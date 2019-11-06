@@ -7,7 +7,7 @@
 </div>
 <section class="table view-content--as-table">
   <div class="thead header">
-      <div class="th cell">
+      <div class="th cell" (click)="getGenes()">
         <b>HGNC, название</b>
         <i class="fa fa-sort-desc sort-icon" aria-hidden="true"></i>
       </div>
@@ -21,7 +21,7 @@
       <div class="th cell"><b>Взаимодействия</b></div>
   </div>
   <div class="tbody">
-    <div class="tr row" *ngFor="let data of dataSource">
+    <div class="tr row" *ngFor="let data of activeGenes | slice: 0: activeGenesQuantity">
       <div class="td cell td-name">
         <div class="td_title">
           <a href="#" class="link">

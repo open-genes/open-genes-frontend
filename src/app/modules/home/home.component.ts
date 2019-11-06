@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../core/services/api.service';
-import { Observable } from 'rxjs';
 import { IGen } from '../../core/models';
 
 @Component({
@@ -10,7 +9,7 @@ import { IGen } from '../../core/models';
 })
 export class HomeComponent implements OnInit {
 
-  genes: Observable<IGen[]>;
+  genes: IGen[];
 
   constructor(private apiService: ApiService) { }
 
@@ -19,6 +18,8 @@ export class HomeComponent implements OnInit {
   }
 
   private getGenes() {
-    this.genes = this.apiService.getGenes();
+    this.apiService.getGenes().subscribe( (genes) => {
+      this.genes = genes;
+    });
   }
 }
