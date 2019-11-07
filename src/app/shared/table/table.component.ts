@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { IGen } from '../../core/models';
 
 @Component({
@@ -6,23 +6,16 @@ import { IGen } from '../../core/models';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit, OnChanges {
+export class TableComponent implements OnInit {
 
   @Input() dataSource: IGen[];
-  activeGenes: IGen[];
   activeGenesQuantity = 20;
-  isSorted = false;
+  isSorted;
 
   constructor() { }
 
   ngOnInit() {
    this.getScrollPosition();
-  }
-
-  ngOnChanges(): void {
-    if (this.dataSource) {
-      this.activeGenes = this.dataSource;
-    }
   }
 
   getGenes() {
@@ -31,12 +24,12 @@ export class TableComponent implements OnInit, OnChanges {
   }
 
   private reverse() {
-    this.activeGenes.reverse();
+    this.dataSource.reverse();
   }
   private sort() {
     this.dataSource.sort((a, b) => {
-      const A = (a.name).toLowerCase();
-      const B = (b.name).toLowerCase();
+      const A = (a.symbol + a.name).toLowerCase();
+      const B = (b.symbol + b.name).toLowerCase();
       if (A < B) {
         return -1;
       } else if (A > B) {
