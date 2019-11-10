@@ -5880,8 +5880,8 @@ readers do not read off random characters that represent icons */
   font-family: 'Font Awesome 5 Brands';
   font-style: normal;
   font-weight: normal;
-  src: url("../../fonts/fontawesome/fa-brands-400.eot");
-  src: url("../../fonts/fontawesome/fa-brands-400.eot?#iefix") format("embedded-opentype"), url("../../fonts/fontawesome/fa-brands-400.woff2") format("woff2"), url("../../fonts/fontawesome/fa-brands-400.woff") format("woff"), url("../../fonts/fontawesome/fa-brands-400.ttf") format("truetype"), url("../../fonts/fontawesome/fa-brands-400.svg#fontawesome") format("svg"); }
+  src: url("../fonts/fontawesome/fa-brands-400.eot");
+  src: url("../fonts/fontawesome/fa-brands-400.eot?#iefix") format("embedded-opentype"), url("../fonts/fontawesome/fa-brands-400.woff2") format("woff2"), url("../fonts/fontawesome/fa-brands-400.woff") format("woff"), url("../fonts/fontawesome/fa-brands-400.ttf") format("truetype"), url("../fonts/fontawesome/fa-brands-400.svg#fontawesome") format("svg"); }
 
 .fab {
   font-family: 'Font Awesome 5 Brands'; }
@@ -5889,8 +5889,8 @@ readers do not read off random characters that represent icons */
   font-family: 'Font Awesome 5 Pro';
   font-style: normal;
   font-weight: 300;
-  src: url("../../fonts/fontawesome/fa-light-300.eot");
-  src: url("../../fonts/fontawesome/fa-light-300.eot?#iefix") format("embedded-opentype"), url("../../fonts/fontawesome/fa-light-300.woff2") format("woff2"), url("../../fonts/fontawesome/fa-light-300.woff") format("woff"), url("../../fonts/fontawesome/fa-light-300.ttf") format("truetype"), url("../../fonts/fontawesome/fa-light-300.svg#fontawesome") format("svg"); }
+  src: url("../fonts/fontawesome/fa-light-300.eot");
+  src: url("../fonts/fontawesome/fa-light-300.eot?#iefix") format("embedded-opentype"), url("../fonts/fontawesome/fa-light-300.woff2") format("woff2"), url("../fonts/fontawesome/fa-light-300.woff") format("woff"), url("../fonts/fontawesome/fa-light-300.ttf") format("truetype"), url("../fonts/fontawesome/fa-light-300.svg#fontawesome") format("svg"); }
 
 .fal {
   font-family: 'Font Awesome 5 Pro';
@@ -5899,8 +5899,8 @@ readers do not read off random characters that represent icons */
   font-family: 'Font Awesome 5 Pro';
   font-style: normal;
   font-weight: 300;
-  src: url("../../fonts/fontawesome/fa-light-300.eot");
-  src: url("../../fonts/fontawesome/fa-light-300.eot?#iefix") format("embedded-opentype"), url("../../fonts/fontawesome/fa-light-300.woff2") format("woff2"), url("../../fonts/fontawesome/fa-light-300.woff") format("woff"), url("../../fonts/fontawesome/fa-light-300.ttf") format("truetype"), url("../../fonts/fontawesome/fa-light-300.svg#fontawesome") format("svg"); }
+  src: url("../fonts/fontawesome/fa-light-300.eot");
+  src: url("../fonts/fontawesome/fa-light-300.eot?#iefix") format("embedded-opentype"), url("../fonts/fontawesome/fa-light-300.woff2") format("woff2"), url("../fonts/fontawesome/fa-light-300.woff") format("woff"), url("../fonts/fontawesome/fa-light-300.ttf") format("truetype"), url("../fonts/fontawesome/fa-light-300.svg#fontawesome") format("svg"); }
 
 .far {
   font-family: 'Font Awesome 5 Pro';
@@ -5909,8 +5909,8 @@ readers do not read off random characters that represent icons */
   font-family: 'Font Awesome 5 Pro';
   font-style: normal;
   font-weight: 900;
-  src: url("../../fonts/fontawesome/fa-solid-900.eot");
-  src: url("../../fonts/fontawesome/fa-solid-900.eot?#iefix") format("embedded-opentype"), url("../../fonts/fontawesome/fa-solid-900.woff2") format("woff2"), url("../../fonts/fontawesome/fa-solid-900.woff") format("woff"), url("../../fonts/fontawesome/fa-solid-900.ttf") format("truetype"), url("../../fonts/fontawesome/fa-solid-900.svg#fontawesome") format("svg"); }
+  src: url("../fonts/fontawesome/fa-solid-900.eot");
+  src: url("../fonts/fontawesome/fa-solid-900.eot?#iefix") format("embedded-opentype"), url("../fonts/fontawesome/fa-solid-900.woff2") format("woff2"), url("../fonts/fontawesome/fa-solid-900.woff") format("woff"), url("../fonts/fontawesome/fa-solid-900.ttf") format("truetype"), url("../fonts/fontawesome/fa-solid-900.svg#fontawesome") format("svg"); }
 
 .fa,
 .fas {

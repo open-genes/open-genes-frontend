@@ -225,11 +225,8 @@
       &__title {
         font-size: $font-size-bigger;
         font-weight: $font-weight-medium;
-        text-decoration: none;
         margin-bottom: 5px;
-        &, .link {
-          color: $color-gray;
-        }
+        color: $color-gray;
 
         .link,
         .tag {
@@ -237,12 +234,7 @@
         }
 
         .link {
-          text-decoration: underline;
           margin-right: 5px;
-          &:hover,
-          &:active {
-            color: lighten($color-gray, 10%);
-          }
         }
 
         .tag {
@@ -388,30 +380,58 @@
       color: #212121;
       text-align: center;
       font-weight: 400;
-      padding: 4px 8px 16px 8px;
+      padding: 8px 10px 10px 10px;
       border-bottom: 2px solid $color-borders;
       background-color: $color-gray-very-light;
       position: relative;
+      transition: background-color .15s linear;
+
       &__title {
         width: 100%;
         @include overflow-lines(12px, 1.3, 3, 0);
       }
+
       .fa {
         display: inline;
         font-size: 12px;
         margin-left: 5px;
       }
-      &.sortable {
-        cursor: pointer;
-        &:hover {
-          background-color: rgba(#b9def0, .75);
-        }
-      }
+
       &--wide {
         width: 120px;
       }
       &--wider {
         width: 180px;
+      }
+
+      &--sortable {
+        cursor: pointer;
+        color: $color-general;
+        padding-right: 20px;
+
+        .sort-icon {
+          font-size: 16px;
+          position: absolute;
+          top: 6px;
+          right: 10px;
+        }
+
+        &:hover {
+          background-color: rgba(#afbef0, .3);
+        }
+      }
+
+      &--sorted {
+        color: $color-orange;
+
+        .sort-icon {
+          transform: scale(1, -1)translateY(-5px)translateZ(0);
+        }
+
+        &,
+        &:hover {
+          background-color: rgba($color-orange, .15);
+        }
       }
 
       &:first-child {

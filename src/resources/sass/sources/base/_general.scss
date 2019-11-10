@@ -41,20 +41,38 @@ body {
   }
 }
 
-a.link {
+.link {
   color: $color-general;
   font-weight: $font-weight-medium;
-  text-decoration: none;
+
   small {
     font-size: 13px;
     font-weight: normal;
   }
 
-  &:hover,
-  &:active {
+  &:hover {
     color: lighten(mix($color-general, $color-blue, 5%), 3%);
   }
+
+  @at-root a.link {
+    &:active {
+      color: lighten(mix($color-general, $color-blue, 5%), 3%);
+    }
+  }
+
+  &--gray {
+    color: $color-gray;
+
+    &:hover,
+    &:active {
+      color: lighten($color-gray, 10%);
+    }
+  }
 }
+
+
+
+
 
 a.reference-link {
   font-size: 11px;

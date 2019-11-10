@@ -11,29 +11,51 @@
 </div>
 
 
-<section class="table view-content--as-table">
+<section class="view-content view-content--as-table">
   <div class="thead">
-      <div class="th cell" (click)="getGenes()">
-        <b>HGNC, название</b>
-        <i class="fa fa-sort-desc sort-icon"
-           [class.icon-rotated]="isSorted"
-          ></i>
+      <div class="th th--sortable" (click)="getGenes()" [class.th--sorted]="isSorted">
+        <div class="th__title">
+          <b>HGNC, название</b>
+        </div>
+        <span class="fa far fa-sort-down sort-icon"></span>
       </div>
-      <div class="th cell"><b>Происхождение</b></div>
-      <div class="th cell" (click)="sortByAge()">
-        <span><b>Возраст</b> (млн. лет)</span>
+      <div class="th">
+        <div class="th__title">
+          <b>Происхождение</b>
+        </div>
       </div>
-      <div class="th cell"><b>Функциональные кластеры:</b></div>
-      <div class="th cell"><b>Возрастные изменения экспрессии:</b></div>
-      <div class="th cell"><b>Заболевания</b></div>
-      <div class="th cell"><b>Взаимодействия</b></div>
+      <div class="th" (click)="sortByAge()">
+        <div class="th__title">
+          <b>Возраст</b> (млн. лет)
+        </div>
+      </div>
+      <div class="th">
+        <div class="th__title">
+          <b>Функциональные кластеры:</b>
+        </div>
+      </div>
+      <div class="th">
+        <div class="th__title">
+          <b>Возрастные изменения экспрессии:</b>
+        </div>
+      </div>
+      <div class="th">
+        <div class="th__title">
+          <b>Заболевания</b>
+        </div>
+      </div>
+      <div class="th">
+        <div class="th__title">
+          <b>Взаимодействия</b>
+        </div>
+      </div>
   </div>
   <div class="tbody">
     <div class="tr row" *ngFor="let data of dataSource | slice: 0: loadedGenesQuantity">
       <div class="td cell td-name">
         <div class="td_title">
-          <a href="#" class="link">
-            <b>{{data.symbol}}</b>{{data.name}}
+          <a href="#" class="link link--gray">
+            <b>{{data.symbol}}</b> {{data.name}}
           </a>
           <a href="#" title="Этот ген на GeneAge" class="tag tag--small">{{data.ID}}</a>
         </div>

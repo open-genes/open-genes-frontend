@@ -667,3 +667,21 @@ $classes: btn-blue, btn-green, btn-red;
   border-radius: 3px;
   cursor: pointer;
 }
+
+.view-panel {
+  background-color: $color-gray-soft;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 12px 10px;
+  &.col {
+    font-size: 0;
+  }
+
+  .page__subtitle {
+    margin: 0;
+    padding-right: 10px;
+  }
+  &__buttons {
+    text-align: right;
+  }
+}
