@@ -1,0 +1,44 @@
+@include resolution_widescreen {
+  body, .header {
+    min-width: $widescreen;
+  }
+  .container {
+    width: $widescreen;
+  }
+}
+
+@include resolution_desktop {
+  body, .header {
+    min-width: $desktop;
+  }
+  .container {
+    width: $desktop;
+  }
+}
+
+@include resolution_tablet {
+  body, .header {
+    min-width: $tablet;
+  }
+  .container {
+    width: $tablet;
+  }
+}
+
+@include resolution_phablet {
+  body, .header {
+    min-width: $phablet - 20px;
+  }
+  .container {
+    width: $phablet - 20px;
+  }
+}
+
+@include resolution_phone {
+  body, .header {
+    min-width: $smartphone - 20px;
+  }
+  .container {
+    width: $smartphone - 20px;
+  }
+}

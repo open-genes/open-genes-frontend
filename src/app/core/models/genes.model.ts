@@ -1,4 +1,4 @@
-export interface IGen {
+export interface IGene {
   ID: number;
   agePhylo: string;
   ageMya: number;
@@ -12,7 +12,7 @@ export interface IGen {
   locationStart: number;
   locationEnd: number;
   orientation: number;
-  accPromoter?: any;
+  accPromoter: any;
   accOrf: string;
   accCds: string;
   references: string;
@@ -25,12 +25,11 @@ export interface IGen {
   commentFunctionEN: string;
   commentAgingEN: string;
   commentsReferenceLinks: string;
-  rating?: any;
+  rating: any;
   functionalClusters: string | string[];
   dateAdded: number;
   userEdited: string;
-  isHidden: number;
   expression: string;
   expressionEN: string;
-  expressionChange?: any;
+  expressionChange: any;
 }

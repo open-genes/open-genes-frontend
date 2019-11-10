@@ -1,0 +1,26 @@
+// Обрезка текста
+@mixin text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Обрезка многострочного текста
+@mixin overflow-lines($font-size, $font-line-height, $lines, $additional, $whole-height:"") {
+  display: block;
+  display: -webkit-box;
+  font-size: $font-size;
+  line-height: $font-line-height;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  word-break: keep-all;
+  hyphens: auto;
+  @if $whole-height != "" {
+    height: $whole-height;
+  }
+  @else {
+    max-height: ($font-line-height * $font-size * $lines) + $additional;
+  }
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
