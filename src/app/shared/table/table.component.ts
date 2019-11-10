@@ -11,7 +11,7 @@ import {takeUntil} from 'rxjs/operators';
 export class TableComponent implements OnInit, OnDestroy {
 
   @Input() dataSource: IGene[];
-  activeGenesQuantity = 20;
+  loadedGenesQuantity = 20;
   isSorted;
   private subscription$ = new Subject();
 
@@ -58,8 +58,8 @@ export class TableComponent implements OnInit, OnDestroy {
         const d = document.documentElement;
         const offset = d.scrollTop + window.innerHeight;
         const height = d.offsetHeight;
-        if (offset >= height - 20 && this.dataSource.length >= this.activeGenesQuantity) {
-          this.activeGenesQuantity += 20;
+        if (offset >= height - 20 && this.dataSource.length >= this.loadedGenesQuantity) {
+          this.loadedGenesQuantity += 20;
         }
       });
   }
