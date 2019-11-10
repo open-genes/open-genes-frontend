@@ -1,8 +1,8 @@
 <div class="view-panel">
   <div class="total">Всего генов: {{dataSource?.length}}</div>
   <div class="buttons">
-    <i class="fa fa-table icon active" aria-hidden="true"></i>
-    <i class="fa fa-th-large icon" aria-hidden="true"></i>
+    <i class="fa fa-table icon active"></i>
+    <i class="fa fa-th-large icon"></i>
   </div>
 </div>
 <section class="table view-content--as-table">
@@ -11,7 +11,7 @@
         <b>HGNC, название</b>
         <i class="fa fa-sort-desc sort-icon"
            [class.icon-rotated]="isSorted"
-           aria-hidden="true"></i>
+          ></i>
       </div>
       <div class="th cell"><b>Происхождение</b></div>
       <div class="th cell" (click)="sortByAge()">
