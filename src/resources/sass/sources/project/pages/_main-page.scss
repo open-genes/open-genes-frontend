@@ -1,0 +1,50 @@
+.main-page { // .page
+  // &__inner { }
+  &__header {
+    background-color: #eff2fc;
+    padding: 20px 0 30px 0;
+    margin-bottom: 15px;
+    border-radius: 0 0 20px 20px;
+    .page__title { // переиспользуем
+      h1 {
+        color: #FF4E1A;
+      }
+    }
+    .header__description,
+    .header__button {
+      width: 100%;
+    }
+    .header__description {
+      font-size: $font-size-bigger;
+      color: $color-gray-dark;
+    }
+    .header__button {
+      margin-top: 10px;
+      .btn {
+        margin: 0;
+        float: left;
+        font-size: $font-size-bigger;
+      }
+    }
+  }
+
+  .view-panel {
+    background-color: $color-gray-soft;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 12px 10px;
+    &.col {
+      font-size: 0;
+    }
+
+    .page__subtitle {
+      margin: 0;
+      padding-right: 10px;
+    }
+    &__buttons {
+      text-align: right;
+    }
+  }
+}
+
+

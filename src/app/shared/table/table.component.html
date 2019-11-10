@@ -1,12 +1,18 @@
-<div class="view-panel">
-  <div class="total">Всего генов: {{dataSource?.length}}</div>
-  <div class="buttons">
-    <i class="fa fa-table icon active"></i>
-    <i class="fa fa-th-large icon"></i>
+<div class="view-panel col col-16">
+  <div class="page__subtitle per per-70 __middle">
+    Всего генов: {{dataSource?.length}}
+  </div>
+  <div class="view-panel__buttons per per-30 __middle">
+    <button class="toggler toggler--def js_toggler js_view-toggler">
+      <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
+      <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
+    </button>
   </div>
 </div>
+
+
 <section class="table view-content--as-table">
-  <div class="thead header">
+  <div class="thead">
       <div class="th cell" (click)="getGenes()">
         <b>HGNC, название</b>
         <i class="fa fa-sort-desc sort-icon"

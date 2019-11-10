@@ -1,0 +1,61 @@
+// Ширина колонок на разных разрешениях
+
+@include resolution_widescreen {
+  .#{$prefix}col {
+    @for $i from 1 through 16 {
+      &.#{$prefix}col-#{$i} {
+        width: ($widescreen / 16) * $i;
+      }
+    }
+  }
+}
+
+@include resolution_desktop {
+  .#{$prefix}col {
+    @for $i from 1 through 16 {
+      &.#{$prefix}col-#{$i} {
+        width: ($desktop / 16) * $i;
+      }
+    }
+  }
+}
+
+@include resolution_tablet {
+  .#{$prefix}col {
+    &.__#{$prefix}preserve-width {
+      @for $i from 1 through 16 {
+        &.#{$prefix}col-#{$i} {
+          width: ($tablet / 16) * $i;
+        }
+      }
+    }
+
+    &:not(.__#{$prefix}preserve-width) {
+      @for $i from 1 through 16 {
+        &.#{$prefix}col-#{$i} {
+          width: $tablet;
+        }
+      }
+    }
+  }
+}
+
+@include resolution_phablet {
+  .#{$prefix}col {
+    @for $i from 1 through 16 {
+      &.#{$prefix}col-#{$i} {
+        width: $phablet - 20px;
+      }
+    }
+  }
+}
+
+@include resolution_phone {
+  .#{$prefix}col {
+    @for $i from 1 through 16 {
+      &.#{$prefix}col-#{$i} {
+        width: $smartphone - 20px;
+      }
+    }
+  }
+}

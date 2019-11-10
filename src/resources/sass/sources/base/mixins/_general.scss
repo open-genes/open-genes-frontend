@@ -1,0 +1,6 @@
+// Скрытие блока без лишних переопределений
+@mixin display($val) {
+  &:not(.hidden) {
+    display: #{$val};
+  }
+}
