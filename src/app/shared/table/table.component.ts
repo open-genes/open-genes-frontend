@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import { IGen } from '../../core/models';
+import { IGene } from '../../core/models';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
@@ -10,7 +10,7 @@ import {takeUntil} from 'rxjs/operators';
 })
 export class TableComponent implements OnInit, OnDestroy {
 
-  @Input() dataSource: IGen[];
+  @Input() dataSource: IGene[];
   activeGenesQuantity = 20;
   isSorted;
   private subscription$ = new Subject();

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../core/services/api.service';
-import { IGen } from '../../core/models';
+import { IGene } from '../../core/models';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +9,7 @@ import { IGen } from '../../core/models';
 })
 export class HomeComponent implements OnInit {
 
-  genes: IGen[];
+  genes: IGene[];
 
   constructor(private apiService: ApiService) { }
 
