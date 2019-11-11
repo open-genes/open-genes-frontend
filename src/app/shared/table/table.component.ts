@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import { IGene } from '../../core/models';
+import {IGene} from '../../core/models';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
@@ -13,12 +13,18 @@ export class TableComponent implements OnInit, OnDestroy {
   @Input() dataSource: IGene[];
   loadedGenesQuantity = 20;
   isSorted;
+  asCards = true;
   private subscription$ = new Subject();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
-   this.getScrollPosition();
+    this.getScrollPosition();
+  }
+
+  geneView() {
+    this.asCards = !this.asCards;
   }
 
   getGenes() {
@@ -29,6 +35,7 @@ export class TableComponent implements OnInit, OnDestroy {
   private reverse() {
     this.dataSource.reverse();
   }
+
   private sortByName() {
     this.dataSource.sort((a, b) => {
       const A = (a.symbol + a.name).toLowerCase();
@@ -41,6 +48,7 @@ export class TableComponent implements OnInit, OnDestroy {
       return 0;
     });
   }
+
   private sortByAge() {
     this.dataSource.sort((a, b) => {
       const A = a.ageMya;
@@ -51,6 +59,7 @@ export class TableComponent implements OnInit, OnDestroy {
       return 0;
     });
   }
+
   private getScrollPosition() {
     fromEvent(document, 'scroll')
       .pipe(takeUntil(this.subscription$))

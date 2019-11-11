@@ -3,15 +3,17 @@
     Всего генов: {{dataSource?.length}}
   </div>
   <div class="view-panel__buttons per per-30 __middle">
-    <button class="toggler toggler--def js_toggler js_view-toggler">
+    <button class="toggler"
+            (click)="geneView()"
+            [ngClass]="asCards == true ? 'toggler--alt' : 'toggler--def'"
+    >
       <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
       <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
     </button>
   </div>
 </div>
 
-
-<section class="view-content view-content--as-table">
+<section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
   <div class="thead">
       <div class="th th--sortable" (click)="getGenes()" [class.th--sorted]="isSorted">
         <div class="th__title">
