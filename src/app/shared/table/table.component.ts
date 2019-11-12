@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
-import {IGen} from '../../core/models';
+import {IGene} from '../../core/models';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
@@ -10,10 +10,11 @@ import {takeUntil} from 'rxjs/operators';
 })
 export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
-  @Input() dataSource: IGen[];
-  searchedData: IGen[];
-  activeGenesQuantity = 20;
+  @Input() dataSource: IGene[];
+  searchedData: IGene[];
+  loadedGenesQuantity = 20;
   isSorted;
+  asCards = true;
   private subscription$ = new Subject();
 
   constructor() {
@@ -34,6 +35,10 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(): void {
     this.searchedData = this.dataSource;
+  }
+
+  geneView() {
+    this.asCards = !this.asCards;
   }
 
   getGenes() {
@@ -76,8 +81,8 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
         const d = document.documentElement;
         const offset = d.scrollTop + window.innerHeight;
         const height = d.offsetHeight;
-        if (offset >= height - 20 && this.dataSource.length >= this.activeGenesQuantity) {
-          this.activeGenesQuantity += 20;
+        if (offset >= height - 20 && this.dataSource.length >= this.loadedGenesQuantity) {
+          this.loadedGenesQuantity += 20;
         }
       });
   }

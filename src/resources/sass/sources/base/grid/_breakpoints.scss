@@ -1,0 +1,114 @@
+/*
+ * Миксины для медиа-запросов
+ */
+
+// АДАПТИВНАЯ СЕТКА - МЕДИАЗАПРОСЫ
+$n: $max-scroll-width; // средняя ширина скролла
+$from-widescreen: $widescreen + $gutter + $n;
+$from-desktop: $desktop + $gutter + $n;
+$from-tablet: $tablet + $gutter + $n;
+$from-phablet: $phablet + $gutter + $n;
+$from-smartphone: $smartphone + $gutter + $n;
+
+/* Основные разрешения
+================================================*/
+
+/* Desktop - widescreen
+------------------------------------------------*/
+@mixin resolution_widescreen {
+  @media only screen and (min-width: $from-widescreen) {
+    @content;
+  }
+}
+
+/* Desktop - small desktop
+------------------------------------------------*/
+@mixin resolution_desktop {
+  @media only screen and (min-width: $from-desktop) and (max-width: $from-widescreen - .02px) {
+    @content;
+  }
+}
+/* Mobile - tablet
+------------------------------------------------*/
+@mixin resolution_tablet {
+  @media only screen and (min-width: $from-tablet) and (max-width: $from-desktop - .02px) {
+    @content;
+  }
+}
+/* Mobile - smartphone (Portrait, 320px)
+------------------------------------------------*/
+@mixin resolution_smartphone {
+  @media only screen and (max-width: $from-tablet - .02px) {
+    @content;
+  }
+}
+
+/* Дополнительные разрешения
+================================================*/
+
+/* Mobile - phone only (Optional, 320px)
+------------------------------------------------*/
+@mixin resolution_phone {
+  @media only screen and (max-width: $from-phablet - .02px) {
+    @content;
+  }
+}
+
+/* Mobile - phablet (Optional, 480px)
+------------------------------------------------*/
+@mixin resolution_phablet {
+  @media only screen and (min-width: $from-phablet) and (max-width: $from-tablet - .02px) {
+    @content;
+  }
+}
+
+/* Брейкпоинты, объединяющие несколько разрешений
+------------------------------------------------*/
+
+@mixin resolution_all-but-widescreen {
+  @media only screen and (max-width: $from-widescreen - .02px) {
+    @content;
+  }
+}
+
+@mixin resolution_desktop-and-up {
+  @media only screen and (min-width: $from-desktop) {
+    @content;
+  }
+}
+
+@mixin resolution_tablet-and-desktop {
+  @media only screen and (min-width: $from-tablet) and (max-width: $from-widescreen - .02px) {
+    @content;
+  }
+}
+
+@mixin resolution_tablet-and-up {
+  @media only screen and (min-width: $from-tablet) {
+    @content;
+  }
+}
+
+@mixin resolution_phablet-and-up {
+  @media only screen and (min-width: $from-phablet) {
+    @content;
+  }
+}
+
+@mixin resolution_smartphone-and-tablet {
+  @media only screen and (max-width: $from-desktop - .02px) {
+    @content;
+  }
+}
+
+@mixin resolution_phablet-and-tablet {
+  @media only screen and (min-width: $from-phablet) and (max-width: $from-desktop - .02px) {
+    @content;
+  }
+}
+
+@mixin resolution_phablet-tablet-and-dektop {
+  @media only screen and (min-width: $from-phablet) and (max-width: $from-widescreen - .02px) {
+    @content;
+  }
+}

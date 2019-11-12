@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IGen } from '../models';
+import { IGene } from '../models';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
@@ -14,9 +14,9 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getGenes(): Observable<IGen[]> {
+  getGenes(): Observable<IGene[]> {
     return this.http
-      .get<IGen[]>(`${this.url}/export`)
+      .get<IGene[]>(`${this.url}/export`)
       .pipe(
         map(ev => {
           ev = ev.map(item => {
