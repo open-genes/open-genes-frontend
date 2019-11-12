@@ -1,29 +1,39 @@
 <div class="view-panel">
   <div class="total">Всего генов: {{dataSource?.length}}</div>
-  <div class="search-holder">
-    <input class="search-input" (keyup)="search($event)" type="text" placeholder="Поиск">
+  <form [formGroup]="searchForm" class="search-holder">
+    <div class="search-input">
+      <input formControlName="search" type="text" placeholder="Поиск">
+      <div class="search-result"
+           *ngIf="hasResult">
+        <span class="result-text"
+              *ngFor="let data of dataSource; let i = index"
+              (click)="setResult(i)">
+          {{data.symbol}} {{data.name}}
+        </span>
+      </div>
+    </div>
     <div class="buttons">
       <i class="fa fa-table icon active" aria-hidden="true"></i>
       <i class="fa fa-th-large icon" aria-hidden="true"></i>
     </div>
-  </div>
+  </form>
 </div>
 <section class="table view-content--as-table">
   <div class="thead header">
-      <div class="th cell" (click)="getGenes()">
-        <b>HGNC, название</b>
-        <i class="fa fa-sort-desc sort-icon"
-           [class.icon-rotated]="isSorted"
-           aria-hidden="true"></i>
-      </div>
-      <div class="th cell"><b>Происхождение</b></div>
-      <div class="th cell" (click)="sortByAge()">
-        <span><b>Возраст</b> (млн. лет)</span>
-      </div>
-      <div class="th cell"><b>Функциональные кластеры:</b></div>
-      <div class="th cell"><b>Возрастные изменения экспрессии:</b></div>
-      <div class="th cell"><b>Заболевания</b></div>
-      <div class="th cell"><b>Взаимодействия</b></div>
+    <div class="th cell" (click)="getGenes()">
+      <b>HGNC, название</b>
+      <i class="fa fa-sort-desc sort-icon"
+         [class.icon-rotated]="isSorted"
+         aria-hidden="true"></i>
+    </div>
+    <div class="th cell"><b>Происхождение</b></div>
+    <div class="th cell" (click)="sortByAge()">
+      <span><b>Возраст</b> (млн. лет)</span>
+    </div>
+    <div class="th cell"><b>Функциональные кластеры:</b></div>
+    <div class="th cell"><b>Возрастные изменения экспрессии:</b></div>
+    <div class="th cell"><b>Заболевания</b></div>
+    <div class="th cell"><b>Взаимодействия</b></div>
   </div>
   <div class="tbody">
     <div class="tr row" *ngFor="let data of dataSource | slice: 0: activeGenesQuantity">
@@ -40,7 +50,8 @@
       <div class="td cell td-clusters">
         <span class="tag" *ngFor="let funcCluster of data.functionalClusters">{{funcCluster}}</span>
       </div>
-      <div class="td cell td-expression"><a href="#" class="tag" *ngIf="data.expressionChange">{{data.expressionChange}}</a></div>
+      <div class="td cell td-expression"><a href="#" class="tag"
+                                            *ngIf="data.expressionChange">{{data.expressionChange}}</a></div>
       <div class="td cell text-right td-external">
         <a href="#" class="badge badge--disgenet">DisGenet</a>
       </div>

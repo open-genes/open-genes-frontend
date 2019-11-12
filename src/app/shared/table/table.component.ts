@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {IGen} from '../../core/models';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-table',
@@ -14,6 +15,8 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   searchedData: IGen[];
   activeGenesQuantity = 20;
   isSorted;
+  hasResult;
+  searchForm: FormGroup;
   private subscription$ = new Subject();
 
   constructor() {
@@ -21,15 +24,12 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     this.getScrollPosition();
+    this.initForm();
   }
 
-  search(e) {
-    const searchText = e.target.value.toLowerCase();
-    this.dataSource = this.searchedData.filter((item) => {
-      return (item.name.toLowerCase().includes(searchText) ||
-        (item.aliases || '').toLowerCase().includes(searchText) ||
-        item.symbol.toLowerCase().includes(searchText));
-    });
+  setResult(i) {
+    this.searchForm.get('search').setValue(this.dataSource[i].symbol + ' ' + this.dataSource[i].name);
+    this.hasResult = false;
   }
 
   ngOnChanges(): void {
@@ -80,6 +80,25 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
           this.activeGenesQuantity += 20;
         }
       });
+  }
+
+  private initForm() {
+    this.searchForm = new FormGroup({
+      search: new FormControl('')
+    });
+
+    this.searchForm.valueChanges.subscribe(() => {
+      this.search();
+      this.hasResult = true;
+    });
+  }
+
+  private search() {
+    const searchText = this.searchForm.get('search').value.toLowerCase();
+    this.dataSource = this.searchedData.filter((item) => {
+      const searchedText = (item.symbol + ' ' + item.name + ' ' + item.aliases).toLowerCase();
+      return searchedText.includes(searchText);
+    });
   }
 
   ngOnDestroy(): void {
