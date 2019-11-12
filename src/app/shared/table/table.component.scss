@@ -9,6 +9,15 @@
   align-items: center;
   justify-content: space-between;
 
+  .search-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .search-input{
+      margin-right: 20px;
+    }
+  }
+
   .buttons {
     .icon {
       font-size: 20px;
@@ -23,6 +32,7 @@
     }
   }
 }
+
 .view-content--as-table {
   width: 100%;
   display: table;
@@ -73,13 +83,14 @@
     .td_title .link {
       display: block;
       font-weight: 600;
+
       b {
         margin-right: 4px;
         color: #000;
       }
     }
 
-    .td+.td {
+    .td + .td {
       border-left: 1px solid #dedfe1;
     }
   }
@@ -109,7 +120,8 @@
     text-align: right;
   }
 }
-.icon-rotated{
+
+.icon-rotated {
   transform: rotate(180deg);
   padding-bottom: 3px;
 }

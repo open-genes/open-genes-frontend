@@ -1,5 +1,5 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import { IGen } from '../../core/models';
+import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
+import {IGen} from '../../core/models';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
@@ -8,17 +8,32 @@ import {takeUntil} from 'rxjs/operators';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit, OnDestroy {
+export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() dataSource: IGen[];
+  searchedData: IGen[];
   activeGenesQuantity = 20;
   isSorted;
   private subscription$ = new Subject();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
-   this.getScrollPosition();
+    this.getScrollPosition();
+  }
+
+  search(e) {
+    const searchText = e.target.value.toLowerCase();
+    this.dataSource = this.searchedData.filter((item) => {
+      return (item.name.toLowerCase().includes(searchText) ||
+        (item.aliases || '').toLowerCase().includes(searchText) ||
+        item.symbol.toLowerCase().includes(searchText));
+    });
+  }
+
+  ngOnChanges(): void {
+    this.searchedData = this.dataSource;
   }
 
   getGenes() {
@@ -29,6 +44,7 @@ export class TableComponent implements OnInit, OnDestroy {
   private reverse() {
     this.dataSource.reverse();
   }
+
   private sortByName() {
     this.dataSource.sort((a, b) => {
       const A = (a.symbol + a.name).toLowerCase();
@@ -41,6 +57,7 @@ export class TableComponent implements OnInit, OnDestroy {
       return 0;
     });
   }
+
   private sortByAge() {
     this.dataSource.sort((a, b) => {
       const A = a.ageMya;
@@ -51,6 +68,7 @@ export class TableComponent implements OnInit, OnDestroy {
       return 0;
     });
   }
+
   private getScrollPosition() {
     fromEvent(document, 'scroll')
       .pipe(takeUntil(this.subscription$))
