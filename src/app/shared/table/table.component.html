@@ -1,39 +1,39 @@
-<div class="view-panel col col-16">
-  <div class="page__subtitle per per-70 __middle">
-    <div class="total">
-      Всего генов: {{dataSource?.length}}
+<div class="view-panel">
+  <div class="total">Всего генов: {{dataSource?.length}}</div>
+  <form [formGroup]="searchForm" class="search-holder">
+    <div class="search-input">
+      <input formControlName="search" type="text" placeholder="Поиск">
+      <div class="search-result"
+           *ngIf="hasResult">
+        <span class="result-text"
+              *ngFor="let data of dataSource; let i = index"
+              (click)="setResult(i)">
+          {{data.symbol}} {{data.name}}
+        </span>
+      </div>
     </div>
-    <div class="search-holder">
-      <input class="search-input" (keyup)="search($event)" type="text" placeholder="Поиск">
+    <div class="buttons">
+      <i class="fa fa-table icon active" aria-hidden="true"></i>
+      <i class="fa fa-th-large icon" aria-hidden="true"></i>
     </div>
-  </div>
-
-  <div class="view-panel__buttons per per-30 __middle">
-    <button class="toggler"
-            (click)="geneView()"
-            [ngClass]="asCards == true ? 'toggler--alt' : 'toggler--def'"
-    >
-      <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
-      <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
-    </button>
-  </div>
+  </form>
 </div>
 
 <section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
   <div class="thead">
-      <div class="th th--sortable" (click)="getGenes()" [class.th--sorted]="isSorted">
+    <div class="th th--sortable" (click)="getGenes()" [class.th--sorted]="isSorted">
         <div class="th__title">
           <b>HGNC, название</b>
         </div>
         <span class="fa far fa-sort-down sort-icon"></span>
       </div>
-      <div class="th">
+    <div class="th">
         <div class="th__title">
           <b>Происхождение</b>
         </div>
       </div>
       <div class="th" (click)="sortByAge()">
-        <div class="th__title">
+      <div class="th__title">
           <b>Возраст</b> (млн. лет)
         </div>
       </div>
@@ -73,7 +73,8 @@
       <div class="td cell td-clusters">
         <span class="tag" *ngFor="let funcCluster of data.functionalClusters">{{funcCluster}}</span>
       </div>
-      <div class="td cell td-expression"><a href="#" class="tag" *ngIf="data.expressionChange">{{data.expressionChange}}</a></div>
+      <div class="td cell td-expression"><a href="#" class="tag"
+                                            *ngIf="data.expressionChange">{{data.expressionChange}}</a></div>
       <div class="td cell text-right td-external">
         <a href="#" class="badge badge--disgenet">DisGenet</a>
       </div>

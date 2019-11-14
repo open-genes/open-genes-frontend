@@ -1,0 +1,26 @@
+.search-holder {
+  .search-result {
+    background: white;
+    position: absolute;
+    top: 22px;
+    height: auto;
+    overflow-y: scroll;
+    max-height: 500px;
+    width: 204px;
+    z-index: 12;
+    border: 1px solid silver;
+    .result-text{
+      display: block;
+      border-bottom: 1px solid silver;
+      padding: 10px 5px;
+    }
+  }
+  ::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+  }
+  /* Optional: show position indicator in red */
+  ::-webkit-scrollbar-thumb {
+    background: #FF0000;
+  }
+}
