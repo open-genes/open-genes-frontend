@@ -3,7 +3,7 @@
     background: white;
     position: absolute;
     top: 22px;
-    height: auto;
+    height: 200px;
     overflow-y: scroll;
     max-height: 500px;
     width: 204px;
@@ -11,8 +11,13 @@
     border: 1px solid silver;
     .result-text{
       display: block;
+      width: 100%;
       border-bottom: 1px solid silver;
       padding: 10px 5px;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
   ::-webkit-scrollbar {
