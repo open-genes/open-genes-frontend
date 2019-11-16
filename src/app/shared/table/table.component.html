@@ -1,4 +1,4 @@
-<div class="view-panel">
+<div class="view-panel col col-16">
   <div class="total">Всего генов: {{dataSource?.length}}</div>
   <form [formGroup]="searchForm" class="search-holder">
     <div class="search-input">
@@ -19,21 +19,22 @@
   </form>
 </div>
 
-<section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
-  <div class="thead">
-    <div class="th th--sortable" (click)="getGenes()" [class.th--sorted]="isSorted">
+<div class="col col-16">
+  <section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
+    <div class="thead">
+      <div class="th th--sortable" (click)="getGenes()" [class.th--sorted]="isSorted">
         <div class="th__title">
           <b>HGNC, название</b>
         </div>
         <span class="fa far fa-sort-down sort-icon"></span>
       </div>
-    <div class="th">
+      <div class="th">
         <div class="th__title">
           <b>Происхождение</b>
         </div>
       </div>
       <div class="th" (click)="sortByAge()">
-      <div class="th__title">
+        <div class="th__title">
           <b>Возраст</b> (млн. лет)
         </div>
       </div>
@@ -57,30 +58,31 @@
           <b>Взаимодействия</b>
         </div>
       </div>
-  </div>
-  <div class="tbody">
-    <div class="tr row" *ngFor="let data of dataSource | slice: 0: loadedGenesQuantity">
-      <div class="td cell td-name">
-        <div class="td_title">
-          <a href="#" class="link link--gray">
-            <b>{{data.symbol}}</b> {{data.name}}
-          </a>
-          <a href="#" title="Этот ген на GeneAge" class="tag tag--small">{{data.ID}}</a>
+    </div>
+    <div class="tbody">
+      <div class="tr row" *ngFor="let data of dataSource | slice: 0: loadedGenesQuantity">
+        <div class="td cell td-name">
+          <div class="td_title">
+            <a href="#" class="link link--gray">
+              <b>{{data.symbol}}</b> {{data.name}}
+            </a>
+            <a href="#" title="Этот ген на GeneAge" class="tag tag--small">{{data.ID}}</a>
+          </div>
+        </div>
+        <div class="td cell td-age-phylo"><b>{{data.agePhylo}}</b></div>
+        <div class="td cell td-age-mya">{{data.ageMya}}</div>
+        <div class="td cell td-clusters">
+          <span class="tag" *ngFor="let funcCluster of data.functionalClusters">{{funcCluster}}</span>
+        </div>
+        <div class="td cell td-expression"><a href="#" class="tag"
+                                              *ngIf="data.expressionChange">{{data.expressionChange}}</a></div>
+        <div class="td cell text-right td-external">
+          <a href="#" class="badge badge--disgenet">DisGenet</a>
+        </div>
+        <div class="td cell text-right td-external">
+          <a href="#" class="badge badge--biogrid">BioGrid</a>
         </div>
       </div>
-      <div class="td cell td-age-phylo"><b>{{data.agePhylo}}</b></div>
-      <div class="td cell td-age-mya">{{data.ageMya}}</div>
-      <div class="td cell td-clusters">
-        <span class="tag" *ngFor="let funcCluster of data.functionalClusters">{{funcCluster}}</span>
-      </div>
-      <div class="td cell td-expression"><a href="#" class="tag"
-                                            *ngIf="data.expressionChange">{{data.expressionChange}}</a></div>
-      <div class="td cell text-right td-external">
-        <a href="#" class="badge badge--disgenet">DisGenet</a>
-      </div>
-      <div class="td cell text-right td-external">
-        <a href="#" class="badge badge--biogrid">BioGrid</a>
-      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>

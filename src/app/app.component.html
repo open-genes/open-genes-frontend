@@ -1,1 +1,43 @@
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+
+<head>
+  <meta charset = 'utf-8'>
+  <title>Главная</title >
+  <meta name='description' content=''>
+  <meta name = 'viewport' content = 'width=device-width, initial-scale=1, maximum-scale=1'>
+  <meta property='og:image' content='/images/social-cover.png'>
+</head>
+
+<body>
+<header class="header">
+  <a class="header__logo"
+     href="/"
+     title="<?= Yii::t('main', 'main_page_link'); ?>">
+  </a>
+</header>
+
 <router-outlet></router-outlet>
+
+<footer class="wrapper footer">
+  <div class="container">
+    <div class="per per-70">
+      <a href="/api/"
+         class="link"
+         target="_blank"
+      >JSON data</a>
+      <a href="/api/"
+         class="fa far fa-download"
+         target="_blank"
+      ></a>
+    </div>
+    <div class="per per-30 footer__language">
+      <button
+        value="<?= Yii::$app->language == 'en-US' ? 'RU' : 'EN'?>"
+        class="language-switcher js_language-switcher">
+        EN
+      </button>
+    </div>
+  </div>
+</footer>
+</body>

@@ -4,3 +4,15 @@
     display: #{$val};
   }
 }
+
+// Стили панели
+@mixin panel {
+  display: block;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid $color-borders;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+  position: relative;
+}
