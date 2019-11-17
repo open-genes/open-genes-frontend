@@ -12,7 +12,10 @@ export class TableComponent implements OnInit, OnDestroy {
 
   @Input() dataSource: IGene[];
   loadedGenesQuantity = 20;
-  isSorted;
+  isSorted = {
+    name: false,
+    ageMya: false
+  };
   asCards = true;
   private subscription$ = new Subject();
 
@@ -27,9 +30,14 @@ export class TableComponent implements OnInit, OnDestroy {
     this.asCards = !this.asCards;
   }
 
-  getGenes() {
-    this.isSorted ? this.reverse() : this.sortByName();
-    this.isSorted = !this.isSorted;
+  getGenes(sortBy) {
+    if (sortBy === 'name') {
+      this.isSorted.name ? this.reverse() : this.sortByName();
+      this.isSorted.name = !this.isSorted.name;
+    } else {
+      this.isSorted.ageMya ? this.reverse() : this.sortByAge();
+      this.isSorted.ageMya = !this.isSorted.ageMya;
+    }
   }
 
   private reverse() {
@@ -40,23 +48,13 @@ export class TableComponent implements OnInit, OnDestroy {
     this.dataSource.sort((a, b) => {
       const A = (a.symbol + a.name).toLowerCase();
       const B = (b.symbol + b.name).toLowerCase();
-      if (A < B) {
-        return -1;
-      } else if (A > B) {
-        return 1;
-      }
-      return 0;
+      return A > B ? 1 : A < B ? -1 : 0;
     });
   }
 
   private sortByAge() {
     this.dataSource.sort((a, b) => {
-      const A = a.ageMya;
-      const B = b.ageMya;
-      if (A - B) {
-        return -1;
-      }
-      return 0;
+      return a.ageMya - b.ageMya;
     });
   }
 

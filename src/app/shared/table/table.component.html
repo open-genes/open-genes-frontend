@@ -15,7 +15,7 @@
 
 <section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
   <div class="thead">
-      <div class="th th--sortable" (click)="getGenes()" [class.th--sorted]="isSorted">
+      <div class="th th--sortable" (click)="getGenes('name')" [class.th--sorted]="isSorted.name">
         <div class="th__title">
           <b>HGNC, название</b>
         </div>
@@ -26,10 +26,11 @@
           <b>Происхождение</b>
         </div>
       </div>
-      <div class="th" (click)="sortByAge()">
+      <div class="th th--sortable" (click)="getGenes('ageMya')" [class.th--sorted]="isSorted.ageMya">
         <div class="th__title">
           <b>Возраст</b> (млн. лет)
         </div>
+        <span class="fa far fa-sort-down sort-icon"></span>
       </div>
       <div class="th">
         <div class="th__title">
