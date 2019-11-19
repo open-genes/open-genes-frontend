@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {IGene} from '../../core/models';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
@@ -8,9 +8,10 @@ import {takeUntil} from 'rxjs/operators';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit, OnDestroy {
+export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() dataSource: IGene[];
+  searchedData: IGene[];
   loadedGenesQuantity = 20;
   isSorted = {
     name: false,
@@ -24,6 +25,14 @@ export class TableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getScrollPosition();
+  }
+
+  ngOnChanges() {
+    this.searchedData = this.dataSource;
+  }
+
+  getSearchedData(e: IGene[]) {
+    this.searchedData = e;
   }
 
   geneView() {
@@ -41,11 +50,11 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   private reverse() {
-    this.dataSource.reverse();
+    this.searchedData.reverse();
   }
 
   private sortByName() {
-    this.dataSource.sort((a, b) => {
+    this.searchedData.sort((a, b) => {
       const A = (a.symbol + a.name).toLowerCase();
       const B = (b.symbol + b.name).toLowerCase();
       return A > B ? 1 : A < B ? -1 : 0;
@@ -53,7 +62,7 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   private sortByAge() {
-    this.dataSource.sort((a, b) => {
+    this.searchedData.sort((a, b) => {
       return a.ageMya - b.ageMya;
     });
   }

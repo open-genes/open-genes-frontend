@@ -5,12 +5,10 @@ import { APP_ROUTES } from './app-routing';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { SearchComponent } from './shared/search/search.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SearchComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,

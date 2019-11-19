@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://open-genes.org'
+  apiUrl: 'http://open-genes.com'
 };
 
 /*

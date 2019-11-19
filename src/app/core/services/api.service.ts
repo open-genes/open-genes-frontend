@@ -16,13 +16,10 @@ export class ApiService {
 
   getGenes(): Observable<IGene[]> {
     return this.http
-      .get<IGene[]>(`${this.url}/export`)
+      .get<IGene[]>(`${this.url}/api?lang=ru`)
       .pipe(
         map(ev => {
           ev = ev.map(item => {
-            if (item.functionalClusters) {
-              item.functionalClusters = (item.functionalClusters as string).split(',');
-            }
             return item;
           });
           return ev;
