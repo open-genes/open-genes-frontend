@@ -8,22 +8,63 @@
 
 .toggler {
   display: inline-block;
+  width: 40px;
+  height: 40px;
   user-select: none;
   cursor: pointer;
+  position: relative;
+
+  &:after { // TODO: добавить шаблон
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    border-radius: 10px;
+    background-color: rgba($color-general-dark, .15);
+    opacity: 0;
+    transition: color, opacity, .15s ease-in-out;
+  }
+
   &__icon {
-    display: inline-block;
-    font-size: $font-size-max;
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    line-height: 37px;
+    text-align: center;
+    font-size: 24px;
     color: $color-indent;
     padding: 2px;
+    opacity: .75;
+    transition: opacity .15s linear;
   }
-  &--def {
-    .toggler__icon--def {
+
+  &:hover {
+    &:after {
+      opacity: 1;
+    }
+
+    .toggler__icon {
+      opacity: 1;
       color: $color-general;
     }
   }
-  &--alt {
+
+  &--def {
     .toggler__icon--alt {
-      color: $color-general;
+      display: none;
+    }
+  }
+  &--alt {
+    .toggler__icon--def {
+      display: none;
     }
   }
 }
@@ -290,7 +331,7 @@ a.badge {
 input[type='text'],
 input[type='email'],
 input[type='password'] {
-  line-height: 20px;
+  line-height: 33px;
   height: 33px;
 }
 

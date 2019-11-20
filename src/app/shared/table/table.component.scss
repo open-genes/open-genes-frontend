@@ -1,63 +1,23 @@
 @import "../../../resources/sass/export";
 
 .view-panel {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  background-color: $color-gray-soft;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  padding: 12px 10px;
+  margin-bottom: 20px;
+  padding-right: 60px;
 
   &.col {
     font-size: 0;
   }
 
-  .panel-content {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
-
-  .page__subtitle {
-    margin: 0;
-    padding-right: 10px;
-  }
   &__buttons {
-    text-align: right;
-  }
-}
-
-.search-holder {
-  .search-result {
-    background: white;
     position: absolute;
-    top: 22px;
-    height: 200px;
-    overflow-y: scroll;
-    max-height: 500px;
-    width: 204px;
-    z-index: 12;
-    border: 1px solid silver;
-    .result-text{
-      display: block;
-      width: 100%;
-      border-bottom: 1px solid silver;
-      padding: 10px 5px;
-      font-size: 14px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-  ::-webkit-scrollbar {
-    width: 0;  /* Remove scrollbar space */
-    background: transparent;  /* Optional: just make scrollbar invisible */
-  }
-  /* Optional: show position indicator in red */
-  ::-webkit-scrollbar-thumb {
-    background: #FF0000;
+    top: 0;
+    right: 0;
+    z-index: 1;
   }
 }
 
@@ -295,7 +255,7 @@ $columns-quantity: 7;
         }
 
         &:hover {
-          background-color: rgba(#afbef0, .3);
+          background-color: rgba($color-hover, .3);
         }
       }
 
