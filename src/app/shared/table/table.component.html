@@ -1,13 +1,14 @@
+<div class="page__subtitle col col-16">
+  Всего генов: {{searchedData?.length}}
+</div>
+
 <div class="view-panel col col-16">
-  <div class="page__subtitle per per-70 __middle">
-    Всего генов: {{dataSource?.length}}
-  </div>
   <div class="panel-content">
     <app-search [dataSource]="dataSource" (dataSourceChange)="getSearchedData($event)"></app-search>
     <div class="view-panel__buttons per per-30 __middle">
       <button class="toggler"
               (click)="geneView()"
-              [ngClass]="asCards == true ? 'toggler--alt' : 'toggler--def'">
+              [ngClass]="asCards == true ? 'toggler--def' : 'toggler--alt'">
         <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
         <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
       </button>

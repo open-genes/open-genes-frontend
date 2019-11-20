@@ -130,8 +130,14 @@ $columns-quantity: 7;
     .thead {
       display: none;
     }
+    .tbody {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: stretch;
+      justify-content: space-between;
+    }
+
     .tr {
-      flex: none;
       @include panel;
       @include resolution_tablet-and-up {
         width: calc(50% - 10px);
