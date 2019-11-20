@@ -1,31 +1,12 @@
-.search-holder {
-  .search-result {
-    background: white;
-    position: absolute;
-    top: 22px;
-    height: 200px;
-    overflow-y: scroll;
-    max-height: 500px;
-    width: 204px;
-    z-index: 12;
-    border: 1px solid silver;
-    .result-text{
-      display: block;
-      width: 100%;
-      border-bottom: 1px solid silver;
-      padding: 10px 5px;
-      font-size: 14px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-  ::-webkit-scrollbar {
-    width: 0;  /* Remove scrollbar space */
-    background: transparent;  /* Optional: just make scrollbar invisible */
-  }
-  /* Optional: show position indicator in red */
-  ::-webkit-scrollbar-thumb {
-    background: #FF0000;
+.view-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .panel-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 }

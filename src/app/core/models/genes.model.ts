@@ -1,9 +1,9 @@
 export interface IGene {
-  ID: number;
+  id: number;
   agePhylo: string;
   ageMya: number;
   symbol: string;
-  aliases: string;
+  aliases: string[];
   name: string;
   entrezGene: number;
   uniprot: string;
