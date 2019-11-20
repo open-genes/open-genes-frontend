@@ -1,5 +1,33 @@
-
 @import "../../../resources/sass/export";
+
+.view-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: $color-gray-soft;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 12px 10px;
+
+  &.col {
+    font-size: 0;
+  }
+
+  .panel-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .page__subtitle {
+    margin: 0;
+    padding-right: 10px;
+  }
+  &__buttons {
+    text-align: right;
+  }
+}
 
 .search-holder {
   .search-result {
@@ -30,6 +58,8 @@
   /* Optional: show position indicator in red */
   ::-webkit-scrollbar-thumb {
     background: #FF0000;
+  }
+}
 
 $columns-quantity: 7;
 
