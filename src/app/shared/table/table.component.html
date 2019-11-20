@@ -15,6 +15,7 @@
   </div>
 </div>
 
+<div class="col col-16">
 <section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
   <div class="thead">
     <div class="th th--sortable" (click)="getGenes('name')" [class.th--sorted]="isSorted.name">
@@ -81,3 +82,4 @@
     </div>
   </div>
 </section>
+</div>

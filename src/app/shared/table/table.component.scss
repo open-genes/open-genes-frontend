@@ -1,12 +1,348 @@
-.view-panel {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
 
-  .panel-content {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+@import "../../../resources/sass/export";
+
+.search-holder {
+  .search-result {
+    background: white;
+    position: absolute;
+    top: 22px;
+    height: 200px;
+    overflow-y: scroll;
+    max-height: 500px;
+    width: 204px;
+    z-index: 12;
+    border: 1px solid silver;
+    .result-text{
+      display: block;
+      width: 100%;
+      border-bottom: 1px solid silver;
+      padding: 10px 5px;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  ::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+  }
+  /* Optional: show position indicator in red */
+  ::-webkit-scrollbar-thumb {
+    background: #FF0000;
+
+$columns-quantity: 7;
+
+.view-content {
+  margin-bottom: 30px;
+
+  .tr {
+    .td {
+
+      .info-sign {
+        display: none;
+      }
+
+      &__overflow {
+        @include overflow-lines(14px, 1.5, 4, 5px);
+      }
+
+      &--expandable {
+        cursor: pointer;
+        .info-sign {
+          display: inline-block;
+        }
+
+        &:hover,
+        &.active {
+          background-color: rgba($color-general, 0.25);
+        }
+
+        &:hover,
+        &.active {
+          .td__popover {
+            display: block;
+          }
+        }
+
+      }
+
+      &__title {
+        font-size: $font-size-bigger;
+        font-weight: $font-weight-medium;
+        margin-bottom: 5px;
+        color: $color-gray;
+
+        .link,
+        .tag {
+          vertical-align: middle;
+        }
+
+        .link {
+          margin-right: 5px;
+        }
+
+        .tag {
+          margin-bottom: 0;
+        }
+      }
+
+      b {
+        color: #000;
+        font-weight: bold;
+        margin-right: 3px;
+      }
+    }
+  }
+
+  // В виде карточек
+  &.view-content--as-cards {
+    .thead {
+      display: none;
+    }
+    .tr {
+      flex: none;
+      @include panel;
+      @include resolution_tablet-and-up {
+        width: calc(50% - 10px);
+      }
+      font-size: 0;
+      padding-bottom: 75px;
+
+      //separator
+      &:after {
+        content: " ";
+        display: block;
+        width: 100%;
+        height: 1px;
+        background-color: $color-borders;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 44px;
+        left: 0;
+        z-index: 0;
+      }
+
+      .td {
+        display: inline-block;
+        width: 100%;
+        position: relative;
+        font-size: $font-size;
+
+        &__label {
+          display: block;
+          width: 100%;
+          font-size: $font-size-bigger;
+          color: $color-gray-halfing;
+          font-weight: $font-weight-medium;
+          margin-bottom: 3px;
+        }
+
+
+        &-name {
+          margin: 10px 0;
+          .td__title {
+            .link {
+              font-size: $font-size-max;
+              text-decoration: none;
+            }
+          }
+        }
+
+        &-age-phylo {
+          font-size: $font-size-big;
+        }
+
+        &-age-mya {
+          font-size: $font-size-max;
+          margin-top: 2px;
+        }
+
+        &-clusters {
+          margin-top: 10px;
+          .td__label {
+            margin-bottom: 5px;
+          }
+        }
+
+        &-external {
+          &,
+          .badge {
+            width: 80px;
+            margin-bottom: 0;
+          }
+
+          position: absolute;
+          left: 10px;
+          bottom: 12px;
+          &:nth-last-child(2) {
+            left: 100px;
+          }
+        }
+      }
+    }
+  }
+
+  // В виде таблицы
+  &.view-content--as-table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    font-size: 14px;
+    line-height: 1.5;
+    // border: 1px solid $color-borders;
+    border-radius: 3px;
+
+    .td,
+    .th {
+      display: table-cell;
+      vertical-align: top;
+      word-break: keep-all;
+      hyphens: auto;
+
+      &--text-left {
+        text-align: left;
+      }
+      &--text-center {
+        text-align: center;
+      }
+      &--text-right {
+        text-align: right;
+      }
+    }
+
+    .thead {
+      width: 100%;
+      display: table-header-group;
+      // &--fixed { }
+    }
+
+    .th {
+      width: (100% / $columns-quantity); // Фикс для пустой таблицы
+      color: #212121;
+      text-align: center;
+      font-weight: 400;
+      padding: 8px 10px 10px 10px;
+      border-bottom: 2px solid $color-borders;
+      background-color: $color-gray-very-light;
+      position: relative;
+      transition: background-color .15s linear;
+
+      &__title {
+        width: 100%;
+        @include overflow-lines(12px, 1.3, 3, 0);
+      }
+
+      .fa {
+        display: inline;
+        font-size: 12px;
+        margin-left: 5px;
+      }
+
+      &--wide {
+        width: 120px;
+      }
+      &--wider {
+        width: 180px;
+      }
+
+      &--sortable {
+        cursor: pointer;
+        color: $color-general;
+        padding-right: 20px;
+
+        .sort-icon {
+          font-size: 16px;
+          position: absolute;
+          top: 6px;
+          right: 10px;
+        }
+
+        &:hover {
+          background-color: rgba(#afbef0, .3);
+        }
+      }
+
+      &--sorted {
+        color: $color-orange;
+
+        .sort-icon {
+          transform: scale(1, -1)translateY(-5px)translateZ(0);
+        }
+
+        &,
+        &:hover {
+          background-color: rgba($color-orange, .15);
+        }
+      }
+
+      &:first-child {
+        text-align: left;
+      }
+    }
+
+    .tbody {
+      display: table-row-group;
+    }
+
+    .tr {
+      display: table-row;
+      position: relative;
+      .td {
+        color: $color-indent;
+        padding: 6px 8px 12px 8px;
+        position: relative;
+
+        &__label,
+        &__unit {
+          display: none;
+        }
+      }
+
+      .td + .td {
+        border-left: 1px solid $color-borders;
+      }
+
+      .tr__edit-btn {
+        display: block;
+        height: 22px;
+        width: 22px;
+        font-size: 16px;
+        color: $color-general;
+        text-align: center;
+        line-height: 22px;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        z-index: 2;
+        cursor: pointer;
+        opacity: .35;
+        transition: opacity .15s ease-in;
+        &:hover {
+          opacity: 1;
+        }
+      }
+
+      &:hover {
+        border-color: $color-general;
+        .tr__edit-btn {
+          opacity: .75;
+        }
+      }
+    }
+
+    .th:first-child,
+    .td:first-child {
+      padding-left: 8px;
+    }
+
+    .tr:nth-child(even) {
+      background: $color-gray-very-light;
+    }
+
+    .tr:nth-child(odd) {
+      background: #fff;
+    }
+
   }
 }

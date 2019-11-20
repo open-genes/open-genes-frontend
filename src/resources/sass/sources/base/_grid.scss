@@ -1,39 +1,5 @@
 /* Robust grid */
 @import "grid/variables";
-
-$prefix: '';
-
-.__#{$prefix}top {
-  vertical-align: top;
-}
-.__#{$prefix}middle {
-  vertical-align: top;
-}
-.__#{$prefix}bottom {
-  vertical-align: top;
-}
-
-.#{$prefix}container {
-  @include display(block);
-  font-size: 0;
-  margin-left: auto;
-  margin-right: auto;
-
-  .#{$prefix}per,
-  .#{$prefix}col {
-    display: inline-block;
-    vertical-align: top;
-    font-size: $font-size;
-
-    &.#{$prefix}container {
-      font-size: 0;
-    }
-  }
-}
-
 @import "grid/breakpoints";
 @import "grid/columns";
-@import "grid/percents";
-@import "grid/responsive";
-@import "grid/flex";
-
+@import "grid/container";
