@@ -15,70 +15,70 @@
 </div>
 
 <div class="col col-16">
-<section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
-  <div class="thead">
-    <div class="th th--sortable" (click)="getGenes('name')" [class.th--sorted]="isSorted.name">
-      <div class="th__title">
-        <b>HGNC, название</b>
+  <section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
+    <div class="thead">
+      <div class="th th--sortable" (click)="getGenes('name')" [class.th--sorted]="isSorted.name">
+        <div class="th__title">
+          <b>HGNC, название</b>
+        </div>
+        <span class="fa far fa-sort-down sort-icon"></span>
       </div>
-      <span class="fa far fa-sort-down sort-icon"></span>
-    </div>
-    <div class="th">
-      <div class="th__title">
-        <b>Происхождение</b>
-      </div>
-    </div>
-    <div class="th th--sortable" (click)="getGenes('ageMya')" [class.th--sorted]="isSorted.ageMya">
-      <div class="th__title">
-        <b>Возраст</b> (млн. лет)
-      </div>
-      <span class="fa far fa-sort-down sort-icon"></span>
-    </div>
-    <div class="th">
-      <div class="th__title">
-        <b>Функциональные кластеры:</b>
-      </div>
-    </div>
-    <div class="th">
-      <div class="th__title">
-        <b>Возрастные изменения экспрессии:</b>
-      </div>
-    </div>
-    <div class="th">
-      <div class="th__title">
-        <b>Заболевания</b>
-      </div>
-    </div>
-    <div class="th">
-      <div class="th__title">
-        <b>Взаимодействия</b>
-      </div>
-    </div>
-  </div>
-  <div class="tbody">
-    <div class="tr row" *ngFor="let data of searchedData | slice: 0: loadedGenesQuantity">
-      <div class="td cell td-name">
-        <div class="td_title">
-          <a href="#" class="link link--gray">
-            <b>{{data.symbol}}</b> {{data.name}}
-          </a>
-          <a href="#" title="Этот ген на GeneAge" class="tag tag--small">{{data.id}}</a>
+      <div class="th">
+        <div class="th__title">
+          <b>Происхождение</b>
         </div>
       </div>
-      <div class="td cell td-age-phylo"><b>{{data.agePhylo}}</b></div>
-      <div class="td cell td-age-mya">{{data.ageMya}}</div>
-      <div class="td cell td-clusters">
-        <span class="tag" *ngFor="let funcCluster of data.functionalClusters">{{funcCluster}}</span>
+      <div class="th th--sortable" (click)="getGenes('ageMya')" [class.th--sorted]="isSorted.ageMya">
+        <div class="th__title">
+          <b>Возраст</b> (млн. лет)
+        </div>
+        <span class="fa far fa-sort-down sort-icon"></span>
       </div>
-      <div class="td cell td-expression"><a href="#" class="tag"
-                                            *ngIf="data.expressionChange">{{data.expressionChange}}</a></div>
-      <div class="td cell text-right td-external">
-        <a href="#" class="badge badge--disgenet">DisGenet</a>
+      <div class="th">
+        <div class="th__title">
+          <b>Функциональные кластеры:</b>
+        </div>
       </div>
-      <div class="td cell text-right td-external">
-        <a href="#" class="badge badge--biogrid">BioGrid</a>
+      <div class="th">
+        <div class="th__title">
+          <b>Возрастные изменения экспрессии:</b>
+        </div>
+      </div>
+      <div class="th">
+        <div class="th__title">
+          <b>Заболевания</b>
+        </div>
+      </div>
+      <div class="th">
+        <div class="th__title">
+          <b>Взаимодействия</b>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+    <div class="tbody">
+      <div class="tr row" *ngFor="let data of searchedData | slice: 0: loadedGenesQuantity">
+        <div class="td cell td-name">
+          <div class="td_title">
+            <a href="#" class="link link--gray">
+              <b>{{data.symbol}}</b> {{data.name}}
+            </a>
+            <a href="#" title="Этот ген на GeneAge" class="tag tag--small">{{data.id}}</a>
+          </div>
+        </div>
+        <div class="td cell td-age-phylo"><b>{{data.agePhylo}}</b></div>
+        <div class="td cell td-age-mya">{{data.ageMya}}</div>
+        <div class="td cell td-clusters">
+          <span class="tag" *ngFor="let funcCluster of data.functionalClusters">{{funcCluster}}</span>
+        </div>
+        <div class="td cell td-expression"><a href="#" class="tag"
+                                              *ngIf="data.expressionChange">{{data.expressionChange}}</a></div>
+        <div class="td cell text-right td-external">
+          <a href="#" class="badge badge--disgenet">DisGenet</a>
+        </div>
+        <div class="td cell text-right td-external">
+          <a href="#" class="badge badge--biogrid">BioGrid</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
