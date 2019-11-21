@@ -1,8 +1,13 @@
 <div class="view-panel col col-16">
   <div class="page__subtitle per per-70 __middle">
-    Всего генов: {{dataSource?.length}}
+    {{ 'main_page_total' | translate }} {{dataSource?.length}}
   </div>
   <div class="view-panel__buttons per per-30 __middle">
+    <select #langSelect (change)="translate.use(langSelect.value)">
+      <option *ngFor="let lang of translate.getLangs()"
+              [selected]="lang === translate.currentLang"
+              [value]="lang">{{ lang }}</option>
+    </select>
     <button class="toggler toggler--def js_toggler js_view-toggler">
       <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
       <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
@@ -15,23 +20,23 @@
   <div class="thead">
       <div class="th th--sortable" (click)="getGenes()" [class.th--sorted]="isSorted">
         <div class="th__title">
-          <b>HGNC, название</b>
+          <b>{{ 'main_page_table_name' | translate }}</b>
         </div>
         <span class="fa far fa-sort-down sort-icon"></span>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>Происхождение</b>
+          <b>{{ 'phylogeny' | translate }}</b>
         </div>
       </div>
       <div class="th" (click)="sortByAge()">
         <div class="th__title">
-          <b>Возраст</b> (млн. лет)
+          <b>{{ 'age' | translate }}</b> ({{ 'million_years' | translate }})
         </div>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>Функциональные кластеры:</b>
+          <b>{{ 'main_page_table_functional_clusters' | translate }}</b>
         </div>
       </div>
       <div class="th">
@@ -41,12 +46,12 @@
       </div>
       <div class="th">
         <div class="th__title">
-          <b>Заболевания</b>
+          <b>{{ 'diseases' | translate }}</b>
         </div>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>Взаимодействия</b>
+          <b>{{ 'main_page_table_interactions' | translate }}</b>
         </div>
       </div>
   </div>

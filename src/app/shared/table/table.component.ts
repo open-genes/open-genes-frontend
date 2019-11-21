@@ -2,6 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { IGene } from '../../core/models';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-table',
@@ -15,7 +16,10 @@ export class TableComponent implements OnInit, OnDestroy {
   isSorted;
   private subscription$ = new Subject();
 
-  constructor() { }
+  constructor(public translate: TranslateService) {
+    translate.addLangs(['ru', 'en']);
+    translate.use('ru');
+  }
 
   ngOnInit() {
    this.getScrollPosition();
