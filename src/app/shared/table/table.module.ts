@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { TableComponent } from './table.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {SearchComponent} from '../search/search.component';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   declarations: [TableComponent, SearchComponent],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ],
   exports: [TableComponent]
 })

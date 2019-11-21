@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {IGene} from '../../core/models';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-table',
@@ -20,7 +21,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   asCards = true;
   private subscription$ = new Subject();
 
-  constructor() {
+  constructor(private translate: TranslateService) {
   }
 
   ngOnInit() {

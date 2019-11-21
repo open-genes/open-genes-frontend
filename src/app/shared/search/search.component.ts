@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IGene} from '../../core/models';
 import {FormControl, FormGroup} from '@angular/forms';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-search',
@@ -14,7 +15,7 @@ export class SearchComponent implements OnInit {
   searchForm: FormGroup;
   hasResult;
 
-  constructor() {
+  constructor(private translate: TranslateService) {
   }
 
   ngOnInit() {

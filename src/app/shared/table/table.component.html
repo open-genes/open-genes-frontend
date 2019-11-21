@@ -1,5 +1,5 @@
 <div class="page__subtitle col col-16 __mt-35">
-  Всего генов: {{searchedData?.length}}
+  {{ 'main_page_total' | translate }} {{searchedData?.length}}
 </div>
 
 <div class="view-panel col col-16">
@@ -19,39 +19,39 @@
     <div class="thead">
       <div class="th th--sortable" (click)="getGenes('name')" [class.th--sorted]="isSorted.name">
         <div class="th__title">
-          <b>HGNC, название</b>
+          <b>{{ 'main_page_table_name' | translate }}</b>
         </div>
         <span class="fa far fa-sort-down sort-icon"></span>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>Происхождение</b>
+          <b>{{ 'phylogeny' | translate }}</b>
         </div>
       </div>
       <div class="th th--sortable" (click)="getGenes('ageMya')" [class.th--sorted]="isSorted.ageMya">
         <div class="th__title">
-          <b>Возраст</b> (млн. лет)
+          <b>{{ 'age' | translate }}</b> ({{ 'million_years' | translate }})
         </div>
         <span class="fa far fa-sort-down sort-icon"></span>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>Функциональные кластеры:</b>
+          <b>{{ 'main_page_table_functional_clusters' | translate }}</b>
         </div>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>Возрастные изменения экспрессии:</b>
+          <b>{{ 'возрастные_изменения_экспрессии' | translate }}</b>
         </div>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>Заболевания</b>
+          <b>{{ 'diseases' | translate }}</b>
         </div>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>Взаимодействия</b>
+          <b>{{ 'main_page_table_interactions' | translate }}</b>
         </div>
       </div>
     </div>

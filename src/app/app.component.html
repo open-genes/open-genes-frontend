@@ -33,9 +33,9 @@
     </div>
     <div class="per per-30 footer__language">
       <button
-        value="<?= Yii::$app->language == 'en-US' ? 'RU' : 'EN'?>"
+        (click)="changeLanguage()"
         class="language-switcher js_language-switcher">
-        EN
+        {{translate.currentLang}}
       </button>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <form [formGroup]="searchForm" class="search-holder">
-  <input formControlName="searchText" type="text" placeholder="Поиск" class="field">
+  <input formControlName="searchText" type="text" placeholder="{{ 'search' | translate }}" class="field">
   <div class="autocomplete-list"
        *ngIf="hasResult">
       <span class="autocomplete-list__item"

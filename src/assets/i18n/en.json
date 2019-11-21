@@ -11,6 +11,7 @@
   "main_page_table_name" : "HGNC, name",
   "phylogeny" : "Origin",
   "main_page_table_functional_clusters" : "Functional clusters",
+  "возрастные_изменения_экспрессии" : "Age-related changes in expression:",
   "diseases" : "Diseases",
   "main_page_table_interactions" : "Interactions",
   "gene_page_link_disgenet" : "Gene page on DisGenet",
@@ -74,5 +75,6 @@
   "ассоциации_гена_с_долголетием_фенотипом_старения" : "Associations of the gene with longevity/phenotype of aging",
   "участие_гена_в_связанных_со_старением_процессах_механизмах" : "Gene involvement in aging-related processes or mechanisms",
   "ген_регулирует_связанные_со_старением_гены" : "Gene regulates aging-related genes",
-  "использование_продукта_гена_в_часах_старения" : "Gene product involvement in Aging Clock"
+  "использование_продукта_гена_в_часах_старения" : "Gene product involvement in Aging Clock",
+  "search" : "Search"
 }
