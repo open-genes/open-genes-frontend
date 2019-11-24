@@ -22,10 +22,10 @@ export class SearchComponent implements OnInit {
     this.initform();
   }
 
-  setResult(i) {
-    this.searchForm.get('searchText').setValue(this.searchedData[i].symbol + ' ' + this.searchedData[i].name);
-    this.hasResult = false;
-  }
+  // setResult(i) {
+  //   this.searchForm.get('searchText').setValue(this.searchedData[i].symbol + ' ' + this.searchedData[i].name);
+  //   this.hasResult = false;
+  // }
 
   private search() {
     const searchText = this.searchForm.get('searchText').value.toLowerCase();
@@ -47,5 +47,4 @@ export class SearchComponent implements OnInit {
       }
     });
   }
-
 }

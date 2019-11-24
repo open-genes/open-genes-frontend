@@ -7,7 +7,7 @@
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 20px;
-  padding-right: 60px;
+  padding-right: 50px;
 
   &.col {
     font-size: 0;
@@ -28,35 +28,6 @@ $columns-quantity: 7;
 
   .tr {
     .td {
-
-      .info-sign {
-        display: none;
-      }
-
-      &__overflow {
-        @include overflow-lines(14px, 1.5, 4, 5px);
-      }
-
-      &--expandable {
-        cursor: pointer;
-        .info-sign {
-          display: inline-block;
-        }
-
-        &:hover,
-        &.active {
-          background-color: rgba($color-general, 0.25);
-        }
-
-        &:hover,
-        &.active {
-          .td__popover {
-            display: block;
-          }
-        }
-
-      }
-
       &__title {
         font-size: $font-size-bigger;
         font-weight: $font-weight-medium;
@@ -82,6 +53,22 @@ $columns-quantity: 7;
         font-weight: bold;
         margin-right: 3px;
       }
+
+      &--expandable {
+        cursor: pointer;
+
+        &:hover,
+        &.active {
+          background-color: rgba($color-general, 0.25);
+        }
+
+        &:hover,
+        &.active {
+          .td__popover {
+            display: block;
+          }
+        }
+      }
     }
   }
 
@@ -90,6 +77,15 @@ $columns-quantity: 7;
     .thead {
       display: none;
     }
+
+    .cards-filters {
+      width: 100%;
+      margin-bottom: 20px;
+      .filter + .filter {
+        margin-left: 10px;
+      }
+    }
+
     .tbody {
       display: flex;
       flex-flow: row wrap;
@@ -186,8 +182,12 @@ $columns-quantity: 7;
     overflow: auto;
     font-size: 14px;
     line-height: 1.5;
-    // border: 1px solid $color-borders;
-    border-radius: 3px;
+    border: 1px solid $color-borders;
+    border-radius: 5px;
+
+    .cards-filters {
+      display: none;
+    }
 
     .td,
     .th {
@@ -210,7 +210,6 @@ $columns-quantity: 7;
     .thead {
       width: 100%;
       display: table-header-group;
-      // &--fixed { }
     }
 
     .th {

@@ -1,8 +1,4 @@
-<div class="page__subtitle col col-16 __mt-35">
-  {{ 'main_page_total' | translate }} {{searchedData?.length}}
-</div>
-
-<div class="view-panel col col-16">
+<div class="view-panel col col-16 __mt-20">
   <app-search [dataSource]="dataSource" (dataSourceChange)="getSearchedData($event)"></app-search>
   <div class="view-panel__buttons">
     <button class="toggler"
@@ -15,7 +11,8 @@
 </div>
 
 <div class="col col-16">
-  <section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
+  <ng-container *ngIf="searchedData?.length !== 0">
+    <section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
     <div class="thead">
       <div class="th th--sortable" (click)="getGenes('name')" [class.th--sorted]="isSorted.name">
         <div class="th__title">
@@ -55,6 +52,18 @@
         </div>
       </div>
     </div>
+
+    <div class="cards-filters">
+      <button class="filter" (click)="getGenes('name')" [class.filter--sorted]="isSorted.name">
+          {{ 'main_page_table_name' | translate }}
+        <span class="fa far fa-sort-down sort-icon"></span>
+      </button>
+      <button class="filter" (click)="getGenes('ageMya')" [class.filter--sorted]="isSorted.ageMya">
+          {{ 'age' | translate }} ({{ 'million_years' | translate }})
+        <span class="fa far fa-sort-down sort-icon"></span>
+      </button>
+    </div>
+
     <div class="tbody">
       <div class="tr row" *ngFor="let data of searchedData | slice: 0: loadedGenesQuantity">
         <div class="td cell td-name">
@@ -81,4 +90,16 @@
       </div>
     </div>
   </section>
+  </ng-container>
+
+  <ng-container *ngIf="searchedData?.length == 0">
+    <section class="col col-16 no-content">
+      <div class="no-content__icon no-content__icon-standard"></div>
+      <div class="no-content__title">
+        <div class="title__center">
+          {{ 'nothing_found' | translate }}
+        </div>
+      </div>
+    </section>
+  </ng-container>
 </div>
