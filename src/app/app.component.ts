@@ -9,7 +9,7 @@ import {TranslateService} from '@ngx-translate/core';
 export class AppComponent {
   title = 'frontend';
 
-  constructor(private translate: TranslateService) {
+  constructor(public translate: TranslateService) {
     this.translate.addLangs(['ru', 'en']);
     const lang = localStorage.getItem('lang') || 'ru';
     this.translate.use(lang);
