@@ -280,20 +280,18 @@
   }
 }
 
-.app-body {
-  &--gene {
-    @include resolution_desktop-and-up {
-      padding-top: (50px + 130px + 20px);
-      .gene-page__header {
-        position: fixed;
-        top: 50px;
-        z-index: 50; // между хедером и контентом
-      }
+.gene-page {
+  @include resolution_desktop-and-up {
+    padding-top: (130px + 20px);
+    .gene-page__header {
+      position: fixed;
+      top: 50px;
+      z-index: 50; // между хедером и контентом
     }
-    @include resolution_smartphone-and-tablet {
-      .gene-page__header {
-        margin-bottom: 20px;
-      }
+  }
+  @include resolution_smartphone-and-tablet {
+    .gene-page__header {
+      margin-bottom: 20px;
     }
   }
 }

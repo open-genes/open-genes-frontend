@@ -29,7 +29,7 @@ export interface IGene {
   functionalClusters: string | string[];
   dateAdded: number;
   userEdited: string;
-  expression: string;
+  expression: Array<any>;
   expressionEN: string;
   expressionChange: any;
 }
