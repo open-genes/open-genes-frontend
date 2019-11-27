@@ -18,6 +18,7 @@ export class LanguageComponent {
     const lang = environment.languages[nextIndex];
     this.translate.use(lang);
     localStorage.setItem('lang', lang);
+    window.location.reload();
   }
 
 }
