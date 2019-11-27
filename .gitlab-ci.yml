@@ -1,0 +1,63 @@
+stages:
+  - build
+  - staging
+  - release
+
+variables:
+  PROJECT_DEV_NAME: open-genes-dev
+  PROJECT_STAGE_NAME: open-genes-stage
+  PROJECT_NAME: open-genes
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}-${CI_JOB_NAME}
+  paths:
+    - node_modules/
+
+build:
+  stage: build
+  image: alexsuch/angular-cli:7.3.8
+  script:
+    - npm run build --prod --aot
+  artifacts:
+    paths:
+      - dist/
+  when: manual
+
+deploy-dev:
+  extends: .deploy
+  environment:
+    name: develop
+  variables:
+    PROJECT_DIR: /var/www/${PROJECT_DEV_NAME}
+
+deploy-stage:
+  extends: .deploy
+  environment:
+    name: stage
+  variables:
+    PROJECT_DIR: /var/www/${PROJECT_STAGE_NAME}
+
+deploy-prod:
+  extends: .deploy
+  stage: release
+  environment:
+    name: production
+  variables:
+    PROJECT_DIR: /var/www/${PROJECT_NAME}
+  only:
+    - master
+
+.deploy:
+  stage: staging
+  dependencies:
+    - build
+  image: instrumentisto/rsync-ssh
+  script:
+    - rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' dist/ ${DROPLET_USER}@${DROPLET_IP}:${PROJECT_DIR}/app/genes/dist/
+    - rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' dist/frontend/index.html ${DROPLET_USER}@${DROPLET_IP}:${PROJECT_DIR}/app/genes/index.html
+  before_script:
+    - mkdir ~/.ssh
+    - echo ${DROPLET_KEY} | base64 -d > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+  cache: {}
+  when: manual
