@@ -17,6 +17,7 @@ build:
   stage: build
   image: alexsuch/angular-cli:7.3.8
   script:
+    - npm install
     - npm run build --prod --aot
   artifacts:
     paths:
@@ -53,8 +54,7 @@ deploy-prod:
     - build
   image: instrumentisto/rsync-ssh
   script:
-    - rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' dist/ ${DROPLET_USER}@${DROPLET_IP}:${PROJECT_DIR}/app/genes/dist/
-    - rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' dist/frontend/index.html ${DROPLET_USER}@${DROPLET_IP}:${PROJECT_DIR}/app/genes/index.html
+    - rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' dist/frontend/ ${DROPLET_USER}@${DROPLET_IP}:${PROJECT_DIR}/frontend/
   before_script:
     - mkdir ~/.ssh
     - echo ${DROPLET_KEY} | base64 -d > ~/.ssh/id_rsa
