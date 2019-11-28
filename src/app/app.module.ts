@@ -13,13 +13,15 @@ import {HttpClient} from '@angular/common/http';
 import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { LanguageComponent } from './common/language/language.component';
+import { MenuComponent } from './common/menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    LanguageComponent
+    LanguageComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
