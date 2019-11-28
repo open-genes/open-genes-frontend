@@ -5,6 +5,7 @@
          type="text"
          placeholder="{{ 'search' | translate }}"
          class="field"
+         required
          (focusin)="hasResult = true"
   >
   <div class="autocomplete-list"
@@ -25,7 +26,8 @@
      class="backdrop"
      (click)="hasResult = false"></div>
 
-<div class="page__subtitle col col-16 __mt-10">
+<div class="page__subtitle col col-16 __mt-10"
+     *ngIf="searchForm.valid">
   {{ 'items_found' | translate }} {{searchedData?.length}}
 </div>
 
