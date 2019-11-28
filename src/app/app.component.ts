@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +10,10 @@ import {TranslateService} from '@ngx-translate/core';
 export class AppComponent {
   title = 'frontend';
 
-  constructor(public translate: TranslateService) {
-    this.translate.addLangs(['ru', 'en']);
-    const lang = localStorage.getItem('lang') || 'ru';
+  constructor(private translate: TranslateService) {
+    this.translate.addLangs(environment.languages);
+    const lang = localStorage.getItem('lang') || environment.languages[0];
     this.translate.use(lang);
   }
 
-  changeLanguage() {
-    const lang = this.translate.currentLang === 'en' ? 'ru' : 'en';
-    this.translate.use(lang);
-    localStorage.setItem('lang', lang);
-  }
 }

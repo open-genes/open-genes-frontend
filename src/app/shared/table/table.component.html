@@ -68,7 +68,7 @@
       <div class="tr row" *ngFor="let data of searchedData | slice: 0: loadedGenesQuantity">
         <div class="td cell td-name">
           <div class="td_title">
-            <a href="#" class="link link--gray">
+            <a [routerLink]="['/gene', data.id]" class="link link--gray">
               <b>{{data.symbol}}</b> {{data.name}}
             </a>
             <a href="#" title="Этот ген на GeneAge" class="tag tag--small">{{data.id}}</a>

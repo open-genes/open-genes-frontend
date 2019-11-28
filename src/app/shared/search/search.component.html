@@ -13,7 +13,7 @@
       <a
         *ngIf="i < 5"
         class="autocomplete-list__item"
-        href="http://open-genes.com/gene/?gene={{data.id}}"
+        [routerLink]="['/gene', data.id]"
       >
         <span class="item__symbol">{{data.symbol}}</span>&nbsp;<span class="item__name">{{data.name}}</span>
       </a>
