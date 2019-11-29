@@ -77,15 +77,19 @@
         <div class="td cell td-age-phylo"><b>{{data.agePhylo}}</b></div>
         <div class="td cell td-age-mya">{{data.ageMya}}</div>
         <div class="td cell td-clusters">
-          <span class="tag" *ngFor="let funcCluster of data.functionalClusters">{{funcCluster}}</span>
+          <span class="tag" *ngFor="let funcCluster of data.functionalClusters">{{funcCluster.name}}</span>
         </div>
         <div class="td cell td-expression"><a href="#" class="tag"
                                               *ngIf="data.expressionChange">{{data.expressionChange}}</a></div>
         <div class="td cell text-right td-external">
-          <a href="#" class="badge badge--disgenet">DisGenet</a>
+          <a href="http://disgenet.org/browser/1/1/0/{{data.entrezGene}}/"
+             target="_blank"
+             class="badge badge--disgenet">DisGenet</a>
         </div>
         <div class="td cell text-right td-external">
-          <a href="#" class="badge badge--biogrid">BioGrid</a>
+          <a href="https://thebiogrid.org/search.php?search={{data.symbol}}&organism=9606/"
+             target="_blank"
+             class="badge badge--biogrid">BioGrid</a>
         </div>
       </div>
     </div>

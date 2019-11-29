@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {environment} from '../environments/environment';
 
@@ -7,7 +7,7 @@ import {environment} from '../environments/environment';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewInit {
   title = 'frontend';
 
   constructor(private translate: TranslateService) {
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     this.translate.use(lang);
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     document.getElementById('loader').style.display = 'none';
   }
 
