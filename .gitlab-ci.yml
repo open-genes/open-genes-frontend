@@ -18,7 +18,7 @@ build:
   image: alexsuch/angular-cli:7.3.8
   script:
     - npm install
-    - ng build --prod
+    - ng build --env=prod
   artifacts:
     paths:
       - dist/
