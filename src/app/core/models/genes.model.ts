@@ -1,9 +1,9 @@
 export interface IGene {
-  ID: number;
+  id: number;
   agePhylo: string;
   ageMya: number;
   symbol: string;
-  aliases: string;
+  aliases: string[];
   name: string;
   entrezGene: number;
   uniprot: string;
@@ -29,7 +29,7 @@ export interface IGene {
   functionalClusters: string | string[];
   dateAdded: number;
   userEdited: string;
-  expression: string;
+  expression: Array<any>;
   expressionEN: string;
   expressionChange: any;
 }

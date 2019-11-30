@@ -3,11 +3,23 @@
 <head>
   <meta charset="utf-8">
   <title>Frontend</title>
+  <meta name='description' content='Description'>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta property='og:image' content='/images/social-cover.png'>
+
+  <meta name="theme-color" content="#7673d1">
+  <meta name="msapplication-navbutton-color" content="#7673d1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#7673d1">
 </head>
 <body>
+  <div class="loader" id="loader">
+    <div class="loader__inner">
+      <span class="spinner"></span>
+      <div class="loader__description" id="js_loader-text"></div>
+    </div>
+  </div>
   <app-root></app-root>
 </body>
 </html>

@@ -1,8 +1,15 @@
+.#{$prefix}container {
+  @include display(block);
+  font-size: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @include resolution_widescreen {
   body, .header {
     min-width: $widescreen;
   }
-  .container {
+  .#{$prefix}container {
     width: $widescreen;
   }
 }
@@ -11,7 +18,7 @@
   body, .header {
     min-width: $desktop;
   }
-  .container {
+  .#{$prefix}container {
     width: $desktop;
   }
 }
@@ -20,7 +27,7 @@
   body, .header {
     min-width: $tablet;
   }
-  .container {
+  .#{$prefix}container {
     width: $tablet;
   }
 }
@@ -29,7 +36,7 @@
   body, .header {
     min-width: $phablet - 20px;
   }
-  .container {
+  .#{$prefix}container {
     width: $phablet - 20px;
   }
 }
@@ -38,7 +45,7 @@
   body, .header {
     min-width: $smartphone - 20px;
   }
-  .container {
+  .#{$prefix}container {
     width: $smartphone - 20px;
   }
 }

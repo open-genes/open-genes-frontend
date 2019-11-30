@@ -1,61 +1,116 @@
-// Ширина колонок на разных разрешениях
-
-@include resolution_widescreen {
+/* Колонки */
+.#{$prefix}container {
   .#{$prefix}col {
-    @for $i from 1 through 16 {
-      &.#{$prefix}col-#{$i} {
-        width: ($widescreen / 16) * $i;
+    display: inline-block;
+    vertical-align: top;
+    font-size: $font-size;
+
+    .#{$prefix}flex-subcontainer {
+      width: 100%;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+
+      .#{$prefix}per {
+        font-size: $font-size;
+
+        @for $i from 1 through 100 {
+          &.#{$prefix}per-#{$i} {
+            flex: 1%*$i 1 1;
+          }
+        }
+
+        /* Более точная ширина колонок */
+        &.#{$prefix}per-14 {
+          width: (100% / 7);
+        }
+
+        &.#{$prefix}per-16 {
+          width: (50% / 3);
+        }
+
+        &.#{$prefix}per-25 {
+          width: (100% / 4);
+        }
+
+        &.#{$prefix}per-33 {
+          width: (100% / 3);
+        }
+
+        &.#{$prefix}per-66 {
+          width: (200% / 3);
+        }
+      }
+
+      .__#{$prefix}top {
+        align-items: flex-start;
+      }
+      .__#{$prefix}middle {
+        align-items: center;
+      }
+      .__#{$prefix}bottom {
+        align-items: flex-end;
+      }
+      .__#{$prefix}flex-auto {
+        width: unset;
+        flex-grow: 1;
+        flex-shrink: 1;
+      }
+      .__#{$prefix}not-flex {
+        flex: none;
       }
     }
   }
-}
 
-@include resolution_desktop {
-  .#{$prefix}col {
-    @for $i from 1 through 16 {
-      &.#{$prefix}col-#{$i} {
-        width: ($desktop / 16) * $i;
-      }
-    }
-  }
-}
-
-@include resolution_tablet {
-  .#{$prefix}col {
-    &.__#{$prefix}preserve-width {
-      @for $i from 1 through 16 {
+  @include resolution_widescreen {
+    .#{$prefix}col {
+      @for $i from 1 through $columns-quantity {
         &.#{$prefix}col-#{$i} {
-          width: ($tablet / 16) * $i;
+          width: ($widescreen / $columns-quantity) * $i;
         }
       }
     }
+  }
 
-    &:not(.__#{$prefix}preserve-width) {
-      @for $i from 1 through 16 {
+  @include resolution_desktop {
+    .#{$prefix}col {
+      @for $i from 1 through $columns-quantity {
+        &.#{$prefix}col-#{$i} {
+          width: ($desktop / $columns-quantity) * $i;
+        }
+      }
+    }
+  }
+
+  @include resolution_tablet {
+    .#{$prefix}col {
+      @for $i from 1 through $columns-quantity {
         &.#{$prefix}col-#{$i} {
           width: $tablet;
         }
       }
     }
   }
-}
 
-@include resolution_phablet {
-  .#{$prefix}col {
-    @for $i from 1 through 16 {
-      &.#{$prefix}col-#{$i} {
-        width: $phablet - 20px;
+  @include resolution_phablet {
+    .#{$prefix}col {
+      @for $i from 1 through $columns-quantity {
+        &.#{$prefix}col-#{$i} {
+          width: $phablet - 20px;
+        }
+      }
+    }
+  }
+
+  @include resolution_phone {
+    .#{$prefix}col {
+      @for $i from 1 through $columns-quantity {
+        &.#{$prefix}col-#{$i} {
+          width: $smartphone - 20px;
+        }
       }
     }
   }
 }
 
-@include resolution_phone {
-  .#{$prefix}col {
-    @for $i from 1 through 16 {
-      &.#{$prefix}col-#{$i} {
-        width: $smartphone - 20px;
-      }
-    }
-  }
-}

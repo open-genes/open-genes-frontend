@@ -148,11 +148,13 @@ a.reference-link {
     float: right;
     padding-right: 60px;
 
-    .language-switcher {
+    app-language {
       margin-top: 15px;
-      color: #7673d1;
-
+      .language-switcher {
+        color: #7673d1;
+      }
     }
+
     .signin__button {
       position: absolute;
       top: 5px;
@@ -176,6 +178,7 @@ a.reference-link {
     bottom: 0;
     left: 0;
     z-index: 2;
+    background-color: rgba($color-general-dark, .15);
 
     .menu__panel {
       height: 100%;
@@ -188,10 +191,10 @@ a.reference-link {
       background-color: #fff;
       box-shadow: -1px 0 4px 0 rgba(5,5,5,.3);
 
-      @include resolution_desktop-and-up {
+      @include resolution_tablet-and-up {
         width: 320px;
       }
-      @include resolution_smartphone-and-tablet {
+      @include resolution_smartphone {
         width: 100%;
         min-width: 320px;
       }
@@ -585,28 +588,5 @@ ul.list--bulletted {
       font-size: $font-size-max;
       font-weight: $font-weight-medium;
     }
-  }
-}
-
-.footer {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  padding: 10px 0;
-  background-color: $color-indent;
-  color: #fff;
-
-
-  .link {
-    color: #fff;
-    text-decoration: underline;
-  }
-
-  .col {
-    vertical-align: middle;
-  }
-
-  &__language {
-    text-align: right;
   }
 }

@@ -1,3 +1,5 @@
+// DEMS
+
 // Fonts
 $font-size: 14px;
 $font-size-smaller: ($font-size - 1);
@@ -16,17 +18,15 @@ $font-weight-medium: 500;
 $font-weight-bold: 700;
 $font-weight-black: 900;
 
-// Colors
+// COLORS
 // -Base
 $color-general: #4363eb;
 $color-general-dark: darken($color-general, 15%);
-$color-pink: #ffC0cb;
 
 // -UI
 $color-black: desaturate(darken($color-general, 50%), 5%);
 $color-gray-dark: #425e74;
-$color-gray: #5d6a82;
-
+$color-gray: #767c88;
 $color-gray-half: #777;
 $color-gray-halfing: #999;
 $color-gray-half-power: #888;
@@ -36,64 +36,45 @@ $color-gray-fade: #bbb;
 $color-gray-fading: #b1b8c9;
 $color-gray-light: #dedfe1;
 $color-gray-soft: #e9e9e9;
+$color-silver: #e9eaee;
 $color-gray-very-light: #f9f8fc;
-
+$color-purple: #4d58dc;
 $color-blue: #4FA1DD;
-$color-blue-bit-lighter: #6bb0e2;
-$color-blue-lighter: #9fd4f9;
-$color-blue-lighten: lighten($color-blue, 37%);
-$color-blue-half: #f0f4f7;
-$color-blue-half-lighten: lighten($color-blue,33%);
-$color-blue-light: #f6fafD;
-$color-blue-very-very-light: #eff;
-$color-blue-soft: #e9eef9;
-
 $color-green-light: #a7ebc4;
 $color-green-medium: #2dbf70;
 $color-green: #28aa64;
 $color-green-dark: #1f864f;
-
+$color-orange: #fca34d;
+$color-yellow: #ffd700;
+$color-pink: #ffC0cb;
 $color-red-light: #f8c9c4;
 $color-red-medium: #f39f96;
 $color-red: #e74c3c;
 $color-red-dark: #cd3121;
 
-// Elements' variables
+// Elements variables
 $color-indent: #575757;
-$color-scroll: #89a0b3;
 $color-borders: $color-gray-light;
 $color-border-light: #e3e4e8;
-$color-borders-blue: $color-blue-half-lighten;
-$color-headers: #fafbfc;
 
-// States' variables
-$color-hover: $color-blue-light;
-$color-selected: darken($color-blue-light, 5%);
-$success-color: darken($color-green, 10%);
-$error-color: darken($color-red, 10%);
-
-
-// SECONDARY COLORS
-
-// Icon colors
-$color-orange: #fca34d;
-$color-yellow: #ffd700;
-$color-golden: #b88b58;
-$color-grass: #7CD223;
-$color-aqua: #0090ff;
-$color-purple: #4d58dc;
-
+// States variables
+$color-hover: #afbef0;
+$color-selected: #a1b5f7;
+$success-color: $color-green-medium;
+$error-color: $color-red-medium;
 
 // PATHS
+$path-images: '../images';
+$path-fonts: '../fonts';
 
-//FONTS
-$path-font-roboto-thin: '../fonts/roboto/thin.woff2';
-$path-font-roboto-thin-woff: '../fonts/roboto/thin.woff';
-$path-font-roboto-light: '../fonts/roboto/light.woff2';
-$path-font-roboto-light-woff: '../fonts/roboto/light.woff';
-$path-font-roboto-regular: '../fonts/roboto/regular.woff2';
-$path-font-roboto-regular-woff: '../fonts/roboto/regular.woff';
-$path-font-roboto-medium: '../fonts/roboto/medium.woff2';
-$path-font-roboto-medium-woff: '../fonts/roboto/medium.woff';
-$path-font-roboto-bold: '../fonts/roboto/bold.woff2';
-$path-font-roboto-bold-woff: '../fonts/roboto/bold.woff';
+//Fonts
+$path-font-roboto-thin: $path-fonts + '/roboto/thin.woff2';
+$path-font-roboto-thin-woff: $path-fonts + '/roboto/thin.woff';
+$path-font-roboto-light: $path-fonts + '/roboto/light.woff2';
+$path-font-roboto-light-woff: $path-fonts + '/roboto/light.woff';
+$path-font-roboto-regular: $path-fonts + '/roboto/regular.woff2';
+$path-font-roboto-regular-woff: $path-fonts + '/roboto/regular.woff';
+$path-font-roboto-medium: $path-fonts + '/roboto/medium.woff2';
+$path-font-roboto-medium-woff: $path-fonts + '/roboto/medium.woff';
+$path-font-roboto-bold: $path-fonts + '/roboto/bold.woff2';
+$path-font-roboto-bold-woff: $path-fonts + '/roboto/bold.woff';

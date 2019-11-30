@@ -1,3 +1,23 @@
-<div class="container">
-  <app-table [dataSource]="genes"></app-table>
+<div class="page main-page">
+  <div class="page__inner">
+    <div class="wrapper main-page__header">
+      <div class="container">
+        <div class="col col-16">
+          <div class="page__title">
+            <h1>{{ 'main_page_header_title' | translate }}</h1>
+          </div>
+          <div class="header__description">
+            {{ 'main_page_header_description' | translate }}
+          </div>
+          <div class="header__button">
+            <a href="/about" class="btn btn-purple btn-flat js_link">{{ 'main_page_header_button' | translate }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <app-mini-cards [lastGenes]="lastGenes"></app-mini-cards>
+      <app-table [dataSource]="genes"></app-table>
+    </div>
+  </div>
 </div>

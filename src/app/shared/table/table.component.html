@@ -1,77 +1,107 @@
-<div class="view-panel col col-16">
-  <div class="page__subtitle per per-70 __middle">
-    Всего генов: {{dataSource?.length}}
-  </div>
-  <div class="view-panel__buttons per per-30 __middle">
-    <button class="toggler toggler--def js_toggler js_view-toggler">
+<div class="view-panel col col-16 __mt-20">
+  <app-search [dataSource]="dataSource" (dataSourceChange)="getSearchedData($event)"></app-search>
+  <div class="view-panel__buttons">
+    <button class="toggler"
+            (click)="geneView()"
+            [ngClass]="asCards == true ? 'toggler--def' : 'toggler--alt'">
       <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
       <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
     </button>
   </div>
 </div>
 
-
-<section class="view-content view-content--as-table">
-  <div class="thead">
-      <div class="th th--sortable" (click)="getGenes()" [class.th--sorted]="isSorted">
+<div class="col col-16">
+  <ng-container *ngIf="searchedData?.length !== 0">
+    <section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
+    <div class="thead">
+      <div class="th th--sortable" (click)="getGenes('name')" [class.th--sorted]="isSorted.name">
         <div class="th__title">
-          <b>HGNC, название</b>
+          <b>{{ 'main_page_table_name' | translate }}</b>
+        </div>
+        <span class="fa far fa-sort-down sort-icon"></span>
+      </div>
+      <div class="th th--sortable" (click)="getGenes('ageMya')" [class.th--sorted]="isSorted.ageMya">
+        <div class="th__title">
+          <b>{{ 'age' | translate }}</b>
         </div>
         <span class="fa far fa-sort-down sort-icon"></span>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>Происхождение</b>
-        </div>
-      </div>
-      <div class="th" (click)="sortByAge()">
-        <div class="th__title">
-          <b>Возраст</b> (млн. лет)
+          <b>{{ 'main_page_table_functional_clusters' | translate }}</b>
         </div>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>Функциональные кластеры:</b>
+          <b>{{ 'возрастные_изменения_экспрессии' | translate }}</b>
         </div>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>Возрастные изменения экспрессии:</b>
+          <b>{{ 'diseases' | translate }}</b>
         </div>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>Заболевания</b>
+          <b>{{ 'main_page_table_interactions' | translate }}</b>
         </div>
-      </div>
-      <div class="th">
-        <div class="th__title">
-          <b>Взаимодействия</b>
-        </div>
-      </div>
-  </div>
-  <div class="tbody">
-    <div class="tr row" *ngFor="let data of dataSource | slice: 0: loadedGenesQuantity">
-      <div class="td cell td-name">
-        <div class="td_title">
-          <a href="#" class="link link--gray">
-            <b>{{data.symbol}}</b> {{data.name}}
-          </a>
-          <a href="#" title="Этот ген на GeneAge" class="tag tag--small">{{data.ID}}</a>
-        </div>
-      </div>
-      <div class="td cell td-age-phylo"><b>{{data.agePhylo}}</b></div>
-      <div class="td cell td-age-mya">{{data.ageMya}}</div>
-      <div class="td cell td-clusters">
-        <span class="tag" *ngFor="let funcCluster of data.functionalClusters">{{funcCluster}}</span>
-      </div>
-      <div class="td cell td-expression"><a href="#" class="tag" *ngIf="data.expressionChange">{{data.expressionChange}}</a></div>
-      <div class="td cell text-right td-external">
-        <a href="#" class="badge badge--disgenet">DisGenet</a>
-      </div>
-      <div class="td cell text-right td-external">
-        <a href="#" class="badge badge--biogrid">BioGrid</a>
       </div>
     </div>
-  </div>
-</section>
+
+    <div class="cards-filters">
+      <button class="filter" (click)="getGenes('name')" [class.filter--sorted]="isSorted.name">
+          {{ 'main_page_table_name' | translate }}
+        <span class="fa far fa-sort-down sort-icon"></span>
+      </button>
+      <button class="filter" (click)="getGenes('ageMya')" [class.filter--sorted]="isSorted.ageMya">
+          {{ 'age' | translate }} ({{ 'million_years' | translate }})
+        <span class="fa far fa-sort-down sort-icon"></span>
+      </button>
+    </div>
+
+    <div class="tbody">
+      <div class="tr row" *ngFor="let data of searchedData | slice: 0: loadedGenesQuantity">
+        <div class="td cell td-name">
+          <div class="td_title">
+            <a [routerLink]="['/gene', data.id]" class="link link--gray">
+              <b>{{data.symbol}}</b> {{data.name}}
+            </a>
+            <a href="https://genomics.senescence.info/genes/entry.php?hgnc={{data.symbol}}" title="Этот ген на GeneAge" class="tag tag--small">{{data.id}}</a>
+          </div>
+        </div>
+        <div class="td cell td-age-mya">
+          <b>{{data.agePhylo}}</b><br>
+          {{data.ageMya}} {{ 'million_years' | translate }}
+        </div>
+        <div class="td cell td-clusters">
+          <span class="tag" *ngFor="let funcCluster of data.functionalClusters">{{funcCluster.name}}</span>
+        </div>
+        <div class="td cell td-expression">
+          <span class="tag" *ngIf="data.expressionChange">{{data.expressionChange}}</span>
+        </div>
+        <div class="td cell text-right td-external">
+          <a href="http://disgenet.org/browser/1/1/0/{{data.entrezGene}}/"
+             target="_blank"
+             class="badge badge--disgenet">DisGenet</a>
+        </div>
+        <div class="td cell text-right td-external">
+          <a href="https://thebiogrid.org/search.php?search={{data.symbol}}&organism=9606/"
+             target="_blank"
+             class="badge badge--biogrid">BioGrid</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  </ng-container>
+
+  <ng-container *ngIf="searchedData?.length == 0">
+    <section class="col col-16 no-content">
+      <div class="no-content__icon no-content__icon-standard"></div>
+      <div class="no-content__title">
+        <div class="title__center">
+          {{ 'nothing_found' | translate }}
+        </div>
+      </div>
+    </section>
+  </ng-container>
+</div>

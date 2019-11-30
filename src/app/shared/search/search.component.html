@@ -1,0 +1,33 @@
+<form [formGroup]="searchForm"
+      class="search-holder"
+>
+  <input formControlName="searchText"
+         type="text"
+         placeholder="{{ 'search' | translate }}"
+         class="field"
+         required
+         (focusin)="hasResult = true"
+  >
+  <div class="autocomplete-list"
+       *ngIf="hasResult">
+    <ng-container *ngFor="let data of searchedData; let i = index">
+      <a
+        *ngIf="i < 5"
+        class="autocomplete-list__item"
+        [routerLink]="['/gene', data.id]"
+      >
+        <span class="item__symbol">{{data.symbol}}</span>&nbsp;<span class="item__name">{{data.name}}</span>
+      </a>
+    </ng-container>
+  </div>
+</form>
+
+<div *ngIf="hasResult"
+     class="backdrop"
+     (click)="hasResult = false"></div>
+
+<div class="page__subtitle col col-16 __mt-10"
+     *ngIf="searchForm.valid">
+  {{ 'items_found' | translate }} {{searchedData?.length}}
+</div>
+

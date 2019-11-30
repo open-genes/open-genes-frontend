@@ -1,0 +1,427 @@
+<div class="page">
+  <div class="page__inner">
+    <div class="main-page__header wrapper">
+      <div class="container">
+        <div class="col col-16">
+          <div class="page__title">
+            <h1>{{ 'about_page_title' | translate }}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="col col-16">
+
+        <article *ngIf="translate.currentLang==='ru'">
+          <p class="hint">
+            <b>Open Longevity Genes</b>&nbsp;&mdash; это база данных, в&nbsp;которой мы&nbsp;собираем все гены человека,
+            ассоциированные со&nbsp;старением и&nbsp;продолжительностью жизни. В&nbsp;таблице на&nbsp;основной странице
+            базы содержится краткая информация о&nbsp;генах. Кликнув на&nbsp;название гена в&nbsp;таблице, вы&nbsp;найдете
+            подробную статью об&nbsp;этом гене со&nbsp;ссылками на&nbsp;литературу и&nbsp;быстрым доступом к&nbsp;другим
+            базам данных.
+          </p>
+
+
+          <p>Наша база данных призвана помочь исследователям в&nbsp;изучении генетики старения и&nbsp;связанных с&nbsp;ним
+            процессов. Мы&nbsp;вручную собираем информацию об&nbsp;эволюции гена. его функциях и&nbsp;методах
+            определения ассоциации гена со&nbsp;старением и&nbsp;продолжительностью жизни.
+
+          <h2>По&nbsp;каким критериям мы&nbsp;отбираем гены</h2>
+
+          <p>
+            Мы&nbsp;добавляем ген в&nbsp;базу, если проводились исследования, которые показали влияние этого гена на&nbsp;продолжительность
+            жизни у&nbsp;человека или модельных организмов. Мы&nbsp;выделили 10&nbsp;видов исследований на&nbsp;эту
+            тему, прямо или косвенно подтверждающих ассоциацию гена с&nbsp;продолжительностью жизни и&nbsp;старением.
+            Если в&nbsp;отношении гена проводилось хотя&nbsp;бы одно из&nbsp;этих исследований, он&nbsp;окажется в&nbsp;нашей
+            базе данных.
+          </p>
+
+          <h3>10&nbsp;критериев отбора генов в&nbsp;базу:</h3>
+          <ol class="list">
+            <li>Доказательства влияния гена на&nbsp;ускоренное старение у&nbsp;человека;</li>
+            <li>Эксперименты с&nbsp;ослаблением/усилением функции гена у&nbsp;млекопитающих;</li>
+            <li>Эксперименты с&nbsp;ослаблением/усилением функции гена у&nbsp;не&nbsp;млекопитающих;</li>
+            <li>Эксперименты с&nbsp;ослаблением/усилением функции гена на&nbsp;культурах клеток;</li>
+            <li>Возрастные изменения экспрессии гена/активности белка у&nbsp;человека;</li>
+            <li>Возрастные изменения экспрессии гена/активности белка у&nbsp;млекопитающих;</li>
+            <li>Возрастные изменения экспрессии гена/активности белка у&nbsp;не&nbsp;млекопитающих;</li>
+            <li>Ассоциация гена с&nbsp;долголетием или ассоциированным с&nbsp;возрастом фенотипом (исследования
+              ассоциации вариантов гена/количества белка/активности белка с&nbsp;низкой/высокой продолжительностью жизни
+              или быстрым/медленным, сильным/слабым проявлениям признаков старения, а&nbsp;также возрастными болезнями);
+            </li>
+            <li>Участие продукта гена в&nbsp;связанных со&nbsp;старением процессах или механизмах;</li>
+            <li>Участие продукта гена в&nbsp;регуляции генов, связанных со&nbsp;старением;</li>
+          </ol>
+
+          <p>
+            К&nbsp;генам, напрямую связанным с&nbsp;ускоренным старением у&nbsp;человека (1&nbsp;пункт), относится
+            несколько генов, мутации в&nbsp;которых вызывают прогерию. К&nbsp;экспериментам с&nbsp;усилением/ослаблением
+            функции гена у&nbsp;модельных организмов (2&ndash;4&nbsp;пункты) относятся исследования с&nbsp;нокаутом
+            гена, ослаблением его экспрессии, усилением функции гена с&nbsp;помощью добавления его дополнительных копий,
+            терапией с&nbsp;помощью введения готового продукта гена, которое привело к&nbsp;увеличению или уменьшению
+            продолжительности жизни организма и/или развитием у&nbsp;него выраженного прогероидного синдрома.
+          </p>
+
+          <p>
+            К&nbsp;доказательствам возрастных изменений экспрессии гена/активности белка (5&ndash;7&nbsp;пункты)
+            относятся исследования, показывающие что у&nbsp;старых особей экспрессия гена или активность его продукта во&nbsp;всех
+            или некоторых тканях выше или ниже по&nbsp;сравнению с&nbsp;молодыми. К&nbsp;доказательствам ассоциации гена
+            с&nbsp;фенотипом старения или долголетием (8&nbsp;пункт) относятся исследования, подтверждающие, что
+            аллельный вариант гена или количество/активность белка связаны с&nbsp;низкой или высокой продолжительностью
+            жизни, возрастными заболеваниями, а&nbsp;также быстрым или медленным, сильным или слабым проявлением
+            признаков старения.&nbsp;9&nbsp;и&nbsp;10&nbsp;пункт&nbsp;&mdash; это косвенные подтверждения ассоциации
+            гена с&nbsp;продолжительностью жизни или старением.
+          </p>
+
+          <h2>Содержание таблицы с&nbsp;генами</h2>
+          <h3>Что уже есть</h3>
+
+          <p>
+            В&nbsp;таблице на&nbsp;основной странице базы содержится краткая информация о&nbsp;генах. В&nbsp;колонке
+            &laquo;Возраст гена&raquo; указано, у&nbsp;каких организмов в&nbsp;процессе эволюции появился гомолог
+            человеческого гена и&nbsp;приблизительный возраст этого предкового организма. Эта информация получена из&nbsp;исследований
+            молекулярной эволюции гена.
+          </p>
+
+          <p>
+            В&nbsp;колонке &laquo;Функциональные кластеры&raquo; мы&nbsp;указываем в&nbsp;каких процессах участвует ген.
+            Мы&nbsp;составили список функциональных кластеров и&nbsp;в&nbsp;соответствии с&nbsp;ним указываем как
+            основные, так и&nbsp;дополнительные функции гена.
+          </p>
+
+          <h3>Функциональные кластеры:</h3>
+          <ol class="list">
+            <li>Клеточный цикл (check points, пролиферация, рост клеток, сегрегация хромосом, апоптоз);</li>
+            <li>Метаболизм ДНК (репликация, репарация, рекомбинация ДНК);</li>
+            <li>Достраивание и&nbsp;защита теломер;</li>
+            <li>Структура ядра (ядерная ламина);</li>
+            <li>Цитоскелет;</li>
+            <li>Эпигенетические изменения (метилирование ДНК, модификации гистонов, ремоделирование хроматина);</li>
+            <li>Регуляция транскрипции/трансляции;</li>
+            <li>Протеостаз (фолдинг/транспорт/контроль белка, протеолиз);</li>
+            <li>Эмбриональное развитие;</li>
+            <li>Дифференцировка клеток;</li>
+            <li>Сигнальные пути катаболизма/анаболизма (метаболизм жиров, белков, сахаров);</li>
+            <li>Метаболизм кальция;</li>
+            <li>Ответ на&nbsp;стресс (рефолдинг белков, аутофагия, убиквинтин-протеосомный путь);</li>
+            <li>Митохондриальная функция (окислительно-восстановительный потенциал, антиоксидантная функция, синтез
+              АТФ);
+            </li>
+            <li>Иммунная функция;</li>
+            <li>Внутриклеточный транспорт;</li>
+            <li>Межклеточный матрикс;</li>
+          </ol>
+          <p>
+            В&nbsp;колонке &laquo;Обоснование&raquo; мы&nbsp;указываем, по&nbsp;каким именно критериям из&nbsp;приведенного
+            выше списка ген отобран в&nbsp;базу.
+          </p>
+
+          <p>
+            В&nbsp;колонке &laquo;Заболевания&raquo; стоит ссылка на&nbsp;страницу гена в&nbsp;базе данных DisGenet, в&nbsp;которой
+            указаны все заболевания, с&nbsp;которыми ассоциирован ген. В&nbsp;колонке &laquo;Взаимодействия&raquo; мы&nbsp;дали
+            ссылку на&nbsp;страницу гена в&nbsp;базе данных BioGrid.
+            Что еще мы&nbsp;добавим
+          </p>
+
+          <p>
+            Ассоциации с&nbsp;возрастными заболеваниями. Список заболеваний, с&nbsp;которыми ассоциирован ген может
+            быть огромным и&nbsp;он&nbsp;непрерывно пополняется. По&nbsp;ссылке на&nbsp;страницу гена в&nbsp;DisGenet
+            можно увидеть весь этот список. Но&nbsp;поскольку для исследования старения и&nbsp;продолжительности жизни
+            особенно интересны возрастные заболевания, мы&nbsp;выпишем их&nbsp;в&nbsp;отдельную колонку.
+          </p>
+
+          <p>
+            Визуализация критериев отбора гена в&nbsp;базу. Мы&nbsp;сейчас работаем над наглядностью нашей основной
+            таблицы с&nbsp;генами. Мы&nbsp;планируем с&nbsp;помощью набора простых иконок показывать в&nbsp;колонке
+            &laquo;Обоснование&raquo;, какие именно эксперименты и&nbsp;на&nbsp;каких организмах проводились с&nbsp;геном.
+            Также мы&nbsp;выделим цветом гены, модификация которых позволила увеличить продолжительность жизни, потому
+            что именно эти гены особенно интересны в&nbsp;качестве потенциальных мишеней для терапии старения. В&nbsp;отдельной
+            колонке мы&nbsp;покажем с&nbsp;помощью стрелочек увеличивается или уменьшается с&nbsp;возрастом экспрессия
+            гена.
+          </p>
+
+          <p>
+            Еще одна колонка с&nbsp;возрастом гена. Мы&nbsp;хотим, чтобы наша база давала полное представление об&nbsp;эволюционной
+            истории гена. Сейчас мы&nbsp;определяем возраст гена, ссылаясь на&nbsp;подробные исследования молекулярной
+            эволюции генного семейства. Другой подход&nbsp;&mdash; просто автоматически сравнить геномы человека и&nbsp;других
+            организмов и&nbsp;выявить похожие по&nbsp;последовательности гены (подробнее&nbsp;см.&nbsp;в&nbsp;разделе
+            как мы&nbsp;определяем возраст гена). Возраст гена, определенный разными способами, не&nbsp;всегда
+            совпадает. Поэтому мы&nbsp;добавим в&nbsp;таблицу также информацию о&nbsp;самых древних гомологах гена,
+            выявленных с&nbsp;помощью автоматического выравнивания последовательностей ДНК. Таким образом мы&nbsp;предоставим
+            исследователям эволюции старения возможность самим решать, какой метод определения возраста гена им&nbsp;больше
+            подходит.
+          </p>
+
+          <p>
+            Гены в&nbsp;таблице можно будет сортировать по&nbsp;нескольким пунктам&nbsp;&mdash; по&nbsp;каждому из&nbsp;двух
+            подходов к&nbsp;определению возраста гена, функции, критериям отбора гена, ассоциации с&nbsp;возрастными
+            болезнями.
+          </p>
+
+          <h3>Содержание статьи с&nbsp;описанием гена</h3>
+
+          <h2>Что уже есть</h2>
+
+          <p>
+            Нажав на&nbsp;название гена в&nbsp;таблице, вы&nbsp;попадете на&nbsp;страницу с&nbsp;подробным описанием
+            гена. В&nbsp;начале статьи указаны все синонимы названия гена, даны ссылки на&nbsp;страницу гена в&nbsp;других
+            базах данных.
+          </p>
+
+          <p>
+            Далее статья состоит из&nbsp;трех разделов: эволюция, функции и&nbsp;исследования ассоциации гена со&nbsp;старением
+            и&nbsp;продолжительностью жизни. Эти разделы содержат выдержки из&nbsp;исследовательских или обзорных
+            научных статей со&nbsp;ссылками на&nbsp;источники.
+          </p>
+
+          <p>
+            В&nbsp;разделе &laquo;Эволюция&raquo; мы&nbsp;указываем, к&nbsp;какому генному семейству относится ген, а&nbsp;также
+            какие важные события происходили в&nbsp;его эволюции. В&nbsp;разделе &laquo;Функции&raquo; мы&nbsp;описываем
+            подробнее, какие именно молекулярные функции в&nbsp;том или ином процессе, механизме или пути выполняет
+            ген. Каждый функциональный кластер может включать несколько процессов, поэтому мы&nbsp;описываем функции
+            подробнее, указывая в&nbsp;каких именно процессах и&nbsp;механизмах ген участвует.
+          </p>
+
+          <p>
+            В&nbsp;последнем разделе мы&nbsp;выписываем важную информацию об&nbsp;исследованиях гена в&nbsp;контексте
+            старения или продолжительности жизни. Мы&nbsp;отдаем предпочтение исследованиям на&nbsp;людях или
+            млекопитающих. Если таких исследований нет, мы&nbsp;указываем исследования на&nbsp;других моделях, а&nbsp;также
+            работы, косвенно подтверждающие связь гена со&nbsp;старением.
+          </p>
+
+          <p>
+            Мы&nbsp;указываем, на&nbsp;каких организмах проводилось исследование, усилена или ослаблена была функция
+            гена, увеличило это или уменьшило продолжительность жизни организма и&nbsp;на&nbsp;сколько процентов или
+            месяцев, если это указано в&nbsp;статье. Мы&nbsp;также указываем на&nbsp;каких организмах подтверждены
+            возрастные изменения экспрессии гена или активности белка, какие варианты гена, количество или активность
+            белка с&nbsp;каким фенотипом старения или с&nbsp;какой продолжительностью жизни (низкой/высокой)
+            ассоциированы, в&nbsp;каких связанных со&nbsp;старением процессах ген участвует или какой именно ген
+            регулируется продуктом этого гена. В&nbsp;конце статьи приведены ссылки на&nbsp;исследования.
+          </p>
+
+
+          <h3>Что еще мы&nbsp;добавим</h3>
+
+          <p>Сейчас в&nbsp;статье гена содержатся результаты ручного поиска информации, а&nbsp;также ссылки на&nbsp;другие
+            базы. Чтобы проще было работать с&nbsp;геном, мы&nbsp;выведем важную информацию о&nbsp;гене из&nbsp;других
+            баз данных.
+          </p>
+
+          <p>
+            Мы&nbsp;укажем локализацию гена на&nbsp;хромосоме,
+            выведем отдельно&nbsp;GO terms по&nbsp;трем пунктам: процесс, в&nbsp;котором участвует ген, клеточный
+            компартмент, в&nbsp;котором работает ген, и&nbsp;молекулярная функция. Мы&nbsp;также покажем, в&nbsp;каких
+            тканях и&nbsp;в&nbsp;каком количестве ген экспрессируется. По&nbsp;ссылкам на&nbsp;публикации в&nbsp;конце
+            описания гена можно будет сразу перейти на&nbsp;страницу статьи в&nbsp;PubMed.</p>
+
+        </article>
+
+        <article *ngIf="translate.currentLang==='en'">
+          <p class="hint">
+            <b>Open Longevity Genes</b> is&nbsp;a&nbsp;database of&nbsp;human genes associated with aging and longevity.
+          </p>
+
+
+          <p>The table on&nbsp;the main page contains brief info on&nbsp;the genes. A&nbsp;click on&nbsp;a&nbsp;gene
+            name in&nbsp;the table opens a&nbsp;detailed article about the gene, with links to&nbsp;academic literature
+            and quick access to&nbsp;other databases. Our database is&nbsp;designed to&nbsp;help researchers study the
+            genetics of&nbsp;aging and related processes. We&nbsp;manually collect information on&nbsp;the evolution of&nbsp;the
+            gene, its functions, and methods to&nbsp;determine if&nbsp;the gene is&nbsp;associated with aging and life
+            expectancy.</p>
+
+
+          <h2>What criteria we&nbsp;select the genes by</h2>
+          <p>We&nbsp;add a&nbsp;gene to&nbsp;the database if&nbsp;studies showed that the gene affects the longevity of&nbsp;humans
+            or&nbsp;model organisms. We&nbsp;have identified 10&nbsp;types of&nbsp;studies that might directly or&nbsp;indirectly
+            confirm the association of&nbsp;the gene with longevity and aging. If&nbsp;at&nbsp;least one of&nbsp;these
+            studies has been performed, the gene will be&nbsp;added to&nbsp;the database.</p>
+
+          <h3>10&nbsp;criteria for selecting genes for the database:</h3>
+          <ol class="list">
+            <li>Evidence that the gene is&nbsp;associated with accelerated aging in&nbsp;humans;</li>
+            <li>Experiments with diminishing&nbsp;/ enhancing of&nbsp;the gene function in&nbsp;mammals;</li>
+            <li>Experiments with diminishing&nbsp;/ enhancing of&nbsp;the gene function in&nbsp;non-mammals;</li>
+            <li>Experiments with diminishing /enhancing of&nbsp;the gene function in&nbsp;cell cultures;</li>
+            <li>Age-related changes in&nbsp;gene expression/protein activity in&nbsp;humans;</li>
+            <li>Age-related changes in&nbsp;gene expression/protein activity in&nbsp;mammals;</li>
+            <li>Age-related changes in&nbsp;gene expression/protein activity in&nbsp;non-mammals;</li>
+            <li>Association of&nbsp;the gene with longevity or&nbsp;age-associated phenotype (studies of&nbsp;the
+              association of&nbsp;gene variants/amount of&nbsp;protein/protein activity with low/high life expectancy or&nbsp;fast/slow,
+              strong/weak manifestations of&nbsp;signs of&nbsp;aging, as&nbsp;well as&nbsp;age-related diseases);
+            </li>
+            <li>Involvement of&nbsp;the gene product in&nbsp;aging-related processes or&nbsp;mechanisms;</li>
+            <li>Involvement of&nbsp;the gene product in&nbsp;gene regulation associated with aging;</li>
+          </ol>
+
+          <p>
+            A&nbsp;group of&nbsp;genes directly related to&nbsp;accelerated aging in&nbsp;humans (item&nbsp;1) includes
+            several genes which mutations cause progeria. Experiments with enhancing/diminishing of&nbsp;a&nbsp;gene
+            function in&nbsp;model organisms (items 2&ndash;4) include studies using gene knockout, decreasing its
+            expression, enhancing gene function by&nbsp;introducing its extra copies, and therapy involving delivery of&nbsp;gene
+            product which led to&nbsp;increased or&nbsp;decreased life expectancy of&nbsp;the organism and/or the
+            development of&nbsp;a&nbsp;moderate progeroid syndrome.
+          </p>
+
+          <p>
+            The evidence of&nbsp;age-related changes in&nbsp;gene expression/protein activity (items 5&ndash;7) includes
+            studies showed that in&nbsp;older individuals, compared with younger ones, gene expression or&nbsp;gene
+            product activity in&nbsp;all or&nbsp;some tissues was increased or&nbsp;decreased.
+          </p>
+
+          <p>
+            Evidence of&nbsp;gene association with aging phenotype or&nbsp;longevity (item&nbsp;8) include studies
+            confirming that an&nbsp;allelic variant of&nbsp;the gene or&nbsp;amount/activity of&nbsp;the protein is&nbsp;associated
+            with low or&nbsp;high life expectancy, age-related diseases, as&nbsp;well as&nbsp;fast or&nbsp;slow, strong
+            or&nbsp;weak manifestations of&nbsp;aging. Items 9&nbsp;and 10&nbsp;include indirect confirmations of&nbsp;the
+            association of&nbsp;a&nbsp;gene with life expectancy or&nbsp;aging.
+          </p>
+
+          <h2>Content of the genes table</h2>
+          <h3>What is&nbsp;already there</h3>
+          <p>
+            The table on&nbsp;the main page contains brief information about the genes. The &laquo;Gene age&raquo;
+            column indicates in&nbsp;which organisms the homolog of&nbsp;the human gene appeared in&nbsp;the process of&nbsp;evolution
+            and the approximate age of&nbsp;this ancestral organisms. The information is&nbsp;obtained in&nbsp;studies
+            of&nbsp;the molecular evolution of&nbsp;the gene.
+          </p>
+
+          <p>
+            The &laquo;Functional Clusters&raquo; column indicates which processes the gene is&nbsp;involved&nbsp;in. We&nbsp;have
+            compiled a&nbsp;list of&nbsp;functional clusters and, based on&nbsp;the list, indicate both the main and
+            additional functions of&nbsp;the gene.
+          </p>
+
+
+          <h3>Functional Clusters:</h3>
+          <ol class="list">
+            <li>The cell cycle (checkpoints, proliferation, cell growth, chromosome segregation, apoptosis);</li>
+            <li>DNA metabolism (replication, repair, DNA recombination);</li>
+            <li>Extension and protection of&nbsp;telomeres;</li>
+            <li>Core structure (nuclear lamina);</li>
+            <li>Cytoskeleton;</li>
+            <li>Epigenetic changes (DNA methylation, histone modifications, chromatin remodeling);</li>
+            <li>Regulation of&nbsp;transcription&nbsp;/ translation;</li>
+            <li>Proteostasis (protein folding&nbsp;/ transport&nbsp;/ control, proteolysis);</li>
+            <li>Embryonic development;</li>
+            <li>Cells differentiation;</li>
+            <li>Signaling pathways of&nbsp;catabolism/anabolism (metabolism of&nbsp;fats, proteins, sugars);</li>
+            <li>Calcium metabolism;</li>
+            <li>Response to&nbsp;stress (protein refolding, autophagy, ubiquitin-proteasome pathway);</li>
+            <li>Mitochondrial function (redox potential, antioxidant function, ATP synthesis);</li>
+            <li>Immune function;</li>
+            <li>Intracellular transport;</li>
+            <li>Intercellular matrix</li>
+          </ol>
+
+          <p>
+            In&nbsp;the &laquo;Criteria&raquo; column we&nbsp;indicate based on&nbsp;what criteria from the above list
+            the gene was included in&nbsp;the database.
+          </p>
+
+          <p>
+            In&nbsp;the &laquo;Diseases&raquo; column there is&nbsp;the link to&nbsp;the gene page in&nbsp;the DisGenet
+            database, which lists all the diseases which the gene is&nbsp;associated with. In&nbsp;the &laquo;Interactions&raquo;
+            column the link to&nbsp;the gene page in&nbsp;the BioGrid database is&nbsp;provided.
+          </p>
+
+          <h2>What we&nbsp;are going to&nbsp;add</h2>
+
+          <p>
+            Associations with age-related diseases. The list of&nbsp;diseases which the gene is&nbsp;associated with can
+            be&nbsp;huge and it&nbsp;is&nbsp;constantly updated. The link to&nbsp;the gene page in&nbsp;DisGenet leads
+            to&nbsp;the complete list, but since age-related diseases are especially relevant for the studies of&nbsp;aging
+            and longevity, we&nbsp;are going to&nbsp;give them in&nbsp;a&nbsp;separate column.
+          </p>
+
+          <p>
+            Genes selection criteria visualization. We&nbsp;are currently working on&nbsp;making our main gene table
+            more visual. We&nbsp;plan to&nbsp;show in&nbsp;the &laquo;Rationale&raquo; column which experiments with the
+            gene have been conducted and in&nbsp;which organisms, using a&nbsp;set of&nbsp;simple icons. We&nbsp;will
+            also highlight in&nbsp;color the genes which modification allowed to&nbsp;increase the lifespan because it&nbsp;is&nbsp;these
+            genes that are especially interesting as&nbsp;potential targets for the treatment of&nbsp;aging. In&nbsp;a&nbsp;separate
+            column, we&nbsp;intend to&nbsp;show if&nbsp;the expression of&nbsp;the gene increases or&nbsp;decreases with
+            age, using arrows.
+          </p>
+
+          <p>
+            Another column containing the age of&nbsp;a&nbsp;gene. We&nbsp;want our database to&nbsp;provide a&nbsp;complete
+            picture of&nbsp;the evolutionary history of&nbsp;the genes. Currently, we&nbsp;state the age of&nbsp;a&nbsp;gene
+            citing detailed studies of&nbsp;the molecular evolution of&nbsp;the gene family. Another approach is&nbsp;to&nbsp;automatically
+            compare the genomes of&nbsp;humans and other organisms and identify genes that have closely similar
+            sequences (for more details, see how we&nbsp;determine the age of&nbsp;a&nbsp;gene). Different methods of&nbsp;determining
+            the age of&nbsp;a&nbsp;gene do&nbsp;not always give the same result. Therefore, we&nbsp;are going to&nbsp;add
+            to&nbsp;the table information on&nbsp;the most ancient gene homologs identified by&nbsp;the automatic
+            alignment of&nbsp;DNA sequences. That way we&nbsp;will provide researchers of&nbsp;the evolution of&nbsp;aging
+            with the opportunity to&nbsp;decide for themselves which method of&nbsp;determining the age of&nbsp;a&nbsp;gene
+            is&nbsp;more suitable for them.
+          </p>
+
+          <h3>What is&nbsp;already there</h3>
+
+          <p>
+            A&nbsp;click on&nbsp;a&nbsp;gene name opens a&nbsp;page with a&nbsp;detailed gene description. At&nbsp;the
+            beginning of&nbsp;the article, all synonyms of&nbsp;the gene HGNC are listed, as&nbsp;well as&nbsp;the links
+            leading to&nbsp;the gene page on&nbsp;the other resources.
+            The rest of&nbsp;the page consists of&nbsp;three sections: evolution, functions, and studies on&nbsp;the
+            gene association with aging and longevity. These sections contain excerpts from research papers or&nbsp;scientific
+            reviews as&nbsp;well as&nbsp;the links to&nbsp;the sources.
+          </p>
+
+          <p>
+            In&nbsp;the &laquo;Evolution&raquo; section, we&nbsp;indicate which gene family the gene belongs&nbsp;to, as&nbsp;well
+            as&nbsp;what important events have occurred during its evolution.
+          </p>
+
+          <p>
+            In&nbsp;the &laquo;Functions&raquo; section we&nbsp;describe in&nbsp;more detail what specific molecular
+            functions the gene performs in&nbsp;a&nbsp;given process, mechanism, or&nbsp;pathway. Each functional
+            cluster can include several processes, so&nbsp;we&nbsp;describe the functions in&nbsp;more detail,
+            indicating which particular processes and mechanisms the gene is&nbsp;involved&nbsp;in.
+          </p>
+
+          <p>
+            In&nbsp;the last section, we&nbsp;provide important information about the studies of&nbsp;the gene in&nbsp;the
+            context of&nbsp;aging or&nbsp;life expectancy. We&nbsp;give preference to&nbsp;studies in&nbsp;humans or&nbsp;mammals.
+            If&nbsp;there are no&nbsp;such studies, we&nbsp;indicate studies in&nbsp;other models, as&nbsp;well as&nbsp;papers
+            that confirm the association of&nbsp;the gene with aging indirectly.
+          </p>
+
+          <p>
+            We&nbsp;indicate in&nbsp;which organisms the study has been conducted if&nbsp;the function of&nbsp;the gene
+            was enhanced or&nbsp;diminished, and if&nbsp;the life expectancy of&nbsp;the organism increased or&nbsp;decreased,
+            and by&nbsp;how many percent or&nbsp;months, if&nbsp;that is&nbsp;stated in&nbsp;the paper. We&nbsp;also
+            indicate in&nbsp;which organisms age-related changes in&nbsp;gene expression or&nbsp;activity of&nbsp;the
+            protein have been shown, which variants of&nbsp;the gene or&nbsp;the amount or&nbsp;activity of&nbsp;the
+            protein which phenotype of&nbsp;aging or&nbsp;which life expectancy (low/high) are associated with, which
+            aging-related processes the gene is&nbsp;involved&nbsp;in, and which gene is&nbsp;regulated by&nbsp;the
+            product of&nbsp;this gene.
+            Links to&nbsp;the studies are given at&nbsp;the end of&nbsp;the article.
+          </p>
+
+          <p>
+            Soon we&nbsp;will add sorting. You will be&nbsp;able to&nbsp;sort genes in&nbsp;the&nbsp;table by&nbsp;several
+            criteria&nbsp;&mdash; any of&nbsp;the two approaches to&nbsp;determining the age of&nbsp;a&nbsp;gene, its
+            function, gene selection criteria, association with age-related diseases.
+          </p>
+
+          <h2>Content of a gene article</h2>
+
+          <h3>What else we&nbsp;are going to&nbsp;add</h3>
+          <p>
+            Currently, an&nbsp;article about a&nbsp;gene contains the results of&nbsp;a&nbsp;manual search for
+            gene data, as&nbsp;well as&nbsp;links to&nbsp;other databases. To&nbsp;make it&nbsp;easier to&nbsp;work
+            with the gene, we&nbsp;will display important information about the gene obtained in&nbsp;other databases.
+          </p>
+
+          <p>
+            We&nbsp;will indicate the localization of&nbsp;the gene on&nbsp;the chromosome, as&nbsp;well as&nbsp;separate&nbsp;GO
+            terms by&nbsp;three points: the process the gene is&nbsp;involved&nbsp;in, the cell compartment which it&nbsp;works&nbsp;in,
+            and molecular function. We&nbsp;will also show in&nbsp;which tissues and in&nbsp;what quantity the gene is&nbsp;expressed.</p>
+        </article>
+
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -10,6 +10,7 @@ import { IGene } from '../../core/models';
 export class HomeComponent implements OnInit {
 
   genes: IGene[];
+  lastGenes: IGene[];
 
   constructor(private apiService: ApiService) { }
 
@@ -20,6 +21,10 @@ export class HomeComponent implements OnInit {
   private getGenes() {
     this.apiService.getGenes().subscribe( (genes) => {
       this.genes = genes;
+    });
+
+    this.apiService.getLastGene().subscribe( (genes) => {
+      this.lastGenes = genes;
     });
   }
 }

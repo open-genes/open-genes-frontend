@@ -168,13 +168,14 @@
 
         &:hover,
         &:active {
-          background-color: darken($color-hover, 5%);
+          background-color: lighten($color-hover, 10%);
         }
+
         &:nth-child(even) {
-          background-color: $color-hover;
+          background-color: lighten($color-hover, 15%);
           &:hover,
           &:active {
-            background-color: darken($color-hover, 5%);
+            background-color: lighten($color-hover, 5%);
           }
         }
       }
@@ -280,20 +281,18 @@
   }
 }
 
-.app-body {
-  &--gene {
-    @include resolution_desktop-and-up {
-      padding-top: (50px + 130px + 20px);
-      .gene-page__header {
-        position: fixed;
-        top: 50px;
-        z-index: 50; // между хедером и контентом
-      }
+.gene-page {
+  @include resolution_desktop-and-up {
+    padding-top: (130px + 20px);
+    .gene-page__header {
+      position: fixed;
+      top: 50px;
+      z-index: 50; // между хедером и контентом
     }
-    @include resolution_smartphone-and-tablet {
-      .gene-page__header {
-        margin-bottom: 20px;
-      }
+  }
+  @include resolution_smartphone-and-tablet {
+    .gene-page__header {
+      margin-bottom: 20px;
     }
   }
 }
