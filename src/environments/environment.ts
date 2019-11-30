@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  apiUrl: 'http://dev.open-genes.com',
+  production: true,
+  apiUrl: 'http://open-genes.com',
   languages: ['ru', 'en']
 };
 

@@ -1,5 +1,6 @@
 stages:
   - build
+  - build-dev
   - staging
   - release
 
@@ -18,7 +19,18 @@ build:
   image: alexsuch/angular-cli:7.3.8
   script:
     - npm install
-    - ng build --env=prod
+    - ng build --prod
+  artifacts:
+    paths:
+      - dist/
+  when: manual
+
+build-dev:
+  stage: build-dev
+  image: alexsuch/angular-cli:7.3.8
+  script:
+    - npm install
+    - ng build
   artifacts:
     paths:
       - dist/
