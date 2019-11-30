@@ -18,7 +18,18 @@ build:
   image: alexsuch/angular-cli:7.3.8
   script:
     - npm install
-    - npm run build --configuration=production
+    - ng build --prod
+  artifacts:
+    paths:
+      - dist/
+  when: manual
+
+build-dev:
+  stage: build-dev
+  image: alexsuch/angular-cli:7.3.8
+  script:
+    - npm install
+    - ng build --aot
   artifacts:
     paths:
       - dist/
