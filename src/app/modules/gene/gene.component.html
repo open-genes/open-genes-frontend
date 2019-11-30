@@ -36,7 +36,7 @@
         <div class="col col-16 header__functional-clusters">
           <ng-container *ngIf="gene.functionalClusters; else tagSkeletal">
             <ng-container *ngFor="let item of gene.functionalClusters">
-              <a href="" class="tag">{{item.name}}</a>
+              <span class="tag">{{item.name}}</span>
             </ng-container>
           </ng-container>
           <ng-template #tagSkeletal>
@@ -70,7 +70,7 @@
             {{ 'age' | translate }}
           </div>
           <div class="type__value">
-            {{ gene.ageMya || ('age_unknown' | translate) }}
+            {{ gene.ageMya || ('age_unknown' | translate) }} <small>{{ 'million_years' | translate }}</small>
           </div>
         </div>
 

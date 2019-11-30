@@ -13,12 +13,14 @@
       justify-content: space-between;
 
       .#{$prefix}per {
-        display: inline-flex;
+        font-size: $font-size;
+
         @for $i from 1 through 100 {
           &.#{$prefix}per-#{$i} {
-            flex-basis: 1%*$i 1 1;
+            flex: 1%*$i 1 1;
           }
         }
+
         /* Более точная ширина колонок */
         &.#{$prefix}per-14 {
           width: (100% / 7);
@@ -63,9 +65,9 @@
 
   @include resolution_widescreen {
     .#{$prefix}col {
-      @for $i from 1 through 16 {
+      @for $i from 1 through $columns-quantity {
         &.#{$prefix}col-#{$i} {
-          width: ($widescreen / 16) * $i;
+          width: ($widescreen / $columns-quantity) * $i;
         }
       }
     }
@@ -73,9 +75,9 @@
 
   @include resolution_desktop {
     .#{$prefix}col {
-      @for $i from 1 through 16 {
+      @for $i from 1 through $columns-quantity {
         &.#{$prefix}col-#{$i} {
-          width: ($desktop / 16) * $i;
+          width: ($desktop / $columns-quantity) * $i;
         }
       }
     }
@@ -83,7 +85,7 @@
 
   @include resolution_tablet {
     .#{$prefix}col {
-      @for $i from 1 through 16 {
+      @for $i from 1 through $columns-quantity {
         &.#{$prefix}col-#{$i} {
           width: $tablet;
         }
@@ -93,7 +95,7 @@
 
   @include resolution_phablet {
     .#{$prefix}col {
-      @for $i from 1 through 16 {
+      @for $i from 1 through $columns-quantity {
         &.#{$prefix}col-#{$i} {
           width: $phablet - 20px;
         }
@@ -103,7 +105,7 @@
 
   @include resolution_phone {
     .#{$prefix}col {
-      @for $i from 1 through 16 {
+      @for $i from 1 through $columns-quantity {
         &.#{$prefix}col-#{$i} {
           width: $smartphone - 20px;
         }

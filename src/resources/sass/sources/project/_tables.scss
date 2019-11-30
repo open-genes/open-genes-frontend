@@ -1,6 +1,5 @@
 .view-latest {
   width: 100%;
-  margin-top: 30px;
 
   &__title.page__subtitle {
     margin-bottom: 0;
@@ -15,9 +14,16 @@
   }
 
   &__card {
-    flex: 0 1 25%;
     color: #fff;
     padding: 5px;
+
+    // TODO: перевести на сетку
+    @include resolution_tablet-and-up {
+      flex: 25% 0 1;
+    }
+    @include resolution_smartphone {
+      flex: 50% 0 1;
+    }
 
     .card__inner {
       border-radius: 10px;

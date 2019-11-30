@@ -1,4 +1,4 @@
-@import "../../../resources/sass/export";
+@import "../../../resources/sass/dependencies";
 
 .view-panel {
   position: relative;
@@ -234,13 +234,6 @@ $columns-quantity: 7;
         margin-left: 5px;
       }
 
-      &--wide {
-        width: 120px;
-      }
-      &--wider {
-        width: 180px;
-      }
-
       &--sortable {
         cursor: pointer;
         color: $color-general;
@@ -255,6 +248,10 @@ $columns-quantity: 7;
 
         &:hover {
           background-color: rgba($color-hover, .3);
+        }
+
+        @include resolution_smartphone {
+          white-space: nowrap;
         }
       }
 
