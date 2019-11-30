@@ -268,7 +268,8 @@ $columns-quantity: 7;
         }
       }
 
-      &:first-child {
+      &:first-child,
+      &:nth-child(2) {
         text-align: left;
       }
     }
