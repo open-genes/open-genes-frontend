@@ -176,6 +176,7 @@ a.reference-link {
     bottom: 0;
     left: 0;
     z-index: 2;
+    background-color: rgba($color-general-dark, .15);
 
     .menu__panel {
       height: 100%;
