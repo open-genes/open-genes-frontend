@@ -21,7 +21,10 @@ export class HomeComponent implements OnInit {
   private getGenes() {
     this.apiService.getGenes().subscribe( (genes) => {
       this.genes = genes;
-      this.lastGenes = genes.slice(0, 4); // test
+    });
+
+    this.apiService.getLastGene().subscribe( (genes) => {
+      this.lastGenes = genes;
     });
   }
 }
