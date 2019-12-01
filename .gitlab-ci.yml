@@ -1,4 +1,5 @@
 stages:
+  - build-dev
   - build
   - staging
   - release
@@ -13,16 +14,31 @@ cache:
   paths:
     - node_modules/
 
+build-dev:
+  stage: build-dev
+  image: alexsuch/angular-cli:7.3.8
+  script:
+    - npm install
+    - ng build
+  artifacts:
+    paths:
+      - dist/
+  when: manual
+  except:
+    - master
+
 build:
   stage: build
   image: alexsuch/angular-cli:7.3.8
   script:
     - npm install
-    - npm run build --prod --aot
+    - ng build --prod
   artifacts:
     paths:
       - dist/
   when: manual
+  only:
+    - master
 
 deploy-dev:
   extends: .deploy
