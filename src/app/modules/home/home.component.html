@@ -10,14 +10,24 @@
             {{ 'main_page_header_description' | translate }}
           </div>
           <div class="header__button">
-            <a href="/about" class="btn btn-purple btn-flat js_link">{{ 'main_page_header_button' | translate }}</a>
+            <a routerLink="/about" class="btn btn-purple btn-flat js_link">{{ 'main_page_header_button' | translate }}</a>
           </div>
         </div>
       </div>
     </div>
     <div class="container">
-      <app-mini-cards [lastGenes]="lastGenes"></app-mini-cards>
-      <app-table [dataSource]="genes"></app-table>
+      <div class="loading_data"
+           *ngIf="!genes || !lastGenes">
+        <p class="page__subtitle">{{ 'ui_loader' | translate }}</p>
+      </div>
+
+      <app-mini-cards
+        [lastGenes]="lastGenes"
+        *ngIf="lastGenes"></app-mini-cards>
+
+      <app-table
+        [dataSource]="genes"
+        *ngIf="genes"></app-table>
     </div>
   </div>
 </div>

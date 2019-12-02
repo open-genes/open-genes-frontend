@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {IGene} from '../../core/models';
-import {fromEvent, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -13,7 +12,9 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() dataSource: IGene[];
   searchedData: IGene[];
-  loadedGenesQuantity = 20;
+  genesPerPage = 30;
+  loadedGenesQuantity = this.genesPerPage;
+  loading = false;
   isSorted = {
     name: false,
     ageMya: false
@@ -25,7 +26,6 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-    this.getScrollPosition();
   }
 
   ngOnChanges() {
@@ -68,17 +68,10 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  private getScrollPosition() {
-    fromEvent(document, 'scroll')
-      .pipe(takeUntil(this.subscription$))
-      .subscribe(() => {
-        const d = document.documentElement;
-        const offset = d.scrollTop + window.innerHeight;
-        const height = d.offsetHeight;
-        if (offset >= height - 20 && this.dataSource.length >= this.loadedGenesQuantity) {
-          this.loadedGenesQuantity += 20;
-        }
-      });
+  private loadMoreGenes() {
+    if (this.searchedData.length >= this.loadedGenesQuantity) {
+      this.loadedGenesQuantity += this.genesPerPage;
+    }
   }
 
   ngOnDestroy(): void {
