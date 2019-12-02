@@ -1,4 +1,4 @@
-import {Routes} from '@angular/router';
+import {ExtraOptions, Routes} from '@angular/router';
 
 export const APP_ROUTES: Routes = [
   {
@@ -18,3 +18,7 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./modules/api/api.module').then(m => m.ApiModule)
   }
 ];
+
+export const ROUTER_OPTIONS: ExtraOptions = {
+  anchorScrolling: 'enabled'
+};

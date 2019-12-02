@@ -145,27 +145,27 @@
 
           <ul class="list contents-list">
             <li *ngIf="gene.commentEvolution">
-              <a href="#evolution">
+              <a [routerLink]="['/gene', id]" fragment="evolution">
                 {{ 'gene_page_title_evolution' | translate }}
               </a>
             </li>
             <li *ngIf="gene.commentFunction">
-              <a href="#function">
+              <a [routerLink]="['/gene', id]" fragment="function">
                 {{ 'gene_page_title_function' | translate }}
               </a>
             </li>
             <li *ngIf="gene.commentCause">
-              <a href="#cause">
+              <a [routerLink]="['/gene', id]" fragment="cause">
                 {{ 'gene_page_title_criteria' | translate }}
               </a>
             </li>
             <li *ngIf="gene.commentAging">
-              <a href="#aging">
+              <a [routerLink]="['/gene', id]" fragment="aging">
                 {{ 'gene_page_title_aging' | translate }}
               </a>
             </li>
             <li *ngIf="gene.commentsReferenceLinks">
-              <a href="#reference">
+              <a [routerLink]="['/gene', id]" fragment="reference">
                 {{ 'gene_page_title_reference' | translate }}
               </a>
             </li>
