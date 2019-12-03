@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../core/services/api.service';
-import { IGene } from '../../core/models';
+import {Component, OnInit} from '@angular/core';
+import {ApiService} from '../../core/services/api.service';
+import {IGene} from '../../core/models';
 
 @Component({
   selector: 'app-home',
@@ -11,19 +11,22 @@ export class HomeComponent implements OnInit {
 
   genes: IGene[];
   lastGenes: IGene[];
+  newsGene: IGene;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {
+  }
 
   ngOnInit() {
     this.getGenes();
   }
 
   private getGenes() {
-    this.apiService.getGenes().subscribe( (genes) => {
+    this.apiService.getGenes().subscribe((genes) => {
       this.genes = genes;
+      this.newsGene = genes[Math.floor(Math.random() * genes.length)];
     });
 
-    this.apiService.getLastGene().subscribe( (genes) => {
+    this.apiService.getLastGene().subscribe((genes) => {
       this.lastGenes = genes;
     });
   }

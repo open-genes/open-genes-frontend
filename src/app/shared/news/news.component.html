@@ -1,0 +1,13 @@
+<h1 class="news-title">Новости Pubmed</h1>
+<ul class="news">
+  <li *ngFor="let item of newsList">
+    <a [routerLink]="['/gene', gene?.id]">
+      <span class="name">{{gene?.symbol}}</span>
+      <span class="gene">страница гена</span>
+    </a>
+    <a href="{{item.url}}" target="_blank">
+      <p class="title">{{item.title}}</p>
+      <p class="url">{{item.url}}</p>
+    </a>
+  </li>
+</ul>

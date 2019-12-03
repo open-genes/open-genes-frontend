@@ -1,0 +1,33 @@
+.news-title{
+  margin-top: 30px;
+  font-size: 28px;
+}
+
+.news {
+  font-size: 14px;
+
+  li {
+    margin-top: 20px;
+    width: 100%;
+
+    .name {
+      color: #ff4e1a;
+      margin-right: 20px;
+    }
+
+    .gene {
+      color: #bababa;
+      text-decoration: underline;
+    }
+
+    .title {
+      color: #2d3138;
+      text-decoration: underline;
+      margin: 10px 0 5px;
+    }
+
+    .url {
+      color: #4073f6;
+    }
+  }
+}

@@ -28,6 +28,8 @@
       <app-table
         [dataSource]="genes"
         *ngIf="genes"></app-table>
+
+      <app-news *ngIf="newsGene" [gene]="newsGene"></app-news>
     </div>
   </div>
 </div>
