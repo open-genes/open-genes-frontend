@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
 import {IGene} from '../../core/models';
 import {Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
@@ -11,6 +11,7 @@ import {TranslateService} from '@ngx-translate/core';
 export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() dataSource: IGene[];
+  @Output() filterCluster = new EventEmitter<number[]>();
   searchedData: IGene[];
   genesPerPage = 30;
   loadedGenesQuantity = this.genesPerPage;
@@ -21,6 +22,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   };
   asCards = true;
   private subscription$ = new Subject();
+  private funcCluster: number[] = [];
 
   constructor(private translate: TranslateService) {
   }
@@ -76,5 +78,14 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
+  }
+
+  filterByFuncClusters(id: number) {
+    if (!this.funcCluster.includes(id)) {
+      this.funcCluster.push(id);
+    } else {
+      this.funcCluster = this.funcCluster.filter(item => item !== id);
+    }
+    this.filterCluster.emit(this.funcCluster);
   }
 }

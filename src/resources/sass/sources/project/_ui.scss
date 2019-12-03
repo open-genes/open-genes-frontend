@@ -280,6 +280,10 @@ a.badge {
     height: 23px;
     min-width: 100px;
   }
+
+  &.active{
+    background-color: #cccccc;
+  }
 }
 
 .info-sign {

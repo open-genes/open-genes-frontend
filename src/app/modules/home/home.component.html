@@ -27,9 +27,12 @@
 
       <app-table
         [dataSource]="genes"
+        (filterCluster)="filterByFuncClusters($event)"
         *ngIf="genes"></app-table>
 
-      <app-news *ngIf="newsGene" [gene]="newsGene"></app-news>
+      <app-news
+        [gene]="newsGene"
+        *ngIf="newsGene"></app-news>
     </div>
   </div>
 </div>

@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getGenes();
+    this.getLastgenes();
   }
 
   private getGenes() {
@@ -25,9 +26,21 @@ export class HomeComponent implements OnInit {
       this.genes = genes;
       this.newsGene = genes[Math.floor(Math.random() * genes.length)];
     });
+  }
 
+  private getLastgenes() {
     this.apiService.getLastGene().subscribe((genes) => {
       this.lastGenes = genes;
     });
+  }
+
+  private filterByFuncClusters(fc: number[]) {
+    if (fc.length > 0) {
+      this.apiService.getGenesByFunctionalClusters(fc).subscribe((genes) => {
+        this.genes = genes;
+      });
+    } else {
+      this.getGenes();
+    }
   }
 }

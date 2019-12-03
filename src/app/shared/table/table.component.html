@@ -75,7 +75,12 @@
             {{data.ageMya}} {{ 'million_years' | translate }}
           </div>
           <div class="td cell td-clusters">
-            <span class="tag" *ngFor="let funcCluster of data.functionalClusters">{{funcCluster.name}}</span>
+            <span class="tag"
+                  *ngFor="let item of data.functionalClusters"
+                  (click)="filterByFuncClusters(item.id)"
+                  [class.active]="funcCluster.includes(item.id)">
+              {{item.name}}
+            </span>
           </div>
           <div class="td cell td-expression">
             <span class="tag" *ngIf="data.expressionChange">{{data.expressionChange}}</span>
