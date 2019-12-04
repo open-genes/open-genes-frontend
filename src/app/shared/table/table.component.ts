@@ -12,10 +12,11 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() dataSource: IGene[];
   @Output() filterCluster = new EventEmitter<number[]>();
+  @Output() filterExpression = new EventEmitter<string>();
   searchedData: IGene[];
   genesPerPage = 30;
   loadedGenesQuantity = this.genesPerPage;
-  loading = false;
+  loading = true;
   isSorted = {
     name: false,
     ageMya: false
@@ -23,8 +24,9 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   asCards = true;
   private subscription$ = new Subject();
   private funcCluster: number[] = [];
+  private expression: string;
 
-  constructor(private translate: TranslateService) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -32,6 +34,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges() {
     this.searchedData = this.dataSource;
+    this.loading = false;
   }
 
   getSearchedData(e: IGene[]) {
@@ -86,6 +89,19 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.funcCluster = this.funcCluster.filter(item => item !== id);
     }
+    this.expression = null;
+    this.loading = true;
     this.filterCluster.emit(this.funcCluster);
+  }
+
+  filterByExpressionChange(expression: string) {
+    if (this.expression !== expression) {
+      this.expression = expression;
+    } else {
+      this.expression = null;
+    }
+    this.funcCluster = [];
+    this.loading = true;
+    this.filterExpression.emit(this.expression);
   }
 }

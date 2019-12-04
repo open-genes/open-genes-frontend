@@ -16,11 +16,6 @@
       </div>
     </div>
     <div class="container">
-      <div class="loading_data"
-           *ngIf="!genes || !lastGenes">
-        <p class="page__subtitle">{{ 'ui_loader' | translate }}</p>
-      </div>
-
       <app-mini-cards
         [lastGenes]="lastGenes"
         *ngIf="lastGenes"></app-mini-cards>
@@ -28,11 +23,17 @@
       <app-table
         [dataSource]="genes"
         (filterCluster)="filterByFuncClusters($event)"
+        (filterExpression)="filterByExpressionChange($event)"
         *ngIf="genes"></app-table>
 
       <app-news
         [gene]="newsGene"
         *ngIf="newsGene"></app-news>
+
+      <div class="loading_data"
+           *ngIf="!genes || !lastGenes">
+        <p class="page__subtitle">{{ 'ui_loader' | translate }}</p>
+      </div>
     </div>
   </div>
 </div>

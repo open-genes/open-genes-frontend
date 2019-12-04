@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../core/services/api.service';
 import {IGene} from '../../core/models';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,13 @@ export class HomeComponent implements OnInit {
   lastGenes: IGene[];
   newsGene: IGene;
 
-  constructor(private apiService: ApiService) {
+  private expressionTranslates = {
+    уменьшается: 'decreased',
+    увеличивается: 'increased',
+    неоднозначно: 'mixed'
+  };
+
+  constructor(private apiService: ApiService, private translate: TranslateService) {
   }
 
   ngOnInit() {
@@ -37,6 +44,19 @@ export class HomeComponent implements OnInit {
   private filterByFuncClusters(fc: number[]) {
     if (fc.length > 0) {
       this.apiService.getGenesByFunctionalClusters(fc).subscribe((genes) => {
+        this.genes = genes;
+      });
+    } else {
+      this.getGenes();
+    }
+  }
+
+  private filterByExpressionChange(expression: string) {
+    if (expression) {
+      if (this.translate.currentLang === 'ru') {
+        expression = this.expressionTranslates[expression];
+      }
+      this.apiService.getGenesByExpressionChange(expression).subscribe(genes => {
         this.genes = genes;
       });
     } else {
