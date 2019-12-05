@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { APP_ROUTES } from './app-routing';
+import {APP_ROUTES, ROUTER_OPTIONS} from './app-routing';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -25,7 +25,7 @@ import { MenuComponent } from './common/menu/menu.component';
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(APP_ROUTES),
+    RouterModule.forRoot(APP_ROUTES, ROUTER_OPTIONS),
     HttpClientModule,
     // ngx-translate and the loader module
     TranslateModule.forRoot({
