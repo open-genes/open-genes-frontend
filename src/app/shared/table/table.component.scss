@@ -1,345 +1,359 @@
 @import "../../../resources/sass/dependencies";
 
-.view-panel {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-  padding-right: 50px;
+:host {
 
-  &.col {
-    font-size: 0;
-  }
+  .view-panel {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding-right: 50px;
 
-  &__buttons {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 1;
-  }
-}
+    &.col {
+      font-size: 0;
+    }
 
-$columns-quantity: 7;
-
-.view-content {
-  margin-bottom: 30px;
-
-  .tr {
-    .td {
-      &__title {
-        font-size: $font-size-bigger;
-        font-weight: $font-weight-medium;
-        margin-bottom: 5px;
-        color: $color-gray;
-
-        .link,
-        .tag {
-          vertical-align: middle;
-        }
-
-        .link {
-          margin-right: 5px;
-        }
-
-        .tag {
-          margin-bottom: 0;
-        }
-      }
-
-      b {
-        color: #000;
-        font-weight: bold;
-        margin-right: 3px;
-      }
-
-      &--expandable {
-        cursor: pointer;
-
-        &:hover,
-        &.active {
-          background-color: rgba($color-general, 0.25);
-        }
-
-        &:hover,
-        &.active {
-          .td__popover {
-            display: block;
-          }
-        }
-      }
+    &__buttons {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
     }
   }
 
-  // В виде карточек
-  &.view-content--as-cards {
-    .thead {
-      display: none;
-    }
+  $columns-quantity: 7;
 
-    .cards-filters {
-      width: 100%;
-      margin-bottom: 20px;
-      .filter + .filter {
-        margin-left: 10px;
-      }
-    }
-
-    .tbody {
-      display: flex;
-      flex-flow: row wrap;
-      align-items: stretch;
-      justify-content: space-between;
-    }
+  .view-content {
+    margin-bottom: 30px;
 
     .tr {
-      @include panel;
-      @include resolution_tablet-and-up {
-        width: calc(50% - 10px);
-      }
-      font-size: 0;
-      padding-bottom: 75px;
-
-      //separator
-      &:after {
-        content: " ";
-        display: block;
-        width: 100%;
-        height: 1px;
-        background-color: $color-borders;
-        margin-bottom: 10px;
-        position: absolute;
-        bottom: 44px;
-        left: 0;
-        z-index: 0;
-      }
-
       .td {
-        display: inline-block;
-        width: 100%;
-        position: relative;
-        font-size: $font-size;
-
-        &__label {
-          display: block;
-          width: 100%;
+        &__title {
           font-size: $font-size-bigger;
-          color: $color-gray-halfing;
           font-weight: $font-weight-medium;
-          margin-bottom: 3px;
+          margin-bottom: 5px;
+          color: $color-gray;
+
+          .link,
+          .tag {
+            vertical-align: middle;
+          }
+
+          .link {
+            margin-right: 5px;
+          }
+
+          .tag {
+            margin-bottom: 0;
+          }
         }
 
+        b {
+          color: #000;
+          font-weight: bold;
+          margin-right: 3px;
+        }
 
-        &-name {
-          margin: 10px 0;
-          .td__title {
-            .link {
-              font-size: $font-size-max;
-              text-decoration: none;
+        &--expandable {
+          cursor: pointer;
+
+          &:hover,
+          &.active {
+            background-color: rgba($color-general, 0.25);
+          }
+
+          &:hover,
+          &.active {
+            .td__popover {
+              display: block;
             }
           }
         }
-
-        &-age-phylo {
-          font-size: $font-size-big;
-        }
-
-        &-age-mya {
-          font-size: $font-size-max;
-          margin-top: 2px;
-        }
-
-        &-clusters {
-          margin-top: 10px;
-          .td__label {
-            margin-bottom: 5px;
-          }
-        }
-
-        &-external {
-          &,
-          .badge {
-            width: 80px;
-            margin-bottom: 0;
-          }
-
-          position: absolute;
-          left: 10px;
-          bottom: 12px;
-          &:nth-last-child(2) {
-            left: 100px;
-          }
-        }
-      }
-    }
-  }
-
-  // В виде таблицы
-  &.view-content--as-table {
-    display: block;
-    width: 100%;
-    overflow: auto;
-    font-size: 14px;
-    line-height: 1.5;
-    border: 1px solid $color-borders;
-    border-radius: 5px;
-
-    .cards-filters {
-      display: none;
-    }
-
-    .td,
-    .th {
-      display: table-cell;
-      vertical-align: top;
-      word-break: keep-all;
-      hyphens: auto;
-
-      &--text-left {
-        text-align: left;
-      }
-      &--text-center {
-        text-align: center;
-      }
-      &--text-right {
-        text-align: right;
       }
     }
 
-    .thead {
-      width: 100%;
-      display: table-header-group;
-    }
+    // В виде карточек
+    &.view-content--as-cards {
+      .thead {
+        display: none;
+      }
 
-    .th {
-      width: (100% / $columns-quantity); // Фикс для пустой таблицы
-      color: #212121;
-      text-align: center;
-      font-weight: 400;
-      padding: 8px 10px 10px 10px;
-      border-bottom: 2px solid $color-borders;
-      background-color: $color-gray-very-light;
-      position: relative;
-      transition: background-color .15s linear;
-
-      &__title {
+      .cards-filters {
         width: 100%;
-        @include overflow-lines(12px, 1.3, 3, 0);
+        margin-bottom: 20px;
+
+        .filter + .filter {
+          margin-left: 10px;
+        }
       }
 
-      .fa {
-        display: inline;
-        font-size: 12px;
-        margin-left: 5px;
+      .tbody {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: stretch;
+        justify-content: space-between;
       }
 
-      &--sortable {
-        cursor: pointer;
-        color: $color-general;
-        padding-right: 20px;
+      .tr {
+        @include panel;
+        @include resolution_tablet-and-up {
+          width: calc(50% - 10px);
+        }
+        font-size: 0;
+        padding-bottom: 75px;
 
-        .sort-icon {
-          font-size: 16px;
+        //separator
+        &:after {
+          content: " ";
+          display: block;
+          width: 100%;
+          height: 1px;
+          background-color: $color-borders;
+          margin-bottom: 10px;
           position: absolute;
-          top: 6px;
-          right: 10px;
+          bottom: 44px;
+          left: 0;
+          z-index: 0;
         }
 
-        &:hover {
-          background-color: rgba($color-hover, .3);
+        .td {
+          display: inline-block;
+          width: 100%;
+          position: relative;
+          font-size: $font-size;
+
+          &__label {
+            display: block;
+            width: 100%;
+            font-size: $font-size-bigger;
+            color: $color-gray-halfing;
+            font-weight: $font-weight-medium;
+            margin-bottom: 3px;
+          }
+
+
+          &-name {
+            margin: 10px 0;
+
+            .td__title {
+              .link {
+                font-size: $font-size-max;
+                text-decoration: none;
+              }
+            }
+          }
+
+          &-age-phylo {
+            font-size: $font-size-big;
+          }
+
+          &-age-mya {
+            font-size: $font-size-max;
+            margin-top: 2px;
+          }
+
+          &-clusters {
+            margin-top: 10px;
+
+            .td__label {
+              margin-bottom: 5px;
+            }
+          }
+
+          &-external {
+            &,
+            .badge {
+              width: 80px;
+              margin-bottom: 0;
+            }
+
+            position: absolute;
+            left: 10px;
+            bottom: 12px;
+
+            &:nth-last-child(2) {
+              left: 100px;
+            }
+          }
         }
-
-        @include resolution_smartphone {
-          white-space: nowrap;
-        }
-      }
-
-      &--sorted {
-        color: $color-orange;
-
-        .sort-icon {
-          transform: scale(1, -1)translateY(-5px)translateZ(0);
-        }
-
-        &,
-        &:hover {
-          background-color: rgba($color-orange, .15);
-        }
-      }
-
-      &:first-child,
-      &:nth-child(2) {
-        text-align: left;
       }
     }
 
-    .tbody {
-      display: table-row-group;
-    }
+    // В виде таблицы
+    &.view-content--as-table {
+      display: block;
+      width: 100%;
+      overflow: auto;
+      font-size: 14px;
+      line-height: 1.5;
+      border: 1px solid $color-borders;
+      border-radius: 5px;
 
-    .tr {
-      display: table-row;
-      position: relative;
-      .td {
-        color: $color-indent;
-        padding: 6px 8px 12px 8px;
+      .cards-filters {
+        display: none;
+      }
+
+      .td,
+      .th {
+        display: table-cell;
+        vertical-align: top;
+        word-break: keep-all;
+        hyphens: auto;
+
+        &--text-left {
+          text-align: left;
+        }
+
+        &--text-center {
+          text-align: center;
+        }
+
+        &--text-right {
+          text-align: right;
+        }
+      }
+
+      .thead {
+        width: 100%;
+        display: table-header-group;
+      }
+
+      .th {
+        width: (100% / $columns-quantity); // Фикс для пустой таблицы
+        color: #212121;
+        text-align: center;
+        font-weight: 400;
+        padding: 8px 10px 10px 10px;
+        border-bottom: 2px solid $color-borders;
+        background-color: $color-gray-very-light;
+        position: relative;
+        transition: background-color .15s linear;
+
+        &__title {
+          width: 100%;
+          @include overflow-lines(12px, 1.3, 3, 0);
+        }
+
+        .fa {
+          display: inline;
+          font-size: 12px;
+          margin-left: 5px;
+        }
+
+        &--sortable {
+          cursor: pointer;
+          color: $color-general;
+          padding-right: 20px;
+
+          .sort-icon {
+            font-size: 16px;
+            position: absolute;
+            top: 6px;
+            right: 10px;
+          }
+
+          &:hover {
+            background-color: rgba($color-hover, .3);
+          }
+
+          @include resolution_smartphone {
+            white-space: nowrap;
+          }
+        }
+
+        &--sorted {
+          color: $color-orange;
+
+          .sort-icon {
+            transform: scale(1, -1) translateY(-5px) translateZ(0);
+          }
+
+          &,
+          &:hover {
+            background-color: rgba($color-orange, .15);
+          }
+        }
+
+        &:first-child,
+        &:nth-child(2) {
+          text-align: left;
+        }
+      }
+
+      .tbody {
+        display: table-row-group;
+      }
+
+      .tr {
+        display: table-row;
         position: relative;
 
-        &__label,
-        &__unit {
-          display: none;
+        .td {
+          color: $color-indent;
+          padding: 6px 8px 12px 8px;
+          position: relative;
+
+          &__label,
+          &__unit {
+            display: none;
+          }
         }
-      }
 
-      .td + .td {
-        border-left: 1px solid $color-borders;
-      }
-
-      .tr__edit-btn {
-        display: block;
-        height: 22px;
-        width: 22px;
-        font-size: 16px;
-        color: $color-general;
-        text-align: center;
-        line-height: 22px;
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        z-index: 2;
-        cursor: pointer;
-        opacity: .35;
-        transition: opacity .15s ease-in;
-        &:hover {
-          opacity: 1;
+        .td + .td {
+          border-left: 1px solid $color-borders;
         }
-      }
 
-      &:hover {
-        border-color: $color-general;
         .tr__edit-btn {
-          opacity: .75;
+          display: block;
+          height: 22px;
+          width: 22px;
+          font-size: 16px;
+          color: $color-general;
+          text-align: center;
+          line-height: 22px;
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          z-index: 2;
+          cursor: pointer;
+          opacity: .35;
+          transition: opacity .15s ease-in;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+
+        &:hover {
+          border-color: $color-general;
+
+          .tr__edit-btn {
+            opacity: .75;
+          }
         }
       }
-    }
 
-    .th:first-child,
-    .td:first-child {
-      padding-left: 8px;
-    }
+      .th:first-child,
+      .td:first-child {
+        padding-left: 8px;
+      }
 
-    .tr:nth-child(even) {
-      background: $color-gray-very-light;
-    }
+      .tr:nth-child(even) {
+        background: $color-gray-very-light;
+      }
 
-    .tr:nth-child(odd) {
-      background: #fff;
-    }
+      .tr:nth-child(odd) {
+        background: #fff;
+      }
 
+    }
   }
-}
 
-.loader_container{
-  text-align: center;
+  // .btn-more { }
+
+  .loader-container {
+    text-align: center;
+  }
 }

@@ -78,5 +78,6 @@
   "использование_продукта_гена_в_часах_старения" : "Gene product involvement in Aging Clock",
   "search" : "Search",
   "items_found": "Items found",
-  "nothing_found": "Nothing found"
+  "nothing_found": "Nothing found",
+  "show_more": "Show more"
 }

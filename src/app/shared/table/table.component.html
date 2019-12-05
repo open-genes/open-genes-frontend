@@ -94,11 +94,14 @@
       </div>
     </section>
 
-    <div class="btn-more" *ngIf="searchedData?.length > loadedGenesQuantity">
-      <button (click)="loadMoreGenes()">Показать еще</button>
+    <div class="btn-wrap btn-more" *ngIf="searchedData?.length > loadedGenesQuantity">
+      <button
+        (click)="loadMoreGenes()"
+        class="btn btn--big btn-purple btn--small"
+      >{{ 'show_more' | translate }}</button>
     </div>
 
-    <div class="loader_container" *ngIf="loading">
+    <div class="loader-container" *ngIf="loading">
       <i class="fa fa-spinner fa-spin fa-3x"></i>
     </div>
   </ng-container>
