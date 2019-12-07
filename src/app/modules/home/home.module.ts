@@ -6,11 +6,13 @@ import {HOME_ROUTES} from './home-routing';
 import {TableModule} from '../../shared';
 import {MiniCardsComponent} from '../../shared/mini-cards/mini-cards.component';
 import {TranslateModule} from '@ngx-translate/core';
+import {NewsComponent} from '../../shared/news/news.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    MiniCardsComponent
+    MiniCardsComponent,
+    NewsComponent
   ],
   imports: [
     CommonModule,

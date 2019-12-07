@@ -11,7 +11,7 @@
 </div>
 
 <div class="col col-16">
-  <ng-container *ngIf="searchedData?.length !== 0">
+  <ng-container *ngIf="searchedData?.length !== 0 && !loading">
     <section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
       <div class="thead">
         <div class="th th--sortable" (click)="getGenes('name')" [class.th--sorted]="isSorted.name">
@@ -75,10 +75,18 @@
             {{data.ageMya}} {{ 'million_years' | translate }}
           </div>
           <div class="td cell td-clusters">
-            <span class="tag" *ngFor="let funcCluster of data.functionalClusters">{{funcCluster.name}}</span>
+            <span class="tag"
+                  *ngFor="let item of data.functionalClusters"
+                  (click)="filterByFuncClusters(item.id)"
+                  [class.active]="funcCluster.includes(item.id)">
+              {{item.name}}
+            </span>
           </div>
           <div class="td cell td-expression">
-            <span class="tag" *ngIf="data.expressionChange">{{data.expressionChange}}</span>
+            <span class="tag"
+                  *ngIf="data.expressionChange"
+                  (click)="filterByExpressionChange(data.expressionChange)"
+                  [class.active]="expression === data.expressionChange">{{data.expressionChange}}</span>
           </div>
           <div class="td cell text-right td-external">
             <a href="http://disgenet.org/browser/1/1/0/{{data.entrezGene}}/"
@@ -101,10 +109,11 @@
       >{{ 'show_more' | translate }}</button>
     </div>
 
-    <div class="loader-container" *ngIf="loading">
-      <i class="fa fa-spinner fa-spin fa-3x"></i>
-    </div>
   </ng-container>
+
+  <div class="loader-container" *ngIf="loading">
+    <i class="fa fa-spinner fa-spin fa-3x"></i>
+  </div>
 
   <ng-container *ngIf="searchedData?.length == 0">
     <section class="col col-16 no-content">

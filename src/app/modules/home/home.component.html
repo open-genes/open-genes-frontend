@@ -31,7 +31,18 @@
 
       <app-table
         [dataSource]="genes"
+        (filterCluster)="filterByFuncClusters($event)"
+        (filterExpression)="filterByExpressionChange($event)"
         *ngIf="genes"></app-table>
+
+      <app-news
+        [gene]="newsGene"
+        *ngIf="newsGene"></app-news>
+
+      <div class="loading_data"
+           *ngIf="!genes || !lastGenes">
+        <p class="page__subtitle">{{ 'ui_loader' | translate }}</p>
+      </div>
     </div>
   </div>
 </div>
