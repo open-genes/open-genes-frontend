@@ -6,7 +6,7 @@
          placeholder="{{ 'search' | translate }}"
          class="field"
          required
-         (focusin)="hasResult = true"
+         (focusin)="search()"
   >
   <div class="autocomplete-list"
        *ngIf="hasResult">

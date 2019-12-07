@@ -28,6 +28,7 @@ export class SearchComponent implements OnInit {
   // }
 
   private search() {
+    this.hasResult = true;
     const searchText = this.searchForm.get('searchText').value.toLowerCase();
     this.searchedData = this.dataSource.filter((item) => {
       const searchedText = (item.symbol + ' ' + item.name + ' ' + item.aliases.join(' ')).toLowerCase();
@@ -43,7 +44,6 @@ export class SearchComponent implements OnInit {
     this.searchForm.valueChanges.subscribe((x) => {
       if (x) {
         this.search();
-        this.hasResult = true;
       }
     });
   }
