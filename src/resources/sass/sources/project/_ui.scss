@@ -1,5 +1,7 @@
 .sidebar {
   @include resolution_widescreen {
+    flex: 20% 1 1;
+
     &--right {
       padding-left: 30px;
     }
@@ -9,12 +11,20 @@
   }
 
   @include resolution_all-but-widescreen {
+    flex: 100% 1 1;
     order: 2;
   }
 }
 
 .content {
   max-width: 100%;
+
+  @include resolution_widescreen {
+    flex: 80% 1 1;
+  }
+  @include resolution_all-but-widescreen {
+    flex: 100% 1 1;
+  }
 }
 
 // Класс для skeleton screens

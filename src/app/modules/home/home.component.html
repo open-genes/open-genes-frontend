@@ -28,7 +28,7 @@
 
       <div class="col col-16">
         <div class="flex-subcontainer">
-          <div class="per per-20 sidebar sidebar--left">
+          <div class="per sidebar sidebar--left">
             <app-news
               [gene]="newsGene"
               *ngIf="newsGene && genes"
@@ -41,7 +41,7 @@
             ></app-mini-cards>
           </div>
 
-          <div class="per per-80 content">
+          <div class="per content">
             <app-table
               [dataSource]="genes"
               (filterCluster)="filterByFuncClusters($event)"
