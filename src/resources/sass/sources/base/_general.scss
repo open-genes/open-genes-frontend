@@ -99,7 +99,7 @@ $header-height: 50px;
   width: 100%;
   height: $header-height;
   color: #fff;
-  background-color: #7673d1;
+  background-color: $color-base;
   position: fixed;
   top: 0;
   left: 0;
@@ -315,7 +315,7 @@ $header-height: 50px;
 
     .page__subtitle {
       font-size: 16px;
-      color: $color-indent;
+      color: $color-black;
       font-weight: $font-weight-medium;
       margin-bottom: 10px;
     }

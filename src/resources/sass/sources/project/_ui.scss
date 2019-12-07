@@ -32,6 +32,7 @@
   user-select: none;
   cursor: pointer;
   position: relative;
+  user-select: none;
 
   &:after { // TODO: добавить шаблон
     content: '';
@@ -107,6 +108,7 @@
   background-color: $color-gray-halfing;
   opacity: .85;
   transition: opacity .15s linear;
+  user-select: none;
 
   @include resolution_smartphone {
     padding: 0 5px;
@@ -141,7 +143,7 @@
   }
 
   &--biogrid {
-    background-color: darken(desaturate(#FFC769, 2%), 10%);
+    background-color: $color-orange;
   }
 
   // Класс для skeleton screens
@@ -263,13 +265,6 @@ a.badge {
 
 // ALias
 .alias {
-  display: inline;
-  font-style: italic;
-  color: $color-gray;
-}
-
-// Tags
-.tag {
   display: inline-block;
   vertical-align: middle;
   min-width: 40px;
@@ -281,6 +276,7 @@ a.badge {
   border-radius: 3px;
   margin: 0 5px 5px 0;
   background-color: $color-gray-soft;
+  user-select: none;
 
   &--small {
     min-width: 20px;
@@ -299,17 +295,53 @@ a.badge {
     height: 23px;
     min-width: 100px;
   }
-
-  &.active{
-    background-color: #cccccc;
-  }
 }
 
-.info-sign {
+// Tags
+.tag {
+  display: inline-block;
   vertical-align: middle;
-  font-size: 15px;
+  min-width: 40px;
+  padding: 3px 5px;
+  font-size: $font-size-small;
+  font-weight: 500;
   color: $color-general;
+  white-space: nowrap;
+  text-align: center;
+  background-color: lighten($color-hover, 3);
+  border-radius: 3px;
+  margin: 0 5px 5px 0;
   cursor: pointer;
+  user-select: none;
+
+  &--small {
+    min-width: 25px;
+    font-size: 10px;
+  }
+
+  @include resolution_smartphone-and-tablet {
+    min-height: 17px;
+    font-size: 10px;
+    font-weight: $font-weight-bold;
+  }
+
+  // Класс для skeleton screens
+  &.__skeletal {
+    height: 23px;
+    min-width: 100px;
+  }
+
+  &:not(.__skeletal):not(.__active) {
+    &:hover {
+      color: $color-base-text;
+      background-color: $color-hover;
+    }
+  }
+
+  &.__active{
+    color: desaturate(darken($color-orange, 12%), 2);
+    background-color: $color-active;
+  }
 }
 
 // Field
@@ -363,10 +395,6 @@ a.badge {
     text-overflow: ellipsis;
   }
 
-  &:focus {
-    outline: none;
-  }
-
   &--error {
     border-color: $color-red-medium;
   }
@@ -383,7 +411,7 @@ input[type='password'] {
   height: 33px;
 }
 
-// Rows
+// Rows for forms
 .ui-row {
   display: flex;
   flex-direction: row;
@@ -890,7 +918,8 @@ $classes: btn-blue, btn-green, btn-red;
   cursor: pointer;
   padding: 0 20px 0 8px;
   border-radius: 15px;
-  background-color: rgba($color-hover, .3);
+  background-color: lighten($color-hover, 3);
+  user-select: none;
 
   .sort-icon {
     font-size: 16px;
@@ -900,11 +929,11 @@ $classes: btn-blue, btn-green, btn-red;
   }
 
   &:hover {
-    background-color: rgba($color-hover, .5);
+    background-color: $color-hover;
   }
 
   &--sorted {
-    color: $color-orange;
+    color: desaturate(darken($color-orange, 12%), 2);
 
     .sort-icon {
       transform: scale(1, -1) translateY(-7px) translateZ(0);
@@ -912,7 +941,7 @@ $classes: btn-blue, btn-green, btn-red;
 
     &,
     &:hover {
-      background-color: rgba($color-orange, .15);
+      background-color: $color-active;
     }
   }
 }

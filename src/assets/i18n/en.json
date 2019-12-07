@@ -11,7 +11,7 @@
   "main_page_table_name" : "HGNC, gene name",
   "phylogeny" : "Origin",
   "main_page_table_functional_classes" : "Functional classes",
-  "возрастные_изменения_экспрессии" : "Age-related changes in expression:",
+  "main_page_table_expression" : "Age-related changes in expression:",
   "diseases" : "Diseases",
   "main_page_table_interactions" : "Interactions",
   "gene_page_link_disgenet" : "Gene page on DisGenet",

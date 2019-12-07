@@ -14,6 +14,7 @@
       <a
         *ngIf="i < 5"
         class="autocomplete-list__item"
+        tabindex="0"
         [routerLink]="['/gene', data.id]"
       >
         <span class="item__symbol">{{data.symbol}}</span>&nbsp;<span class="item__name">{{data.name}}</span>
@@ -26,7 +27,7 @@
      class="backdrop"
      (click)="hasResult = false"></div>
 
-<div class="page__subtitle col col-16 __mt-10"
+<div class="page__subtitle __mt-10"
      *ngIf="searchForm.valid">
   {{ 'items_found' | translate }} {{searchedData?.length}}
 </div>
