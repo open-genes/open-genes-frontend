@@ -15,10 +15,13 @@
     align-items: flex-end;
   }
 
-  // Можно использовать все те же классы, но также есть
-  // Блок, заполняющий свободное пространство
-
   // Проценты
+  & > .#{$prefix}per {
+    flex-basis: auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+
   @for $i from 1 through 100 {
     & > .#{$prefix}per-#{$i} {
       width: unset;

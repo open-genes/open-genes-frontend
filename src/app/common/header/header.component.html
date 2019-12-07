@@ -1,7 +1,13 @@
 <header class="header">
-  <a class="header__logo"
-     [routerLink]="'/'"
-     title="{{'main_page_link' | translate}}">
-  </a>
-  <app-menu></app-menu>
+  <div class="header__centering">
+    <a class="header__logo"
+       [routerLink]="'/'"
+       title="{{'main_page_link' | translate}}">
+    </a>
+
+    <div class="header__right">
+      <app-language></app-language>
+      <app-menu></app-menu>
+    </div>
+  </div>
 </header>

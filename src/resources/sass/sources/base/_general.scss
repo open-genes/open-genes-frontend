@@ -13,6 +13,7 @@ body {
   right: 0;
   padding-top: 50px;
   padding-bottom: 100px;
+  background-color: #fff;
 
   * {
     box-sizing: border-box;
@@ -91,10 +92,12 @@ a.reference-link {
   }
 }
 
+$header-height: 50px;
+
 .header {
   display: block;
   width: 100%;
-  height: 50px;
+  height: $header-height;
   color: #fff;
   background-color: #7673d1;
   position: fixed;
@@ -104,13 +107,23 @@ a.reference-link {
   padding: 0 5px;
   box-shadow: 0 1px 4px 0 rgba(5,5,5,.14);
 
+  &__centering {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+
+    @media screen and (min-width: 1600px) {
+      padding: 0 calc(50% - 800px);
+    }
+  }
+
   &__logo,
-  .signin__button {
+  .signin-button {
     display: block;
-    height: 40px;
-    min-width: 40px;
+    height: ($header-height - 10px);
+    min-width: ($header-height - 10px);
     color: #fff;
-    line-height: 40px;
+    line-height: ($header-height - 10px);
     text-align: center;
     cursor: pointer;
     &:after {
@@ -144,20 +157,35 @@ a.reference-link {
     position: relative;
     margin: 5px 0;
   }
-  &__signin {
+
+  &__right {
+    height: $header-height;
     float: right;
-    padding-right: 60px;
+    position: relative;
+
+    app-language,
+    app-menu {
+      display: inline-block;
+      height: 100%;
+      vertical-align: top;
+    }
 
     app-language {
-      margin-top: 15px;
+      padding-top: 15px;
       .language-switcher {
         color: #7673d1;
       }
     }
 
-    .signin__button {
+    app-menu {
+      position: relative;
+      width: 60px;
+    }
+
+    .signin-button {
       position: absolute;
-      top: 5px;
+      top: 50%;
+      transform: translateY(-50%);
       right: 10px;
       z-index: 6;
       font-size: 18px;
@@ -182,7 +210,7 @@ a.reference-link {
 
     .menu__panel {
       height: 100%;
-      padding: 60px 0 30px 0;
+      padding: $header-height 0 30px 0;
       position: absolute;
       top: 0;
       right: 0;
@@ -288,6 +316,7 @@ a.reference-link {
     .page__subtitle {
       font-size: 16px;
       color: $color-indent;
+      font-weight: $font-weight-medium;
       margin-bottom: 10px;
     }
   }

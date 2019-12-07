@@ -1,3 +1,22 @@
+.sidebar {
+  @include resolution_widescreen {
+    &--right {
+      padding-left: 30px;
+    }
+    &--left {
+      padding-right: 30px;
+    }
+  }
+
+  @include resolution_all-but-widescreen {
+    order: 2;
+  }
+}
+
+.content {
+  max-width: 100%;
+}
+
 // Класс для skeleton screens
 .__skeletal {
   color: $color-gray;
@@ -414,7 +433,7 @@ input[type='password'] {
 
 // Button
 .btn {
-  @include display(block);
+  @include display(inline-block);
   min-width: 80px;
   height: 33px;
   line-height: 33px;
@@ -707,7 +726,7 @@ $classes: btn-blue, btn-green, btn-red;
   width: 100%;
   padding: 20px 10px;
   border-radius: 5px;
-  background-color: #eff2fc;
+  background-color: $color-general-light;
   color: #5C6796;
   margin-bottom: 10px;
 }

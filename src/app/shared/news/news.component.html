@@ -1,13 +1,18 @@
-<h1 class="news-title">Новости Pubmed</h1>
+<div class="page__subtitle view-latest__title">
+  {{ 'news_list_title' | translate }}
+</div>
 <ul class="news">
-  <li *ngFor="let item of newsList">
-    <a [routerLink]="['/gene', gene?.id]">
-      <span class="name">{{gene?.symbol}}</span>
-      <span class="gene">страница гена</span>
-    </a>
-    <a href="{{item.url}}" target="_blank">
-      <p class="title">{{item.title}}</p>
-      <p class="url">{{item.url}}</p>
-    </a>
+  <li *ngFor="let item of newsList"
+      class="news__item"
+  >
+    <div class="item__gene">
+      <a [routerLink]="['/gene', gene?.id]"
+       class="tag">{{gene?.symbol}}</a>
+    </div>
+
+    <a href="{{item.url}}"
+       class="item__title link link--gray"
+       target="_blank"
+    >{{item.title}}</a>
   </li>
 </ul>

@@ -1,16 +1,16 @@
 {
   "main_page_link" : "Главная",
   "main_page_header_title" : "Open Longevity Genes",
-  "main_page_header_description" : "Собираем информацию о генах, ассоциированных со старением и продолжительностью жизни: их эволюционном возрасте и функциях.",
+  "main_page_header_description" : "Мы собираем информацию о генах, ассоциированных со старением и продолжительностью жизни: об их эволюционном возрасте и функциях.",
   "main_page_header_button" : "Подробнее",
   "main_page_last" : "Последние добавленные",
   "million_years" : "млн. лет",
-  "age" : "Возраст",
+  "age" : "возраст",
   "age_unknown" : "Неизвестен",
   "main_page_total" : "Всего генов:",
-  "main_page_table_name" : "HGNC, название",
+  "main_page_table_name" : "HGNC, название гена",
   "phylogeny" : "Происхождение",
-  "main_page_table_functional_clusters" : "Функциональные кластеры:",
+  "main_page_table_functional_classes" : "Функциональные классы:",
   "возрастные_изменения_экспрессии" : "Возрастные изменения экспрессии:",
   "diseases" : "Заболевания",
   "main_page_table_interactions" : "Взаимодействия",
@@ -79,5 +79,6 @@
   "search" : "Поиск",
   "items_found": "Найдено:",
   "nothing_found": "Ничего не найдено",
-  "show_more": "Показать еще"
+  "show_more": "Показать еще",
+  "news_list_title": "Новые статьи"
 }

@@ -5,12 +5,12 @@
   "main_page_header_button" : "More",
   "main_page_last" : "Last added",
   "million_years" : "m. years",
-  "age" : "Age",
+  "age" : "age",
   "age_unknown" : "Unknown",
   "main_page_total" : "Genes total:",
-  "main_page_table_name" : "HGNC, name",
+  "main_page_table_name" : "HGNC, gene name",
   "phylogeny" : "Origin",
-  "main_page_table_functional_clusters" : "Functional clusters",
+  "main_page_table_functional_classes" : "Functional classes",
   "возрастные_изменения_экспрессии" : "Age-related changes in expression:",
   "diseases" : "Diseases",
   "main_page_table_interactions" : "Interactions",
@@ -79,5 +79,6 @@
   "search" : "Search",
   "items_found": "Items found",
   "nothing_found": "Nothing found",
-  "show_more": "Show more"
+  "show_more": "Show more",
+  "news_list_title": "New articles"
 }

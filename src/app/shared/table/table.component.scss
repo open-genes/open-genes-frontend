@@ -26,7 +26,7 @@
   $columns-quantity: 7;
 
   .view-content {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 
     .tr {
       .td {
@@ -99,7 +99,7 @@
       .tr {
         @include panel;
         @include resolution_tablet-and-up {
-          width: calc(50% - 10px);
+          width: calc(50% - 10px); // TODO: убрать calc
         }
         font-size: 0;
         padding-bottom: 75px;
@@ -185,6 +185,7 @@
     &.view-content--as-table {
       display: block;
       width: 100%;
+      max-width: 100%;
       overflow: auto;
       font-size: 14px;
       line-height: 1.5;
@@ -201,18 +202,6 @@
         vertical-align: top;
         word-break: keep-all;
         hyphens: auto;
-
-        &--text-left {
-          text-align: left;
-        }
-
-        &--text-center {
-          text-align: center;
-        }
-
-        &--text-right {
-          text-align: right;
-        }
       }
 
       .thead {
@@ -351,7 +340,26 @@
     }
   }
 
-  // .btn-more { }
+  .show-more {
+    margin-bottom: 20px;
+    &__button {
+      width: 100%;
+      $btn-height: 30px;
+      height: $btn-height;
+      line-height: ($btn-height - 2px);
+      padding: 0 10px;
+      font-size: 14px;
+      font-weight: $font-weight-medium;
+      background: $color-hover;
+      background-color: lighten($color-hover, 5%);
+      border: 1px solid darken($color-hover, 5%);
+
+      &:hover {
+        background-color: $color-hover;
+        border: 1px solid darken($color-hover, 10%);
+      }
+    }
+  }
 
   .loader-container {
     text-align: center;

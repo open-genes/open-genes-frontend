@@ -20,6 +20,7 @@ $font-weight-black: 900;
 
 // COLORS
 // -Base
+$color-general-light: #eff2fc;
 $color-general: #4363eb;
 $color-general-dark: darken($color-general, 15%);
 
@@ -49,8 +50,8 @@ $color-yellow: #ffd700;
 $color-pink: #ffC0cb;
 $color-red-light: #f8c9c4;
 $color-red-medium: #f39f96;
-$color-red: #e74c3c;
-$color-red-dark: #cd3121;
+$color-red: #FF4E1A;
+$color-red-dark: darken($color-red, 5%);
 
 // Elements variables
 $color-indent: #575757;
@@ -58,8 +59,8 @@ $color-borders: $color-gray-light;
 $color-border-light: #e3e4e8;
 
 // States variables
-$color-hover: #afbef0;
-$color-selected: #a1b5f7;
+$color-hover: darken($color-general-light, 5%);
+$color-selected: darken($color-hover, 5%);
 $success-color: $color-green-medium;
 $error-color: $color-red-medium;
 

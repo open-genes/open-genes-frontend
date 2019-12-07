@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   lastGenes: IGene[];
   newsGene: IGene;
 
-  private expressionTranslates = {
+  private expressionTranslates = { // TODO: убрать хардкод
     уменьшается: 'decreased',
     увеличивается: 'increased',
     неоднозначно: 'mixed'
@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   private getGenes() {
     this.apiService.getGenes().subscribe((genes) => {
       this.genes = genes;
-      this.newsGene = genes[Math.floor(Math.random() * genes.length)];
+      this.newsGene = genes[Math.floor(Math.random() * genes.length)]; // TODO: сделать нормальное ранжирование
     });
   }
 

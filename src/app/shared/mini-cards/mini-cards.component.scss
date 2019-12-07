@@ -1,0 +1,101 @@
+@import "../../../resources/sass/dependencies";
+
+.view-latest {
+  width: 100%;
+
+  &__title.page__subtitle {
+    margin-bottom: 0;
+  }
+
+  &__content {
+    display: flex;
+    min-width: 100%;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: stretch;
+    padding: 10px 0;
+    margin: 0 -5px;
+  }
+
+  &__card {
+    color: #fff;
+    padding: 5px;
+    align-self: stretch;
+
+    @include resolution_widescreen {
+      flex: 50% 0 0;
+      font-size: 20px;
+    }
+
+    @include resolution_tablet-and-desktop {
+      flex: 25% 0 0;
+      font-size: 16px;
+    }
+
+    @include resolution_smartphone {
+      flex: 50% 0 0;
+      font-size: 16px;
+    }
+
+    .card__inner {
+      height: 100%;
+      border-radius: 10px;
+      padding: 10px;
+      background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+
+      .card__title {
+        width: 100%;
+        font-size: 1rem;
+        font-weight: $font-weight-medium;
+        margin-bottom: 10px;
+      }
+
+      .card__phylo,
+      .card__mya {
+        width: 100%;
+        font-size: .8rem;
+      }
+    }
+
+    &:first-child {
+      .card__inner {
+        background-image: linear-gradient(120deg, #436BFF 0%, #5579ff 100%);
+        &:hover,
+        &:active {
+          background-image: linear-gradient(120deg, darken(#436BFF, 10%) 0%, #5579ff 100%);
+        }
+      }
+    }
+    &:nth-child(2) {
+      .card__inner {
+        background-image: linear-gradient(to top, #F3714B 0%, #FE7E5B 100%);
+        &:hover,
+        &:active {
+          background-image: linear-gradient(to top, darken(#F3714B, 10%) 0%, #FE7E5B 100%);
+        }
+      }
+    }
+    &:nth-child(3) {
+      .card__inner {
+        background-image: linear-gradient(to right, #FFAC5F 0%, #FFC769 100%);
+        &:hover,
+        &:active {
+          background-image: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, #FFC769 100%);
+        }
+      }
+    }
+    &:last-child {
+      .card__inner {
+        background-image: linear-gradient(120deg, #83E5CE 0%, #83E5CE 100%);
+        &:hover,
+        &:active {
+          background-image: linear-gradient(120deg, darken(#83E5CE, 10%) 0%, #83E5CE 100%);
+        }
+      }
+    }
+
+    @media only screen and (max-width: 767px) {
+      flex-basis: 50%;
+    }
+  }
+}

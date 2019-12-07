@@ -10,38 +10,49 @@
             {{ 'main_page_header_description' | translate }}
           </div>
           <div class="header__button">
-            <a routerLink="/about" class="btn btn-purple btn-flat js_link">{{ 'main_page_header_button' | translate }}</a>
+            <a routerLink="/about"
+               class="btn btn-purple btn-fill">{{ 'main_page_header_button' | translate }}</a>
           </div>
         </div>
       </div>
     </div>
     <div class="container">
       <section class="col col-16 no-content" *ngIf="!genes && !lastGenes">
-      <div class="no-content__icon no-content__icon-standard"></div>
-      <div class="no-content__title">
-        <div class="title__center">
-          {{ 'error_connection' | translate }}
+        <div class="no-content__icon no-content__icon-standard"></div>
+        <div class="no-content__title">
+          <div class="title__center">
+            {{ 'error_connection' | translate }}
+          </div>
         </div>
-      </div>
       </section>
 
-      <app-mini-cards
-        [lastGenes]="lastGenes"
-        *ngIf="lastGenes"></app-mini-cards>
+      <div class="col col-16">
+        <div class="flex-subcontainer">
+          <div class="per per-20 sidebar sidebar--left">
+            <app-news
+              [gene]="newsGene"
+              *ngIf="newsGene && genes"
+              class="__mb-20"
+            ></app-news>
 
-      <app-table
-        [dataSource]="genes"
-        (filterCluster)="filterByFuncClusters($event)"
-        (filterExpression)="filterByExpressionChange($event)"
-        *ngIf="genes"></app-table>
+            <app-mini-cards
+              [lastGenes]="lastGenes"
+              *ngIf="lastGenes"
+            ></app-mini-cards>
+          </div>
 
-      <app-news
-        [gene]="newsGene"
-        *ngIf="newsGene"></app-news>
+          <div class="per per-80 content">
+            <app-table
+              [dataSource]="genes"
+              (filterCluster)="filterByFuncClusters($event)"
+              (filterExpression)="filterByExpressionChange($event)"
+              *ngIf="genes"></app-table>
 
-      <div class="loading_data"
-           *ngIf="!genes || !lastGenes">
-        <p class="page__subtitle">{{ 'ui_loader' | translate }}</p>
+            <div *ngIf="!genes || !lastGenes">
+              <!-- TODO: лоадер -->
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

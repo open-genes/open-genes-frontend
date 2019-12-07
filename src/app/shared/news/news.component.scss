@@ -1,33 +1,31 @@
-.news-title{
-  margin-top: 30px;
-  font-size: 28px;
+@import "../../../resources/sass/dependencies";
+
+:host {
+  display: inline-block;
+  flex: none;
 }
 
 .news {
+  display: block;
   font-size: 14px;
 
-  li {
-    margin-top: 20px;
+  &__item {
+    display: block;
     width: 100%;
 
-    .name {
-      color: #ff4e1a;
-      margin-right: 20px;
+    .item__gene {
+      width: 100%;
     }
 
-    .gene {
-      color: #bababa;
-      text-decoration: underline;
+    .item__title {
+      margin-top: 5px;
+      white-space: normal;
+      word-break: break-word;
+      hyphens: auto;
     }
 
-    .title {
-      color: #2d3138;
-      text-decoration: underline;
-      margin: 10px 0 5px;
-    }
-
-    .url {
-      color: #4073f6;
+    & + & {
+      margin-top: 15px;
     }
   }
 }
