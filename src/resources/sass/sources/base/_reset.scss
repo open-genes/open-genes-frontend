@@ -22,7 +22,7 @@ input,
 button,
 a {
   &:focus {
-    outline: none;
+    outline-color: $color-hover;
   }
 }
 

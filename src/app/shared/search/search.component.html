@@ -1,7 +1,7 @@
 <form [formGroup]="searchForm"
       class="search-holder"
 >
-  <input formControlName="searchText"
+  <input formControlName="searchField"
          type="text"
          placeholder="{{ 'search' | translate }}"
          class="field"
@@ -11,14 +11,14 @@
   <div class="autocomplete-list"
        *ngIf="hasResult">
     <ng-container *ngFor="let data of searchedData; let i = index">
-      <a
+      <button
         *ngIf="i < 5"
         class="autocomplete-list__item"
         tabindex="0"
         [routerLink]="['/gene', data.id]"
       >
-        <span class="item__symbol">{{data.symbol}}</span>&nbsp;<span class="item__name">{{data.name}}</span>
-      </a>
+        <span class="item__symbol" [innerHTML]="data.symbol | highlight: searchedData"></span>&nbsp;<span class="item__name" [innerHTML]="data.name"></span>
+      </button>
     </ng-container>
   </div>
 </form>

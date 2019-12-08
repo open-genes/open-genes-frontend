@@ -7,20 +7,25 @@ import {TableModule} from '../../shared';
 import {MiniCardsComponent} from '../../shared/mini-cards/mini-cards.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {NewsComponent} from '../../shared/news/news.component';
-import {NgStripTagsPipeModule} from "angular-pipes";
+import {NgStripTagsPipeModule} from 'angular-pipes';
+import {PipesModule} from './pipes/pipes.module';
 
 @NgModule({
   declarations: [
     HomeComponent,
     MiniCardsComponent,
-    NewsComponent
+    NewsComponent,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(HOME_ROUTES),
     TableModule,
     TranslateModule,
-    NgStripTagsPipeModule
+    NgStripTagsPipeModule,
+    PipesModule
+  ],
+  exports: [
+    PipesModule
   ]
 })
 export class HomeModule {

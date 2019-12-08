@@ -39,7 +39,6 @@
   display: inline-block;
   width: 40px;
   height: 40px;
-  user-select: none;
   cursor: pointer;
   position: relative;
   user-select: none;
@@ -343,7 +342,7 @@ a.badge {
 
   &:not(.__skeletal):not(.__active) {
     &:hover {
-      color: $color-base-text;
+      color: $color-general;
       background-color: $color-hover;
     }
   }
@@ -954,4 +953,8 @@ $classes: btn-blue, btn-green, btn-red;
       background-color: $color-active;
     }
   }
+}
+
+mark {
+  background-color: $color-hover;
 }

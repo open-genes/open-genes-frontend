@@ -84,12 +84,13 @@
       &__item {
         display: block;
         width: 100%;
-        padding: 10px 5px;
+        padding: 10px;
         font-size: 14px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         cursor: pointer;
+        text-align: left;
 
         .item__symbol {
           font-weight: $font-weight-medium;

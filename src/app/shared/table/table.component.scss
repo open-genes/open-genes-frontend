@@ -243,25 +243,25 @@ $columns-quantity: 7;
         }
 
         &:hover {
-          color: $color-base-text;
           background-color: rgba($color-hover, .75);
         }
 
         @include resolution_smartphone {
           white-space: nowrap;
         }
-      }
 
-      &--sorted {
-        color: desaturate(darken($color-orange, 12%), 2);
+        &.th--sorted {
+          color: desaturate(darken($color-orange, 12%), 2);
 
-        .sort-icon {
-          transform: scale(1, -1) translateY(-5px) translateZ(0);
-        }
+          .sort-icon {
+            transform: scale(1, -1) translateY(-5px) translateZ(0);
+          }
 
-        &,
-        &:hover {
-          background-color: $color-active;
+          &,
+          &:hover {
+            color: desaturate(darken($color-orange, 12%), 2);
+            background-color: $color-active;
+          }
         }
       }
 

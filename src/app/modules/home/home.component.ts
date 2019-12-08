@@ -31,7 +31,8 @@ export class HomeComponent implements OnInit {
   private getGenes() {
     this.apiService.getGenes().subscribe((genes) => {
       this.genes = genes;
-      this.newsGene = genes[Math.floor(Math.random() * genes.length)]; // TODO: сделать нормальное ранжирование
+      this.newsGene = genes[Math.floor(Math.random() * genes.length)];
+      console.log(genes);
     });
   }
 
