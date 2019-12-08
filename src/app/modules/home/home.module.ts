@@ -7,6 +7,7 @@ import {TableModule} from '../../shared';
 import {MiniCardsComponent} from '../../shared/mini-cards/mini-cards.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {NewsComponent} from '../../shared/news/news.component';
+import {NgStripTagsPipeModule} from "angular-pipes";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {NewsComponent} from '../../shared/news/news.component';
     CommonModule,
     RouterModule.forChild(HOME_ROUTES),
     TableModule,
-    TranslateModule
+    TranslateModule,
+    NgStripTagsPipeModule
   ]
 })
 export class HomeModule {
