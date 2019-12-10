@@ -17,7 +17,7 @@
         tabindex="0"
         [routerLink]="['/gene', data.id]"
       >
-        <span class="item__symbol" [innerHTML]="data.symbol | highlight: searchedData"></span>&nbsp;<span class="item__name" [innerHTML]="data.name"></span>
+        <span class="item__symbol" [innerHTML]="data.symbol"></span>&nbsp;<span class="item__name" [innerHTML]="data.name"></span>
       </button>
     </ng-container>
   </div>

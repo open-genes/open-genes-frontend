@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import {SafePipe} from './safe.pipe';
-import {HighlightSearch} from './highlight.pipe';
+import {HighlightSearch} from './regex.pipe';
 
 const PIPES = [
   SafePipe,

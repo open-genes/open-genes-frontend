@@ -32,7 +32,6 @@ export class HomeComponent implements OnInit {
     this.apiService.getGenes().subscribe((genes) => {
       this.genes = genes;
       this.newsGene = genes[Math.floor(Math.random() * genes.length)];
-      console.log(genes);
     });
   }
 
