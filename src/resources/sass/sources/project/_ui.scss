@@ -1,3 +1,19 @@
+%clickable-badge {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 8px;
+  border: 1px solid #ddd;
+  font-size: 12px;
+  color: #444;
+  line-height: 26px;
+  border-radius: 4px;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  background-color: #fff;
+}
+
 .sidebar {
   @include resolution_widescreen {
     flex: 20% 1 1;
@@ -308,48 +324,25 @@ a.badge {
 
 // Tags
 .tag {
-  display: inline-block;
-  vertical-align: middle;
+  @extend %clickable-badge;
   min-width: 40px;
-  padding: 3px 5px;
-  font-size: $font-size-small;
-  font-weight: 500;
-  color: $color-general;
-  white-space: nowrap;
-  text-align: center;
-  background-color: lighten($color-hover, 3);
-  border-radius: 3px;
   margin: 0 5px 5px 0;
-  cursor: pointer;
-  user-select: none;
-
-  &--small {
-    min-width: 25px;
-    font-size: 10px;
-  }
-
-  @include resolution_smartphone-and-tablet {
-    min-height: 17px;
-    font-size: 10px;
-    font-weight: $font-weight-bold;
-  }
 
   // Класс для skeleton screens
   &.__skeletal {
-    height: 23px;
+    height: 26px;
     min-width: 100px;
   }
 
   &:not(.__skeletal):not(.__active) {
     &:hover {
-      color: $color-general;
-      background-color: $color-hover;
+      color: rgba($color-general, .85);
     }
   }
 
   &.__active{
-    color: desaturate(darken($color-orange, 12%), 2);
-    background-color: $color-active;
+    border-color: $color-general;
+    color: $color-general;
   }
 }
 
