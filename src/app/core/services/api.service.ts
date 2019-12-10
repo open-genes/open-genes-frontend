@@ -27,4 +27,12 @@ export class ApiService {
   getLastGene(): Observable<IGene[]> {
     return this.http.get<IGene[]>(`${this.url}/api/latest`);
   }
+
+  getGenesByFunctionalClusters(fc: number[]): Observable<IGene[]> {
+    return this.http.get<IGene[]>(`${this.url}/api/by-functional-cluster/${fc}?lang=${this.translate.currentLang}`);
+  }
+
+  getGenesByExpressionChange(expression: string): Observable<IGene[]> {
+    return this.http.get<IGene[]>(`${this.url}/api/by-expression-change/${expression}?lang=${this.translate.currentLang}`);
+  }
 }

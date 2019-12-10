@@ -1,7 +1,6 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
 import {IGene} from '../../core/models';
-import {fromEvent, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -12,24 +11,30 @@ import {TranslateService} from '@ngx-translate/core';
 export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() dataSource: IGene[];
+  @Output() filterCluster = new EventEmitter<number[]>();
+  @Output() filterExpression = new EventEmitter<string>();
   searchedData: IGene[];
-  loadedGenesQuantity = 20;
+  genesPerPage = 30;
+  loadedGenesQuantity = this.genesPerPage;
+  loading = true;
   isSorted = {
     name: false,
     ageMya: false
   };
   asCards = true;
   private subscription$ = new Subject();
+  private funcCluster: number[] = [];
+  private expression: string;
 
-  constructor(private translate: TranslateService) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.getScrollPosition();
   }
 
   ngOnChanges() {
     this.searchedData = this.dataSource;
+    this.loading = false;
   }
 
   getSearchedData(e: IGene[]) {
@@ -68,20 +73,35 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  private getScrollPosition() {
-    fromEvent(document, 'scroll')
-      .pipe(takeUntil(this.subscription$))
-      .subscribe(() => {
-        const d = document.documentElement;
-        const offset = d.scrollTop + window.innerHeight;
-        const height = d.offsetHeight;
-        if (offset >= height - 20 && this.dataSource.length >= this.loadedGenesQuantity) {
-          this.loadedGenesQuantity += 20;
-        }
-      });
+  private loadMoreGenes() {
+    if (this.searchedData.length >= this.loadedGenesQuantity) {
+      this.loadedGenesQuantity += this.genesPerPage;
+    }
   }
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
+  }
+
+  filterByFuncClusters(id: number) {
+    if (!this.funcCluster.includes(id)) {
+      this.funcCluster.push(id);
+    } else {
+      this.funcCluster = this.funcCluster.filter(item => item !== id);
+    }
+    this.expression = null;
+    this.loading = true;
+    this.filterCluster.emit(this.funcCluster);
+  }
+
+  filterByExpressionChange(expression: string) {
+    if (this.expression !== expression) {
+      this.expression = expression;
+    } else {
+      this.expression = null;
+    }
+    this.funcCluster = [];
+    this.loading = true;
+    this.filterExpression.emit(this.expression);
   }
 }

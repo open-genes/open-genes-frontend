@@ -36,14 +36,14 @@
         <div class="col col-16 header__functional-clusters">
           <ng-container *ngIf="gene.functionalClusters; else tagSkeletal">
             <ng-container *ngFor="let item of gene.functionalClusters">
-              <span class="tag">{{item.name}}</span>
+              <span class="alias">{{item.name}}</span>
             </ng-container>
           </ng-container>
           <ng-template #tagSkeletal>
-            <span class="tag __skeletal"></span>
-            <span class="tag __skeletal"></span>
-            <span class="tag __skeletal"></span>
-            <span class="tag __skeletal"></span>
+            <span class="alias __skeletal"></span>
+            <span class="alias __skeletal"></span>
+            <span class="alias __skeletal"></span>
+            <span class="alias __skeletal"></span>
           </ng-template>
         </div>
       </div>
@@ -131,7 +131,7 @@
         <div class="col col-16 articles__content" *ngIf="gene.aliases">
           <h3>{{ 'gebe_page_title_aliases' | translate }}</h3>
           <ng-container *ngFor="let item of gene.aliases">
-            <a href="" class="tag">{{item}}</a>
+            <a href="" class="alias">{{item}}</a>
           </ng-container>
         </div>
 
@@ -145,27 +145,27 @@
 
           <ul class="list contents-list">
             <li *ngIf="gene.commentEvolution">
-              <a href="#evolution">
+              <a [routerLink]="['/gene', id]" fragment="evolution">
                 {{ 'gene_page_title_evolution' | translate }}
               </a>
             </li>
             <li *ngIf="gene.commentFunction">
-              <a href="#function">
+              <a [routerLink]="['/gene', id]" fragment="function">
                 {{ 'gene_page_title_function' | translate }}
               </a>
             </li>
             <li *ngIf="gene.commentCause">
-              <a href="#cause">
+              <a [routerLink]="['/gene', id]" fragment="cause">
                 {{ 'gene_page_title_criteria' | translate }}
               </a>
             </li>
             <li *ngIf="gene.commentAging">
-              <a href="#aging">
+              <a [routerLink]="['/gene', id]" fragment="aging">
                 {{ 'gene_page_title_aging' | translate }}
               </a>
             </li>
             <li *ngIf="gene.commentsReferenceLinks">
-              <a href="#reference">
+              <a [routerLink]="['/gene', id]" fragment="reference">
                 {{ 'gene_page_title_reference' | translate }}
               </a>
             </li>
@@ -251,7 +251,5 @@
   </div>
 </div>
 <ng-template #loading>
-  <div class="container">
-    <div class="col">{{ 'ui_loader' | translate }}</div>
-  </div>
+<!-- TODO: лоадер -->
 </ng-template>

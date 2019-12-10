@@ -1,29 +1,25 @@
-<div class="header__signin">
-  <app-language></app-language>
-
-  <div class="signin__button js_signin-btn"
-       (click)="toggleMenu()"
-       [class.active]="menuVisible">
-    <span class="fa far fa-bars"></span>
-  </div>
-
-  <div class="header__menu js_header-menu"
-       (click)="toggleMenu()"
-       *ngIf="menuVisible">
-    <div class="menu__panel">
-      <ul class="menu__links">
-        <li class="menu__link">
-          <a [routerLink]="'/about'"
-             routerLinkActive="current"
-             class="js_nav_link">{{ 'header_menu_about' | translate }}</a>
-        </li>
-        <li class="menu__link">
-          <a [routerLink]="'/api'"
-             routerLinkActive="current"
-             class="js_nav_link">{{ 'header_menu_api' | translate }}</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-
+<div class="signin-button js_signin-btn"
+     (click)="toggleMenu()"
+     [class.active]="menuVisible">
+  <span class="fa far fa-bars"></span>
 </div>
+
+<div class="header__menu js_header-menu"
+     (click)="toggleMenu()"
+     *ngIf="menuVisible">
+  <div class="menu__panel">
+    <ul class="menu__links">
+      <li class="menu__link">
+        <a [routerLink]="'/about'"
+           routerLinkActive="current"
+           class="js_nav_link">{{ 'header_menu_about' | translate }}</a>
+      </li>
+      <li class="menu__link">
+        <a [routerLink]="'/api'"
+           routerLinkActive="current"
+           class="js_nav_link">{{ 'header_menu_api' | translate }}</a>
+      </li>
+    </ul>
+  </div>
+</div>
+

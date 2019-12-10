@@ -20,48 +20,46 @@ $font-weight-black: 900;
 
 // COLORS
 // -Base
-$color-general: #4363eb;
+$color-base: #7673d1;
+$color-general-light: #eff2fc;
+$color-general: #4d58dc;
 $color-general-dark: darken($color-general, 15%);
 
 // -UI
-$color-black: desaturate(darken($color-general, 50%), 5%);
-$color-gray-dark: #425e74;
-$color-gray: #767c88;
-$color-gray-half: #777;
-$color-gray-halfing: #999;
-$color-gray-half-power: #888;
-$color-gray-half-well: #aaa;
-$color-gray-semi: #9ca2ab;
-$color-gray-fade: #bbb;
-$color-gray-fading: #b1b8c9;
-$color-gray-light: #dedfe1;
-$color-gray-soft: #e9e9e9;
-$color-silver: #e9eaee;
-$color-gray-very-light: #f9f8fc;
-$color-purple: #4d58dc;
+$color-black: #2b2c2d;
+$color-gray: #838689;
+$color-gray-halfing: #a3a6ab;
+$color-gray-semi: #ced2d7;
+$color-gray-light: #d7d7d7;
+$color-gray-soft: #efefef;
+$color-gray-very-light: #f8f9fd;
+$color-purple: $color-general;
 $color-blue: #4FA1DD;
 $color-green-light: #a7ebc4;
 $color-green-medium: #2dbf70;
 $color-green: #28aa64;
 $color-green-dark: #1f864f;
-$color-orange: #fca34d;
+$color-orange: darken(desaturate(#FFC769, 2%), 10%);
 $color-yellow: #ffd700;
 $color-pink: #ffC0cb;
 $color-red-light: #f8c9c4;
 $color-red-medium: #f39f96;
-$color-red: #e74c3c;
-$color-red-dark: #cd3121;
+$color-red: #FF4E1A;
+$color-red-dark: darken($color-red, 5%);
+
+// States variables
+$color-hover: darken(#e8ebfd, 2%);
+$color-selected: #cfd1f6;
+$color-active: lighten($color-orange, 30%);
+$success-color: $color-green-medium;
+$error-color: $color-red-medium;
 
 // Elements variables
 $color-indent: #575757;
 $color-borders: $color-gray-light;
 $color-border-light: #e3e4e8;
+$color-borders-active: darken($color-hover, 5%);
 
-// States variables
-$color-hover: #afbef0;
-$color-selected: #a1b5f7;
-$success-color: $color-green-medium;
-$error-color: $color-red-medium;
 
 // PATHS
 $path-images: '../images';

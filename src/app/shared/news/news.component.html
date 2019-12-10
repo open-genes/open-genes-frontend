@@ -1,0 +1,20 @@
+<div class="page__subtitle view-latest__title">
+  {{ 'news_list_title' | translate }}
+</div>
+<ul class="news">
+  <li *ngFor="let item of newsList"
+      class="news__item"
+  >
+    <div class="item__gene">
+      <a [routerLink]="['/gene', gene?.id]"
+       class="alias">{{gene?.symbol}}</a>
+    </div>
+
+    <a href="{{item.url}}"
+       class="item__title link link--gray"
+       target="_blank"
+    >{{item.title | regex:'\&lt;[a-z]\&gt;|\&lt;\/[a-z]\&gt;|\\[|\\]' }}</a>
+  </li>
+</ul>
+
+

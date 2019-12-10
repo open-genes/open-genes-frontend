@@ -23,27 +23,27 @@ export class SearchComponent implements OnInit {
   }
 
   // setResult(i) {
-  //   this.searchForm.get('searchText').setValue(this.searchedData[i].symbol + ' ' + this.searchedData[i].name);
+  //   this.searchForm.get('searchField').setValue(this.searchedData[i].symbol + ' ' + this.searchedData[i].name);
   //   this.hasResult = false;
   // }
 
   private search() {
-    const searchText = this.searchForm.get('searchText').value.toLowerCase();
+    this.hasResult = true;
+    const searchField = this.searchForm.get('searchField').value.toLowerCase();
     this.searchedData = this.dataSource.filter((item) => {
       const searchedText = (item.symbol + ' ' + item.name + ' ' + item.aliases.join(' ')).toLowerCase();
-      return searchedText.includes(searchText);
+      return searchedText.includes(searchField);
     });
     this.dataSourceChange.emit(this.searchedData);
   }
 
-  private initform() {
+  public initform() {
     this.searchForm = new FormGroup({
-      searchText: new FormControl(''),
+      searchField: new FormControl(''),
     });
     this.searchForm.valueChanges.subscribe((x) => {
       if (x) {
         this.search();
-        this.hasResult = true;
       }
     });
   }
