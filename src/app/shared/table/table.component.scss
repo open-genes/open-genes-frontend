@@ -1,5 +1,9 @@
 @import "../../../resources/sass/dependencies";
 
+:host {
+
+}
+
 .view-panel {
   position: relative;
   display: flex;
@@ -24,7 +28,7 @@
 $columns-quantity: 7;
 
 .view-content {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 
   .tr {
     .td {
@@ -34,16 +38,13 @@ $columns-quantity: 7;
         margin-bottom: 5px;
         color: $color-gray;
 
-        .link,
-        .tag {
-          vertical-align: middle;
-        }
-
         .link {
+          vertical-align: middle;
           margin-right: 5px;
         }
 
-        .tag {
+        .alias {
+          vertical-align: 1px;
           margin-bottom: 0;
         }
       }
@@ -81,6 +82,7 @@ $columns-quantity: 7;
     .cards-filters {
       width: 100%;
       margin-bottom: 20px;
+
       .filter + .filter {
         margin-left: 10px;
       }
@@ -96,7 +98,7 @@ $columns-quantity: 7;
     .tr {
       @include panel;
       @include resolution_tablet-and-up {
-        width: calc(50% - 10px);
+        width: calc(50% - 10px); // TODO: убрать calc
       }
       font-size: 0;
       padding-bottom: 75px;
@@ -124,15 +126,15 @@ $columns-quantity: 7;
         &__label {
           display: block;
           width: 100%;
-          font-size: $font-size-bigger;
+          font-size: $font-size;
           color: $color-gray-halfing;
-          font-weight: $font-weight-medium;
           margin-bottom: 3px;
         }
 
 
         &-name {
           margin: 10px 0;
+
           .td__title {
             .link {
               font-size: $font-size-max;
@@ -146,12 +148,14 @@ $columns-quantity: 7;
         }
 
         &-age-mya {
-          font-size: $font-size-max;
+          font-size: $font-size-bigger;
           margin-top: 2px;
         }
 
-        &-clusters {
+        &-clusters,
+        &-expression {
           margin-top: 10px;
+
           .td__label {
             margin-bottom: 5px;
           }
@@ -167,6 +171,7 @@ $columns-quantity: 7;
           position: absolute;
           left: 10px;
           bottom: 12px;
+
           &:nth-last-child(2) {
             left: 100px;
           }
@@ -179,6 +184,7 @@ $columns-quantity: 7;
   &.view-content--as-table {
     display: block;
     width: 100%;
+    max-width: 100%;
     overflow: auto;
     font-size: 14px;
     line-height: 1.5;
@@ -195,31 +201,21 @@ $columns-quantity: 7;
       vertical-align: top;
       word-break: keep-all;
       hyphens: auto;
-
-      &--text-left {
-        text-align: left;
-      }
-      &--text-center {
-        text-align: center;
-      }
-      &--text-right {
-        text-align: right;
-      }
     }
 
     .thead {
       width: 100%;
       display: table-header-group;
+      background-color: $color-general-light;
     }
 
     .th {
       width: (100% / $columns-quantity); // Фикс для пустой таблицы
-      color: #212121;
+      color: $color-black;
       text-align: center;
       font-weight: 400;
       padding: 8px 10px 10px 10px;
       border-bottom: 2px solid $color-borders;
-      background-color: $color-gray-very-light;
       position: relative;
       transition: background-color .15s linear;
 
@@ -242,29 +238,30 @@ $columns-quantity: 7;
         .sort-icon {
           font-size: 16px;
           position: absolute;
-          top: 6px;
+          top: 5px;
           right: 10px;
         }
 
         &:hover {
-          background-color: rgba($color-hover, .3);
+          background-color: rgba($color-hover, .75);
         }
 
         @include resolution_smartphone {
           white-space: nowrap;
         }
-      }
 
-      &--sorted {
-        color: $color-orange;
+        &.th--sorted {
+          color: desaturate(darken($color-orange, 12%), 2);
 
-        .sort-icon {
-          transform: scale(1, -1)translateY(-5px)translateZ(0);
-        }
+          .sort-icon {
+            transform: scale(1, -1) translateY(-5px) translateZ(0);
+          }
 
-        &,
-        &:hover {
-          background-color: rgba($color-orange, .15);
+          &,
+          &:hover {
+            color: desaturate(darken($color-orange, 12%), 2);
+            background-color: $color-active;
+          }
         }
       }
 
@@ -281,13 +278,14 @@ $columns-quantity: 7;
     .tr {
       display: table-row;
       position: relative;
+
       .td {
         color: $color-indent;
         padding: 6px 8px 12px 8px;
         position: relative;
 
-        &__label,
-        &__unit {
+        // Подписи в карточках
+        &__label {
           display: none;
         }
       }
@@ -296,28 +294,9 @@ $columns-quantity: 7;
         border-left: 1px solid $color-borders;
       }
 
-      .tr__edit-btn {
-        display: block;
-        height: 22px;
-        width: 22px;
-        font-size: 16px;
-        color: $color-general;
-        text-align: center;
-        line-height: 22px;
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        z-index: 2;
-        cursor: pointer;
-        opacity: .35;
-        transition: opacity .15s ease-in;
-        &:hover {
-          opacity: 1;
-        }
-      }
-
       &:hover {
         border-color: $color-general;
+
         .tr__edit-btn {
           opacity: .75;
         }
@@ -339,3 +318,29 @@ $columns-quantity: 7;
 
   }
 }
+
+.show-more {
+  margin-bottom: 20px;
+
+  &__button {
+    width: 100%;
+    $btn-height: 35px;
+    height: $btn-height;
+    line-height: ($btn-height - 2px);
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: $font-weight-medium;
+    color: $color-general;
+    background-color: lighten($color-hover, 3%);
+    border: 1px solid $color-borders-active;
+
+    &:hover {
+      background-color: $color-hover;
+    }
+  }
+}
+
+.loader-container {
+  text-align: center;
+}
+

@@ -1,0 +1,31 @@
+@import "../../../resources/sass/dependencies";
+
+:host {
+  display: inline-block;
+  flex: none;
+}
+
+.news {
+  display: block;
+  font-size: 14px;
+
+  &__item {
+    display: block;
+    width: 100%;
+
+    .item__gene {
+      width: 100%;
+    }
+
+    .item__title {
+      margin-top: 5px;
+      white-space: normal;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    & + & {
+      margin-top: 15px;
+    }
+  }
+}

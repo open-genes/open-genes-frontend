@@ -168,11 +168,11 @@
 
         &:hover,
         &:active {
-          background-color: lighten($color-hover, 10%);
+          background-color: lighten($color-hover, 2%);
         }
 
         &:nth-child(even) {
-          background-color: lighten($color-hover, 15%);
+          background-color: lighten($color-hover, 8%);
           &:hover,
           &:active {
             background-color: lighten($color-hover, 5%);
@@ -247,7 +247,7 @@
         height: 20px;
         overflow: hidden;
         position: relative;
-        background-color: #eff2fc;
+        background-color: $color-general-light;
         border-radius: 3px;
 
         .value__bar {

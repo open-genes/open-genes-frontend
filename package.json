@@ -21,6 +21,7 @@
     "@angular/router": "~8.2.7",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
+    "angular-pipes": "^10.0.0",
     "font-awesome": "^4.7.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",

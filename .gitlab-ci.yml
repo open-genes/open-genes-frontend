@@ -1,5 +1,4 @@
 stages:
-  - build-dev
   - build
   - staging
   - release
@@ -10,12 +9,12 @@ variables:
   PROJECT_NAME: open-genes
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}-${CI_JOB_NAME}
+  key: ${CI_JOB_NAME}
   paths:
     - node_modules/
 
 build-dev:
-  stage: build-dev
+  stage: build
   image: alexsuch/angular-cli:7.3.8
   script:
     - npm install
@@ -24,10 +23,8 @@ build-dev:
     paths:
       - dist/
   when: manual
-  except:
-    - master
 
-build:
+build-prod:
   stage: build
   image: alexsuch/angular-cli:7.3.8
   script:
@@ -42,6 +39,8 @@ build:
 
 deploy-dev:
   extends: .deploy
+  dependencies:
+    - build-dev
   environment:
     name: develop
   variables:
@@ -49,6 +48,8 @@ deploy-dev:
 
 deploy-stage:
   extends: .deploy
+  dependencies:
+    - build-dev
   environment:
     name: stage
   variables:
@@ -56,6 +57,8 @@ deploy-stage:
 
 deploy-prod:
   extends: .deploy
+  dependencies:
+    - build-prod
   stage: release
   environment:
     name: production
@@ -66,8 +69,6 @@ deploy-prod:
 
 .deploy:
   stage: staging
-  dependencies:
-    - build
   image: instrumentisto/rsync-ssh
   script:
     - rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' dist/frontend/ ${DROPLET_USER}@${DROPLET_IP}:${PROJECT_DIR}/frontend/

@@ -1,3 +1,15 @@
+.__text-left {
+  text-align: left;
+}
+
+.__text-center {
+  text-align: center;
+}
+
+.__text-right {
+  text-align: right;
+}
+
 $sizes: (5, 10, 15, 20, 25, 30, 35);
 
 @each $size in $sizes {
@@ -7,4 +19,8 @@ $sizes: (5, 10, 15, 20, 25, 30, 35);
   .__mb-#{$size} {
     margin-bottom: #{$size}px;
   }
+}
+
+.__w-100 {
+  width: 100%;
 }
