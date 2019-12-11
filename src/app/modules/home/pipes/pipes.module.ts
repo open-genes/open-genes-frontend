@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 
-import {SafePipe} from './safe.pipe';
-import {HighlightSearch} from './regex.pipe';
+import { SafePipe } from './safe.pipe';
+import { StripTagsPipe } from './strip-tags.pipe';
 
 const PIPES = [
   SafePipe,
-  HighlightSearch
+  StripTagsPipe
 ];
 
 @NgModule({
   declarations: [
-    ...PIPES,
+    ...PIPES
   ],
   exports: [
-    ...PIPES,
+    ...PIPES
   ]
 })
 

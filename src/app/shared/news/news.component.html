@@ -13,7 +13,7 @@
     <a href="{{item.url}}"
        class="item__title link link--gray"
        target="_blank"
-    >{{item.title | regex:'\&lt;[a-z]\&gt;|\&lt;\/[a-z]\&gt;|\\[|\\]' }}</a>
+    >{{item.title | stripTags}}</a>
   </li>
 </ul>
 
