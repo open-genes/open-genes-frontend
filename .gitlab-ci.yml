@@ -19,6 +19,9 @@ build-dev:
   script:
     - npm install
     - ng build
+  cache:
+    paths:
+    - node_modules/
   artifacts:
     paths:
       - dist/

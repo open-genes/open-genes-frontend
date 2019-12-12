@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
+  production: false,
   apiUrl: 'http://open-genes.com',
   pubmedApiUrl: 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils',
   pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',
