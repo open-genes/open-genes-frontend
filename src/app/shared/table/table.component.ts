@@ -23,8 +23,8 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   };
   asCards = true;
   private subscription$ = new Subject();
-  private funcCluster: number[] = [];
-  private expression: string;
+  public funcCluster: number[] = [];
+  public expression: string;
 
   constructor() {
   }
@@ -73,7 +73,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  private loadMoreGenes() {
+  public loadMoreGenes() {
     if (this.searchedData.length >= this.loadedGenesQuantity) {
       this.loadedGenesQuantity += this.genesPerPage;
     }

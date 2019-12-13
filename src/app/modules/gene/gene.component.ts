@@ -11,7 +11,7 @@ import {IGene} from '../../core/models';
 })
 export class GeneComponent implements OnInit {
 
-  private id: number;
+  public id: number;
   private subscription: Subscription;
   public gene: IGene;
 

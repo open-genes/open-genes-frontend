@@ -27,7 +27,7 @@ export class SearchComponent implements OnInit {
   //   this.hasResult = false;
   // }
 
-  private search() {
+  public search() {
     this.hasResult = true;
     const searchField = this.searchForm.get('searchField').value.toLowerCase();
     this.searchedData = this.dataSource.filter((item) => {
