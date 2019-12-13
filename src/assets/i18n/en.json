@@ -80,5 +80,6 @@
   "items_found": "Items found",
   "nothing_found": "Nothing found",
   "show_more": "Show more",
-  "news_list_title": "New articles"
+  "news_list_title": "New articles",
+  "news_list_hint": "Articles on PubMed on genes from our base"
 }

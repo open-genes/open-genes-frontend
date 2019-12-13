@@ -49,10 +49,6 @@
               (filterCluster)="filterByFuncClusters($event)"
               (filterExpression)="filterByExpressionChange($event)"
               *ngIf="genes"></app-table>
-
-            <div *ngIf="!genes || !lastGenes">
-              <!-- TODO: лоадер -->
-            </div>
           </div>
         </div>
       </div>

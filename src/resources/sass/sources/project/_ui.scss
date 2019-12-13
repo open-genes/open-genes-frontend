@@ -771,6 +771,13 @@ $classes: btn-blue, btn-green, btn-red;
   margin-bottom: 10px;
 }
 
+.tip {
+  width: 100%;
+  font-size: 13px;
+  color: $color-gray;
+  margin-bottom: 20px;
+}
+
 .rating {
   display: inline-block;
   width: 36px;
@@ -960,4 +967,21 @@ $classes: btn-blue, btn-green, btn-red;
 
 mark {
   background-color: $color-hover;
+}
+
+.loader-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  background-color: #fff;
+  text-align: center;
+
+  .fa {
+    font-size: 40px;
+    color: $color-general;
+    margin-top: 100px;
+  }
 }
