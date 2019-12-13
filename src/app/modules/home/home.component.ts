@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  private filterByFuncClusters(fc: number[]) {
+  public filterByFuncClusters(fc: number[]) {
     if (fc.length > 0) {
       this.apiService.getGenesByFunctionalClusters(fc).subscribe((genes) => {
         this.genes = genes;
@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private filterByExpressionChange(expression: string) {
+  public filterByExpressionChange(expression: string) {
     if (expression) {
       if (this.translate.currentLang === 'ru') {
         expression = this.expressionTranslates[expression];
