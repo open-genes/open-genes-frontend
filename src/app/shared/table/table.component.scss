@@ -41,6 +41,7 @@ $columns-quantity: 7;
         .link {
           vertical-align: middle;
           margin-right: 5px;
+          text-decoration: underline;
         }
 
         .alias {
@@ -338,9 +339,5 @@ $columns-quantity: 7;
       background-color: $color-hover;
     }
   }
-}
-
-.loader-container {
-  text-align: center;
 }
 
