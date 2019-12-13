@@ -62,11 +62,11 @@ body {
   }
 
   &--gray {
-    color: $color-gray;
+    color: darken($color-gray, 10%);
 
     &:hover,
     &:active {
-      color: lighten($color-gray, 10%);
+      color: $color-gray;
     }
   }
 }

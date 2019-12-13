@@ -29,16 +29,18 @@
       <div class="col col-16">
         <div class="flex-subcontainer">
           <div class="per sidebar sidebar--left">
-            <app-news
-              [gene]="newsGene"
-              *ngIf="newsGene && genes"
-              class="__mb-20"
-            ></app-news>
+            <div class="sidebar__inner">
+              <app-news
+                [gene]="newsGene"
+                *ngIf="newsGene && genes"
+                class="__mb-20"
+              ></app-news>
 
-            <app-mini-cards
-              [lastGenes]="lastGenes"
-              *ngIf="lastGenes"
-            ></app-mini-cards>
+              <app-mini-cards
+                [lastGenes]="lastGenes"
+                *ngIf="lastGenes"
+              ></app-mini-cards>
+            </div>
           </div>
 
           <div class="per content">
@@ -47,10 +49,6 @@
               (filterCluster)="filterByFuncClusters($event)"
               (filterExpression)="filterByExpressionChange($event)"
               *ngIf="genes"></app-table>
-
-            <div *ngIf="!genes || !lastGenes">
-              <!-- TODO: лоадер -->
-            </div>
           </div>
         </div>
       </div>

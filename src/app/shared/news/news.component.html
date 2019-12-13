@@ -1,6 +1,9 @@
 <div class="page__subtitle view-latest__title">
   {{ 'news_list_title' | translate }}
 </div>
+<div class="tip">
+  {{ 'news_list_hint' | translate }}
+</div>
 <ul class="news">
   <li *ngFor="let item of newsList"
       class="news__item"
@@ -13,7 +16,7 @@
     <a href="{{item.url}}"
        class="item__title link link--gray"
        target="_blank"
-    >{{item.title | regex:'\&lt;[a-z]\&gt;|\&lt;\/[a-z]\&gt;|\\[|\\]' }}</a>
+    >{{item.title | stripTags}}</a>
   </li>
 </ul>
 
