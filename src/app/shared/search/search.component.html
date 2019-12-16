@@ -6,6 +6,7 @@
          placeholder="{{ 'search' | translate }}"
          class="field"
          required
+         #searchQuery
          (focusin)="search()"
   >
   <div class="autocomplete-list"
@@ -17,7 +18,16 @@
         tabindex="0"
         [routerLink]="['/gene', data.id]"
       >
-        <span class="item__symbol" [innerHTML]="data.symbol"></span>&nbsp;<span class="item__name" [innerHTML]="data.name"></span>
+        <span class="item__symbol"
+              appHighlight
+              [highlightText]="searchQuery.value"
+              [innerHTML]="data.symbol">
+        </span>&nbsp;
+        <span class="item__name"
+              appHighlight
+              [highlightText]="searchQuery.value"
+              [innerHTML]="data.name">
+        </span>
       </button>
     </ng-container>
   </div>
