@@ -15,9 +15,9 @@ export class PubmedApiService {
   constructor(private http: HttpClient) {
   }
 
-  public getNewsList(symbol: string): Observable<any> {
+  public getNewsList(symbols: string): Observable<any> {
     // tslint:disable-next-line:max-line-length
-    return this.http.get(`${this.url}/esearch.fcgi?${this.params}&retmax=${this.limit}&term=${symbol}[Title]&&2007:2019[pubdate]`);
+    return this.http.get(`${this.url}/esearch.fcgi?${this.params}&retmax=${this.limit}&term=${symbols}&datetype=pdat&reldate=180`);
   }
 
   public getNewsData(id: number): Observable<any> {
