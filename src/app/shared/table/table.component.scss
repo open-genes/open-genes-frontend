@@ -4,6 +4,14 @@
 
 }
 
+.table-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
 .view-panel {
   position: relative;
   display: flex;

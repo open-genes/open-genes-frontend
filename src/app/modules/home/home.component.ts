@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ApiService} from '../../core/services/api.service';
-import {IGene} from '../../core/models';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, OnInit } from '@angular/core';
+
+import { ApiService } from '../../core/services/api.service';
+import { IGene, IFilter } from '../../core/models';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ export class HomeComponent implements OnInit {
   genes: IGene[];
   lastGenes: IGene[];
   newsGene: IGene;
+  filters: IFilter;
 
   private expressionTranslates = { // TODO: убрать хардкод
     уменьшается: 'decreased',
@@ -21,6 +23,12 @@ export class HomeComponent implements OnInit {
   };
 
   constructor(private apiService: ApiService, private translate: TranslateService) {
+    this.filters = {
+      name: false,
+      ageMya: false,
+      cluster: [],
+      expression: null
+    };
   }
 
   ngOnInit() {
@@ -62,5 +70,20 @@ export class HomeComponent implements OnInit {
     } else {
       this.getGenes();
     }
+  }
+
+  /**
+   * Событие изменения набора филтров таблицы генов
+   * @param filters - Набор фильтров
+   */
+  public filtersChanged(filters: IFilter) {
+    console.log('filters changed', filters);
+  }
+
+  /**
+   * Сброс фильтров таблицы генов
+   */
+  public filtersCleared() {
+    this.getGenes();
   }
 }
