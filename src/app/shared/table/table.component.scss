@@ -7,7 +7,7 @@
 .table-controls {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
   padding-bottom: 10px;
 }
@@ -94,6 +94,10 @@ $columns-quantity: 7;
 
       .filter + .filter {
         margin-left: 10px;
+      }
+
+      .btn {
+        float: right;
       }
     }
 

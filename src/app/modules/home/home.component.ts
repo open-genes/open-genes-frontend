@@ -22,7 +22,10 @@ export class HomeComponent implements OnInit {
     неоднозначно: 'mixed'
   };
 
-  constructor(private apiService: ApiService, private translate: TranslateService) {
+  constructor(
+    private readonly apiService: ApiService,
+    private readonly translate: TranslateService
+  ) {
     this.filters = {
       name: false,
       ageMya: false,
@@ -70,14 +73,6 @@ export class HomeComponent implements OnInit {
     } else {
       this.getGenes();
     }
-  }
-
-  /**
-   * Событие изменения набора филтров таблицы генов
-   * @param filters - Набор фильтров
-   */
-  public filtersChanged(filters: IFilter) {
-    console.log('filters changed', filters);
   }
 
   /**

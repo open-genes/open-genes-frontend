@@ -11,7 +11,7 @@
 </div>
 
 <ng-container *ngIf="searchedData?.length !== 0 && !loading">
-  <div class="table-controls" *ngIf="filters.name || filters.ageMya || filters.expression || filters.cluster.length > 0">
+  <div class="table-controls" *ngIf="(filters.name || filters.ageMya || filters.expression || filters.cluster.length > 0) && asCards">
     <button class="btn btn-purple" (click)="clearFilters()">
       <span class="fa fa-filter"></span>&nbsp;
       Очистить фильтры
@@ -54,13 +54,19 @@
     </div>
 
     <div class="cards-filters">
-      <button class="filter" (click)="getGenes('name')" [class.filter--sorted]="isSorted.name">
+      <button class="filter" (click)="getGenes('name')" [class.filter--sorted]="filters.name">
         {{ 'main_page_table_name' | translate }}
         <span class="fa far fa-sort-down sort-icon"></span>
       </button>
-      <button class="filter" (click)="getGenes('ageMya')" [class.filter--sorted]="isSorted.ageMya">
+      <button class="filter" (click)="getGenes('ageMya')" [class.filter--sorted]="filters.ageMya">
         {{ 'age' | translate }} ({{ 'million_years' | translate }})
         <span class="fa far fa-sort-down sort-icon"></span>
+      </button>
+      <button class="btn btn-purple"
+              (click)="clearFilters()"
+              *ngIf="(filters.name || filters.ageMya || filters.expression || filters.cluster.length > 0) && !asCards">
+        <span class="fa fa-filter"></span>&nbsp;
+        Очистить фильтры
       </button>
     </div>
 

@@ -8,21 +8,25 @@ import { RouterModule } from '@angular/router';
 import { SearchModule } from '../search/search.module';
 import { PipesModule } from '../../modules/home/pipes/pipes.module';
 import { DirectivesModule } from '../../modules/home/directives/directives.module';
+import { TableService } from './table.service';
 
 @NgModule({
   declarations: [
     TableComponent,
     SearchComponent
   ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        TranslateModule,
-        RouterModule,
-        SearchModule,
-        PipesModule,
-        DirectivesModule
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    RouterModule,
+    SearchModule,
+    PipesModule,
+    DirectivesModule
+  ],
+  providers: [
+    // TableService
+  ],
   exports: [
     TableComponent
   ]

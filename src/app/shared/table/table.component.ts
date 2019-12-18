@@ -1,16 +1,9 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
+
+import { Subject } from 'rxjs';
 
 import { IFilter, IGene } from '../../core/models';
-import { Subject } from 'rxjs';
+import { TableService } from './table.service';
 
 @Component({
   selector: 'app-table',
@@ -20,46 +13,32 @@ import { Subject } from 'rxjs';
 export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() dataSource: IGene[];
-  // @Input() filters: IFilter;
-  public filters: IFilter;
   @Output() filterCluster = new EventEmitter<number[]>();
   @Output() filterExpression = new EventEmitter<string>();
-  @Output() filtersChanged = new EventEmitter<IFilter>();
   @Output() filtersCleared = new EventEmitter();
   searchedData: IGene[];
   genesPerPage = 30;
   loadedGenesQuantity = this.genesPerPage;
   loading = true;
-  isSorted = {
-    name: false,
-    ageMya: false
-  };
   asCards = true;
   private subscription$ = new Subject();
-  public funcCluster: number[] = [];
-  public expression: string;
+  public filters: IFilter;
 
-  constructor() {
+  constructor(private readonly tableService: TableService) {
     this.filters = {
       name: false,
       ageMya: false,
       expression: null,
       cluster: []
     };
+    this.tableService.register(this);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('changes', changes);
+  ngOnChanges() {
     this.searchedData = this.dataSource;
     this.loading = false;
-    if (changes.filters && changes.filters.currentValue) {
-      // this.filters = changes.filters.currentValue;
-    } else {
-
-    }
   }
 
   getSearchedData(e: IGene[]) {
@@ -72,15 +51,12 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   getGenes(sortBy) {
     if (sortBy === 'name') {
-      this.isSorted.name ? this.reverse() : this.sortByName();
-      this.isSorted.name = !this.isSorted.name;
+      this.filters.name ? this.reverse() : this.sortByName();
       this.filters.name = !this.filters.name;
     } else {
-      this.isSorted.ageMya ? this.reverse() : this.sortByAge();
-      this.isSorted.ageMya = !this.isSorted.ageMya;
+      this.filters.ageMya ? this.reverse() : this.sortByAge();
       this.filters.ageMya = !this.filters.ageMya;
     }
-    this.filtersChanged.emit(this.filters);
   }
 
   private reverse() {
@@ -113,34 +89,23 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   filterByFuncClusters(id: number) {
     if (!this.filters.cluster.includes(id)) {
-      // this.funcCluster.push(id);
       this.filters.cluster.push(id);
     } else {
-      // this.funcCluster = this.funcCluster.filter(item => item !== id);
       this.filters.cluster = this.filters.cluster.filter(item => item !== id);
     }
-    this.expression = null;
     this.loading = true;
-    // this.filters.cluster = [...this.funcCluster];
-    console.log('filters', this.filters);
-    // this.filterCluster.emit(this.funcCluster);
     this.filterCluster.emit(this.filters.cluster);
-    this.filtersChanged.emit(this.filters);
   }
 
   filterByExpressionChange(expression: string) {
     if (this.filters.expression !== expression) {
-      // this.expression = expression;
       this.filters.expression = expression;
     } else {
-      // this.expression = null;
       this.filters.expression = null;
     }
-    // this.funcCluster = [];
     this.filters.cluster = [];
     this.loading = true;
-    this.filterExpression.emit(this.expression);
-    this.filtersChanged.emit(this.filters);
+    this.filterExpression.emit(this.filters.expression);
   }
 
   /**

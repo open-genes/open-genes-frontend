@@ -48,9 +48,9 @@
               [dataSource]="genes"
               (filterCluster)="filterByFuncClusters($event)"
               (filterExpression)="filterByExpressionChange($event)"
-              (filtersChanged)="filtersChanged($event)"
               (filtersCleared)="filtersCleared()"
-              *ngIf="genes"></app-table>
+              *ngIf="genes">
+            </app-table>
           </div>
         </div>
       </div>
