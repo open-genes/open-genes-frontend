@@ -4,6 +4,14 @@
 
 }
 
+.table-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
 .view-panel {
   position: relative;
   display: flex;
@@ -86,6 +94,10 @@ $columns-quantity: 7;
 
       .filter + .filter {
         margin-left: 10px;
+      }
+
+      .btn {
+        float: right;
       }
     }
 

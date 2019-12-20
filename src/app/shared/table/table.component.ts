@@ -1,7 +1,9 @@
-import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
-import {IGene} from '../../core/models';
-import {Subject} from 'rxjs';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
+
+import { Subject } from 'rxjs';
+
+import { IFilter, IGene } from '../../core/models';
+import { TableService } from './table.service';
 
 @Component({
   selector: 'app-table',
@@ -13,24 +15,26 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   @Input() dataSource: IGene[];
   @Output() filterCluster = new EventEmitter<number[]>();
   @Output() filterExpression = new EventEmitter<string>();
+  @Output() filtersCleared = new EventEmitter();
   searchedData: IGene[];
   genesPerPage = 30;
   loadedGenesQuantity = this.genesPerPage;
   loading = true;
-  isSorted = {
-    name: false,
-    ageMya: false
-  };
   asCards = true;
   private subscription$ = new Subject();
-  public funcCluster: number[] = [];
-  public expression: string;
+  public filters: IFilter;
 
-  constructor() {
+  constructor(private readonly tableService: TableService) {
+    this.filters = {
+      name: false,
+      ageMya: false,
+      expression: null,
+      cluster: []
+    };
+    this.tableService.register(this);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnChanges() {
     this.searchedData = this.dataSource;
@@ -47,11 +51,11 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   getGenes(sortBy) {
     if (sortBy === 'name') {
-      this.isSorted.name ? this.reverse() : this.sortByName();
-      this.isSorted.name = !this.isSorted.name;
+      this.filters.name ? this.reverse() : this.sortByName();
+      this.filters.name = !this.filters.name;
     } else {
-      this.isSorted.ageMya ? this.reverse() : this.sortByAge();
-      this.isSorted.ageMya = !this.isSorted.ageMya;
+      this.filters.ageMya ? this.reverse() : this.sortByAge();
+      this.filters.ageMya = !this.filters.ageMya;
     }
   }
 
@@ -84,24 +88,36 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   filterByFuncClusters(id: number) {
-    if (!this.funcCluster.includes(id)) {
-      this.funcCluster.push(id);
+    if (!this.filters.cluster.includes(id)) {
+      this.filters.cluster.push(id);
     } else {
-      this.funcCluster = this.funcCluster.filter(item => item !== id);
+      this.filters.cluster = this.filters.cluster.filter(item => item !== id);
     }
-    this.expression = null;
     this.loading = true;
-    this.filterCluster.emit(this.funcCluster);
+    this.filterCluster.emit(this.filters.cluster);
   }
 
   filterByExpressionChange(expression: string) {
-    if (this.expression !== expression) {
-      this.expression = expression;
+    if (this.filters.expression !== expression) {
+      this.filters.expression = expression;
     } else {
-      this.expression = null;
+      this.filters.expression = null;
     }
-    this.funcCluster = [];
+    this.filters.cluster = [];
     this.loading = true;
-    this.filterExpression.emit(this.expression);
+    this.filterExpression.emit(this.filters.expression);
+  }
+
+  /**
+   * Сброс фильтров
+   */
+  clearFilters() {
+    this.filters = {
+      name: false,
+      ageMya: false,
+      expression: null,
+      cluster: []
+    };
+    this.filtersCleared.emit();
   }
 }

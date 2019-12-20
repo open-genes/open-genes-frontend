@@ -1,15 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {APP_ROUTES, ROUTER_OPTIONS} from './app-routing';
+import { APP_ROUTES, ROUTER_OPTIONS } from './app-routing';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
 // import ngx-translate and the http loader
-import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {HttpClient} from '@angular/common/http';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { LanguageComponent } from './common/language/language.component';

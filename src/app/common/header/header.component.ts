@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { TableService } from '../../shared/table/table.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private readonly router: Router,
+              private readonly tableService: TableService) { }
 
   ngOnInit() {
   }
 
+  /**
+   * Сброс фильтров таблицы генов
+   */
+  clearFilters() {
+    this.tableService.clearFilters();
+  }
 }
