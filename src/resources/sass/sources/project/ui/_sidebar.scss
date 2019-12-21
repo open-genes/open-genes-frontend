@@ -1,0 +1,38 @@
+.sidebar {
+  @include resolution_widescreen {
+    flex: 0 0 20%;
+    width: 250px;
+    position: sticky;
+    top: 70px;
+    margin-bottom: 60px;
+
+    &__inner {
+      width: 100%;
+    }
+
+    &--right {
+      .sidebar__inner {
+        padding-left: 30px;
+      }
+    }
+    &--left {
+      .sidebar__inner {
+        padding-right: 30px;
+      }
+    }
+  }
+
+  @include resolution_all-but-widescreen {
+    flex: 0 0 100%;
+    order: 2;
+  }
+}
+
+.content {
+  @include resolution_widescreen {
+    flex: 1 1 80%;
+  }
+  @include resolution_all-but-widescreen {
+    flex: 0 0 100%;
+  }
+}

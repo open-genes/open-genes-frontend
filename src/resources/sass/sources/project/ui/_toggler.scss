@@ -1,0 +1,67 @@
+.toggler {
+  display: inline-block;
+  width: ($ui-base-height * 2) + 4px;
+  height: $ui-base-height;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+
+  &:after { // TODO: добавить шаблон
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    border-radius: 10px;
+    background-color: rgba($color-hover, .75);
+    opacity: 0;
+    transition: color, opacity, .15s ease-in-out;
+  }
+
+  &__icon {
+    display: inline-block;
+    width: $ui-base-height;
+    height: $ui-base-height;
+    position: relative;
+    z-index: 1;
+    line-height: $ui-base-height - 3px;
+    text-align: center;
+    font-size: 20px;
+    padding: 2px;
+
+    .fa {
+      z-index: 1;
+    }
+
+    & + & {
+      margin-left: 4px;
+    }
+  }
+
+  &:hover {
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &--def {
+    .toggler__icon--def {
+      color: $color-general;
+    }
+    .toggler__icon--alt {
+      color: $color-gray;
+    }
+  }
+
+  &--alt {
+    .toggler__icon--def {
+      color: $color-gray;
+    }
+    .toggler__icon--alt {
+      color: $color-general;
+    }
+  }
+}

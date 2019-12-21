@@ -1,35 +1,26 @@
 @import "../../../resources/sass/dependencies";
 
-:host {
-
-}
-
-.table-controls {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  padding-bottom: 10px;
-}
-
 .view-panel {
   position: relative;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
   margin-bottom: 20px;
-  padding-right: 50px;
 
-  &.col {
-    font-size: 0;
+  &__filters {
+    padding-right: 5px;
+    .btn {
+      margin-left: 10px;
+    }
   }
 
   &__buttons {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 1;
+    padding-left: 5px;
+    display: flex;
+    align-items: center;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
   }
 }
 
@@ -86,19 +77,6 @@ $columns-quantity: 7;
   &.view-content--as-cards {
     .thead {
       display: none;
-    }
-
-    .cards-filters {
-      width: 100%;
-      margin-bottom: 20px;
-
-      .filter + .filter {
-        margin-left: 10px;
-      }
-
-      .btn {
-        float: right;
-      }
     }
 
     .tbody {
@@ -204,7 +182,7 @@ $columns-quantity: 7;
     border: 1px solid $color-borders;
     border-radius: 5px;
 
-    .cards-filters {
+    .view-panel__filters {
       display: none;
     }
 
@@ -303,10 +281,6 @@ $columns-quantity: 7;
         }
       }
 
-      .td + .td {
-        border-left: 1px solid $color-borders;
-      }
-
       &:hover {
         border-color: $color-general;
 
@@ -328,7 +302,6 @@ $columns-quantity: 7;
     .tr:nth-child(odd) {
       background: #fff;
     }
-
   }
 }
 

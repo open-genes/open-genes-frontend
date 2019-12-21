@@ -4,28 +4,26 @@
 <div class="tip">
   {{ 'news_list_hint' | translate }}
 </div>
-<ng-container *ngIf="!loading">
-  <ul class="news">
-    <li *ngFor="let item of newsList"
-        class="news__item"
-    >
-      <div class="item__gene">
-        <a [routerLink]="['/gene', item.gene?.id]"
-           class="alias">{{item.gene?.symbol}}</a>
-      </div>
+<ul class="news" *ngIf="!loading">
+  <li *ngFor="let item of newsList"
+      class="news__item"
+  >
+    <div class="item__gene">
+      <a [routerLink]="['/gene', item.gene?.id]"
+         class="alias">{{item.gene?.symbol}}</a>
+    </div>
 
-      <a href="{{item.url}}"
-         class="item__title link link--gray"
-         target="_blank"
-      >{{item.title | stripTags}}</a>
-    </li>
-  </ul>
-</ng-container>
-<ng-container *ngIf="loading">
-  <div class="news-list-spinner-container">
-    <span class="spinner"></span>
-  </div>
-</ng-container>
+    <a href="{{item.url}}"
+       class="item__title link link--gray"
+       target="_blank"
+    >{{item.title | stripTags}}</a>
+  </li>
+</ul>
+<div class="loader-container" *ngIf="loading">
+  <i class="fa far fa-circle-notch fa-spin fa-3x"></i>
+</div>
+
+
 
 
 

@@ -1,3 +1,21 @@
+@import "../../../resources/sass/dependencies";
+
 :host {
   display: inline-block;
 }
+
+.language-switcher {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  font-size: 12px;
+  color: $color-indent;
+  font-weight: $font-weight-medium;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+

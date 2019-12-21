@@ -1,0 +1,36 @@
+// Loader
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 102;
+  background-color: #fff;
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 40px;
+  }
+}
+
+.loader-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  background-color: #fff;
+  text-align: center;
+
+  .fa {
+    font-size: $ui-base-height;
+    color: $color-general;
+    margin-top: 100px;
+  }
+}
