@@ -1,0 +1,19 @@
+// Spinner
+.spinner {
+  width: 1em;
+  height: 1em;
+  position: relative;
+  border: 0.1em solid $color-general;
+  border-left: 0.1em solid transparent;
+  border-radius: 50%;
+  animation: r1 1s normal infinite linear;
+}
+
+@keyframes r1 {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}

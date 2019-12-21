@@ -1,22 +1,37 @@
+<app-search [dataSource]="dataSource" (dataSourceChange)="getSearchedData($event)"></app-search>
+
 <div class="view-panel">
-  <app-search [dataSource]="dataSource" (dataSourceChange)="getSearchedData($event)"></app-search>
+  <div class="filters-group view-panel__filters">
+    <button class="filter" (click)="getGenes('name')" [class.filter--sorted]="filters.name">
+      {{ 'main_page_table_name' | translate }}
+      <span class="fa far fa-sort-down sort-icon"></span>
+    </button>
+
+    <button class="filter" (click)="getGenes('ageMya')" [class.filter--sorted]="filters.ageMya">
+      {{ 'age' | translate }} ({{ 'million_years' | translate }})
+      <span class="fa far fa-sort-down sort-icon"></span>
+    </button>
+
+    <button class="btn btn--small btn-purple"
+            (click)="clearFilters()"
+            *ngIf="(filters.name || filters.ageMya || filters.expression || filters.cluster.length > 0)"
+    >
+      <span class="fa fa-times"></span>&nbsp;
+      Сбросить
+    </button>
+  </div>
+
   <div class="view-panel__buttons">
     <button class="toggler"
             (click)="geneView()"
             [ngClass]="asCards == true ? 'toggler--def' : 'toggler--alt'">
-      <span class="fa fal fa-table toggler__icon toggler__icon--def"></span>
+      <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
       <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
     </button>
   </div>
 </div>
 
 <ng-container *ngIf="searchedData?.length !== 0 && !loading">
-  <div class="table-controls" *ngIf="(filters.name || filters.ageMya || filters.expression || filters.cluster.length > 0) && asCards">
-    <button class="btn btn-purple" (click)="clearFilters()">
-      <span class="fa fa-filter"></span>&nbsp;
-      Очистить фильтры
-    </button>
-  </div>
   <section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
     <div class="thead">
       <div class="th th--sortable" (click)="getGenes('name')" [class.th--sorted]="filters.name">
@@ -51,23 +66,6 @@
           <b>{{ 'main_page_table_interactions' | translate }}</b>
         </div>
       </div>
-    </div>
-
-    <div class="cards-filters">
-      <button class="filter" (click)="getGenes('name')" [class.filter--sorted]="filters.name">
-        {{ 'main_page_table_name' | translate }}
-        <span class="fa far fa-sort-down sort-icon"></span>
-      </button>
-      <button class="filter" (click)="getGenes('ageMya')" [class.filter--sorted]="filters.ageMya">
-        {{ 'age' | translate }} ({{ 'million_years' | translate }})
-        <span class="fa far fa-sort-down sort-icon"></span>
-      </button>
-      <button class="btn btn-purple"
-              (click)="clearFilters()"
-              *ngIf="(filters.name || filters.ageMya || filters.expression || filters.cluster.length > 0) && !asCards">
-        <span class="fa fa-filter"></span>&nbsp;
-        Очистить фильтры
-      </button>
     </div>
 
     <div class="tbody">
@@ -128,7 +126,7 @@
 </ng-container>
 
 <div class="loader-container" *ngIf="loading">
-  <i class="fa fa-spinner fa-spin fa-3x"></i>
+  <i class="fa far fa-circle-notch fa-spin fa-3x"></i>
 </div>
 
 <ng-container *ngIf="searchedData?.length == 0">
