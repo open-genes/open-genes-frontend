@@ -111,13 +111,27 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * Сброс фильтров
    */
-  clearFilters() {
-    this.filters = {
-      name: false,
-      ageMya: false,
-      expression: null,
-      cluster: []
-    };
-    this.filtersCleared.emit();
+  clearFilters(filter: string) {
+    if (filter === 'all') {
+      this.filters = {
+        name: false,
+        ageMya: false,
+        expression: null,
+        cluster: []
+      };
+      this.filtersCleared.emit();
+    } else if (filter === 'name') {
+      this.filters.name = false;
+      this.filtersCleared.emit();
+    } else if (filter === 'ageMya') {
+      this.filters.ageMya = false;
+      this.filtersCleared.emit();
+    } else if (filter === 'expression') {
+      this.filters.expression = null;
+      this.filtersCleared.emit();
+    } else if (filter === 'cluster') {
+      this.filters.cluster = [];
+      this.filtersCleared.emit();
+    }
   }
 }

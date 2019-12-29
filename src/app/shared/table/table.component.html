@@ -1,54 +1,74 @@
 <app-search [dataSource]="dataSource" (dataSourceChange)="getSearchedData($event)"></app-search>
-
-<div class="view-panel">
-  <div class="filters-group view-panel__filters">
-    <button class="filter" (click)="getGenes('name')" [class.filter--sorted]="filters.name">
-      {{ 'main_page_table_name' | translate }}
-      <span class="fa far fa-sort-down sort-icon"></span>
-    </button>
-
-    <button class="filter" (click)="getGenes('ageMya')" [class.filter--sorted]="filters.ageMya">
-      {{ 'age' | translate }} ({{ 'million_years' | translate }})
-      <span class="fa far fa-sort-down sort-icon"></span>
-    </button>
-
-    <button class="btn btn--small btn-purple"
-            (click)="clearFilters()"
-            *ngIf="(filters.name || filters.ageMya || filters.expression || filters.cluster.length > 0)"
-    >
-      <span class="fa fa-times"></span>&nbsp;
-      Сбросить
-    </button>
-  </div>
-
-  <div class="view-panel__buttons">
-    <button class="toggler"
-            (click)="geneView()"
-            [ngClass]="asCards == true ? 'toggler--def' : 'toggler--alt'">
-      <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
-      <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
-    </button>
-  </div>
-</div>
-
 <ng-container *ngIf="searchedData?.length !== 0 && !loading">
+  <div class="view-panel">
+    <div class="filters-group view-panel__filters">
+      <button class="filter name-filter"
+              (click)="getGenes('name')"
+              [class.__active]="filters.name"
+      >
+        {{ 'main_page_table_name' | translate }}
+        <span class="fa far fa-sort-down"></span>
+      </button>
+
+      <button class="filter age-filter"
+              (click)="getGenes('ageMya')"
+              [class.__active]="filters.ageMya"
+      >
+        {{ 'age' | translate }} ({{ 'million_years' | translate }})
+        <span class="fa far fa-sort-down"></span>
+      </button>
+
+      <button
+        *ngIf="filters.cluster.length > 0"
+        class="filter __active functional-classes-filter"
+        (click)="clearFilters('cluster')"
+      >
+        {{ 'functional_classes' | translate }}
+        <span class="fa fal fa-times"></span>
+      </button>
+
+      <button
+        *ngIf="filters.expression"
+        class="filter __active expression-change-filter"
+        (click)="clearFilters('expression')"
+      >
+        {{ 'main_page_table_expression' | translate }}
+        <span class="fa fal fa-times"></span>
+      </button>
+
+      <button class="btn btn--small btn-purple btn--icon-only"
+              (click)="clearFilters('all')"
+              *ngIf="(filters.name || filters.ageMya || filters.expression || filters.cluster.length > 0)"
+      >
+        <span class="fa fal fa-times"></span>
+      </button>
+    </div>
+
+    <div class="view-panel__buttons">
+      <button class="toggler"
+              (click)="geneView()"
+              [ngClass]="asCards == true ? 'toggler--def' : 'toggler--alt'">
+        <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
+        <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
+      </button>
+    </div>
+  </div>
+
   <section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
     <div class="thead">
-      <div class="th th--sortable" (click)="getGenes('name')" [class.th--sorted]="filters.name">
+      <div class="th">
         <div class="th__title">
           <b>{{ 'main_page_table_name' | translate }}</b>
         </div>
-        <span class="fa far fa-sort-down sort-icon"></span>
-      </div>
-      <div class="th th--sortable" (click)="getGenes('ageMya')" [class.th--sorted]="filters.ageMya">
-        <div class="th__title">
-          <b>{{ 'phylogeny' | translate }}, {{ 'age' | translate }}</b>
-        </div>
-        <span class="fa far fa-sort-down sort-icon"></span>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>{{ 'main_page_table_functional_classes' | translate }}</b>
+          <b>{{ 'phylogeny' | translate }}, {{ 'age' | translate }}</b>
+        </div>
+      </div>
+      <div class="th">
+        <div class="th__title">
+          <b>{{ 'functional_classes' | translate }}</b>
         </div>
       </div>
       <div class="th">
@@ -85,14 +105,14 @@
         </div>
         <div class="td cell td-clusters">
           <span class="td__label" *ngIf="data.functionalClusters">
-            {{ 'main_page_table_functional_classes' | translate }}
+            {{ 'functional_classes' | translate }}
           </span>
           <span class="tag"
                 *ngFor="let item of data.functionalClusters"
                 (click)="filterByFuncClusters(item.id)"
                 [class.__active]="filters.cluster.includes(item.id)">
               {{item.name}}
-            </span>
+          </span>
         </div>
         <div class="td cell td-expression">
           <span class="td__label" *ngIf="data.expressionChange">

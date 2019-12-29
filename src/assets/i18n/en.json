@@ -11,7 +11,7 @@
   "main_page_total" : "Genes total:",
   "main_page_table_name" : "HGNC, gene name",
   "phylogeny" : "Origin",
-  "main_page_table_functional_classes" : "Functional classes",
+  "functional_classes" : "Functional classes",
   "main_page_table_expression" : "Age-related changes in expression:",
   "diseases" : "Diseases",
   "main_page_table_interactions" : "Interactions",

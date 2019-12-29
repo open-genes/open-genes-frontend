@@ -21,7 +21,7 @@ export class TableService {
   /**
    * Сброс фильтров таблицы
    */
-  public clearFilters() {
-    this.table.clearFilters();
+  public clearFilters(all: string) {
+    this.table.clearFilters('all');
   }
 }
