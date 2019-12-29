@@ -1,5 +1,6 @@
 <form [formGroup]="searchForm"
-      class="search-holder"
+      class="search-form"
+      [class.search-form--active]="showResult"
 >
   <input formControlName="searchField"
          type="text"
@@ -9,12 +10,12 @@
          #searchQuery
          (focusin)="search()"
   >
-  <div class="autocomplete-list"
-       *ngIf="hasResult">
+  <div class="search-form__autocomplete-list"
+       *ngIf="showResult">
     <ng-container *ngFor="let data of searchedData; let i = index">
       <button
         *ngIf="i < 5"
-        class="autocomplete-list__item"
+        class="search-form__autocomplete-item"
         tabindex="0"
         [routerLink]="['/gene', data.id]"
       >
@@ -33,9 +34,9 @@
   </div>
 </form>
 
-<div *ngIf="hasResult"
-     class="backdrop"
-     (click)="hasResult = false"></div>
+<div *ngIf="showResult"
+     class="search-backdrop"
+     (click)="showResult = false"></div>
 
 <div class="page__subtitle __mt-10"
      *ngIf="searchForm.valid">

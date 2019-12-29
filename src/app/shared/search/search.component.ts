@@ -13,7 +13,7 @@ export class SearchComponent implements OnInit {
   @Output() dataSourceChange: EventEmitter<IGene[]> = new EventEmitter<IGene[]>();
   searchedData: IGene[];
   searchForm: FormGroup;
-  hasResult;
+  showResult;
 
   constructor(private translate: TranslateService) {}
 
@@ -23,11 +23,11 @@ export class SearchComponent implements OnInit {
 
   // setResult(i) {
   //   this.searchForm.get('searchField').setValue(this.searchedData[i].symbol + ' ' + this.searchedData[i].name);
-  //   this.hasResult = false;
+  //   this.showResult = false;
   // }
 
   public search() {
-    this.hasResult = true;
+    this.showResult = true;
     const searchField = this.searchForm.get('searchField').value.toLowerCase();
     this.searchedData = this.dataSource.filter((item) => {
       const searchedText = (item.symbol + ' ' + item.name + ' ' + item.aliases.join(' ')).toLowerCase();

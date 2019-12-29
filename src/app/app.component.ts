@@ -17,6 +17,6 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    document.getElementById('loader').style.display = 'none';
+    document.body.classList.remove('body--loading');
   }
 }

@@ -3,128 +3,154 @@
 :host {
   display: block;
   width: 100%;
+}
 
-  .search-holder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+.search-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  z-index: 1;
+}
+
+.search-form {
+  input[type='text'] {
+    font-size: 16px;
+    display: block;
     width: 100%;
-    margin-bottom: 10px;
+    line-height: 40px;
+    height: 40px;
+    padding: 0 10px;
+    resize: none;
+    font-weight: $font-weight-medium;
+    color: $color-black;
+    background-color: #fff;
+    text-overflow: ellipsis;
 
-    input[type='text'] {
-      font-size: 16px;
-      display: block;
-      width: 100%;
-      line-height: 40px;
-      height: 40px;
-      padding: 0 10px;
-      resize: none;
-      font-weight: $font-weight-medium;
-      color: $color-black;
-      background-color: #fff;
-      text-overflow: ellipsis;
+    &::-ms-clear {
+      display: none !important; // скрываем иконку очистки поля на IE/Edge
+    }
 
-      &::-ms-clear {
-        display: none !important; // скрываем иконку очистки поля на IE/Edge
-      }
+    $prefixed-selectors: (
+      '::placeholder',
+      '::-webkit-input-placeholder',
+      '::-moz-placeholder',
+      ':-moz-placeholder',
+      ':-ms-input-placeholder'
+    );
 
-      $prefixed-selectors: (
-        '::placeholder',
-        '::-webkit-input-placeholder',
-        '::-moz-placeholder',
-        ':-moz-placeholder',
-        ':-ms-input-placeholder'
-      );
-
-      @mixin placeholder-color() {
-        @each $prefixed-selector in $prefixed-selectors {
-          &#{$prefixed-selector} {
-            @content;
-          }
-        }
-      }
-
-      @include placeholder-color {
-        color: $color-gray-halfing;
-      }
-
-      &:focus {
-        border-color: $color-borders-active;
-        @include placeholder-color {
-          color: transparent;
+    @mixin placeholder-color() {
+      @each $prefixed-selector in $prefixed-selectors {
+        &#{$prefixed-selector} {
+          @content;
         }
       }
     }
 
+    @include placeholder-color {
+      color: $color-gray-halfing;
+    }
 
-    .autocomplete-list {
-      position: absolute;
-      top: 100%;
-      max-height: (39px * 5) + 18px;
-      width: 100%;
-      overflow-y: scroll;
-      background: #fff;
-      border-radius: 5px;
-      z-index: 12;
-      &:not(:empty) {
-        border: 1px solid $color-borders;
-        padding: 8px 0;
-        box-shadow: 0 1px 5px 0 rgba($color-black, .15);
-      }
-
-      ::-webkit-scrollbar {
-        width: 5px;
-        background: $color-gray-halfing;
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background: $color-gray;
-      }
-
-      &__item {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        font-size: 14px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        cursor: pointer;
-        text-align: left;
-
-        .item__symbol {
-          font-weight: $font-weight-medium;
-        }
-
-        .item__name {
-          color: $color-gray;
-        }
-
-        .item__name,
-        .item__symbol {
-          &.__highlight {
-            color: $color-orange;
-          }
-        }
-
-        &:hover,
-        &:active {
-          background-color: rgba($color-hover, .3);
-        }
+    &:focus {
+      border-color: $color-borders-active;
+      @include placeholder-color {
+        color: transparent;
       }
     }
   }
 
-  .backdrop {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: transparent;
-    z-index: 1;
+
+  &__autocomplete-list {
+    position: absolute;
+    top: 100%;
+    max-height: (39px * 5) + 18px;
+    width: 100%;
+    overflow-y: scroll;
+    background: #fff;
+    border-radius: 5px;
+    z-index: 12;
+
+    &:not(:empty) {
+      border: 1px solid $color-borders;
+      padding: 8px 0;
+      box-shadow: 0 1px 5px 0 rgba($color-black, .15);
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+      background: $color-gray-halfing;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: $color-gray;
+    }
+  }
+
+  &__autocomplete-item {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    text-align: left;
+
+    .item__symbol {
+      font-weight: $font-weight-medium;
+    }
+
+    .item__name {
+      color: $color-gray;
+    }
+
+    .item__name,
+    .item__symbol {
+      &.__highlight {
+        color: $color-orange;
+      }
+    }
+
+    &:hover,
+    &:active {
+      background-color: rgba($color-hover, .3);
+    }
+  }
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
+
+
+  // TODO: сделать без переопределений
+  &--active {
+    @include resolution_smartphone-and-tablet {
+      margin: 0;
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background-color: #fff;
+      padding: 10px;
+      z-index: 100;
+
+      .search-form__autocomplete-list {
+        top: 50px;
+        box-shadow: none;
+        border: 0;
+      }
+    }
   }
 }
+
+
+
 
 

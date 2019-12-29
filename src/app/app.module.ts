@@ -21,7 +21,7 @@ import { BurgerMenuComponent } from './common/burger-menu/burger-menu.component'
     HeaderComponent,
     FooterComponent,
     LanguageComponent,
-    BurgerMenuComponent
+    BurgerMenuComponent,
   ],
   imports: [
     BrowserModule,
