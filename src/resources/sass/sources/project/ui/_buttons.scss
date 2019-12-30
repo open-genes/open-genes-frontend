@@ -69,7 +69,7 @@
       }
     }
 
-    &:not(.btn-flat) {
+    &:not(.btn-flat):not(.btn--icon-only) {
       border: 1px solid lighten($color, 5%);
 
       &.disabled {
@@ -77,12 +77,11 @@
       }
     }
 
-    &:not(.disabled):not(.btn-flat):hover {
+    &:not(.disabled):hover {
+      border-color: darken($color, 10%);
       &:not(.btn-fill) {
         color: darken($color, 10%);
       }
-
-      border: 1px solid darken($color, 10%);
     }
 
     &.btn-fill {
@@ -98,7 +97,7 @@
 
       &:not(.disabled):hover {
         background-color: darken($color, 10%);
-        border: 1px solid darken($color, 10%);
+        border-color: darken($color, 10%);
         $color2-dark: lighten(adjust-hue($color, 10deg), 5%);
         background: linear-gradient(150deg, $color 0%, $color2-dark 100%);
       }
@@ -152,6 +151,27 @@
 
 .btn.btn--big {
   @include btn--big;
+}
+
+@mixin btn--icon-only {
+  width: auto;
+  height: auto;
+  min-width: auto;
+  font-size: 22px; // default
+  padding: .05em;
+  text-align: center;
+  line-height: 0;
+  border-radius: 50%;
+  border: 0;
+  .fa {
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+  }
+}
+
+.btn.btn--icon-only {
+  @include btn--icon-only;
 }
 
 // Исправления

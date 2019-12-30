@@ -6,7 +6,7 @@ $element-base-color: $color-general;
   display: flex;
   align-items: flex-start;
   flex-flow: row wrap;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .filter {
@@ -28,20 +28,26 @@ $element-base-color: $color-general;
   background-color: lighten($element-base-color, 10%);
   user-select: none;
 
-  .sort-icon {
+  .fa {
+    height: 26px;
+    line-height: inherit;
     font-size: 16px;
     position: absolute;
-    top: 2px;
+    top: 0;
     right: 8px;
+
+    &.fa-sort-down {
+      line-height: 20px;
+    }
   }
 
   &:hover {
     background-color: $element-base-color;
   }
 
-  &--sorted {
-    .sort-icon {
-      transform: scale(1, -1) translateY(-7px) translateZ(0);
+  &.__active {
+    .fa {
+      transform: scale(1, -1) translateZ(0);
     }
 
     &,

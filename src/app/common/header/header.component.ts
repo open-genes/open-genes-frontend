@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   /**
    * Сброс фильтров таблицы генов
    */
-  clearFilters() {
-    this.tableService.clearFilters();
+  clearFilters(all: string) {
+    this.tableService.clearFilters('all');
   }
 }

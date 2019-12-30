@@ -1,4 +1,5 @@
 {
+  "title": "Open Longevity Genes — Database of human genes associated with aging",
   "main_page_link" : "Main page",
   "main_page_header_title" : "Open Longevity Genes",
   "main_page_header_description" : "Collecting information about genes associated with aging and life span — their evolutionary origin and functions.",
@@ -10,7 +11,7 @@
   "main_page_total" : "Genes total:",
   "main_page_table_name" : "HGNC, gene name",
   "phylogeny" : "Origin",
-  "main_page_table_functional_classes" : "Functional classes",
+  "functional_classes" : "Functional classes",
   "main_page_table_expression" : "Age-related changes in expression:",
   "diseases" : "Diseases",
   "main_page_table_interactions" : "Interactions",
@@ -42,7 +43,7 @@
   "alert_error_login_unsuccessful" : "Unsuccessful login attempt. Please try again.",
   "error_page_404" : "This page doesn\"t exist or something went wrong.",
   "error_page_soon" : "This section will be updated soon.",
-  "error_connection" : "There are some problems with connection",
+  "error_connection" : "Some problems with connection occurred",
   "link_geneage" : "This gene on GeneAge",
   "link_entrez" : "This gene on Entrez Gene",
   "link_uniprot" : "This gene on UniProt",

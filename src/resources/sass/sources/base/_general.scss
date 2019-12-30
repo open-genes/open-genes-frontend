@@ -1,6 +1,7 @@
 html {
   min-height: 460px;
 }
+
 body {
   display: table;
   height: 100%;
@@ -19,6 +20,10 @@ body {
     box-sizing: border-box;
   }
 
+  .preloader {
+    display: none;
+  }
+
   &:before { // overlay
     content: ' ';
     display: none;
@@ -34,12 +39,60 @@ body {
     @include fadeIn;
   }
 
-  &.still {
+  &.body--still {
     overflow: hidden;
+
     &:before {
       display: block;
     }
   }
+
+  &.body--loading {
+    @extend .body--still;
+
+    .preloader {
+      display: block;
+    }
+  }
+}
+
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 102;
+  background-color: #fff;
+  text-align: center;
+  font-size: 0;
+
+  &::before {
+    content: ' ';
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid $color-general;
+    border-left: 4px solid transparent;
+    border-radius: 50%;
+    animation: r1 1s normal infinite linear;
+    transform-origin: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+
+@keyframes r1 {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+
 }
 
 .link {
@@ -72,9 +125,6 @@ body {
 }
 
 
-
-
-
 a.reference-link {
   font-size: 11px;
   color: $color-gray;
@@ -105,7 +155,7 @@ $header-height: 50px;
   left: 0;
   z-index: 100;
   padding: 0 5px;
-  box-shadow: 0 1px 4px 0 rgba(5,5,5,.14);
+  box-shadow: 0 1px 4px 0 rgba(5, 5, 5, .14);
 
   &__centering {
     width: 100%;
@@ -126,6 +176,7 @@ $header-height: 50px;
     line-height: ($header-height - 10px);
     text-align: center;
     cursor: pointer;
+
     &:after {
       content: ' ';
       display: block;
@@ -140,9 +191,11 @@ $header-height: 50px;
       opacity: 0;
       transition: color, opacity, .15s ease-in-out;
     }
+
     .fa {
       line-height: 40px;
     }
+
     &:hover,
     &.active {
       &:after {
@@ -150,6 +203,7 @@ $header-height: 50px;
       }
     }
   }
+
   &__logo {
     width: 100px;
     float: left;
@@ -172,6 +226,7 @@ $header-height: 50px;
 
     app-language {
       padding-top: 15px;
+
       .language-switcher {
         color: #7673d1;
       }
@@ -189,6 +244,7 @@ $header-height: 50px;
       right: 10px;
       z-index: 6;
       font-size: 18px;
+
       &:hover,
       &.active {
         color: $color-pink;
@@ -217,7 +273,7 @@ $header-height: 50px;
       bottom: 0;
       z-index: 1;
       background-color: #fff;
-      box-shadow: -1px 0 4px 0 rgba(5,5,5,.3);
+      box-shadow: -1px 0 4px 0 rgba(5, 5, 5, .3);
 
       @include resolution_tablet-and-up {
         width: 320px;
@@ -248,8 +304,10 @@ $header-height: 50px;
             width: 100%;
             position: relative;
           }
+
           a {
             padding: 15px 30px 15px 10px;
+
             &:before {
               content: " ";
               display: block;
@@ -270,6 +328,7 @@ $header-height: 50px;
             &:visited {
               color: $color-general;
             }
+
             &:hover,
             &:active {
               color: $color-general-dark;
@@ -293,11 +352,14 @@ $header-height: 50px;
   width: 100%;
   height: 100%;
   position: relative;
+
   &__inner {
     display: table-cell;
     vertical-align: top;
+
     .page__title {
       margin-bottom: 15px;
+
       h1 {
         font-size: 28px;
         color: $color-indent;
@@ -324,6 +386,7 @@ $header-height: 50px;
   &--dummy {
     .page__inner {
       vertical-align: middle;
+
       .no-content {
         border: 0;
         margin-top: -100px;
@@ -339,6 +402,7 @@ $header-height: 50px;
 .container {
   text-align: left;
   position: relative;
+
   & > header {
     text-align: center;
   }
@@ -429,6 +493,7 @@ article {
     margin-bottom: 0;
     padding: 10px 16px;
     border-bottom: 1px solid #ccc;
+
     b {
       font-weight: 700;
       color: $color-general;
@@ -439,6 +504,7 @@ article {
     width: 100%;
     margin: 6px 0;
     padding: 6px 0;
+
     b {
       font-weight: 700;
     }
@@ -463,6 +529,7 @@ article {
     margin-bottom: 10px;
     border-bottom: 1px solid $color-borders;
   }
+
   &__tab {
     display: inline-block;
     height: 50px;
@@ -478,6 +545,7 @@ article {
     cursor: pointer;
     margin-bottom: -2px;
     padding: 8px 5px 16px 8px;
+
     &:before {
       content: ' ';
       display: block;
@@ -490,6 +558,7 @@ article {
       right: 5px;
       z-index: 0;
     }
+
     &--active:before,
     &:hover:before {
       opacity: 1;
@@ -532,6 +601,7 @@ article {
   border-radius: 3px;
   cursor: pointer;
 }
+
 button.load-btn {
   line-height: normal;
 }
@@ -544,13 +614,14 @@ button.load-btn {
   0% {
     opacity: 0;
   }
-  100%  {
+  100% {
     opacity: 1;
   }
 }
 
 table {
   border-collapse: collapse;
+
   tr td:nth-child(2) {
     width: 120px;
   }
@@ -565,6 +636,7 @@ ul, ol {
       width: 100%;
       position: relative;
     }
+
     li + li {
       margin-top: 1ex;
     }
@@ -574,6 +646,7 @@ ul, ol {
 ul.list--bulletted {
   li {
     padding-left: 1.8ex;
+
     &:before {
       content: " ";
       display: block;
@@ -595,22 +668,27 @@ ul.list--bulletted {
   text-align: center;
   border: 1px solid $color-borders;
   border-radius: 10px;
+
   &__icon {
     display: inline-block;
     width: 150px;
     height: 150px;
     background: transparent center center / cover no-repeat;
+
     &-standard {
       background-image: url(../images/no-content-default.svg);
     }
+
     &-404 {
       background-image: url(../images/no-content-404.svg);
     }
   }
+
   &__title {
     width: 100%;
     color: $color-indent;
     margin-top: 15px;
+
     .title__center {
       display: inline-block;
       max-width: 320px;

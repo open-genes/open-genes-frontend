@@ -8,7 +8,7 @@ import {environment} from '../environments/environment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
-  title = 'frontend';
+  // title = 'frontend';
 
   constructor(private translate: TranslateService) {
     this.translate.addLangs(environment.languages);
@@ -17,7 +17,6 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    document.getElementById('loader').style.display = 'none';
+    document.body.classList.remove('body--loading');
   }
-
 }

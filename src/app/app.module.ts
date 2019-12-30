@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { LanguageComponent } from './common/language/language.component';
-import { MenuComponent } from './common/menu/menu.component';
+import { BurgerMenuComponent } from './common/burger-menu/burger-menu.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { MenuComponent } from './common/menu/menu.component';
     HeaderComponent,
     FooterComponent,
     LanguageComponent,
-    MenuComponent
+    BurgerMenuComponent,
   ],
   imports: [
     BrowserModule,

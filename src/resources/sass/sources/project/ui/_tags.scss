@@ -4,6 +4,12 @@
   min-width: 40px;
   margin: 0 5px 5px 0;
 
+  &__inner {
+    width: 100%;
+    line-height: $ui-base-height;
+    @include text-overflow;
+  }
+
   // Класс для skeleton screens
   &.__skeletal {
     height: 26px;
