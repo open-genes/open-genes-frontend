@@ -2,6 +2,12 @@
       class="search-form"
       [class.search-form--active]="showResult"
 >
+  <button
+    (click)="showResult = false"
+    class="btn btn-purple btn--icon-only cancel-search-button">
+    <span class="fa fal fa-times"></span>
+  </button>
+
   <input formControlName="searchField"
          type="text"
          placeholder="{{ 'search' | translate }}"
