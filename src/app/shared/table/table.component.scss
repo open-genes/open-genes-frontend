@@ -12,12 +12,18 @@
     padding-right: 5px;
   }
 
+  // Переключать вид можно только на десктопе.
+  // На мобильном контент всегда выглядит в виде карточек.
   &__buttons {
     padding-left: 5px;
     display: flex;
     align-items: center;
     flex-flow: row nowrap;
     justify-content: flex-end;
+    @include resolution_smartphone-and-tablet {
+      display: none;
+
+    }
   }
 }
 
@@ -70,114 +76,18 @@ $columns-quantity: 7;
     }
   }
 
-  // В виде карточек
-  &.view-content--as-cards {
-    .thead {
-      display: none;
-    }
-
-    .tbody {
-      display: flex;
-      flex-flow: row wrap;
-      align-items: stretch;
-      justify-content: space-between;
-    }
-
-    .tr {
-      @include panel;
-      @include resolution_tablet-and-up {
-        width: calc(50% - 10px); // TODO: убрать calc
-      }
-      font-size: 0;
-      padding-bottom: 75px;
-
-      //separator
-      &:after {
-        content: " ";
-        display: block;
-        width: 100%;
-        height: 1px;
-        background-color: $color-borders;
-        margin-bottom: 10px;
-        position: absolute;
-        bottom: 44px;
-        left: 0;
-        z-index: 0;
-      }
-
-      .td {
-        display: inline-block;
-        width: 100%;
-        position: relative;
-        font-size: $font-size;
-
-        &__label {
-          display: block;
-          width: 100%;
-          font-size: $font-size;
-          color: $color-gray-halfing;
-          margin-bottom: 3px;
-        }
-
-
-        &-name {
-          margin: 10px 0;
-
-          .td__title {
-            .link {
-              font-size: $font-size-max;
-              text-decoration: none;
-            }
-          }
-        }
-
-        &-age-phylo {
-          font-size: $font-size-big;
-        }
-
-        &-age-mya {
-          font-size: $font-size-bigger;
-          margin-top: 2px;
-        }
-
-        &-clusters,
-        &-expression {
-          margin-top: 10px;
-
-          .td__label {
-            margin-bottom: 5px;
-          }
-        }
-
-        &-external {
-          &,
-          .badge {
-            width: 80px;
-            margin-bottom: 0;
-          }
-
-          position: absolute;
-          left: 10px;
-          bottom: 12px;
-
-          &:nth-last-child(2) {
-            left: 100px;
-          }
-        }
-      }
-    }
-  }
-
   // В виде таблицы
-  &.view-content--as-table {
+  @mixin view-content--as-table {
     display: block;
+    overflow: auto;
     width: 100%;
     max-width: 100%;
-    overflow: auto;
     font-size: 14px;
     line-height: 1.5;
     border: 1px solid $color-borders;
     border-radius: 5px;
+    margin-right: auto;
+    margin-left: auto;
 
     .view-panel__filters {
       display: none;
@@ -299,6 +209,118 @@ $columns-quantity: 7;
     .tr:nth-child(odd) {
       background: #fff;
     }
+  }
+
+  // В виде карточек
+  @mixin view-content--as-cards {
+    .thead {
+      display: none;
+    }
+
+    .tbody {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: stretch;
+      justify-content: space-between;
+    }
+
+    .tr {
+      @include panel;
+      @include resolution_tablet-and-up {
+        width: calc(50% - 10px); // TODO: убрать calc
+      }
+      font-size: 0;
+      padding-bottom: 75px;
+
+      //separator
+      &:after {
+        content: " ";
+        display: block;
+        width: 100%;
+        height: 1px;
+        background-color: $color-borders;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 44px;
+        left: 0;
+        z-index: 0;
+      }
+
+      .td {
+        display: inline-block;
+        width: 100%;
+        position: relative;
+        font-size: $font-size;
+
+        &__label {
+          display: block;
+          width: 100%;
+          font-size: $font-size;
+          color: $color-gray-halfing;
+          margin-bottom: 3px;
+        }
+
+
+        &-name {
+          margin: 10px 0;
+
+          .td__title {
+            .link {
+              font-size: $font-size-max;
+              text-decoration: none;
+            }
+          }
+        }
+
+        &-age-phylo {
+          font-size: $font-size-big;
+        }
+
+        &-age-mya {
+          font-size: $font-size-bigger;
+          margin-top: 2px;
+        }
+
+        &-clusters,
+        &-expression {
+          margin-top: 10px;
+
+          .td__label {
+            margin-bottom: 5px;
+          }
+        }
+
+        &-external {
+          &,
+          .badge {
+            width: 80px;
+            margin-bottom: 0;
+          }
+
+          position: absolute;
+          left: 10px;
+          bottom: 12px;
+
+          &:nth-last-child(2) {
+            left: 100px;
+          }
+        }
+      }
+    }
+  }
+
+  @include resolution_desktop-and-up {
+    &.view-content--as-table {
+      @include view-content--as-table;
+    }
+
+    &.view-content--as-cards {
+      @include view-content--as-cards;
+    }
+  }
+
+  @include resolution_smartphone-and-tablet {
+    @include view-content--as-cards;
   }
 }
 

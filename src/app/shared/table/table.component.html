@@ -110,8 +110,9 @@
           <span class="tag"
                 *ngFor="let item of data.functionalClusters"
                 (click)="filterByFuncClusters(item.id)"
-                [class.__active]="filters.cluster.includes(item.id)">
-              {{item.name}}
+                [class.__active]="filters.cluster.includes(item.id)"
+          >
+            <div class="tag__inner">{{item.name}}</div>
           </span>
         </div>
         <div class="td cell td-expression">
@@ -121,7 +122,10 @@
           <span class="tag"
                 *ngIf="data.expressionChange"
                 (click)="filterByExpressionChange(data.expressionChange)"
-                [class.__active]="filters.expression === data.expressionChange">{{data.expressionChange}}</span>
+                [class.__active]="filters.expression === data.expressionChange"
+          >
+            <div class="tag__inner">{{data.expressionChange}}</div>
+          </span>
         </div>
         <div class="td cell __text-right td-external">
           <a href="http://disgenet.org/browser/1/1/0/{{data.entrezGene}}/"
