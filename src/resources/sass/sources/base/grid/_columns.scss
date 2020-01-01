@@ -89,7 +89,8 @@
       @for $i from 1 through $columns-quantity {
         &.#{$prefix}col-#{$i} {
           width: 100%;
-          min-width: $tablet - 40px;
+          min-width: $tablet - $gutter;
+          max-width: $desktop - ($gutter + .02px);
         }
       }
     }
@@ -100,7 +101,8 @@
       @for $i from 1 through $columns-quantity {
         &.#{$prefix}col-#{$i} {
           width: 100%;
-          min-width: $phablet - 40px;
+          min-width: $phablet - $gutter;
+          max-width: $tablet - ($gutter + .02px);
         }
       }
     }
@@ -111,7 +113,8 @@
       @for $i from 1 through $columns-quantity {
         &.#{$prefix}col-#{$i} {
           width: 100%;
-          min-width: $smartphone - 40px;
+          min-width: $smartphone - $gutter;
+          max-width: $phablet  - ($gutter +  .02px);
         }
       }
     }
