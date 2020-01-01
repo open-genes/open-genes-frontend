@@ -85,7 +85,7 @@ mark {
     &:not(:empty) {
       border: 1px solid $color-borders;
       padding: 8px 0;
-      box-shadow: 0 1px 5px 0 rgba($color-black, .15);
+      box-shadow: 0 5px 5px 0 rgba($color-black, .15);
     }
 
     ::-webkit-scrollbar {
@@ -151,7 +151,7 @@ mark {
       background-color: #fff;
       padding: 10px;
       z-index: 100;
-      box-shadow: 0 1px 5px 0 rgba($color-black, .15);
+      box-shadow: 0 5px 5px 0 rgba($color-black, .15);
 
       .cancel-search-button {
         display: inline-flex;
