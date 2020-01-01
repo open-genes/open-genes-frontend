@@ -1,0 +1,95 @@
+@import "../../../resources/sass/dependencies";
+
+.header__menu {
+  height: 100%;
+  width: 100%;
+  color: $color-borders;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  background-color: rgba($color-general-dark, .15);
+}
+
+.menu__panel {
+  height: 100%;
+  padding: $header-height 0 30px 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: #fff;
+  box-shadow: -1px 0 4px 0 rgba(5, 5, 5, .3);
+
+  @include resolution_tablet-and-up {
+    width: 320px;
+  }
+  @include resolution_smartphone {
+    width: 100%;
+    min-width: 320px;
+  }
+
+  form {
+    width: 100%;
+    padding: 0 10px;
+    margin-bottom: 20px;
+  }
+
+  .menu__links {
+    width: 100%;
+    padding: 0;
+
+    .menu__link {
+      font-size: $font-size-bigger;
+      font-weight: $font-weight-medium;
+      text-transform: uppercase;
+      border-top: 1px solid $color-borders;
+
+      &, a {
+        display: block;
+        width: 100%;
+        position: relative;
+      }
+
+      a {
+        padding: 15px 30px 15px 10px;
+
+        &:before {
+          content: " ";
+          display: block;
+          width: 5px;
+          height: 100%;
+          border-top-right-radius: 100%;
+          border-bottom-right-radius: 100%;
+          background-color: $color-general;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 0;
+          opacity: 0;
+          transition: opacity .2s ease-in;
+        }
+
+        &:link,
+        &:visited {
+          color: $color-general;
+        }
+
+        &:hover,
+        &:active {
+          color: $color-general-dark;
+          background-color: rgba($color-general-dark, .15);
+        }
+
+        &.current {
+          &:before {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}

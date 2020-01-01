@@ -1,5 +1,8 @@
 // DEMS
 
+// UI
+$header-height: 50px;
+
 // Fonts
 $font-size: 14px;
 $font-size-smaller: ($font-size - 1);
@@ -25,7 +28,7 @@ $color-general-light: #edeefb;
 $color-general-semi: #b7bcf1;
 $color-general: #4d58dc;
 $color-general-dark: darken($color-general, 15%);
-$color-accent: #fe4f18;
+$color-accent: #fe6231;
 
 // -UI
 $color-black: #2d323b;
