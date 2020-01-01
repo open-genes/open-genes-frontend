@@ -29,10 +29,11 @@
   body,
   .header,
   .#{$prefix}container {
-    min-width: $tablet - 20px;
+    min-width: $tablet - $gutter;
   }
   .#{$prefix}container {
-    width: calc(100% - 20px);
+    width: calc(100% - #{$gutter});
+    max-width: $desktop - ($gutter + .02px);
   }
 }
 
@@ -40,10 +41,11 @@
   body,
   .header,
   .#{$prefix}container {
-    min-width: $phablet - 20px;
+    min-width: $phablet - $gutter;
   }
   .#{$prefix}container {
-    width: calc(100% - 20px);
+    width: calc(100% - #{$gutter});
+    max-width: $tablet - ($gutter + .02px);
   }
 }
 
@@ -51,9 +53,10 @@
   body,
   .header,
   .#{$prefix}container {
-    min-width: $smartphone - 20px;
+    min-width: $smartphone - $gutter;
   }
   .#{$prefix}container {
-    width: calc(100% - 20px);
+    width: calc(100% - #{$gutter});
+    max-width: $phablet  - ($gutter + .02px);
   }
 }

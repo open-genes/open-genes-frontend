@@ -19,10 +19,10 @@ html {
 }
 
 input,
-button,
-a {
+button {
   &:focus {
-    outline-color: $color-hover;
+    outline: none;
+    border-color: $color-general;
   }
 }
 
