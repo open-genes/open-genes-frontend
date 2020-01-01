@@ -26,14 +26,6 @@
     display: none;
   }
 
-  &--pink {
-    background-color: lighten($color-pink, 8%);
-  }
-
-  &--green {
-    background-color: lighten($color-green-light, 8%);
-  }
-
   &--entrez {
     background-color: lighten(#369, 28%);
   }

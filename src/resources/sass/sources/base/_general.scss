@@ -247,7 +247,7 @@ $header-height: 50px;
 
       &:hover,
       &.active {
-        color: $color-pink;
+        color: $color-red-light;
       }
     }
   }
@@ -438,7 +438,8 @@ article {
   * + h2,
   * + h3,
   * + p,
-  * + .list {
+  * + .list,
+  * + app-code-block {
     margin-top: 2ex;
   }
 

@@ -15,6 +15,10 @@
   z-index: 1;
 }
 
+mark {
+  background-color: $color-hover;
+}
+
 .cancel-search-button {
   display: none;
   align-self: flex-start;

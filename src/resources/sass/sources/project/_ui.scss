@@ -31,8 +31,5 @@ $ui-base-height: 26px;
 @import "ui/popover";
 @import "ui/filters";
 @import "ui/tip";
-
-mark {
-  background-color: $color-hover;
-}
+@import "ui/code";
 

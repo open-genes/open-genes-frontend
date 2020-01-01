@@ -14,13 +14,100 @@
     </div>
 
     <div class="container">
-      <section class="col col-16 no-content">
-        <div class="no-content__icon no-content__icon-standard"></div>
-        <div class="no-content__title">
-          <div class="title__center">
-            {{ 'error_page_soon' | translate }}
-          </div>
-        </div>
+      <section class="col col-16 content">
+        <article>
+          <p>
+            API проекта возвращает данные в формате json. Все эндпоинты принимают параметр <code>?lang (en|ru)</code>.
+          </p>
+
+          <p>
+            <code>/api/</code> — получение общего списка всех занесенных в базу генов с краткой информацией по каждому гену:
+          </p>
+
+          <app-code-block text=
+'<div>[</div>
+<div>&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;"id": <var class="number">68</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;"ageMya": <var>"3000"</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;"agePhylo": <var>"Prokaryota"</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;"symbol": <var>"BLM"</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;"aliases": [</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<var>"BS"</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<var>"RECQL3"</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<var>"RECQ2</var>"</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;],</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;"name": <var>"Bloom&nbsp;syndrome,&nbsp;RecQ&nbsp;helicase-like"</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;"entrezGene": <var>"641"</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;"uniprot": <var>"BLM_HUMAN"</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;"functionalClusters": [</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id": <var class="number">2</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name": <var>"метаболизм&nbsp;ДНК"</var></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id": <var class="number">3</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name": <var>"регуляция&nbsp;транскрипции/трансляции"</var></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;],</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;"expressionChange": <var class="null">null</var></div>
+<div>&nbsp;&nbsp;},&nbsp;<var class="mark">...</var></div>
+<div>]</div>
+'>
+          </app-code-block>
+
+          <p><code>/api/gene/&#60;id&#62;</code> — получение полной информации об одном гене по его id.</p>
+
+          <app-code-block text=
+'<div>{</div>
+<div>&nbsp;&nbsp;"id": <var class="number">254</var>,</div>
+<div>&nbsp;&nbsp;"ageMya": <var>"1000"</var>,</div>
+<div>&nbsp;&nbsp;"agePhylo": <var>"Eumetazoa"</var>,</div>
+<div>&nbsp;&nbsp;"symbol": <var>"ADCY5"</var>,</div>
+<div>&nbsp;&nbsp;"aliases": [</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>"AC5"</var></div>
+<div>&nbsp;&nbsp;],</div>
+<div>&nbsp;&nbsp;"name": <var>"adenylate cyclase 5"</var>,</div>
+<div>&nbsp;&nbsp;"entrezGene": <var>"111"</var>,</div>
+<div>&nbsp;&nbsp;"uniprot": <var>"ADCY5_HUMAN"</var>,</div>
+<div>&nbsp;&nbsp;"commentEvolution": <var>"Аденилатциклазы эволюционно консервативные ферменты, претерпевшие множественные дупликации [1]."</var>,</div>
+<div>&nbsp;&nbsp;"commentFunction": <var>"ADCY5 катализирует синтез циклического АМФ, является критическим регулятором клеточных функций."</var>,</div>
+<div>&nbsp;&nbsp;"commentCause": [</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>"Прямые доказательства на млекопитающих"</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>"Участие гена в связанных со старением процессах/механизмах"</var></div>
+<div>&nbsp;&nbsp;],</div>
+<div>&nbsp;&nbsp;"commentAging": <var>"ADCY5 нокаут повышает здоровую продолжительность жизни мышей примерно на 30 процентов [5]. Старые ADCY5 нокаут мыши также защищены от возрастной кардиомиопатии, гипертрофии, апоптоза, фиброза и сердечной недостаточности [6, 7]"</var>,</div>
+<div>&nbsp;&nbsp;"commentsReferenceLinks": {</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>"10.1124/pr.109.001370": "[1] 10.1124/pr.109.001370"</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>"10.1124/mol.115.099556": " <br>[2] 10.1124/mol.115.099556"</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<var class="mark">...</var></div>
+<div>&nbsp;&nbsp;},</div>
+<div>&nbsp;&nbsp;"rating": <var class="null">null</var>,</div>
+<div>&nbsp;&nbsp;"functionalClusters": [</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id": <var class="number">11</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name": <var>"митохондриальная функция"</var></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;}, {...}</div>
+<div>&nbsp;&nbsp;],</div>
+<div>&nbsp;&nbsp;"expression": [</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name": <var>"heart"</var>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"exp_rpkm": <var>"22.9328"</var></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;}, <var class="mark">{...}</var></div>
+<div>&nbsp;&nbsp;],</div>
+<div>&nbsp;&nbsp;"expressionChange": <var>"mixed"</var></div>
+<div>}</div>'
+          ></app-code-block>
+
+          <p>
+            <code>/api/by-functional-cluster/&#60;id&#62;,&#60;id&#62;,...</code> — получение списка генов, принадлежащих одновременно ко всем перечисленным функциональным кластерам.
+            Структура ответа такая же, как в <code>/api/</code>.
+          </p>
+
+          <p>
+            <code>/api/by-expression-change/&#60;expression-change&#62;</code> — получение списка генов, имеющих заданное значение изменения экспрессии
+            Структура ответа такая же, как в <code>/api/</code>.
+          </p>
+        </article>
       </section>
     </div>
   </div>

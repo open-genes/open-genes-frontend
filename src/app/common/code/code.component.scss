@@ -1,0 +1,61 @@
+@import "../../../resources/sass/dependencies";
+
+:host {
+  display: block;
+  width: 100%;
+
+
+}
+
+code {
+  display: block;
+  width: 100%;
+  background-color: $color-black;
+  color: #fff;
+  white-space: normal; // вместо pre/pre-wrap оборачиваем строки в div'ы
+  padding: 10px 20px 10px 0;
+  font-size: .9em;
+  border-radius: 5px;
+  word-wrap: normal;
+  overflow: auto;
+  counter-reset: code-lines;
+  counter-set: code-lines;
+
+  ::ng-deep var { // Чтобы применить стили к innerHTML
+    color: $color-general-semi;
+
+    &.number {
+      color: $color-red-medium;
+    }
+
+    &.null {
+      color: $color-gray-halfing;
+    }
+
+    &.mark {
+      background-color: $color-black-light;
+      padding: 0 .5em;
+      border-radius: 3px;
+    }
+  }
+
+  ::ng-deep div {
+    position: relative;
+    padding-left: 4em;
+
+    &:before {
+      content: counter(code-lines);
+      counter-increment: code-lines 1;
+      position: absolute;
+      width: 3em;
+      height: 100%;
+      top: 0;
+      left: 0;
+      padding-left: 1em;
+      color: rgba(#fff, .3);
+      box-sizing: border-box;
+    }
+  }
+}
+
+
