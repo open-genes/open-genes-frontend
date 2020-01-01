@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { LanguageComponent } from './common/language/language.component';
-import { BurgerMenuComponent } from './common/burger-menu/burger-menu.component';
+import { BurgerMenuComponent } from './common/app-burger-menu/app-burger-menu.component';
 
 @NgModule({
   declarations: [
