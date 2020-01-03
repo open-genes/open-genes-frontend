@@ -16,6 +16,8 @@ $ui-base-height: 26px;
   background-color: #fff;
 }
 
+@import "ui/animations";
+@import "ui/preloader";
 @import "ui/sidebar";
 @import "ui/skeletons";
 @import "ui/toggler";

@@ -3,11 +3,11 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } 
 import { Subject } from 'rxjs';
 
 import { IFilter, IGene } from '../../core/models';
-import { TableService } from './table.service';
+import { GenesListService } from './genes-list.service';
 
 @Component({
   selector: 'app-table',
-  templateUrl: './table.component.html',
+  templateUrl: './genes-list.component.html',
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, OnChanges, OnDestroy {
@@ -24,14 +24,14 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   private subscription$ = new Subject();
   public filters: IFilter;
 
-  constructor(private readonly tableService: TableService) {
+  constructor(private readonly genesListService: GenesListService) {
     this.filters = {
       name: false,
       ageMya: false,
       expression: null,
       cluster: []
     };
-    this.tableService.register(this);
+    this.genesListService.register(this);
   }
 
   ngOnInit() {}

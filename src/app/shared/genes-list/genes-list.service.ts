@@ -5,7 +5,7 @@ import { TableComponent } from './table.component';
 @Injectable({
   providedIn: 'root'
 })
-export class TableService {
+export class GenesListService {
   private table: TableComponent;
 
   constructor() { }

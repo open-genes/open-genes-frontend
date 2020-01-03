@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 import { SearchModule } from '../search/search.module';
 import { PipesModule } from '../../modules/home/pipes/pipes.module';
 import { DirectivesModule } from '../../modules/home/directives/directives.module';
-import { TableService } from './table.service';
+import { GenesListService } from './genes-list.service';
 
 @NgModule({
   declarations: [

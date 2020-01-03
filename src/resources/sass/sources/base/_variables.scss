@@ -1,8 +1,5 @@
 // DEMS
 
-// UI
-$header-height: 50px;
-
 // Fonts
 $font-size: 14px;
 $font-size-smaller: ($font-size - 1);
@@ -65,7 +62,10 @@ $color-indent: #575757;
 $color-borders: $color-gray-light;
 $color-border-light: #e3e4e8;
 $color-borders-active: darken($color-hover, 5%);
-
+$header-height: 50px;
+$preloader-spinner-size: 40px;
+$preloader-spinner-color: $color-gray-light;
+$preloader-spinner-color-accent: $color-general;
 
 // PATHS
 $path-images: '../images';
