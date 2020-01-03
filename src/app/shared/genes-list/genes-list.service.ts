@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
 
-import { TableComponent } from './table.component';
+import { GenesListComponent } from './genes-list.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GenesListService {
-  private table: TableComponent;
+  private genesList: GenesListComponent;
 
   constructor() { }
 
   /**
    * Регистрация таблицы
-   * @param tableComponent - Регистрируемая таблица
+   * @param genesListComponent - Регистрируемая таблица
    */
-  public register(tableComponent: TableComponent) {
-    this.table = tableComponent;
+  public register(genesListComponent: GenesListComponent) {
+    this.genesList = genesListComponent;
   }
 
   /**
    * Сброс фильтров таблицы
    */
   public clearFilters(all: string) {
-    this.table.clearFilters('all');
+    this.genesList.clearFilters('all');
   }
 }

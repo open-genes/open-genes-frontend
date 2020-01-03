@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-api',
-  templateUrl: './api.component.html',
-  styleUrls: ['./api.component.scss']
+  selector: 'app-api-reference',
+  templateUrl: './api-reference.component.html',
+  styleUrls: ['./api-reference.component.scss']
 })
-export class ApiComponent implements OnInit {
+export class ApiReferenceComponent implements OnInit {
 
   constructor(public translate: TranslateService) { }
 
