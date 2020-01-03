@@ -1,6 +1,59 @@
 @import "../styles";
 
-.loader-container {
+$skeleton-line-height: ($ui-base-height / 2);
+
+:host {
+  display: block;
+}
+
+.skeleton {
+  padding: inherit;
+
+  &__line-group {
+    width: 100%;
+    display: inline-block;
+
+    & + & {
+      margin-top: $skeleton-line-height;
+    }
+  }
+
+  &__line {
+    position: relative;
+    background-color: #f2f2f2;
+    height: $skeleton-line-height;
+    border-radius: $border-radius-regular;
+    overflow: hidden;
+
+    &::after {
+      content: ' ';
+      display: block;
+      animation: blockTextShine 1s linear infinite forwards;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-image: linear-gradient(to right, $color-gray-soft 0%, $color-gray-very-light 20%, $color-gray-soft 40%, $color-gray-soft 100%);
+      height: 100%;
+    }
+
+    &--1 {
+      width: 100%
+    }
+
+    &--2 {
+      width: 80%;
+    }
+
+    &--3 {
+      width: 50%
+    }
+
+    &:not(:last-of-type) {
+      margin-bottom: ($skeleton-line-height / 1.5);
+    }
+  }
+}
+
+.loader {
   position: absolute;
   top: 0;
   right: 0;

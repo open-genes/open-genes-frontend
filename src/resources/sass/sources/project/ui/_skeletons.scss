@@ -1,40 +1,6 @@
-// Скелетон скрин
-.skeleton { // Контейнер
-  &__line { // Одна строчка
-    position: relative;
-    background-color: #f2f2f2;
-    height: 10px;
-    overflow: hidden;
+// Стили скелетон-скрина перенесены в компонент
 
-    &::after {
-      content: ' ';
-      display: block;
-      animation: blockTextShine 1s linear infinite forwards;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-image: linear-gradient(to right, #f2f2f2 0%, #fafafa 20%, #f2f2f2 40%, #f2f2f2 100%);
-      height: 10px
-    }
-
-    &--1 {
-      width: 156px
-    }
-
-    &--2 {
-      width: 235px
-    }
-
-    &--3 {
-      width: 200px
-    }
-
-    &:not(:last-of-type) {
-      margin-bottom: 4px
-    }
-  }
-}
-
-// Класс-модификатор, который делает не подгрузившийся элемент плейсхолдером
+// Класс-модификатор, который делает неподгрузившийся элемент плейсхолдером
 .__skeletal {
   font-size: 0;
   color: $color-gray;

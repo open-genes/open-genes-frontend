@@ -6,7 +6,6 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./code-block.component.scss']
 })
 export class CodeBlockComponent implements OnInit {
-  private codeStrings: string;
   @Input()
   text: string;
 

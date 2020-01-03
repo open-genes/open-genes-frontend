@@ -20,8 +20,11 @@
   </li>
 </ul>
 
-<app-loader-placeholder *ngIf="isLoading">
-</app-loader-placeholder>
+<app-loader-placeholder
+  *ngIf="isLoading"
+  [loader]="'skeleton'"
+  [groups]="3"
+></app-loader-placeholder>
 
 
 
