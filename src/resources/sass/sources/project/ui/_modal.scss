@@ -8,7 +8,7 @@
   max-width: 600px;
   background-color: #fff;
   border-radius: $border-radius-medium;
-  box-shadow: 0 1px 4px 1px rgba(5, 5, 5, .14);
+  box-shadow: $box-shadow;
   padding: 20px 15px 15px 15px;
 
   &__title {

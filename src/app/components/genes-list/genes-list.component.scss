@@ -220,6 +220,8 @@ $columns-quantity: 7;
 
   // В виде карточек
   @mixin view-content--as-cards {
+    margin-top: -20px;
+
     .thead {
       display: none;
     }
@@ -233,11 +235,10 @@ $columns-quantity: 7;
 
     .tr {
       @include panel;
-      @include resolution_tablet-and-up {
-        width: calc(50% - 10px); // TODO: убрать calc
-      }
+
       font-size: 0;
       padding-bottom: 75px;
+      margin-top: 20px;
 
       //separator
       &:after {
@@ -323,6 +324,14 @@ $columns-quantity: 7;
 
     &.view-content--as-cards {
       @include view-content--as-cards;
+    }
+  }
+
+  @include resolution_tablet-and-up {
+    &.view-content--as-cards {
+      .tr {
+        width: calc(50% - 10px); // TODO: убрать calc
+      }
     }
   }
 

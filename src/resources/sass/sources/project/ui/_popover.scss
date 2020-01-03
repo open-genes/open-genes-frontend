@@ -9,7 +9,7 @@
   border: 1px solid $color-borders;
   border-radius: $border-radius-regular;
   padding: 20px 20px 10px 20px;
-  box-shadow: 0 1px 4px 0 rgba(5, 5, 5, .14);
+  box-shadow: $box-shadow;
 
   @include resolution_tablet-and-up {
     min-width: 300px;
