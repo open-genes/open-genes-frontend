@@ -2,10 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-code-block',
-  templateUrl: './code.component.html',
-  styleUrls: ['./code.component.scss']
+  templateUrl: './code-block.component.html',
+  styleUrls: ['./code-block.component.scss']
 })
-export class CodeComponent implements OnInit {
+export class CodeBlockComponent implements OnInit {
   private codeStrings: string;
   @Input()
   text: string;

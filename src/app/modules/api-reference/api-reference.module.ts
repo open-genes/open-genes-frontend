@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {ApiReferenceComponent} from './api-reference.component';
 import {RouterModule, Routes} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
-import {CodeComponent} from '../../components/code/code.component';
+import {CodeBlockComponent} from '../../components/code-block/code-block.component';
 import {PipesModule} from '../home/pipes/pipes.module';
 
 const routes: Routes = [
@@ -11,7 +11,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [ApiReferenceComponent, CodeComponent],
+  declarations: [ApiReferenceComponent, CodeBlockComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
