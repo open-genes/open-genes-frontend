@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { TableService } from '../../shared/table/table.service';
+import { GenesListService } from '../../shared/genes-list/genes-list.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +11,7 @@ import { TableService } from '../../shared/table/table.service';
 export class HeaderComponent implements OnInit {
 
   constructor(private readonly router: Router,
-              private readonly tableService: TableService) { }
+              private readonly genesListService: GenesListService) { }
 
   ngOnInit() {
   }
@@ -20,6 +20,6 @@ export class HeaderComponent implements OnInit {
    * Сброс фильтров таблицы генов
    */
   clearFilters(all: string) {
-    this.tableService.clearFilters('all');
+    this.genesListService.clearFilters('all');
   }
 }
