@@ -1,0 +1,165 @@
+<app-search [dataSource]="dataSource" (dataSourceChange)="getSearchedData($event)"></app-search>
+<ng-container *ngIf="searchedData?.length !== 0 && !isLoading">
+  <div class="view-panel">
+    <div class="filters-group view-panel__filters">
+      <button class="filter name-filter"
+              (click)="getGenes('name')"
+              [class.__active]="filters.name"
+      >
+        {{ 'main_page_table_name' | translate }}
+        <span class="fa far fa-sort-down"></span>
+      </button>
+
+      <button class="filter age-filter"
+              (click)="getGenes('ageMya')"
+              [class.__active]="filters.ageMya"
+      >
+        {{ 'age' | translate }} ({{ 'million_years' | translate }})
+        <span class="fa far fa-sort-down"></span>
+      </button>
+
+      <button
+        *ngIf="filters.cluster.length > 0"
+        class="filter __active functional-classes-filter"
+        (click)="clearFilters('cluster')"
+      >
+        {{ 'functional_classes' | translate }}
+        <span class="fa fal fa-times"></span>
+      </button>
+
+      <button
+        *ngIf="filters.expression"
+        class="filter __active expression-change-filter"
+        (click)="clearFilters('expression')"
+      >
+        {{ 'main_page_table_expression' | translate }}
+        <span class="fa fal fa-times"></span>
+      </button>
+
+      <button class="btn btn--small btn-purple btn--icon-only"
+              (click)="clearFilters('all')"
+              *ngIf="(filters.name || filters.ageMya || filters.expression || filters.cluster.length > 0)"
+      >
+        <span class="fa fal fa-times"></span>
+      </button>
+    </div>
+
+    <div class="view-panel__buttons">
+      <button class="toggler"
+              (click)="geneView()"
+              [ngClass]="asCards == true ? 'toggler--def' : 'toggler--alt'">
+        <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
+        <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
+      </button>
+    </div>
+  </div>
+
+  <section class="view-content" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
+    <div class="thead">
+      <div class="th">
+        <div class="th__title">
+          <b>{{ 'main_page_table_name' | translate }}</b>
+        </div>
+      </div>
+      <div class="th">
+        <div class="th__title">
+          <b>{{ 'phylogeny' | translate }}, {{ 'age_lowercase' | translate }}</b>
+        </div>
+      </div>
+      <div class="th">
+        <div class="th__title">
+          <b>{{ 'functional_classes' | translate }}</b>
+        </div>
+      </div>
+      <div class="th">
+        <div class="th__title">
+          <b>{{ 'main_page_table_expression' | translate }}</b>
+        </div>
+      </div>
+      <div class="th">
+        <div class="th__title">
+          <b>{{ 'diseases' | translate }}</b>
+        </div>
+      </div>
+      <div class="th">
+        <div class="th__title">
+          <b>{{ 'main_page_table_interactions' | translate }}</b>
+        </div>
+      </div>
+    </div>
+
+    <div class="tbody">
+      <div class="tr row" *ngFor="let data of searchedData | slice: 0: loadedGenesQuantity">
+        <div class="td cell td-name">
+          <div class="td__title">
+            <a [routerLink]="['/gene', data.id]" class="link link--gray">
+              <b>{{data.symbol}}</b> {{data.name}}
+            </a>
+            <a href="https://genomics.senescence.info/genes/entry.php?hgnc={{data.symbol}}"
+               title="Этот ген на GeneAge" class="alias alias--small">{{data.id}}</a>
+          </div>
+        </div>
+        <div class="td cell td-age-mya">
+          <b>{{data.agePhylo}}</b><br>
+          {{data.ageMya}} {{ 'million_years' | translate }}
+        </div>
+        <div class="td cell td-clusters">
+          <span class="td__label" *ngIf="data.functionalClusters">
+            {{ 'functional_classes' | translate }}
+          </span>
+          <span class="tag"
+                *ngFor="let item of data.functionalClusters"
+                (click)="filterByFuncClusters(item['id'])"
+                [class.__active]="filters.cluster.includes(item['id'])"
+          >
+            <div class="tag__inner">{{item["name"]}}</div>
+          </span>
+        </div>
+        <div class="td cell td-expression">
+          <span class="td__label" *ngIf="data.expressionChange">
+            {{ 'main_page_table_expression' | translate }}
+          </span>
+          <span class="tag"
+                *ngIf="data.expressionChange"
+                (click)="filterByExpressionChange(data.expressionChange)"
+                [class.__active]="filters.expression === data.expressionChange"
+          >
+            <div class="tag__inner">{{data.expressionChange}}</div>
+          </span>
+        </div>
+        <div class="td cell __text-right td-external">
+          <a href="http://disgenet.org/browser/1/1/0/{{data.entrezGene}}/"
+             target="_blank"
+             class="badge badge--disgenet">DisGenet</a>
+        </div>
+        <div class="td cell __text-right td-external">
+          <a href="https://thebiogrid.org/search.php?search={{data.symbol}}&organism=9606/"
+             target="_blank"
+             class="badge badge--biogrid">BioGrid</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="btn-wrap show-more" *ngIf="searchedData?.length > loadedGenesQuantity">
+    <button
+      (click)="loadMoreGenes()"
+      class="btn show-more__button"
+    >{{ 'show_more' | translate }}</button>
+  </div>
+</ng-container>
+
+<app-loader-placeholder *ngIf="isLoading">
+</app-loader-placeholder>
+
+<ng-container *ngIf="searchedData?.length == 0">
+  <section class="no-content">
+    <div class="no-content__icon no-content__icon-standard"></div>
+    <div class="no-content__title">
+      <div class="title__center">
+        {{ 'nothing_found' | translate }}
+      </div>
+    </div>
+  </section>
+</ng-container>
+

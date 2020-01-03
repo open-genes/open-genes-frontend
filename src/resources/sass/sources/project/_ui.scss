@@ -1,5 +1,3 @@
-$ui-base-height: 26px;
-
 %clickable-badge {
   display: inline-block;
   vertical-align: middle;
@@ -16,11 +14,12 @@ $ui-base-height: 26px;
   background-color: #fff;
 }
 
+@import "ui/animations";
+@import "ui/preloader";
 @import "ui/sidebar";
 @import "ui/skeletons";
 @import "ui/toggler";
 @import "ui/badge";
-@import "ui/loader";
 @import "ui/alias";
 @import "ui/tags";
 @import "ui/fields";

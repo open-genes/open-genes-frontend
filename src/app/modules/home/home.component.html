@@ -17,15 +17,6 @@
       </div>
     </div>
     <div class="container">
-      <section class="no-content" *ngIf="!genes && !lastGenes">
-        <div class="no-content__icon no-content__icon-standard"></div>
-        <div class="no-content__title">
-          <div class="title__center">
-            {{ 'error_connection' | translate }}
-          </div>
-        </div>
-      </section>
-
       <div class="col col-16">
         <div class="flex-subcontainer">
           <div class="per sidebar sidebar--left">
@@ -54,6 +45,15 @@
           </div>
         </div>
       </div>
+
+      <section class="no-content" *ngIf="error">
+        <div class="no-content__icon no-content__icon-standard"></div>
+        <div class="no-content__title">
+          <div class="title__center">
+            {{ 'error_connection' | translate }}
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 </div>

@@ -7,8 +7,8 @@
   width: 100%;
   max-width: 600px;
   background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 1px 4px 1px rgba(5, 5, 5, .14);
+  border-radius: $border-radius-medium;
+  box-shadow: $box-shadow;
   padding: 20px 15px 15px 15px;
 
   &__title {
@@ -39,7 +39,7 @@
       top: 0;
       left: 0;
       z-index: 1;
-      border-radius: 10px;
+      border-radius: $border-radius-medium;
       background-color: rgba($color-general-dark, .15);
       opacity: 0;
       transition: color, opacity, .15s ease-in-out;

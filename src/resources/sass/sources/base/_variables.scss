@@ -1,7 +1,11 @@
 // DEMS
 
-// UI
-$header-height: 50px;
+$ui-base-height: 26px;
+$padding-regular: 10px;
+$padding-medium: 10px;
+$border-radius-regular: 5px;
+$border-radius-medium: 10px;
+$box-shadow: 0 1px 4px 0 rgba(5, 5, 5, .14);
 
 // Fonts
 $font-size: 14px;
@@ -65,7 +69,10 @@ $color-indent: #575757;
 $color-borders: $color-gray-light;
 $color-border-light: #e3e4e8;
 $color-borders-active: darken($color-hover, 5%);
-
+$header-height: 50px;
+$preloader-spinner-size: 40px;
+$preloader-spinner-color: $color-gray-light;
+$preloader-spinner-color-accent: $color-general;
 
 // PATHS
 $path-images: '../images';
