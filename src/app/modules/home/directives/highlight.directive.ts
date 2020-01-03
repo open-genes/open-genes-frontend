@@ -6,11 +6,9 @@ import { AfterViewInit, Directive, ElementRef, Input, OnChanges, SimpleChanges }
 export class HighlightDirective implements OnChanges, AfterViewInit {
   @Input() highlightText: string;         // Фрагмент текста, который необходимо выделить
   @Input() highlightMinLength: number;    // Минимальное количество символов для выделения
-  @Input() highlightColor: string;        // Цвет выделения
 
   constructor(private readonly element: ElementRef) {
     this.highlightMinLength = 3;
-    this.highlightColor = '#ffd54f';
   }
 
   ngAfterViewInit(): void {
@@ -43,13 +41,12 @@ export class HighlightDirective implements OnChanges, AfterViewInit {
         const range = new Range();
         range.setStart(this.element.nativeElement.childNodes[0], index);
         range.setEnd(this.element.nativeElement.childNodes[0], index + this.highlightText.length);
-        const wrapper = document.createElement('span');
-        wrapper.classList.add('text-highlight-wrapper');
-        wrapper.style.backgroundColor = this.highlightColor;
+        const wrapper = document.createElement('mark');
+        wrapper.classList.add('text-highlight');
         try {
           range.surroundContents(wrapper);
         } catch (e) {
-          console.error(e);
+          // console.error(e);
         }
       }
     }

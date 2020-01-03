@@ -1,0 +1,61 @@
+// Badge
+.badge {
+  display: inline-block;
+  vertical-align: middle;
+  height: 30px;
+  min-width: 44px;
+  padding: 0 8px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: $font-weight-medium;
+  color: #fff;
+  line-height: 31px;
+  white-space: nowrap;
+  border-radius: 15px;
+  margin: 0 5px 5px 0;
+  background-color: $color-gray-halfing;
+  opacity: .85;
+  transition: opacity .15s linear;
+  user-select: none;
+
+  @include resolution_smartphone {
+    padding: 0 5px;
+  }
+
+  &:empty {
+    display: none;
+  }
+
+  &--entrez {
+    background-color: lighten(#369, 28%);
+  }
+
+  &--geneage {
+    background-color: lighten(#BA4200, 25%);
+  }
+
+  &--uniprot {
+    background-color: lighten(#5caecd, 15%);
+  }
+
+  &--disgenet {
+    background-color: lighten(#7774D1, 10%);
+  }
+
+  &--biogrid {
+    background-color: $color-orange;
+  }
+
+  // Класс для skeleton screens
+  &.__skeletal {
+    min-width: 100px;
+    border-color: $color-gray-soft;
+  }
+}
+
+a.badge {
+  &:hover,
+  &:active {
+    opacity: 1;
+  }
+}

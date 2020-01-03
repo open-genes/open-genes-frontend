@@ -1,4 +1,4 @@
-export interface IGene {
+export interface Genes {
   id: number;
   agePhylo: string;
   ageMya: number;

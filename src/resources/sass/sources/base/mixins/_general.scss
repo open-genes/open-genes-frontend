@@ -11,8 +11,7 @@
   width: 100%;
   background-color: #fff;
   border: 1px solid $color-borders;
-  border-radius: 5px;
+  border-radius: $border-radius-regular;
   padding: 10px;
-  margin-bottom: 20px;
   position: relative;
 }

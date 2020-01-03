@@ -1,0 +1,51 @@
+<form [formGroup]="searchForm"
+      class="search-form"
+      [class.search-form--active]="showResult"
+>
+  <button
+    (click)="showResult = false"
+    class="btn btn-purple btn--icon-only cancel-search-button">
+    <span class="fa fal fa-times"></span>
+  </button>
+
+  <input formControlName="searchField"
+         type="text"
+         placeholder="{{ 'search' | translate }}"
+         class="field"
+         required
+         #searchQuery
+         (focusin)="search()"
+  >
+  <div class="search-form__autocomplete-list"
+       *ngIf="showResult">
+    <ng-container *ngFor="let data of searchedData; let i = index">
+      <button
+        *ngIf="i < 5"
+        class="search-form__autocomplete-item"
+        tabindex="0"
+        [routerLink]="['/gene', data.id]"
+      >
+        <span class="item__symbol"
+              appHighlight
+              [highlightText]="searchQuery.value"
+              [innerHTML]="data.symbol">
+        </span>&nbsp;
+        <span class="item__name"
+              appHighlight
+              [highlightText]="searchQuery.value"
+              [innerHTML]="data.name">
+        </span>
+      </button>
+    </ng-container>
+  </div>
+</form>
+
+<div *ngIf="showResult"
+     class="search-backdrop"
+     (click)="showResult = false"></div>
+
+<div class="page__subtitle __mt-10"
+     *ngIf="searchForm.valid">
+  {{ 'items_found' | translate }} {{searchedData?.length}}
+</div>
+

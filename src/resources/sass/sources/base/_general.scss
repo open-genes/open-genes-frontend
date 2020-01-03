@@ -1,6 +1,7 @@
 html {
   min-height: 460px;
 }
+
 body {
   display: table;
   height: 100%;
@@ -19,6 +20,10 @@ body {
     box-sizing: border-box;
   }
 
+  .preloader {
+    display: none;
+  }
+
   &:before { // overlay
     content: ' ';
     display: none;
@@ -34,9 +39,18 @@ body {
     @include fadeIn;
   }
 
-  &.still {
+  &.body--still {
     overflow: hidden;
+
     &:before {
+      display: block;
+    }
+  }
+
+  &.body--loading {
+    @extend .body--still;
+
+    .preloader {
       display: block;
     }
   }
@@ -72,9 +86,6 @@ body {
 }
 
 
-
-
-
 a.reference-link {
   font-size: 11px;
   color: $color-gray;
@@ -92,20 +103,22 @@ a.reference-link {
   }
 }
 
-$header-height: 50px;
-
-.header {
+app-header {
   display: block;
   width: 100%;
-  height: $header-height;
-  color: #fff;
-  background-color: $color-base;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
+}
+
+.header {
+  width: 100%;
+  height: $header-height;
+  color: #fff;
+  background-color: $color-base;
   padding: 0 5px;
-  box-shadow: 0 1px 4px 0 rgba(5,5,5,.14);
+  box-shadow: $box-shadow;
 
   &__centering {
     width: 100%;
@@ -126,6 +139,7 @@ $header-height: 50px;
     line-height: ($header-height - 10px);
     text-align: center;
     cursor: pointer;
+
     &:after {
       content: ' ';
       display: block;
@@ -135,14 +149,16 @@ $header-height: 50px;
       top: 0;
       left: 0;
       z-index: 1;
-      border-radius: 10px;
+      border-radius: $border-radius-medium;
       background-color: rgba($color-general-dark, .15);
       opacity: 0;
       transition: color, opacity, .15s ease-in-out;
     }
+
     .fa {
       line-height: 40px;
     }
+
     &:hover,
     &.active {
       &:after {
@@ -150,6 +166,7 @@ $header-height: 50px;
       }
     }
   }
+
   &__logo {
     width: 100px;
     float: left;
@@ -164,7 +181,7 @@ $header-height: 50px;
     position: relative;
 
     app-language,
-    app-menu {
+    app-burger-menu {
       display: inline-block;
       height: 100%;
       vertical-align: top;
@@ -172,12 +189,13 @@ $header-height: 50px;
 
     app-language {
       padding-top: 15px;
+
       .language-switcher {
         color: #7673d1;
       }
     }
 
-    app-menu {
+    app-burger-menu {
       position: relative;
       width: 60px;
     }
@@ -189,100 +207,10 @@ $header-height: 50px;
       right: 10px;
       z-index: 6;
       font-size: 18px;
+
       &:hover,
       &.active {
-        color: $color-pink;
-      }
-    }
-  }
-
-  &__menu {
-    height: 100%;
-    width: 100%;
-    color: $color-borders;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 2;
-    background-color: rgba($color-general-dark, .15);
-
-    .menu__panel {
-      height: 100%;
-      padding: $header-height 0 30px 0;
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 1;
-      background-color: #fff;
-      box-shadow: -1px 0 4px 0 rgba(5,5,5,.3);
-
-      @include resolution_tablet-and-up {
-        width: 320px;
-      }
-      @include resolution_smartphone {
-        width: 100%;
-        min-width: 320px;
-      }
-
-      form {
-        width: 100%;
-        padding: 0 10px;
-        margin-bottom: 20px;
-      }
-
-      .menu__links {
-        width: 100%;
-        padding: 0;
-
-        .menu__link {
-          font-size: $font-size-bigger;
-          font-weight: $font-weight-medium;
-          text-transform: uppercase;
-          border-top: 1px solid $color-borders;
-
-          &, a {
-            display: block;
-            width: 100%;
-            position: relative;
-          }
-          a {
-            padding: 15px 30px 15px 10px;
-            &:before {
-              content: " ";
-              display: block;
-              width: 5px;
-              height: 100%;
-              border-top-right-radius: 100%;
-              border-bottom-right-radius: 100%;
-              background-color: $color-general;
-              position: absolute;
-              top: 0;
-              left: 0;
-              z-index: 0;
-              opacity: 0;
-              transition: opacity .2s ease-in;
-            }
-
-            &:link,
-            &:visited {
-              color: $color-general;
-            }
-            &:hover,
-            &:active {
-              color: $color-general-dark;
-              background-color: rgba($color-general-dark, .15);
-            }
-
-            &.current {
-              &:before {
-                opacity: 1;
-              }
-            }
-          }
-        }
+        color: $color-accent;
       }
     }
   }
@@ -293,11 +221,14 @@ $header-height: 50px;
   width: 100%;
   height: 100%;
   position: relative;
+
   &__inner {
     display: table-cell;
     vertical-align: top;
+
     .page__title {
       margin-bottom: 15px;
+
       h1 {
         font-size: 28px;
         color: $color-indent;
@@ -324,6 +255,7 @@ $header-height: 50px;
   &--dummy {
     .page__inner {
       vertical-align: middle;
+
       .no-content {
         border: 0;
         margin-top: -100px;
@@ -339,6 +271,7 @@ $header-height: 50px;
 .container {
   text-align: left;
   position: relative;
+
   & > header {
     text-align: center;
   }
@@ -374,7 +307,8 @@ article {
   * + h2,
   * + h3,
   * + p,
-  * + .list {
+  * + .list,
+  * + app-code-block {
     margin-top: 2ex;
   }
 
@@ -413,7 +347,7 @@ article {
   background-color: #fff;
   // box-shadow: 1px 1px 10px rgba(0,0,0, .09);
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: $border-radius-regular;
   animation: animation__appear .35s forwards ease-in-out;
 
   .row__inner {
@@ -429,6 +363,7 @@ article {
     margin-bottom: 0;
     padding: 10px 16px;
     border-bottom: 1px solid #ccc;
+
     b {
       font-weight: 700;
       color: $color-general;
@@ -439,6 +374,7 @@ article {
     width: 100%;
     margin: 6px 0;
     padding: 6px 0;
+
     b {
       font-weight: 700;
     }
@@ -463,6 +399,7 @@ article {
     margin-bottom: 10px;
     border-bottom: 1px solid $color-borders;
   }
+
   &__tab {
     display: inline-block;
     height: 50px;
@@ -478,6 +415,7 @@ article {
     cursor: pointer;
     margin-bottom: -2px;
     padding: 8px 5px 16px 8px;
+
     &:before {
       content: ' ';
       display: block;
@@ -490,6 +428,7 @@ article {
       right: 5px;
       z-index: 0;
     }
+
     &--active:before,
     &:hover:before {
       opacity: 1;
@@ -532,6 +471,7 @@ article {
   border-radius: 3px;
   cursor: pointer;
 }
+
 button.load-btn {
   line-height: normal;
 }
@@ -544,13 +484,14 @@ button.load-btn {
   0% {
     opacity: 0;
   }
-  100%  {
+  100% {
     opacity: 1;
   }
 }
 
 table {
   border-collapse: collapse;
+
   tr td:nth-child(2) {
     width: 120px;
   }
@@ -565,6 +506,7 @@ ul, ol {
       width: 100%;
       position: relative;
     }
+
     li + li {
       margin-top: 1ex;
     }
@@ -574,6 +516,7 @@ ul, ol {
 ul.list--bulletted {
   li {
     padding-left: 1.8ex;
+
     &:before {
       content: " ";
       display: block;
@@ -594,23 +537,28 @@ ul.list--bulletted {
   font-size: 0;
   text-align: center;
   border: 1px solid $color-borders;
-  border-radius: 10px;
+  border-radius: $border-radius-medium;
+
   &__icon {
     display: inline-block;
     width: 150px;
     height: 150px;
     background: transparent center center / cover no-repeat;
+
     &-standard {
       background-image: url(../images/no-content-default.svg);
     }
+
     &-404 {
       background-image: url(../images/no-content-404.svg);
     }
   }
+
   &__title {
     width: 100%;
     color: $color-indent;
     margin-top: 15px;
+
     .title__center {
       display: inline-block;
       max-width: 320px;

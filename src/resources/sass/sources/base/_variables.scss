@@ -1,5 +1,12 @@
 // DEMS
 
+$ui-base-height: 26px;
+$padding-regular: 10px;
+$padding-medium: 10px;
+$border-radius-regular: 5px;
+$border-radius-medium: 10px;
+$box-shadow: 0 1px 4px 0 rgba(5, 5, 5, .14);
+
 // Fonts
 $font-size: 14px;
 $font-size-smaller: ($font-size - 1);
@@ -21,12 +28,15 @@ $font-weight-black: 900;
 // COLORS
 // -Base
 $color-base: #7673d1;
-$color-general-light: #eff2fc;
+$color-general-light: #edeefb;
+$color-general-semi: #b7bcf1;
 $color-general: #4d58dc;
 $color-general-dark: darken($color-general, 15%);
+$color-accent: #fe6231;
 
 // -UI
-$color-black: #2b2c2d;
+$color-black: #2d323b;
+$color-black-light: #42464e;
 $color-gray: #838689;
 $color-gray-halfing: #a3a6ab;
 $color-gray-semi: #ced2d7;
@@ -41,9 +51,9 @@ $color-green: #28aa64;
 $color-green-dark: #1f864f;
 $color-orange: darken(desaturate(#FFC769, 2%), 10%);
 $color-yellow: #ffd700;
-$color-pink: #ffC0cb;
-$color-red-light: #f8c9c4;
+$color-red-light: #fbe5e1;
 $color-red-medium: #f39f96;
+$color-red-text: #c0341d;
 $color-red: #FF4E1A;
 $color-red-dark: darken($color-red, 5%);
 
@@ -59,7 +69,10 @@ $color-indent: #575757;
 $color-borders: $color-gray-light;
 $color-border-light: #e3e4e8;
 $color-borders-active: darken($color-hover, 5%);
-
+$header-height: 50px;
+$preloader-spinner-size: 40px;
+$preloader-spinner-color: $color-gray-light;
+$preloader-spinner-color-accent: $color-general;
 
 // PATHS
 $path-images: '../images';

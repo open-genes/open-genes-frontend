@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnChanges, OnInit} from '@angular/core';
+
 import {ApiService} from '../../core/services/api.service';
-import {IGene} from '../../core/models';
+import {Genes, IFilter} from '../../core/models';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -9,10 +10,10 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
-  genes: IGene[];
-  lastGenes: IGene[];
-  newsGene: IGene;
+  genes: Genes[];
+  lastGenes: Genes[];
+  filters: IFilter;
+  error: number;
 
   private expressionTranslates = { // TODO: убрать хардкод
     уменьшается: 'decreased',
@@ -20,23 +21,31 @@ export class HomeComponent implements OnInit {
     неоднозначно: 'mixed'
   };
 
-  constructor(private apiService: ApiService, private translate: TranslateService) {
+  constructor(
+    private readonly apiService: ApiService,
+    private readonly translate: TranslateService
+  ) {
+    this.filters = {
+      name: false,
+      ageMya: false,
+      cluster: [],
+      expression: null
+    };
   }
 
   ngOnInit() {
     this.getGenes();
-    this.getLastgenes();
+    this.getLastEditedGenes();
   }
 
   private getGenes() {
     this.apiService.getGenes().subscribe((genes) => {
       this.genes = genes;
-      this.newsGene = genes[Math.floor(Math.random() * genes.length)];
-    });
+    }, error => this.error = error);
   }
 
-  private getLastgenes() {
-    this.apiService.getLastGene().subscribe((genes) => {
+  private getLastEditedGenes() {
+    this.apiService.getLastEditedGene().subscribe((genes) => {
       this.lastGenes = genes;
     });
   }
@@ -62,5 +71,12 @@ export class HomeComponent implements OnInit {
     } else {
       this.getGenes();
     }
+  }
+
+  /**
+   * Сброс фильтров таблицы генов
+   */
+  public filtersCleared() {
+    this.getGenes();
   }
 }

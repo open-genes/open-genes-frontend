@@ -1,19 +1,19 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {APP_ROUTES, ROUTER_OPTIONS} from './app-routing';
+import { APP_ROUTES, ROUTER_OPTIONS } from './app-routing';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
 // import ngx-translate and the http loader
-import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {HttpClient} from '@angular/common/http';
-import { HeaderComponent } from './common/header/header.component';
-import { FooterComponent } from './common/footer/footer.component';
-import { LanguageComponent } from './common/language/language.component';
-import { MenuComponent } from './common/menu/menu.component';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { LanguageComponent } from './components/language/language.component';
+import { BurgerMenuComponent } from './components/burger-menu/burger-menu.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { MenuComponent } from './common/menu/menu.component';
     HeaderComponent,
     FooterComponent,
     LanguageComponent,
-    MenuComponent
+    BurgerMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +37,8 @@ import { MenuComponent } from './common/menu/menu.component';
     })
   ],
   providers: [TranslateService],
+  exports: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

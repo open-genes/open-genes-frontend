@@ -6,7 +6,8 @@
 }
 
 @include resolution_widescreen {
-  body, .header {
+  body,
+  .header {
     min-width: $widescreen;
   }
   .#{$prefix}container {
@@ -15,7 +16,8 @@
 }
 
 @include resolution_desktop {
-  body, .header {
+  body,
+  .header {
     min-width: $desktop;
   }
   .#{$prefix}container {
@@ -24,28 +26,37 @@
 }
 
 @include resolution_tablet {
-  body, .header {
-    min-width: $tablet;
+  body,
+  .header,
+  .#{$prefix}container {
+    min-width: $tablet - $gutter;
   }
   .#{$prefix}container {
-    width: $tablet;
+    width: calc(100% - #{$gutter});
+    max-width: $desktop - ($gutter + .02px);
   }
 }
 
 @include resolution_phablet {
-  body, .header {
-    min-width: $phablet - 20px;
+  body,
+  .header,
+  .#{$prefix}container {
+    min-width: $phablet - $gutter;
   }
   .#{$prefix}container {
-    width: $phablet - 20px;
+    width: calc(100% - #{$gutter});
+    max-width: $tablet - ($gutter + .02px);
   }
 }
 
 @include resolution_phone {
-  body, .header {
-    min-width: $smartphone - 20px;
+  body,
+  .header,
+  .#{$prefix}container {
+    min-width: $smartphone - $gutter;
   }
   .#{$prefix}container {
-    width: $smartphone - 20px;
+    width: calc(100% - #{$gutter});
+    max-width: $phablet  - ($gutter + .02px);
   }
 }
