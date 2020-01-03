@@ -4,7 +4,7 @@
 <div class="tip">
   {{ 'news_list_hint' | translate }}
 </div>
-<ul class="news" *ngIf="!loading">
+<ul class="news" *ngIf="!isLoading">
   <li *ngFor="let item of newsList"
       class="news__item"
   >
@@ -19,9 +19,9 @@
     >{{item.title | stripTags}}</a>
   </li>
 </ul>
-<div class="loader-container" *ngIf="loading">
-  <i class="fa far fa-circle-notch fa-spin fa-3x"></i>
-</div>
+
+<app-loader-placeholder *ngIf="isLoading">
+</app-loader-placeholder>
 
 
 

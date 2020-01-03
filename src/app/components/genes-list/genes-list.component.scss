@@ -1,4 +1,9 @@
-@import "../../../resources/sass/dependencies";
+@import "../styles";
+
+:host {
+  display: block;
+  margin-bottom: 20px;
+}
 
 .view-panel {
   position: relative;
@@ -33,6 +38,8 @@ $columns-quantity: 7;
   margin-bottom: 10px;
 
   .tr {
+    animation: fadeIn .5s linear forwards; // при рендеринге/подгрузке элемент мингнет
+
     .td {
       &__title {
         font-size: $font-size-bigger;
@@ -325,8 +332,6 @@ $columns-quantity: 7;
 }
 
 .show-more {
-  margin-bottom: 20px;
-
   &__button {
     width: 100%;
     $btn-height: 35px;

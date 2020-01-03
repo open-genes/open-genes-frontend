@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {ApiReferenceComponent} from './api-reference.component';
 import {RouterModule, Routes} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
-import {CodeComponent} from '../../common/code/code.component';
+import {CodeComponent} from '../../components/code/code.component';
 import {PipesModule} from '../home/pipes/pipes.module';
 
 const routes: Routes = [

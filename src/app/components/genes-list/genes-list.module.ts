@@ -9,11 +9,13 @@ import { SearchModule } from '../search/search.module';
 import { PipesModule } from '../../modules/home/pipes/pipes.module';
 import { DirectivesModule } from '../../modules/home/directives/directives.module';
 // import { GenesListService } from './genes-list.service';
+import { LoaderPlaceholderComponent } from '../loader-placeholder/loader-placeholder.component';
 
 @NgModule({
   declarations: [
     GenesListComponent,
-    SearchComponent
+    SearchComponent,
+    LoaderPlaceholderComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { DirectivesModule } from '../../modules/home/directives/directives.modul
     // GenesListService
   ],
   exports: [
-    GenesListComponent
+    GenesListComponent,
+    LoaderPlaceholderComponent
   ]
 })
 export class GenesListModule { }

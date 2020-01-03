@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IGene } from '../../core/models';
+import { Genes } from '../../core/models';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -9,9 +9,9 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  @Input() dataSource: IGene[];
-  @Output() dataSourceChange: EventEmitter<IGene[]> = new EventEmitter<IGene[]>();
-  searchedData: IGene[];
+  @Input() dataSource: Genes[];
+  @Output() dataSourceChange: EventEmitter<Genes[]> = new EventEmitter<Genes[]>();
+  searchedData: Genes[];
   searchForm: FormGroup;
   showResult;
 

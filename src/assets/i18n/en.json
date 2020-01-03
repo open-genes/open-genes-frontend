@@ -43,7 +43,7 @@
   "alert_error_login_unsuccessful" : "Unsuccessful login attempt. Please try again.",
   "error_page_404" : "This page doesn\"t exist or something went wrong.",
   "error_page_soon" : "This section will be updated soon.",
-  "error_connection" : "Some problems with connection occurred",
+  "error_connection" : "Some connection issues occurred",
   "link_geneage" : "This gene on GeneAge",
   "link_entrez" : "This gene on Entrez Gene",
   "link_uniprot" : "This gene on UniProt",

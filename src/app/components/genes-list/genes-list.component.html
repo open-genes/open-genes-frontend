@@ -1,5 +1,5 @@
 <app-search [dataSource]="dataSource" (dataSourceChange)="getSearchedData($event)"></app-search>
-<ng-container *ngIf="searchedData?.length !== 0 && !loading">
+<ng-container *ngIf="searchedData?.length !== 0 && !isLoading">
   <div class="view-panel">
     <div class="filters-group view-panel__filters">
       <button class="filter name-filter"
@@ -149,9 +149,8 @@
   </div>
 </ng-container>
 
-<div class="loader-container" *ngIf="loading">
-  <i class="fa far fa-circle-notch fa-spin fa-3x"></i>
-</div>
+<app-loader-placeholder *ngIf="isLoading">
+</app-loader-placeholder>
 
 <ng-container *ngIf="searchedData?.length == 0">
   <section class="no-content">

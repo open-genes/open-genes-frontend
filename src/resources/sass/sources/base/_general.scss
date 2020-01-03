@@ -145,7 +145,7 @@ a.reference-link {
       top: 0;
       left: 0;
       z-index: 1;
-      border-radius: 10px;
+      border-radius: $border-radius-medium;
       background-color: rgba($color-general-dark, .15);
       opacity: 0;
       transition: color, opacity, .15s ease-in-out;
@@ -343,7 +343,7 @@ article {
   background-color: #fff;
   // box-shadow: 1px 1px 10px rgba(0,0,0, .09);
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: $border-radius-regular;
   animation: animation__appear .35s forwards ease-in-out;
 
   .row__inner {
@@ -533,7 +533,7 @@ ul.list--bulletted {
   font-size: 0;
   text-align: center;
   border: 1px solid $color-borders;
-  border-radius: 10px;
+  border-radius: $border-radius-medium;
 
   &__icon {
     display: inline-block;

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {IGene} from '../models';
+import {Genes} from '../models';
 import {environment} from '../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -9,30 +9,29 @@ import {TranslateService} from '@ngx-translate/core';
   providedIn: 'root'
 })
 export class ApiService {
-
   private url = environment.apiUrl;
 
   constructor(private http: HttpClient,
               private translate: TranslateService) {
   }
 
-  getGenes(): Observable<IGene[]> {
-    return this.http.get<IGene[]>(`${this.url}/api?lang=${this.translate.currentLang}`);
+  getGenes(): Observable<Genes[]> {
+    return this.http.get<Genes[]>(`${this.url}/api?lang=${this.translate.currentLang}`);
   }
 
-  getGeneById(id: number): Observable<IGene> {
-    return this.http.get<IGene>(`${this.url}/api/gene/${id}?lang=${this.translate.currentLang}`);
+  getGeneById(id: number): Observable<Genes> {
+    return this.http.get<Genes>(`${this.url}/api/gene/${id}?lang=${this.translate.currentLang}`);
   }
 
-  getLastGene(): Observable<IGene[]> {
-    return this.http.get<IGene[]>(`${this.url}/api/latest`);
+  getLastEditedGene(): Observable<Genes[]> {
+    return this.http.get<Genes[]>(`${this.url}/api/latest`);
   }
 
-  getGenesByFunctionalClusters(fc: number[]): Observable<IGene[]> {
-    return this.http.get<IGene[]>(`${this.url}/api/by-functional-cluster/${fc}?lang=${this.translate.currentLang}`);
+  getGenesByFunctionalClusters(fc: number[]): Observable<Genes[]> {
+    return this.http.get<Genes[]>(`${this.url}/api/by-functional-cluster/${fc}?lang=${this.translate.currentLang}`);
   }
 
-  getGenesByExpressionChange(expression: string): Observable<IGene[]> {
-    return this.http.get<IGene[]>(`${this.url}/api/by-expression-change/${expression}?lang=${this.translate.currentLang}`);
+  getGenesByExpressionChange(expression: string): Observable<Genes[]> {
+    return this.http.get<Genes[]>(`${this.url}/api/by-expression-change/${expression}?lang=${this.translate.currentLang}`);
   }
 }

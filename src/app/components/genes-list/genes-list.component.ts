@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } 
 
 import { Subject } from 'rxjs';
 
-import { IFilter, IGene } from '../../core/models';
+import { IFilter, Genes } from '../../core/models';
 import { GenesListService } from './genes-list.service';
 
 @Component({
@@ -12,14 +12,14 @@ import { GenesListService } from './genes-list.service';
 })
 export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
 
-  @Input() dataSource: IGene[];
+  @Input() dataSource: Genes[];
   @Output() filterCluster = new EventEmitter<number[]>();
   @Output() filterExpression = new EventEmitter<string>();
   @Output() filtersCleared = new EventEmitter();
-  searchedData: IGene[];
+  searchedData: Genes[];
   genesPerPage = 30;
   loadedGenesQuantity = this.genesPerPage;
-  loading = true;
+  isLoading = true;
   asCards = true;
   private subscription$ = new Subject();
   public filters: IFilter;
@@ -38,10 +38,10 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges() {
     this.searchedData = this.dataSource;
-    this.loading = false;
+    this.isLoading = false;
   }
 
-  getSearchedData(e: IGene[]) {
+  getSearchedData(e: Genes[]) {
     this.searchedData = e;
   }
 
@@ -93,7 +93,7 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.filters.cluster = this.filters.cluster.filter(item => item !== id);
     }
-    this.loading = true;
+    this.isLoading = true;
     this.filterCluster.emit(this.filters.cluster);
   }
 
@@ -104,7 +104,7 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
       this.filters.expression = null;
     }
     this.filters.cluster = [];
-    this.loading = true;
+    this.isLoading = true;
     this.filterExpression.emit(this.filters.expression);
   }
 

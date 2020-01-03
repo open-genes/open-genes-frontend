@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {PubmedApiService} from '../../core/services/pubmed.api.service';
 import {INews} from '../../core/models/news.model';
-import {IGene} from '../../core/models';
+import {Genes} from '../../core/models';
 import {finalize, switchMap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 
@@ -12,13 +12,13 @@ import {environment} from '../../../environments/environment';
 })
 export class NewsComponent implements OnInit {
 
-  @Input() genes: IGene[];
+  @Input() genes: Genes[];
   newsList: INews[];
-  loading: boolean;
+  isLoading: boolean;
 
   constructor(private pubmedApiService: PubmedApiService) {
     this.newsList = [];
-    this.loading = true;
+    this.isLoading = true;
   }
 
   ngOnInit() {
@@ -27,8 +27,8 @@ export class NewsComponent implements OnInit {
 
   private getNews() {
     let symbolsQuery = '';
-    const filteredGenes = this.genes.filter((gene: IGene) => gene.functionalClusters.length > 2 ? true : false);
-    filteredGenes.forEach((gene: IGene, index: number, array: IGene[]) => {
+    const filteredGenes = this.genes.filter((gene: Genes) => gene.functionalClusters.length > 2 ? true : false);
+    filteredGenes.forEach((gene: Genes, index: number, array: Genes[]) => {
       symbolsQuery += `${gene.symbol}[Title]`;
       symbolsQuery += index < array.length - 1 ? '+OR+' : '';
     });
@@ -41,11 +41,11 @@ export class NewsComponent implements OnInit {
         );
       }),
       finalize(() => {
-        this.loading = false;
+        this.isLoading = false;
       })
     ).subscribe(data => {
       data.result.uids.forEach(id => {
-        filteredGenes.forEach((gene: IGene) => {
+        filteredGenes.forEach((gene: Genes) => {
           if (data.result[id].title.toLowerCase().indexOf(gene.symbol.toLowerCase()) !== -1) {
             this.newsList.push({
               url: environment.pubmedUrl + id,

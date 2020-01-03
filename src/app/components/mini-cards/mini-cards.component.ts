@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IGene} from '../../core/models';
+import {Genes} from '../../core/models';
 
 @Component({
   selector: 'app-mini-cards',
@@ -8,7 +8,7 @@ import {IGene} from '../../core/models';
 })
 export class MiniCardsComponent implements OnInit {
 
-  @Input() lastGenes: IGene[];
+  @Input() lastGenes: Genes[];
 
   constructor() {
   }

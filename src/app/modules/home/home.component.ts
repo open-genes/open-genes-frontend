@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnChanges, OnInit} from '@angular/core';
 
-import { ApiService } from '../../core/services/api.service';
-import { IGene, IFilter } from '../../core/models';
-import { TranslateService } from '@ngx-translate/core';
+import {ApiService} from '../../core/services/api.service';
+import {Genes, IFilter} from '../../core/models';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -10,11 +10,10 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
-  genes: IGene[];
-  lastGenes: IGene[];
-  newsGene: IGene;
+  genes: Genes[];
+  lastGenes: Genes[];
   filters: IFilter;
+  error: number;
 
   private expressionTranslates = { // TODO: убрать хардкод
     уменьшается: 'decreased',
@@ -36,18 +35,17 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getGenes();
-    this.getLastgenes();
+    this.getLastEditedGenes();
   }
 
   private getGenes() {
     this.apiService.getGenes().subscribe((genes) => {
       this.genes = genes;
-      this.newsGene = genes[Math.floor(Math.random() * genes.length)];
-    });
+    }, error => this.error = error);
   }
 
-  private getLastgenes() {
-    this.apiService.getLastGene().subscribe((genes) => {
+  private getLastEditedGenes() {
+    this.apiService.getLastEditedGene().subscribe((genes) => {
       this.lastGenes = genes;
     });
   }
