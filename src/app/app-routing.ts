@@ -14,8 +14,8 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./modules/about/about.module').then(m => m.AboutModule)
   },
   {
-    path: 'api',
-    loadChildren: () => import('./modules/api/api.module').then(m => m.ApiModule)
+    path: 'api-reference',
+    loadChildren: () => import('./modules/api-reference/api-reference.module').then(m => m.ApiReferenceModule)
   }
 ];
 

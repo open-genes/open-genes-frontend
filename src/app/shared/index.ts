@@ -1,1 +1,1 @@
-export * from './table/table.module';
+export * from './genes-list/genes-list.module';

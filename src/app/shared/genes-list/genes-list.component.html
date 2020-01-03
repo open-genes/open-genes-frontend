@@ -109,10 +109,10 @@
           </span>
           <span class="tag"
                 *ngFor="let item of data.functionalClusters"
-                (click)="filterByFuncClusters(item.id)"
-                [class.__active]="filters.cluster.includes(item.id)"
+                (click)="filterByFuncClusters(item['id'])"
+                [class.__active]="filters.cluster.includes(item['id'])"
           >
-            <div class="tag__inner">{{item.name}}</div>
+            <div class="tag__inner">{{item["name"]}}</div>
           </span>
         </div>
         <div class="td cell td-expression">

@@ -6,11 +6,11 @@ import { IFilter, IGene } from '../../core/models';
 import { GenesListService } from './genes-list.service';
 
 @Component({
-  selector: 'app-table',
+  selector: 'app-genes-list',
   templateUrl: './genes-list.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./genes-list.component.scss']
 })
-export class TableComponent implements OnInit, OnChanges, OnDestroy {
+export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() dataSource: IGene[];
   @Output() filterCluster = new EventEmitter<number[]>();

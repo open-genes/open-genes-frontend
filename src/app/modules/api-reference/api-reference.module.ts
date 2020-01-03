@@ -1,17 +1,17 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ApiComponent} from './api.component';
+import {ApiReferenceComponent} from './api-reference.component';
 import {RouterModule, Routes} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 import {CodeComponent} from '../../common/code/code.component';
-import {PipesModule} from "../home/pipes/pipes.module";
+import {PipesModule} from '../home/pipes/pipes.module';
 
 const routes: Routes = [
-  {path: '', component: ApiComponent}
+  {path: '', component: ApiReferenceComponent}
 ];
 
 @NgModule({
-  declarations: [ApiComponent, CodeComponent],
+  declarations: [ApiReferenceComponent, CodeComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -19,5 +19,5 @@ const routes: Routes = [
     PipesModule
   ]
 })
-export class ApiModule {
+export class ApiReferenceModule {
 }
