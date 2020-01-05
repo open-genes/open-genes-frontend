@@ -103,7 +103,6 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.filters.expression = null;
     }
-    this.filters.cluster = [];
     this.isLoading = true;
     this.filterExpression.emit(this.filters.expression);
   }
