@@ -15,7 +15,7 @@
   z-index: 1;
 }
 
-mark {
+::ng-deep mark.text-highlight { // being generated dynamically
   background-color: $color-hover;
 }
 
