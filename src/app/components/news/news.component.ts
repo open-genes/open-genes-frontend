@@ -15,6 +15,7 @@ export class NewsComponent implements OnInit {
   @Input() genes: Genes[];
   newsList: INews[];
   isLoading: boolean;
+  error: number;
 
   constructor(private pubmedApiService: PubmedApiService) {
     this.newsList = [];
@@ -55,6 +56,6 @@ export class NewsComponent implements OnInit {
           }
         });
       });
-    });
+    }, error => this.error = error);
   }
 }

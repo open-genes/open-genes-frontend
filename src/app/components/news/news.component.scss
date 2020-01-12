@@ -3,6 +3,10 @@
 :host {
   display: inline-block;
   flex: none;
+
+  &:empty {
+    display: none;
+  }
 }
 
 .news {
