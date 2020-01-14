@@ -36,11 +36,11 @@
         <span class="fa fal fa-times"></span>
       </button>
 
-      <button class="btn btn--small btn-purple btn--icon-only"
+      <button class="btn btn--small btn-purple"
               (click)="clearFilters('all')"
               *ngIf="(filters.name || filters.ageMya || filters.expression || filters.cluster.length > 0)"
       >
-        <span class="fa fal fa-times"></span>
+        <span class="fa fal fa-filter"></span> {{ 'filters_reset' | translate }}
       </button>
     </div>
 

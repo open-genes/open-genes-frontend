@@ -13,6 +13,7 @@
   "main_page_table_name" : "HGNC, название",
   "phylogeny" : "Происхождение",
   "functional_classes": "Функциональные классы:",
+  "filters_reset": "Сбросить",
   "main_page_table_expression" : "Возрастные изменения экспрессии:",
   "diseases" : "Заболевания",
   "main_page_table_interactions" : "Взаимодействия",
