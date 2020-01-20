@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {ApiService} from '../../core/services/api.service';
-import {Genes} from '../../core/models';
+import {Genes, Origin} from '../../core/models';
 
 @Component({
   selector: 'app-gene',

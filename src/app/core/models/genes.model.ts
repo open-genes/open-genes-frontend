@@ -1,7 +1,5 @@
 export interface Genes {
   id: number;
-  agePhylo: string;
-  ageMya: number;
   symbol: string;
   aliases: string[];
   name: string;
@@ -32,4 +30,12 @@ export interface Genes {
   expression: Array<any>;
   expressionEN: string;
   expressionChange: any;
+  origin: Origin;
+}
+
+export interface Origin {
+  id: number;
+  phylum: string;
+  age: string;
+  order: number;
 }

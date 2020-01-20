@@ -61,7 +61,7 @@
             {{ 'phylogeny' | translate }}
           </div>
           <div class="type__value">
-            {{ gene.agePhylo || ('gene_page_origin_unknown' | translate) }}
+            {{ gene.origin.phylum || ('gene_page_origin_unknown' | translate) }}
           </div>
         </div>
 
@@ -70,7 +70,7 @@
             {{ 'age' | translate }}
           </div>
           <div class="type__value">
-            {{ gene.ageMya || ('age_unknown' | translate) }} <small>{{ 'million_years' | translate }}</small>
+            {{ gene.origin.age || ('age_unknown' | translate) }} <small>{{ 'million_years' | translate }}</small>
           </div>
         </div>
 
