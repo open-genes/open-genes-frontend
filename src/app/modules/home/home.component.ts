@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
   ) {
     this.filters = {
       name: false,
-      ageMya: false,
+      age: false,
       cluster: [],
       expression: null
     };

@@ -11,8 +11,8 @@
       </button>
 
       <button class="filter age-filter"
-              (click)="getGenes('ageMya')"
-              [class.__active]="filters.ageMya"
+              (click)="getGenes('age')"
+              [class.__active]="filters.age"
       >
         {{ 'age' | translate }} ({{ 'million_years' | translate }})
         <span class="fa far fa-sort-down"></span>
@@ -38,7 +38,7 @@
 
       <button class="btn btn--small btn-purple"
               (click)="clearFilters('all')"
-              *ngIf="(filters.name || filters.ageMya || filters.expression || filters.cluster.length > 0)"
+              *ngIf="(filters.name || filters.age || filters.expression || filters.cluster.length > 0)"
       >
         <span class="fa fal fa-filter"></span> {{ 'filters_reset' | translate }}
       </button>
@@ -100,8 +100,8 @@
           </div>
         </div>
         <div class="td cell td-age-mya">
-          <b>{{data.agePhylo}}</b><br>
-          {{data.ageMya}} {{ 'million_years' | translate }}
+          <b>{{data.origin.phylum}}</b><br>
+          {{data.origin.age}} {{ 'million_years' | translate }}
         </div>
         <div class="td cell td-clusters">
           <span class="td__label" *ngIf="data.functionalClusters">

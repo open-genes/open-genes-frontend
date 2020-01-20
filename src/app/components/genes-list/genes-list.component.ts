@@ -27,7 +27,7 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private readonly genesListService: GenesListService) {
     this.filters = {
       name: false,
-      ageMya: false,
+      age: false,
       expression: null,
       cluster: []
     };
@@ -54,8 +54,8 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
       this.filters.name ? this.reverse() : this.sortByName();
       this.filters.name = !this.filters.name;
     } else {
-      this.filters.ageMya ? this.reverse() : this.sortByAge();
-      this.filters.ageMya = !this.filters.ageMya;
+      this.filters.age ? this.reverse() : this.sortByAge();
+      this.filters.age = !this.filters.age;
     }
   }
 
@@ -73,7 +73,7 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
 
   private sortByAge() {
     this.searchedData.sort((a, b) => {
-      return a.ageMya - b.ageMya;
+      return a.origin.order - b.origin.order;
     });
   }
 
@@ -114,7 +114,7 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
     if (filter === 'all') {
       this.filters = {
         name: false,
-        ageMya: false,
+        age: false,
         expression: null,
         cluster: []
       };
@@ -122,8 +122,8 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
     } else if (filter === 'name') {
       this.filters.name = false;
       this.filtersCleared.emit();
-    } else if (filter === 'ageMya') {
-      this.filters.ageMya = false;
+    } else if (filter === 'age') {
+      this.filters.age = false;
       this.filtersCleared.emit();
     } else if (filter === 'expression') {
       this.filters.expression = null;
