@@ -7,6 +7,39 @@
 @include mat-core();
 
 // Define the theme.
+$open-genes-purple: ( // TODO: доделать, сгененировать цвета
+  50: #edeefb,
+  100: #b7bcf1,
+  200: #b39ddb,
+  300: #8986d7,
+  400: #7673d1,
+  500: #7880e4,
+  600: #8986d7,
+  700: #7673d1,
+  800: #b388ff,
+  900: #6360cb,
+  A100: #4d58dc,
+  A200: #413dba,
+  A400: #504dc4,
+  A700: #413dba,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
 $open-genes-primary: mat-palette($open-genes-purple, 400, 500, 600);
 $open-genes-accent:  mat-palette($mat-amber, 700, 800, 900);
 $open-genes-theme:   mat-light-theme($open-genes-primary, $open-genes-accent);
@@ -15,3 +48,14 @@ $open-genes-theme:   mat-light-theme($open-genes-primary, $open-genes-accent);
 @include mat-core-theme($open-genes-theme);
 @include mat-button-theme($open-genes-theme);
 @include mat-checkbox-theme($open-genes-theme);
+
+// Some custom design
+
+.mat-expansion-panel {
+  box-shadow: none !important;
+  border: 1px solid $color-borders;
+
+  .mat-expansion-panel-header {
+    padding-left: 10px;
+  }
+}
