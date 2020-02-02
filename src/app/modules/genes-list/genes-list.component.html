@@ -76,16 +76,7 @@
           <b>{{ 'main_page_table_expression' | translate }}</b>
         </div>
       </div>
-      <div class="th">
-        <div class="th__title __text-right">
-          <b>{{ 'diseases' | translate }}</b>
-        </div>
-      </div>
-      <div class="th">
-        <div class="th__title __text-right">
-          <b>{{ 'main_page_table_interactions' | translate }}</b>
-        </div>
-      </div>
+      <div class="th"></div>
     </div>
 
     <div class="tbody">
@@ -127,15 +118,31 @@
             <div class="tag__inner">{{data.expressionChange}}</div>
           </span>
         </div>
-        <div class="td cell __text-right td-external">
-          <a href="http://disgenet.org/browser/1/1/0/{{data.entrezGene}}/"
-             target="_blank"
-             class="badge badge--disgenet">DisGenet</a>
-        </div>
-        <div class="td cell __text-right td-external">
-          <a href="https://thebiogrid.org/search.php?search={{data.symbol}}&organism=9606/"
-             target="_blank"
-             class="badge badge--biogrid">BioGrid</a>
+        <div class="td td-actions">
+          <button mat-icon-button
+                  class="td-actions__menu"
+                  [matMenuTriggerFor]="geneListItemMenu"
+                  aria-label="Меню гена в списке"
+          >
+            <mat-icon>
+              <span class="fa far fa-ellipsis-v"></span>
+            </mat-icon>
+          </button>
+          <mat-menu #geneListItemMenu>
+            <a mat-menu-item
+               href="http://disgenet.org/browser/1/1/0/{{data.entrezGene}}/"
+               target="_blank">
+              <span class="legend __brand-color-disgenet"></span>
+              DisGenet
+            </a>
+
+            <a mat-menu-item
+               href="https://thebiogrid.org/search.php?search={{data.symbol}}&organism=9606/"
+               target="_blank">
+              <span class="legend __brand-color-biogrid"></span>
+              BioGrid
+            </a>
+          </mat-menu>
         </div>
       </div>
     </div>

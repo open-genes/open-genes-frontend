@@ -32,7 +32,7 @@
   }
 }
 
-$columns-quantity: 7;
+$columns-quantity: 4;
 
 .view-content {
   margin-bottom: 10px;
@@ -63,6 +63,12 @@ $columns-quantity: 7;
         color: #000;
         font-weight: bold;
         margin-right: 3px;
+      }
+
+      .td-actions__menu {
+        position: absolute;
+        right: 10px;
+        z-index: 1;
       }
 
       &--expandable {
@@ -117,7 +123,7 @@ $columns-quantity: 7;
     .th {
       width: (100% / $columns-quantity); // Фикс для пустой таблицы
       color: $color-black;
-      text-align: center;
+      text-align: left;
       font-weight: 400;
       padding: 8px 10px 10px 10px;
       border-bottom: 2px solid $color-borders;
@@ -169,11 +175,6 @@ $columns-quantity: 7;
           }
         }
       }
-
-      &:first-child,
-      &:nth-child(2) {
-        text-align: left;
-      }
     }
 
     .tbody {
@@ -201,6 +202,12 @@ $columns-quantity: 7;
         .tr__edit-btn {
           opacity: .75;
         }
+      }
+    }
+
+    .td-actions {
+      &__menu {
+        top: 5px;
       }
     }
 
@@ -237,22 +244,8 @@ $columns-quantity: 7;
       @include panel;
 
       font-size: 0;
-      padding-bottom: 75px;
+      padding-bottom: 20px;
       margin-top: 20px;
-
-      //separator
-      &:after {
-        content: " ";
-        display: block;
-        width: 100%;
-        height: 1px;
-        background-color: $color-borders;
-        margin-bottom: 10px;
-        position: absolute;
-        bottom: 44px;
-        left: 0;
-        z-index: 0;
-      }
 
       .td {
         display: inline-block;
@@ -268,9 +261,17 @@ $columns-quantity: 7;
           margin-bottom: 3px;
         }
 
+        &-actions {
+          position: static !important;
+          height: 1px !important;
+          &__menu {
+            top: 10px;
+          }
+        }
 
         &-name {
           margin: 10px 0;
+          padding-right: 30px;
 
           .td__title {
             .link {
@@ -295,22 +296,6 @@ $columns-quantity: 7;
 
           .td__label {
             margin-bottom: 5px;
-          }
-        }
-
-        &-external {
-          &,
-          .badge {
-            width: 80px;
-            margin-bottom: 0;
-          }
-
-          position: absolute;
-          left: 10px;
-          bottom: 12px;
-
-          &:nth-last-child(2) {
-            left: 100px;
           }
         }
       }
