@@ -1,0 +1,11 @@
+// Legend
+.legend {
+  display: inline-block;
+  vertical-align: middle;
+  height: .8em;
+  width: .8em;
+  border-radius: 50%;
+  margin-right: 5px;
+  background-color: $color-gray-halfing;
+  user-select: none;
+}

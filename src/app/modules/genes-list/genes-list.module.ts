@@ -10,6 +10,9 @@ import { PipesModule } from '../../pages/home/pipes/pipes.module';
 import { DirectivesModule } from '../../pages/home/directives/directives.module';
 // import { GenesListService } from './genes-list.service';
 import { LoaderPlaceholderComponent } from '../../components/loader-placeholder/loader-placeholder.component';
+import {MatMenuModule} from "@angular/material/menu";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { LoaderPlaceholderComponent } from '../../components/loader-placeholder/
     RouterModule,
     SearchModule,
     PipesModule,
-    DirectivesModule
+    DirectivesModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [
     // GenesListService
