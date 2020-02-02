@@ -66,7 +66,7 @@ deploy-dev:
 deploy-stage:
   extends: .deploy
   dependencies:
-    - build-stage
+    - build-staging
   environment:
     name: stage
   variables:
