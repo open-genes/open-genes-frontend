@@ -1,4 +1,21 @@
-<button class="language-switcher js_language-switcher"
-        (click)="changeLanguage()">
-  {{translate.currentLang}}
+<button mat-icon-button [matMenuTriggerFor]="languageMenu"
+        class="language-switcher"
+        aria-label="Выбор языка"
+>
+  <span class="language-switcher__inner">
+    {{translate.currentLang}}
+  </span>
 </button>
+
+<mat-menu #languageMenu>
+  <button mat-menu-item
+          (click)="changeLanguage('ru')"
+          [disabled]="currentIndex === 0"
+  >{{ 'language_ru' | translate }}
+  </button>
+  <button mat-menu-item
+          (click)="changeLanguage('en')"
+          [disabled]="currentIndex === 1"
+  >{{ 'language_en' | translate }}
+  </button>
+</mat-menu>

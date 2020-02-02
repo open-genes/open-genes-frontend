@@ -84,5 +84,7 @@
   "nothing_found": "Ничего не найдено",
   "show_more": "Показать еще",
   "news_list_title": "Новые публикации",
-  "news_list_hint": "Статьи на PubMed по генам из нашей базы"
+  "news_list_hint": "Статьи на PubMed по генам из нашей базы",
+  "language_en": "English",
+  "language_ru": "Русский"
 }

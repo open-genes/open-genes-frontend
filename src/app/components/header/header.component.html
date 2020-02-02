@@ -1,13 +1,13 @@
 <header class="header">
   <div class="header__centering">
-    <a class="header__logo"
+    <a class="header__logo __hoverable"
        [routerLink]="'/'"
        (click)="clearFilters('all')"
        title="{{'main_page_link' | translate}}">
     </a>
 
     <div class="header__right">
-      <app-language></app-language>
+      <app-language relative="fixed"></app-language>
       <app-burger-menu></app-burger-menu>
     </div>
   </div>

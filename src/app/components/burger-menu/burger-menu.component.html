@@ -1,8 +1,10 @@
-<div class="signin-button js_signin-btn"
-     (click)="toggleMenu()"
-     [class.active]="menuVisible">
-  <span class="fa far fa-bars"></span>
-</div>
+<button mat-icon-button
+        class="signin-button js_signin-btn"
+        (click)="toggleMenu()"
+        [class.active]="menuVisible"
+        aria-label="Меню"
+><span class="fa fal fa-bars"></span> <!-- TODO: use MatIconRegistry to use icon set -->
+</button>
 
 <div class="header__menu js_header-menu"
      (click)="toggleMenu()"

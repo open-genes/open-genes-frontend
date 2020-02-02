@@ -20,7 +20,7 @@
        *ngIf="showResult">
     <ng-container *ngFor="let data of searchedData; let i = index">
       <button
-        *ngIf="i < 5"
+        *ngIf="i < 3"
         class="search-form__autocomplete-item"
         tabindex="0"
         [routerLink]="['/gene', data.id]"

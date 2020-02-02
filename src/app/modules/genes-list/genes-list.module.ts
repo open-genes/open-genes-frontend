@@ -6,10 +6,10 @@ import { SearchComponent } from '../search/search.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { SearchModule } from '../search/search.module';
-import { PipesModule } from '../../modules/home/pipes/pipes.module';
-import { DirectivesModule } from '../../modules/home/directives/directives.module';
+import { PipesModule } from '../../pages/home/pipes/pipes.module';
+import { DirectivesModule } from '../../pages/home/directives/directives.module';
 // import { GenesListService } from './genes-list.service';
-import { LoaderPlaceholderComponent } from '../loader-placeholder/loader-placeholder.component';
+import { LoaderPlaceholderComponent } from '../../components/loader-placeholder/loader-placeholder.component';
 
 @NgModule({
   declarations: [

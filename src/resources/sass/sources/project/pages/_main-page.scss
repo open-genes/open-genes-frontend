@@ -29,10 +29,8 @@
     .header__button {
       margin-top: 30px;
 
-      .btn {
-        padding: 0 15px;
-        font-size: 14px;
-        letter-spacing: 1px;
+      a {
+        min-width: 120px;
       }
     }
   }
