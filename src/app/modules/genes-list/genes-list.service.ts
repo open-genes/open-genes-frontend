@@ -21,7 +21,7 @@ export class GenesListService {
   /**
    * Сброс фильтров таблицы
    */
-  public clearFilters(all: string) {
-    this.genesList.clearFilters('all');
+  public clearFilters(all) {
+    this.genesList.clearFilters(all);
   }
 }

@@ -18,7 +18,20 @@ build-dev:
   image: alexsuch/angular-cli:7.3.8
   script:
     - npm install
-    - ng build
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+  when: manual
+  except:
+    - master
+
+build-staging:
+  stage: build
+  image: alexsuch/angular-cli:7.3.8
+  script:
+    - npm install
+    - npm run build-staging
   artifacts:
     paths:
       - dist/
@@ -31,7 +44,7 @@ build-prod:
   image: alexsuch/angular-cli:7.3.8
   script:
     - npm install
-    - ng build --prod
+    - npm run build-prod
   artifacts:
     paths:
       - dist/
@@ -53,7 +66,7 @@ deploy-dev:
 deploy-stage:
   extends: .deploy
   dependencies:
-    - build-dev
+    - build-stage
   environment:
     name: stage
   variables:

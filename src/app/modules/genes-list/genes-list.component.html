@@ -4,7 +4,7 @@
     <div class="filters-group view-panel__filters">
       <button class="filter name-filter"
               (click)="getGenes('name')"
-              [class.__active]="filters.name"
+              [class.__active]="filters.byName"
       >
         {{ 'main_page_table_name' | translate }}
         <span class="fa far fa-sort-down"></span>
@@ -12,25 +12,25 @@
 
       <button class="filter age-filter"
               (click)="getGenes('age')"
-              [class.__active]="filters.age"
+              [class.__active]="filters.byAge"
       >
         {{ 'age' | translate }} ({{ 'million_years' | translate }})
         <span class="fa far fa-sort-down"></span>
       </button>
 
       <button
-        *ngIf="filters.cluster.length > 0"
+        *ngIf="filters.byClasses.length > 0"
         class="filter __active functional-classes-filter"
-        (click)="clearFilters('cluster')"
+        (click)="clearFilters('classes')"
       >
         {{ 'functional_classes' | translate }}
         <span class="fa fal fa-times"></span>
       </button>
 
       <button
-        *ngIf="filters.expression"
+        *ngIf="filters.byExpressionChange"
         class="filter __active expression-change-filter"
-        (click)="clearFilters('expression')"
+        (click)="clearFilters('expressionChange')"
       >
         {{ 'main_page_table_expression' | translate }}
         <span class="fa fal fa-times"></span>
@@ -38,7 +38,7 @@
 
       <button class="btn btn--small btn-purple"
               (click)="clearFilters('all')"
-              *ngIf="(filters.name || filters.age || filters.expression || filters.cluster.length > 0)"
+              *ngIf="(filters.byName || filters.byAge || filters.byExpressionChange || filters.byClasses.length > 0)"
       >
         <span class="fa fal fa-filter"></span> {{ 'filters_reset' | translate }}
       </button>
@@ -77,12 +77,12 @@
         </div>
       </div>
       <div class="th">
-        <div class="th__title">
+        <div class="th__title __text-right">
           <b>{{ 'diseases' | translate }}</b>
         </div>
       </div>
       <div class="th">
-        <div class="th__title">
+        <div class="th__title __text-right">
           <b>{{ 'main_page_table_interactions' | translate }}</b>
         </div>
       </div>
@@ -110,7 +110,7 @@
           <span class="tag"
                 *ngFor="let item of data.functionalClusters"
                 (click)="filterByFuncClusters(item['id'])"
-                [class.__active]="filters.cluster.includes(item['id'])"
+                [class.__active]="filters.byClasses.includes(item['id'])"
           >
             <div class="tag__inner">{{item["name"]}}</div>
           </span>
@@ -122,7 +122,7 @@
           <span class="tag"
                 *ngIf="data.expressionChange"
                 (click)="filterByExpressionChange(data.expressionChange)"
-                [class.__active]="filters.expression === data.expressionChange"
+                [class.__active]="filters.byExpressionChange === data.expressionChange"
           >
             <div class="tag__inner">{{data.expressionChange}}</div>
           </span>

@@ -36,7 +36,7 @@
         <div class="col col-16 header__functional-clusters">
           <ng-container *ngIf="gene.functionalClusters; else tagSkeletal">
             <ng-container *ngFor="let item of gene.functionalClusters">
-              <span class="alias">{{item.name}}</span>
+              <a routerLink="/" class="alias">{{item.name}}</a>
             </ng-container>
           </ng-container>
           <ng-template #tagSkeletal>
@@ -54,72 +54,83 @@
         <div class="col col-16 page__title">
           <h1>{{ 'age' | translate }}</h1>
         </div>
-      </div>
-      <div class="container __flex age__types">
-        <div class="col col-4 __preserve-width __flex-auto age__type">
-          <div class="type__title">
-            {{ 'phylogeny' | translate }}
-          </div>
-          <div class="type__value">
-            {{ gene.origin.phylum || ('gene_page_origin_unknown' | translate) }}
-          </div>
-        </div>
+        <div class="col col-16">
+          <div class="flex-subcontainer age__types">
+            <div class="col col-4 __preserve-width age__type">
+              <div class="type__inner">
+                <div class="type__title">
+                  {{ 'phylogeny' | translate }}
+                </div>
+                <div class="type__value">
+                  {{ gene.origin.phylum || ('gene_page_origin_unknown' | translate) }}
+                </div>
+              </div>
+            </div>
 
-        <div class="col col-4 __preserve-width __flex-auto age__type">
-          <div class="type__title">
-            {{ 'age' | translate }}
-          </div>
-          <div class="type__value">
-            {{ gene.origin.age || ('age_unknown' | translate) }} <small>{{ 'million_years' | translate }}</small>
-          </div>
-        </div>
+            <div class="col col-4 __preserve-width age__type">
+              <div class="type__inner">
+                <div class="type__title">
+                  {{ 'age' | translate }}
+                </div>
+                <div class="type__value">
+                  {{ gene.origin.age || ('age_unknown' | translate) }} <small>{{ 'million_years' | translate }}</small>
+                </div>
+              </div>
+            </div>
 
-        <a href="http://disgenet.org/browser/1/1/0/{{gene.entrezGene}}/"
-           target="_blank"
-           title="{{ 'gene_page_link_disgenet' | translate }}"
-           class="col col-3 __preserve-width __flex-auto age__type age__diseases">
-          <div class="type__title">
-            {{ 'diseases' | translate }}
-          </div>
-          <div class="type__value">
-              <span class="badge badge--disgenet">
-                  <span class="fa fal fa-stream"></span>
-                {{ 'gene_page_link_disgenet' | translate }}
-              </span>
-          </div>
-        </a>
+            <a href="http://disgenet.org/browser/1/1/0/{{gene.entrezGene}}/"
+               target="_blank"
+               title="{{ 'gene_page_link_disgenet' | translate }}"
+               class="col col-4 __preserve-width age__type age__diseases">
+              <div class="type__inner">
+                <div class="type__title">
+                  {{ 'diseases' | translate }}
+                </div>
+                <div class="type__value">
+                <span class="badge badge--disgenet">
+                    <span class="fa fal fa-stream"></span>
+                  {{ 'gene_page_link_disgenet' | translate }}
+                </span>
+                </div>
+              </div>
+            </a>
 
-        <a href="https://thebiogrid.org/search.php?search={{gene.symbol}}&organism=9606/"
-           target="_blank"
-           title="{{ 'gene_page_link_biogrid' | translate }}"
-           class="col col-3 __preserve-width __flex-auto age__type age__interactions">
-          <div class="type__title">
-            {{ 'gene_page_title_interactions' | translate }}
-          </div>
-          <div class="type__value">
-              <span class="badge badge--biogrid">
-                  <span class="fa fal fa-search"></span>
-                {{ 'gene_page_link_biogrid' | translate }}
-              </span>
-          </div>
-        </a>
+            <a href="https://thebiogrid.org/search.php?search={{gene.symbol}}&organism=9606/"
+               target="_blank"
+               title="{{ 'gene_page_link_biogrid' | translate }}"
+               class="col col-4 __preserve-width age__type age__interactions">
+              <div class="type__inner">
+                <div class="type__title">
+                  {{ 'gene_page_title_interactions' | translate }}
+                </div>
+                <div class="type__value">
+                <span class="badge badge--biogrid">
+                    <span class="fa fal fa-search"></span>
+                  {{ 'gene_page_link_biogrid' | translate }}
+                </span>
+                </div>
+              </div>
+            </a>
 
-        <div class="col col-7 __preserve-width __flex-auto age__type age__rating" *ngIf="gene.rating">
-          <div class="type__title">
-            {{ 'gene_page_title_criteria' | translate }}
-            <small><sup>*</sup></small>
-          </div>
-          <div class="type__value">
+            <div class="col col-7 __preserve-width __flex-auto age__type age__rating" *ngIf="gene.rating">
+              <div class="type__title">
+                {{ 'gene_page_title_criteria' | translate }}
+                <small><sup>*</sup></small>
+              </div>
+              <div class="type__value">
               <span
                 class="rating{{ (gene.rating > 5) ? 'rating--medium' : 'rating--high'}}">
                   {{gene.rating}}
               </span>
-          </div>
-          <div class="type__description">
-            {{gene.rating}}
+              </div>
+              <div class="type__description">
+                {{gene.rating}}
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
     </section>
 
     <div class="wrapper gene-page__articles">
@@ -131,7 +142,7 @@
         <div class="col col-16 articles__content" *ngIf="gene.aliases">
           <h3>{{ 'gebe_page_title_aliases' | translate }}</h3>
           <ng-container *ngFor="let item of gene.aliases">
-            <a href="" class="alias">{{item}}</a>
+            <span class="alias">{{item}}</span>
           </ng-container>
         </div>
 
@@ -141,35 +152,46 @@
                     gene.commentCause ||
                     gene.commentAging ||
                     gene.commentsReferenceLinks; else noContent">
-          <h3>{{ 'gene_page_title_contents' | translate }}</h3>
 
-          <ul class="list contents-list">
-            <li *ngIf="gene.commentEvolution">
-              <a [routerLink]="['/gene', id]" fragment="evolution">
+          <mat-expansion-panel class="contents-list">
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{ 'gene_page_title_contents' | translate }}</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-nav-list>
+              <a mat-list-item
+                 *ngIf="gene.commentEvolution"
+                 [routerLink]="['/gene', id]" fragment="evolution">
                 {{ 'gene_page_title_evolution' | translate }}
               </a>
-            </li>
-            <li *ngIf="gene.commentFunction">
-              <a [routerLink]="['/gene', id]" fragment="function">
+
+              <a mat-list-item
+                 *ngIf="gene.commentFunction"
+                 [routerLink]="['/gene', id]" fragment="function">
                 {{ 'gene_page_title_function' | translate }}
               </a>
-            </li>
-            <li *ngIf="gene.commentCause">
-              <a [routerLink]="['/gene', id]" fragment="cause">
+
+              <a mat-list-item
+                 *ngIf="gene.commentCause"
+                 [routerLink]="['/gene', id]" fragment="cause">
                 {{ 'gene_page_title_criteria' | translate }}
               </a>
-            </li>
-            <li *ngIf="gene.commentAging">
-              <a [routerLink]="['/gene', id]" fragment="aging">
+
+              <a mat-list-item
+                 *ngIf="gene.commentAging"
+                 [routerLink]="['/gene', id]" fragment="aging">
                 {{ 'gene_page_title_aging' | translate }}
               </a>
-            </li>
-            <li *ngIf="gene.commentsReferenceLinks">
-              <a [routerLink]="['/gene', id]" fragment="reference">
+
+              <a mat-list-item
+                 *ngIf="gene.commentsReferenceLinks"
+                 [routerLink]="['/gene', id]" fragment="reference">
                 {{ 'gene_page_title_reference' | translate }}
               </a>
-            </li>
-          </ul>
+            </mat-nav-list>
+
+          </mat-expansion-panel>
+
 
           <ng-container *ngIf="gene.commentEvolution">
             <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
@@ -226,25 +248,31 @@
       </div>
     </div>
 
-    <section class="wrapper gene-page__expression" *ngIf="gene.expression">
+    <section class="wrapper gene-page__expression" *ngIf="gene.expression.length !== 0">
       <div class="container">
-        <div class="col col-16 page__title">
-          <h1>{{ 'gene_page_title_expression' | translate }}</h1>
-          <p>
-            {{ 'gene_page_expression_hint' | translate }}
-          </p>
-        </div>
+        <div class="col col-16">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ 'gene_page_title_expression' | translate }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p class="__mb-20">
+              {{ 'gene_page_expression_hint' | translate }}
+            </p>
 
-        <div class="col col-16 expression__rows">
-          <ng-container *ngFor="let item of gene.expression">
-            <div class="expression__row">
-              <div class="row__name">{{item.name}}</div>
-              <div class="row__value" [class.row__value--minimum]="item.exp_rpkm < 2">
-                <div class="value__bar" [style.width]="item.exp_rpkm*2+'%'"></div>
-                <div class="value__rpkm">{{item.exp_rpkm | number:'1.0-2'}} RPKM</div>
-              </div>
+            <div class="expression__rows">
+              <ng-container *ngFor="let item of gene.expression">
+                <div class="expression__row">
+                  <div class="row__name">{{item.name}}</div>
+                  <div class="row__value" [class.row__value--minimum]="item.exp_rpkm < 2">
+                    <mat-progress-bar class="value__bar" [value]="item.exp_rpkm"></mat-progress-bar>
+                    <div class="value__rpkm">{{item.exp_rpkm | number:'1.0-2'}} RPKM</div>
+                  </div>
+                </div>
+              </ng-container>
             </div>
-          </ng-container>
+          </mat-expansion-panel>
         </div>
       </div>
     </section>

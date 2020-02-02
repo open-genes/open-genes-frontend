@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {PipesModule} from '../../modules/home/pipes/pipes.module';
+import {PipesModule} from '../../pages/home/pipes/pipes.module';
 
 
 

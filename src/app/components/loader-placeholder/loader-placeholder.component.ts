@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {LOADER_TYPES} from './conf/loader-types.enum';
 
 @Component({
   selector: 'app-loader-placeholder',
@@ -7,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class LoaderPlaceholderComponent implements OnInit {
   @Input()
-  loader: string;
+  type = LOADER_TYPES.loader;
 
   @Input()
   groups: number;

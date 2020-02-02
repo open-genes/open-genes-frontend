@@ -1,4 +1,6 @@
-<ng-container *ngIf="loader === 'skeleton'; then isSkeleton; else isSpinner"></ng-container>
+<ng-container
+  *ngIf="type === 'skeleton'; then isSkeleton; else isSpinner"
+></ng-container>
 
 <ng-template #isSkeleton>
   <div class="skeleton">
