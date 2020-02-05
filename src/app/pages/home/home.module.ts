@@ -8,7 +8,7 @@ import {MiniCardsComponent} from '../../components/mini-cards/mini-cards.compone
 import {TranslateModule} from '@ngx-translate/core';
 import {NewsComponent} from '../../components/news/news.component';
 import {NgStripTagsPipeModule} from 'angular-pipes';
-import {PipesModule} from './pipes/pipes.module';
+import {PipesModule} from '../../modules/pipes/pipes.module';
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 

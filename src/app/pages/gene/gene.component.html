@@ -229,7 +229,10 @@
                 <li *ngFor="let item of gene.commentsReferenceLinks | keyvalue">
                   <a href="https://doi.org/{{item.key}}"
                      target="_blank"
-                     class="reference-link">{{item.value}}</a>
+                     class="reference-link"
+                     [innerHTML]="item.value | safe: 'html'"
+                  ></a>
+
                 </li>
               </ul>
             </article>

@@ -4,7 +4,7 @@ import {ApiReferenceComponent} from './api-reference.component';
 import {RouterModule, Routes} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 import {CodeBlockComponent} from '../../components/code-block/code-block.component';
-import {PipesModule} from '../home/pipes/pipes.module';
+import {PipesModule} from '../../modules/pipes/pipes.module';
 
 const routes: Routes = [
   {path: '', component: ApiReferenceComponent}
