@@ -3,50 +3,46 @@
   display: block;
   padding: 6px 10px;
   width: 100%;
-  border-radius: 14px;
+  border-radius: 5px;
   //border: 0;
   //border-bottom: 1px solid $color-borders;
   background-color: #fff;
-  border: 1px solid rgba($color-gray, .15);
+  border: 1px solid $color-borders;
   font-size: $font-size;
   color: $color-gray;
   resize: none;
   appearance: none;
+  transition: border .15s linear;
 
   &::-ms-clear {
     display: none !important; // скрываем иконку очистки поля на IE/Edge
   }
 
-  &::-webkit-input-placeholder {
-    color: $color-gray-semi;
+  $prefixed-selectors: (
+    '::placeholder',
+    '::-webkit-input-placeholder',
+    '::-moz-placeholder',
+    ':-moz-placeholder',
+    ':-ms-input-placeholder'
+  );
+
+  @mixin placeholder-color() {
+    @each $prefixed-selector in $prefixed-selectors {
+      &#{$prefixed-selector} {
+        @content;
+      }
+    }
   }
 
-  &::-moz-placeholder {
-    color: $color-gray-semi;
+  @include placeholder-color {
+    color: $color-gray-halfing;
   }
 
-  &:-moz-placeholder {
-    color: $color-gray-semi;
-  }
-
-  &:-ms-input-placeholder {
-    color: $color-gray-semi;
-  }
-
-  &[placeholder] {
-    text-overflow: ellipsis;
-  }
-
-  &::-moz-placeholder {
-    text-overflow: ellipsis;
-  }
-
-  &:-moz-placeholder {
-    text-overflow: ellipsis;
-  }
-
-  &:-ms-input-placeholder {
-    text-overflow: ellipsis;
+  &:focus {
+    border-color: $color-borders-active;
+    @include placeholder-color {
+      color: transparent;
+    }
   }
 
   &--error {

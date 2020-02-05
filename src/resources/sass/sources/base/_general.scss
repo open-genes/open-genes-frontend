@@ -47,6 +47,16 @@ body {
     }
   }
 
+  &.body--search-on-main-page-is-active {
+    @include resolution_smartphone-and-tablet {
+      overflow: hidden;
+
+      &:before {
+        display: block;
+      }
+    }
+  }
+
   &.body--loading {
     @extend .body--still;
 
