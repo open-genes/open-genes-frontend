@@ -38,7 +38,7 @@
 
       <button class="btn btn--small btn-purple"
               (click)="clearFilters('all')"
-              *ngIf="(filters.byName || filters.byAge || filters.byExpressionChange || filters.byClasses.length > 0)"
+              *ngIf="(filters.byName && filters.byAge || filters.byExpressionChange || filters.byClasses.length > 0)"
       >
         <span class="fa fal fa-filter"></span> {{ 'filters_reset' | translate }}
       </button>

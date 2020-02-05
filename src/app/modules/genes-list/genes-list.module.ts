@@ -7,7 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { SearchModule } from '../search/search.module';
 import { PipesModule } from '../pipes/pipes.module';
-import { DirectivesModule } from '../../pages/home/directives/directives.module';
+import { DirectivesModule } from '../../directives/directives.module';
 // import { GenesListService } from './genes-list.service';
 import { LoaderPlaceholderComponent } from '../../components/loader-placeholder/loader-placeholder.component';
 import {MatMenuModule} from "@angular/material/menu";
