@@ -14,10 +14,10 @@ $sizes: (5, 10, 15, 20, 25, 30, 35);
 
 @each $size in $sizes {
   .__mt-#{$size} {
-    margin-top: #{$size}px;
+    margin-top: #{$size}px !important;
   }
   .__mb-#{$size} {
-    margin-bottom: #{$size}px;
+    margin-bottom: #{$size}px !important;
   }
 }
 
