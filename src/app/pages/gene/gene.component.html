@@ -56,7 +56,7 @@
         </div>
         <div class="col col-16">
           <div class="flex-subcontainer age__types">
-            <div class="col col-4 __preserve-width age__type">
+            <div class="col age__type age__phylogeny">
               <div class="type__inner">
                 <div class="type__title">
                   {{ 'phylogeny' | translate }}
@@ -67,7 +67,7 @@
               </div>
             </div>
 
-            <div class="col col-4 __preserve-width age__type">
+            <div class="col age__type age__years">
               <div class="type__inner">
                 <div class="type__title">
                   {{ 'age' | translate }}
@@ -81,7 +81,7 @@
             <a href="http://disgenet.org/browser/1/1/0/{{gene.entrezGene}}/"
                target="_blank"
                title="{{ 'gene_page_link_disgenet' | translate }}"
-               class="col col-4 __preserve-width age__type age__diseases">
+               class="col age__type age__diseases">
               <div class="type__inner">
                 <div class="type__title">
                   {{ 'diseases' | translate }}
@@ -98,7 +98,7 @@
             <a href="https://thebiogrid.org/search.php?search={{gene.symbol}}&organism=9606/"
                target="_blank"
                title="{{ 'gene_page_link_biogrid' | translate }}"
-               class="col col-4 __preserve-width age__type age__interactions">
+               class="col age__type age__interactions">
               <div class="type__inner">
                 <div class="type__title">
                   {{ 'gene_page_title_interactions' | translate }}
@@ -112,7 +112,7 @@
               </div>
             </a>
 
-            <div class="col col-7 __preserve-width __flex-auto age__type age__rating" *ngIf="gene.rating">
+            <div class="col age__type age__rating hidden" *ngIf="gene.rating">
               <div class="type__title">
                 {{ 'gene_page_title_criteria' | translate }}
                 <small><sup>*</sup></small>
@@ -140,10 +140,19 @@
         </div>
 
         <div class="col col-16 articles__content" *ngIf="gene.aliases">
-          <h3>{{ 'gebe_page_title_aliases' | translate }}</h3>
+          <h3>{{ 'gene_page_title_aliases' | translate }}</h3>
           <ng-container *ngFor="let item of gene.aliases">
             <span class="alias">{{item}}</span>
           </ng-container>
+        </div>
+
+        <div class="col col-16 articles__content" *ngIf="gene.band">
+          <h3>{{ 'gene_page_title_position' | translate }}</h3>
+          <article id="cytogenetic-band">
+            <p><b>{{ 'gene_page_cytogenetic_band' | translate }}:</b> {{ gene.band }}</p>
+            <p><b>{{ 'gene_page_location_start' | translate }}:</b> {{ gene.locationStart }}</p>
+            <p><b>{{ 'gene_page_location_end' | translate }}:</b> {{ gene.locationEnd }}</p>
+          </article>
         </div>
 
         <div class="col col-16 articles__content"
@@ -153,7 +162,7 @@
                     gene.commentAging ||
                     gene.commentsReferenceLinks; else noContent">
 
-          <mat-expansion-panel class="contents-list">
+          <mat-expansion-panel class="contents-list  __mt-10">
             <mat-expansion-panel-header>
               <mat-panel-title>{{ 'gene_page_title_contents' | translate }}</mat-panel-title>
             </mat-expansion-panel-header>

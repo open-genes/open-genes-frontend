@@ -146,11 +146,19 @@
       }
 
       @include resolution_tablet-and-up {
+        .age__type {
+          width: 25%;
+        }
+
         .age__type + .age__type {
           padding-left: 10px;
         }
       }
       @include resolution_smartphone {
+        .age__type {
+          width: 100%;
+        }
+
         .age__type + .age__type {
           margin-top: 10px;
         }
