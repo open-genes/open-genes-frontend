@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
 
-import { Subject } from 'rxjs';
+import {Subject} from 'rxjs';
 
-import { IFilter, Genes } from '../../core/models';
-import { GenesListService } from './genes-list.service';
+import {Filter, Genes} from '../../core/models';
+import {GenesListService} from './genes-list.service';
 
 @Component({
   selector: 'app-genes-list',
@@ -22,19 +22,20 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
   isLoading = true;
   asCards = true;
   private subscription$ = new Subject();
-  public filters: IFilter;
+  public filters: Filter;
 
   constructor(private readonly genesListService: GenesListService) {
     this.filters = {
-      name: false,
-      ageMya: false,
-      expression: null,
-      cluster: []
+      byName: false,
+      byAge: false,
+      byExpressionChange: null,
+      byClasses: []
     };
     this.genesListService.register(this);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   ngOnChanges() {
     this.searchedData = this.dataSource;
@@ -51,11 +52,11 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
 
   getGenes(sortBy) {
     if (sortBy === 'name') {
-      this.filters.name ? this.reverse() : this.sortByName();
-      this.filters.name = !this.filters.name;
+      this.filters.byName ? this.reverse() : this.sortByName();
+      this.filters.byName = !this.filters.byName;
     } else {
-      this.filters.ageMya ? this.reverse() : this.sortByAge();
-      this.filters.ageMya = !this.filters.ageMya;
+      this.filters.byAge ? this.reverse() : this.sortByAge();
+      this.filters.byAge = !this.filters.byAge;
     }
   }
 
@@ -73,7 +74,7 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
 
   private sortByAge() {
     this.searchedData.sort((a, b) => {
-      return a.ageMya - b.ageMya;
+      return a.origin.order - b.origin.order;
     });
   }
 
@@ -87,24 +88,25 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
+  // TODO: перенести в отдельный модуль
   filterByFuncClusters(id: number) {
-    if (!this.filters.cluster.includes(id)) {
-      this.filters.cluster.push(id);
+    if (!this.filters.byClasses.includes(id)) {
+      this.filters.byClasses.push(id);
     } else {
-      this.filters.cluster = this.filters.cluster.filter(item => item !== id);
+      this.filters.byClasses = this.filters.byClasses.filter(item => item !== id);
     }
     this.isLoading = true;
-    this.filterCluster.emit(this.filters.cluster);
+    this.filterCluster.emit(this.filters.byClasses);
   }
 
   filterByExpressionChange(expression: string) {
-    if (this.filters.expression !== expression) {
-      this.filters.expression = expression;
+    if (this.filters.byExpressionChange !== expression) {
+      this.filters.byExpressionChange = expression;
     } else {
-      this.filters.expression = null;
+      this.filters.byExpressionChange = null;
     }
     this.isLoading = true;
-    this.filterExpression.emit(this.filters.expression);
+    this.filterExpression.emit(this.filters.byExpressionChange);
   }
 
   /**
@@ -113,23 +115,23 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
   clearFilters(filter: string) {
     if (filter === 'all') {
       this.filters = {
-        name: false,
-        ageMya: false,
-        expression: null,
-        cluster: []
+        byName: false,
+        byAge: false,
+        byClasses: [],
+        byExpressionChange: null
       };
       this.filtersCleared.emit();
     } else if (filter === 'name') {
-      this.filters.name = false;
+      this.filters.byName = false;
       this.filtersCleared.emit();
-    } else if (filter === 'ageMya') {
-      this.filters.ageMya = false;
+    } else if (filter === 'age') {
+      this.filters.byAge = false;
       this.filtersCleared.emit();
-    } else if (filter === 'expression') {
-      this.filters.expression = null;
+    } else if (filter === 'classes') {
+      this.filters.byClasses = [];
       this.filtersCleared.emit();
-    } else if (filter === 'cluster') {
-      this.filters.cluster = [];
+    } else if (filter === 'expressionChange') {
+      this.filters.byExpressionChange = null;
       this.filtersCleared.emit();
     }
   }

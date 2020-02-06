@@ -1,7 +1,7 @@
 // Badge
 .badge {
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: -0.1em;
   height: 30px;
   min-width: 44px;
   padding: 0 8px;
@@ -24,26 +24,6 @@
 
   &:empty {
     display: none;
-  }
-
-  &--entrez {
-    background-color: lighten(#369, 28%);
-  }
-
-  &--geneage {
-    background-color: lighten(#BA4200, 25%);
-  }
-
-  &--uniprot {
-    background-color: lighten(#5caecd, 15%);
-  }
-
-  &--disgenet {
-    background-color: lighten(#7774D1, 10%);
-  }
-
-  &--biogrid {
-    background-color: $color-orange;
   }
 
   // Класс для skeleton screens

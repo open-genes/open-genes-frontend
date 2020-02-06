@@ -2,25 +2,33 @@
       class="search-form"
       [class.search-form--active]="showResult"
 >
+  <div *ngIf="showResult"
+       class="search-backdrop"
+       (click)="cancelSearch($event)"
+  ></div>
+
   <button
-    (click)="showResult = false"
+    (click)="cancelSearch($event)"
     class="btn btn-purple btn--icon-only cancel-search-button">
-    <span class="fa fal fa-times"></span>
+    <span class="fa fal fa-arrow-left"></span>
   </button>
 
-  <input formControlName="searchField"
-         type="text"
-         placeholder="{{ 'search' | translate }}"
-         class="field"
-         required
-         #searchQuery
-         (focusin)="search()"
-  >
+  <div class="search-form__field-wrapper">
+    <input formControlName="searchField"
+           type="text"
+           placeholder="{{ 'search' | translate }}"
+           class="field search-form__search"
+           required
+           #searchQuery
+           (focusin)="search()"
+    >
+  </div>
+
   <div class="search-form__autocomplete-list"
        *ngIf="showResult">
     <ng-container *ngFor="let data of searchedData; let i = index">
       <button
-        *ngIf="i < 5"
+        *ngIf="i < 3"
         class="search-form__autocomplete-item"
         tabindex="0"
         [routerLink]="['/gene', data.id]"
@@ -39,10 +47,6 @@
     </ng-container>
   </div>
 </form>
-
-<div *ngIf="showResult"
-     class="search-backdrop"
-     (click)="showResult = false"></div>
 
 <div class="page__subtitle __mt-10"
      *ngIf="searchForm.valid">

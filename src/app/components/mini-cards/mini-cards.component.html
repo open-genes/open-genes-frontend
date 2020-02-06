@@ -6,11 +6,13 @@
     <a *ngFor="let item of lastGenes"
        [routerLink]="['/gene', item.id]"
        class="view-latest__card">
-      <div class="card__inner">
-        <div class="card__title">{{ item.symbol }}</div>
-        <div class="card__phylo">{{ item.agePhylo }}</div>
-        <div class="card__mya">{{ item.ageMya }} {{ 'million_years' | translate }}</div>
-      </div>
+      <mat-card class="card__inner">
+        <mat-card-title class="card__title">{{ item.symbol }}</mat-card-title>
+        <mat-card-content>
+          <div class="card__phylo">{{ item.origin.phylum }}</div>
+          <div class="card__mya">{{ item.origin.age }} {{ 'million_years' | translate }}</div>
+        </mat-card-content>
+      </mat-card>
     </a>
   </div>
 </section>

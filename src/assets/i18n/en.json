@@ -13,6 +13,7 @@
   "main_page_table_name" : "HGNC, gene name",
   "phylogeny" : "Origin",
   "functional_classes" : "Functional classes",
+  "filters_reset": "Reset",
   "main_page_table_expression" : "Age-related changes in expression:",
   "diseases" : "Diseases",
   "main_page_table_interactions" : "Interactions",
@@ -83,5 +84,7 @@
   "nothing_found": "Nothing found",
   "show_more": "Show more",
   "news_list_title": "New articles",
-  "news_list_hint": "Articles on PubMed on genes from our base"
+  "news_list_hint": "Articles on PubMed on genes from our base",
+  "language_en": "English",
+  "language_ru": "Русский"
 }

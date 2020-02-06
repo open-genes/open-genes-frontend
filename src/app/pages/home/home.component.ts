@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnChanges, OnInit} from '@angular/core';
 
 import {ApiService} from '../../core/services/api.service';
-import {Genes, IFilter} from '../../core/models';
+import {Genes, Filter} from '../../core/models';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -12,7 +12,7 @@ import {TranslateService} from '@ngx-translate/core';
 export class HomeComponent implements OnInit {
   genes: Genes[];
   lastGenes: Genes[];
-  filters: IFilter;
+  filters: Filter;
   error: number;
 
   private expressionTranslates = { // TODO: убрать хардкод
@@ -26,10 +26,10 @@ export class HomeComponent implements OnInit {
     private readonly translate: TranslateService
   ) {
     this.filters = {
-      name: false,
-      ageMya: false,
-      cluster: [],
-      expression: null
+      byName: false,
+      byAge: false,
+      byClasses: [],
+      byExpressionChange: null
     };
   }
 

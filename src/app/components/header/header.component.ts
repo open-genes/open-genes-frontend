@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { GenesListService } from '../genes-list/genes-list.service';
+import { GenesListService } from '../../modules/genes-list/genes-list.service';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   /**
    * Сброс фильтров таблицы генов
    */
-  clearFilters(all: string) {
-    this.genesListService.clearFilters('all');
+  clearFilters(all) {
+    this.genesListService.clearFilters(all);
   }
 }

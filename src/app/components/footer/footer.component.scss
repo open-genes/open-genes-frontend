@@ -5,7 +5,7 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  padding: 10px 0;
+  padding: 5px 0;
   background-color: $color-indent;
   color: #fff;
 
@@ -20,5 +20,6 @@
 
   ::ng-deep .footer__language {
     text-align: right;
+    color: $color-indent;
   }
 }

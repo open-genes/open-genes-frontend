@@ -1,9 +1,9 @@
 /**
  * Интерфейс, описывающий набор фильтров таблицы генов
  */
-export interface IFilter {
-  name: boolean;        // Название гена
-  ageMya: boolean;      // Происхождение, возраст
-  cluster: number[];    // Функциональный класс
-  expression: string;   // Возрастные изменения экспрессии
+export interface Filter {
+  byName: boolean;            // по названию гена
+  byAge: boolean;             // по возрасту, смотрит на origin.order
+  byClasses: number[];        // по функциональным классам
+  byExpressionChange: string; // по варианту возрастного изменения экспрессии
 }

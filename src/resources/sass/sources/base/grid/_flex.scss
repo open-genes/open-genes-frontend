@@ -1,112 +1,38 @@
-// Флексбокс
-.#{$prefix}container.__#{$prefix}flex {
-  @include display(flex);
-  flex-flow: row wrap;
+.__#{$prefix}align-items-flex-start {
   align-items: flex-start;
-  justify-content: space-between;
+}
 
-  .__#{$prefix}top {
-    align-items: flex-start;
-  }
-  .__#{$prefix}middle {
-    align-items: center;
-  }
-  .__#{$prefix}bottom {
-    align-items: flex-end;
-  }
+.__#{$prefix}align-items-center{
+  align-items: center;
+}
 
-  // Проценты
-  & > .#{$prefix}per {
-    flex-basis: auto;
-    flex-grow: 1;
-    flex-shrink: 1;
-  }
+.__#{$prefix}align-items-flex-end {
+  align-items: flex-end;
+}
 
-  @for $i from 1 through 100 {
-    & > .#{$prefix}per-#{$i} {
+.__#{$prefix}align-self-flex-start {
+  align-self: flex-start;
+}
+
+.__#{$prefix}align-self-center{
+  align-self: center;
+}
+
+.__#{$prefix}align-self-flex-end {
+  align-self: flex-end;
+}
+
+@include resolution_tablet-and-up {
+  .#{$prefix}per,
+  .#{$prefix}col {
+    &.__#{$prefix}flex-auto {
       width: unset;
-      flex-basis: 1%*$i;
+      flex-grow: 1;
+      flex-shrink: 1;
     }
-  }
 
-  // Колонки
-  @include resolution_widescreen {
-    .#{$prefix}col {
-      @for $i from 1 through 16 {
-        &.#{$prefix}col-#{$i} {
-          width: unset;
-          flex-basis: ($widescreen / 16) * $i;
-        }
-      }
-    }
-  }
-
-  @include resolution_desktop {
-    .#{$prefix}col {
-      @for $i from 1 through 16 {
-        &.#{$prefix}col-#{$i} {
-          width: unset;
-          flex-basis: ($desktop / 16) * $i;
-        }
-      }
-    }
-  }
-
-  @include resolution_tablet {
-    .#{$prefix}col {
-      &.__#{$prefix}preserve-width {
-        @for $i from 1 through 16 {
-          &.#{$prefix}col-#{$i} {
-            width: unset;
-            flex-basis: ($tablet / 16) * $i;
-          }
-        }
-      }
-
-      &:not(.__#{$prefix}preserve-width) {
-        @for $i from 1 through 16 {
-          &.#{$prefix}col-#{$i} {
-            width: $tablet;
-          }
-        }
-      }
-    }
-  }
-
-  @include resolution_phablet {
-    .#{$prefix}col {
-      @for $i from 1 through 16 {
-        &.#{$prefix}col-#{$i} {
-          width: $phablet - 20px;
-        }
-      }
-    }
-  }
-
-  @include resolution_phone {
-    .#{$prefix}col {
-      @for $i from 1 through 16 {
-        &.#{$prefix}col-#{$i} {
-          width: $smartphone - 20px;
-        }
-      }
-    }
-  }
-
-  @include resolution_tablet-and-up {
-    .#{$prefix}per,
-    .#{$prefix}col {
-      // занимает все свободное пространство по соседству с блоком с фиксированной шириной или .__#{$prefix}not-flex
-      &.__#{$prefix}flex-auto {
-        width: unset;
-        flex-grow: 1;
-        flex-shrink: 1;
-      }
-
-      // Отменяет флексбокс
-      &.__#{$prefix}not-flex {
-        flex: none;
-      }
+    &.__#{$prefix}not-flex {
+      flex: none;
     }
   }
 }

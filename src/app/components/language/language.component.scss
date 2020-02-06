@@ -4,18 +4,21 @@
   display: inline-block;
 }
 
+$language-switcher-size: 20px;
+
 .language-switcher {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-color: #fff;
-  font-size: 12px;
-  color: $color-indent;
-  font-weight: $font-weight-medium;
-  text-transform: uppercase;
-  text-align: center;
-  line-height: 20px;
-  border-radius: 3px;
-  cursor: pointer;
+  &__inner {
+    display: inline-block;
+    width: $language-switcher-size;
+    height: $language-switcher-size;
+    line-height: $language-switcher-size;
+    background-color: #fff;
+    font-size: 12px;
+    color: currentColor;
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 3px;
+  }
 }
 

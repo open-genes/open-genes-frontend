@@ -1,18 +1,8 @@
-@import "../styles";
+@import "../../components/styles";
 
 :host {
   display: block;
   width: 100%;
-}
-
-.search-backdrop {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: transparent;
-  z-index: 1;
 }
 
 ::ng-deep mark.text-highlight { // being generated dynamically
@@ -26,7 +16,12 @@
 }
 
 .search-form {
-  input[type='text'] {
+  &__field-wrapper {
+    display: block;
+    width: 100%
+  }
+
+  &__search { // input
     font-size: 16px;
     display: block;
     width: 100%;
@@ -37,40 +32,7 @@
     font-weight: $font-weight-medium;
     color: $color-black;
     background-color: #fff;
-    text-overflow: ellipsis;
-
-    &::-ms-clear {
-      display: none !important; // скрываем иконку очистки поля на IE/Edge
-    }
-
-    $prefixed-selectors: (
-      '::placeholder',
-      '::-webkit-input-placeholder',
-      '::-moz-placeholder',
-      ':-moz-placeholder',
-      ':-ms-input-placeholder'
-    );
-
-    @mixin placeholder-color() {
-      @each $prefixed-selector in $prefixed-selectors {
-        &#{$prefixed-selector} {
-          @content;
-        }
-      }
-    }
-
-    @include placeholder-color {
-      color: $color-gray-halfing;
-    }
-
-    &:focus {
-      border-color: $color-borders-active;
-      @include placeholder-color {
-        color: transparent;
-      }
-    }
   }
-
 
   &__autocomplete-list {
     position: absolute;
@@ -145,12 +107,11 @@
       top: 0;
       right: 0;
       left: 0;
-      max-height: 60%;
-      min-height: 180px;
+      height: 60px;
       margin: 0;
       background-color: #fff;
       padding: 10px;
-      z-index: 100;
+      z-index: 101;
       box-shadow: 0 5px 5px 0 rgba($color-black, .15);
 
       .cancel-search-button {
@@ -164,6 +125,21 @@
     }
   }
 }
+
+.search-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  z-index: 1;
+
+  @include resolution_smartphone-and-tablet {
+    z-index: 100;
+  }
+}
+
 
 
 

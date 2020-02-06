@@ -4,43 +4,43 @@
     <div class="filters-group view-panel__filters">
       <button class="filter name-filter"
               (click)="getGenes('name')"
-              [class.__active]="filters.name"
+              [class.__active]="filters.byName"
       >
         {{ 'main_page_table_name' | translate }}
         <span class="fa far fa-sort-down"></span>
       </button>
 
       <button class="filter age-filter"
-              (click)="getGenes('ageMya')"
-              [class.__active]="filters.ageMya"
+              (click)="getGenes('age')"
+              [class.__active]="filters.byAge"
       >
         {{ 'age' | translate }} ({{ 'million_years' | translate }})
         <span class="fa far fa-sort-down"></span>
       </button>
 
       <button
-        *ngIf="filters.cluster.length > 0"
+        *ngIf="filters.byClasses.length > 0"
         class="filter __active functional-classes-filter"
-        (click)="clearFilters('cluster')"
+        (click)="clearFilters('classes')"
       >
         {{ 'functional_classes' | translate }}
         <span class="fa fal fa-times"></span>
       </button>
 
       <button
-        *ngIf="filters.expression"
+        *ngIf="filters.byExpressionChange"
         class="filter __active expression-change-filter"
-        (click)="clearFilters('expression')"
+        (click)="clearFilters('expressionChange')"
       >
         {{ 'main_page_table_expression' | translate }}
         <span class="fa fal fa-times"></span>
       </button>
 
-      <button class="btn btn--small btn-purple btn--icon-only"
+      <button class="btn btn--small btn-purple"
               (click)="clearFilters('all')"
-              *ngIf="(filters.name || filters.ageMya || filters.expression || filters.cluster.length > 0)"
+              *ngIf="(filters.byName && filters.byAge || filters.byExpressionChange || filters.byClasses.length > 0)"
       >
-        <span class="fa fal fa-times"></span>
+        <span class="fa fal fa-filter"></span> {{ 'filters_reset' | translate }}
       </button>
     </div>
 
@@ -76,16 +76,7 @@
           <b>{{ 'main_page_table_expression' | translate }}</b>
         </div>
       </div>
-      <div class="th">
-        <div class="th__title">
-          <b>{{ 'diseases' | translate }}</b>
-        </div>
-      </div>
-      <div class="th">
-        <div class="th__title">
-          <b>{{ 'main_page_table_interactions' | translate }}</b>
-        </div>
-      </div>
+      <div class="th"></div>
     </div>
 
     <div class="tbody">
@@ -100,8 +91,8 @@
           </div>
         </div>
         <div class="td cell td-age-mya">
-          <b>{{data.agePhylo}}</b><br>
-          {{data.ageMya}} {{ 'million_years' | translate }}
+          <b>{{data.origin.phylum}}</b><br>
+          {{data.origin.age}} {{ 'million_years' | translate }}
         </div>
         <div class="td cell td-clusters">
           <span class="td__label" *ngIf="data.functionalClusters">
@@ -110,7 +101,7 @@
           <span class="tag"
                 *ngFor="let item of data.functionalClusters"
                 (click)="filterByFuncClusters(item['id'])"
-                [class.__active]="filters.cluster.includes(item['id'])"
+                [class.__active]="filters.byClasses.includes(item['id'])"
           >
             <div class="tag__inner">{{item["name"]}}</div>
           </span>
@@ -122,20 +113,36 @@
           <span class="tag"
                 *ngIf="data.expressionChange"
                 (click)="filterByExpressionChange(data.expressionChange)"
-                [class.__active]="filters.expression === data.expressionChange"
+                [class.__active]="filters.byExpressionChange === data.expressionChange"
           >
             <div class="tag__inner">{{data.expressionChange}}</div>
           </span>
         </div>
-        <div class="td cell __text-right td-external">
-          <a href="http://disgenet.org/browser/1/1/0/{{data.entrezGene}}/"
-             target="_blank"
-             class="badge badge--disgenet">DisGenet</a>
-        </div>
-        <div class="td cell __text-right td-external">
-          <a href="https://thebiogrid.org/search.php?search={{data.symbol}}&organism=9606/"
-             target="_blank"
-             class="badge badge--biogrid">BioGrid</a>
+        <div class="td td-actions">
+          <button mat-icon-button
+                  class="td-actions__menu"
+                  [matMenuTriggerFor]="geneListItemMenu"
+                  aria-label="Меню гена в списке"
+          >
+            <mat-icon>
+              <span class="fa far fa-ellipsis-v"></span>
+            </mat-icon>
+          </button>
+          <mat-menu #geneListItemMenu>
+            <a mat-menu-item
+               href="http://disgenet.org/browser/1/1/0/{{data.entrezGene}}/"
+               target="_blank">
+              <span class="legend __brand-color-disgenet"></span>
+              DisGenet
+            </a>
+
+            <a mat-menu-item
+               href="https://thebiogrid.org/search.php?search={{data.symbol}}&organism=9606/"
+               target="_blank">
+              <span class="legend __brand-color-biogrid"></span>
+              BioGrid
+            </a>
+          </mat-menu>
         </div>
       </div>
     </div>
