@@ -16,6 +16,17 @@
 }
 
 .search-form {
+  margin-bottom: 10px;
+
+  &,
+  &__panel {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+  }
+
   &__field-wrapper {
     display: block;
     width: 100%
@@ -92,35 +103,32 @@
     }
   }
 
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  position: relative;
-  width: 100%;
-  margin-bottom: 10px;
-
-
   // TODO: сделать без переопределений
+  @include resolution_smartphone-and-tablet {
   &--active {
-    @include resolution_smartphone-and-tablet {
-      position: fixed;
-      top: 0;
-      right: 0;
-      left: 0;
-      height: 60px;
-      margin: 0;
-      background-color: #fff;
-      padding: 10px;
-      z-index: 101;
-      box-shadow: 0 5px 5px 0 rgba($color-black, .15);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 60px;
+    margin: 0;
+    background-color: #fff;
+    z-index: 101;
+    box-shadow: 0 5px 5px 0 rgba($color-black, .15);
 
-      .cancel-search-button {
-        display: inline-flex;
-      }
+    .search-form__panel {
 
-      .search-form__autocomplete-list {
-        top: 50px;
-        border: 0;
+        padding: 10px;
+        z-index: 1;
+
+        .cancel-search-button {
+          display: inline-flex;
+        }
+
+        .search-form__autocomplete-list {
+          top: 50px;
+          border: 0;
+        }
       }
     }
   }
@@ -136,7 +144,7 @@
   z-index: 1;
 
   @include resolution_smartphone-and-tablet {
-    z-index: 100;
+    z-index: 0;
   }
 }
 
