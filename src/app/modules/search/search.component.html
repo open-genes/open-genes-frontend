@@ -7,44 +7,46 @@
        (click)="cancelSearch($event)"
   ></div>
 
-  <button
-    (click)="cancelSearch($event)"
-    class="btn btn-purple btn--icon-only cancel-search-button">
-    <span class="fa fal fa-arrow-left"></span>
-  </button>
+  <div class="search-form__panel">
+    <button
+      (click)="cancelSearch($event)"
+      class="btn btn-purple btn--icon-only cancel-search-button">
+      <span class="fa fal fa-arrow-left"></span>
+    </button>
 
-  <div class="search-form__field-wrapper">
-    <input formControlName="searchField"
-           type="text"
-           placeholder="{{ 'search' | translate }}"
-           class="field search-form__search"
-           required
-           #searchQuery
-           (focusin)="search()"
-    >
-  </div>
-
-  <div class="search-form__autocomplete-list"
-       *ngIf="showResult">
-    <ng-container *ngFor="let data of searchedData; let i = index">
-      <button
-        *ngIf="i < 3"
-        class="search-form__autocomplete-item"
-        tabindex="0"
-        [routerLink]="['/gene', data.id]"
+    <div class="search-form__field-wrapper">
+      <input formControlName="searchField"
+             type="text"
+             placeholder="{{ 'search' | translate }}"
+             class="field search-form__search"
+             required
+             #searchQuery
+             (focusin)="search()"
       >
-        <span class="item__symbol"
-              appHighlight
-              [highlightText]="searchQuery.value"
-              [innerHTML]="data.symbol">
-        </span>&nbsp;
-        <span class="item__name"
-              appHighlight
-              [highlightText]="searchQuery.value"
-              [innerHTML]="data.name">
-        </span>
-      </button>
-    </ng-container>
+    </div>
+
+    <div class="search-form__autocomplete-list"
+         *ngIf="showResult">
+      <ng-container *ngFor="let data of searchedData; let i = index">
+        <button
+          *ngIf="i < 3"
+          class="search-form__autocomplete-item"
+          tabindex="0"
+          [routerLink]="['/gene', data.id]"
+        >
+          <span class="item__symbol"
+                appHighlight
+                [highlightText]="searchQuery.value"
+                [innerHTML]="data.symbol">
+          </span>&nbsp;
+          <span class="item__name"
+                appHighlight
+                [highlightText]="searchQuery.value"
+                [innerHTML]="data.name">
+          </span>
+        </button>
+      </ng-container>
+    </div>
   </div>
 </form>
 

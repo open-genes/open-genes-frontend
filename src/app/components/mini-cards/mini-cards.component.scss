@@ -26,21 +26,6 @@ mat-card {
     padding: 5px;
     align-self: stretch;
 
-    @include resolution_widescreen {
-      flex: 50% 0 0;
-      font-size: 20px;
-    }
-
-    @include resolution_tablet-and-desktop {
-      flex: 25% 0 0;
-      font-size: 16px;
-    }
-
-    @include resolution_smartphone {
-      flex: 50% 0 0;
-      font-size: 16px;
-    }
-
     .card__inner {
       height: 100%;
       border-radius: 10px;
@@ -59,6 +44,26 @@ mat-card {
         width: 100%;
         font-size: .8rem;
       }
+    }
+
+    @include resolution_widescreen {
+      flex: 50% 0 0;
+      font-size: 20px;
+      min-height: 90px;
+
+      .card__mya {
+        display: none;
+      }
+    }
+
+    @include resolution_tablet-and-desktop {
+      flex: 25% 0 0;
+      font-size: 16px;
+    }
+
+    @include resolution_smartphone {
+      flex: 50% 0 0;
+      font-size: 16px;
     }
 
     &:first-child {
