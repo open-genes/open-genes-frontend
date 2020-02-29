@@ -130,10 +130,9 @@
           </div>
         </div>
       </div>
-
     </section>
 
-    <div class="wrapper gene-page__articles">
+    <section class="wrapper gene-page__articles">
       <div class="container">
         <div class="col col-16 page__title">
           <h1>{{ 'gene_page_title_description' | translate }}</h1>
@@ -161,46 +160,6 @@
                     gene.commentCause ||
                     gene.commentAging ||
                     gene.commentsReferenceLinks; else noContent">
-
-          <mat-expansion-panel class="contents-list  __mt-10">
-            <mat-expansion-panel-header>
-              <mat-panel-title>{{ 'gene_page_title_contents' | translate }}</mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <mat-nav-list>
-              <a mat-list-item
-                 *ngIf="gene.commentEvolution"
-                 [routerLink]="['/gene', id]" fragment="evolution">
-                {{ 'gene_page_title_evolution' | translate }}
-              </a>
-
-              <a mat-list-item
-                 *ngIf="gene.commentFunction"
-                 [routerLink]="['/gene', id]" fragment="function">
-                {{ 'gene_page_title_function' | translate }}
-              </a>
-
-              <a mat-list-item
-                 *ngIf="gene.commentCause"
-                 [routerLink]="['/gene', id]" fragment="cause">
-                {{ 'gene_page_title_criteria' | translate }}
-              </a>
-
-              <a mat-list-item
-                 *ngIf="gene.commentAging"
-                 [routerLink]="['/gene', id]" fragment="aging">
-                {{ 'gene_page_title_aging' | translate }}
-              </a>
-
-              <a mat-list-item
-                 *ngIf="gene.commentsReferenceLinks"
-                 [routerLink]="['/gene', id]" fragment="reference">
-                {{ 'gene_page_title_reference' | translate }}
-              </a>
-            </mat-nav-list>
-
-          </mat-expansion-panel>
-
 
           <ng-container *ngIf="gene.commentEvolution">
             <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
@@ -258,7 +217,7 @@
           </section>
         </ng-template>
       </div>
-    </div>
+    </section>
 
     <section class="wrapper gene-page__expression" *ngIf="gene.expression.length !== 0">
       <div class="container">
