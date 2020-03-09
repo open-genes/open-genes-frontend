@@ -27,6 +27,7 @@
   "gene_page_cytogenetic_band" : "Cytogenetic band",
   "gene_page_location_start": "Location start",
   "gene_page_location_end": "Location end",
+  "gene_page_orientation": "Orientation",
   "gene_page_title_contents" : "Contents",
   "gene_page_title_evolution" : "Evolution",
   "gene_page_title_function" : "Function",

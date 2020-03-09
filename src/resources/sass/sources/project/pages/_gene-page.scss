@@ -307,12 +307,17 @@
 }
 
 .gene-page {
+  $fixed-header-height: (130px + 20px);
   @include resolution_desktop-and-up {
-    padding-top: (130px + 20px);
+    padding-top: $fixed-header-height;
     .gene-page__header {
       position: fixed;
-      top: 50px;
+      top: $header-height;
       z-index: 50; // между хедером и контентом
+    }
+
+    .sidebar {
+      top: $fixed-header-height + $header-height;
     }
   }
   @include resolution_smartphone-and-tablet {
