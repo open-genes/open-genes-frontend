@@ -17,6 +17,15 @@ export interface Genes {
   origin: Origin;
 }
 
+export interface Researches {
+  increaseLifespan: any; // TODO: бэк не должен возвращать null
+  geneAssociatedWithProgeriaSyndromes: any;
+  geneAssociatedWithLongevityEffects: any;
+  ageRelatedChangesOfGene: any;
+  interventionToGeneImprovesVitalProcesses: any;
+  proteinRegulatesOtherGenes: any;
+}
+
 export interface Gene {
   id: number;
   symbol: string;
@@ -43,8 +52,10 @@ export interface Gene {
   commentEvolutionEN: string;
   commentFunctionEN: string;
   commentAgingEN: string;
+  researches: Researches;
   expression: Array<any>;
   expressionEN: string;
+  proteinClasses: string[];
   commentsReferenceLinks: any;
   rating: any;
 }

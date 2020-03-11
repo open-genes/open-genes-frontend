@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {ApiService} from '../../core/services/api.service';
+import {Gene} from '../../core/models';
 
 @Component({
   selector: 'app-gene',
@@ -12,7 +13,7 @@ import {ApiService} from '../../core/services/api.service';
 export class GeneComponent implements OnInit {
   public id: number;
   private subscription: Subscription;
-  public gene: any;
+  public gene: Gene;
 
   constructor(private activateRoute: ActivatedRoute,
               private apiService: ApiService) {
