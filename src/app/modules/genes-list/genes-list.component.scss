@@ -86,6 +86,13 @@ $columns-quantity: 4;
           }
         }
       }
+
+      // TODO: временный костыль
+      .tag[name="не изменяется"],
+      .tag[name="not set"] {
+        pointer-events: none;
+        opacity: .5;
+      }
     }
   }
 

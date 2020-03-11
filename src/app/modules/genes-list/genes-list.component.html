@@ -98,25 +98,26 @@
           <span class="td__label" *ngIf="data.functionalClusters">
             {{ 'functional_classes' | translate }}
           </span>
-          <span class="tag"
+          <button class="tag"
                 *ngFor="let item of data.functionalClusters"
                 (click)="filterByFuncClusters(item['id'])"
                 [class.__active]="filters.byClasses.includes(item['id'])"
           >
             <div class="tag__inner">{{item["name"]}}</div>
-          </span>
+          </button>
         </div>
         <div class="td cell td-expression">
           <span class="td__label" *ngIf="data.expressionChange">
             {{ 'main_page_table_expression' | translate }}
           </span>
-          <span class="tag"
+          <button class="tag"
                 *ngIf="data.expressionChange"
                 (click)="filterByExpressionChange(data.expressionChange)"
                 [class.__active]="filters.byExpressionChange === data.expressionChange"
+                name="{{data.expressionChange}}"
           >
             <div class="tag__inner">{{data.expressionChange}}</div>
-          </span>
+          </button>
         </div>
         <div class="td td-actions">
           <button mat-icon-button
