@@ -13,7 +13,7 @@ import {Gene} from '../../core/models';
 export class GeneComponent implements OnInit {
   public id: number;
   private subscription: Subscription;
-  public gene: Gene[];
+  public gene: Gene;
 
   constructor(private activateRoute: ActivatedRoute,
               private apiService: ApiService) {
@@ -24,9 +24,9 @@ export class GeneComponent implements OnInit {
     this.getGene();
   }
 
-  public getGene() {
-    this.apiService.getGeneById(this.id).subscribe((geneInterfaceObservable) => {
-      this.gene = geneInterfaceObservable;
+  private getGene() {
+    this.apiService.getGeneById(this.id).subscribe((geneInterface) => {
+      this.gene = geneInterface;
     });
   }
 }

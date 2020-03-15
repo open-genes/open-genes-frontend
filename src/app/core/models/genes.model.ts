@@ -1,3 +1,5 @@
+import {Researches} from './researches.model';
+
 export interface Origin {
   id: number;
   phylum: string;
@@ -15,15 +17,6 @@ export interface Genes {
   functionalClusters: string | string[];
   expressionChange: any;
   origin: Origin;
-}
-
-export interface Researches {
-  increaseLifespan: any; // TODO: бэк не должен возвращать null
-  geneAssociatedWithProgeriaSyndromes: any;
-  geneAssociatedWithLongevityEffects: any;
-  ageRelatedChangesOfGene: any;
-  interventionToGeneImprovesVitalProcesses: any;
-  proteinRegulatesOtherGenes: any;
 }
 
 export interface Gene {
