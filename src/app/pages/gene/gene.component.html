@@ -259,36 +259,213 @@
                     </article>
                   </ng-container>
 
+                  <h3>Исследования</h3>
+
                   <ng-container *ngIf="gene.researches.increaseLifespan">
-                    <h3>Исследования</h3>
+                    <h4>Gene intervention</h4>
+                    <div class="table-section __mb-20">
+                      <table class="table">
+                        <thead>
+                        <th> Intervention Result </th>
+                        <th> Model Organism </th>
+                        <th> Line </th>
+                        <th> Age </th>
+                        <th> <span class="fa fal fa-mars"></span> </th>
+                        <th> <span class="fa fal fa-venus"></span> </th>
+                        <th> <span class="fa fal fa-venus-mars"></span> </th>
+                        <th> Reference </th>
+                        <th> Comment </th>
+                        </thead>
 
-                    <ng-container *ngFor="let object of gene.researches.increaseLifespan; let i = index"
-                                    matColumnDef="object">
-
-
-<!--                      <th mat-header-cell *matHeaderCellDef> Intervention Result </th>-->
-<!--                      <th mat-header-cell *matHeaderCellDef> Model Organism </th>-->
-<!--                      <th mat-header-cell *matHeaderCellDef> Line </th>-->
-<!--                      <th mat-header-cell *matHeaderCellDef> Age </th>-->
-<!--                      <th mat-header-cell *matHeaderCellDef> Val. for male </th>-->
-<!--                      <th mat-header-cell *matHeaderCellDef> Val. for female </th>-->
-<!--                      <th mat-header-cell *matHeaderCellDef> Val. for both </th>-->
-<!--                      <th mat-header-cell *matHeaderCellDef> Reference </th>-->
-<!--                      <th mat-header-cell *matHeaderCellDef> Comment </th>-->
-
-                      <td mat-cell *matCellDef="let object"> {{ object.interventionResult }} </td>
-                      {{ object.modelOrganism }}
-                      {{ object.organismLine }}
-                      {{ object.age }}
-                      {{ object.valueForMale }}
-                      {{ object.valueForFemale }}
-                      {{ object.valueForAll }}
-                      {{ object.reference }}
-                      {{ object.comment }}
-
-                    </ng-container>
-
+                        <tr *ngFor="let object of gene.researches.increaseLifespan; let i = index">
+                          <td>
+                          {{ object.interventionResult }}
+                          </td>
+                          <td>
+                          {{ object.modelOrganism }}
+                          </td>
+                          <td>
+                          {{ object.organismLine }}
+                          </td>
+                          <td class="__nowrap">
+                          {{ object.age }}
+                          </td>
+                          <td class="__nowrap">
+                          {{ object.valueForMale }}
+                          </td>
+                          <td class="__nowrap">
+                          {{ object.valueForFemale }}
+                          </td>
+                          <td class="__nowrap">
+                          {{ object.valueForAll }}
+                          </td>
+                          <td>
+                          {{ object.reference }}
+                          </td>
+                          <td>
+                          {{ object.comment }}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
                   </ng-container>
+
+                  <ng-container *ngIf="gene.researches.geneAssociatedWithProgeriaSyndromes">
+                    <h4>Association with progeria syndrome</h4>
+                    <div class="table-section __mb-20">
+                      <table class="table">
+                        <thead>
+                        <th> Allelic polymorphism </th>
+                        <th> Reference </th>
+                        <th> Comment </th>
+                        </thead>
+
+                        <tr *ngFor="let object of gene.researches.geneAssociatedWithProgeriaSyndromes; let i = index">
+                          <td>
+                            {{ object.progeriaSyndrome }}
+                          </td>
+                          <td>
+                            {{ object.reference }}
+                          </td>
+                          <td>
+                            {{ object.comment }}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="gene.researches.geneAssociatedWithLongevityEffects">
+                    <h4>Association with longevity effects</h4>
+                    <div class="table-section __mb-20">
+                      <table class="table">
+                        <thead>
+                        <th> Longevity effect </th>
+                        <th> Allelic polymorphism </th>
+                        <th> Sex </th>
+                        <th> Reference </th>
+                        <th> Comment </th>
+                        </thead>
+
+                        <tr *ngFor="let object of gene.researches.geneAssociatedWithLongevityEffects; let i = index">
+                          <td>
+                            {{ object.longevityEffect }}
+                          </td>
+                          <td>
+                            {{ object.allelicPolymorphism }}
+                          </td>
+                          <td>
+                            {{ object.sex }}
+                          </td>
+                          <td>
+                            {{ object.reference }}
+                          </td>
+                          <td>
+                            {{ object.comment }}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="gene.researches.ageRelatedChangesOfGene">
+                    <h4>Association with age related changes</h4>
+                    <div class="table-section __mb-20">
+                      <table class="table">
+                        <thead>
+                        <th> Change type </th>
+                        <th> Sample </th>
+                        <th> Model organism </th>
+                        <th> Age (from—to) </th>
+                        <th> <span class="fa fal fa-mars"></span> </th>
+                        <th> <span class="fa fal fa-venus"></span> </th>
+                        <th> <span class="fa fal fa-venus-mars"></span> </th>
+                        <th> Reference </th>
+                        <th> Comment </th>
+                        </thead>
+
+                        <tr *ngFor="let object of gene.researches.ageRelatedChangesOfGene; let i = index">
+                          <td>
+                            {{ object.changeType }}
+                          </td>
+                          <td>
+                            {{ object.sample }}
+                          </td>
+                          <td>
+                            {{ object.modelOrganism }}
+                          </td>
+                          <td class="__nowrap">
+                            {{ object.ageFrom }}—{{ object.ageTo }}
+                          </td>
+                          <td class="__nowrap">
+                            {{ object.valueForMale }}
+                          </td>
+                          <td class="__nowrap">
+                            {{ object.valueForFemale }}
+                          </td>
+                          <td class="__nowrap">
+                            {{ object.valueForAll }}
+                          </td>
+                          <td>
+                            {{ object.reference }}
+                          </td>
+                          <td>
+                            {{ object.comment }}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="gene.researches.interventionToGeneImprovesVitalProcesses">
+                    <h4>intervention to gene improves vital processes</h4>
+                    <div class="table-section __mb-20">
+                      <table class="table">
+                        <thead>
+                        <th> Intervention </th>
+                        <th> Result </th>
+                        <th> Process </th>
+                        <th> Model organism </th>
+                        <th> Organism line </th>
+                        <th> Age</th>
+                        <th> Sex </th>
+                        <th> Reference </th>
+                        <th> Comment </th>
+                        </thead>
+
+                        <tr *ngFor="let object of gene.researches.interventionToGeneImprovesVitalProcesses; let i = index">
+                          <td>
+                            {{ object.geneIntervention }}
+                          </td>
+                          <td>
+                            {{ object.interventionResultForVitalProcess }}
+                          </td>
+                          <td>
+                            {{ object.vitalProcess }}
+                          </td>
+                          <td>
+                            {{ object.modelOrganism }}
+                          </td>
+                          <td>
+                            {{ object.organismLine }}
+                          </td>
+                          <td class="__nowrap">
+                            {{ object.age }}
+                          </td>
+                          <td class="__nowrap">
+                            {{ object.sex }}
+                          </td>
+                          <td>
+                            {{ object.reference }}
+                          </td>
+                          <td>
+                            {{ object.comment }}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </ng-container>
+
 
                   <ng-container *ngIf="gene.commentsReferenceLinks">
                     <article id="reference" class="js_article-reference">
