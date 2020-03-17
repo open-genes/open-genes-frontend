@@ -86,6 +86,12 @@
                    [routerLink]="['/gene', id]" fragment="reference">
                   {{ 'gene_page_title_reference' | translate }}
                 </a>
+
+                <a mat-list-item
+                   *ngIf="gene.researches"
+                   [routerLink]="['/gene', id]" fragment="researches">
+                  {{ 'gene_page_title_researches' | translate }}
+                </a>
               </mat-nav-list>
             </div>
           </div>
@@ -259,7 +265,9 @@
                     </article>
                   </ng-container>
 
-                  <h3>Исследования</h3>
+                  <h3 *ngIf="gene.researches"
+                      id="researches"
+                  >Исследования</h3>
 
                   <ng-container *ngIf="gene.researches.increaseLifespan">
                     <h4>Gene intervention</h4>

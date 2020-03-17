@@ -33,7 +33,7 @@
   }
   .#{$prefix}container {
     width: calc(100% - #{$gutter});
-    max-width: $desktop - ($gutter + .02px);
+    max-width: $desktop - $gutter;
   }
 }
 
@@ -45,7 +45,7 @@
   }
   .#{$prefix}container {
     width: calc(100% - #{$gutter});
-    max-width: $tablet - ($gutter + .02px);
+    max-width: $tablet - $gutter;
   }
 }
 
@@ -57,6 +57,6 @@
   }
   .#{$prefix}container {
     width: calc(100% - #{$gutter});
-    max-width: $phablet  - ($gutter + .02px);
+    max-width: $phablet  - $gutter;
   }
 }

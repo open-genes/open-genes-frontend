@@ -36,6 +36,7 @@
   "gene_page_title_aging" : "Доказательства ассоциации со старением/долголетием",
   "gene_page_title_expression" : "Экспрессия гена",
   "gene_page_title_reference" : "Ссылки",
+  "gene_page_title_researches": "Исследования",
   "gene_page_expression_hint" : "Предоставлено NCBI.",
   "gene_page_error_no_article_yet" : "Статья для этого гена пока не готова.",
   "gene_page_origin_unknown" : "Неизвестно",
