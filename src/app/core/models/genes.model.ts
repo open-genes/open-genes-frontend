@@ -1,11 +1,6 @@
 import {Researches} from './researches.model';
-
-export interface Origin {
-  id: number;
-  phylum: string;
-  age: string;
-  order: number;
-}
+import {Origin} from './origin.model';
+import {Terms} from './gene-ontology.model';
 
 export interface Genes {
   id: number;
@@ -49,6 +44,7 @@ export interface Gene {
   expression: Array<any>;
   expressionEN: string;
   proteinClasses: string[];
+  terms: Terms;
   commentsReferenceLinks: any;
   rating: any;
 }

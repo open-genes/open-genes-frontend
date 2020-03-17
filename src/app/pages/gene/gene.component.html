@@ -92,6 +92,15 @@
                    [routerLink]="['/gene', id]" fragment="researches">
                   {{ 'gene_page_title_researches' | translate }}
                 </a>
+
+                <a mat-list-item
+                   *ngIf="
+                    gene.terms.biological_process.length >= 1 ||
+                    gene.terms.cellular_component.length >= 1 ||
+                    gene.terms.molecular_activity.length >= 1"
+                   [routerLink]="['/gene', id]" fragment="terms">
+                  Gene Ontology
+                </a>
               </mat-nav-list>
             </div>
           </div>
@@ -265,7 +274,7 @@
                     </article>
                   </ng-container>
 
-                  <h3 *ngIf="gene.researches"
+                  <h3 *ngIf="gene.researches.increaseLifespan !== null"
                       id="researches"
                   >Исследования</h3>
 
@@ -474,6 +483,71 @@
                     </div>
                   </ng-container>
 
+                  <section
+                    *ngIf="
+                    gene.terms.biological_process.length >= 1 ||
+                    gene.terms.cellular_component.length >= 1 ||
+                    gene.terms.molecular_activity.length >= 1"
+                    id="terms">
+                    <mat-tab-group>
+                      <mat-tab
+                        *ngIf="gene.terms.biological_process.length >= 1"
+                        label="Biological process"
+                      >
+                        <h3 class="__mt-20">Gene Ontology: Biological process</h3>
+
+                        <article>
+                          <ul class="list list--bulletted">
+                            <li *ngFor="let term of gene.terms.biological_process">
+                              <ng-container *ngFor="let Object of term | keyvalue">
+                                <ng-container *ngFor="let object of Object | toArray">
+                                  {{ object }}
+                                </ng-container>
+                              </ng-container>
+                            </li>
+                          </ul>
+                        </article>
+                      </mat-tab>
+
+                      <mat-tab
+                        *ngIf="gene.terms.cellular_component.length >= 1"
+                        label="Cellular component"
+                      >
+                        <h3 class="__mt-20">Gene Ontology: Cellular component</h3>
+
+                        <article>
+                          <ul class="list list--bulletted">
+                            <li *ngFor="let term of gene.terms.cellular_component">
+                              <ng-container *ngFor="let Object of term | keyvalue">
+                                <ng-container *ngFor="let object of Object | toArray">
+                                  {{ object }}
+                                </ng-container>
+                              </ng-container>
+                            </li>
+                          </ul>
+                        </article>
+                      </mat-tab>
+
+                      <mat-tab
+                        *ngIf="gene.terms.molecular_activity.length >= 1"
+                        label="Molecular activity"
+                      >
+                        <h3 class="__mt-20">Gene Ontology: Molecular activity</h3>
+
+                        <article>
+                          <ul class="list list--bulletted">
+                            <li *ngFor="let term of gene.terms.molecular_activity">
+                              <ng-container *ngFor="let Object of term | keyvalue">
+                                <ng-container *ngFor="let object of Object | toArray">
+                                  {{ object }}
+                                </ng-container>
+                              </ng-container>
+                            </li>
+                          </ul>
+                        </article>
+                      </mat-tab>
+                    </mat-tab-group>
+                  </section>
 
                   <ng-container *ngIf="gene.commentsReferenceLinks">
                     <article id="reference" class="js_article-reference">
@@ -484,7 +558,6 @@
                              class="reference-link"
                              [innerHTML]="item.value | safe: 'html'"
                           ></a>
-
                         </li>
                       </ul>
                     </article>
