@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit {
     if (fc.length > 0) {
       this.apiService.getGenesByFunctionalClusters(fc).subscribe((genes) => {
         this.genes = genes;
-      });
+      }, error => this.error = error);
     } else {
       this.getGenes();
     }
@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit {
       }
       this.apiService.getGenesByExpressionChange(expression).subscribe(genes => {
         this.genes = genes;
-      });
+      }, error => this.error = error);
     } else {
       this.getGenes();
     }

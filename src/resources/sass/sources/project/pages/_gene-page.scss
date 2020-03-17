@@ -213,9 +213,32 @@
       margin-bottom: 0.8ex;
     }
 
+    h4 {
+      width: 100%;
+      font-size: calc(0.2vw + 12px);
+      color: $color-indent;
+      font-weight: $font-weight-medium;
+      margin-bottom: 0.8ex;
+    }
+
     article + article,
     article + h3 {
       margin-top: 30px;
+    }
+
+    .table-section {
+      @include resolution_desktop-and-up {
+        max-width: 960px;
+      }
+      @include resolution_tablet {
+        max-width: 748px;
+      }
+      @include resolution_phablet {
+        max-width: 460px;
+      }
+      @include resolution_smartphone {
+        max-width: 320px;
+      }
     }
 
     .reference-list {
@@ -307,12 +330,17 @@
 }
 
 .gene-page {
+  $fixed-header-height: (130px + 20px);
   @include resolution_desktop-and-up {
-    padding-top: (130px + 20px);
+    padding-top: $fixed-header-height;
     .gene-page__header {
       position: fixed;
-      top: 50px;
+      top: $header-height;
       z-index: 50; // между хедером и контентом
+    }
+
+    .sidebar {
+      top: $fixed-header-height + $header-height;
     }
   }
   @include resolution_smartphone-and-tablet {

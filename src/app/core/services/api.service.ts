@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Genes} from '../models';
+import {Gene, Genes} from '../models';
 import {environment} from '../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -19,10 +19,6 @@ export class ApiService {
     return this.http.get<Genes[]>(`${this.url}/api?lang=${this.translate.currentLang}`);
   }
 
-  getGeneById(id: number): Observable<Genes> {
-    return this.http.get<Genes>(`${this.url}/api/gene/${id}?lang=${this.translate.currentLang}`);
-  }
-
   getLastEditedGene(): Observable<Genes[]> {
     return this.http.get<Genes[]>(`${this.url}/api/latest`);
   }
@@ -33,5 +29,9 @@ export class ApiService {
 
   getGenesByExpressionChange(expression: string): Observable<Genes[]> {
     return this.http.get<Genes[]>(`${this.url}/api/by-expression-change/${expression}?lang=${this.translate.currentLang}`);
+  }
+
+  getGeneById(id: number): Observable<Gene[]> {
+    return this.http.get<Gene[]>(`${this.url}/api/gene/${id}?lang=${this.translate.currentLang}`);
   }
 }

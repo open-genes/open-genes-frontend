@@ -24,7 +24,11 @@
 
   @include resolution_all-but-widescreen {
     flex: 0 0 100%;
-    order: 2;
+    margin-bottom: 20px;
+
+    &--mb-btm {
+      order: 2;
+    }
   }
 }
 

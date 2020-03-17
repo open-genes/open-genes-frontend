@@ -1,3 +1,7 @@
+import {Researches} from './researches.model';
+import {Origin} from './origin.model';
+import {Terms} from './gene-ontology.model';
+
 export interface Genes {
   id: number;
   symbol: string;
@@ -5,6 +9,20 @@ export interface Genes {
   name: string;
   entrezGene: number;
   uniprot: string;
+  functionalClusters: string | string[];
+  expressionChange: any;
+  origin: Origin;
+}
+
+export interface Gene {
+  id: number;
+  symbol: string;
+  aliases: string[];
+  name: string;
+  entrezGene: number;
+  uniprot: string;
+  functionalClusters: string | string[];
+  origin: Origin;
   why: string;
   band: string;
   locationStart: number;
@@ -22,20 +40,12 @@ export interface Genes {
   commentEvolutionEN: string;
   commentFunctionEN: string;
   commentAgingEN: string;
-  commentsReferenceLinks: string;
-  rating: any;
-  functionalClusters: string | string[];
-  dateAdded: number;
-  userEdited: string;
+  researches: Researches;
   expression: Array<any>;
   expressionEN: string;
-  expressionChange: any;
-  origin: Origin;
+  proteinClasses: string[];
+  terms: Terms;
+  commentsReferenceLinks: any;
+  rating: any;
 }
 
-export interface Origin {
-  id: number;
-  phylum: string;
-  age: string;
-  order: number;
-}
