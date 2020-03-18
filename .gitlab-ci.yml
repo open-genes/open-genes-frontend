@@ -8,11 +8,6 @@ variables:
   PROJECT_STAGE_NAME: open-genes-stage
   PROJECT_NAME: open-genes
 
-cache:
-  key: ${CI_JOB_NAME}
-  paths:
-    - node_modules/
-
 build-dev:
   stage: build
   image: alexsuch/angular-cli:7.3.8
@@ -117,5 +112,4 @@ deploy-prod:
     - mkdir ~/.ssh
     - echo ${DROPLET_KEY} | base64 -d > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
-  cache: {}
   when: manual
