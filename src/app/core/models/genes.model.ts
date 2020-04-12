@@ -12,6 +12,7 @@ export interface Genes {
   functionalClusters: string | string[];
   expressionChange: any;
   origin: Origin;
+  homologueTaxon: string;
 }
 
 export interface Gene {
@@ -23,6 +24,7 @@ export interface Gene {
   uniprot: string;
   functionalClusters: string | string[];
   origin: Origin;
+  homologueTaxon: string;
   why: string;
   band: string;
   locationStart: number;

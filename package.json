@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build-staging": "ng build --configuration=staging",
-    "build-prod": "ng build --prod",
+    "build-prod": "ng build --prod --output-hashing=all",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
