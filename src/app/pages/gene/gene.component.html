@@ -108,10 +108,7 @@
           <div class="per content">
             <div class="page-wrapper">
               <section class="wrapper gene-page__age">
-                <div class="__w-100 page__title">
-                  <h1>{{ 'age' | translate }}</h1>
-                </div>
-                <div class="__w-100">
+                <div class="__w-100 __mb-30">
                   <div class="flex-subcontainer age__types">
                     <div class="col age__type age__phylogeny">
                       <div class="type__inner">
@@ -119,7 +116,11 @@
                           {{ 'phylogeny' | translate }}
                         </div>
                         <div class="type__value">
-                          {{ gene.origin.phylum || ('gene_page_origin_unknown' | translate) }}
+                          {{ gene.origin.phylum || ('gene_page_no_data' | translate) }}
+                        </div>
+                        <div class="type__value">
+                          {{ gene.origin.age || ('age_unknown' | translate) }}
+                          <small>{{ 'million_years' | translate }}</small>
                         </div>
                       </div>
                     </div>
@@ -127,11 +128,10 @@
                     <div class="col age__type age__years">
                       <div class="type__inner">
                         <div class="type__title">
-                          {{ 'age' | translate }}
+                          {{ 'ncbi_homologs' | translate }}
                         </div>
                         <div class="type__value">
-                          {{ gene.origin.age || ('age_unknown' | translate) }}
-                          <small>{{ 'million_years' | translate }}</small>
+                          {{ gene.homologueTaxon || ('gene_page_no_data' | translate) }}
                         </div>
                       </div>
                     </div>
@@ -488,7 +488,12 @@
                     gene.terms.biological_process.length >= 1 ||
                     gene.terms.cellular_component.length >= 1 ||
                     gene.terms.molecular_activity.length >= 1"
-                    id="terms">
+                    id="terms"
+                    class="__mt-20"
+                  >
+
+                    <h4>Gene Ontology</h4>
+
                     <mat-tab-group>
                       <mat-tab
                         *ngIf="gene.terms.biological_process.length >= 1"

@@ -63,12 +63,12 @@
       .age__type {
         display: flex;
         flex-flow: row wrap;
-        align-items: flex-start;
+        align-items: stretch;
         flex-grow: 0 !important;
 
         .type__inner {
           width: 100%;
-          height: 100px;
+          min-height: 100px;
           padding: 10px;
           border: 1px solid $color-borders;
           border-radius: $border-radius-medium;

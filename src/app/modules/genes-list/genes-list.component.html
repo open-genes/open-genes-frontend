@@ -68,6 +68,11 @@
       </div>
       <div class="th">
         <div class="th__title">
+          <b>{{ 'ncbi_homologs' | translate }}</b>
+      </div>
+      </div>
+      <div class="th">
+        <div class="th__title">
           <b>{{ 'functional_classes' | translate }}</b>
         </div>
       </div>
@@ -86,13 +91,14 @@
             <a [routerLink]="['/gene', data.id]" class="link link--gray">
               <b>{{data.symbol}}</b> {{data.name}}
             </a>
-            <a href="https://genomics.senescence.info/genes/entry.php?hgnc={{data.symbol}}"
-               title="Этот ген на GeneAge" class="alias alias--small">{{data.id}}</a>
           </div>
         </div>
         <div class="td cell td-age-mya">
           <b>{{data.origin.phylum}}</b><br>
           {{data.origin.age}} {{ 'million_years' | translate }}
+        </div>
+        <div class="td cell td-age-homologs">
+          <b>{{data.homologueTaxon}}</b>
         </div>
         <div class="td cell td-clusters">
           <span class="td__label" *ngIf="data.functionalClusters">
@@ -142,6 +148,12 @@
                target="_blank">
               <span class="legend __brand-color-biogrid"></span>
               BioGrid
+            </a>
+
+            <a mat-menu-item
+              href="https://genomics.senescence.info/genes/entry.php?hgnc={{data.symbol}}">
+              <span class="legend __brand-color-geneage"></span>
+              GeneAge
             </a>
           </mat-menu>
         </div>
