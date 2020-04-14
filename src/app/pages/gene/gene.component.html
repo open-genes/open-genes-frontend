@@ -272,19 +272,19 @@
                   </ng-container>
 
                   <ng-container *ngIf="gene.researches.increaseLifespan" class="__mt-30">
-                    <h3>Gene intervention</h3>
+                    <h3>{{ "gene_page_researches_gene_intervention" | translate }}</h3>
                     <div class="table-section __mb-20">
                       <table class="table">
                         <thead>
-                        <th> Intervention Result</th>
-                        <th> Model Organism</th>
-                        <th> Line</th>
-                        <th> Age</th>
+                        <th>{{ "gene_intervention_result" | translate }}</th>
+                        <th>{{ "researches_model_organism" | translate }}</th>
+                        <th>{{ "researches_model_line" | translate }}</th>
+                        <th>{{ "researches_model_age" | translate }}</th>
                         <th><span class="fa fal fa-mars"></span></th>
                         <th><span class="fa fal fa-venus"></span></th>
                         <th><span class="fa fal fa-venus-mars"></span></th>
-                        <th> Reference</th>
-                        <th> Comment</th>
+                        <th>{{ "researches_model_reference" | translate }}</th>
+                        <th>{{ "researches_model_comment" | translate }}</th>
                         </thead>
 
                         <tr *ngFor="let object of gene.researches.increaseLifespan; let i = index">
@@ -325,9 +325,9 @@
                     <div class="table-section __mb-20">
                       <table class="table">
                         <thead>
-                        <th> Allelic polymorphism</th>
-                        <th> Reference</th>
-                        <th> Comment</th>
+                        <th>{{ "gene_page_allelic_polymorphism" | translate }}</th>
+                        <th>{{ "progeria_reference" | translate }}</th>
+                        <th>{{ "progeria_comment" | translate }}</th>
                         </thead>
 
                         <tr *ngFor="let object of gene.researches.geneAssociatedWithProgeriaSyndromes; let i = index">
@@ -346,15 +346,15 @@
                   </ng-container>
 
                   <ng-container *ngIf="gene.researches.geneAssociatedWithLongevityEffects">
-                    <h3>Association with longevity effects</h3>
+                    <h3>{{ "gene_page_researches_longevity_effects" | translate }}</h3>
                     <div class="table-section __mb-20">
                       <table class="table">
                         <thead>
-                        <th> Longevity effect</th>
-                        <th> Allelic polymorphism</th>
-                        <th> Sex</th>
-                        <th> Reference</th>
-                        <th> Comment</th>
+                        <th>{{ "longevity_effects_effect" | translate }}</th>
+                        <th>{{ "gene_page_allelic_polymorphism" | translate }}</th>
+                        <th>{{ "researches_sex" | translate }}</th>
+                        <th>{{ "researches_reference" | translate }}</th>
+                        <th>{{ "researches_comment" | translate }}</th>
                         </thead>
 
                         <tr *ngFor="let object of gene.researches.geneAssociatedWithLongevityEffects; let i = index">
@@ -379,19 +379,19 @@
                   </ng-container>
 
                   <ng-container *ngIf="gene.researches.ageRelatedChangesOfGene" class="__mt-30">
-                    <h3>Association with age related changes</h3>
+                    <h3>{{ "longevity_effects_comment" | translate }}</h3>
                     <div class="table-section __mb-20">
                       <table class="table">
                         <thead>
-                        <th> Change type</th>
-                        <th> Sample</th>
-                        <th> Model organism</th>
-                        <th> Age (from—to)</th>
+                        <th>{{ "age_related_changes_type" | translate }}</th>
+                        <th>{{ "age_related_changes_sample" | translate }}</th>
+                        <th>{{ "researches_model_organism" | translate }}</th>
+                        <th>{{ "researches_age" | translate }}</th>
                         <th><span class="fa fal fa-mars"></span></th>
                         <th><span class="fa fal fa-venus"></span></th>
                         <th><span class="fa fal fa-venus-mars"></span></th>
-                        <th> Reference</th>
-                        <th> Comment</th>
+                        <th>{{ "researches_reference" | translate }}</th>
+                        <th>{{ "researches_comment" | translate }}</th>
                         </thead>
 
                         <tr *ngFor="let object of gene.researches.ageRelatedChangesOfGene; let i = index">
@@ -428,19 +428,20 @@
                   </ng-container>
 
                   <ng-container *ngIf="gene.researches.interventionToGeneImprovesVitalProcesses" class="__mt-30">
-                    <h3>intervention to gene improves vital processes</h3>
+                    <h3>{{ "gene_page_intervention" | translate }}</h3>
                     <div class="table-section __mb-20">
                       <table class="table">
                         <thead>
-                        <th> Intervention</th>
-                        <th> Result</th>
-                        <th> Process</th>
-                        <th> Model organism</th>
-                        <th> Organism line</th>
-                        <th> Age</th>
-                        <th> Sex</th>
-                        <th> Reference</th>
-                        <th> Comment</th>
+                        <th>{{ "intervention_vital_type" | translate }}</th>
+                        <th>{{ "intervention_vital_result" | translate }}</th>
+                        <th>{{ "intervention_vital_process" | translate }}</th>
+                        <th>{{ "researches_model_organism" | translate }}</th>
+
+                        <th>{{ "intervention_vital_organism_line" | translate }}</th>
+                        <th>{{ "researches_age" | translate }}</th>
+                        <th>{{ "researches_sex" | translate }}</th>
+                        <th>{{ "researches_reference" | translate }}</th>
+                        <th>{{ "researches_comment" | translate }}</th>
                         </thead>
 
                         <tr
