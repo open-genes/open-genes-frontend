@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {PubmedApiService} from '../../core/services/pubmed.api.service';
-import {INews} from '../../core/models/news.model';
+import {News} from '../../core/models/news.model';
 import {Genes} from '../../core/models';
 import {finalize, switchMap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
@@ -13,7 +13,7 @@ import {environment} from '../../../environments/environment';
 export class NewsComponent implements OnInit {
 
   @Input() genes: Genes[];
-  newsList: INews[];
+  newsList: News[];
   isLoading: boolean;
   error: number;
 
