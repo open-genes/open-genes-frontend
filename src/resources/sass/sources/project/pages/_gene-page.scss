@@ -5,6 +5,7 @@
     padding: 15px 0 10px 0;
     border-bottom: 1px solid $color-borders;
     background-color: #fff;
+    margin-bottom: 30px;
 
     .header__title {
       display: inline-block;
@@ -173,15 +174,15 @@
 
   &__articles {
     .articles__content + .articles__content {
-      margin-top: 20px;
+      margin-top: 30px;
     }
 
     .articles__content + .no-content {
-      margin-top: 20px;
+      margin-top: 30px;
     }
 
     .contents-list {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
 
       .mat-nav-list {
         [mat-list-item] {
@@ -219,11 +220,6 @@
       color: $color-indent;
       font-weight: $font-weight-medium;
       margin-bottom: 0.8ex;
-    }
-
-    article + article,
-    article + h3 {
-      margin-top: 30px;
     }
 
     .table-section {
@@ -327,25 +323,29 @@
       margin-top: 10px;
     }
   }
+
+  article + article,
+  article + section,
+  section + section,
+  section + article,
+  article + h3 {
+    margin-top: 30px;
+  }
 }
 
+// Fixed header
 .gene-page {
-  $fixed-header-height: (130px + 20px);
+  // $fixed-header-height: (130px + 20px);
   @include resolution_desktop-and-up {
-    padding-top: $fixed-header-height;
-    .gene-page__header {
-      position: fixed;
-      top: $header-height;
-      z-index: 50; // между хедером и контентом
-    }
+    // padding-top: $fixed-header-height;
+    //.gene-page__header {
+    //  position: fixed;
+    //  top: $header-height;
+    //  z-index: 50; // между хедером и контентом
+    //}
 
     .sidebar {
-      top: $fixed-header-height + $header-height;
-    }
-  }
-  @include resolution_smartphone-and-tablet {
-    .gene-page__header {
-      margin-bottom: 20px;
+      top: 100px;
     }
   }
 }

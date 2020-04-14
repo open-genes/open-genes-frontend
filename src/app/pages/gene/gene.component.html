@@ -56,7 +56,7 @@
             <div class="sidebar__inner">
               <b>{{ 'gene_page_title_contents' | translate }}</b>
 
-              <mat-nav-list dense>
+              <mat-nav-list dense *ngIf="isContent()">
                 <a mat-list-item
                    *ngIf="gene.commentEvolution"
                    [routerLink]="['/gene', id]" fragment="evolution">
@@ -70,7 +70,7 @@
                 </a>
 
                 <a mat-list-item
-                   *ngIf="gene.commentCause"
+                   *ngIf="gene.commentCause.lenght > 1"
                    [routerLink]="['/gene', id]" fragment="cause">
                   {{ 'gene_page_title_criteria' | translate }}
                 </a>
@@ -82,24 +82,24 @@
                 </a>
 
                 <a mat-list-item
-                   *ngIf="gene.commentsReferenceLinks"
-                   [routerLink]="['/gene', id]" fragment="reference">
-                  {{ 'gene_page_title_reference' | translate }}
-                </a>
-
-                <a mat-list-item
-                   *ngIf="gene.researches"
-                   [routerLink]="['/gene', id]" fragment="researches">
-                  {{ 'gene_page_title_researches' | translate }}
+                   *ngIf="gene.expression.length !== 0"
+                   [routerLink]="['/gene', id]" fragment="expression">
+                  {{ 'gene_page_title_expression' | translate }}
                 </a>
 
                 <a mat-list-item
                    *ngIf="
-                    gene.terms.biological_process.length >= 1 ||
-                    gene.terms.cellular_component.length >= 1 ||
-                    gene.terms.molecular_activity.length >= 1"
+                    gene.terms.biological_process.lenght >= 1 ||
+                    gene.terms.cellular_component.lenght >= 1 ||
+                    gene.terms.molecular_activity.lenght >= 1"
                    [routerLink]="['/gene', id]" fragment="terms">
                   Gene Ontology
+                </a>
+
+                <a mat-list-item
+                   *ngIf="gene.commentsReferenceLinks.lenght > 1"
+                   [routerLink]="['/gene', id]" fragment="reference">
+                  {{ 'gene_page_title_reference' | translate }}
                 </a>
               </mat-nav-list>
             </div>
@@ -108,7 +108,7 @@
           <div class="per content">
             <div class="page-wrapper">
               <section class="wrapper gene-page__age">
-                <div class="__w-100 __mb-30">
+                <div class="__w-100">
                   <div class="flex-subcontainer age__types">
                     <div class="col age__type age__phylogeny">
                       <div class="type__inner">
@@ -145,10 +145,10 @@
                           {{ 'diseases' | translate }}
                         </div>
                         <div class="type__value">
-                <span class="badge __brand-color-disgenet">
-                    <span class="fa fal fa-stream"></span>
-                  {{ 'gene_page_link_disgenet' | translate }}
-                </span>
+                          <span class="badge __brand-color-disgenet">
+                              <span class="fa fal fa-stream"></span>
+                            {{ 'gene_page_link_disgenet' | translate }}
+                          </span>
                         </div>
                       </div>
                     </a>
@@ -162,10 +162,10 @@
                           {{ 'gene_page_title_interactions' | translate }}
                         </div>
                         <div class="type__value">
-                <span class="badge __brand-color-biogrid">
-                    <span class="fa fal fa-search"></span>
-                  {{ 'gene_page_link_biogrid' | translate }}
-                </span>
+                          <span class="badge __brand-color-biogrid">
+                              <span class="fa fal fa-search"></span>
+                            {{ 'gene_page_link_biogrid' | translate }}
+                          </span>
                         </div>
                       </div>
                     </a>
@@ -238,11 +238,8 @@
                 </div>
 
                 <div class="__w-100 articles__content"
-                     *ngIf="gene.commentEvolution ||
-                    gene.commentFunction ||
-                    gene.commentCause ||
-                    gene.commentAging ||
-                    gene.commentsReferenceLinks; else noContent">
+                     *ngIf="isContent();
+                      else noContent">
 
                   <ng-container *ngIf="gene.commentEvolution">
                     <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
@@ -258,7 +255,7 @@
                     </article>
                   </ng-container>
 
-                  <ng-container *ngIf="gene.commentCause">
+                  <ng-container *ngIf="gene.commentCause.lenght > 1">
                     <h3>{{ 'gene_page_title_criteria' | translate }}</h3>
                     <article id="cause">
                       <ul class="list list--bulletted">
@@ -274,67 +271,63 @@
                     </article>
                   </ng-container>
 
-                  <h3 *ngIf="gene.researches.increaseLifespan !== null"
-                      id="researches"
-                  >Исследования</h3>
-
-                  <ng-container *ngIf="gene.researches.increaseLifespan">
-                    <h4>Gene intervention</h4>
+                  <ng-container *ngIf="gene.researches.increaseLifespan" class="__mt-30">
+                    <h3>Gene intervention</h3>
                     <div class="table-section __mb-20">
                       <table class="table">
                         <thead>
-                        <th> Intervention Result </th>
-                        <th> Model Organism </th>
-                        <th> Line </th>
-                        <th> Age </th>
-                        <th> <span class="fa fal fa-mars"></span> </th>
-                        <th> <span class="fa fal fa-venus"></span> </th>
-                        <th> <span class="fa fal fa-venus-mars"></span> </th>
-                        <th> Reference </th>
-                        <th> Comment </th>
+                        <th> Intervention Result</th>
+                        <th> Model Organism</th>
+                        <th> Line</th>
+                        <th> Age</th>
+                        <th><span class="fa fal fa-mars"></span></th>
+                        <th><span class="fa fal fa-venus"></span></th>
+                        <th><span class="fa fal fa-venus-mars"></span></th>
+                        <th> Reference</th>
+                        <th> Comment</th>
                         </thead>
 
                         <tr *ngFor="let object of gene.researches.increaseLifespan; let i = index">
                           <td>
-                          {{ object.interventionResult }}
+                            {{ object.interventionResult }}
                           </td>
                           <td>
-                          {{ object.modelOrganism }}
+                            {{ object.modelOrganism }}
                           </td>
                           <td>
-                          {{ object.organismLine }}
+                            {{ object.organismLine }}
                           </td>
                           <td class="__nowrap">
-                          {{ object.age }}
+                            {{ object.age }}
                           </td>
                           <td class="__nowrap">
-                          {{ object.valueForMale }}
+                            {{ object.valueForMale }}
                           </td>
                           <td class="__nowrap">
-                          {{ object.valueForFemale }}
+                            {{ object.valueForFemale }}
                           </td>
                           <td class="__nowrap">
-                          {{ object.valueForAll }}
+                            {{ object.valueForAll }}
                           </td>
                           <td>
-                          {{ object.reference }}
+                            {{ object.reference }}
                           </td>
                           <td>
-                          {{ object.comment }}
+                            {{ object.comment }}
                           </td>
                         </tr>
                       </table>
                     </div>
                   </ng-container>
 
-                  <ng-container *ngIf="gene.researches.geneAssociatedWithProgeriaSyndromes">
-                    <h4>Association with progeria syndrome</h4>
+                  <ng-container *ngIf="gene.researches.geneAssociatedWithProgeriaSyndromes" class="__mt-30">
+                    <h3>{{ "gene_page_researches_progeria" | translate }}</h3>
                     <div class="table-section __mb-20">
                       <table class="table">
                         <thead>
-                        <th> Allelic polymorphism </th>
-                        <th> Reference </th>
-                        <th> Comment </th>
+                        <th> Allelic polymorphism</th>
+                        <th> Reference</th>
+                        <th> Comment</th>
                         </thead>
 
                         <tr *ngFor="let object of gene.researches.geneAssociatedWithProgeriaSyndromes; let i = index">
@@ -353,15 +346,15 @@
                   </ng-container>
 
                   <ng-container *ngIf="gene.researches.geneAssociatedWithLongevityEffects">
-                    <h4>Association with longevity effects</h4>
+                    <h3>Association with longevity effects</h3>
                     <div class="table-section __mb-20">
                       <table class="table">
                         <thead>
-                        <th> Longevity effect </th>
-                        <th> Allelic polymorphism </th>
-                        <th> Sex </th>
-                        <th> Reference </th>
-                        <th> Comment </th>
+                        <th> Longevity effect</th>
+                        <th> Allelic polymorphism</th>
+                        <th> Sex</th>
+                        <th> Reference</th>
+                        <th> Comment</th>
                         </thead>
 
                         <tr *ngFor="let object of gene.researches.geneAssociatedWithLongevityEffects; let i = index">
@@ -385,20 +378,20 @@
                     </div>
                   </ng-container>
 
-                  <ng-container *ngIf="gene.researches.ageRelatedChangesOfGene">
-                    <h4>Association with age related changes</h4>
+                  <ng-container *ngIf="gene.researches.ageRelatedChangesOfGene" class="__mt-30">
+                    <h3>Association with age related changes</h3>
                     <div class="table-section __mb-20">
                       <table class="table">
                         <thead>
-                        <th> Change type </th>
-                        <th> Sample </th>
-                        <th> Model organism </th>
-                        <th> Age (from—to) </th>
-                        <th> <span class="fa fal fa-mars"></span> </th>
-                        <th> <span class="fa fal fa-venus"></span> </th>
-                        <th> <span class="fa fal fa-venus-mars"></span> </th>
-                        <th> Reference </th>
-                        <th> Comment </th>
+                        <th> Change type</th>
+                        <th> Sample</th>
+                        <th> Model organism</th>
+                        <th> Age (from—to)</th>
+                        <th><span class="fa fal fa-mars"></span></th>
+                        <th><span class="fa fal fa-venus"></span></th>
+                        <th><span class="fa fal fa-venus-mars"></span></th>
+                        <th> Reference</th>
+                        <th> Comment</th>
                         </thead>
 
                         <tr *ngFor="let object of gene.researches.ageRelatedChangesOfGene; let i = index">
@@ -434,23 +427,24 @@
                     </div>
                   </ng-container>
 
-                  <ng-container *ngIf="gene.researches.interventionToGeneImprovesVitalProcesses">
-                    <h4>intervention to gene improves vital processes</h4>
+                  <ng-container *ngIf="gene.researches.interventionToGeneImprovesVitalProcesses" class="__mt-30">
+                    <h3>intervention to gene improves vital processes</h3>
                     <div class="table-section __mb-20">
                       <table class="table">
                         <thead>
-                        <th> Intervention </th>
-                        <th> Result </th>
-                        <th> Process </th>
-                        <th> Model organism </th>
-                        <th> Organism line </th>
+                        <th> Intervention</th>
+                        <th> Result</th>
+                        <th> Process</th>
+                        <th> Model organism</th>
+                        <th> Organism line</th>
                         <th> Age</th>
-                        <th> Sex </th>
-                        <th> Reference </th>
-                        <th> Comment </th>
+                        <th> Sex</th>
+                        <th> Reference</th>
+                        <th> Comment</th>
                         </thead>
 
-                        <tr *ngFor="let object of gene.researches.interventionToGeneImprovesVitalProcesses; let i = index">
+                        <tr
+                          *ngFor="let object of gene.researches.interventionToGeneImprovesVitalProcesses; let i = index">
                           <td>
                             {{ object.geneIntervention }}
                           </td>
@@ -489,17 +483,16 @@
                     gene.terms.cellular_component.length >= 1 ||
                     gene.terms.molecular_activity.length >= 1"
                     id="terms"
-                    class="__mt-20"
                   >
 
-                    <h4>Gene Ontology</h4>
+                    <h3>Gene Ontology</h3>
 
                     <mat-tab-group>
                       <mat-tab
                         *ngIf="gene.terms.biological_process.length >= 1"
                         label="Biological process"
                       >
-                        <h3 class="__mt-20">Gene Ontology: Biological process</h3>
+                        <h3 class="__mt-30">Gene Ontology: Biological process</h3>
 
                         <article>
                           <ul class="list list--bulletted">
@@ -518,7 +511,7 @@
                         *ngIf="gene.terms.cellular_component.length >= 1"
                         label="Cellular component"
                       >
-                        <h3 class="__mt-20">Gene Ontology: Cellular component</h3>
+                        <h3 class="__mt-30">Gene Ontology: Cellular component</h3>
 
                         <article>
                           <ul class="list list--bulletted">
@@ -537,7 +530,7 @@
                         *ngIf="gene.terms.molecular_activity.length >= 1"
                         label="Molecular activity"
                       >
-                        <h3 class="__mt-20">Gene Ontology: Molecular activity</h3>
+                        <h3 class="__mt-30">Gene Ontology: Molecular activity</h3>
 
                         <article>
                           <ul class="list list--bulletted">
@@ -554,6 +547,34 @@
                     </mat-tab-group>
                   </section>
 
+                  <section class="wrapper gene-page__expression" *ngIf="gene.expression.length !== 0"
+                  id="expression">
+                    <div class="__w-100">
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            {{ 'gene_page_title_expression' | translate }}
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p class="__mb-20">
+                          {{ 'gene_page_expression_hint' | translate }}
+                        </p>
+
+                        <div class="expression__rows">
+                          <ng-container *ngFor="let item of gene.expression">
+                            <div class="expression__row">
+                              <div class="row__name">{{item['name']}}</div>
+                              <div class="row__value" [class.row__value--minimum]="item['exp_rpkm'] < 2">
+                                <mat-progress-bar class="value__bar" [value]="item['exp_rpkm']"></mat-progress-bar>
+                                <div class="value__rpkm">{{item['exp_rpkm'] | number:'1.0-2'}} RPKM</div>
+                              </div>
+                            </div>
+                          </ng-container>
+                        </div>
+                      </mat-expansion-panel>
+                    </div>
+                  </section>
+
                   <ng-container *ngIf="gene.commentsReferenceLinks">
                     <article id="reference" class="js_article-reference">
                       <ul class="list reference-list">
@@ -568,6 +589,7 @@
                     </article>
                   </ng-container>
                 </div>
+
                 <ng-template #noContent>
                   <section class="__w-100 no-content">
                     <div class="no-content__icon no-content__icon-standard"></div>
@@ -578,33 +600,6 @@
                     </div>
                   </section>
                 </ng-template>
-              </section>
-
-              <section class="wrapper gene-page__expression" *ngIf="gene.expression.length !== 0">
-                <div class="__w-100">
-                  <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                      <mat-panel-title>
-                        {{ 'gene_page_title_expression' | translate }}
-                      </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <p class="__mb-20">
-                      {{ 'gene_page_expression_hint' | translate }}
-                    </p>
-
-                    <div class="expression__rows">
-                      <ng-container *ngFor="let item of gene.expression">
-                        <div class="expression__row">
-                          <div class="row__name">{{item['name']}}</div>
-                          <div class="row__value" [class.row__value--minimum]="item['exp_rpkm'] < 2">
-                            <mat-progress-bar class="value__bar" [value]="item['exp_rpkm']"></mat-progress-bar>
-                            <div class="value__rpkm">{{item['exp_rpkm'] | number:'1.0-2'}} RPKM</div>
-                          </div>
-                        </div>
-                      </ng-container>
-                    </div>
-                  </mat-expansion-panel>
-                </div>
               </section>
             </div>
           </div>
