@@ -29,4 +29,25 @@ export class GeneComponent implements OnInit {
       this.gene = geneInterface;
     });
   }
+
+  private isContent() {
+    if (
+      this.gene.commentEvolution ||
+      this.gene.commentFunction ||
+      this.gene.commentCause.lenght > 1 ||
+      this.gene.commentAging ||
+      this.gene.commentsReferenceLinks ||
+      this.gene.researches.increaseLifespan ||
+      this.gene.researches.geneAssociatedWithProgeriaSyndromes ||
+      this.gene.researches.geneAssociatedWithLongevityEffects ||
+      this.gene.researches.ageRelatedChangesOfGene ||
+      this.gene.researches.interventionToGeneImprovesVitalProcesses ||
+      this.gene.expression.length !== 0 ||
+      this.gene.terms
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
