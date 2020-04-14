@@ -114,5 +114,8 @@
   "news_list_title": "New articles",
   "news_list_hint": "Articles on PubMed on genes from our base",
   "language_en": "English",
-  "language_ru": "Русский"
+  "language_ru": "Русский",
+  "gene_ontology_biological_process": "Biological process",
+  "gene_ontology_cellular_component": "Cellular component",
+  "gene_ontology_biological_molecular_activity": "Molecular activity"
 }

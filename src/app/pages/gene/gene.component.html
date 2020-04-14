@@ -493,7 +493,7 @@
                         *ngIf="gene.terms.biological_process.length >= 1"
                         label="Biological process"
                       >
-                        <h3 class="__mt-30">Gene Ontology: Biological process</h3>
+                        <h3 class="__mt-30">Gene Ontology: {{ "gene_ontology_biological_process" | translate }}</h3>
 
                         <article>
                           <ul class="list list--bulletted">
@@ -512,7 +512,7 @@
                         *ngIf="gene.terms.cellular_component.length >= 1"
                         label="Cellular component"
                       >
-                        <h3 class="__mt-30">Gene Ontology: Cellular component</h3>
+                        <h3 class="__mt-30">Gene Ontology: {{ "gene_ontology_cellular_component" | translate }}</h3>
 
                         <article>
                           <ul class="list list--bulletted">
@@ -531,7 +531,7 @@
                         *ngIf="gene.terms.molecular_activity.length >= 1"
                         label="Molecular activity"
                       >
-                        <h3 class="__mt-30">Gene Ontology: Molecular activity</h3>
+                        <h3 class="__mt-30">Gene Ontology: {{ "gene_ontology_biological_molecular_activity" | translate }}</h3>
 
                         <article>
                           <ul class="list list--bulletted">

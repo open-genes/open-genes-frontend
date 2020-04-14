@@ -114,5 +114,8 @@
   "news_list_title": "Новые публикации",
   "news_list_hint": "Статьи на PubMed по генам из нашей базы",
   "language_en": "English",
-  "language_ru": "Русский"
+  "language_ru": "Русский",
+  "gene_ontology_biological_process": "Биологический процесс",
+  "gene_ontology_cellular_component": "Клеточный компонент",
+  "gene_ontology_biological_molecular_activity": "Молекулярное взаимодействие"
 }
