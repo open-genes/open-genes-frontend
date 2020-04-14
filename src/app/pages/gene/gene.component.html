@@ -194,7 +194,7 @@
                   <h1>{{ 'gene_page_title_description' | translate }}</h1>
                 </div>
 
-                <div class="__w-100 articles__content" *ngIf="gene.aliases"> <!-- TODO: Приходит aliases":[""] -->
+                <div class="__w-100 articles__content" *ngIf="gene.aliases.length !== 0">
                   <h3>{{ 'gene_page_title_aliases' | translate }}</h3>
                   <ng-container *ngFor="let item of gene.aliases">
                     <span class="alias">{{item}}</span>
@@ -379,7 +379,7 @@
                   </ng-container>
 
                   <ng-container *ngIf="gene.researches.ageRelatedChangesOfGene" class="__mt-30">
-                    <h3>{{ "longevity_effects_comment" | translate }}</h3>
+                    <h3>{{ "gene_page_researches_longevity_effects" | translate }}</h3>
                     <div class="table-section __mb-20">
                       <table class="table">
                         <thead>
