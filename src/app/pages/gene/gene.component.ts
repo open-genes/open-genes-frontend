@@ -30,9 +30,8 @@ export class GeneComponent implements OnInit {
     });
   }
 
-  private isContent() {
-    if (
-      this.gene.commentEvolution ||
+  public isContent() {
+    return !!(this.gene.commentEvolution ||
       this.gene.commentFunction ||
       this.gene.commentCause.lenght > 1 ||
       this.gene.commentAging ||
@@ -43,11 +42,6 @@ export class GeneComponent implements OnInit {
       this.gene.researches.ageRelatedChangesOfGene ||
       this.gene.researches.interventionToGeneImprovesVitalProcesses ||
       this.gene.expression.length !== 0 ||
-      this.gene.terms
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+      this.gene.terms);
   }
 }
