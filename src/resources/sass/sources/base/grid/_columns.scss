@@ -114,7 +114,7 @@
         &.#{$prefix}col-#{$i} {
           width: 100%;
           min-width: $smartphone - $gutter;
-          max-width: $phablet  - $gutter;
+          max-width: $phablet - $gutter;
         }
       }
     }

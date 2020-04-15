@@ -25,6 +25,28 @@ $sizes: (5, 10, 15, 20, 25, 30, 35);
   width: 100%;
 }
 
+.__w-content {
+  @include resolution_desktop {
+    max-width: $desktop - $gutter;
+  }
+
+  @include resolution_desktop {
+    max-width: $desktop - $gutter;
+  }
+
+  @include resolution_desktop {
+    max-width: $desktop - $gutter;
+  }
+
+  @include resolution_tablet {
+    max-width: $desktop - $gutter;
+  }
+
+  @include resolution_smartphone {
+    max-width: calc(100vw - #{$gutter});
+  }
+}
+
 .__nowrap {
   white-space: nowrap;
 }
