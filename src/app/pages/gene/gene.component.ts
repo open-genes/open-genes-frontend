@@ -33,7 +33,7 @@ export class GeneComponent implements OnInit {
   public isContent() {
     return !!(this.gene.commentEvolution ||
       this.gene.commentFunction ||
-      this.gene.commentCause.lenght > 1 ||
+      this.gene.commentCause[0].length !== 0 ||
       this.gene.commentAging ||
       this.gene.commentsReferenceLinks ||
       this.gene.researches.increaseLifespan ||
