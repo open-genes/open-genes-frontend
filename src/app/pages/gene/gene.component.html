@@ -70,7 +70,7 @@
                 </a>
 
                 <a mat-list-item
-                   *ngIf="gene.commentCause.lenght > 1"
+                   *ngIf="gene.commentCause[0].length !== 0"
                    [routerLink]="['/gene', id]" fragment="cause">
                   {{ 'gene_page_title_criteria' | translate }}
                 </a>
@@ -194,7 +194,7 @@
                   <h1>{{ 'gene_page_title_description' | translate }}</h1>
                 </div>
 
-                <div class="__w-100 articles__content" *ngIf="gene.aliases.length !== 0">
+                <div class="__w-100 articles__content" *ngIf="gene.aliases[0].length !== 0"> <!-- TODO: приходит массив с пустой строкой вместо пустого массива ("aliases":[""]) -->
                   <h3>{{ 'gene_page_title_aliases' | translate }}</h3>
                   <ng-container *ngFor="let item of gene.aliases">
                     <span class="alias">{{item}}</span>
@@ -255,7 +255,7 @@
                     </article>
                   </ng-container>
 
-                  <ng-container *ngIf="gene.commentCause.lenght > 1">
+                  <ng-container *ngIf="gene.commentCause[0].length !== 0"> <!-- TODO: приходит массив с пустой строкой вместо пустого массива ("commentCause":[""]) -->
                     <h3>{{ 'gene_page_title_criteria' | translate }}</h3>
                     <article id="cause">
                       <ul class="list list--bulletted">
