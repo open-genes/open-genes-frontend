@@ -54,13 +54,13 @@
     // Задаем минимальную и максимальную ширину колонкам
     &:first-child {
       .th__title {
-        min-width: 200px;
+        width: 200px;
       }
     }
 
     &:nth-child(4) {
       .th__title {
-        max-width: 300px;
+        width: 300px;
       }
     }
 
@@ -68,6 +68,12 @@
       .th__title {
         width: 24px;
       }
+    }
+  }
+
+  .td-clusters {
+    &__limiter {
+      max-width: 300px;
     }
   }
 
