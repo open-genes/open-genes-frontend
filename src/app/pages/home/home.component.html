@@ -23,16 +23,18 @@
         <div class="flex-subcontainer">
           <div class="per sidebar sidebar--left sidebar--mb-btm">
             <div class="sidebar__inner">
-              <app-news
-                [genes]="genes"
-                *ngIf="genes"
-                class="__mb-20"
-              ></app-news>
-
-              <app-mini-cards
-                [lastGenes]="lastGenes"
-                *ngIf="lastGenes"
-              ></app-mini-cards>
+              <div class="sidebar__item sidebar__item--desktop-50">
+                <app-news
+                  [genes]="genes"
+                  *ngIf="genes"
+                ></app-news>
+              </div>
+              <div class="sidebar__item sidebar__item--desktop-50">
+                <app-mini-cards
+                  [lastGenes]="lastGenes"
+                  *ngIf="lastGenes"
+                ></app-mini-cards>
+              </div>
             </div>
           </div>
 

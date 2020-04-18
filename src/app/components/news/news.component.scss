@@ -1,31 +1,37 @@
 @import "../styles";
 
 :host {
-  display: inline-block;
-  flex: none;
+  width: 100%;
 
   &:empty {
-    display: none;
+    display: none; // фикс для момента во время подгрузки
   }
 }
 
 .news {
-  display: block;
+  display: inline-block;
   font-size: 14px;
+  margin-top: 5px;
 
   &__item {
-    display: block;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
     width: 100%;
 
     .item__gene {
-      width: 100%;
+      flex: 0 1;
+      padding: 2px 5px 0 0;
     }
 
     .item__title {
-      margin-top: 5px;
+      flex: 4 0 210px; // внутренняя ширина .sidebar - минимальная ширина заголовка
+      flex-flow: row wrap;
+      font-size: $font-size-smaller;
       white-space: normal;
       word-break: break-word;
       hyphens: auto;
+      margin-top: 4px;
     }
 
     & + & {

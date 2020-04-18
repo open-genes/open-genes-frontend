@@ -86,11 +86,11 @@ body {
   }
 
   &--gray {
-    color: darken($color-gray, 10%);
+    color: mix($color-gray, $color-general, 90%);
 
     &:hover,
     &:active {
-      color: $color-gray;
+      color: darken(mix($color-gray, $color-general, 90%), 10%);
     }
   }
 }
@@ -259,7 +259,7 @@ app-header {
       font-size: 16px;
       color: $color-black;
       font-weight: $font-weight-medium;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
   }
 

@@ -2,9 +2,7 @@
   <div class="page__subtitle view-latest__title">
     {{ 'news_list_title' | translate }}
   </div>
-  <div class="tip">
-    {{ 'news_list_hint' | translate }}
-  </div>
+
   <ul class="news" *ngIf="!isLoading">
     <li *ngFor="let item of newsList"
         class="news__item"
@@ -24,7 +22,7 @@
   <app-loader-placeholder
     *ngIf="isLoading"
     type="skeleton"
-    [groups]="3"
+    [groups]="2"
   ></app-loader-placeholder>
 </ng-container>
 

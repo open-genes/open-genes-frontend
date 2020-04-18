@@ -59,3 +59,8 @@ $open-genes-theme:   mat-light-theme($open-genes-primary, $open-genes-accent);
     padding-left: 10px;
   }
 }
+
+.mat-tab-label {
+  font-size: $font-size-small;
+  padding: 0 8px;
+}

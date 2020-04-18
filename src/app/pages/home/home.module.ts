@@ -9,8 +9,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {NewsComponent} from '../../components/news/news.component';
 import {NgStripTagsPipeModule} from 'angular-pipes';
 import {PipesModule} from '../../modules/pipes/pipes.module';
-import {MatCardModule} from "@angular/material/card";
-import {MatButtonModule} from "@angular/material/button";
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -25,7 +24,6 @@ import {MatButtonModule} from "@angular/material/button";
     TranslateModule,
     NgStripTagsPipeModule,
     PipesModule,
-    MatCardModule,
     MatButtonModule
   ],
   exports: [

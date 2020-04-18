@@ -1,0 +1,45 @@
+.view-panel {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  &__filters {
+    padding-right: 5px;
+  }
+
+  // Переключать вид можно только на десктопе.
+  // На мобильном контент всегда выглядит в виде карточек.
+  &__buttons {
+    padding-left: 5px;
+    display: flex;
+    align-items: center;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    @include resolution_smartphone-and-tablet {
+      display: none;
+
+    }
+  }
+}
+
+.show-more {
+  &__button {
+    width: 100%;
+    $btn-height: 35px;
+    height: $btn-height;
+    line-height: ($btn-height - 2px);
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: $font-weight-medium;
+    color: $color-general;
+    background-color: lighten($color-hover, 3%);
+    border: 1px solid $color-borders-active;
+
+    &:hover {
+      background-color: $color-hover;
+    }
+  }
+}

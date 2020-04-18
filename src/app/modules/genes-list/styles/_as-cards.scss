@@ -1,0 +1,80 @@
+// В виде карточек
+@mixin view-content--as-cards {
+  margin-top: -20px;
+
+  .thead {
+    display: none;
+  }
+
+  .tbody {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+    justify-content: space-between;
+  }
+
+  .tr {
+    @include panel('10px 15px');
+
+    font-size: 0;
+    padding-bottom: 20px;
+    margin-top: 20px;
+
+    .td {
+      display: inline-block;
+      width: 100%;
+      position: relative;
+      font-size: $font-size;
+
+      &__label {
+        display: block;
+        width: 100%;
+        font-size: $font-size;
+        color: $color-gray-halfing;
+        margin-bottom: 3px;
+      }
+
+      &-actions {
+        position: static; // чтобы элемент перестал быть родителем
+        height: 1px;
+
+        &__menu {
+          top: 15px;
+        }
+      }
+
+      &-name {
+        margin: 10px 0;
+        padding-right: 30px;
+
+        .td__title {
+          .link {
+            font-size: $font-size-huge;
+            text-decoration: none;
+          }
+        }
+      }
+
+      &-age-phylo {
+        font-size: $font-size-big;
+      }
+
+      &-age-mya {
+        font-size: $font-size-bigger;
+        margin-top: 2px;
+      }
+
+      .td__label {
+        margin: 10px 0 5px 0;
+      }
+    }
+
+    @include resolution_phablet-and-up {
+      width: calc(50% - 10px);
+    }
+
+    @include resolution_phone {
+      width: 100%;
+    }
+  }
+}
