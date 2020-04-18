@@ -6,12 +6,12 @@
 }
 
 // Стили панели
-@mixin panel {
+@mixin panel($padding: '10px') {
   display: block;
   width: 100%;
   background-color: #fff;
   border: 1px solid $color-borders;
   border-radius: $border-radius-regular;
-  padding: 10px;
+  padding: unquote($padding);
   position: relative;
 }

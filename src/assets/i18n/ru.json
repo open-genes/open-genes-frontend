@@ -17,7 +17,7 @@
   "main_page_table_expression" : "Возрастные изменения экспрессии:",
   "diseases" : "Заболевания",
   "interactions" : "Взаимодействия",
-  "ncbi_homologs": "Консервативен у",
+  "ncbi_homologs": "Консервативен у:",
   "gene_page_link_disgenet" : "Страница гена на DisGenet",
   "gene_page_link_biogrid" : "Поиск на BioGrid",
   "gene_page_title_aliases" : "Синонимы (HGNC)",

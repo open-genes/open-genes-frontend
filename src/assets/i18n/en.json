@@ -17,7 +17,7 @@
   "main_page_table_expression" : "Age-related changes in expression:",
   "diseases" : "Diseases",
   "interactions" : "Interactions",
-  "ncbi_homologs": "Conservative in",
+  "ncbi_homologs": "Conservative in:",
   "gene_page_link_disgenet" : "Gene page on DisGenet",
   "gene_page_link_biogrid" : "Search on BioGrid",
   "gene_page_title_aliases" : "Aliases (HGNC)",

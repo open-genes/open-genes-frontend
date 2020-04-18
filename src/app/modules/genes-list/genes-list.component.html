@@ -58,30 +58,32 @@
     <div class="thead">
       <div class="th">
         <div class="th__title">
-          <b>{{ 'main_page_table_name' | translate }}</b>
+          {{ 'main_page_table_name' | translate }}
         </div>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>{{ 'phylogeny' | translate }}, {{ 'age_lowercase' | translate }}</b>
+          {{ 'phylogeny' | translate }}, {{ 'age_lowercase' | translate }}
         </div>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>{{ 'ncbi_homologs' | translate }}</b>
+          {{ 'ncbi_homologs' | translate }}
       </div>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>{{ 'functional_classes' | translate }}</b>
+          {{ 'functional_classes' | translate }}
         </div>
       </div>
       <div class="th">
         <div class="th__title">
-          <b>{{ 'main_page_table_expression' | translate }}</b>
+          {{ 'main_page_table_expression' | translate }}
         </div>
       </div>
-      <div class="th"></div>
+      <div class="th">
+        <div class="th__title"></div>
+      </div>
     </div>
 
     <div class="tbody">
@@ -95,9 +97,12 @@
         </div>
         <div class="td cell td-age-mya">
           <b>{{data.origin.phylum}}</b><br>
-          {{data.origin.age}} {{ 'million_years' | translate }}
+          {{data.origin.age}} <span *ngIf="data.origin.age">({{ 'million_years' | translate }})</span>
         </div>
         <div class="td cell td-age-homologs">
+          <span class="td__label" *ngIf="data.homologueTaxon">
+            {{ 'ncbi_homologs' | translate }}
+          </span>
           <b>{{data.homologueTaxon}}</b>
         </div>
         <div class="td cell td-clusters">
