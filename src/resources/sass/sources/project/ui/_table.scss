@@ -3,7 +3,7 @@ table.table {
   color: $color-black;
   background: #fff;
   border: 1px solid $color-borders;
-  font-size: 12pt;
+  font-size: $font-size-smaller;
   border-collapse: collapse;
 
   thead th,

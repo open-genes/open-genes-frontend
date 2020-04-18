@@ -11,20 +11,6 @@ export interface Lifespan {
   comment: string;
 }
 
-export interface ProgeriaSyndromes {
-  progeriaSyndrome: string;
-  reference: string ;
-  comment: string;
-}
-
-export interface LongevityEffects {
-  longevityEffect: string;
-  allelicPolymorphism: string;
-  sex: string;
-  reference: string ;
-  comment: string;
-}
-
 export interface AgeRelatedChanges {
   changeType: string;
   sample: string;
@@ -39,9 +25,9 @@ export interface AgeRelatedChanges {
   comment: string;
 }
 
-export interface GeneInterventions {
+export interface InterventionAffectsAgingProcess {
   geneIntervention: string;
-  interventionResultForVitalProcess: string;
+  interventionResultForVitalProcess: string; // TODO: переименовать название вводящее в заблуждение
   vitalProcess: string;
   modelOrganism: string;
   organismLine: string;
@@ -63,11 +49,25 @@ export interface ProteinRegulatesGenes {
   };
 }
 
+export interface ProgeriaSyndromes {
+  progeriaSyndrome: string;
+  reference: string ;
+  comment: string;
+}
+
+export interface LongevityEffects {
+  longevityEffect: string;
+  allelicPolymorphism: string;
+  sex: string;
+  reference: string ;
+  comment: string;
+}
+
 export interface Researches {
   increaseLifespan: Lifespan[];
+  ageRelatedChangesOfGene: AgeRelatedChanges[];
+  interventionToGeneImprovesVitalProcesses: InterventionAffectsAgingProcess[];
+  proteinRegulatesOtherGenes: ProteinRegulatesGenes[];
   geneAssociatedWithProgeriaSyndromes: ProgeriaSyndromes[];
   geneAssociatedWithLongevityEffects: LongevityEffects[];
-  ageRelatedChangesOfGene: AgeRelatedChanges[];
-  interventionToGeneImprovesVitalProcesses: GeneInterventions[];
-  proteinRegulatesOtherGenes: ProteinRegulatesGenes[];
 }
