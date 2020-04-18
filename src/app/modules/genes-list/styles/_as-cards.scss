@@ -68,5 +68,13 @@
         margin: 10px 0 5px 0;
       }
     }
+
+    @include resolution_phablet-and-up {
+      width: calc(50% - 10px);
+    }
+
+    @include resolution_phone {
+      width: 100%;
+    }
   }
 }

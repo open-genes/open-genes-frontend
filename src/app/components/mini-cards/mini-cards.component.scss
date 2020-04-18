@@ -1,5 +1,9 @@
 @import "../styles";
 
+:host {
+  width: 100%;
+}
+
 mat-card {
   color: #fff;
 }
@@ -30,25 +34,26 @@ mat-card {
       height: 100%;
       border-radius: 10px;
       padding: 10px;
+      font-size: $font-size-smaller;
       background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
 
       .card__title {
         width: 100%;
-        font-size: 1rem;
+        font-size: 1em;
         font-weight: $font-weight-medium;
-        margin-bottom: 10px;
+        margin-bottom: 1ex;
       }
 
       .card__phylo,
       .card__mya {
         width: 100%;
-        font-size: .8rem;
+        font-size: .9em;
       }
     }
 
     @include resolution_widescreen {
-      flex: 50% 0 0;
-      font-size: 20px;
+      flex: 0 0 50%;
+      font-size: 16px;
       min-height: 90px;
 
       .card__mya {
@@ -57,13 +62,15 @@ mat-card {
     }
 
     @include resolution_tablet-and-desktop {
-      flex: 25% 0 0;
-      font-size: 16px;
+      flex: 0 0 50%;
     }
 
-    @include resolution_smartphone {
-      flex: 50% 0 0;
-      font-size: 16px;
+    @include resolution_phablet {
+      flex: 0 0 25%;
+    }
+
+    @include resolution_phone {
+      flex: 0 0 50%;
     }
 
     &:first-child {
