@@ -4,7 +4,7 @@
   </div>
   <div class="view-latest__content">
     <a *ngFor="let item of lastGenes"
-       [routerLink]="['/gene', item.id]"
+       [routerLink]="['/gene', item.symbol]"
        class="view-latest__card">
       <div class="card__inner">
         <div class="card__title">{{ item.symbol }}</div>

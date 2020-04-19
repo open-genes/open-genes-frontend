@@ -31,7 +31,7 @@ export class ApiService {
     return this.http.get<Genes[]>(`${this.url}/api/by-expression-change/${expression}?lang=${this.translate.currentLang}`);
   }
 
-  getGeneById(id: number): Observable<Gene[]> {
-    return this.http.get<Gene[]>(`${this.url}/api/gene/${id}?lang=${this.translate.currentLang}`);
+  getGeneByHGNCsymbol(symbol: string): Observable<Gene[]> {
+    return this.http.get<Gene[]>(`${this.url}/api/gene/${symbol}?lang=${this.translate.currentLang}`);
   }
 }

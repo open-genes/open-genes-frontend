@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {ApiService} from '../../core/services/api.service';
@@ -10,14 +10,14 @@ import {Gene} from '../../core/models';
   styleUrls: ['./gene.component.scss']
 })
 
-export class GeneComponent implements OnInit {
-  public id: number;
+export class GeneComponent implements OnInit, OnDestroy {
+  public symbol: string;
   private subscription: Subscription;
   public gene: any;
 
   constructor(private activateRoute: ActivatedRoute,
               private apiService: ApiService) {
-    this.subscription = activateRoute.params.subscribe(params => this.id = params.id);
+    this.subscription = activateRoute.params.subscribe(params => this.symbol = params.id);
   }
 
   ngOnInit() {
@@ -25,7 +25,7 @@ export class GeneComponent implements OnInit {
   }
 
   private getGene() {
-    this.apiService.getGeneById(this.id).subscribe((geneInterface) => {
+    this.apiService.getGeneByHGNCsymbol(this.symbol).subscribe((geneInterface) => {
       this.gene = geneInterface;
     });
   }
@@ -43,5 +43,9 @@ export class GeneComponent implements OnInit {
       this.gene.researches.interventionToGeneImprovesVitalProcesses ||
       this.gene.expression.length !== 0 ||
       this.gene.terms);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

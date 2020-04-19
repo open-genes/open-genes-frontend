@@ -61,31 +61,31 @@
               <mat-nav-list dense *ngIf="isContent()">
                 <a mat-list-item
                    *ngIf="gene.commentEvolution"
-                   [routerLink]="['/gene', id]" fragment="evolution">
+                   [routerLink]="['/gene', symbol]" fragment="evolution">
                   {{ 'gene_page_title_evolution' | translate }}
                 </a>
 
                 <a mat-list-item
                    *ngIf="gene.commentFunction"
-                   [routerLink]="['/gene', id]" fragment="function">
+                   [routerLink]="['/gene', symbol]" fragment="function">
                   {{ 'gene_page_title_function' | translate }}
                 </a>
 
                 <a mat-list-item
                    *ngIf="gene.commentCause[0].length !== 0"
-                   [routerLink]="['/gene', id]" fragment="cause">
+                   [routerLink]="['/gene', symbol]" fragment="cause">
                   {{ 'gene_page_title_criteria' | translate }}
                 </a>
 
                 <a mat-list-item
                    *ngIf="gene.commentAging"
-                   [routerLink]="['/gene', id]" fragment="aging">
+                   [routerLink]="['/gene', symbol]" fragment="aging">
                   {{ 'gene_page_title_aging' | translate }}
                 </a>
 
                 <a mat-list-item
                    *ngIf="gene.expression.length !== 0"
-                   [routerLink]="['/gene', id]" fragment="expression">
+                   [routerLink]="['/gene', symbol]" fragment="expression">
                   {{ 'gene_page_title_expression' | translate }}
                 </a>
 
@@ -94,13 +94,13 @@
                     gene.terms.biological_process.lenght >= 1 ||
                     gene.terms.cellular_component.lenght >= 1 ||
                     gene.terms.molecular_activity.lenght >= 1"
-                   [routerLink]="['/gene', id]" fragment="terms">
+                   [routerLink]="['/gene', symbol]" fragment="terms">
                   Gene Ontology
                 </a>
 
                 <a mat-list-item
                    *ngIf="gene.commentsReferenceLinks.lenght > 1"
-                   [routerLink]="['/gene', id]" fragment="reference">
+                   [routerLink]="['/gene', symbol]" fragment="reference">
                   {{ 'gene_page_title_reference' | translate }}
                 </a>
               </mat-nav-list>
@@ -442,7 +442,7 @@
                             {{ object.proteinActivity }}
                           </td>
                           <td>
-                            <a href="gene/{{object.regulatedGene.id}}"
+                            <a href="gene/{{object.regulatedGene.symbol}}"
                                class="link"
                             >{{ object.regulatedGene.symbol }}</a>
                           </td>
