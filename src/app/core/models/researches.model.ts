@@ -45,7 +45,7 @@ export interface ProteinRegulatesGenes {
     id: number;
     symbol: string;
     name: string;
-    entrezGene: number;
+    ncbiId: number;
   };
 }
 

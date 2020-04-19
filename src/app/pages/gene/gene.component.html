@@ -15,7 +15,7 @@
                class="badge __brand-color-geneage"
             >GeneAge</a>
 
-            <a href="https://www.ncbi.nlm.nih.gov/gene/{{gene.entrezGene}}"
+            <a href="https://www.ncbi.nlm.nih.gov/gene/{{gene.ncbiId}}"
                target="_blank"
                title="{{ 'link_entrez' | translate }}"
                class="badge __brand-color-entrez"
@@ -61,31 +61,31 @@
               <mat-nav-list dense *ngIf="isContent()">
                 <a mat-list-item
                    *ngIf="gene.commentEvolution"
-                   [routerLink]="['/gene', id]" fragment="evolution">
+                   [routerLink]="['/gene', symbol]" fragment="evolution">
                   {{ 'gene_page_title_evolution' | translate }}
                 </a>
 
                 <a mat-list-item
                    *ngIf="gene.commentFunction"
-                   [routerLink]="['/gene', id]" fragment="function">
+                   [routerLink]="['/gene', symbol]" fragment="function">
                   {{ 'gene_page_title_function' | translate }}
                 </a>
 
                 <a mat-list-item
                    *ngIf="gene.commentCause[0].length !== 0"
-                   [routerLink]="['/gene', id]" fragment="cause">
+                   [routerLink]="['/gene', symbol]" fragment="cause">
                   {{ 'gene_page_title_criteria' | translate }}
                 </a>
 
                 <a mat-list-item
                    *ngIf="gene.commentAging"
-                   [routerLink]="['/gene', id]" fragment="aging">
+                   [routerLink]="['/gene', symbol]" fragment="aging">
                   {{ 'gene_page_title_aging' | translate }}
                 </a>
 
                 <a mat-list-item
                    *ngIf="gene.expression.length !== 0"
-                   [routerLink]="['/gene', id]" fragment="expression">
+                   [routerLink]="['/gene', symbol]" fragment="expression">
                   {{ 'gene_page_title_expression' | translate }}
                 </a>
 
@@ -94,13 +94,13 @@
                     gene.terms.biological_process.lenght >= 1 ||
                     gene.terms.cellular_component.lenght >= 1 ||
                     gene.terms.molecular_activity.lenght >= 1"
-                   [routerLink]="['/gene', id]" fragment="terms">
+                   [routerLink]="['/gene', symbol]" fragment="terms">
                   Gene Ontology
                 </a>
 
                 <a mat-list-item
                    *ngIf="gene.commentsReferenceLinks.lenght > 1"
-                   [routerLink]="['/gene', id]" fragment="reference">
+                   [routerLink]="['/gene', symbol]" fragment="reference">
                   {{ 'gene_page_title_reference' | translate }}
                 </a>
               </mat-nav-list>
@@ -139,7 +139,7 @@
                       </div>
                     </div>
 
-                    <a href="http://disgenet.org/browser/1/1/0/{{gene.entrezGene}}/"
+                    <a href="http://disgenet.org/browser/1/1/0/{{gene.ncbiId}}/"
                        target="_blank"
                        title="{{ 'gene_page_link_disgenet' | translate }}"
                        class="col age__type age__diseases">
@@ -197,7 +197,7 @@
                   <h1>{{ 'gene_page_title_description' | translate }}</h1>
                 </div>
 
-                <div class="__w-100 articles__content" *ngIf="gene.aliases[0].length !== 0"> <!-- TODO: приходит массив с пустой строкой вместо пустого массива ("aliases":[""]) -->
+                <div class="__w-100 articles__content" *ngIf="gene.aliases.length !== 0">
                   <h3>{{ 'gene_page_title_aliases' | translate }}</h3>
                   <ng-container *ngFor="let item of gene.aliases">
                     <span class="alias">{{item}}</span>
@@ -273,7 +273,7 @@
                     </article>
                   </section>
 
-                  <section *ngIf="gene.researches.increaseLifespan">
+                  <section *ngIf="gene.researches.increaseLifespan.length !== 0">
                     <h3>{{ "gene_page_researches_lifespan" | translate }}</h3>
                     <div class="table-section __mt-20">
                       <table class="table">
@@ -326,7 +326,7 @@
                     </div>
                   </section>
 
-                  <section *ngIf="gene.researches.ageRelatedChangesOfGene">
+                  <section *ngIf="gene.researches.ageRelatedChangesOfGene.length !== 0">
                     <h3>{{ "gene_page_researches_age_related_changes" | translate }}</h3>
                     <div class="table-section __mt-20">
                       <table class="table">
@@ -375,7 +375,7 @@
                     </div>
                   </section>
 
-                  <section *ngIf="gene.researches.interventionToGeneImprovesVitalProcesses">
+                  <section *ngIf="gene.researches.interventionToGeneImprovesVitalProcesses.length !== 0">
                     <h3>{{ "gene_page_intervention" | translate }}</h3>
                     <div class="table-section __mt-20">
                       <table class="table">
@@ -426,7 +426,7 @@
                     </div>
                   </section>
 
-                  <section *ngIf="gene.researches.proteinRegulatesOtherGenes">
+                  <section *ngIf="gene.researches.proteinRegulatesOtherGenes.length !== 0">
                     <h3>{{ "gene_page_researches_protein_regulates_genes" | translate }}</h3>
                     <div class="table-section __mt-20">
                       <table class="table">
@@ -442,7 +442,7 @@
                             {{ object.proteinActivity }}
                           </td>
                           <td>
-                            <a href="gene/{{object.regulatedGene.id}}"
+                            <a href="gene/{{object.regulatedGene.symbol}}"
                                class="link"
                             >{{ object.regulatedGene.symbol }}</a>
                           </td>
@@ -457,7 +457,7 @@
                     </div>
                   </section>
 
-                  <section *ngIf="gene.researches.geneAssociatedWithProgeriaSyndromes">
+                  <section *ngIf="gene.researches.geneAssociatedWithProgeriaSyndromes.length !== 0">
                     <h3>{{ "gene_page_researches_progeria" | translate }}</h3>
                     <div class="table-section __mt-20">
                       <table class="table">
@@ -482,7 +482,7 @@
                     </div>
                   </section>
 
-                  <section *ngIf="gene.researches.geneAssociatedWithLongevityEffects">
+                  <section *ngIf="gene.researches.geneAssociatedWithLongevityEffects.length !== 0">
                     <h3>{{ "gene_page_researches_longevity_effects" | translate }}</h3>
                     <div class="table-section __mt-20">
                       <table class="table">
