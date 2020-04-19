@@ -20,15 +20,15 @@ export class ApiService {
   }
 
   getLastEditedGene(): Observable<Genes[]> {
-    return this.http.get<Genes[]>(`${this.url}/api/latest`);
+    return this.http.get<Genes[]>(`${this.url}/api/gene/latest`);
   }
 
   getGenesByFunctionalClusters(fc: number[]): Observable<Genes[]> {
-    return this.http.get<Genes[]>(`${this.url}/api/by-functional-cluster/${fc}?lang=${this.translate.currentLang}`);
+    return this.http.get<Genes[]>(`${this.url}/api/gene/by-functional-cluster/${fc}?lang=${this.translate.currentLang}`);
   }
 
   getGenesByExpressionChange(expression: string): Observable<Genes[]> {
-    return this.http.get<Genes[]>(`${this.url}/api/by-expression-change/${expression}?lang=${this.translate.currentLang}`);
+    return this.http.get<Genes[]>(`${this.url}/api/gene/by-expression-change/${expression}?lang=${this.translate.currentLang}`);
   }
 
   getGeneByHGNCsymbol(symbol: string): Observable<Gene[]> {

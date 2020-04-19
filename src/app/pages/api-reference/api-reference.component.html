@@ -21,7 +21,7 @@
           </p>
 
           <p>
-            <code>/api/</code> — получение общего списка всех занесенных в базу генов с краткой информацией по каждому гену:
+            <code>/api/gene/</code> — получение общего списка всех занесенных в базу генов с краткой информацией по каждому гену:
           </p>
 
           <app-code-block text=
@@ -99,13 +99,13 @@
           ></app-code-block>
 
           <p>
-            <code>/api/by-functional-cluster/&#60;id&#62;,&#60;id&#62;,...</code> — получение списка генов, принадлежащих одновременно ко всем перечисленным функциональным классам.
-            Структура ответа такая же, как в <code>/api/</code>.
+            <code>/api/gene/by-functional-cluster/&#60;id&#62;,&#60;id&#62;,...</code> — получение списка генов, принадлежащих одновременно ко всем перечисленным функциональным классам.
+            Структура ответа такая же, как в <code>/api/gene/</code>.
           </p>
 
           <p>
-            <code>/api/by-expression-change/&#60;expression-change&#62;</code> — получение списка генов, имеющих заданное значение изменения экспрессии с возрастом.
-            Структура ответа такая же, как в <code>/api/</code>.
+            <code>/api/gene/by-expression-change/&#60;expression-change&#62;</code> — получение списка генов, имеющих заданное значение изменения экспрессии с возрастом.
+            Структура ответа такая же, как в <code>/api/gene/</code>.
           </p>
         </article>
 
@@ -115,7 +115,7 @@
           </p>
 
           <p>
-            <code>/api/</code> — get general list of all genes in a base with short info on every gene:
+            <code>/api/gene/</code> — get general list of all genes in a base with short info on every gene:
           </p>
 
           <app-code-block text=
@@ -193,13 +193,13 @@
           ></app-code-block>
 
           <p>
-            <code>/api/by-functional-cluster/&#60;id&#62;,&#60;id&#62;,...</code> — get a list of genes belonging simultaneously to all functional classes listed by their id's.
-            The structure of response is the same as in <code>/api/</code>.
+            <code>/api/gene/by-functional-cluster/&#60;id&#62;,&#60;id&#62;,...</code> — get a list of genes belonging simultaneously to all functional classes listed by their id's.
+            The structure of response is the same as in <code>/api/gene/</code>.
           </p>
 
           <p>
-            <code>/api/by-expression-change/&#60;expression-change&#62;</code> — get a list of genes with the same value of age-related changes in expression.
-            The structure of response is the same as in <code>/api/</code>.
+            <code>/api/gene/by-expression-change/&#60;expression-change&#62;</code> — get a list of genes with the same value of age-related changes in expression.
+            The structure of response is the same as in <code>/api/gene/</code>.
           </p>
         </article>
       </section>
