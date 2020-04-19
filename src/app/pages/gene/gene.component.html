@@ -273,7 +273,7 @@
                     </article>
                   </section>
 
-                  <section *ngIf="gene.researches.increaseLifespan">
+                  <section *ngIf="gene.researches.increaseLifespan.length !== 0">
                     <h3>{{ "gene_page_researches_lifespan" | translate }}</h3>
                     <div class="table-section __mt-20">
                       <table class="table">
@@ -326,7 +326,7 @@
                     </div>
                   </section>
 
-                  <section *ngIf="gene.researches.ageRelatedChangesOfGene">
+                  <section *ngIf="gene.researches.ageRelatedChangesOfGene.length !== 0">
                     <h3>{{ "gene_page_researches_age_related_changes" | translate }}</h3>
                     <div class="table-section __mt-20">
                       <table class="table">
@@ -375,7 +375,7 @@
                     </div>
                   </section>
 
-                  <section *ngIf="gene.researches.interventionToGeneImprovesVitalProcesses">
+                  <section *ngIf="gene.researches.interventionToGeneImprovesVitalProcesses.length !== 0">
                     <h3>{{ "gene_page_intervention" | translate }}</h3>
                     <div class="table-section __mt-20">
                       <table class="table">
@@ -426,7 +426,7 @@
                     </div>
                   </section>
 
-                  <section *ngIf="gene.researches.proteinRegulatesOtherGenes">
+                  <section *ngIf="gene.researches.proteinRegulatesOtherGenes.length !== 0">
                     <h3>{{ "gene_page_researches_protein_regulates_genes" | translate }}</h3>
                     <div class="table-section __mt-20">
                       <table class="table">
@@ -457,7 +457,7 @@
                     </div>
                   </section>
 
-                  <section *ngIf="gene.researches.geneAssociatedWithProgeriaSyndromes">
+                  <section *ngIf="gene.researches.geneAssociatedWithProgeriaSyndromes.length !== 0">
                     <h3>{{ "gene_page_researches_progeria" | translate }}</h3>
                     <div class="table-section __mt-20">
                       <table class="table">
@@ -482,7 +482,7 @@
                     </div>
                   </section>
 
-                  <section *ngIf="gene.researches.geneAssociatedWithLongevityEffects">
+                  <section *ngIf="gene.researches.geneAssociatedWithLongevityEffects.length !== 0">
                     <h3>{{ "gene_page_researches_longevity_effects" | translate }}</h3>
                     <div class="table-section __mt-20">
                       <table class="table">

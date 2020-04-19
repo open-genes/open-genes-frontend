@@ -36,11 +36,12 @@ export class GeneComponent implements OnInit, OnDestroy {
       this.gene.commentCause[0].length !== 0 ||
       this.gene.commentAging ||
       this.gene.commentsReferenceLinks ||
-      this.gene.researches.increaseLifespan ||
-      this.gene.researches.geneAssociatedWithProgeriaSyndromes ||
-      this.gene.researches.geneAssociatedWithLongevityEffects ||
-      this.gene.researches.ageRelatedChangesOfGene ||
-      this.gene.researches.interventionToGeneImprovesVitalProcesses ||
+      this.gene.researches.increaseLifespan !== 0 ||
+      this.gene.researches.ageRelatedChangesOfGene.length !== 0 ||
+      this.gene.researches.interventionToGeneImprovesVitalProcesses.length !== 0 ||
+      this.gene.researches.proteinRegulatesOtherGenes.length !== 0 ||
+      this.gene.researches.geneAssociatedWithProgeriaSyndromes.length !== 0 ||
+      this.gene.researches.geneAssociatedWithLongevityEffects.length !== 0 ||
       this.gene.expression.length !== 0 ||
       this.gene.terms);
   }
