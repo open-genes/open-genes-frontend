@@ -7,7 +7,7 @@ export interface Genes {
   symbol: string;
   aliases: string[];
   name: string;
-  entrezGene: number;
+  ncbiId: number;
   uniprot: string;
   functionalClusters: string | string[];
   expressionChange: any;
@@ -20,7 +20,7 @@ export interface Gene {
   symbol: string;
   aliases: string[];
   name: string;
-  entrezGene: number;
+  ncbiId: number;
   uniprot: string;
   functionalClusters: string | string[];
   origin: Origin;

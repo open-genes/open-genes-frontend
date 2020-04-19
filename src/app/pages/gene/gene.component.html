@@ -15,7 +15,7 @@
                class="badge __brand-color-geneage"
             >GeneAge</a>
 
-            <a href="https://www.ncbi.nlm.nih.gov/gene/{{gene.entrezGene}}"
+            <a href="https://www.ncbi.nlm.nih.gov/gene/{{gene.ncbiId}}"
                target="_blank"
                title="{{ 'link_entrez' | translate }}"
                class="badge __brand-color-entrez"
@@ -139,7 +139,7 @@
                       </div>
                     </div>
 
-                    <a href="http://disgenet.org/browser/1/1/0/{{gene.entrezGene}}/"
+                    <a href="http://disgenet.org/browser/1/1/0/{{gene.ncbiId}}/"
                        target="_blank"
                        title="{{ 'gene_page_link_disgenet' | translate }}"
                        class="col age__type age__diseases">
