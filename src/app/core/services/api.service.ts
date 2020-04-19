@@ -20,7 +20,7 @@ export class ApiService {
   }
 
   getLastEditedGene(): Observable<Genes[]> {
-    return this.http.get<Genes[]>(`${this.url}/api/gene/latest`);
+    return this.http.get<Genes[]>(`${this.url}/api/gene/by-latest`);
   }
 
   getGenesByFunctionalClusters(fc: number[]): Observable<Genes[]> {
