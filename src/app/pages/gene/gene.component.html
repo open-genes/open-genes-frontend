@@ -197,7 +197,7 @@
                   <h1>{{ 'gene_page_title_description' | translate }}</h1>
                 </div>
 
-                <div class="__w-100 articles__content" *ngIf="gene.aliases[0].length !== 0"> <!-- TODO: приходит массив с пустой строкой вместо пустого массива ("aliases":[""]) -->
+                <div class="__w-100 articles__content" *ngIf="gene.aliases.length !== 0">
                   <h3>{{ 'gene_page_title_aliases' | translate }}</h3>
                   <ng-container *ngFor="let item of gene.aliases">
                     <span class="alias">{{item}}</span>
