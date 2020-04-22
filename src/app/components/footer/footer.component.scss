@@ -9,16 +9,16 @@
   background-color: $color-indent;
   color: #fff;
 
-  ::ng-deep .flex-subcontainer {
+  .flex-subcontainer {
     align-self: center;
   }
 
-  ::ng-deep .link {
+  .link {
     color: #fff;
-    text-decoration: underline;
+    margin-right: 1em;
   }
 
-  ::ng-deep .footer__language {
+  .footer__language {
     text-align: right;
     color: $color-indent;
   }
