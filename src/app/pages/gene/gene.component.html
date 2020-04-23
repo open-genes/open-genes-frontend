@@ -72,7 +72,7 @@
                 </a>
 
                 <a mat-list-item
-                   *ngIf="gene.commentCause[0].length !== 0"
+                   *ngIf="gene.commentCause.length !== 0"
                    [routerLink]="['/gene', symbol]" fragment="cause">
                   {{ 'gene_page_title_criteria' | translate }}
                 </a>
@@ -91,15 +91,15 @@
 
                 <a mat-list-item
                    *ngIf="
-                    gene.terms.biological_process.lenght >= 1 ||
-                    gene.terms.cellular_component.lenght >= 1 ||
-                    gene.terms.molecular_activity.lenght >= 1"
+                    gene.terms.biological_process.length >= 1 ||
+                    gene.terms.cellular_component.length >= 1 ||
+                    gene.terms.molecular_activity.length >= 1"
                    [routerLink]="['/gene', symbol]" fragment="terms">
                   Gene Ontology
                 </a>
 
                 <a mat-list-item
-                   *ngIf="gene.commentsReferenceLinks.lenght > 1"
+                   *ngIf="gene.commentsReferenceLinks.length > 1"
                    [routerLink]="['/gene', symbol]" fragment="reference">
                   {{ 'gene_page_title_reference' | translate }}
                 </a>
@@ -257,7 +257,7 @@
                     </article>
                   </section>
 
-                  <section *ngIf="gene.commentCause[0].length !== 0"> <!-- TODO: приходит массив с пустой строкой вместо пустого массива ("commentCause":[""]) -->
+                  <section *ngIf="gene.commentCause.length !== 0">
                     <h3>{{ 'gene_page_title_criteria' | translate }}</h3>
                     <article id="cause">
                       <ul class="list list--bulletted">
