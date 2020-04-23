@@ -33,10 +33,10 @@ export class GeneComponent implements OnInit, OnDestroy {
   public isContent() {
     return !!(this.gene.commentEvolution ||
       this.gene.commentFunction ||
-      this.gene.commentCause[0].length !== 0 ||
+      this.gene.commentCause.length !== 0 ||
       this.gene.commentAging ||
       this.gene.commentsReferenceLinks ||
-      this.gene.researches.increaseLifespan !== 0 ||
+      this.gene.researches.increaseLifespan.length !== 0 ||
       this.gene.researches.ageRelatedChangesOfGene.length !== 0 ||
       this.gene.researches.interventionToGeneImprovesVitalProcesses.length !== 0 ||
       this.gene.researches.proteinRegulatesOtherGenes.length !== 0 ||
