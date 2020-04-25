@@ -534,12 +534,8 @@
 
                         <article>
                           <ul class="list list--bulletted">
-                            <li *ngFor="let term of gene.terms.biological_process">
-                              <ng-container *ngFor="let Object of term | keyvalue">
-                                <ng-container *ngFor="let object of Object | toArray">
-                                  {{ object }}
-                                </ng-container>
-                              </ng-container>
+                            <li *ngFor="let term of this.geneOntologyProcess | keyvalue">
+                              <span class="alias">{{ term.key }}</span> {{ term.value }}
                             </li>
                           </ul>
                         </article>

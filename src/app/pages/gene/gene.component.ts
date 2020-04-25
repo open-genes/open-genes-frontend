@@ -11,22 +11,36 @@ import {Gene} from '../../core/models';
 })
 
 export class GeneComponent implements OnInit, OnDestroy {
-  public symbol: string;
-  private subscription: Subscription;
-  public gene: any;
 
   constructor(private activateRoute: ActivatedRoute,
               private apiService: ApiService) {
     this.subscription = activateRoute.params.subscribe(params => this.symbol = params.id);
   }
+  public symbol: string;
+  private subscription: Subscription;
+  public gene: any;
+  public geneOntologyProcess: any;
+
+  static toMap(object) {
+    const mappedObj = new Map();
+    for (const element of object) {
+      for (const [key, value] of Object.entries(element)) {
+        mappedObj.set(key, value);
+      }
+    }
+    return mappedObj;
+    // console.log(mappedObj);
+  }
 
   ngOnInit() {
     this.getGene();
+    // console.log(this.geneOntologyProcess);
   }
 
   private getGene() {
     this.apiService.getGeneByHGNCsymbol(this.symbol).subscribe((geneInterface) => {
       this.gene = geneInterface;
+      this.geneOntologyProcess = GeneComponent.toMap(this.gene.terms.biological_process);
     });
   }
 
