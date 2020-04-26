@@ -515,6 +515,17 @@
                     </div>
                   </section>
 
+                  <section *ngIf="gene.orthologs.length !== 0"
+                           id="orthologs">
+                    <h3>{{ "gene_page_title_orthologs" | translate }}</h3>
+
+                    <ul class="list">
+                      <li *ngFor="let item of gene.orthologs | keyvalue">
+                        <span class="alias">{{ item.key }}</span> {{ item.value }}
+                      </li>
+                    </ul>
+                  </section>
+
                   <section
                     *ngIf="
                     gene.terms.biological_process.length >= 1 ||
@@ -534,7 +545,7 @@
 
                         <article>
                           <ul class="list">
-                            <li *ngFor="let term of this.geneOntologyProcess | keyvalue">
+                            <li *ngFor="let term of this.geneOntologyProcessMap | keyvalue">
                               <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
                                  title="QuickGO"
                                  class="alias">{{ term.key | zero }}</a> {{ term.value }}
@@ -551,7 +562,7 @@
 
                         <article>
                           <ul class="list">
-                            <li *ngFor="let term of this.geneOntologyComponent | keyvalue">
+                            <li *ngFor="let term of this.geneOntologyComponentMap | keyvalue">
                               <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
                                  title="QuickGO"
                                  class="alias">{{ term.key | zero }}</a> {{ term.value }}
@@ -568,7 +579,7 @@
 
                         <article>
                           <ul class="list">
-                            <li *ngFor="let term of this.geneOntologyActivity | keyvalue">
+                            <li *ngFor="let term of this.geneOntologyActivityMap | keyvalue">
                               <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
                                  title="QuickGO"
                                  class="alias">{{ term.key | zero }}</a> {{ term.value }}
