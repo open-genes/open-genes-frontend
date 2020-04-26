@@ -11,13 +11,27 @@ import {Gene} from '../../core/models';
 })
 
 export class GeneComponent implements OnInit, OnDestroy {
-  public symbol: string;
-  private subscription: Subscription;
-  public gene: any;
 
   constructor(private activateRoute: ActivatedRoute,
               private apiService: ApiService) {
     this.subscription = activateRoute.params.subscribe(params => this.symbol = params.id);
+  }
+
+  public symbol: string;
+  private subscription: Subscription;
+  public gene: any;
+  public geneOntologyProcessMap: Map<string, string>;
+  public geneOntologyComponentMap: Map<string, string>;
+  public geneOntologyActivityMap: Map<string, string>;
+
+  static toMap(object) {
+    const mappedObj = new Map();
+    for (const element of object) {
+      for (const [key, value] of Object.entries(element)) {
+        mappedObj.set(key, value);
+      }
+    }
+    return mappedObj;
   }
 
   ngOnInit() {
@@ -27,6 +41,10 @@ export class GeneComponent implements OnInit, OnDestroy {
   private getGene() {
     this.apiService.getGeneByHGNCsymbol(this.symbol).subscribe((geneInterface) => {
       this.gene = geneInterface;
+      this.geneOntologyProcessMap = GeneComponent.toMap(this.gene.terms.biological_process);
+      this.geneOntologyComponentMap = GeneComponent.toMap(this.gene.terms.cellular_component);
+      this.geneOntologyActivityMap = GeneComponent.toMap(this.gene.terms.molecular_activity);
+      console.log(this.gene.orthologs);
     });
   }
 
@@ -43,6 +61,7 @@ export class GeneComponent implements OnInit, OnDestroy {
       this.gene.researches.geneAssociatedWithProgeriaSyndromes.length !== 0 ||
       this.gene.researches.geneAssociatedWithLongevityEffects.length !== 0 ||
       this.gene.expression.length !== 0 ||
+      this.gene.orthologs.length !== 0 ||
       this.gene.terms);
   }
 
