@@ -516,6 +516,10 @@ ul, ol {
     li {
       width: 100%;
       position: relative;
+
+      .alias {
+        vertical-align: top;
+      }
     }
 
     li + li {

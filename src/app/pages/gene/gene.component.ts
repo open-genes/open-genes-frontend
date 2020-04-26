@@ -19,7 +19,9 @@ export class GeneComponent implements OnInit, OnDestroy {
   public symbol: string;
   private subscription: Subscription;
   public gene: any;
-  public geneOntologyProcess: any;
+  public geneOntologyProcess: Map<string, string>;
+  public geneOntologyComponent: Map<string, string>;
+  public geneOntologyActivity: Map<string, string>;
 
   static toMap(object) {
     const mappedObj = new Map();
@@ -41,6 +43,8 @@ export class GeneComponent implements OnInit, OnDestroy {
     this.apiService.getGeneByHGNCsymbol(this.symbol).subscribe((geneInterface) => {
       this.gene = geneInterface;
       this.geneOntologyProcess = GeneComponent.toMap(this.gene.terms.biological_process);
+      this.geneOntologyComponent = GeneComponent.toMap(this.gene.terms.cellular_component);
+      this.geneOntologyActivity = GeneComponent.toMap(this.gene.terms.molecular_activity);
     });
   }
 
