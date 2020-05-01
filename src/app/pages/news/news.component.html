@@ -1,0 +1,30 @@
+<div class="page">
+  <div class="page__inner">
+    <div class="about-page__header wrapper">
+      <div class="container">
+        <div class="col col-16">
+          <div class="page__title">
+            <h1>News</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="col col-16">
+        <app-news-list
+          [genesList]="genes"
+          [limit]="loadPortion"
+          *ngIf="genes"
+        ></app-news-list>
+      </div>
+      <div class="col col-16 __mt-15">
+        <button mat-flat-button
+                color="primary"
+                class="__w-100"
+                (click)="loadMore(5)"
+        >Еще</button>
+      </div>
+    </div>
+  </div>
+</div>

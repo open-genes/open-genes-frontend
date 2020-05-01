@@ -16,7 +16,7 @@ export class ApiService {
   }
 
   getGenes(): Observable<Genes[]> {
-    return this.http.get<Genes[]>(`${this.url}/api?lang=${this.translate.currentLang}`);
+    return this.http.get<Genes[]>(`${this.url}/api/gene?lang=${this.translate.currentLang}`);
   }
 
   getLastEditedGene(): Observable<Genes[]> {
@@ -27,7 +27,7 @@ export class ApiService {
     return this.http.get<Genes[]>(`${this.url}/api/gene/by-functional-cluster/${fc}?lang=${this.translate.currentLang}`);
   }
 
-  getGenesByExpressionChange(expression: string): Observable<Genes[]> {
+  getGenesByExpressionChange(expression: number): Observable<Genes[]> {
     return this.http.get<Genes[]>(`${this.url}/api/gene/by-expression-change/${expression}?lang=${this.translate.currentLang}`);
   }
 

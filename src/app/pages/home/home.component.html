@@ -24,10 +24,18 @@
           <div class="per sidebar sidebar--left sidebar--mb-btm">
             <div class="sidebar__inner">
               <div class="sidebar__item sidebar__item--desktop-50">
-                <app-news
-                  [genes]="genes"
+                <div class="page__subtitle view-latest__title">
+                  <a href="/news"
+                     class="link link--gray"
+                  >
+                    {{ 'news_list_title' | translate }}
+                  </a>
+                </div>
+                <app-news-list
+                  [genesList]="genes"
+                  [limit]="3"
                   *ngIf="genes"
-                ></app-news>
+                ></app-news-list>
               </div>
               <div class="sidebar__item sidebar__item--desktop-50">
                 <app-mini-cards

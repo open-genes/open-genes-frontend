@@ -6,16 +6,15 @@ import {HOME_ROUTES} from './home-routing';
 import {GenesListModule} from '../../modules/genes-list/genes-list.module';
 import {MiniCardsComponent} from '../../components/mini-cards/mini-cards.component';
 import {TranslateModule} from '@ngx-translate/core';
-import {NewsComponent} from '../../components/news/news.component';
 import {NgStripTagsPipeModule} from 'angular-pipes';
 import {PipesModule} from '../../modules/pipes/pipes.module';
 import {MatButtonModule} from '@angular/material/button';
+import {NewsListModule} from '../../components/news-list/news-list.module';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    MiniCardsComponent,
-    NewsComponent,
+    MiniCardsComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +23,8 @@ import {MatButtonModule} from '@angular/material/button';
     TranslateModule,
     NgStripTagsPipeModule,
     PipesModule,
-    MatButtonModule
+    MatButtonModule,
+    NewsListModule,
   ],
   exports: [
     PipesModule

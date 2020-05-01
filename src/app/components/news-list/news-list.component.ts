@@ -6,13 +6,13 @@ import {finalize, switchMap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 
 @Component({
-  selector: 'app-news',
-  templateUrl: './news.component.html',
-  styleUrls: ['./news.component.scss']
+  selector: 'app-news-list',
+  templateUrl: './news-list.component.html',
+  styleUrls: ['./news-list.component.scss']
 })
-export class NewsComponent implements OnInit {
-
-  @Input() genes: Genes[];
+export class NewsListComponent implements OnInit {
+  @Input() genesList: Genes[];
+  @Input() limit: number;
   newsList: News[];
   isLoading: boolean;
   error: number;
@@ -23,22 +23,22 @@ export class NewsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getNews();
+    this.getNewsList(this.limit);
   }
 
-  private getNews() {
+  private getNewsList(limit) {
     let symbolsQuery = '';
-    const filteredGenes = this.genes.filter((gene: Genes) => gene.functionalClusters.length > 2 ? true : false);
+    const filteredGenes = this.genesList.filter((gene: Genes) => gene.functionalClusters.length > 2);
     filteredGenes.forEach((gene: Genes, index: number, array: Genes[]) => {
       symbolsQuery += `${gene.symbol}[Title]`;
       symbolsQuery += index < array.length - 1 ? '+OR+' : '';
     });
-    this.pubmedApiService.getNewsList(symbolsQuery).pipe(
+    this.pubmedApiService.getNewsList(symbolsQuery, limit).pipe(
       switchMap(news => {
         return this.pubmedApiService.getNewsData(
           news.esearchresult.idlist
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 3)
+            // .sort(() => Math.random() - 0.5)
+            .slice(0, limit)
         );
       }),
       finalize(() => {
