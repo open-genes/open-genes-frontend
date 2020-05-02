@@ -4,12 +4,14 @@ import { SafePipe } from './safe.pipe';
 import { StripTagsPipe } from './strip-tags.pipe';
 import {SplitByPipe} from './split-by.pipe';
 import {ZeroPadding} from './zero-padding.pipe';
+import {LocalizedDatePipe} from './i18n-date.pipe';
 
 const PIPES = [
   SafePipe,
   StripTagsPipe,
   SplitByPipe,
-  ZeroPadding
+  ZeroPadding,
+  LocalizedDatePipe
 ];
 
 @NgModule({

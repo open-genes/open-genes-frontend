@@ -18,12 +18,10 @@
           *ngIf="genes"
         ></app-news-list>
       </div>
-      <div class="col col-16 __mt-15">
-        <button mat-flat-button
-                color="primary"
-                class="__w-100"
+      <div class="col col-16 __mt-15 btn-wrap show-more">
+        <button class="btn show-more__button"
                 (click)="loadMore(5)"
-        >Еще</button>
+        >{{ 'show_more' | translate }}</button>
       </div>
     </div>
   </div>

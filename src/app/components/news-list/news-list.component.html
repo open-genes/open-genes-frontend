@@ -11,6 +11,13 @@
        class="item__title link link--gray"
        target="_blank"
     >{{item.title | stripTags}}</a>
+
+    <span class="" *ngIf="translate.currentLang==='ru'">
+      {{item.date | localizedDate:'d MMMM'}}
+    </span>
+    <span class="" *ngIf="translate.currentLang==='en'">
+      {{item.date | localizedDate:'d MMMM'}}
+    </span>
   </li>
 </ul>
 
