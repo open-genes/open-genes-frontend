@@ -13,7 +13,6 @@ export class LocalizedDatePipe implements PipeTransform {
 
   transform(value: any, pattern: string = 'mediumDate'): any {
     const datePipe: DatePipe = new DatePipe(this.translate.currentLang);
-    console.log(this.translate.currentLang);
     return datePipe.transform(value, pattern);
   }
 }

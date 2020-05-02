@@ -7,24 +7,26 @@
          class="alias">{{item.gene?.symbol}}</a>
     </div>
 
-    <a href="{{item.url}}"
-       class="item__title link link--gray"
-       target="_blank"
-    >{{item.title | stripTags}}</a>
+    <div class="item__title">
+      <a href="{{item.url}}"
+         class="item__caption link link--gray"
+         target="_blank"
+      >{{item.title | stripTags}}</a>
 
-    <span class="" *ngIf="translate.currentLang==='ru'">
-      {{item.date | localizedDate:'d MMMM'}}
-    </span>
-    <span class="" *ngIf="translate.currentLang==='en'">
-      {{item.date | localizedDate:'d MMMM'}}
-    </span>
+      <div class="item__date" *ngIf="translate.currentLang==='ru'">
+        {{item.date | localizedDate:'d MMMM'}}
+      </div>
+      <div class="item__date" *ngIf="translate.currentLang==='en'">
+        {{item.date | localizedDate:'d MMMM'}}
+      </div>
+    </div>
   </li>
 </ul>
 
 <app-loader-placeholder
   *ngIf="isLoading || error"
   type="skeleton"
-  [groups]="2"
+  [groups]="limit"
 ></app-loader-placeholder>
 
 

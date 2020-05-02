@@ -30,7 +30,6 @@ export class NewsComponent implements OnInit {
 
   public loadMore(portion: number) {
     if (portion) {
-      console.log(this.loadPortion);
       return this.loadPortion += portion;
     }
   }
