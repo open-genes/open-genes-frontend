@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnChanges, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, Output} from '@angular/core';
 
 import {ApiService} from '../../core/services/api.service';
 import {Genes, Filter} from '../../core/models';
@@ -16,9 +16,10 @@ export class HomeComponent implements OnInit {
   error: number;
 
   private expressionTranslates = { // TODO: убрать хардкод
-    уменьшается: 'decreased',
-    увеличивается: 'increased',
-    неоднозначно: 'mixed'
+    0: 'no data',
+    1: 'decreased',
+    2: 'increased',
+    3: 'mixed'
   };
 
   constructor(
@@ -60,11 +61,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  public filterByExpressionChange(expression: string) {
+  public filterByExpressionChange(expression: number) {
     if (expression) {
-      if (this.translate.currentLang === 'ru') {
-        expression = this.expressionTranslates[expression];
-      }
       this.apiService.getGenesByExpressionChange(expression).subscribe(genes => {
         this.genes = genes;
       }, error => this.error = error);

@@ -10,32 +10,40 @@
 
 .news {
   display: inline-block;
-  font-size: 14px;
-  margin-top: 5px;
+  font-size: 1em;
+  margin-top: .3em;
 
   &__item {
     display: flex;
     flex-flow: row wrap;
     align-items: flex-start;
     width: 100%;
+    padding: .5em 5% .5em 0;
 
     .item__gene {
       flex: 0 1;
-      padding: 2px 5px 0 0;
+      padding-right: .3em;
     }
 
     .item__title {
       flex: 4 0 210px; // внутренняя ширина .sidebar - минимальная ширина заголовка
       flex-flow: row wrap;
-      font-size: $font-size-smaller;
+      font-size: .92em;
       white-space: normal;
       word-break: break-word;
       hyphens: auto;
-      margin-top: 4px;
+    }
+
+    // .item__caption { }
+
+    .item__date {
+      font-size: .85em;
+      color: $color-gray-halfing;
+      margin-top: 1ex;
     }
 
     & + & {
-      margin-top: 15px;
+      border-top: 1px solid $color-border-light;
     }
   }
 }

@@ -9,15 +9,14 @@ import {environment} from '../../../environments/environment';
 export class PubmedApiService {
 
   private url = environment.pubmedApiUrl;
-  private limit = 3;
   private params = 'db=pubmed&retmode=json';
 
   constructor(private http: HttpClient) {
   }
 
-  public getNewsList(symbols: string): Observable<any> {
+  public getNewsList(symbols: string, limit: number): Observable<any> {
     // tslint:disable-next-line:max-line-length
-    return this.http.get(`${this.url}/esearch.fcgi?${this.params}&retmax=${this.limit}&term=${symbols}&datetype=pdat&reldate=180`);
+    return this.http.get(`${this.url}/esearch.fcgi?${this.params}&retmax=${limit}&term=${symbols}&datetype=pdat&reldate=180`);
   }
 
   public getNewsData(id: number): Observable<any> {

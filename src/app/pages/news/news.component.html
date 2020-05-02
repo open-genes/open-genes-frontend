@@ -1,0 +1,31 @@
+<div class="page">
+  <div class="page__inner">
+    <div class="text-page__header wrapper">
+      <div class="container">
+        <div class="col col-16">
+          <div class="page__title">
+            <h1>{{ 'news_page_title' | translate }}</h1>
+          </div>
+          <div class="header__description">
+            <h1>{{ 'news_page_description' | translate }}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="col col-16 news-page__news">
+        <app-news-list
+          [genesList]="genes"
+          [limit]="loadPortion"
+          *ngIf="genes"
+        ></app-news-list>
+      </div>
+      <div class="col col-16 __mt-15 btn-wrap show-more">
+        <button class="btn show-more__button"
+                (click)="loadMore(5)"
+        >{{ 'show_more' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>

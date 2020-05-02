@@ -117,6 +117,8 @@
   "nothing_found": "Ничего не найдено",
   "show_more": "Показать еще",
   "news_list_title": "Новые публикации на PubMed",
+  "news_page_title": "Новости",
+  "news_page_description": "Новые публикации на PubMed по генам, представленным в базе",
   "language_en": "English",
   "language_ru": "Русский",
   "gene_ontology_biological_process": "Биологический процесс",

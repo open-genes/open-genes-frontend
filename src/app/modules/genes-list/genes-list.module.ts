@@ -9,16 +9,15 @@ import { SearchModule } from '../search/search.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { DirectivesModule } from '../../directives/directives.module';
 // import { GenesListService } from './genes-list.service';
-import { LoaderPlaceholderComponent } from '../../components/loader-placeholder/loader-placeholder.component';
-import {MatMenuModule} from "@angular/material/menu";
-import {MatIconModule} from "@angular/material/icon";
-import {MatButtonModule} from "@angular/material/button";
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {LoaderPlaceholderModule} from "../../components/loader-placeholder/loader-placeholder.module";
 
 @NgModule({
   declarations: [
     GenesListComponent,
-    SearchComponent,
-    LoaderPlaceholderComponent
+    SearchComponent
   ],
   imports: [
     CommonModule,
@@ -30,14 +29,11 @@ import {MatButtonModule} from "@angular/material/button";
     DirectivesModule,
     MatMenuModule,
     MatIconModule,
-    MatButtonModule
-  ],
-  providers: [
-    // GenesListService
+    MatButtonModule,
+    LoaderPlaceholderModule
   ],
   exports: [
-    GenesListComponent,
-    LoaderPlaceholderComponent
+    GenesListComponent
   ]
 })
 export class GenesListModule { }

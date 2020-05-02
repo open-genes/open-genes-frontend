@@ -24,22 +24,3 @@
     }
   }
 }
-
-.show-more {
-  &__button {
-    width: 100%;
-    $btn-height: 35px;
-    height: $btn-height;
-    line-height: ($btn-height - 2px);
-    padding: 0 10px;
-    font-size: 14px;
-    font-weight: $font-weight-medium;
-    color: $color-general;
-    background-color: lighten($color-hover, 3%);
-    border: 1px solid $color-borders-active;
-
-    &:hover {
-      background-color: $color-hover;
-    }
-  }
-}

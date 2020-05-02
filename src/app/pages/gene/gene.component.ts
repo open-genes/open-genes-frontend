@@ -44,7 +44,6 @@ export class GeneComponent implements OnInit, OnDestroy {
       this.geneOntologyProcessMap = GeneComponent.toMap(this.gene.terms.biological_process);
       this.geneOntologyComponentMap = GeneComponent.toMap(this.gene.terms.cellular_component);
       this.geneOntologyActivityMap = GeneComponent.toMap(this.gene.terms.molecular_activity);
-      console.log(this.gene.orthologs);
     });
   }
 
