@@ -28,7 +28,7 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
     this.filters = {
       byName: false,
       byAge: false,
-      byExpressionChange: null,
+      byExpressionChange: 0, // !
       byClasses: []
     };
     this.genesListService.register(this);
@@ -99,14 +99,25 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
     this.filterCluster.emit(this.filters.byClasses);
   }
 
-  filterByExpressionChange(expression: string) {
+  filterByExpressionChange(expression: number) {
     if (this.filters.byExpressionChange !== expression) {
       this.filters.byExpressionChange = expression;
     } else {
-      this.filters.byExpressionChange = null;
+      this.filters.byExpressionChange = 0; // !
     }
     this.isLoading = true;
-    this.filterExpression.emit(this.filters.byExpressionChange);
+    this.filterExpression.emit(this.filters.byExpressionChange); // !
+  }
+
+  public getExpressionLocaleKey(expression: number) {
+    const expressionTranslations = new Map([
+      [0, 'expression_change_no_data'],
+      [1, 'expression_change_decreased'],
+      [2, 'expression_change_increased'],
+      [3, 'expression_change_mixed']
+    ]);
+
+    return expressionTranslations.get(expression);
   }
 
   /**
@@ -118,7 +129,7 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
         byName: false,
         byAge: false,
         byClasses: [],
-        byExpressionChange: null
+        byExpressionChange: 0 // !
       };
       this.filtersCleared.emit();
     } else if (filter === 'name') {
@@ -131,7 +142,7 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
       this.filters.byClasses = [];
       this.filtersCleared.emit();
     } else if (filter === 'expressionChange') {
-      this.filters.byExpressionChange = null;
+      this.filters.byExpressionChange = 0; // !
       this.filtersCleared.emit();
     }
   }

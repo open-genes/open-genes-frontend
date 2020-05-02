@@ -123,5 +123,9 @@
   "language_ru": "Русский",
   "gene_ontology_biological_process": "Биологический процесс",
   "gene_ontology_cellular_component": "Клеточный компонент",
-  "gene_ontology_biological_molecular_activity": "Молекулярное взаимодействие"
+  "gene_ontology_biological_molecular_activity": "Молекулярное взаимодействие",
+  "expression_change_no_data": "Нет данных",
+  "expression_change_decreased": "Снижается",
+  "expression_change_increased": "Повышается",
+  "expression_change_mixed": "Неоднозначно"
 }

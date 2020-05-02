@@ -15,13 +15,6 @@ export class HomeComponent implements OnInit {
   filters: Filter;
   error: number;
 
-  private expressionTranslates = { // TODO: убрать хардкод
-    0: 'no data',
-    1: 'decreased',
-    2: 'increased',
-    3: 'mixed'
-  };
-
   constructor(
     private readonly apiService: ApiService,
     private readonly translate: TranslateService
@@ -30,7 +23,7 @@ export class HomeComponent implements OnInit {
       byName: false,
       byAge: false,
       byClasses: [],
-      byExpressionChange: null
+      byExpressionChange: 0 // !
     };
   }
 

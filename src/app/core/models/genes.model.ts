@@ -10,7 +10,7 @@ export interface Genes {
   ncbiId: number;
   uniprot: string;
   functionalClusters: string | string[];
-  expressionChange: any;
+  expressionChange?: number;
   origin: Origin;
   homologueTaxon: string;
 }
