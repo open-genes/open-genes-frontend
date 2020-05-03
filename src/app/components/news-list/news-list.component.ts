@@ -15,6 +15,8 @@ import {Subject} from 'rxjs';
 export class NewsListComponent implements OnInit, OnChanges {
   @Input() genesList: Genes[];
   @Input() limit;
+  @Input() showDates = false;
+
   newsList: News[];
   isLoading: boolean;
   error: number;
