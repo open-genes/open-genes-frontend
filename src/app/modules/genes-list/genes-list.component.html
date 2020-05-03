@@ -120,13 +120,13 @@
           </div>
         </div>
         <div class="td cell td-expression">
-          <span class="td__label" *ngIf="data.expressionChange">
+          <span class="td__label">
             {{ 'main_page_table_expression' | translate }}
           </span>
           <button class="tag"
-                *ngIf="data.expressionChange"
+                  name="{{ data.expressionChange }}"
                 (click)="filterByExpressionChange(data.expressionChange)"
-                [class.__active]="filters.byExpressionChange === data.expressionChange"
+                [class.__active]="(filters.byExpressionChange === data.expressionChange) && (data.expressionChange !== 0)"
           >
             <div class="tag__inner">{{ getExpressionLocaleKey(data.expressionChange) | translate }}</div>
           </button>
