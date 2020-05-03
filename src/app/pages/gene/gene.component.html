@@ -607,8 +607,11 @@
                           <ng-container *ngFor="let item of gene.expression">
                             <div class="expression__row">
                               <div class="row__name">{{item['name']}}</div>
-                              <div class="row__value" [class.row__value--minimum]="item['exp_rpkm'] < 2">
-                                <mat-progress-bar class="value__bar" [value]="item['exp_rpkm']"></mat-progress-bar>
+                              <div class="row__value" [class.row__value--minimum]="chartCalculatePercent(item['exp_rpkm'], this.expressionMaxValue) < 3">
+                                <mat-progress-bar
+                                  [value]="chartCalculatePercent(item['exp_rpkm'], this.expressionMaxValue)"
+                                  class="value__bar"
+                                ></mat-progress-bar>
                                 <div class="value__rpkm">{{item['exp_rpkm'] | number:'1.0-2'}} RPKM</div>
                               </div>
                             </div>
