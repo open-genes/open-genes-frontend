@@ -14,7 +14,7 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() dataSource: Genes[];
   @Output() filterCluster = new EventEmitter<number[]>();
-  @Output() filterExpression = new EventEmitter<string>();
+  @Output() filterExpression = new EventEmitter<number>();
   @Output() filtersCleared = new EventEmitter();
   searchedData: Genes[];
   genesPerPage = 30;

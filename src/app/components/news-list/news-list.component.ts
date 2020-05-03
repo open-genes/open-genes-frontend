@@ -1,10 +1,11 @@
-import {Component, Input, OnInit, OnChanges} from '@angular/core';
+import {Component, Input, Output, OnInit, OnChanges} from '@angular/core';
 import {PubmedApiService} from '../../core/services/pubmed.api.service';
 import {News} from '../../core/models/news.model';
 import {Genes} from '../../core/models';
 import {finalize, switchMap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateService} from '@ngx-translate/core';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-news-list',
@@ -13,12 +14,7 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class NewsListComponent implements OnInit, OnChanges {
   @Input() genesList: Genes[];
-  @Input() limit: number;
-
-  set currentPage(value: number) {
-    this.limit = value;
-  }
-
+  @Input() limit;
   newsList: News[];
   isLoading: boolean;
   error: number;
@@ -32,10 +28,13 @@ export class NewsListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.makeNewsList(this.limit);
   }
 
-  ngOnChanges() {
-    this.makeNewsList(this.limit);
+  ngOnChanges(changes) {
+    if (changes && changes.limit && changes.limit.currentValue > changes.limit.previousValue) {
+      this.makeNewsList(this.limit);
+    }
   }
 
   private makeNewsList(limit) {

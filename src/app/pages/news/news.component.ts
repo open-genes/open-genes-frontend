@@ -10,7 +10,7 @@ import {ApiService} from '../../core/services/api.service';
 export class NewsComponent implements OnInit {
   genes: Genes[];
   error: number;
-  @Output() loadPortion: number;
+  portion: number;
 
   constructor(
     private readonly apiService: ApiService,
@@ -18,7 +18,7 @@ export class NewsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadPortion = 10;
+    this.portion = 10;
     this.getGenes();
   }
 
@@ -30,7 +30,7 @@ export class NewsComponent implements OnInit {
 
   public loadMore(portion: number) {
     if (portion) {
-      return this.loadPortion += portion;
+      return this.portion += portion;
     }
   }
 }

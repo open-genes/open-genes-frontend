@@ -13,15 +13,23 @@
          target="_blank"
       >{{item.title | stripTags}}</a>
 
-      <div class="item__date" *ngIf="translate.currentLang==='ru'">
+      <div class="item__date" *ngIf="translate.currentLang === 'ru'">
         {{item.date | localizedDate:'d MMMM'}}
       </div>
-      <div class="item__date" *ngIf="translate.currentLang==='en'">
+      <div class="item__date" *ngIf="translate.currentLang === 'en'">
         {{item.date | localizedDate:'d MMMM'}}
       </div>
     </div>
   </li>
 </ul>
+
+<div
+  *ngIf="isAbleToList"
+  class="__mt-15 btn-wrap show-more">
+  <button class="btn show-more__button"
+          (click)="loadMore(listPortion)"
+  >{{ 'show_more' | translate }}</button>
+</div>
 
 <app-loader-placeholder
   *ngIf="isLoading || error"
