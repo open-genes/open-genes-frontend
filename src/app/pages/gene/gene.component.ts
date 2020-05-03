@@ -23,6 +23,7 @@ export class GeneComponent implements OnInit, OnDestroy {
   public geneOntologyProcessMap: Map<string, string>;
   public geneOntologyComponentMap: Map<string, string>;
   public geneOntologyActivityMap: Map<string, string>;
+  public expressionMaxValue: number;
 
   static toMap(object) {
     const mappedObj = new Map();
@@ -32,6 +33,14 @@ export class GeneComponent implements OnInit, OnDestroy {
       }
     }
     return mappedObj;
+  }
+
+  static chartMaxValue(object) {
+    const objArray = [];
+    for (const value of Object.values(object)) {
+      objArray.push(value['exp_rpkm']);
+    }
+    return Math.max(...objArray);
   }
 
   ngOnInit() {
@@ -44,7 +53,13 @@ export class GeneComponent implements OnInit, OnDestroy {
       this.geneOntologyProcessMap = GeneComponent.toMap(this.gene.terms.biological_process);
       this.geneOntologyComponentMap = GeneComponent.toMap(this.gene.terms.cellular_component);
       this.geneOntologyActivityMap = GeneComponent.toMap(this.gene.terms.molecular_activity);
+      this.expressionMaxValue = GeneComponent.chartMaxValue(this.gene.expression);
+      console.log(this.expressionMaxValue);
     });
+  }
+
+  public chartCalculatePercent(a: number, b: number) {
+    return (a / b) * 100;
   }
 
   public isContent() {
