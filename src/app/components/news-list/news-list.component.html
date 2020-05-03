@@ -1,0 +1,39 @@
+<ul class="news" *ngIf="!isLoading">
+  <li *ngFor="let item of newsList"
+      class="news__item"
+  >
+    <div class="item__gene">
+      <a [routerLink]="['/gene', item.gene?.symbol]"
+         class="alias">{{item.gene?.symbol}}</a>
+    </div>
+
+    <div class="item__title">
+      <a href="{{item.url}}"
+         class="item__caption link link--gray"
+         target="_blank"
+      >{{item.title | stripTags}}</a>
+
+      <ng-container *ngIf="showDates === true">
+      <div class="item__date" *ngIf="translate.currentLang === 'ru'">
+        {{item.date | localizedDate:'d MMMM'}}
+      </div>
+      <div class="item__date" *ngIf="translate.currentLang === 'en'">
+        {{item.date | localizedDate:'d MMMM'}}
+      </div>
+      </ng-container>
+    </div>
+  </li>
+</ul>
+
+<app-loader-placeholder
+  *ngIf="isLoading || error"
+  type="skeleton"
+  [groups]="limit"
+></app-loader-placeholder>
+
+
+
+
+
+
+

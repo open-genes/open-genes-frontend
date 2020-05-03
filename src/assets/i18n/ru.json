@@ -116,10 +116,17 @@
   "items_found": "Найдено:",
   "nothing_found": "Ничего не найдено",
   "show_more": "Показать еще",
+  "show_more_short": "Еще",
   "news_list_title": "Новые публикации на PubMed",
+  "news_page_title": "Новости",
+  "news_page_description": "Новые публикации на PubMed по генам, представленным в базе",
   "language_en": "English",
   "language_ru": "Русский",
   "gene_ontology_biological_process": "Биологический процесс",
   "gene_ontology_cellular_component": "Клеточный компонент",
-  "gene_ontology_biological_molecular_activity": "Молекулярное взаимодействие"
+  "gene_ontology_biological_molecular_activity": "Молекулярное взаимодействие",
+  "expression_change_no_data": "нет данных",
+  "expression_change_decreased": "снижается",
+  "expression_change_increased": "повышается",
+  "expression_change_mixed": "неоднозначно"
 }

@@ -46,7 +46,6 @@ export class HighlightDirective implements OnChanges, AfterViewInit {
         try {
           range.surroundContents(wrapper);
         } catch (e) {
-          // console.error(e);
         }
       }
     }

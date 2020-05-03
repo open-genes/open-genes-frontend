@@ -23,16 +23,28 @@
         <div class="flex-subcontainer">
           <div class="per sidebar sidebar--left sidebar--mb-btm">
             <div class="sidebar__inner">
-              <div class="sidebar__item sidebar__item--desktop-50">
-                <app-news
-                  [genes]="genes"
-                  *ngIf="genes"
-                ></app-news>
+              <div class="sidebar__item sidebar__item--desktop-50"
+                   *ngIf="genes"
+              >
+                <div class="sidebar__title">
+                  {{ 'news_list_title' | translate }}
+                  <a href="/news" class="link link--gray">
+                    {{ 'show_more_short' | translate }}
+                  </a>
+                </div>
+                <app-news-list
+                  [genesList]="genes"
+                  [limit]="2"
+                ></app-news-list>
               </div>
-              <div class="sidebar__item sidebar__item--desktop-50">
+              <div class="sidebar__item sidebar__item--desktop-50"
+                   *ngIf="lastGenes"
+              >
+                <div class="sidebar__title">
+                  {{ 'main_page_last' | translate }}
+                </div>
                 <app-mini-cards
                   [lastGenes]="lastGenes"
-                  *ngIf="lastGenes"
                 ></app-mini-cards>
               </div>
             </div>

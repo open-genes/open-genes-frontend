@@ -1,10 +1,18 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {APP_ROUTES, ROUTER_OPTIONS} from './app-routing';
 import {HttpClientModule} from '@angular/common/http';
+import { registerLocaleData } from '@angular/common';
+import localeEn from '@angular/common/locales/en';
+import localeRu from '@angular/common/locales/ru';
+
+registerLocaleData(localeRu, 'ru');
+registerLocaleData(localeEn, 'en');
 
 import {AppComponent} from './app.component';
+registerLocaleData(localeRu, 'ru');
+registerLocaleData(localeEn, 'en');
 
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
@@ -40,7 +48,9 @@ import {VendorsModule} from './modules/vendors/vendors.module';
     BrowserAnimationsModule,
     VendorsModule
   ],
-  providers: [TranslateService],
+  providers: [
+    TranslateService,
+    { provide: LOCALE_ID, useValue: 'ru' }],
   exports: [
     VendorsModule
   ],

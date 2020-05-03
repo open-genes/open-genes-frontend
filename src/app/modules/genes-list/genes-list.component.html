@@ -127,9 +127,8 @@
                 *ngIf="data.expressionChange"
                 (click)="filterByExpressionChange(data.expressionChange)"
                 [class.__active]="filters.byExpressionChange === data.expressionChange"
-                name="{{data.expressionChange}}"
           >
-            <div class="tag__inner">{{data.expressionChange}}</div>
+            <div class="tag__inner">{{ getExpressionLocaleKey(data.expressionChange) | translate }}</div>
           </button>
         </div>
         <div class="td td-actions">

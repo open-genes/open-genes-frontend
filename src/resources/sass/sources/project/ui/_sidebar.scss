@@ -27,7 +27,7 @@
     flex: 0 0 100%;
 
     & + & {
-      margin-top: 20px;
+      margin-top: .5em;
     }
   }
 }
@@ -36,11 +36,24 @@
   &__inner {
     display: flex;
     width: 100%;
+    font-size: $font-size;
   }
 
   &__item {
     display: flex;
     flex-flow: row wrap;
+  }
+
+  &__title {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-content: space-between; // для ссылки "Все" рядом с заголовком
+    position: relative;
+    width: 100%;
+    font-size: 1em;
+    color: $color-black;
+    font-weight: $font-weight-medium;
   }
 
   @include resolution_widescreen {
