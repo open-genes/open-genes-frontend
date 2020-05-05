@@ -12,7 +12,7 @@ import { DirectivesModule } from '../../directives/directives.module';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import {LoaderPlaceholderModule} from "../../components/loader-placeholder/loader-placeholder.module";
+import {LoaderPlaceholderModule} from "../../components/shared/loader-placeholder/loader-placeholder.module";
 
 @NgModule({
   declarations: [
