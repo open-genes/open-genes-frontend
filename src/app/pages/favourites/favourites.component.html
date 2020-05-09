@@ -1,0 +1,21 @@
+<div class="page">
+  <div class="page__inner">
+    <div class="text-page__header wrapper">
+      <div class="container">
+        <div class="col col-16">
+          <div class="page__title">
+            <h1>{{ 'favourites_page_title' | translate }}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="col col-16">
+        <mat-card *ngFor="favedGene in favedGenes | async">
+          {{ favedGene.symbol }}
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

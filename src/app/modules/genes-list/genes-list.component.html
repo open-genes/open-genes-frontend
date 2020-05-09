@@ -141,7 +141,12 @@
               <span class="fa far fa-ellipsis-v"></span>
             </mat-icon>
           </button>
-          <mat-menu #geneListItemMenu>
+          <mat-menu #geneListItemMenu="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="geneListItemSubMenu">This gene on</button>
+            <button mat-menu-item (click)="favItem(gene.id)">Add to Favourites</button>
+          </mat-menu>
+
+          <mat-menu #geneListItemSubMenu="matMenu">
             <a mat-menu-item
                href="http://disgenet.org/browser/1/1/0/{{data.ncbiId}}/"
                target="_blank">
@@ -157,9 +162,19 @@
             </a>
 
             <a mat-menu-item
-              href="https://genomics.senescence.info/genes/entry.php?hgnc={{data.symbol}}">
+               href="https://genomics.senescence.info/genes/entry.php?hgnc={{data.symbol}}">
               <span class="legend __brand-color-geneage"></span>
               GeneAge
+            </a>
+            <a mat-menu-item
+              href="https://www.ncbi.nlm.nih.gov/gene/{{data.symbol}}">
+              <span class="legend __brand-color-entrez"></span>
+              EntrezGene
+            </a>
+            <a mat-menu-item
+               href="https://www.uniprot.org/uniprot/{{data.symbol}}_HUMAN">
+              <span class="legend __brand-color-uniprot"></span>
+              UniProt
             </a>
           </mat-menu>
         </div>

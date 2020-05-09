@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
-
 import {Subject} from 'rxjs';
-
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {Filter, Genes} from '../../core/models';
 import {GenesListService} from './genes-list.service';
 
@@ -10,6 +9,7 @@ import {GenesListService} from './genes-list.service';
   templateUrl: './genes-list.component.html',
   styleUrls: ['./genes-list.component.scss']
 })
+
 export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() dataSource: Genes[];
@@ -24,7 +24,10 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
   private subscription$ = new Subject();
   public filters: Filter;
 
-  constructor(private readonly genesListService: GenesListService) {
+  constructor(
+    private readonly genesListService: GenesListService,
+    private snackBar: MatSnackBar
+  ) {
     this.filters = {
       byName: false,
       byAge: false,
@@ -32,6 +35,8 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
       byClasses: []
     };
     this.genesListService.register(this);
+
+    // snackBar.open('Added to favourites️');
   }
 
   ngOnInit() {
@@ -84,9 +89,6 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
-  }
 
   // TODO: перенести в отдельный модуль
   filterByFuncClusters(id: number) {
@@ -145,5 +147,9 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
       this.filters.byExpressionChange = 0; // !
       this.filtersCleared.emit();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
   }
 }
