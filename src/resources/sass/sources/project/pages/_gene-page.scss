@@ -56,7 +56,9 @@
   }
 
   &__age {
-    .flex-subcontainer.age__types {
+    .age__types {
+      display: flex;
+      flex-flow: row wrap;
       justify-content: flex-start;
       align-items: stretch;
       font-size: 0;

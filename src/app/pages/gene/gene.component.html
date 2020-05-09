@@ -1,58 +1,62 @@
 <div class="page gene-page" *ngIf="gene">
   <div class="page__inner">
     <section class="wrapper gene-page__header">
-      <div class="container">
-        <div class="col col-16 header__title">
-          <div class="title__caption">
-            <div class="caption__inner">
-              {{gene.symbol}}
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col col-12 header__title">
+            <div class="title__caption">
+              <div class="caption__inner">
+                {{gene.symbol}}
+              </div>
+            </div>
+            <div class="title__vendors">
+              <a href="https://genomics.senescence.info/genes/entry.php?hgnc={{gene.symbol}}"
+                 target="_blank"
+                 title="{{ 'link_geneage' | translate }} ?>"
+                 class="badge __brand-color-geneage"
+              >GeneAge</a>
+
+              <a href="https://www.ncbi.nlm.nih.gov/gene/{{gene.ncbiId}}"
+                 target="_blank"
+                 title="{{ 'link_entrez' | translate }}"
+                 class="badge __brand-color-entrez"
+              >EntrezGene</a>
+
+              <a href="https://www.uniprot.org/uniprot/{{gene.uniprot}}"
+                 target="_blank"
+                 title="{{ 'link_uniprot' | translate }}"
+                 class="badge __brand-color-uniprot"
+              >UniProt</a>
             </div>
           </div>
-          <div class="title__vendors">
-            <a href="https://genomics.senescence.info/genes/entry.php?hgnc={{gene.symbol}}"
-               target="_blank"
-               title="{{ 'link_geneage' | translate }} ?>"
-               class="badge __brand-color-geneage"
-            >GeneAge</a>
-
-            <a href="https://www.ncbi.nlm.nih.gov/gene/{{gene.ncbiId}}"
-               target="_blank"
-               title="{{ 'link_entrez' | translate }}"
-               class="badge __brand-color-entrez"
-            >EntrezGene</a>
-
-            <a href="https://www.uniprot.org/uniprot/{{gene.uniprot}}"
-               target="_blank"
-               title="{{ 'link_uniprot' | translate }}"
-               class="badge __brand-color-uniprot"
-            >UniProt</a>
+          <div class="col col-12 header__short-comment">
+            <span class="str_source-GeneAge">
+              {{gene.name}}
+            </span>
           </div>
-        </div>
-        <div class="col col-16 header__short-comment">
-          <span class="str_source-GeneAge">
-            {{gene.name}}
-          </span>
-        </div>
-        <div class="col col-16 header__functional-clusters">
-          <ng-container *ngIf="gene.functionalClusters; else tagSkeletal">
-            <ng-container *ngFor="let item of gene.functionalClusters">
-              <a routerLink="/" class="alias">{{item.name}}</a>
+          <div class="col col-12 header__functional-clusters">
+            <ng-container *ngIf="gene.functionalClusters; else tagSkeletal">
+              <ng-container *ngFor="let item of gene.functionalClusters">
+                <a routerLink="/" class="alias">{{item.name}}</a>
+              </ng-container>
             </ng-container>
-          </ng-container>
-          <ng-template #tagSkeletal>
-            <span class="alias __skeletal"></span>
-            <span class="alias __skeletal"></span>
-            <span class="alias __skeletal"></span>
-            <span class="alias __skeletal"></span>
-          </ng-template>
+            <ng-template #tagSkeletal>
+              <span class="alias __skeletal"></span>
+              <span class="alias __skeletal"></span>
+              <span class="alias __skeletal"></span>
+              <span class="alias __skeletal"></span>
+            </ng-template>
+          </div>
         </div>
       </div>
     </section>
 
-    <div class="container">
-      <div class="col col-16">
-        <div class="flex-subcontainer">
-          <div class="per sidebar sidebar--left">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col col-12">
+        <div class="row">
+          <div class="col-lg-12 col-xl-2">
+            <div class="sticky-top sidebar sidebar--mb-btm">
             <div class="sidebar__inner">
               <div class="__not-flex __w-100">
 
@@ -107,13 +111,13 @@
               </div>
             </div>
           </div>
+          </div>
 
-          <div class="per content">
+          <div class="col-lg-12 col-xl-10">
             <div class="page-wrapper">
               <section class="wrapper gene-page__age">
-                <div class="__w-100">
-                  <div class="flex-subcontainer age__types">
-                    <div class="col age__type age__phylogeny">
+                <div class="age__types">
+                    <div class="age__type age__phylogeny">
                       <div class="type__inner">
                         <div class="type__title">
                           {{ 'phylogeny' | translate }}
@@ -128,7 +132,7 @@
                       </div>
                     </div>
 
-                    <div class="col age__type age__years">
+                    <div class="age__type age__years">
                       <div class="type__inner">
                         <div class="type__title">
                           {{ 'ncbi_homologs' | translate }}
@@ -142,7 +146,7 @@
                     <a href="http://disgenet.org/browser/1/1/0/{{gene.ncbiId}}/"
                        target="_blank"
                        title="{{ 'gene_page_link_disgenet' | translate }}"
-                       class="col age__type age__diseases">
+                       class="age__type age__diseases">
                       <div class="type__inner">
                         <div class="type__title">
                           {{ 'diseases' | translate }}
@@ -159,7 +163,7 @@
                     <a href="https://thebiogrid.org/search.php?search={{gene.symbol}}&organism=9606/"
                        target="_blank"
                        title="{{ 'gene_page_link_biogrid' | translate }}"
-                       class="col age__type age__interactions">
+                       class="age__type age__interactions">
                       <div class="type__inner">
                         <div class="type__title">
                           {{ 'gene_page_title_interactions' | translate }}
@@ -173,7 +177,7 @@
                       </div>
                     </a>
 
-                    <div class="col age__type age__rating hidden" *ngIf="gene.rating">
+                    <div class="age__type age__rating hidden" *ngIf="gene.rating">
                       <div class="type__title">
                         {{ 'gene_page_title_criteria' | translate }}
                         <small><sup>*</sup></small>
@@ -189,7 +193,6 @@
                       </div>
                     </div>
                   </div>
-                </div>
               </section>
 
               <section class="wrapper gene-page__articles">
@@ -660,6 +663,7 @@
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </div>
