@@ -245,15 +245,19 @@
 
                   <section *ngIf="gene.commentEvolution">
                     <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
-                    <article id="evolution">
-                      {{gene.commentEvolution}}
+                    <article
+                      id="evolution"
+                      [innerHTML]="gene.commentEvolution"
+                    >
                     </article>
                   </section>
 
                   <section *ngIf="gene.commentFunction">
                     <h3>{{ 'gene_page_title_function' | translate }}</h3>
-                    <article id="function">
-                      {{gene.commentFunction}}
+                    <article
+                      id="function"
+                      [innerHTML]="gene.commentFunction"
+                    >
                     </article>
                   </section>
 
@@ -268,8 +272,10 @@
 
                   <section *ngIf="gene.commentAging">
                     <h3>{{ 'gene_page_title_aging' | translate }}</h3>
-                    <article id="aging">
-                      {{gene.commentAging}}
+                    <article
+                      id="aging"
+                      [innerHTML]="gene.commentAging"
+                    >
                     </article>
                   </section>
 
@@ -493,8 +499,8 @@
                     <div class="table-section __mt-20">
                       <table class="table">
                         <thead>
-                        <th>{{ "longevity_effects_effect" | translate }}</th>
                         <th>{{ "gene_page_allelic_polymorphism" | translate }}</th>
+                        <th>{{ "longevity_effects_effect" | translate }}</th>
                         <th>{{ "researches_sex" | translate }}</th>
                         <th>{{ "researches_reference" | translate }}</th>
                         <th>{{ "researches_comment" | translate }}</th>
@@ -502,10 +508,10 @@
 
                         <tr *ngFor="let object of gene.researches.geneAssociatedWithLongevityEffects; let i = index">
                           <td>
-                            {{ object.longevityEffect }}
+                            {{ object.allelicPolymorphism }}
                           </td>
                           <td>
-                            {{ object.allelicPolymorphism }}
+                            {{ object.longevityEffect }}
                           </td>
                           <td>
                             {{ object.sex }}
