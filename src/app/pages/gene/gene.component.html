@@ -282,7 +282,7 @@
                         <th>{{ "gene_intervention_result" | translate }}</th>
                         <th>{{ "researches_model_organism" | translate }}</th>
                         <th>{{ "researches_organism_line" | translate }}</th>
-                        <th>{{ "researches_age" | translate }}</th>
+                        <th>{{ "researches_age" | translate }}<sup>*</sup></th>
                         <th><span class="fa fal fa-mars"></span></th>
                         <th><span class="fa fal fa-venus"></span></th>
                         <th><span class="fa fal fa-venus-mars"></span></th>
@@ -323,6 +323,9 @@
                           </td>
                         </tr>
                       </table>
+                      <div class="reference">
+                        *{{ 'gene_page_researches_lifespan_hint' | translate }}
+                      </div>
                     </div>
                   </section>
 
@@ -334,7 +337,8 @@
                         <th>{{ "age_related_changes_type" | translate }}</th>
                         <th>{{ "age_related_changes_sample" | translate }}</th>
                         <th>{{ "researches_model_organism" | translate }}</th>
-                        <th>{{ "researches_age" | translate }}</th>
+                        <th>{{ "researches_age_group_1" | translate }}</th>
+                        <th>{{ "researches_age_group_2" | translate }} </th>
                         <th><span class="fa fal fa-mars"></span></th>
                         <th><span class="fa fal fa-venus"></span></th>
                         <th><span class="fa fal fa-venus-mars"></span></th>
@@ -353,7 +357,10 @@
                             {{ object.modelOrganism }}
                           </td>
                           <td class="__nowrap">
-                            {{ object.ageFrom }}—{{ object.ageTo }}
+                            {{ object.ageFrom }}
+                          </td>
+                          <td class="__nowrap">
+                          {{ object.ageTo }}
                           </td>
                           <td class="__nowrap">
                             {{ object.valueForMale }}
@@ -376,17 +383,16 @@
                   </section>
 
                   <section *ngIf="gene.researches.interventionToGeneImprovesVitalProcesses.length !== 0">
-                    <h3>{{ "gene_page_intervention" | translate }}</h3>
+                    <h3>{{ 'gene_page_intervention_moderates_aging' | translate }}</h3>
                     <div class="table-section __mt-20">
                       <table class="table">
                         <thead>
-                        <th>{{ "intervention_aging_type" | translate }}</th>
-                        <th>{{ "intervention_aging_result" | translate }}</th>
+                        <th>{{ "gene_intervention_type" | translate }}</th>
                         <th>{{ "intervention_aging_process" | translate }}</th>
                         <th>{{ "researches_model_organism" | translate }}</th>
 
                         <th>{{ "researches_organism_line" | translate }}</th>
-                        <th>{{ "researches_age" | translate }}</th>
+                        <th>{{ "researches_age" | translate }}<sup>*</sup></th>
                         <th>{{ "researches_sex" | translate }}</th>
                         <th>{{ "researches_reference" | translate }}</th>
                         <th>{{ "researches_comment" | translate }}</th>
@@ -396,9 +402,6 @@
                           *ngFor="let object of gene.researches.interventionToGeneImprovesVitalProcesses; let i = index">
                           <td>
                             {{ object.geneIntervention }}
-                          </td>
-                          <td>
-                            {{ object.interventionResultForVitalProcess }}
                           </td>
                           <td>
                             {{ object.vitalProcess }}
@@ -423,6 +426,9 @@
                           </td>
                         </tr>
                       </table>
+                    </div>
+                    <div class="reference">
+                      *{{ 'gene_page_researches_lifespan_hint' | translate }}
                     </div>
                   </section>
 
@@ -516,7 +522,7 @@
                   </section>
 
                   <section *ngIf="gene.orthologs.length !== 0"
-                           id="orthologs">
+                           id="orthologs"> <!-- TODO: отображается пустое, приходит {"":""} -->
                     <h3>{{ "gene_page_title_orthologs" | translate }}</h3>
 
                     <ul class="list">
@@ -545,7 +551,7 @@
 
                         <article>
                           <ul class="list">
-                            <li *ngFor="let term of this.geneOntologyProcessMap | keyvalue">
+                            <li *ngFor="let term of geneOntologyProcessMap | keyvalue">
                               <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
                                  title="QuickGO"
                                  class="alias">{{ term.key | zero }}</a> {{ term.value }}
@@ -562,7 +568,7 @@
 
                         <article>
                           <ul class="list">
-                            <li *ngFor="let term of this.geneOntologyComponentMap | keyvalue">
+                            <li *ngFor="let term of geneOntologyComponentMap | keyvalue">
                               <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
                                  title="QuickGO"
                                  class="alias">{{ term.key | zero }}</a> {{ term.value }}
@@ -579,7 +585,7 @@
 
                         <article>
                           <ul class="list">
-                            <li *ngFor="let term of this.geneOntologyActivityMap | keyvalue">
+                            <li *ngFor="let term of geneOntologyActivityMap | keyvalue">
                               <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
                                  title="QuickGO"
                                  class="alias">{{ term.key | zero }}</a> {{ term.value }}
@@ -607,9 +613,9 @@
                           <ng-container *ngFor="let item of gene.expression">
                             <div class="expression__row">
                               <div class="row__name">{{item['name']}}</div>
-                              <div class="row__value" [class.row__value--minimum]="chartCalculatePercent(item['exp_rpkm'], this.expressionMaxValue) < 3">
+                              <div class="row__value" [class.row__value--minimum]="chartCalculatePercent(item['exp_rpkm'], expressionMaxValue) < 3">
                                 <mat-progress-bar
-                                  [value]="chartCalculatePercent(item['exp_rpkm'], this.expressionMaxValue)"
+                                  [value]="chartCalculatePercent(item['exp_rpkm'], expressionMaxValue)"
                                   class="value__bar"
                                 ></mat-progress-bar>
                                 <div class="value__rpkm">{{item['exp_rpkm'] | number:'1.0-2'}} RPKM</div>

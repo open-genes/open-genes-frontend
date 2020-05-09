@@ -54,7 +54,6 @@ export class GeneComponent implements OnInit, OnDestroy {
       this.geneOntologyComponentMap = GeneComponent.toMap(this.gene.terms.cellular_component);
       this.geneOntologyActivityMap = GeneComponent.toMap(this.gene.terms.molecular_activity);
       this.expressionMaxValue = GeneComponent.chartMaxValue(this.gene.expression);
-      console.log(this.expressionMaxValue);
     });
   }
 
