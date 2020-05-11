@@ -62,7 +62,7 @@
 
               <b>{{ 'gene_page_title_contents' | translate }}</b>
 
-              <mat-nav-list dense *ngIf="isContent()">
+              <mat-nav-list *ngIf="isContent()">
                 <a mat-list-item
                    *ngIf="gene.commentEvolution"
                    [routerLink]="['/gene', symbol]" fragment="evolution">
