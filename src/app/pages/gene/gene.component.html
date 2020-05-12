@@ -56,7 +56,7 @@
         <div class="col col-12">
         <div class="row">
           <div class="col-lg-12 col-xl-2">
-            <div class="sticky-top sidebar sidebar--mb-btm">
+            <div class="sidebar sidebar--mb-btm">
             <div class="sidebar__inner">
               <div class="__not-flex __w-100">
 
@@ -284,7 +284,7 @@
 
                   <section *ngIf="gene.researches.increaseLifespan.length !== 0">
                     <h3>{{ "gene_page_researches_lifespan" | translate }}</h3>
-                    <div class="table-section __mt-20">
+                    <div class="table-section __mt-20 __w-content">
                       <table class="table">
                         <thead>
                         <th>{{ "gene_intervention_type" | translate }}</th>
@@ -340,7 +340,7 @@
 
                   <section *ngIf="gene.researches.ageRelatedChangesOfGene.length !== 0">
                     <h3>{{ "gene_page_researches_age_related_changes" | translate }}</h3>
-                    <div class="table-section __mt-20">
+                    <div class="table-section __mt-20 __w-content">
                       <table class="table">
                         <thead>
                         <th>{{ "age_related_changes_type" | translate }}</th>
@@ -393,7 +393,7 @@
 
                   <section *ngIf="gene.researches.interventionToGeneImprovesVitalProcesses.length !== 0">
                     <h3>{{ 'gene_page_intervention_moderates_aging' | translate }}</h3>
-                    <div class="table-section __mt-20">
+                    <div class="table-section __mt-20 __w-content">
                       <table class="table">
                         <thead>
                         <th>{{ "gene_intervention_type" | translate }}</th>
@@ -443,7 +443,7 @@
 
                   <section *ngIf="gene.researches.proteinRegulatesOtherGenes.length !== 0">
                     <h3>{{ "gene_page_researches_protein_regulates_genes" | translate }}</h3>
-                    <div class="table-section __mt-20">
+                    <div class="table-section __mt-20 __w-content">
                       <table class="table">
                         <thead>
                         <th>{{ "protein_regulates_genes_activity" | translate }}</th>
@@ -474,7 +474,7 @@
 
                   <section *ngIf="gene.researches.geneAssociatedWithProgeriaSyndromes.length !== 0">
                     <h3>{{ "gene_page_researches_progeria" | translate }}</h3>
-                    <div class="table-section __mt-20">
+                    <div class="table-section __mt-20 __w-content">
                       <table class="table">
                         <thead>
                         <th>{{ "progeria_syndrome" | translate }}</th>
@@ -499,7 +499,7 @@
 
                   <section *ngIf="gene.researches.geneAssociatedWithLongevityEffects.length !== 0">
                     <h3>{{ "gene_page_researches_longevity_effects" | translate }}</h3>
-                    <div class="table-section __mt-20">
+                    <div class="table-section __mt-20 __w-content">
                       <table class="table">
                         <thead>
                         <th>{{ "gene_page_allelic_polymorphism" | translate }}</th>
@@ -551,7 +551,8 @@
 
                     <h3>Gene Ontology</h3>
 
-                    <mat-tab-group class="__w-content">
+                    <mat-tab-group
+                      class="__w-content">
                       <mat-tab
                         *ngIf="gene.terms.biological_process.length >= 1"
                         label='{{ "gene_ontology_biological_process" | translate }}'
@@ -650,7 +651,7 @@
                 </div>
 
                 <ng-template #noContent>
-                  <section class="__w-100 no-content">
+                  <section class="col-12 no-content">
                     <div class="no-content__icon no-content__icon-standard"></div>
                     <div class="no-content__title">
                       <div class="title__center">

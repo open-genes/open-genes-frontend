@@ -28,24 +28,18 @@ $sizes: (0, 5, 10, 15, 20, 25, 30, 35);
   width: 100%;
 }
 
+// фикс для таблиц и другуго контента, который расширяет страницу
+// TODO: замедляет рендеринг
 .__w-content {
-  @include resolution_desktop {
-    max-width: $desktop - $gutter;
+  @include resolution_widescreen {
+    max-width: calc(100vw - ((#{$widescreen} / 12) * 3) - #{$gutter});
   }
 
   @include resolution_desktop {
-    max-width: $desktop - $gutter;
+    max-width: calc(100vw - #{$gutter});
   }
 
-  @include resolution_desktop {
-    max-width: $desktop - $gutter;
-  }
-
-  @include resolution_tablet {
-    max-width: $desktop - $gutter;
-  }
-
-  @include resolution_smartphone {
+  @include resolution_smartphone-and-tablet {
     max-width: calc(100vw - #{$gutter});
   }
 }
