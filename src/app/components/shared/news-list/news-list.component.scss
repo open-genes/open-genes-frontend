@@ -22,11 +22,14 @@
 
     .item__gene {
       flex: 0 1;
-      padding-right: .3em;
+      padding-right: .5em;
+      .alias {
+        margin-right: 0;
+      }
     }
 
     .item__title {
-      flex: 4 0 210px; // внутренняя ширина .sidebar - минимальная ширина заголовка
+      flex: 4 0 170px; // внутренняя ширина .sidebar - минимальная ширина заголовка
       flex-flow: row wrap;
       font-size: .92em;
       white-space: normal;

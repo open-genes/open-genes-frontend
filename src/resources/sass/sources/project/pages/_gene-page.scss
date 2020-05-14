@@ -56,7 +56,9 @@
   }
 
   &__age {
-    .flex-subcontainer.age__types {
+    .age__types {
+      display: flex;
+      flex-flow: row wrap;
       justify-content: flex-start;
       align-items: stretch;
       font-size: 0;
@@ -222,21 +224,6 @@
       margin-bottom: 0.8ex;
     }
 
-    .table-section {
-      @include resolution_desktop-and-up {
-        max-width: 960px;
-      }
-      @include resolution_tablet {
-        max-width: 748px;
-      }
-      @include resolution_phablet {
-        max-width: 460px;
-      }
-      @include resolution_smartphone {
-        max-width: 320px;
-      }
-    }
-
     .reference-list {
       margin-top: 10px;
       padding-top: 12px;
@@ -334,18 +321,18 @@
 }
 
 // Fixed header
-.gene-page {
-  // $fixed-header-height: (130px + 20px);
-  @include resolution_desktop-and-up {
-    // padding-top: $fixed-header-height;
-    //.gene-page__header {
-    //  position: fixed;
-    //  top: $header-height;
-    //  z-index: 50; // между хедером и контентом
-    //}
-
-    .sidebar {
-      top: 100px;
-    }
-  }
-}
+//.gene-page {
+//  $fixed-header-height: (130px + 20px);
+//  @include resolution_desktop-and-up {
+//     padding-top: $fixed-header-height;
+//    .gene-page__header {
+//      position: fixed;
+//      top: $header-height;
+//      z-index: 50; // между хедером и контентом
+//    }
+//
+//    .sidebar {
+//      top: 100px;
+//    }
+//  }
+//}

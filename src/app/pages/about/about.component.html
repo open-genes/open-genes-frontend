@@ -1,17 +1,20 @@
 <div class="page">
   <div class="page__inner">
     <div class="text-page__header wrapper">
-      <div class="container">
-        <div class="col col-16">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col col-12">
           <div class="page__title">
             <h1>{{ 'about_page_title' | translate }}</h1>
           </div>
+        </div>
         </div>
       </div>
     </div>
 
     <div class="container">
-      <div class="col col-16">
+      <div class="row">
+        <div class="col col-12">
 
         <article *ngIf="translate.currentLang==='ru'">
           <p class="hint">
@@ -430,7 +433,7 @@
         </article>
 
       </div>
-
+      </div>
     </div>
   </div>
 </div>

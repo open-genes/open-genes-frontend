@@ -87,7 +87,7 @@
     </div>
 
     <div class="tbody">
-      <div class="tr row" *ngFor="let data of searchedData | slice: 0: loadedGenesQuantity">
+      <div class="tr" *ngFor="let data of searchedData | slice: 0: loadedGenesQuantity">
         <div class="td cell td-name">
           <div class="td__title">
             <a [routerLink]="['/gene', data.symbol]" class="link link--gray">

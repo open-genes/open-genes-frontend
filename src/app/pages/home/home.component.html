@@ -1,27 +1,29 @@
 <div class="page main-page">
   <div class="page__inner">
     <div class="wrapper main-page__header">
-      <div class="container">
-        <div class="col col-16">
-          <div class="page__title">
-            <h1>{{ 'main_page_header_title' | translate }}</h1>
-          </div>
-          <div class="header__description">
-            {{ 'main_page_header_description' | translate }}
-          </div>
-          <div class="header__button">
-            <a mat-flat-button
-               color="secondary"
-               routerLink="/about"
-            >{{ 'main_page_header_button' | translate }}</a>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col col-12">
+            <div class="page__title">
+              <h1>{{ 'main_page_header_title' | translate }}</h1>
+            </div>
+            <div class="header__description">
+              {{ 'main_page_header_description' | translate }}
+            </div>
+            <div class="header__button">
+              <a mat-flat-button
+                 color="secondary"
+                 routerLink="/about"
+              >{{ 'main_page_header_button' | translate }}</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="container">
-      <div class="col col-16">
-        <div class="flex-subcontainer">
-          <div class="per sidebar sidebar--left sidebar--mb-btm">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12 col-xl-2">
+          <div class="sidebar sidebar--mb-btm">
             <div class="sidebar__inner">
               <div class="sidebar__item sidebar__item--desktop-50"
                    *ngIf="genes"
@@ -49,8 +51,8 @@
               </div>
             </div>
           </div>
-
-          <div class="per content">
+        </div>
+        <div class="col-lg-12 col-xl-10">
             <app-genes-list
               [dataSource]="genes"
               (filterCluster)="filterByFuncClusters($event)"
@@ -59,17 +61,16 @@
               *ngIf="genes">
             </app-genes-list>
           </div>
-        </div>
-      </div>
 
-      <section class="no-content" *ngIf="error">
-        <div class="no-content__icon no-content__icon-standard"></div>
-        <div class="no-content__title">
-          <div class="title__center">
-            {{ 'error_connection' | translate }}
+        <section class="col-12 no-content" *ngIf="error">
+          <div class="no-content__icon no-content__icon-standard"></div>
+          <div class="no-content__title">
+            <div class="title__center">
+              {{ 'error_connection' | translate }}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   </div>
 </div>
