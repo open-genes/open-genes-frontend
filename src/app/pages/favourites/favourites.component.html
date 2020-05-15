@@ -10,11 +10,20 @@
       </div>
     </div>
 
-    <div class="container">
-      <div class="col col-16">
-        <mat-card *ngFor="favedGene in favedGenes | async">
-          {{ favedGene.symbol }}
-        </mat-card>
+    <div class="container" *ngIf="favouriteGenes">
+      <div
+        class="col col-16"
+        *ngFor="let gene of favouriteGenes"
+      >
+        {{ gene.id }} {{ gene.symbol }}
+
+        <button
+          mat-icon-button
+          (click)="removeFromFavourites(gene.id)">
+          <mat-icon>
+            <span class="fa far fa-trash"></span>
+          </mat-icon>
+        </button>
       </div>
     </div>
   </div>

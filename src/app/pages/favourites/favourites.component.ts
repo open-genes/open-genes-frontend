@@ -1,41 +1,33 @@
-import { Injectable } from '@angular/core';
-import { Genes } from 'src/app/core/models/genes.model';
-import { FavouritesService } from 'src/app/core/services/favourites.service';
+import {Component, OnInit} from '@angular/core';
+import {Genes} from 'src/app/core/models/genes.model';
+import {CartService} from 'src/app/core/services/favourites.service';
+import {TranslateService} from '@ngx-translate/core';
+import {ApiService} from '../../core/services/api.service';
 
-const favedGeneStorageKey = 'Todo_List';
+@Component({
+  selector: 'app-favourites',
+  templateUrl: './favourites.component.html',
+  providers: [CartService]
+})
 
-const favsMap = new Map();
+export class FavouritesComponent implements OnInit {
+  error: number;
+  public favouriteGenes: any;
 
-@Injectable()
-export class FavouritesComponent {
-  favedGene: Genes[];
 
-  constructor(private storageService: FavouritesService) {
-    this.favedGene =
-      storageService.getData(favedGeneStorageKey) || favsMap;
+  constructor(
+    public translate: TranslateService,
+    private readonly apiService: ApiService,
+    private cartService: CartService) {
+
+    this.favouriteGenes = this.cartService.getItems();
+    console.log(this.cartService.getItems());
   }
 
-  saveList() {
-    this.storageService.setData(favedGeneStorageKey, this.favedGene);
+  public removeFromFavourites(id: number) {
+    this.cartService.removeFromCart(id);
   }
 
-  addItem(item: Genes) {
-    this.favedGene.push(item);
-    this.saveList();
-  }
-
-  updateItem(item, changes) {
-    const index = this.favedGene.indexOf(item);
-    this.favedGene[index] = { ...item, ...changes };
-    this.saveList();
-  }
-
-  deleteItem(item) {
-    const index = this.favedGene.indexOf(item);
-    this.favedGene.splice(index, 1);
-    this.saveList();
-  }
-  getTodoList() {
-    return this.favedGene;
+  ngOnInit() {
   }
 }

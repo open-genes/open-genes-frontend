@@ -143,7 +143,14 @@
           </button>
           <mat-menu #geneListItemMenu="matMenu">
             <button mat-menu-item [matMenuTriggerFor]="geneListItemSubMenu">This gene on</button>
-            <button mat-menu-item (click)="favItem(gene.id)">Add to Favourites</button>
+            <button mat-menu-item
+                    *ngIf="this.isFaved(data.id)"
+                    (click)="unFavItem(data.id)"
+            >Remove from Favourites</button>
+            <button mat-menu-item
+                    *ngIf="!this.isFaved(data.id)"
+                    (click)="favItem(data.id)"
+            >Add to Favourites</button>
           </mat-menu>
 
           <mat-menu #geneListItemSubMenu="matMenu">
