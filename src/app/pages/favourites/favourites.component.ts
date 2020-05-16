@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnChanges} from '@angular/core';
 import {Genes} from 'src/app/core/models/genes.model';
 import {FavouritesService} from 'src/app/core/services/favourites.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -10,27 +10,30 @@ import {ApiService} from '../../core/services/api.service';
   providers: [FavouritesService]
 })
 
-export class FavouritesComponent implements OnInit {
+export class FavouritesComponent implements OnInit, OnChanges {
 
   constructor(
     public translate: TranslateService,
     private readonly apiService: ApiService,
     private favouritesService: FavouritesService) {
-
-    this.favouriteGenesIds = this.favouritesService.getItems();
   }
 
   public genes: Genes[];
   public favouriteGenesIds: any;
   error: number;
 
-  public unFavItem(id) {
-    this.favouritesService.removeFromCart(id);
-    console.log('it works');
+  public unFavItem(geneId: number) {
+    console.log(this.favouritesService.favourites);
+    this.favouritesService.removeFromCart(geneId);
   }
 
   ngOnInit() {
+    this.favouriteGenesIds = this.favouritesService.getItems();
     this.getGenes();
+  }
+
+  ngOnChanges() {
+
   }
 
   private getGenes() {

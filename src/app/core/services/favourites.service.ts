@@ -5,24 +5,25 @@ import {Injectable} from '@angular/core';
 })
 
 export class FavouritesService {
-  favourites = []; // TODO: заменить массив на мапу
+  favourites = []; // TODO: заменить массив на мапу или обращаться к local storage напрямую
   storedData = JSON.parse(localStorage.getItem('favourites'));
 
   // Работа с хранилищем происходит через массив
   getItems() {
     if (this.storedData) {
-      this.favourites.push(this.storedData);
+      this.favourites = [...this.storedData]; // очищаем и заново заполняем массив, так как для каждого инстанса сервиса создается отдельный массив
+      console.log(this.favourites);
     }
     return this.storedData;
   }
 
-  addToCart(data) {
+  addToCart(data: number) {
     this.favourites.push(data);
     localStorage.clear();
     localStorage.setItem('favourites', JSON.stringify(this.favourites));
   }
 
-  removeFromCart(data) {
+  removeFromCart(data: number) {
     const index = this.favourites.indexOf(data);
     if (index > -1) {
       this.favourites.splice(index, 1);
@@ -30,15 +31,13 @@ export class FavouritesService {
     }
   }
 
-  isInCart(data) {
+  isInCart(data: number) {
     if (this.favourites.length !== 0) {
       return this.favourites.indexOf(data) > -1;
     } else {
       return false;
     }
   }
-
-
 
   clearCart() {
     this.favourites = [];

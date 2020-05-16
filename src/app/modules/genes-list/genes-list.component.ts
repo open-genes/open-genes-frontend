@@ -89,26 +89,26 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  public favItem(gene) {
-    this.favouritesService.addToCart(gene);
+  public favItem(geneId: number) {
+    this.favouritesService.addToCart(geneId);
     this.snackBar.open('Added to favourites️', 'OK', {
       duration: 500
     });
-    this.isFaved(gene);
+    this.isFaved(geneId);
     console.log(this.favouritesService.favourites);
   }
 
-  public unFavItem(gene) {
-    this.favouritesService.removeFromCart(gene);
+  public unFavItem(geneId: number) {
+    this.favouritesService.removeFromCart(geneId);
     this.snackBar.open('Item removed from favourites️', 'OK', {
       duration: 500
     });
-    this.isFaved(gene);
+    this.isFaved(geneId);
     console.log(this.favouritesService.favourites);
   }
 
-  public isFaved(gene) {
-    return this.favouritesService.isInCart(gene);
+  public isFaved(geneId: number) {
+    return this.favouritesService.isInCart(geneId);
   }
 
   // TODO: перенести в отдельный модуль
