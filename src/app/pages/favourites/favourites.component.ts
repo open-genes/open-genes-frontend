@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Genes} from 'src/app/core/models/genes.model';
 import {FavouritesService} from 'src/app/core/services/favourites.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ApiService} from '../../core/services/api.service';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-favourites',
@@ -16,8 +15,8 @@ export class FavouritesComponent implements OnInit {
   constructor(
     public translate: TranslateService,
     private readonly apiService: ApiService,
-    private favouritesService: FavouritesService,
-    private ref: ChangeDetectorRef) {
+    private favouritesService: FavouritesService
+  ) {
   }
 
   public genes: Genes[];
@@ -25,9 +24,10 @@ export class FavouritesComponent implements OnInit {
   error: number;
 
   public unFavItem(geneId: number) {
-    console.log(this.favouritesService.favourites);
+    // console.log(this.favouritesService.favourites);
     this.favouritesService.removeFromCart(geneId);
-    this.ref.markForCheck();
+    window.location.reload(); // TODO: это плохой костыль, который нужно исправить при помощи manual change detection
+    return this.favouriteGenesIds;
   }
 
   ngOnInit() {

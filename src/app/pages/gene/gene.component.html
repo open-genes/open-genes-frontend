@@ -657,16 +657,18 @@
                     </article>
                   </div>
 
-                  <section class="col-12 no-content" #noContent>
-                    <div class="no-content__inner">
-                      <div class="no-content__icon no-content__icon-standard"></div>
-                      <div class="no-content__title">
-                        <div class="title__center">
-                          {{ 'gene_page_error_no_article_yet' | translate }}
+                  <ng-template #noContent>
+                    <section class="col-12 no-content" >
+                      <div class="no-content__inner">
+                        <div class="no-content__icon no-content__icon-standard"></div>
+                        <div class="no-content__title">
+                          <div class="title__center">
+                            {{ 'gene_page_error_no_article_yet' | translate }}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </section>
+                    </section>
+                  </ng-template>
                 </section>
               </div>
             </div>

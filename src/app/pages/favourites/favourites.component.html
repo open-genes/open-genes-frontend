@@ -1,4 +1,4 @@
-<div class="page">
+<div class="page favourites-page">
   <div class="page__inner">
     <div class="text-page__header wrapper">
       <div class="container">
@@ -10,27 +10,30 @@
       </div>
     </div>
 
-    <div class="container" *ngIf="genes">
-      <div
-        class="col col-16"
-        *ngFor="let gene of genes | toArray"
-      >
-        <ng-container
-          *ngIf="favouriteGenesIds.indexOf(gene.id) > -1"
+    <div class="container favourites-page__favourites" *ngIf="favouriteGenesIds.length !== 0">
+      <ng-container *ngFor="let gene of genes | toArray">
+        <div *ngIf="favouriteGenesIds.indexOf(gene.id) > -1"
+             class="col col-16 faved-gene"
         >
-          {{ gene.id }} {{ gene.symbol }}
+          <div class="faved-gene__title">
+            <a [routerLink]="['/gene', gene.symbol]"
+               class="link link--gray"
+            >{{ gene.symbol }} {{ gene.name }}</a>
+          </div>
           <button
+            class="faved-gene__actions"
             mat-icon-button
-            (click)="unFavItem(gene.id)">
+            (click)="unFavItem(gene.id)"
+            >
             <mat-icon>
               <span class="fa far fa-trash"></span>
             </mat-icon>
           </button>
-        </ng-container>
-      </div>
+        </div>
+      </ng-container>
     </div>
 
-    <section class="col-12 no-content" *ngIf="!genes || error">
+    <section class="col-12 no-content" *ngIf="favouriteGenesIds.length === 0 || error">
       <div class="no-content__inner">
         <div class="no-content__icon no-content__icon-standard"></div>
         <div class="no-content__title">

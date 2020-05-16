@@ -11,8 +11,10 @@ export class FavouritesService {
   // Работа с хранилищем происходит через массив
   getItems() {
     if (this.storedData) {
-      this.favourites = [...this.storedData]; // очищаем и заново заполняем массив, так как для каждого инстанса сервиса создается отдельный массив
-      console.log(this.favourites);
+      this.favourites = [...this.storedData];
+      // очищаем и заново заполняем массив,
+      // так как для каждого инстанса сервиса создается отдельный массив
+      // console.log(this.favourites);
     }
     return this.storedData;
   }
