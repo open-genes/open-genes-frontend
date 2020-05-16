@@ -548,11 +548,20 @@ ul.list--bulletted {
 }
 
 .no-content {
-  padding: 20px;
-  font-size: 0;
-  text-align: center;
-  border: 1px solid $color-borders;
-  border-radius: $border-radius-medium;
+  &[class^="col"] {
+    padding: 0 20px;
+  }
+
+  &__inner {
+    margin: 0 auto;
+    width: 100%;
+    max-width: $desktop;
+    padding: 20px;
+    font-size: 0;
+    text-align: center;
+    border: 1px solid $color-borders;
+    border-radius: $border-radius-medium;
+  }
 
   &__icon {
     display: inline-block;
