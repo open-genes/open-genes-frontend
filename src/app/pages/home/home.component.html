@@ -63,10 +63,12 @@
           </div>
 
         <section class="col-12 no-content" *ngIf="error">
-          <div class="no-content__icon no-content__icon-standard"></div>
-          <div class="no-content__title">
-            <div class="title__center">
-              {{ 'error_connection' | translate }}
+          <div class="no-content__inner">
+            <div class="no-content__icon no-content__icon-standard"></div>
+            <div class="no-content__title">
+              <div class="title__center">
+                {{ 'error_connection' | translate }}
+              </div>
             </div>
           </div>
         </section>

@@ -18,6 +18,10 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/news/news.module').then(m => m.NewsModule)
   },
   {
+    path: 'favourites',
+    loadChildren: () => import('./pages/favourites/favourites.module').then(m => m.FavouritesModule)
+  },
+  {
     path: 'developers',
     loadChildren: () => import('./pages/api-reference/api-reference.module').then(m => m.ApiReferenceModule)
   },
