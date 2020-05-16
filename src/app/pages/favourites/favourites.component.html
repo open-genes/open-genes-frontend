@@ -10,20 +10,21 @@
       </div>
     </div>
 
-    <div class="container" *ngIf="favouriteGenes">
+    <div class="container" *ngIf="genes">
       <div
         class="col col-16"
-        *ngFor="let gene of favouriteGenes"
+        *ngFor="let gene of genes | toArray"
       >
-        {{ gene.id }} {{ gene.symbol }}
-
-        <button
-          mat-icon-button
-          (click)="removeFromFavourites(gene.id)">
-          <mat-icon>
-            <span class="fa far fa-trash"></span>
-          </mat-icon>
-        </button>
+        <ng-container *ngIf="favouriteGenesIds.indexOf(gene.id) > -1">
+          {{ gene.id }} {{ gene.symbol }}
+          <button
+            mat-icon-button
+            (click)="unFavItem(gene.id)">
+            <mat-icon>
+              <span class="fa far fa-trash"></span>
+            </mat-icon>
+          </button>
+        </ng-container>
       </div>
     </div>
   </div>

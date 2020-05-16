@@ -3,7 +3,7 @@ import {Subject} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Filter, Genes} from '../../core/models';
 import {GenesListService} from './genes-list.service';
-import { CartService } from 'src/app/core/services/favourites.service';
+import { FavouritesService } from 'src/app/core/services/favourites.service';
 
 @Component({
   selector: 'app-genes-list',
@@ -28,7 +28,7 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private readonly genesListService: GenesListService,
     private snackBar: MatSnackBar,
-    private cartService: CartService) {
+    private favouritesService: FavouritesService) {
     this.filters = {
       byName: false,
       byAge: false,
@@ -36,6 +36,7 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
       byClasses: []
     };
     this.genesListService.register(this);
+    this.favouritesService.getItems();
   }
 
   ngOnInit() {
@@ -89,25 +90,25 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public favItem(gene) {
-    this.cartService.addToCart(gene);
+    this.favouritesService.addToCart(gene);
     this.snackBar.open('Added to favourites️', 'OK', {
       duration: 500
     });
-    console.log(this.cartService.items);
     this.isFaved(gene);
+    console.log(this.favouritesService.favourites);
   }
 
   public unFavItem(gene) {
-    this.cartService.removeFromCart(gene);
+    this.favouritesService.removeFromCart(gene);
     this.snackBar.open('Item removed from favourites️', 'OK', {
       duration: 500
     });
-    console.log(this.cartService.items);
     this.isFaved(gene);
+    console.log(this.favouritesService.favourites);
   }
 
   public isFaved(gene) {
-    return this.cartService.isInCart(gene);
+    return this.favouritesService.isInCart(gene);
   }
 
   // TODO: перенести в отдельный модуль

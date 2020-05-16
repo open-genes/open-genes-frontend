@@ -13,7 +13,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {LoaderPlaceholderModule} from '../../components/shared/loader-placeholder/loader-placeholder.module';
-import {CartService} from '../../core/services/favourites.service';
+import {FavouritesService} from '../../core/services/favourites.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import {CartService} from '../../core/services/favourites.service';
     LoaderPlaceholderModule
   ],
   providers: [
-    CartService
+    FavouritesService
   ],
   exports: [
     GenesListComponent

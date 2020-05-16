@@ -3,9 +3,9 @@ import {CommonModule} from '@angular/common';
 import {FavouritesComponent} from './favourites.component';
 import {RouterModule, Routes} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
-import {CodeBlockComponent} from '../../components/code-block/code-block.component';
 import {PipesModule} from '../../modules/pipes/pipes.module';
 import {VendorsModule} from '../../modules/vendors/vendors.module';
+import {NgToArrayPipeModule} from 'angular-pipes';
 
 const routes: Routes = [
   {path: '', component: FavouritesComponent}
@@ -18,7 +18,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     TranslateModule,
     PipesModule,
-    VendorsModule
+    VendorsModule,
+    NgToArrayPipeModule,
   ]
 })
 export class FavouritesModule {

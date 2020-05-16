@@ -131,5 +131,6 @@
   "expression_change_no_data": "no data",
   "expression_change_decreased": "decreases",
   "expression_change_increased": "increases",
-  "expression_change_mixed": "mixed"
+  "expression_change_mixed": "mixed",
+  "favourites_page_title": "Favourites"
 }
