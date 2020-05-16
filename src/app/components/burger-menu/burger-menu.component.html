@@ -2,8 +2,12 @@
         class="signin-button js_signin-btn"
         (click)="toggleMenu()"
         [class.active]="menuVisible"
-        aria-label="Меню"
-><span class="fa fal fa-bars"></span> <!-- TODO: use MatIconRegistry to use icon set -->
+        aria-label="Меню"><span
+  [matBadge]="favsCounter"
+  [matBadgeHidden]="favsCounter === 0"
+  matBadgeSize="small"
+  matBadgeColor="accent"
+  class="fa fal fa-bars"></span> <!-- TODO: use MatIconRegistry to use icon set -->
 </button>
 
 <div class="header__menu js_header-menu"
@@ -24,7 +28,14 @@
       <li class="menu__link">
         <a [routerLink]="'/favourites'"
            routerLinkActive="current"
-        >{{ 'header_menu_favourites' | translate }}</a>
+        >
+          <span
+            [matBadge]="favsCounter"
+            [matBadgeHidden]="favsCounter === 0"
+            matBadgeColor="accent"
+            matBadgeOverlap="false"
+          >{{ 'header_menu_favourites' | translate }}</span>
+        </a>
       </li>
     </ul>
   </div>

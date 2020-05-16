@@ -132,25 +132,27 @@
           </button>
         </div>
         <div class="td td-actions">
-          <button mat-icon-button
-                  class="td-actions__menu"
-                  [matMenuTriggerFor]="geneListItemMenu"
-                  aria-label="Меню гена в списке"
+          <button
+            mat-icon-button
+            class="td-actions__menu"
+            [matMenuTriggerFor]="geneListItemMenu"
+            aria-label="Меню гена в списке"
           >
             <mat-icon>
               <span class="fa far fa-ellipsis-v"></span>
             </mat-icon>
           </button>
           <mat-menu #geneListItemMenu="matMenu">
-            <button mat-menu-item [matMenuTriggerFor]="geneListItemSubMenu">This gene on</button>
+            <button mat-menu-item [matMenuTriggerFor]="geneListItemSubMenu"
+            >{{ 'gene_list_menu_this_gene_on' | translate }}</button>
             <button mat-menu-item
                     *ngIf="this.isFaved(data.id)"
                     (click)="unFavItem(data.id)"
-            >Remove from Favourites</button>
+            >{{ 'favourites_remove' | translate }}</button>
             <button mat-menu-item
                     *ngIf="!this.isFaved(data.id)"
                     (click)="favItem(data.id)"
-            >Add to Favourites</button>
+            >{{ 'favourites_add' | translate }}</button>
           </mat-menu>
 
           <mat-menu #geneListItemSubMenu="matMenu">
