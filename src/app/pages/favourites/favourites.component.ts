@@ -1,8 +1,9 @@
-import {Component, OnInit, OnChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Genes} from 'src/app/core/models/genes.model';
 import {FavouritesService} from 'src/app/core/services/favourites.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ApiService} from '../../core/services/api.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-favourites',
@@ -10,12 +11,13 @@ import {ApiService} from '../../core/services/api.service';
   providers: [FavouritesService]
 })
 
-export class FavouritesComponent implements OnInit, OnChanges {
+export class FavouritesComponent implements OnInit {
 
   constructor(
     public translate: TranslateService,
     private readonly apiService: ApiService,
-    private favouritesService: FavouritesService) {
+    private favouritesService: FavouritesService,
+    private ref: ChangeDetectorRef) {
   }
 
   public genes: Genes[];
@@ -25,15 +27,12 @@ export class FavouritesComponent implements OnInit, OnChanges {
   public unFavItem(geneId: number) {
     console.log(this.favouritesService.favourites);
     this.favouritesService.removeFromCart(geneId);
+    this.ref.markForCheck();
   }
 
   ngOnInit() {
     this.favouriteGenesIds = this.favouritesService.getItems();
     this.getGenes();
-  }
-
-  ngOnChanges() {
-
   }
 
   private getGenes() {

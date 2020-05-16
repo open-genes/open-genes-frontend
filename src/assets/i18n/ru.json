@@ -133,5 +133,6 @@
   "expression_change_decreased": "снижается",
   "expression_change_increased": "повышается",
   "expression_change_mixed": "неоднозначно",
-  "favourites_page_title": "Избранное"
+  "favourites_page_title": "Избранное",
+  "favourites_no_data": "Нет добавленных генов"
 }
