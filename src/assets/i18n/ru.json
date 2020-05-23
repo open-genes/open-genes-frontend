@@ -134,8 +134,11 @@
   "expression_change_increased": "повышается",
   "expression_change_mixed": "неоднозначно",
   "favourites_page_title": "Избранное",
+  "favourites_page_total": "Всего:",
   "favourites_no_data": "Нет добавленных генов",
+  "favourites_go_to_home_page": "На главную",
   "gene_list_menu_this_gene_on": "Этот ген в...",
   "favourites_add": "Добавить в Избранное",
-  "favourites_remove": "Убрать из Избранного"
+  "favourites_remove": "Убрать из Избранного",
+  "favourites_clear": "Очистить"
 }
