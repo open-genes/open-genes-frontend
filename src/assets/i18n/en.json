@@ -133,8 +133,11 @@
   "expression_change_increased": "increases",
   "expression_change_mixed": "mixed",
   "favourites_page_title": "Favourites",
+  "favourites_page_total": "Total:",
   "favourites_no_data": "No genes added",
+  "favourites_go_to_home_page": "Go to main page",
   "gene_list_menu_this_gene_on": "This gene on...",
   "favourites_add": "Add to Favourites",
-  "favourites_remove": "Remove from Favourites"
+  "favourites_remove": "Remove from Favourites",
+  "favourites_clear": "Clear"
 }

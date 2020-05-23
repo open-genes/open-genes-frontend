@@ -2,7 +2,7 @@
   <div class="page__inner">
     <div class="text-page__header wrapper">
       <div class="container">
-        <div class="col col-16">
+        <div class="col-12">
           <div class="page__title">
             <h1>{{ 'favourites_page_title' | translate }}</h1>
           </div>
@@ -10,10 +10,26 @@
       </div>
     </div>
 
-    <div class="container favourites-page__favourites" *ngIf="favouriteGenesIds.length !== 0">
+    <div class="container favourites-page__favourites"
+         *ngIf="favouriteGenesIds.length !== 0">
+      <div class="row no-gutters __mb-20 align-items-center">
+        <div class="col page__subtitle __mb-0">
+          {{ 'favourites_page_total' | translate }} {{ favouriteGenesIds.length }}
+        </div>
+        <div class="col d-flex flex-row-reverse">
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="clearFavs()"
+          >
+            {{ 'favourites_clear' | translate }}
+          </button>
+        </div>
+      </div>
+
       <ng-container *ngFor="let gene of genes | toArray">
         <div *ngIf="favouriteGenesIds.indexOf(gene.id) > -1"
-             class="col col-16 faved-gene"
+             class="col-12 faved-gene"
         >
           <div class="faved-gene__title">
             <a [routerLink]="['/gene', gene.symbol]"
@@ -33,13 +49,22 @@
       </ng-container>
     </div>
 
-    <section class="col-12 no-content" *ngIf="favouriteGenesIds.length === 0 || error">
+    <section class="col-12 no-content"
+             *ngIf="favouriteGenesIds.length === 0">
       <div class="no-content__inner">
         <div class="no-content__icon no-content__icon-standard"></div>
         <div class="no-content__title">
           <div class="title__center">
             {{ 'favourites_no_data' | translate }}
           </div>
+        </div>
+        <div class="no-content__button">
+          <a
+            mat-flat-button
+            color="primary"
+            href="/"
+          >{{ 'favourites_go_to_home_page' | translate }}
+          </a>
         </div>
       </div>
     </section>

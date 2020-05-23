@@ -13,6 +13,7 @@ export interface Genes {
   expressionChange?: number;
   origin: Origin;
   homologueTaxon: string;
+  timestamp: string;
 }
 
 export interface Gene {
@@ -49,5 +50,6 @@ export interface Gene {
   terms: Terms;
   commentsReferenceLinks: any;
   rating: any;
+  timestamp: any;
 }
 
