@@ -51,3 +51,9 @@ $sizes: (0, 5, 10, 15, 20, 25, 30, 35);
 .__nowrap {
   white-space: nowrap;
 }
+
+.__mb-btm {
+  @include resolution_smartphone {
+    order: 2;
+  }
+}
