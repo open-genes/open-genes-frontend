@@ -245,8 +245,10 @@
       margin-bottom: 0.8ex;
     }
 
-    a {
-      @extend .link;
+    article {
+      & > a {
+        @extend .link;
+      }
     }
 
     .reference-list {
