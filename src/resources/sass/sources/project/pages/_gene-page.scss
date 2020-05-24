@@ -34,6 +34,7 @@
         float: left;
         width: auto;
         height: 40px;
+        padding-top: 4px;
         @include resolution_smartphone {
           text-align: right;
         }
@@ -61,7 +62,7 @@
       flex-flow: row wrap;
       justify-content: flex-start;
       align-items: stretch;
-      font-size: 0;
+      font-size: $font-size;
 
       .age__type {
         display: flex;
@@ -75,6 +76,10 @@
           padding: 10px;
           border: 1px solid $color-borders;
           border-radius: $border-radius-medium;
+        }
+
+        .type__inner + .type__inner {
+          margin-top: 5px;
         }
 
         .type__title {
@@ -146,11 +151,27 @@
             }
           }
         }
+
+        &.age__orthologs {
+          .list {
+            .alias {
+              text-transform: uppercase;
+
+              &:empty {
+                display: none; // TODO: это костыль для пустых значений ортологов из GeneAge, нужно добавить проверку
+              }
+            }
+          }
+        }
       }
 
       @include resolution_tablet-and-up {
         .age__type {
           width: 25%;
+
+          &.age__orthologs {
+            width: 50%;
+          }
         }
 
         .age__type + .age__type {
@@ -317,6 +338,11 @@
   section + article,
   article + h3 {
     margin-top: 30px;
+  }
+
+  &__links {
+    border-top: 1px solid $color-borders;
+    padding-top: 20px;
   }
 }
 
