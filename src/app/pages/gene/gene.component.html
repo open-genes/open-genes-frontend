@@ -9,24 +9,11 @@
                 {{gene.symbol}}
               </div>
             </div>
-            <div class="title__vendors">
-              <a href="https://genomics.senescence.info/genes/entry.php?hgnc={{gene.symbol}}"
-                 target="_blank"
-                 title="{{ 'link_geneage' | translate }} ?>"
-                 class="badge __brand-color-geneage"
-              >GeneAge</a>
-
-              <a href="https://www.ncbi.nlm.nih.gov/gene/{{gene.ncbiId}}"
-                 target="_blank"
-                 title="{{ 'link_entrez' | translate }}"
-                 class="badge __brand-color-entrez"
-              >EntrezGene</a>
-
-              <a href="https://www.uniprot.org/uniprot/{{gene.uniprot}}"
-                 target="_blank"
-                 title="{{ 'link_uniprot' | translate }}"
-                 class="badge __brand-color-uniprot"
-              >UniProt</a>
+            <div class="title__vendors" *ngIf="gene.aliases.length !== 0">
+                <ng-container
+                  *ngFor="let item of gene.aliases">
+                  <span class="alias">{{item}}</span>
+                </ng-container>
             </div>
           </div>
           <div class="col col-12 header__short-comment">
@@ -130,9 +117,6 @@
                           <small *ngIf="gene.origin.age">{{ 'million_years' | translate }}</small>
                         </div>
                       </div>
-                    </div>
-
-                    <div class="age__type age__years">
                       <div class="type__inner">
                         <div class="type__title">
                           {{ 'ncbi_homologs' | translate }}
@@ -143,53 +127,58 @@
                       </div>
                     </div>
 
-                    <a href="http://disgenet.org/browser/1/1/0/{{gene.ncbiId}}/"
-                       target="_blank"
-                       title="{{ 'gene_page_link_disgenet' | translate }}"
-                       class="age__type age__diseases">
+                    <div class="age__type">
+                      <div class="type__inner"
+                           *ngIf="gene.band || gene.locationStart || gene.locationEnd">
+                        <div class="type__title">
+                          {{ 'gene_page_title_position' | translate }}
+                        </div>
+                        <ul class="list">
+                          <li
+                            *ngIf="gene.band"
+                          ><b>{{ 'gene_page_cytogenetic_band' | translate }}:</b> {{ gene.band }}</li>
+
+                          <li
+                            *ngIf="gene.locationStart"
+                          ><b>{{ 'gene_page_location_start' | translate }}:</b> {{ gene.locationStart }}</li>
+
+                          <li
+                            *ngIf="gene.locationEnd"
+                          ><b>{{ 'gene_page_location_end' | translate }}:</b> {{ gene.locationEnd }}</li>
+
+                          <li
+                            *ngIf="gene.orientation"
+                          ><b>{{ 'gene_page_orientation' | translate }}:</b>
+
+                            <ng-container
+                              *ngIf="gene.orientation === 1; then plusStrand; else minusStrand"
+                            ></ng-container>
+
+                            <ng-template #plusStrand>
+                              {{ 'gene_page_orientation_plus_strand' | translate }}
+                            </ng-template>
+
+                            <ng-template #minusStrand>
+                              {{ 'gene_page_orientation_minus_strand' | translate }}
+                            </ng-template>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div
+                      *ngIf="gene.orthologs.length !== 0"
+                      class="age__type age__orthologs"> <!-- TODO: отображается пустое, приходит {"":""} -->
                       <div class="type__inner">
                         <div class="type__title">
-                          {{ 'diseases' | translate }}
+                          {{ "gene_page_title_orthologs" | translate }}
                         </div>
-                        <div class="type__value">
-                          <span class="badge __brand-color-disgenet">
-                              <span class="fa fal fa-stream"></span>
-                            {{ 'gene_page_link_disgenet' | translate }}
-                          </span>
-                        </div>
-                      </div>
-                    </a>
 
-                    <a href="https://thebiogrid.org/search.php?search={{gene.symbol}}&organism=9606/"
-                       target="_blank"
-                       title="{{ 'gene_page_link_biogrid' | translate }}"
-                       class="age__type age__interactions">
-                      <div class="type__inner">
-                        <div class="type__title">
-                          {{ 'gene_page_title_interactions' | translate }}
-                        </div>
-                        <div class="type__value">
-                          <span class="badge __brand-color-biogrid">
-                              <span class="fa fal fa-search"></span>
-                            {{ 'gene_page_link_biogrid' | translate }}
-                          </span>
-                        </div>
-                      </div>
-                    </a>
-
-                    <div class="age__type age__rating hidden" *ngIf="gene.rating">
-                      <div class="type__title">
-                        {{ 'gene_page_title_criteria' | translate }}
-                        <small><sup>*</sup></small>
-                      </div>
-                      <div class="type__value">
-              <span
-                class="rating{{ (gene.rating > 5) ? 'rating--medium' : 'rating--high'}}">
-                  {{gene.rating}}
-              </span>
-                      </div>
-                      <div class="type__description">
-                        {{gene.rating}}
+                        <ul class="list">
+                          <li *ngFor="let item of gene.orthologs | keyvalue">
+                            {{ item.key }} <span class="alias">{{ item.value }}</span>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -198,48 +187,6 @@
                 <section class="wrapper gene-page__articles">
                   <div class="__w-100 __mt-20 page__title">
                     <h1>{{ 'gene_page_title_description' | translate }}</h1>
-                  </div>
-
-                  <div class="__w-100 articles__content" *ngIf="gene.aliases.length !== 0">
-                    <h3>{{ 'gene_page_title_aliases' | translate }}</h3>
-                    <ng-container *ngFor="let item of gene.aliases">
-                      <span class="alias">{{item}}</span>
-                    </ng-container>
-                  </div>
-
-                  <div class="__w-100 articles__content"
-                       *ngIf="gene.band || gene.locationStart || gene.locationEnd">
-                    <h3>{{ 'gene_page_title_position' | translate }}</h3>
-                    <article id="cytogenetic-band">
-                      <p
-                        *ngIf="gene.band"
-                      ><b>{{ 'gene_page_cytogenetic_band' | translate }}:</b> {{ gene.band }}</p>
-
-                      <p
-                        *ngIf="gene.locationStart"
-                      ><b>{{ 'gene_page_location_start' | translate }}:</b> {{ gene.locationStart }}</p>
-
-                      <p
-                        *ngIf="gene.locationEnd"
-                      ><b>{{ 'gene_page_location_end' | translate }}:</b> {{ gene.locationEnd }}</p>
-
-                      <p
-                        *ngIf="gene.orientation"
-                      ><b>{{ 'gene_page_orientation' | translate }}:</b>
-
-                        <ng-container
-                          *ngIf="gene.orientation === 1; then plusStrand; else minusStrand"
-                        ></ng-container>
-
-                        <ng-template #plusStrand>
-                          {{ 'gene_page_orientation_plus_strand' | translate }}
-                        </ng-template>
-
-                        <ng-template #minusStrand>
-                          {{ 'gene_page_orientation_minus_strand' | translate }}
-                        </ng-template>
-                      </p>
-                    </article>
                   </div>
 
                   <div class="__w-100 articles__content"
@@ -536,17 +483,6 @@
                       </div>
                     </section>
 
-                    <section *ngIf="gene.orthologs.length !== 0"
-                             id="orthologs"> <!-- TODO: отображается пустое, приходит {"":""} -->
-                      <h3>{{ "gene_page_title_orthologs" | translate }}</h3>
-
-                      <ul class="list">
-                        <li *ngFor="let item of gene.orthologs | keyvalue">
-                          <span class="alias">{{ item.key }}</span> {{ item.value }}
-                        </li>
-                      </ul>
-                    </section>
-
                     <section
                       *ngIf="
                     gene.terms.biological_process.length >= 1 ||
@@ -676,5 +612,51 @@
         </div>
       </div>
     </div>
+
+    <section class="wrapper gene-page__links">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <a href="https://genomics.senescence.info/genes/entry.php?hgnc={{gene.symbol}}"
+               target="_blank"
+               title="{{ 'link_geneage' | translate }} ?>"
+               class="badge __brand-color-geneage"
+            >GeneAge</a>
+
+            <a href="https://www.ncbi.nlm.nih.gov/gene/{{gene.ncbiId}}"
+               target="_blank"
+               title="{{ 'link_entrez' | translate }}"
+               class="badge __brand-color-entrez"
+            >EntrezGene</a>
+
+            <a href="https://www.uniprot.org/uniprot/{{gene.uniprot}}"
+               target="_blank"
+               title="{{ 'link_uniprot' | translate }}"
+               class="badge __brand-color-uniprot"
+            >UniProt</a>
+
+            <a href="http://disgenet.org/browser/1/1/0/{{gene.ncbiId}}/"
+               target="_blank"
+               title="{{ 'link_disgenet' | translate }}"
+               class="badge __brand-color-disgenet"
+            >DisGenet</a>
+
+            <a href="https://thebiogrid.org/search.php?search={{gene.symbol}}&organism=9606/"
+               target="_blank"
+               title="{{ 'link_biogrid' | translate }}"
+               class="badge __brand-color-biogrid"
+            >BioGrid</a>
+
+            <a href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{gene.human_protein_atlas.Ensembl}}"
+               target="_blank"
+               title="{{ 'link_ensembl' | translate }}"
+               class="badge __brand-color-ensembl"
+            >Ensembl</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </div>
+
+
