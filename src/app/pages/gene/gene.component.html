@@ -24,7 +24,7 @@
           <div class="col col-12 header__functional-clusters">
             <ng-container *ngIf="gene.functionalClusters; else tagSkeletal">
               <ng-container *ngFor="let item of gene.functionalClusters">
-                <a routerLink="/" class="alias">{{item.name}}</a>
+                <span class="alias">{{item.name}}</span>
               </ng-container>
             </ng-container>
             <ng-template #tagSkeletal>
@@ -567,10 +567,9 @@
                                 <div class="row__name">{{item['name']}}</div>
                                 <div class="row__value"
                                      [class.row__value--minimum]="chartCalculatePercent(item['exp_rpkm'], expressionMaxValue) < 3">
-                                  <mat-progress-bar
-                                    [value]="chartCalculatePercent(item['exp_rpkm'], expressionMaxValue)"
-                                    class="value__bar"
-                                  ></mat-progress-bar>
+                                  <div class="value__bar"
+                                    [style.width.%]="chartCalculatePercent(item['exp_rpkm'], expressionMaxValue)"
+                                  ></div>
                                   <div class="value__rpkm">{{item['exp_rpkm'] | number:'1.0-2'}} RPKM</div>
                                 </div>
                               </div>
@@ -619,39 +618,45 @@
           <div class="col-12">
             <a href="https://genomics.senescence.info/genes/entry.php?hgnc={{gene.symbol}}"
                target="_blank"
-               title="{{ 'link_geneage' | translate }} ?>"
+               matTooltip="{{ 'link_geneage' | translate }}"
                class="badge __brand-color-geneage"
             >GeneAge</a>
 
             <a href="https://www.ncbi.nlm.nih.gov/gene/{{gene.ncbiId}}"
                target="_blank"
-               title="{{ 'link_entrez' | translate }}"
+               matTooltip="{{ 'link_entrez' | translate }}"
                class="badge __brand-color-entrez"
             >EntrezGene</a>
 
             <a href="https://www.uniprot.org/uniprot/{{gene.uniprot}}"
                target="_blank"
-               title="{{ 'link_uniprot' | translate }}"
+               matTooltip="{{ 'link_uniprot' | translate }}"
                class="badge __brand-color-uniprot"
             >UniProt</a>
 
             <a href="http://disgenet.org/browser/1/1/0/{{gene.ncbiId}}/"
                target="_blank"
-               title="{{ 'link_disgenet' | translate }}"
+               matTooltip="{{ 'link_disgenet' | translate }}"
                class="badge __brand-color-disgenet"
             >DisGenet</a>
 
             <a href="https://thebiogrid.org/search.php?search={{gene.symbol}}&organism=9606/"
                target="_blank"
-               title="{{ 'link_biogrid' | translate }}"
+               matTooltip="{{ 'link_biogrid' | translate }}"
                class="badge __brand-color-biogrid"
             >BioGrid</a>
 
             <a href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{gene.human_protein_atlas.Ensembl}}"
                target="_blank"
-               title="{{ 'link_ensembl' | translate }}"
+               matTooltip="{{ 'link_ensembl' | translate }}"
                class="badge __brand-color-ensembl"
             >Ensembl</a>
+
+            <a href="https://www.proteinatlas.org/{{gene.human_protein_atlas.Ensembl}}"
+               target="_blank"
+               matTooltip="{{ 'link_hpa' | translate }}"
+               class="badge __brand-color-hpa"
+            >HPA</a>
           </div>
         </div>
       </div>
