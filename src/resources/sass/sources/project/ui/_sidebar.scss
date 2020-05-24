@@ -76,9 +76,5 @@
 
   @include resolution_smartphone {
     @include one-sidebar-item-on-another;
-
-    &--mb-btm {
-      order: 2;
-    }
   }
 }

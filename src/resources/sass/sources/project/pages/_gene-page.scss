@@ -245,6 +245,10 @@
       margin-bottom: 0.8ex;
     }
 
+    a {
+      @extend .link;
+    }
+
     .reference-list {
       margin-top: 10px;
       padding-top: 12px;
