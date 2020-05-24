@@ -1,9 +1,9 @@
 import {Component, Input, Output, OnInit, OnChanges} from '@angular/core';
-import {PubmedApiService} from '../../core/services/pubmed.api.service';
-import {News} from '../../core/models/news.model';
-import {Genes} from '../../core/models';
+import {PubmedApiService} from '../../../core/services/pubmed.api.service';
+import {News} from '../../../core/models/news.model';
+import {Genes} from '../../../core/models';
 import {finalize, switchMap} from 'rxjs/operators';
-import {environment} from '../../../environments/environment';
+import {environment} from '../../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
 import {Subject} from 'rxjs';
 

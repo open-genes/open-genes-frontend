@@ -41,6 +41,7 @@
 
   &__item {
     display: flex;
+    flex: 0 0 100%;
     flex-flow: row wrap;
   }
 
@@ -57,24 +58,11 @@
   }
 
   @include resolution_widescreen {
-    flex: 0 0 20%;
-    width: 250px;
     position: sticky;
     top: 70px;
     margin-bottom: 60px;
 
     @include one-sidebar-item-on-another;
-
-    &--right {
-      .sidebar__inner {
-        padding-left: 30px;
-      }
-    }
-    &--left {
-      .sidebar__inner {
-        padding-right: 30px;
-      }
-    }
   }
 
   @include resolution_all-but-widescreen {
@@ -83,7 +71,7 @@
   }
 
   @include resolution_tablet-and-desktop {
-  @include two-sidebar-items-in-a-row;
+    @include two-sidebar-items-in-a-row;
   }
 
   @include resolution_smartphone {
@@ -92,14 +80,5 @@
     &--mb-btm {
       order: 2;
     }
-  }
-}
-
-.content {
-  @include resolution_widescreen {
-    flex: 1 1 80%;
-  }
-  @include resolution_all-but-widescreen {
-    flex: 0 0 100%;
   }
 }

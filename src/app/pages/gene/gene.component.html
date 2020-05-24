@@ -1,14 +1,622 @@
 <div class="page gene-page" *ngIf="gene">
   <div class="page__inner">
     <section class="wrapper gene-page__header">
-      <div class="container">
-        <div class="col col-16 header__title">
-          <div class="title__caption">
-            <div class="caption__inner">
-              {{gene.symbol}}
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col col-12 header__title">
+            <div class="title__caption">
+              <div class="caption__inner">
+                {{gene.symbol}}
+              </div>
+            </div>
+            <div class="title__vendors" *ngIf="gene.aliases.length !== 0">
+                <ng-container
+                  *ngFor="let item of gene.aliases">
+                  <span class="alias">{{item}}</span>
+                </ng-container>
             </div>
           </div>
-          <div class="title__vendors">
+          <div class="col col-12 header__short-comment">
+            <span class="str_source-GeneAge">
+              {{gene.name}}
+            </span>
+          </div>
+          <div class="col col-12 header__functional-clusters">
+            <ng-container *ngIf="gene.functionalClusters; else tagSkeletal">
+              <ng-container *ngFor="let item of gene.functionalClusters">
+                <a routerLink="/" class="alias">{{item.name}}</a>
+              </ng-container>
+            </ng-container>
+            <ng-template #tagSkeletal>
+              <span class="alias __skeletal"></span>
+              <span class="alias __skeletal"></span>
+              <span class="alias __skeletal"></span>
+              <span class="alias __skeletal"></span>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col col-12">
+          <div class="row">
+            <div class="col-lg-12 col-xl-2">
+              <div class="sidebar sidebar--mb-btm">
+                <div class="sidebar__inner">
+                  <div class="__not-flex __w-100">
+
+                    <b>{{ 'gene_page_title_contents' | translate }}</b>
+
+                    <mat-nav-list *ngIf="isContent()">
+                      <a mat-list-item
+                         *ngIf="gene.commentEvolution"
+                         [routerLink]="['/gene', symbol]" fragment="evolution">
+                        {{ 'gene_page_title_evolution' | translate }}
+                      </a>
+
+                      <a mat-list-item
+                         *ngIf="gene.commentFunction"
+                         [routerLink]="['/gene', symbol]" fragment="function">
+                        {{ 'gene_page_title_function' | translate }}
+                      </a>
+
+                      <a mat-list-item
+                         *ngIf="gene.commentCause.length !== 0"
+                         [routerLink]="['/gene', symbol]" fragment="cause">
+                        {{ 'gene_page_title_criteria' | translate }}
+                      </a>
+
+                      <a mat-list-item
+                         *ngIf="gene.commentAging"
+                         [routerLink]="['/gene', symbol]" fragment="aging">
+                        {{ 'gene_page_title_aging' | translate }}
+                      </a>
+
+                      <a mat-list-item
+                         *ngIf="gene.expression.length !== 0"
+                         [routerLink]="['/gene', symbol]" fragment="expression">
+                        {{ 'gene_page_title_expression' | translate }}
+                      </a>
+
+                      <a mat-list-item
+                         *ngIf="
+                    gene.terms.biological_process.length >= 1 ||
+                    gene.terms.cellular_component.length >= 1 ||
+                    gene.terms.molecular_activity.length >= 1"
+                         [routerLink]="['/gene', symbol]" fragment="terms">
+                        Gene Ontology
+                      </a>
+
+                      <a mat-list-item
+                         *ngIf="gene.commentsReferenceLinks.length > 1"
+                         [routerLink]="['/gene', symbol]" fragment="reference">
+                        {{ 'gene_page_title_reference' | translate }}
+                      </a>
+                    </mat-nav-list>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12 col-xl-10">
+              <div class="page-wrapper">
+                <section class="wrapper gene-page__age">
+                  <div class="age__types">
+                    <div class="age__type age__phylogeny">
+                      <div class="type__inner">
+                        <div class="type__title">
+                          {{ 'phylogeny' | translate }}
+                        </div>
+                        <div class="type__value">
+                          {{ gene.origin.phylum || ('gene_page_no_data' | translate) }}
+                        </div>
+                        <div class="type__value">
+                          {{ gene.origin.age }}
+                          <small *ngIf="gene.origin.age">{{ 'million_years' | translate }}</small>
+                        </div>
+                      </div>
+                      <div class="type__inner">
+                        <div class="type__title">
+                          {{ 'ncbi_homologs' | translate }}
+                        </div>
+                        <div class="type__value">
+                          {{ gene.homologueTaxon || ('gene_page_no_data' | translate) }}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="age__type">
+                      <div class="type__inner"
+                           *ngIf="gene.band || gene.locationStart || gene.locationEnd">
+                        <div class="type__title">
+                          {{ 'gene_page_title_position' | translate }}
+                        </div>
+                        <ul class="list">
+                          <li
+                            *ngIf="gene.band"
+                          ><b>{{ 'gene_page_cytogenetic_band' | translate }}:</b> {{ gene.band }}</li>
+
+                          <li
+                            *ngIf="gene.locationStart"
+                          ><b>{{ 'gene_page_location_start' | translate }}:</b> {{ gene.locationStart }}</li>
+
+                          <li
+                            *ngIf="gene.locationEnd"
+                          ><b>{{ 'gene_page_location_end' | translate }}:</b> {{ gene.locationEnd }}</li>
+
+                          <li
+                            *ngIf="gene.orientation"
+                          ><b>{{ 'gene_page_orientation' | translate }}:</b>
+
+                            <ng-container
+                              *ngIf="gene.orientation === 1; then plusStrand; else minusStrand"
+                            ></ng-container>
+
+                            <ng-template #plusStrand>
+                              {{ 'gene_page_orientation_plus_strand' | translate }}
+                            </ng-template>
+
+                            <ng-template #minusStrand>
+                              {{ 'gene_page_orientation_minus_strand' | translate }}
+                            </ng-template>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div
+                      *ngIf="gene.orthologs.length !== 0"
+                      class="age__type age__orthologs"> <!-- TODO: отображается пустое, приходит {"":""} -->
+                      <div class="type__inner">
+                        <div class="type__title">
+                          {{ "gene_page_title_orthologs" | translate }}
+                        </div>
+
+                        <ul class="list">
+                          <li *ngFor="let item of gene.orthologs | keyvalue">
+                            {{ item.key }} <span class="alias">{{ item.value }}</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="wrapper gene-page__articles">
+                  <div class="__w-100 __mt-20 page__title">
+                    <h1>{{ 'gene_page_title_description' | translate }}</h1>
+                  </div>
+
+                  <div class="__w-100 articles__content"
+                       *ngIf="isContent();
+                      else noContent">
+
+                    <section *ngIf="gene.commentEvolution">
+                      <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
+                      <article
+                        id="evolution"
+                        [innerHTML]="gene.commentEvolution"
+                      >
+                      </article>
+                    </section>
+
+                    <section *ngIf="gene.commentFunction">
+                      <h3>{{ 'gene_page_title_function' | translate }}</h3>
+                      <article
+                        id="function"
+                        [innerHTML]="gene.commentFunction"
+                      >
+                      </article>
+                    </section>
+
+                    <section *ngIf="gene.commentCause.length !== 0">
+                      <h3>{{ 'gene_page_title_criteria' | translate }}</h3>
+                      <article id="cause">
+                        <ul class="list list--bulletted">
+                          <li *ngFor="let item of gene.commentCause">{{item}}</li>
+                        </ul>
+                      </article>
+                    </section>
+
+                    <section *ngIf="gene.commentAging">
+                      <h3>{{ 'gene_page_title_aging' | translate }}</h3>
+                      <article
+                        id="aging"
+                        [innerHTML]="gene.commentAging"
+                      >
+                      </article>
+                    </section>
+
+                    <section *ngIf="gene.researches.increaseLifespan.length !== 0">
+                      <h3>{{ "gene_page_researches_lifespan" | translate }}</h3>
+                      <div class="table-section __mt-20 __w-content">
+                        <table class="table">
+                          <thead>
+                          <th>{{ "gene_intervention_type" | translate }}</th>
+                          <th>{{ "gene_intervention_result" | translate }}</th>
+                          <th>{{ "researches_model_organism" | translate }}</th>
+                          <th>{{ "researches_organism_line" | translate }}</th>
+                          <th>{{ "researches_age" | translate }}<sup>*</sup></th>
+                          <th><span class="fa fal fa-mars"></span></th>
+                          <th><span class="fa fal fa-venus"></span></th>
+                          <th><span class="fa fal fa-venus-mars"></span></th>
+                          <th>{{ "researches_reference" | translate }}</th>
+                          <th>{{ "researches_comment" | translate }}</th>
+                          </thead>
+
+                          <tr *ngFor="let object of gene.researches.increaseLifespan; let i = index">
+                            <td>
+                              {{ object.interventionType }}
+                            </td>
+                            <td>
+                              {{ object.interventionResult }}
+                            </td>
+                            <td>
+                              {{ object.modelOrganism }}
+                            </td>
+                            <td>
+                              {{ object.organismLine }}
+                            </td>
+                            <td class="__nowrap">
+                              {{ object.age }}
+                            </td>
+                            <td class="__nowrap">
+                              {{ object.valueForMale }}
+                            </td>
+                            <td class="__nowrap">
+                              {{ object.valueForFemale }}
+                            </td>
+                            <td class="__nowrap">
+                              {{ object.valueForAll }}
+                            </td>
+                            <td>
+                              <a href="https://doi.org/{{ object.reference }}" class="link"
+                                 about="_blank">{{ object.reference }}</a>
+                            </td>
+                            <td>
+                              {{ object.comment }}
+                            </td>
+                          </tr>
+                        </table>
+                        <div class="reference">
+                          *{{ 'gene_page_researches_lifespan_hint' | translate }}
+                        </div>
+                      </div>
+                    </section>
+
+                    <section *ngIf="gene.researches.ageRelatedChangesOfGene.length !== 0">
+                      <h3>{{ "gene_page_researches_age_related_changes" | translate }}</h3>
+                      <div class="table-section __mt-20 __w-content">
+                        <table class="table">
+                          <thead>
+                          <th>{{ "age_related_changes_type" | translate }}</th>
+                          <th>{{ "age_related_changes_sample" | translate }}</th>
+                          <th>{{ "researches_model_organism" | translate }}</th>
+                          <th>{{ "researches_age_group_1" | translate }}</th>
+                          <th>{{ "researches_age_group_2" | translate }} </th>
+                          <th><span class="fa fal fa-mars"></span></th>
+                          <th><span class="fa fal fa-venus"></span></th>
+                          <th><span class="fa fal fa-venus-mars"></span></th>
+                          <th>{{ "researches_reference" | translate }}</th>
+                          <th>{{ "researches_comment" | translate }}</th>
+                          </thead>
+
+                          <tr *ngFor="let object of gene.researches.ageRelatedChangesOfGene; let i = index">
+                            <td>
+                              {{ object.changeType }}
+                            </td>
+                            <td>
+                              {{ object.sample }}
+                            </td>
+                            <td>
+                              {{ object.modelOrganism }}
+                            </td>
+                            <td class="__nowrap">
+                              {{ object.ageFrom }}
+                            </td>
+                            <td class="__nowrap">
+                              {{ object.ageTo }}
+                            </td>
+                            <td class="__nowrap">
+                              {{ object.valueForMale }}
+                            </td>
+                            <td class="__nowrap">
+                              {{ object.valueForFemale }}
+                            </td>
+                            <td class="__nowrap">
+                              {{ object.valueForAll }}
+                            </td>
+                            <td>
+                              <a href="https://doi.org/{{ object.reference }}" class="link"
+                                 about="_blank">{{ object.reference }}</a>
+                            </td>
+                            <td>
+                              {{ object.comment }}
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </section>
+
+                    <section *ngIf="gene.researches.interventionToGeneImprovesVitalProcesses.length !== 0">
+                      <h3>{{ 'gene_page_intervention_moderates_aging' | translate }}</h3>
+                      <div class="table-section __mt-20 __w-content">
+                        <table class="table">
+                          <thead>
+                          <th>{{ "gene_intervention_type" | translate }}</th>
+                          <th>{{ "intervention_aging_process" | translate }}</th>
+                          <th>{{ "researches_model_organism" | translate }}</th>
+
+                          <th>{{ "researches_organism_line" | translate }}</th>
+                          <th>{{ "researches_age" | translate }}<sup>*</sup></th>
+                          <th>{{ "researches_sex" | translate }}</th>
+                          <th>{{ "researches_reference" | translate }}</th>
+                          <th>{{ "researches_comment" | translate }}</th>
+                          </thead>
+
+                          <tr
+                            *ngFor="let object of gene.researches.interventionToGeneImprovesVitalProcesses; let i = index">
+                            <td>
+                              {{ object.geneIntervention }}
+                            </td>
+                            <td>
+                              {{ object.vitalProcess }}
+                            </td>
+                            <td>
+                              {{ object.modelOrganism }}
+                            </td>
+                            <td>
+                              {{ object.organismLine }}
+                            </td>
+                            <td class="__nowrap">
+                              {{ object.age }}
+                            </td>
+                            <td class="__nowrap">
+                              {{ object.sex }}
+                            </td>
+                            <td>
+                              <a href="https://doi.org/{{ object.reference }}" class="link"
+                                 about="_blank">{{ object.reference }}</a>
+                            </td>
+                            <td>
+                              {{ object.comment }}
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div class="reference">
+                        *{{ 'gene_page_researches_lifespan_hint' | translate }}
+                      </div>
+                    </section>
+
+                    <section *ngIf="gene.researches.proteinRegulatesOtherGenes.length !== 0">
+                      <h3>{{ "gene_page_researches_protein_regulates_genes" | translate }}</h3>
+                      <div class="table-section __mt-20 __w-content">
+                        <table class="table">
+                          <thead>
+                          <th>{{ "protein_regulates_genes_activity" | translate }}</th>
+                          <th>{{ "gene" | translate }}</th>
+                          <th>{{ "researches_reference" | translate }}</th>
+                          <th>{{ "researches_comment" | translate }}</th>
+                          </thead>
+
+                          <tr *ngFor="let object of gene.researches.proteinRegulatesOtherGenes; let i = index">
+                            <td>
+                              {{ object.proteinActivity }}
+                            </td>
+                            <td>
+                              <a href="gene/{{object.regulatedGene.symbol}}"
+                                 class="link"
+                              >{{ object.regulatedGene.symbol }}</a>
+                            </td>
+                            <td>
+                              <a href="https://doi.org/{{ object.reference }}" class="link"
+                                 about="_blank">{{ object.reference }}</a>
+                            </td>
+                            <td>
+                              {{ object.comment }}
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </section>
+
+                    <section *ngIf="gene.researches.geneAssociatedWithProgeriaSyndromes.length !== 0">
+                      <h3>{{ "gene_page_researches_progeria" | translate }}</h3>
+                      <div class="table-section __mt-20 __w-content">
+                        <table class="table">
+                          <thead>
+                          <th>{{ "progeria_syndrome" | translate }}</th>
+                          <th>{{ "researches_reference" | translate }}</th>
+                          <th>{{ "researches_comment" | translate }}</th>
+                          </thead>
+
+                          <tr *ngFor="let object of gene.researches.geneAssociatedWithProgeriaSyndromes; let i = index">
+                            <td>
+                              {{ object.progeriaSyndrome }}
+                            </td>
+                            <td>
+                              <a href="https://doi.org/{{ object.reference }}" class="link"
+                                 about="_blank">{{ object.reference }}</a>
+                            </td>
+                            <td>
+                              {{ object.comment }}
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </section>
+
+                    <section *ngIf="gene.researches.geneAssociatedWithLongevityEffects.length !== 0">
+                      <h3>{{ "gene_page_researches_longevity_effects" | translate }}</h3>
+                      <div class="table-section __mt-20 __w-content">
+                        <table class="table">
+                          <thead>
+                          <th>{{ "gene_page_allelic_polymorphism" | translate }}</th>
+                          <th>{{ "longevity_effects_effect" | translate }}</th>
+                          <th>{{ "researches_sex" | translate }}</th>
+                          <th>{{ "researches_reference" | translate }}</th>
+                          <th>{{ "researches_comment" | translate }}</th>
+                          </thead>
+
+                          <tr *ngFor="let object of gene.researches.geneAssociatedWithLongevityEffects; let i = index">
+                            <td>
+                              {{ object.allelicPolymorphism }}
+                            </td>
+                            <td>
+                              {{ object.longevityEffect }}
+                            </td>
+                            <td>
+                              {{ object.sex }}
+                            </td>
+                            <td>
+                              <a href="https://doi.org/{{ object.reference }}" class="link"
+                                 about="_blank">{{ object.reference }}</a>
+                            </td>
+                            <td>
+                              {{ object.comment }}
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </section>
+
+                    <section
+                      *ngIf="
+                    gene.terms.biological_process.length >= 1 ||
+                    gene.terms.cellular_component.length >= 1 ||
+                    gene.terms.molecular_activity.length >= 1"
+                      id="terms"
+                    >
+
+                      <h3>Gene Ontology</h3>
+
+                      <mat-tab-group
+                        class="__w-content">
+                        <mat-tab
+                          *ngIf="gene.terms.biological_process.length >= 1"
+                          label='{{ "gene_ontology_biological_process" | translate }}'
+                        >
+                          <h3 class="__mt-30">{{ "gene_ontology_biological_process" | translate }}</h3>
+
+                          <article>
+                            <ul class="list">
+                              <li *ngFor="let term of geneOntologyProcessMap | keyvalue">
+                                <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+                                   title="QuickGO"
+                                   class="alias">{{ term.key | zero }}</a> {{ term.value }}
+                              </li>
+                            </ul>
+                          </article>
+                        </mat-tab>
+
+                        <mat-tab
+                          *ngIf="gene.terms.cellular_component.length >= 1"
+                          label='{{ "gene_ontology_cellular_component" | translate }}'
+                        >
+                          <h3 class="__mt-30">{{ "gene_ontology_cellular_component" | translate }}</h3>
+
+                          <article>
+                            <ul class="list">
+                              <li *ngFor="let term of geneOntologyComponentMap | keyvalue">
+                                <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+                                   title="QuickGO"
+                                   class="alias">{{ term.key | zero }}</a> {{ term.value }}
+                              </li>
+                            </ul>
+                          </article>
+                        </mat-tab>
+
+                        <mat-tab
+                          *ngIf="gene.terms.molecular_activity.length >= 1"
+                          label='{{ "gene_ontology_biological_molecular_activity" | translate }}'
+                        >
+                          <h3 class="__mt-30">{{ "gene_ontology_biological_molecular_activity" | translate }}</h3>
+
+                          <article>
+                            <ul class="list">
+                              <li *ngFor="let term of geneOntologyActivityMap | keyvalue">
+                                <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+                                   title="QuickGO"
+                                   class="alias">{{ term.key | zero }}</a> {{ term.value }}
+                              </li>
+                            </ul>
+                          </article>
+                        </mat-tab>
+                      </mat-tab-group>
+                    </section>
+
+                    <section class="wrapper gene-page__expression" *ngIf="gene.expression.length !== 0"
+                             id="expression">
+                      <div class="__w-100">
+                        <mat-expansion-panel>
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                              {{ 'gene_page_title_expression' | translate }}
+                            </mat-panel-title>
+                          </mat-expansion-panel-header>
+                          <p class="__mb-20">
+                            {{ 'gene_page_expression_hint' | translate }}
+                          </p>
+
+                          <div class="expression__rows">
+                            <ng-container *ngFor="let item of gene.expression">
+                              <div class="expression__row">
+                                <div class="row__name">{{item['name']}}</div>
+                                <div class="row__value"
+                                     [class.row__value--minimum]="chartCalculatePercent(item['exp_rpkm'], expressionMaxValue) < 3">
+                                  <mat-progress-bar
+                                    [value]="chartCalculatePercent(item['exp_rpkm'], expressionMaxValue)"
+                                    class="value__bar"
+                                  ></mat-progress-bar>
+                                  <div class="value__rpkm">{{item['exp_rpkm'] | number:'1.0-2'}} RPKM</div>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </div>
+                        </mat-expansion-panel>
+                      </div>
+                    </section>
+
+                    <article *ngIf="gene.commentsReferenceLinks" id="reference">
+                      <ul class="list reference-list">
+                        <li *ngFor="let item of gene.commentsReferenceLinks | keyvalue">
+                          <a href="https://doi.org/{{item.key}}"
+                             target="_blank"
+                             class="reference-link"
+                             [innerHTML]="item.value | safe: 'html'"
+                          ></a>
+                        </li>
+                      </ul>
+                    </article>
+                  </div>
+
+                  <ng-template #noContent>
+                    <section class="col-12 no-content" >
+                      <div class="no-content__inner">
+                        <div class="no-content__icon no-content__icon-standard"></div>
+                        <div class="no-content__title">
+                          <div class="title__center">
+                            {{ 'gene_page_error_no_article_yet' | translate }}
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </ng-template>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="wrapper gene-page__links">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
             <a href="https://genomics.senescence.info/genes/entry.php?hgnc={{gene.symbol}}"
                target="_blank"
                title="{{ 'link_geneage' | translate }} ?>"
@@ -26,629 +634,29 @@
                title="{{ 'link_uniprot' | translate }}"
                class="badge __brand-color-uniprot"
             >UniProt</a>
+
+            <a href="http://disgenet.org/browser/1/1/0/{{gene.ncbiId}}/"
+               target="_blank"
+               title="{{ 'link_disgenet' | translate }}"
+               class="badge __brand-color-disgenet"
+            >DisGenet</a>
+
+            <a href="https://thebiogrid.org/search.php?search={{gene.symbol}}&organism=9606/"
+               target="_blank"
+               title="{{ 'link_biogrid' | translate }}"
+               class="badge __brand-color-biogrid"
+            >BioGrid</a>
+
+            <a href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{gene.human_protein_atlas.Ensembl}}"
+               target="_blank"
+               title="{{ 'link_ensembl' | translate }}"
+               class="badge __brand-color-ensembl"
+            >Ensembl</a>
           </div>
-        </div>
-        <div class="col col-16 header__short-comment">
-          <span class="str_source-GeneAge">
-            {{gene.name}}
-          </span>
-        </div>
-        <div class="col col-16 header__functional-clusters">
-          <ng-container *ngIf="gene.functionalClusters; else tagSkeletal">
-            <ng-container *ngFor="let item of gene.functionalClusters">
-              <a routerLink="/" class="alias">{{item.name}}</a>
-            </ng-container>
-          </ng-container>
-          <ng-template #tagSkeletal>
-            <span class="alias __skeletal"></span>
-            <span class="alias __skeletal"></span>
-            <span class="alias __skeletal"></span>
-            <span class="alias __skeletal"></span>
-          </ng-template>
         </div>
       </div>
     </section>
-
-    <div class="container">
-      <div class="col col-16">
-        <div class="flex-subcontainer">
-          <div class="per sidebar sidebar--left">
-            <div class="sidebar__inner">
-              <div class="__not-flex __w-100">
-
-              <b>{{ 'gene_page_title_contents' | translate }}</b>
-
-              <mat-nav-list dense *ngIf="isContent()">
-                <a mat-list-item
-                   *ngIf="gene.commentEvolution"
-                   [routerLink]="['/gene', symbol]" fragment="evolution">
-                  {{ 'gene_page_title_evolution' | translate }}
-                </a>
-
-                <a mat-list-item
-                   *ngIf="gene.commentFunction"
-                   [routerLink]="['/gene', symbol]" fragment="function">
-                  {{ 'gene_page_title_function' | translate }}
-                </a>
-
-                <a mat-list-item
-                   *ngIf="gene.commentCause.length !== 0"
-                   [routerLink]="['/gene', symbol]" fragment="cause">
-                  {{ 'gene_page_title_criteria' | translate }}
-                </a>
-
-                <a mat-list-item
-                   *ngIf="gene.commentAging"
-                   [routerLink]="['/gene', symbol]" fragment="aging">
-                  {{ 'gene_page_title_aging' | translate }}
-                </a>
-
-                <a mat-list-item
-                   *ngIf="gene.expression.length !== 0"
-                   [routerLink]="['/gene', symbol]" fragment="expression">
-                  {{ 'gene_page_title_expression' | translate }}
-                </a>
-
-                <a mat-list-item
-                   *ngIf="
-                    gene.terms.biological_process.length >= 1 ||
-                    gene.terms.cellular_component.length >= 1 ||
-                    gene.terms.molecular_activity.length >= 1"
-                   [routerLink]="['/gene', symbol]" fragment="terms">
-                  Gene Ontology
-                </a>
-
-                <a mat-list-item
-                   *ngIf="gene.commentsReferenceLinks.length > 1"
-                   [routerLink]="['/gene', symbol]" fragment="reference">
-                  {{ 'gene_page_title_reference' | translate }}
-                </a>
-              </mat-nav-list>
-              </div>
-            </div>
-          </div>
-
-          <div class="per content">
-            <div class="page-wrapper">
-              <section class="wrapper gene-page__age">
-                <div class="__w-100">
-                  <div class="flex-subcontainer age__types">
-                    <div class="col age__type age__phylogeny">
-                      <div class="type__inner">
-                        <div class="type__title">
-                          {{ 'phylogeny' | translate }}
-                        </div>
-                        <div class="type__value">
-                          {{ gene.origin.phylum || ('gene_page_no_data' | translate) }}
-                        </div>
-                        <div class="type__value">
-                          {{ gene.origin.age }}
-                          <small *ngIf="gene.origin.age">{{ 'million_years' | translate }}</small>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col age__type age__years">
-                      <div class="type__inner">
-                        <div class="type__title">
-                          {{ 'ncbi_homologs' | translate }}
-                        </div>
-                        <div class="type__value">
-                          {{ gene.homologueTaxon || ('gene_page_no_data' | translate) }}
-                        </div>
-                      </div>
-                    </div>
-
-                    <a href="http://disgenet.org/browser/1/1/0/{{gene.ncbiId}}/"
-                       target="_blank"
-                       title="{{ 'gene_page_link_disgenet' | translate }}"
-                       class="col age__type age__diseases">
-                      <div class="type__inner">
-                        <div class="type__title">
-                          {{ 'diseases' | translate }}
-                        </div>
-                        <div class="type__value">
-                          <span class="badge __brand-color-disgenet">
-                              <span class="fa fal fa-stream"></span>
-                            {{ 'gene_page_link_disgenet' | translate }}
-                          </span>
-                        </div>
-                      </div>
-                    </a>
-
-                    <a href="https://thebiogrid.org/search.php?search={{gene.symbol}}&organism=9606/"
-                       target="_blank"
-                       title="{{ 'gene_page_link_biogrid' | translate }}"
-                       class="col age__type age__interactions">
-                      <div class="type__inner">
-                        <div class="type__title">
-                          {{ 'gene_page_title_interactions' | translate }}
-                        </div>
-                        <div class="type__value">
-                          <span class="badge __brand-color-biogrid">
-                              <span class="fa fal fa-search"></span>
-                            {{ 'gene_page_link_biogrid' | translate }}
-                          </span>
-                        </div>
-                      </div>
-                    </a>
-
-                    <div class="col age__type age__rating hidden" *ngIf="gene.rating">
-                      <div class="type__title">
-                        {{ 'gene_page_title_criteria' | translate }}
-                        <small><sup>*</sup></small>
-                      </div>
-                      <div class="type__value">
-              <span
-                class="rating{{ (gene.rating > 5) ? 'rating--medium' : 'rating--high'}}">
-                  {{gene.rating}}
-              </span>
-                      </div>
-                      <div class="type__description">
-                        {{gene.rating}}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <section class="wrapper gene-page__articles">
-                <div class="__w-100 __mt-20 page__title">
-                  <h1>{{ 'gene_page_title_description' | translate }}</h1>
-                </div>
-
-                <div class="__w-100 articles__content" *ngIf="gene.aliases.length !== 0">
-                  <h3>{{ 'gene_page_title_aliases' | translate }}</h3>
-                  <ng-container *ngFor="let item of gene.aliases">
-                    <span class="alias">{{item}}</span>
-                  </ng-container>
-                </div>
-
-                <div class="__w-100 articles__content"
-                     *ngIf="gene.band || gene.locationStart || gene.locationEnd">
-                  <h3>{{ 'gene_page_title_position' | translate }}</h3>
-                  <article id="cytogenetic-band">
-                    <p
-                      *ngIf="gene.band"
-                    ><b>{{ 'gene_page_cytogenetic_band' | translate }}:</b> {{ gene.band }}</p>
-
-                    <p
-                      *ngIf="gene.locationStart"
-                    ><b>{{ 'gene_page_location_start' | translate }}:</b> {{ gene.locationStart }}</p>
-
-                    <p
-                      *ngIf="gene.locationEnd"
-                    ><b>{{ 'gene_page_location_end' | translate }}:</b> {{ gene.locationEnd }}</p>
-
-                    <p
-                      *ngIf="gene.orientation"
-                    ><b>{{ 'gene_page_orientation' | translate }}:</b>
-
-                      <ng-container
-                        *ngIf="gene.orientation === 1; then plusStrand; else minusStrand"
-                      ></ng-container>
-
-                      <ng-template #plusStrand>
-                        {{ 'gene_page_orientation_plus_strand' | translate }}
-                      </ng-template>
-
-                      <ng-template #minusStrand>
-                        {{ 'gene_page_orientation_minus_strand' | translate }}
-                      </ng-template>
-                    </p>
-                  </article>
-                </div>
-
-                <div class="__w-100 articles__content"
-                     *ngIf="isContent();
-                      else noContent">
-
-                  <section *ngIf="gene.commentEvolution">
-                    <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
-                    <article id="evolution">
-                      {{gene.commentEvolution}}
-                    </article>
-                  </section>
-
-                  <section *ngIf="gene.commentFunction">
-                    <h3>{{ 'gene_page_title_function' | translate }}</h3>
-                    <article id="function">
-                      {{gene.commentFunction}}
-                    </article>
-                  </section>
-
-                  <section *ngIf="gene.commentCause.length !== 0">
-                    <h3>{{ 'gene_page_title_criteria' | translate }}</h3>
-                    <article id="cause">
-                      <ul class="list list--bulletted">
-                        <li *ngFor="let item of gene.commentCause">{{item}}</li>
-                      </ul>
-                    </article>
-                  </section>
-
-                  <section *ngIf="gene.commentAging">
-                    <h3>{{ 'gene_page_title_aging' | translate }}</h3>
-                    <article id="aging">
-                      {{gene.commentAging}}
-                    </article>
-                  </section>
-
-                  <section *ngIf="gene.researches.increaseLifespan.length !== 0">
-                    <h3>{{ "gene_page_researches_lifespan" | translate }}</h3>
-                    <div class="table-section __mt-20">
-                      <table class="table">
-                        <thead>
-                        <th>{{ "gene_intervention_type" | translate }}</th>
-                        <th>{{ "gene_intervention_result" | translate }}</th>
-                        <th>{{ "researches_model_organism" | translate }}</th>
-                        <th>{{ "researches_organism_line" | translate }}</th>
-                        <th>{{ "researches_age" | translate }}</th>
-                        <th><span class="fa fal fa-mars"></span></th>
-                        <th><span class="fa fal fa-venus"></span></th>
-                        <th><span class="fa fal fa-venus-mars"></span></th>
-                        <th>{{ "researches_reference" | translate }}</th>
-                        <th>{{ "researches_comment" | translate }}</th>
-                        </thead>
-
-                        <tr *ngFor="let object of gene.researches.increaseLifespan; let i = index">
-                          <td>
-                            {{ object.interventionType }}
-                          </td>
-                          <td>
-                            {{ object.interventionResult }}
-                          </td>
-                          <td>
-                            {{ object.modelOrganism }}
-                          </td>
-                          <td>
-                            {{ object.organismLine }}
-                          </td>
-                          <td class="__nowrap">
-                            {{ object.age }}
-                          </td>
-                          <td class="__nowrap">
-                            {{ object.valueForMale }}
-                          </td>
-                          <td class="__nowrap">
-                            {{ object.valueForFemale }}
-                          </td>
-                          <td class="__nowrap">
-                            {{ object.valueForAll }}
-                          </td>
-                          <td>
-                            <a href="https://doi.org/{{ object.reference }}" class="link" about="_blank">{{ object.reference }}</a>
-                          </td>
-                          <td>
-                            {{ object.comment }}
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
-                  </section>
-
-                  <section *ngIf="gene.researches.ageRelatedChangesOfGene.length !== 0">
-                    <h3>{{ "gene_page_researches_age_related_changes" | translate }}</h3>
-                    <div class="table-section __mt-20">
-                      <table class="table">
-                        <thead>
-                        <th>{{ "age_related_changes_type" | translate }}</th>
-                        <th>{{ "age_related_changes_sample" | translate }}</th>
-                        <th>{{ "researches_model_organism" | translate }}</th>
-                        <th>{{ "researches_age" | translate }}</th>
-                        <th><span class="fa fal fa-mars"></span></th>
-                        <th><span class="fa fal fa-venus"></span></th>
-                        <th><span class="fa fal fa-venus-mars"></span></th>
-                        <th>{{ "researches_reference" | translate }}</th>
-                        <th>{{ "researches_comment" | translate }}</th>
-                        </thead>
-
-                        <tr *ngFor="let object of gene.researches.ageRelatedChangesOfGene; let i = index">
-                          <td>
-                            {{ object.changeType }}
-                          </td>
-                          <td>
-                            {{ object.sample }}
-                          </td>
-                          <td>
-                            {{ object.modelOrganism }}
-                          </td>
-                          <td class="__nowrap">
-                            {{ object.ageFrom }}—{{ object.ageTo }}
-                          </td>
-                          <td class="__nowrap">
-                            {{ object.valueForMale }}
-                          </td>
-                          <td class="__nowrap">
-                            {{ object.valueForFemale }}
-                          </td>
-                          <td class="__nowrap">
-                            {{ object.valueForAll }}
-                          </td>
-                          <td>
-                            <a href="https://doi.org/{{ object.reference }}" class="link" about="_blank">{{ object.reference }}</a>
-                          </td>
-                          <td>
-                            {{ object.comment }}
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
-                  </section>
-
-                  <section *ngIf="gene.researches.interventionToGeneImprovesVitalProcesses.length !== 0">
-                    <h3>{{ "gene_page_intervention" | translate }}</h3>
-                    <div class="table-section __mt-20">
-                      <table class="table">
-                        <thead>
-                        <th>{{ "intervention_aging_type" | translate }}</th>
-                        <th>{{ "intervention_aging_result" | translate }}</th>
-                        <th>{{ "intervention_aging_process" | translate }}</th>
-                        <th>{{ "researches_model_organism" | translate }}</th>
-
-                        <th>{{ "researches_organism_line" | translate }}</th>
-                        <th>{{ "researches_age" | translate }}</th>
-                        <th>{{ "researches_sex" | translate }}</th>
-                        <th>{{ "researches_reference" | translate }}</th>
-                        <th>{{ "researches_comment" | translate }}</th>
-                        </thead>
-
-                        <tr
-                          *ngFor="let object of gene.researches.interventionToGeneImprovesVitalProcesses; let i = index">
-                          <td>
-                            {{ object.geneIntervention }}
-                          </td>
-                          <td>
-                            {{ object.interventionResultForVitalProcess }}
-                          </td>
-                          <td>
-                            {{ object.vitalProcess }}
-                          </td>
-                          <td>
-                            {{ object.modelOrganism }}
-                          </td>
-                          <td>
-                            {{ object.organismLine }}
-                          </td>
-                          <td class="__nowrap">
-                            {{ object.age }}
-                          </td>
-                          <td class="__nowrap">
-                            {{ object.sex }}
-                          </td>
-                          <td>
-                            <a href="https://doi.org/{{ object.reference }}" class="link" about="_blank">{{ object.reference }}</a>
-                          </td>
-                          <td>
-                            {{ object.comment }}
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
-                  </section>
-
-                  <section *ngIf="gene.researches.proteinRegulatesOtherGenes.length !== 0">
-                    <h3>{{ "gene_page_researches_protein_regulates_genes" | translate }}</h3>
-                    <div class="table-section __mt-20">
-                      <table class="table">
-                        <thead>
-                        <th>{{ "protein_regulates_genes_activity" | translate }}</th>
-                        <th>{{ "gene" | translate }}</th>
-                        <th>{{ "researches_reference" | translate }}</th>
-                        <th>{{ "researches_comment" | translate }}</th>
-                        </thead>
-
-                        <tr *ngFor="let object of gene.researches.proteinRegulatesOtherGenes; let i = index">
-                          <td>
-                            {{ object.proteinActivity }}
-                          </td>
-                          <td>
-                            <a href="gene/{{object.regulatedGene.symbol}}"
-                               class="link"
-                            >{{ object.regulatedGene.symbol }}</a>
-                          </td>
-                          <td>
-                            <a href="https://doi.org/{{ object.reference }}" class="link" about="_blank">{{ object.reference }}</a>
-                          </td>
-                          <td>
-                            {{ object.comment }}
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
-                  </section>
-
-                  <section *ngIf="gene.researches.geneAssociatedWithProgeriaSyndromes.length !== 0">
-                    <h3>{{ "gene_page_researches_progeria" | translate }}</h3>
-                    <div class="table-section __mt-20">
-                      <table class="table">
-                        <thead>
-                        <th>{{ "progeria_syndrome" | translate }}</th>
-                        <th>{{ "researches_reference" | translate }}</th>
-                        <th>{{ "researches_comment" | translate }}</th>
-                        </thead>
-
-                        <tr *ngFor="let object of gene.researches.geneAssociatedWithProgeriaSyndromes; let i = index">
-                          <td>
-                            {{ object.progeriaSyndrome }}
-                          </td>
-                          <td>
-                            <a href="https://doi.org/{{ object.reference }}" class="link" about="_blank">{{ object.reference }}</a>
-                          </td>
-                          <td>
-                            {{ object.comment }}
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
-                  </section>
-
-                  <section *ngIf="gene.researches.geneAssociatedWithLongevityEffects.length !== 0">
-                    <h3>{{ "gene_page_researches_longevity_effects" | translate }}</h3>
-                    <div class="table-section __mt-20">
-                      <table class="table">
-                        <thead>
-                        <th>{{ "longevity_effects_effect" | translate }}</th>
-                        <th>{{ "gene_page_allelic_polymorphism" | translate }}</th>
-                        <th>{{ "researches_sex" | translate }}</th>
-                        <th>{{ "researches_reference" | translate }}</th>
-                        <th>{{ "researches_comment" | translate }}</th>
-                        </thead>
-
-                        <tr *ngFor="let object of gene.researches.geneAssociatedWithLongevityEffects; let i = index">
-                          <td>
-                            {{ object.longevityEffect }}
-                          </td>
-                          <td>
-                            {{ object.allelicPolymorphism }}
-                          </td>
-                          <td>
-                            {{ object.sex }}
-                          </td>
-                          <td>
-                            <a href="https://doi.org/{{ object.reference }}" class="link" about="_blank">{{ object.reference }}</a>
-                          </td>
-                          <td>
-                            {{ object.comment }}
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
-                  </section>
-
-                  <section *ngIf="gene.orthologs.length !== 0"
-                           id="orthologs">
-                    <h3>{{ "gene_page_title_orthologs" | translate }}</h3>
-
-                    <ul class="list">
-                      <li *ngFor="let item of gene.orthologs | keyvalue">
-                        <span class="alias">{{ item.key }}</span> {{ item.value }}
-                      </li>
-                    </ul>
-                  </section>
-
-                  <section
-                    *ngIf="
-                    gene.terms.biological_process.length >= 1 ||
-                    gene.terms.cellular_component.length >= 1 ||
-                    gene.terms.molecular_activity.length >= 1"
-                    id="terms"
-                  >
-
-                    <h3>Gene Ontology</h3>
-
-                    <mat-tab-group class="__w-content">
-                      <mat-tab
-                        *ngIf="gene.terms.biological_process.length >= 1"
-                        label='{{ "gene_ontology_biological_process" | translate }}'
-                      >
-                        <h3 class="__mt-30">{{ "gene_ontology_biological_process" | translate }}</h3>
-
-                        <article>
-                          <ul class="list">
-                            <li *ngFor="let term of this.geneOntologyProcessMap | keyvalue">
-                              <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-                                 title="QuickGO"
-                                 class="alias">{{ term.key | zero }}</a> {{ term.value }}
-                            </li>
-                          </ul>
-                        </article>
-                      </mat-tab>
-
-                      <mat-tab
-                        *ngIf="gene.terms.cellular_component.length >= 1"
-                        label='{{ "gene_ontology_cellular_component" | translate }}'
-                      >
-                        <h3 class="__mt-30">{{ "gene_ontology_cellular_component" | translate }}</h3>
-
-                        <article>
-                          <ul class="list">
-                            <li *ngFor="let term of this.geneOntologyComponentMap | keyvalue">
-                              <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-                                 title="QuickGO"
-                                 class="alias">{{ term.key | zero }}</a> {{ term.value }}
-                            </li>
-                          </ul>
-                        </article>
-                      </mat-tab>
-
-                      <mat-tab
-                        *ngIf="gene.terms.molecular_activity.length >= 1"
-                        label='{{ "gene_ontology_biological_molecular_activity" | translate }}'
-                      >
-                        <h3 class="__mt-30">{{ "gene_ontology_biological_molecular_activity" | translate }}</h3>
-
-                        <article>
-                          <ul class="list">
-                            <li *ngFor="let term of this.geneOntologyActivityMap | keyvalue">
-                              <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-                                 title="QuickGO"
-                                 class="alias">{{ term.key | zero }}</a> {{ term.value }}
-                            </li>
-                          </ul>
-                        </article>
-                      </mat-tab>
-                    </mat-tab-group>
-                  </section>
-
-                  <section class="wrapper gene-page__expression" *ngIf="gene.expression.length !== 0"
-                  id="expression">
-                    <div class="__w-100">
-                      <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                          <mat-panel-title>
-                            {{ 'gene_page_title_expression' | translate }}
-                          </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <p class="__mb-20">
-                          {{ 'gene_page_expression_hint' | translate }}
-                        </p>
-
-                        <div class="expression__rows">
-                          <ng-container *ngFor="let item of gene.expression">
-                            <div class="expression__row">
-                              <div class="row__name">{{item['name']}}</div>
-                              <div class="row__value" [class.row__value--minimum]="chartCalculatePercent(item['exp_rpkm'], this.expressionMaxValue) < 3">
-                                <mat-progress-bar
-                                  [value]="chartCalculatePercent(item['exp_rpkm'], this.expressionMaxValue)"
-                                  class="value__bar"
-                                ></mat-progress-bar>
-                                <div class="value__rpkm">{{item['exp_rpkm'] | number:'1.0-2'}} RPKM</div>
-                              </div>
-                            </div>
-                          </ng-container>
-                        </div>
-                      </mat-expansion-panel>
-                    </div>
-                  </section>
-
-                  <article *ngIf="gene.commentsReferenceLinks" id="reference">
-                    <ul class="list reference-list">
-                      <li *ngFor="let item of gene.commentsReferenceLinks | keyvalue">
-                        <a href="https://doi.org/{{item.key}}"
-                           target="_blank"
-                           class="reference-link"
-                           [innerHTML]="item.value | safe: 'html'"
-                        ></a>
-                      </li>
-                    </ul>
-                  </article>
-                </div>
-
-                <ng-template #noContent>
-                  <section class="__w-100 no-content">
-                    <div class="no-content__icon no-content__icon-standard"></div>
-                    <div class="no-content__title">
-                      <div class="title__center">
-                        {{ 'gene_page_error_no_article_yet' | translate }}
-                      </div>
-                    </div>
-                  </section>
-                </ng-template>
-              </section>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
+
+

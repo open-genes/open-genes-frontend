@@ -19,6 +19,7 @@ export class ApiService {
     return this.http.get<Genes[]>(`${this.url}/api/gene?lang=${this.translate.currentLang}`);
   }
 
+  // Эндпоинт возвращает четыре последних отредактированных гена
   getLastEditedGene(): Observable<Genes[]> {
     return this.http.get<Genes[]>(`${this.url}/api/gene/by-latest`);
   }

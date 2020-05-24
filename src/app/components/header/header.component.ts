@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { GenesListService } from '../../modules/genes-list/genes-list.service';
+
 
 @Component({
   selector: 'app-header',
@@ -10,8 +10,10 @@ import { GenesListService } from '../../modules/genes-list/genes-list.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private readonly router: Router,
-              private readonly genesListService: GenesListService) { }
+  constructor(
+    private readonly router: Router,
+    private readonly genesListService: GenesListService
+  ) { }
 
   ngOnInit() {
   }

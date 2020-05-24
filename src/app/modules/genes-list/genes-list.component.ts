@@ -1,15 +1,16 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
-
 import {Subject} from 'rxjs';
-
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {Filter, Genes} from '../../core/models';
 import {GenesListService} from './genes-list.service';
+import { FavouritesService } from 'src/app/core/services/favourites.service';
 
 @Component({
   selector: 'app-genes-list',
   templateUrl: './genes-list.component.html',
   styleUrls: ['./genes-list.component.scss']
 })
+
 export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() dataSource: Genes[];
@@ -24,7 +25,10 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
   private subscription$ = new Subject();
   public filters: Filter;
 
-  constructor(private readonly genesListService: GenesListService) {
+  constructor(
+    private readonly genesListService: GenesListService,
+    private snackBar: MatSnackBar,
+    private favouritesService: FavouritesService) {
     this.filters = {
       byName: false,
       byAge: false,
@@ -32,6 +36,7 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
       byClasses: []
     };
     this.genesListService.register(this);
+    this.favouritesService.getItems();
   }
 
   ngOnInit() {
@@ -84,8 +89,26 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
+  public favItem(geneId: number) {
+    this.favouritesService.addToFavourites(geneId);
+    this.snackBar.open('Добавлено в Избранное!', '', {
+      duration: 600
+    });
+    this.isFaved(geneId);
+    // console.log(this.favouritesService.favourites);
+  }
+
+  public unFavItem(geneId: number) {
+    this.favouritesService.removeFromFavourites(geneId);
+    this.snackBar.open('Убрано из Избранного!', '', {
+      duration: 600
+    });
+    this.isFaved(geneId);
+    // console.log(this.favouritesService.favourites);
+  }
+
+  public isFaved(geneId: number) {
+    return this.favouritesService.isInFavourites(geneId);
   }
 
   // TODO: перенести в отдельный модуль
@@ -145,5 +168,9 @@ export class GenesListComponent implements OnInit, OnChanges, OnDestroy {
       this.filters.byExpressionChange = 0; // !
       this.filtersCleared.emit();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
   }
 }

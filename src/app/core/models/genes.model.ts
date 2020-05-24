@@ -1,6 +1,7 @@
 import {Researches} from './researches.model';
 import {Origin} from './origin.model';
 import {Terms} from './gene-ontology.model';
+import {HumanProteinAtlas} from './human-protein-atlas.model';
 
 export interface Genes {
   id: number;
@@ -13,6 +14,7 @@ export interface Genes {
   expressionChange?: number;
   origin: Origin;
   homologueTaxon: string;
+  timestamp: string;
 }
 
 export interface Gene {
@@ -49,5 +51,7 @@ export interface Gene {
   terms: Terms;
   commentsReferenceLinks: any;
   rating: any;
+  timestamp: any;
+  human_protein_atlas: HumanProteinAtlas; // TODO: исправить название
 }
 

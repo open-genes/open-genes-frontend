@@ -87,7 +87,7 @@
     </div>
 
     <div class="tbody">
-      <div class="tr row" *ngFor="let data of searchedData | slice: 0: loadedGenesQuantity">
+      <div class="tr" *ngFor="let data of searchedData | slice: 0: loadedGenesQuantity">
         <div class="td cell td-name">
           <div class="td__title">
             <a [routerLink]="['/gene', data.symbol]" class="link link--gray">
@@ -132,16 +132,30 @@
           </button>
         </div>
         <div class="td td-actions">
-          <button mat-icon-button
-                  class="td-actions__menu"
-                  [matMenuTriggerFor]="geneListItemMenu"
-                  aria-label="Меню гена в списке"
+          <button
+            mat-icon-button
+            class="td-actions__menu"
+            [matMenuTriggerFor]="geneListItemMenu"
+            aria-label="Меню гена в списке"
           >
             <mat-icon>
               <span class="fa far fa-ellipsis-v"></span>
             </mat-icon>
           </button>
-          <mat-menu #geneListItemMenu>
+          <mat-menu #geneListItemMenu="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="geneListItemSubMenu"
+            >{{ 'gene_list_menu_this_gene_on' | translate }}</button>
+            <button mat-menu-item
+                    *ngIf="this.isFaved(data.id)"
+                    (click)="unFavItem(data.id)"
+            >{{ 'favourites_remove' | translate }}</button>
+            <button mat-menu-item
+                    *ngIf="!this.isFaved(data.id)"
+                    (click)="favItem(data.id)"
+            >{{ 'favourites_add' | translate }}</button>
+          </mat-menu>
+
+          <mat-menu #geneListItemSubMenu="matMenu">
             <a mat-menu-item
                href="http://disgenet.org/browser/1/1/0/{{data.ncbiId}}/"
                target="_blank">
@@ -157,9 +171,19 @@
             </a>
 
             <a mat-menu-item
-              href="https://genomics.senescence.info/genes/entry.php?hgnc={{data.symbol}}">
+               href="https://genomics.senescence.info/genes/entry.php?hgnc={{data.symbol}}">
               <span class="legend __brand-color-geneage"></span>
               GeneAge
+            </a>
+            <a mat-menu-item
+              href="https://www.ncbi.nlm.nih.gov/gene/{{data.symbol}}">
+              <span class="legend __brand-color-entrez"></span>
+              EntrezGene
+            </a>
+            <a mat-menu-item
+               href="https://www.uniprot.org/uniprot/{{data.symbol}}_HUMAN">
+              <span class="legend __brand-color-uniprot"></span>
+              UniProt
             </a>
           </mat-menu>
         </div>
@@ -178,14 +202,17 @@
 <app-loader-placeholder *ngIf="isLoading">
 </app-loader-placeholder>
 
-<ng-container *ngIf="searchedData?.length == 0">
-  <section class="no-content">
+<section
+  *ngIf="searchedData?.length == 0"
+  class="no-content"
+>
+  <div class="no-content__inner">
     <div class="no-content__icon no-content__icon-standard"></div>
     <div class="no-content__title">
       <div class="title__center">
         {{ 'nothing_found' | translate }}
       </div>
     </div>
-  </section>
-</ng-container>
+  </div>
+</section>
 

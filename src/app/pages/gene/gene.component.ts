@@ -12,11 +12,15 @@ import {Gene} from '../../core/models';
 
 export class GeneComponent implements OnInit, OnDestroy {
 
-  constructor(private activateRoute: ActivatedRoute,
-              private apiService: ApiService) {
+  constructor(
+    private activateRoute: ActivatedRoute,
+    private apiService: ApiService,
+  ) {
     this.subscription = activateRoute.params.subscribe(params => this.symbol = params.id);
   }
 
+  // @ViewChild('Content', {static: false}) container: ElementRef;
+  public contentBlockWidth: any;
   public symbol: string;
   private subscription: Subscription;
   public gene: any;
@@ -54,7 +58,6 @@ export class GeneComponent implements OnInit, OnDestroy {
       this.geneOntologyComponentMap = GeneComponent.toMap(this.gene.terms.cellular_component);
       this.geneOntologyActivityMap = GeneComponent.toMap(this.gene.terms.molecular_activity);
       this.expressionMaxValue = GeneComponent.chartMaxValue(this.gene.expression);
-      console.log(this.expressionMaxValue);
     });
   }
 

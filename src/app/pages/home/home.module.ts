@@ -9,7 +9,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {NgStripTagsPipeModule} from 'angular-pipes';
 import {PipesModule} from '../../modules/pipes/pipes.module';
 import {MatButtonModule} from '@angular/material/button';
-import {NewsListModule} from '../../components/news-list/news-list.module';
+import {NewsListModule} from '../../components/shared/news-list/news-list.module';
 
 @NgModule({
   declarations: [

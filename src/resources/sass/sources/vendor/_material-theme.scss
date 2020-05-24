@@ -41,16 +41,20 @@ $open-genes-purple: ( // TODO: доделать, сгененировать цв
 );
 
 $open-genes-primary: mat-palette($open-genes-purple, 400, 500, 600);
-$open-genes-accent:  mat-palette($mat-amber, 700, 800, 900);
+$open-genes-accent:  mat-palette($mat-deep-orange, 700, 800, 900);
 $open-genes-theme:   mat-light-theme($open-genes-primary, $open-genes-accent);
 
-// Include the theme styles for only specified components.
-@include mat-core-theme($open-genes-theme);
-@include mat-button-theme($open-genes-theme);
-@include mat-checkbox-theme($open-genes-theme);
+// Include the theme styles for only specified components:
+//@include mat-core-theme($open-genes-theme);
+//@include mat-button-theme($open-genes-theme);
+//@include mat-checkbox-theme($open-genes-theme);
+
+// Include the theme styles for all Angular Material components:
+@include angular-material-theme($open-genes-theme);
 
 // Some custom design
 
+// - Expansion-panel
 .mat-expansion-panel {
   box-shadow: none !important;
   border: 1px solid $color-borders;
@@ -60,7 +64,24 @@ $open-genes-theme:   mat-light-theme($open-genes-primary, $open-genes-accent);
   }
 }
 
+// - Tab
 .mat-tab-label {
   font-size: $font-size-small;
   padding: 0 8px;
+}
+
+// - List
+.mat-list-base {
+  &,
+  &[dense] {
+    .mat-list-item,
+    .mat-list-option {
+      height: auto !important;
+
+      .mat-list-item-content {
+        padding-top: .5em !important;
+        padding-bottom: .5em !important;
+      }
+    }
+  }
 }

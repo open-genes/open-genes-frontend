@@ -26,6 +26,8 @@ $font-weight-bold: 700;
 $font-weight-black: 900;
 
 // COLORS
+// $color-aeroflot-black: map-get($aeroflot-theme-colors, "aeroflot-black");
+
 // -Base
 $color-base: #7673d1;
 $color-general-light: #edeefb;
@@ -72,6 +74,7 @@ $color-borders-active: darken($color-hover, 10%);
 $header-height: 50px;
 $preloader-spinner-size: 50px;
 $preloader-spinner-color: $color-general;
+
 
 // PATHS
 $path-images: '../images';

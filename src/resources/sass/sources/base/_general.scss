@@ -41,6 +41,7 @@ body {
 
   &.body--still {
     overflow: hidden;
+    padding-right: 15px; // add ltr support
 
     &:before {
       display: block;
@@ -548,11 +549,20 @@ ul.list--bulletted {
 }
 
 .no-content {
-  padding: 20px;
-  font-size: 0;
-  text-align: center;
-  border: 1px solid $color-borders;
-  border-radius: $border-radius-medium;
+  &[class^="col"] {
+    padding: 0 20px;
+  }
+
+  &__inner {
+    margin: 0 auto;
+    width: 100%;
+    max-width: $desktop;
+    padding: 20px;
+    font-size: 0;
+    text-align: center;
+    border: 1px solid $color-borders;
+    border-radius: $border-radius-medium;
+  }
 
   &__icon {
     display: inline-block;
@@ -579,6 +589,16 @@ ul.list--bulletted {
       max-width: 320px;
       font-size: $font-size-max;
       font-weight: $font-weight-medium;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    margin-top: 25px;
+
+    a,
+    button {
+      margin: 0 auto;
     }
   }
 }

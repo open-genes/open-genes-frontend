@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewChecked} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {environment} from '../environments/environment';
 
@@ -6,7 +6,7 @@ import {environment} from '../environments/environment';
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit, AfterViewChecked {
   // title = 'frontend';
 
   constructor(private translate: TranslateService) {
@@ -18,7 +18,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngOnInit() {
   }
 
-  ngAfterViewInit() {
-    document.body.classList.remove('body--loading');
+  ngAfterViewChecked() {
+    setTimeout(() => { // TODO: найти другой способ дождаться полной загрузки DOM, учитывая модули
+      document.body.classList.remove('body--loading');
+    }, 500);
   }
 }

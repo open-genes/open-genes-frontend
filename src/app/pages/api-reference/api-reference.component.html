@@ -1,20 +1,23 @@
 <div class="page">
   <div class="page__inner">
     <div class="main-page__header wrapper">
-      <div class="container">
-        <div class="col col-16">
-          <div class="page__title">
-            <h1>{{ 'api-page_title' | translate }}</h1>
-          </div>
-          <div class="header__description">
-            {{ 'api-page_description' | translate }}
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col col-12">
+            <div class="page__title">
+              <h1>{{ 'api-page_title' | translate }}</h1>
+            </div>
+            <div class="header__description">
+              {{ 'api-page_description' | translate }}
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="container">
-      <section class="col col-16 content">
+      <div class="row">
+        <section class="col col-12 content">
         <article *ngIf="translate.currentLang==='ru'">
           <p>
             API проекта возвращает данные в формате json. Все эндпоинты принимают параметр <code>?lang (en|ru)</code>.
@@ -203,6 +206,7 @@
           </p>
         </article>
       </section>
+      </div>
     </div>
   </div>
 </div>

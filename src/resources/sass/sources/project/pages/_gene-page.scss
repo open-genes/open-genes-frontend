@@ -34,6 +34,7 @@
         float: left;
         width: auto;
         height: 40px;
+        padding-top: 4px;
         @include resolution_smartphone {
           text-align: right;
         }
@@ -56,10 +57,12 @@
   }
 
   &__age {
-    .flex-subcontainer.age__types {
+    .age__types {
+      display: flex;
+      flex-flow: row wrap;
       justify-content: flex-start;
       align-items: stretch;
-      font-size: 0;
+      font-size: $font-size;
 
       .age__type {
         display: flex;
@@ -73,6 +76,10 @@
           padding: 10px;
           border: 1px solid $color-borders;
           border-radius: $border-radius-medium;
+        }
+
+        .type__inner + .type__inner {
+          margin-top: 5px;
         }
 
         .type__title {
@@ -144,11 +151,27 @@
             }
           }
         }
+
+        &.age__orthologs {
+          .list {
+            .alias {
+              text-transform: uppercase;
+
+              &:empty {
+                display: none; // TODO: это костыль для пустых значений ортологов из GeneAge, нужно добавить проверку
+              }
+            }
+          }
+        }
       }
 
       @include resolution_tablet-and-up {
         .age__type {
           width: 25%;
+
+          &.age__orthologs {
+            width: 50%;
+          }
         }
 
         .age__type + .age__type {
@@ -220,21 +243,6 @@
       color: $color-indent;
       font-weight: $font-weight-medium;
       margin-bottom: 0.8ex;
-    }
-
-    .table-section {
-      @include resolution_desktop-and-up {
-        max-width: 960px;
-      }
-      @include resolution_tablet {
-        max-width: 748px;
-      }
-      @include resolution_phablet {
-        max-width: 460px;
-      }
-      @include resolution_smartphone {
-        max-width: 320px;
-      }
     }
 
     .reference-list {
@@ -331,21 +339,26 @@
   article + h3 {
     margin-top: 30px;
   }
+
+  &__links {
+    border-top: 1px solid $color-borders;
+    padding-top: 20px;
+  }
 }
 
 // Fixed header
-.gene-page {
-  // $fixed-header-height: (130px + 20px);
-  @include resolution_desktop-and-up {
-    // padding-top: $fixed-header-height;
-    //.gene-page__header {
-    //  position: fixed;
-    //  top: $header-height;
-    //  z-index: 50; // между хедером и контентом
-    //}
-
-    .sidebar {
-      top: 100px;
-    }
-  }
-}
+//.gene-page {
+//  $fixed-header-height: (130px + 20px);
+//  @include resolution_desktop-and-up {
+//     padding-top: $fixed-header-height;
+//    .gene-page__header {
+//      position: fixed;
+//      top: $header-height;
+//      z-index: 50; // между хедером и контентом
+//    }
+//
+//    .sidebar {
+//      top: 100px;
+//    }
+//  }
+//}
