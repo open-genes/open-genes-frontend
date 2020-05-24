@@ -40,6 +40,7 @@ $open-genes-purple: ( // TODO: доделать, сгененировать цв
   )
 );
 
+// TODO: поправить контрастность палитры на примере mat-progress-bar
 $open-genes-primary: mat-palette($open-genes-purple, 400, 500, 600);
 $open-genes-accent:  mat-palette($mat-deep-orange, 700, 800, 900);
 $open-genes-theme:   mat-light-theme($open-genes-primary, $open-genes-accent);
@@ -85,3 +86,4 @@ $open-genes-theme:   mat-light-theme($open-genes-primary, $open-genes-accent);
     }
   }
 }
+
