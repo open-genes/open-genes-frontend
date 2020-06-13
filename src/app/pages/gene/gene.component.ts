@@ -19,8 +19,6 @@ export class GeneComponent implements OnInit, OnDestroy {
     this.subscription = activateRoute.params.subscribe(params => this.symbol = params.id);
   }
 
-  // @ViewChild('Content', {static: false}) container: ElementRef;
-  public contentBlockWidth: any;
   public symbol: string;
   private subscription: Subscription;
   public gene: any;

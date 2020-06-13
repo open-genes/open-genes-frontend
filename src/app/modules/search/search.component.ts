@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnDestroy, Renderer2, Input, OnInit, Output } 
 import { Genes } from '../../core/models';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -13,18 +14,22 @@ export class SearchComponent implements OnInit, OnDestroy {
   @Output() dataSourceChange: EventEmitter<Genes[]> = new EventEmitter<Genes[]>();
   searchedData: Genes[];
   searchForm: FormGroup;
-  showResult;
+  public showResult: boolean;
+  private subscription$: Subscription;
 
   constructor(private renderer: Renderer2, private translate: TranslateService) {}
 
   ngOnInit() {
-    this.initform();
-  }
+    this.searchForm = new FormGroup({
+      searchField: new FormControl(''),
+    });
 
-  // setResult(i) {
-  //   this.searchForm.get('searchField').setValue(this.searchedData[i].symbol + ' ' + this.searchedData[i].name);
-  //   this.showResult = false;
-  // }
+    this.subscription$ = this.searchForm.valueChanges.subscribe((x) => {
+      if (x) {
+        this.search();
+      }
+    });
+  }
 
   public search() {
     this.showResult = true;
@@ -37,17 +42,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.dataSourceChange.emit(this.searchedData);
   }
 
-  public initform() {
-    this.searchForm = new FormGroup({
-      searchField: new FormControl(''),
-    });
-    this.searchForm.valueChanges.subscribe((x) => {
-      if (x) {
-        this.search();
-      }
-    });
-  }
-
   public cancelSearch(event) {
     this.showResult = false;
     this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
@@ -56,5 +50,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
+    this.subscription$.unsubscribe();
   }
 }

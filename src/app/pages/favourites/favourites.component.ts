@@ -3,7 +3,7 @@ import {Genes} from 'src/app/core/models/genes.model';
 import {FavouritesService} from 'src/app/core/services/favourites.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ApiService} from '../../core/services/api.service';
-import {Subject} from 'rxjs';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-favourites',
@@ -13,7 +13,8 @@ import {Subject} from 'rxjs';
 
 export class FavouritesComponent implements OnInit, OnChanges, OnDestroy {
 
-  private subscription$ = new Subject();
+  private favouritesSubscription$: Subscription;
+  private genesSubscription$: Subscription;
   public favouriteGenesIds: any;
   public genes: Genes[];
   error: number;
@@ -47,16 +48,17 @@ export class FavouritesComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private getGenes() {
-    this.favouritesService.getItems().subscribe((genes) => {
+    this.favouritesSubscription$ = this.favouritesService.getItems().subscribe((genes) => {
       this.favouriteGenesIds = this.favouritesService.favourites;
     }, error => this.favouriteGenesIds = []);
 
-    this.apiService.getGenes().subscribe((genes) => {
+    this.genesSubscription$ = this.apiService.getGenes().subscribe((genes) => {
       this.genes = genes;
     }, error => this.error = error);
   }
 
   ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
+    this.favouritesSubscription$.unsubscribe();
+    this.genesSubscription$.unsubscribe();
   }
 }

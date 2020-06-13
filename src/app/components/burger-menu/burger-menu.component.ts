@@ -15,12 +15,10 @@ export class BurgerMenuComponent implements OnInit {
   favsCounter: number;
   menuVisible = false;
 
-  ngOnInit() {
-    this.getCounters();
-  }
+
 
   private getCounters() {
-    this.favouritesService.getItems().subscribe((genes) => {
+    const favouritesSubscription = this.favouritesService.getItems().subscribe((genes) => {
       this.favsCounter = this.favouritesService.favourites.length;
     }, error => this.favsCounter = 0);
   }
@@ -33,5 +31,9 @@ export class BurgerMenuComponent implements OnInit {
     } else {
       document.body.classList.remove('body--still');
     }
+  }
+
+  ngOnInit() {
+    this.getCounters();
   }
 }
