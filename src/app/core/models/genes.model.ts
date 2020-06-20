@@ -47,7 +47,7 @@ export interface Gene {
   researches: Researches;
   expression: Array<any>;
   expressionEN: string;
-  proteinClasses: string[];
+  proteinClasses: string[]; // TODO: убрать, они есть более полные в human_protein_atlas
   terms: Terms;
   commentsReferenceLinks: any;
   rating: any;

@@ -12,20 +12,21 @@ import {Gene} from '../../core/models';
 
 export class GeneComponent implements OnInit, OnDestroy {
 
+  public symbol: string;
+  private subscription: Subscription;
+  public gene: any;
+  public dateInitial = 1562960035; // July 12 2019 - date when the first data was added
+  public geneOntologyProcessMap: Map<string, string>;
+  public geneOntologyComponentMap: Map<string, string>;
+  public geneOntologyActivityMap: Map<string, string>;
+  public expressionMaxValue: number;
+
   constructor(
     private activateRoute: ActivatedRoute,
     private apiService: ApiService,
   ) {
     this.subscription = activateRoute.params.subscribe(params => this.symbol = params.id);
   }
-
-  public symbol: string;
-  private subscription: Subscription;
-  public gene: any;
-  public geneOntologyProcessMap: Map<string, string>;
-  public geneOntologyComponentMap: Map<string, string>;
-  public geneOntologyActivityMap: Map<string, string>;
-  public expressionMaxValue: number;
 
   static toMap(object) {
     const mappedObj = new Map();

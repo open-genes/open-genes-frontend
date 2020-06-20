@@ -1,6 +1,8 @@
 .gene-page { // .page
   // &__inner { }
 
+  $header-title-height: 30px;
+
   &__header {
     padding: 15px 0 10px 0;
     border-bottom: 1px solid $color-borders;
@@ -8,36 +10,50 @@
     margin-bottom: 30px;
 
     .header__title {
-      display: inline-block;
-      font-size: 0;
+      margin-bottom: 10px;
+      padding-right: 60px; // free space for date
+
+      .title__caption,
+      .title__vendors {
+        display: block;
+        height: $header-title-height;
+        width: auto;
+        float: left; // floats are more simple there
+      }
 
       .title__caption {
-        float: left;
-        width: auto;
-        max-width: 200px;
-        padding-right: 15px;
-        font-size: 30px;
+        position: relative;
+        max-width: 6em; // length: 6 letters
+        padding-right: 10px;
         font-weight: $font-weight-medium;
 
-        &,
-        .caption__inner {
-          height: 40px;
-          line-height: 30px;
+        @include resolution_tablet-and-up {
+          font-size: 30px;
+        }
+
+        @include resolution_smartphone {
+          font-size: 20px;
         }
 
         .caption__inner {
+          height: $header-title-height;
+          line-height: 1;
           @include text-overflow;
         }
       }
 
-      .title__vendors {
-        float: left;
-        width: auto;
-        height: 40px;
-        padding-top: 4px;
-        @include resolution_smartphone {
-          text-align: right;
-        }
+      .title__vendors { // this block may go under the title
+        max-width: 100%;
+        padding-top: 5px; // because .alias inside have the same margin-bottom
+      }
+
+      .title__updated { // date always remains on top right corner
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        font-size: $font-size-very-small;
+        color: $color-gray;
+        white-space: nowrap;
       }
     }
 

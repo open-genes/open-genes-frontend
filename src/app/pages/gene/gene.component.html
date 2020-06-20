@@ -4,17 +4,29 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col col-12 header__title">
-            <div class="title__caption">
-              <div class="caption__inner">
-                {{gene.symbol}}
+
+              <div class="title__caption">
+                <div class="caption__inner">
+                  {{gene.symbol}}
+                </div>
               </div>
-            </div>
-            <div class="title__vendors" *ngIf="gene.aliases.length !== 0">
+
+              <div class="title__vendors" *ngIf="gene.aliases.length !== 0">
                 <ng-container
                   *ngFor="let item of gene.aliases">
                   <span class="alias">{{item}}</span>
                 </ng-container>
-            </div>
+              </div>
+
+              <div class="title__updated">
+                <ng-container *ngIf="gene.timestamp !== 0">
+                  {{gene.timestamp | unixTimeFormatter | localizedDate:'d MMMM yyyy'}}
+                </ng-container>
+                <ng-container *ngIf="gene.timestamp === 0">
+                  {{dateInitial | unixTimeFormatter | localizedDate:'d MMMM yyyy'}}
+                </ng-container>
+              </div>
+
           </div>
           <div class="col col-12 header__short-comment">
             <span class="str_source-GeneAge">

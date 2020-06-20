@@ -41,7 +41,9 @@ body {
 
   &.body--still {
     overflow: hidden;
-    padding-right: 15px; // add ltr support
+    @media screen and (min-device-width: $desktop) {
+      padding-right: 15px; // add ltr support
+    }
 
     &:before {
       display: block;
