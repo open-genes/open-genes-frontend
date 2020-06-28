@@ -1,0 +1,10 @@
+.panel {
+
+  &--dark {
+    background-color: $dark-panel-300;
+    color: $dark-panel-100;
+    border-color: $dark-panel-200;
+    border-radius: $border-radius-medium;
+    padding: $padding-regular;
+  }
+}

@@ -1,0 +1,25 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ 'gene_page_title_expression' | translate }}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <p class="__mb-20">
+    {{ 'gene_page_expression_hint' | translate }}
+  </p>
+
+  <div class="expression__rows">
+    <ng-container *ngFor="let item of gene.expression">
+      <div class="expression__row">
+        <div class="row__name">{{item['name']}}</div>
+        <div class="row__value"
+             [class.row__value--minimum]="chartCalculatePercent(item['exp_rpkm'], max) < 3">
+          <div class="value__bar"
+               [style.width.%]="chartCalculatePercent(item['exp_rpkm'], max)"
+          ></div>
+          <div class="value__rpkm">{{item['exp_rpkm'] | number:'1.0-2'}} RPKM</div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</mat-expansion-panel>

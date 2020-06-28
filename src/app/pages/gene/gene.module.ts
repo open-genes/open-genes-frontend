@@ -13,10 +13,20 @@ import {VendorsModule} from '../../modules/vendors/vendors.module';
 import {
   NgToArrayPipeModule
 } from 'angular-pipes';
+import { ResearchesComponent } from './researches/researches.component';
+import { ManualDescriptionsComponent } from './manual-descriptions/manual-descriptions.component';
+import { GeneOntologyComponent } from './gene-ontology/gene-ontology.component';
+import { HumanProteinAtlasComponent } from './human-protein-atlas/researches.component';
+import { ExpressionComponent } from './expression/expression.component';
 
 @NgModule({
   declarations: [
-    GeneComponent
+    GeneComponent,
+    ResearchesComponent,
+    ManualDescriptionsComponent,
+    GeneOntologyComponent,
+    HumanProteinAtlasComponent,
+    ExpressionComponent
   ],
   imports: [
     CommonModule,

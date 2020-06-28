@@ -245,28 +245,6 @@
       }
     }
 
-    h3 {
-      width: 100%;
-      font-size: calc(0.2vw + 15px);
-      color: $color-indent;
-      font-weight: $font-weight-medium;
-      margin-bottom: 0.8ex;
-    }
-
-    h4 {
-      width: 100%;
-      font-size: calc(0.2vw + 12px);
-      color: $color-indent;
-      font-weight: $font-weight-medium;
-      margin-bottom: 0.8ex;
-    }
-
-    article {
-      & > a {
-        @extend .link;
-      }
-    }
-
     .reference-list {
       margin-top: 10px;
       padding-top: 12px;
@@ -352,14 +330,6 @@
     .expression__row + .expression__row {
       margin-top: 10px;
     }
-  }
-
-  article + article,
-  article + section,
-  section + section,
-  section + article,
-  article + h3 {
-    margin-top: 30px;
   }
 
   &__links {

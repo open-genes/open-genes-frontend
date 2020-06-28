@@ -1,5 +1,5 @@
-// DEMS
-
+// SIZES
+// Base
 $ui-base-height: 26px;
 $padding-regular: 10px;
 $padding-medium: 10px;
@@ -28,9 +28,10 @@ $font-weight-bold: 700;
 $font-weight-black: 900;
 
 // COLORS
-// $color-aeroflot-black: map-get($aeroflot-theme-colors, "aeroflot-black");
+// TODO: Store colors in maps and use variables with map item value:
+//  $color-black: map-get($base-theme-colors, "color-black");
 
-// -Base
+// Base
 $color-base: #7673d1;
 $color-general-light: #edeefb;
 $color-general-semi: #b7bcf1;
@@ -38,7 +39,7 @@ $color-general: #4d58dc;
 $color-general-dark: darken($color-general, 15%);
 $color-accent: #fe6231;
 
-// -UI
+// UI
 $color-black: #2d323b;
 $color-black-light: #42464e;
 $color-gray: #838689;
@@ -69,20 +70,32 @@ $success-color: $color-green-medium;
 $error-color: $color-red-medium;
 
 // Elements variables
+// - typography
 $color-indent: #575757;
+
+// - borders
 $color-borders: $color-gray-light;
 $color-border-light: #e3e4e8;
 $color-borders-active: darken($color-hover, 10%);
+
+// - header
 $header-height: 50px;
+
+// - preloader
 $preloader-spinner-size: 50px;
 $preloader-spinner-color: $color-general;
+
+// - dark-panel
+$dark-panel-100: #64676f;
+$dark-panel-200: #323439;
+$dark-panel-300: #25262b;
 
 
 // PATHS
 $path-images: '../images';
 $path-fonts: '../fonts';
 
-//Fonts
+// Fonts
 $path-font-roboto-thin: $path-fonts + '/roboto/thin.woff2';
 $path-font-roboto-thin-woff: $path-fonts + '/roboto/thin.woff';
 $path-font-roboto-light: $path-fonts + '/roboto/light.woff2';

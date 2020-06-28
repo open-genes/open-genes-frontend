@@ -1,8 +1,9 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs';
-import {ApiService} from '../../core/services/api.service';
-import {Gene} from '../../core/models';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { ApiService } from '../../core/services/api.service';
+import { Gene } from '../../core/models';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-gene',
@@ -11,17 +12,18 @@ import {Gene} from '../../core/models';
 })
 
 export class GeneComponent implements OnInit, OnDestroy {
-
-  public symbol: string;
-  private subscription: Subscription;
   public gene: any;
+  public symbol: string;
   public dateInitial = 1562960035; // July 12 2019 - date when the first data was added
   public geneOntologyProcessMap: Map<string, string>;
   public geneOntologyComponentMap: Map<string, string>;
   public geneOntologyActivityMap: Map<string, string>;
   public expressionMaxValue: number;
 
+  private subscription: Subscription;
+
   constructor(
+    public translate: TranslateService,
     private activateRoute: ActivatedRoute,
     private apiService: ApiService,
   ) {
@@ -60,9 +62,7 @@ export class GeneComponent implements OnInit, OnDestroy {
     });
   }
 
-  public chartCalculatePercent(a: number, b: number) {
-    return (a / b) * 100;
-  }
+  // Traits to define if content exists
 
   public isContent() {
     return !!(this.gene.commentEvolution ||
@@ -79,6 +79,25 @@ export class GeneComponent implements OnInit, OnDestroy {
       this.gene.expression.length !== 0 ||
       this.gene.orthologs.length !== 0 ||
       this.gene.terms);
+  }
+
+  public areResearches() {
+    return !!(
+      this.gene.researches.increaseLifespan.length !== 0 ||
+      this.gene.researches.ageRelatedChangesOfGene.length !== 0 ||
+      this.gene.researches.interventionToGeneImprovesVitalProcesses.length !== 0 ||
+      this.gene.researches.proteinRegulatesOtherGenes.length !== 0 ||
+      this.gene.researches.geneAssociatedWithProgeriaSyndromes.length !== 0 ||
+      this.gene.researches.geneAssociatedWithLongevityEffects.length !== 0
+    );
+  }
+
+  public isGeneOntology() {
+    return !!(
+      this.gene.terms.biological_process.length >= 1 ||
+      this.gene.terms.cellular_component.length >= 1 ||
+      this.gene.terms.molecular_activity.length >= 1
+    );
   }
 
   ngOnDestroy(): void {

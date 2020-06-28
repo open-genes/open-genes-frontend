@@ -14,5 +14,5 @@ export interface HumanProteinAtlas {
   /** Array of strings.
    * Example: 0: "Cancer-related genes"
    */
-  ProteinClasses?: string[];
+  ProteinClass?: string[];
 }
