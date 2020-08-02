@@ -1,0 +1,12 @@
+<article id="reference">
+  <ul class="list reference-list">
+    <li *ngFor="let item of gene | keyvalue">
+      {{item.key}})
+      <a href="https://doi.org/{{item.value}}"
+         target="_blank"
+         class="link link--underline"
+      >{{item.value}}
+      </a>
+    </li>
+  </ul>
+</article>

@@ -246,9 +246,11 @@
     }
 
     .reference-list {
+      position: relative;
       margin-top: 10px;
       padding-top: 12px;
-      position: relative;
+      font-size: 80%;
+      color: $color-gray;
 
       &:before {
         content: " ";

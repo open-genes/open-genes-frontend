@@ -1,19 +1,28 @@
 <div class="panel panel--dark">
   <div class="panel__group">
+    <div class="panel__group">
+      <h3>Антитела</h3>
+      <li *ngFor="let item of gene.human_protein_atlas.Antibody">
+        {{ item }}
+      </li>
+    </div>
+
     <h3>Классы белков</h3>
     <ul class="panel__item list list--bulletted">
       <!-- TODO: These are two different objects parsed from the one source at different time  -->
       <!-- First one is in Russian and second one is in English -->
       <ng-container *ngIf="translate.currentLang === 'ru'">
-        <ng-container *ngFor="let item of gene.proteinClasses | keyvalue">
-          <li>{{ item.value }}</li>
-        </ng-container>
+        <li *ngFor="let item of gene.proteinClasses | keyvalue">
+          {{ item.value }}
+        </li>
       </ng-container>
       <ng-container *ngIf="translate.currentLang === 'en'">
-        <ng-container *ngFor="let item of gene.human_protein_atlas.ProteinClass | keyvalue">
-          <li>{{ item.value }}</li>
-        </ng-container>
+        <li *ngFor="let item of gene.human_protein_atlas.ProteinClass | keyvalue">
+          {{ item.value }}
+        </li>
       </ng-container>
     </ul>
   </div>
+
+
 </div>

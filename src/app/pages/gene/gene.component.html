@@ -4,7 +4,6 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col col-12 header__title">
-
             <div class="title__caption">
               <div class="caption__inner">
                 {{gene.symbol}}
@@ -222,7 +221,7 @@
                     <section *ngIf="gene.commentFunction">
                       <h3>{{ 'gene_page_title_function' | translate }}</h3>
 
-                      <div class="__w-100">
+                      <div class="__w-100 __mt-10 __mb-10">
                         <ng-container *ngFor="let item of gene.functionalClusters">
                           <span class="alias">{{item.name}}</span>
                         </ng-container>
@@ -262,17 +261,10 @@
                       <app-human-protein-atlas [gene]="gene"></app-human-protein-atlas>
                     </section>
 
-                    <article *ngIf="gene.commentsReferenceLinks" id="reference">
-                      <ul class="list reference-list">
-                        <li *ngFor="let item of gene.commentsReferenceLinks | keyvalue">
-                          <a href="https://doi.org/{{item.key}}"
-                             target="_blank"
-                             class="reference-link"
-                             [innerHTML]="item.value | safe: 'html'"
-                          ></a>
-                        </li>
-                      </ul>
-                    </article>
+                    <app-reference
+                      *ngIf="gene.commentsReferenceLinks"
+                      [gene]="this.commentsReferenceLinksMap"
+                    ></app-reference>
                   </div>
 
                   <ng-template #noContent>

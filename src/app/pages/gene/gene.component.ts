@@ -1,9 +1,9 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { ApiService } from '../../core/services/api.service';
-import { Gene } from '../../core/models';
-import { TranslateService } from '@ngx-translate/core';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {ApiService} from '../../core/services/api.service';
+import {Gene} from '../../core/models';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-gene',
@@ -18,6 +18,7 @@ export class GeneComponent implements OnInit, OnDestroy {
   public geneOntologyProcessMap: Map<string, string>;
   public geneOntologyComponentMap: Map<string, string>;
   public geneOntologyActivityMap: Map<string, string>;
+  public commentsReferenceLinksMap: any; // Map<string, string>
   public expressionMaxValue: number;
 
   private subscription: Subscription;
@@ -25,18 +26,29 @@ export class GeneComponent implements OnInit, OnDestroy {
   constructor(
     public translate: TranslateService,
     private activateRoute: ActivatedRoute,
-    private apiService: ApiService,
+    private apiService: ApiService
   ) {
     this.subscription = activateRoute.params.subscribe(params => this.symbol = params.id);
   }
 
   static toMap(object) {
     const mappedObj = new Map();
-    for (const element of object) {
-      for (const [key, value] of Object.entries(element)) {
+    try {
+      // if there is an array of objects
+      for (const element of object) {
+        for (const [key, value] of Object.entries(element)) {
+          mappedObj.set(key, value);
+        }
+      }
+    } catch (e) {
+      // if object is not iterable
+      for (const [key, value] of Object.entries(object)) {
         mappedObj.set(key, value);
       }
     }
+
+    console.log('mapped object is ', mappedObj);
+
     return mappedObj;
   }
 
@@ -50,6 +62,7 @@ export class GeneComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getGene();
+    console.log(this.commentsReferenceLinksMap);
   }
 
   private getGene() {
@@ -59,6 +72,7 @@ export class GeneComponent implements OnInit, OnDestroy {
       this.geneOntologyComponentMap = GeneComponent.toMap(this.gene.terms.cellular_component);
       this.geneOntologyActivityMap = GeneComponent.toMap(this.gene.terms.molecular_activity);
       this.expressionMaxValue = GeneComponent.chartMaxValue(this.gene.expression);
+      this.commentsReferenceLinksMap = GeneComponent.toMap(this.gene.commentsReferenceLinks);
     });
   }
 

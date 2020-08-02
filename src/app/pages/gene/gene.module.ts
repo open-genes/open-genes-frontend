@@ -16,8 +16,9 @@ import {
 import { ResearchesComponent } from './researches/researches.component';
 import { ManualDescriptionsComponent } from './manual-descriptions/manual-descriptions.component';
 import { GeneOntologyComponent } from './gene-ontology/gene-ontology.component';
-import { HumanProteinAtlasComponent } from './human-protein-atlas/researches.component';
+import { HumanProteinAtlasComponent } from './human-protein-atlas/human-protein-atlas.component';
 import { ExpressionComponent } from './expression/expression.component';
+import { ReferenceComponent } from './reference/reference.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ExpressionComponent } from './expression/expression.component';
     ManualDescriptionsComponent,
     GeneOntologyComponent,
     HumanProteinAtlasComponent,
-    ExpressionComponent
+    ExpressionComponent,
+    ReferenceComponent
   ],
   imports: [
     CommonModule,
