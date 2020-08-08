@@ -47,8 +47,6 @@ export class GeneComponent implements OnInit, OnDestroy {
       }
     }
 
-    console.log('mapped object is ', mappedObj);
-
     return mappedObj;
   }
 
@@ -62,7 +60,6 @@ export class GeneComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getGene();
-    console.log(this.commentsReferenceLinksMap);
   }
 
   private getGene() {
@@ -83,7 +80,6 @@ export class GeneComponent implements OnInit, OnDestroy {
       this.gene.commentFunction ||
       this.gene.commentCause.length !== 0 ||
       this.gene.commentAging ||
-      this.gene.commentsReferenceLinks ||
       this.gene.researches.increaseLifespan.length !== 0 ||
       this.gene.researches.ageRelatedChangesOfGene.length !== 0 ||
       this.gene.researches.interventionToGeneImprovesVitalProcesses.length !== 0 ||
