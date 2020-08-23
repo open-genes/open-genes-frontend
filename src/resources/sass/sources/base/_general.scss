@@ -69,10 +69,20 @@ body {
   }
 }
 
+@mixin gray-link {
+  color: mix($color-gray, $color-general, 90%);
+
+  &:hover,
+  &:active {
+    color: darken(mix($color-gray, $color-general, 90%), 10%);
+  }
+}
+
 .link {
   color: $color-general;
   font-weight: $font-weight-medium;
   cursor: pointer;
+  position: relative;
 
   small {
     font-size: 13px;
@@ -90,16 +100,16 @@ body {
   }
 
   &--gray {
-    color: mix($color-gray, $color-general, 90%);
-
-    &:hover,
-    &:active {
-      color: darken(mix($color-gray, $color-general, 90%), 10%);
-    }
+    @include gray-link;
   }
 
   &--underline {
     text-decoration: underline;
+  }
+
+  &--anchor {
+    @include gray-link;
+    border-bottom: 1px dashed currentColor;
   }
 }
 

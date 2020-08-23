@@ -20,13 +20,15 @@ export class DynamicContentAnchorsDirective implements AfterViewInit {
         const anchors = document.getElementsByClassName('link--anchor');
         const referenceList = document.getElementById('reference');
 
-        for (const link of anchors) {
-          link.addEventListener('click', anchorScroll, false);
-        }
+        if (anchors && referenceList) {
+          for (const link of anchors) {
+            link.addEventListener('click', anchorScroll, false);
+          }
 
-        function anchorScroll() {
-          const destinationOffset = referenceList.offsetTop + 10;
-          window.scrollTo(0, destinationOffset);
+          function anchorScroll() {
+            const destinationOffset = referenceList.offsetTop + 10;
+            window.scrollTo(0, destinationOffset);
+          }
         }
       });
     });
