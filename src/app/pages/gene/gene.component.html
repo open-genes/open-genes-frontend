@@ -228,8 +228,9 @@
                       </div>
 
                       <article
+                        appDynamicContentAnchors
                         id="function"
-                        [innerHTML]="gene.commentFunction"
+                        [innerHTML]="gene.commentFunction | linkify"
                       >
                       </article>
                     </section>
@@ -262,6 +263,7 @@
                     </section>
 
                     <app-reference
+                      #Reference
                       *ngIf="gene.commentsReferenceLinks"
                       [gene]="this.commentsReferenceLinksMap"
                     ></app-reference>

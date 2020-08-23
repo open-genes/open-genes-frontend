@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, AfterViewInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {ApiService} from '../../core/services/api.service';
@@ -11,6 +11,7 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./gene.component.scss']
 })
 
+
 export class GeneComponent implements OnInit, OnDestroy {
   public gene: any;
   public symbol: string;
@@ -18,7 +19,7 @@ export class GeneComponent implements OnInit, OnDestroy {
   public geneOntologyProcessMap: Map<string, string>;
   public geneOntologyComponentMap: Map<string, string>;
   public geneOntologyActivityMap: Map<string, string>;
-  public commentsReferenceLinksMap: any; // Map<string, string>
+  public commentsReferenceLinksMap: Map<string, string>;
   public expressionMaxValue: number;
 
   private subscription: Subscription;
