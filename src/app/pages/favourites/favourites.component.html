@@ -32,9 +32,9 @@
              class="col-12 faved-gene"
         >
           <div class="faved-gene__title">
-            <a [routerLink]="['/gene', gene.symbol]"
-               class="link link--gray"
-            >{{ gene.symbol }} {{ gene.name }}</a>
+            <a [routerLink]="['/gene', gene.symbol]">
+              <span class="tag">{{ gene.symbol }}</span> <span class="link link--gray">{{ gene.name | capitalize }}</span>
+            </a>
           </div>
           <button
             class="faved-gene__actions"
