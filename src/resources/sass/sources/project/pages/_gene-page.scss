@@ -66,12 +66,6 @@
     // .header__functional-clusters { }
   }
 
-  .wrapper:not(:first-child) + .wrapper {
-    margin-top: 30px;
-    border-top: 1px solid $color-border-light;
-    padding-top: 20px;
-  }
-
   &__age {
     .age__types {
       display: flex;
@@ -337,6 +331,7 @@
   &__links {
     border-top: 1px solid $color-borders;
     padding-top: 20px;
+    margin-top: 30px;
   }
 }
 

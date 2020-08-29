@@ -7,10 +7,17 @@
     &__title {
       margin: 10px 0;
       padding-right: 30px;
+      .tag {
+        margin: 0 8px 0 0;
+      }
 
       .link {
         font-size: $font-size-huge;
         text-decoration: none;
+      }
+
+      .tag, .link {
+        vertical-align: middle;
       }
     }
 
