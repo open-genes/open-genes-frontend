@@ -7,8 +7,6 @@ import {environment} from '../environments/environment';
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit, AfterViewChecked {
-  // title = 'frontend';
-
   constructor(private translate: TranslateService) {
     this.translate.addLangs(environment.languages);
     const lang = localStorage.getItem('lang') || environment.languages[0];
@@ -19,7 +17,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    setTimeout(() => { // TODO: найти другой способ дождаться полной загрузки DOM, учитывая модули
+    setTimeout(() => { // TODO: find a proper way to wait for the full DOM loading considering all modules
       document.body.classList.remove('body--loading');
     }, 500);
   }

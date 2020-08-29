@@ -5,8 +5,7 @@ import {Pipe, PipeTransform} from '@angular/core';
   name: 'unixTimeFormatter'
 })
 
-// tslint:disable-next-line:class-name
-export class unixTimeFormatterPipe implements PipeTransform {
+export class UnixTimeFormatterPipe implements PipeTransform {
   constructor() {
   }
 

@@ -13,7 +13,7 @@ export class LinkifyPipe implements PipeTransform {
   private parseUrl(text: string) {
     // Find/Replace reference links ([1, 2]) in text
     if (text.match(this.references)) {
-      text = text.replace(this.references, '<a class="link link--anchor">$1</a>');
+      text = text.replace(this.references, '<span class="link link--anchor">$1</span>');
     }
 
     return text;

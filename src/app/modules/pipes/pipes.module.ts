@@ -5,9 +5,9 @@ import { StripTagsPipe } from './strip-tags.pipe';
 import { SplitByPipe } from './split-by.pipe';
 import { ZeroPadding } from './zero-padding.pipe';
 import { LocalizedDatePipe } from './i18n-date.pipe';
-import { unixTimeFormatterPipe } from './unix-time-formatter.pipe';
-import {ReplacePipe} from './replace.pipe';
-import {LinkifyPipe} from './linkify.pipe';
+import { UnixTimeFormatterPipe } from './unix-time-formatter.pipe';
+import { ReplacePipe } from './replace.pipe';
+import { LinkifyPipe } from './linkify.pipe';
 
 const PIPES = [
   SafePipe,
@@ -15,9 +15,9 @@ const PIPES = [
   SplitByPipe,
   ZeroPadding,
   LocalizedDatePipe,
-  unixTimeFormatterPipe,
+  UnixTimeFormatterPipe,
   ReplacePipe,
-  LinkifyPipe
+  LinkifyPipe,
 ];
 
 @NgModule({
