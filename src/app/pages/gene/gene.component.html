@@ -259,12 +259,17 @@
                     </section>
 
                     <section class="wrapper" id="hpa">
-                      <app-human-protein-atlas [gene]="gene"></app-human-protein-atlas>
+                      <h3 class="notranslate __mb-20">Human Protein Atlas</h3>
+                      <app-human-protein-atlas
+                        [gene]="gene"
+                        [hpa]="gene.human_protein_atlas"
+                      ></app-human-protein-atlas>
                     </section>
 
                     <app-reference
                       #Reference
                       *ngIf="gene.commentsReferenceLinks"
+                      class="__mt-30"
                       [gene]="this.commentsReferenceLinksMap"
                     ></app-reference>
                   </div>

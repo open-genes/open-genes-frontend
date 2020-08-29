@@ -1,10 +1,33 @@
 .panel {
+  border-radius: $border-radius-medium;
+  border: 1px solid;
+  padding: $padding-regular $padding-medium;
+  margin-bottom: 18px;
+
+  background-color: $color-white;
+  color: $dark-panel-100;
+  border-color: $color-borders;
 
   &--dark {
-    background-color: $dark-panel-300;
+    background-color: $color-black;
     color: $dark-panel-100;
     border-color: $dark-panel-200;
-    border-radius: $border-radius-medium;
-    padding: $padding-regular $padding-medium;
   }
+
+  &__group {
+    flex-flow: row wrap;
+    position: relative;
+  }
+
+  .panel__group + .panel__group {
+    margin-top: 20px;
+  }
+
+  ul {
+    margin: 0;
+  }
+
+  //&__item {
+  //
+  //}
 }

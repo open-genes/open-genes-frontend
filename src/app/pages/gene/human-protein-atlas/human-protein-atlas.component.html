@@ -1,7 +1,7 @@
-<div class="panel panel--dark">
-  <div class="panel__group">
-    <h3>Protein Classes</h3>
-    <ul class="panel__item list list--bulletted">
+<div class="panel">
+  <div class="panel__group row">
+    <div class="col-sm-3"><h6>Protein Classes</h6></div>
+    <ul class="panel__item col list list--bulletted">
       <!-- TODO: These are two different objects parsed from the one source at different time  -->
       <ng-container *ngIf="translate.currentLang === 'ru' && gene.proteinClasses">
         <ng-container *ngTemplateOutlet="proteinClassesRu"></ng-container>
@@ -22,65 +22,71 @@
       </ng-template>
 
       <ng-template #HPAproteinClasses>
-        <li *ngFor="let item of gene.human_protein_atlas.ProteinClass | keyvalue">
+        <li *ngFor="let item of hpa.ProteinClass | keyvalue">
           {{ item.value }}
         </li>
       </ng-template>
     </ul>
   </div>
 
-  <div class="panel__group">
-    <h3>Biological Process</h3>
-    <ul class="panel__item list list--bulletted">
+  <div class="panel__group row">
+    <div class="col-sm-3"><h6>Biological Process</h6></div>
+    <ul class="panel__item col list list--bulletted">
 
-      <li *ngFor="let item of gene.human_protein_atlas.BiologicalProcess">
-        {{ item }}
-      </li>
-    </ul>
-
-    <button mat-raised-button>More</button>
-  </div>
-  <div class="panel__group">
-    <h3>Molecular Function</h3>
-    <ul class="panel__item list list--bulletted">
-      <li *ngFor="let item of gene.human_protein_atlas.MolecularFunction">
-        {{ item }}
-      </li>
-    </ul>
-
-    <button mat-raised-button>More</button>
-  </div>
-  <div class="panel__group">
-    <h3>Subcellular Location</h3> <!-- TODO: заголовки в отдельные колонки, списки строкой -->
-    <!-- TODO: первые два могут совпадать, надо сравнит два объекта -->
-    <ul *ngIf="gene.human_protein_atlas.SubcellularLocation"
-      class="panel__item list list--bulletted">
-      <li *ngFor="let item of gene.human_protein_atlas.SubcellularLocation">
-        {{ item }}
-      </li>
-    </ul>
-    <ul *ngIf="gene.human_protein_atlas.SubcellularMainLocation"
-      class="panel__item list list--bulletted">
-      <li *ngFor="let item of gene.human_protein_atlas.SubcellularMainLocation">
-        {{ item }}
-      </li>
-    </ul>
-    <ul *ngIf="gene.human_protein_atlas.SubcellularAdditionalLocation"
-      class="panel__item list list--bulletted">
-      <li *ngFor="let item of gene.human_protein_atlas.SubcellularAdditionalLocation">
-        {{ item }}
-      </li>
-    </ul>
-    <button mat-raised-button>More</button>
-  </div>
-
-  <div class="panel__group">
-    <h3>Disease Involvement</h3>
-    <ul class="panel__item list list--bulletted">
-      <li *ngFor="let item of gene.human_protein_atlas.DiseaseInvolvement">
+      <li *ngFor="let item of hpa.BiologicalProcess">
         {{ item }}
       </li>
     </ul>
   </div>
 
+  <div class="panel__group row">
+    <div class="col-sm-3"><h6>Molecular Function</h6></div>
+    <ul class="panel__item col list list--bulletted">
+      <li *ngFor="let item of hpa.MolecularFunction">
+        {{ item }}
+      </li>
+    </ul>
+  </div>
+
+  <div class="panel__group row">
+    <div class="col-12 col-sm-3"><h6>Subcellular Location</h6></div>
+
+    <div class="panel__item col">
+        <ng-container *ngIf="hpa.SubcellularLocation">
+          <span *ngFor="let item of hpa.SubcellularLocation"
+                class="alias"
+          >{{ item }}
+          </span>
+        </ng-container>
+
+      <ng-container *ngIf="hpa.SubcellularMainLocation">
+        <ng-container *ngIf="!isSimilar(hpa.SubcellularLocation, hpa.SubcellularMainLocation)">
+          <span *ngFor="let item of hpa.SubcellularMainLocation"
+                class="alias"
+          >{{ item }}
+          </span>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <ng-container
+      *ngIf="hpa.SubcellularAdditionalLocation"
+    >
+      <ng-container *ngIf="!isSimilar(hpa.SubcellularMainLocation, hpa.SubcellularAdditionalLocation)">
+        <span *ngFor="let item of hpa.SubcellularAdditionalLocation"
+            class="alias"
+        >{{ item }}
+        </span>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <div class="panel__group row">
+    <div class="col-sm-3"><h6>Disease Involvement</h6></div>
+    <ul class="panel__item col list list--bulletted">
+      <li *ngFor="let item of hpa.DiseaseInvolvement">
+        {{ item }}
+      </li>
+    </ul>
+  </div>
 </div>
