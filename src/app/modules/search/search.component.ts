@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, Renderer2, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, OnDestroy, Renderer2, Input, OnInit, Output, Inject} from '@angular/core';
 import { Genes } from '../../core/models';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,6 +10,7 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit, OnDestroy {
+  @Inject (Document) public document: Document;
   @Input() dataSource: Genes[];
   @Output() dataSourceChange: EventEmitter<Genes[]> = new EventEmitter<Genes[]>();
   searchedData: Genes[];
