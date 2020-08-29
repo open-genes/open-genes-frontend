@@ -21,7 +21,7 @@ export class DynamicContentAnchorsDirective implements AfterViewInit {
         const referenceList = document.getElementById('reference');
 
         if (anchors && referenceList) {
-          for (const link of anchors) {
+          for (const [key, link] of Object.entries(anchors)) {
             link.addEventListener('click', anchorScroll, false);
           }
 
