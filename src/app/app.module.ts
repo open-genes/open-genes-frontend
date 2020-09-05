@@ -25,6 +25,7 @@ import {BurgerMenuComponent} from './components/burger-menu/burger-menu.componen
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {VendorsModule} from './modules/vendors/vendors.module';
 import {MatBadgeModule} from '@angular/material/badge';
+import { ScullyLibModule } from '@scullyio/ng-lib';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {MatBadgeModule} from '@angular/material/badge';
     }),
     BrowserAnimationsModule,
     VendorsModule,
-    MatBadgeModule
+    MatBadgeModule,
+    ScullyLibModule
   ],
   providers: [
     TranslateService,
