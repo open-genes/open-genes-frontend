@@ -113,7 +113,8 @@ body {
   }
 }
 
-app-header {
+app-header,
+.app-header { // the class is used on static pages
   display: block;
   width: 100%;
   position: fixed;
