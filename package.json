@@ -1,8 +1,10 @@
 {
   "name": "frontend",
-  "version": "0.0.0",
+  "version": "0.5.0",
   "scripts": {
-    "ng": "ng",
+    "static-sass": "node-sass --output-style compressed --include-path src/assets/sass/ src/assets/sass/style.scss src/assets/sass/style/style.css",
+    "static": "npm run static-sass",
+    "ng": "static && ng",
     "start": "ng serve",
     "build": "ng build",
     "build-staging": "ng build --configuration=staging",
@@ -53,6 +55,9 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.8.3"
+    "typescript": "~3.8.3",
+    "autoprefixer": "^9.6.1",
+    "node-sass": "^4.12.0",
+    "postcss-cli": "^6.1.3"
   }
 }

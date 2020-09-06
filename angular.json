@@ -31,7 +31,9 @@
               {
                 "input": "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
               },
-              "src/resources/sass/style.scss"
+
+              "src/assets/sass/style.scss",
+              "src/resources/sass/vendors.scss"
             ],
             "scripts": []
           },
@@ -123,7 +125,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/resources/sass/style.scss"
+              "src/assets/sass/style.scss",
+              "src/resources/sass/vendors.scss"
             ],
             "scripts": []
           }
