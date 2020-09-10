@@ -21,7 +21,7 @@
     transition: color, opacity, .15s ease-in-out;
   }
 
-  &__icon {
+  &__icon.fa {
     display: inline-block;
     width: $ui-base-height;
     height: $ui-base-height;
@@ -30,10 +30,6 @@
     line-height: $ui-base-height;
     text-align: center;
     font-size: 20px;
-
-    .fa {
-      z-index: 1;
-    }
 
     & + & {
       margin-left: 4px;

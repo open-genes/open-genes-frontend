@@ -1,18 +1,12 @@
 .panel {
+  position: relative;
   border-radius: $border-radius-medium;
   border: 1px solid;
   padding: $padding-regular $padding-medium;
   margin-bottom: 18px;
-
   background-color: $color-white;
   color: $dark-panel-100;
   border-color: $color-borders;
-
-  &--dark {
-    background-color: $color-black;
-    color: $dark-panel-100;
-    border-color: $dark-panel-200;
-  }
 
   &__group {
     flex-flow: row wrap;
@@ -30,4 +24,26 @@
   //&__item {
   //
   //}
+
+  // Panel types
+  &--dark {
+    background-color: $color-black;
+    color: $dark-panel-100;
+    border-color: $dark-panel-200;
+  }
+
+  &--w-shadow {
+    border: none;
+    box-shadow: 0 1px 10px rgba($color-black, 0.25);
+  }
+
+  &--w-colored-shadow {
+    border: none;
+    box-shadow: 0 1px 10px rgba($color-general-dark, 0.25);
+  }
+
+  &--transparent {
+    border: none;
+    background-color: transparent;
+  }
 }
