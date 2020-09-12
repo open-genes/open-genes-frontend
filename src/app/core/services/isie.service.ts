@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
   providedIn: 'root'
 })
 
-export class ApiService {
+export class IsIeService {
   readonly isInternetExplorer = !!(document as any).documentMode && (window as any).MSInputMethodContext;
 
   constructor() {
