@@ -1,1 +1,13 @@
+.about-page {
+  @include resolution_desktop-and-up {
+    font-size: 14px;
+  }
 
+  @include resolution_tablet {
+    font-size: 12px;
+  }
+
+  @include resolution_smartphone {
+    font-size: 11px;
+  }
+}

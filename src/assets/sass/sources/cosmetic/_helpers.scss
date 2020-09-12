@@ -69,3 +69,15 @@ $sizes: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60);
     order: 2;
   }
 }
+
+@include resolution_desktop-and-up {
+  .__only-on-mobile {
+    display: none !important;
+  }
+}
+
+@include resolution_smartphone-and-tablet {
+  .__only-on-desktop {
+    display: none !important;
+  }
+}

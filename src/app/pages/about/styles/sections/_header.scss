@@ -8,30 +8,45 @@
       display: flex;
       flex-flow: row wrap;
       align-items: center;
+      justify-content: stretch;
+    }
+
+    .header__image {
+      display: flex;
+      align-items: center;
+      max-width: 380px;
+      height: 100%;
+      padding: 0;
+
+      img {
+        width: 100%;
+      }
     }
 
     .header__text {
       color: #fff;
+      padding-left: 10%;
 
       h1 {
-        margin-bottom: .8rem;
-        font-size: 3rem;
+        margin-bottom: .8em;
+        font-size: 3em;
       }
 
       p {
-        font-size: 1rem;
+        font-size: 1.2em;
       }
 
       button {
+        width: 260px;
         line-height: 24px;
-        font-weight: 500;
         transition-property: background-color, color, box-shadow;
         transition-duration: .2s;
         transition-timing-function: ease-in-out;
         background-color: $color-accent;
         color: $color-white;
         border-radius: 28px;
-        font-size: 20px;
+        font-size: 1.8em;
+        font-weight: $font-weight-regular;
         padding: 16px 32px;
         margin-top: 24px;
         opacity: .85; // TODO: opacities map
