@@ -6,11 +6,16 @@
     "static-sass": "node-sass --output-style compressed --include-path src/assets/sass src/assets/sass/style.scss src/assets/sass/style.css",
     "static": "npm run static-sass && npm run static-prefixer",
     "static-w": "nodemon -e scss -x npm run static",
-    "ng": "static && ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "build-staging": "ng build --configuration=staging",
-    "build-prod": "ng build --prod --output-hashing=all",
+    "clear-sprites": "rm -r src/assets/images/icons/sprites",
+    "spriteset-general": "svg-sprite --symbol --dest=src/assets/images/icons/sprites src/assets/images/icons/source/general/*.svg --symbol-sprite=general.sprite.svg",
+    "spriteset-landing": "svg-sprite --symbol --dest=src/assets/images/icons/sprites src/assets/images/icons/source/landing/*.svg --symbol-sprite=landing.sprite.svg",
+    "spritesheets": "npm run spriteset-general & npm run spriteset-landing",
+    "sprites": "npm run clear-sprites && npm run spritesheets",
+    "ng": "ng",
+    "start": "npm run static && ng serve",
+    "build": "npm run static && sprites && ng build",
+    "build-staging": "npm run static && npm run sprites && ng build --configuration=staging",
+    "build-prod": "npm run static && npm run sprites && ng build --prod --output-hashing=all",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -61,6 +66,7 @@
     "autoprefixer": "^9.6.1",
     "node-sass": "^4.12.0",
     "nodemon": "^1.19.3",
-    "postcss-cli": "^6.1.3"
+    "postcss-cli": "^6.1.3",
+    "svg-sprite": "^1.5.0"
   }
 }

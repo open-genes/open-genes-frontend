@@ -1,0 +1,41 @@
+$icon-sizes-map: (
+xs: 16,
+sm: 20,
+rg: 24,
+md: 28,
+lg: 32
+);
+
+:host {
+  display: inline-block;
+  font-size: 0;
+  box-sizing: border-box;
+}
+
+.icon-wrapper {
+  position: relative;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+
+  @each $type, $size in $icon-sizes-map {
+    &--#{$type} {
+      height: #{$size}px;
+      width: #{$size}px;
+    }
+  }
+
+  &--custom {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.icon { // svg or img element
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  user-select: none;
+}
+
