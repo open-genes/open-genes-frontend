@@ -6,7 +6,6 @@ body {
   display: table;
   height: 100%;
   width: 100%;
-  font-family: 'Roboto', Arial, Helvetica, sans-serif;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -14,11 +13,6 @@ body {
   right: 0;
   padding-top: 50px;
   padding-bottom: 100px;
-  background-color: #fff;
-
-  * {
-    box-sizing: border-box;
-  }
 
   .preloader {
     display: none;
@@ -78,6 +72,15 @@ body {
   }
 }
 
+@mixin white-link {
+  color: $color-white;
+
+  &:hover,
+  &:active {
+    color: darken($color-white, 10%);
+  }
+}
+
 .link {
   color: $color-general;
   font-weight: $font-weight-medium;
@@ -101,6 +104,10 @@ body {
 
   &--gray {
     @include gray-link;
+  }
+
+  &--white {
+    @include white-link;
   }
 
   &--underline {

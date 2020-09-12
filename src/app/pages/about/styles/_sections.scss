@@ -1,0 +1,22 @@
+.about-page { // TODO: add section class
+  [class^=col] {
+    padding: 0 3rem;
+  }
+
+  h2 {
+    font-size: 36px;
+  }
+
+  .panel {
+    padding: 40px;
+
+    &--transparent {
+      color: $color-white;
+    }
+  }
+}
+
+@import "sections/header";
+@import "sections/short-info";
+@import "sections/problem";
+@import "sections/compare";

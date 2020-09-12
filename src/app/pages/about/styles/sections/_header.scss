@@ -1,0 +1,46 @@
+.about-page {
+  &__header {
+    background: linear-gradient(#91cefd, $color-base);
+
+    .header__centering {
+      height: calc(70vh - 50px);
+      min-height: 430px;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+    }
+
+    .header__text {
+      color: #fff;
+
+      h1 {
+        margin-bottom: .8rem;
+        font-size: 3rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      button {
+        line-height: 24px;
+        font-weight: 500;
+        transition-property: background-color, color, box-shadow;
+        transition-duration: .2s;
+        transition-timing-function: ease-in-out;
+        background-color: $color-accent;
+        color: $color-white;
+        border-radius: 28px;
+        font-size: 20px;
+        padding: 16px 32px;
+        margin-top: 24px;
+        opacity: .85; // TODO: opacities map
+
+        &:hover,
+        &:active {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

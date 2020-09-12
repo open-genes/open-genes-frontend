@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {AboutComponent} from './about.component';
 import {RouterModule, Routes} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
+import {VendorsModule} from "../../modules/vendors/vendors.module";
 
 const routes: Routes = [
   {path: '', component: AboutComponent}
@@ -13,7 +14,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    TranslateModule
+    TranslateModule,
+    VendorsModule
   ]
 })
 export class AboutModule {

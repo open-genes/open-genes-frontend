@@ -10,7 +10,7 @@
   text-align: right;
 }
 
-$sizes: (0, 5, 10, 15, 20, 25, 30, 35);
+$sizes: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60);
 
 @each $size in $sizes {
   .__m-#{$size} {
@@ -20,6 +20,18 @@ $sizes: (0, 5, 10, 15, 20, 25, 30, 35);
     margin-top: #{$size}px !important;
   }
   .__mb-#{$size} {
+    margin-bottom: #{$size}px !important;
+  }
+}
+
+@each $size in $sizes {
+  .__p-#{$size} {
+    margin: #{$size}px !important;
+  }
+  .__pt-#{$size} {
+    margin-top: #{$size}px !important;
+  }
+  .__pb-#{$size} {
     margin-bottom: #{$size}px !important;
   }
 }

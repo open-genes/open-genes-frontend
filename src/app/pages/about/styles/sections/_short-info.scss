@@ -1,0 +1,14 @@
+.about-page {
+  &__about {
+    padding: $padding-large + 10px 0;
+    background: linear-gradient($color-base, $color-general);
+    h2 {
+      color: $color-black;
+    }
+
+    .about__secondary-text {
+      color: $color-gray;
+      font-size: 85%;
+    }
+  }
+}
