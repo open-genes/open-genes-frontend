@@ -26,6 +26,10 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/api-reference/api-reference.module').then(m => m.ApiReferenceModule)
   },
   {
+    path: 'go-search',
+    loadChildren: () => import('./pages/go-search/go-search.module').then(m => m.GoSearchModule)
+  },
+  {
     path: '404',
     loadChildren: () => import('./pages/404/404.module').then(m => m.Error404Module)
   },

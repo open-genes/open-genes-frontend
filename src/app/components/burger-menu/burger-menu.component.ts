@@ -11,6 +11,7 @@ import {
 })
 
 export class BurgerMenuComponent implements OnInit {
+
   @Inject(Document) public document: Document;
 
   constructor() {
@@ -19,6 +20,9 @@ export class BurgerMenuComponent implements OnInit {
   @Input() favsCounter: string;
   isMenuVisible = false;
 
+  ngOnInit() {
+  }
+
   toggleMenu() {
     this.isMenuVisible = !this.isMenuVisible;
     if (this.isMenuVisible === true) {
@@ -26,8 +30,5 @@ export class BurgerMenuComponent implements OnInit {
     } else {
       document.body.classList.remove('body--still');
     }
-  }
-
-  ngOnInit() {
   }
 }

@@ -1,0 +1,25 @@
+<div class="page">
+  <div class="page__inner __pb-60">
+    <div class="main-page__header wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col col-12">
+            <div class="page__title">
+              <h1>Поиск генов по аннотациям Gene Ontology</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <section class="col col-12 content">
+          <ng-container *ngFor="let gene of genes">
+            {{ gene.symbol }} {{ gene.terms }}
+          </ng-container>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

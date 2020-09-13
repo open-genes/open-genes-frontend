@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Gene, Genes} from '../models';
+import {Gene, Genes, GoTermsByQuery} from '../models';
 import {environment} from '../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -36,7 +36,7 @@ export class ApiService {
     return this.http.get<Gene[]>(`${this.url}/api/gene/${symbol}?lang=${this.translate.currentLang}`);
   }
 
-  getGoTermMatchByString(request: string): Observable<Gene[]> {
-    return this.http.get<Gene[]>(`${this.url}/api/gene/by-go-term/${request}`);
+  getGoTermMatchByString(request: string): Observable<GoTermsByQuery[]> {
+    return this.http.get<GoTermsByQuery[]>(`${this.url}/api/gene/by-go-term/${request}`);
   }
 }

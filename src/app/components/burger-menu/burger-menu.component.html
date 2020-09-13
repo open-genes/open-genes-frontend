@@ -17,9 +17,9 @@
         >{{ 'header_menu_about' | translate }}</a>
       </li>
       <li class="menu__link">
-        <a [routerLink]="'/developers'"
+        <a [routerLink]="'/go-search'"
            routerLinkActive="current"
-        >{{ 'header_menu_api' | translate }}</a>
+        >{{ 'header_menu_go_search' | translate }}</a>
       </li>
       <li class="menu__link">
         <a [routerLink]="'/favourites'"
@@ -32,6 +32,11 @@
             matBadgeOverlap="false"
           >{{ 'header_menu_favourites' | translate }}</span>
         </a>
+      </li>
+      <li class="menu__link">
+        <a [routerLink]="'/developers'"
+           routerLinkActive="current"
+        >{{ 'header_menu_api' | translate }}</a>
       </li>
     </ul>
   </div>

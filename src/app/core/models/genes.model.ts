@@ -17,6 +17,21 @@ export interface Genes {
   timestamp: string;
 }
 
+export interface GoTermsByQuery {
+  id: number;
+  symbol: string;
+  aliases: string[];
+  name: string;
+  ncbiId: number;
+  uniprot: string;
+  functionalClusters: string | string[];
+  expressionChange?: number;
+  origin: Origin;
+  homologueTaxon: string;
+  timestamp: number;
+  terms: Terms;
+}
+
 export interface Gene {
   id: number;
   symbol: string;
