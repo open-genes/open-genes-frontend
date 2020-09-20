@@ -1,58 +1,16 @@
-<app-search [dataSource]="dataSource" (dataSourceChange)="getSearchedData($event)"></app-search>
+<app-search [dataSource]="dataSource" (dataSourceChange)="updateSearchedData($event)"></app-search>
 <ng-container *ngIf="searchedData?.length !== 0 && !isLoading">
-  <div class="view-panel">
-    <div class="filters-group view-panel__filters">
-      <button class="filter name-filter"
-              (click)="getGenes('name')"
-              [class.__active]="filters.byName"
-      >
-        {{ 'main_page_table_name' | translate }}
-        <span class="fa far fa-sort-down"></span>
-      </button>
-
-      <button class="filter age-filter"
-              (click)="getGenes('age')"
-              [class.__active]="filters.byAge"
-      >
-        {{ 'age' | translate }} ({{ 'million_years' | translate }})
-        <span class="fa far fa-sort-down"></span>
-      </button>
-
-      <button
-        *ngIf="filters.byClasses.length > 0"
-        class="filter __active functional-classes-filter"
-        (click)="clearFilters('classes')"
-      >
-        {{ 'functional_classes' | translate }}
-        <span class="fa fal fa-times"></span>
-      </button>
-
-      <button
-        *ngIf="filters.byExpressionChange"
-        class="filter __active expression-change-filter"
-        (click)="clearFilters('expressionChange')"
-      >
-        {{ 'main_page_table_expression' | translate }}
-        <span class="fa fal fa-times"></span>
-      </button>
-
-      <button class="btn btn--small btn-purple"
-              (click)="clearFilters('all')"
-              *ngIf="(filters.byName && filters.byAge || filters.byExpressionChange || filters.byClasses.length > 0)"
-      >
-        <span class="fa fal fa-filter"></span> {{ 'filters_reset' | translate }}
-      </button>
-    </div>
-
-    <div class="view-panel__buttons">
-      <button class="toggler"
-              (click)="geneView()"
-              [ngClass]="asCards == true ? 'toggler--def' : 'toggler--alt'">
-        <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
-        <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
-      </button>
-    </div>
-  </div>
+  <app-filters
+    *ngIf="isFilterPanel"
+    [dataSource]="dataSource"
+  >
+    <button class="toggler"
+            (click)="toggleGenesView()"
+            [ngClass]="asCards == true ? 'toggler--def' : 'toggler--alt'">
+      <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
+      <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
+    </button>
+  </app-filters>
 
   <section class="view-content notranslate" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
     <div class="thead">
@@ -115,7 +73,7 @@
                   (click)="filterByFuncClusters(item['id'])"
                   [class.__active]="filters.byClasses.includes(item['id'])"
             >
-              <div class="tag__inner">{{item["name"]}}</div>
+              <span class="tag__inner">{{item["name"]}}</span>
             </button>
           </div>
         </div>

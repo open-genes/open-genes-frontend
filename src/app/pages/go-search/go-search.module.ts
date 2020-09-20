@@ -4,6 +4,7 @@ import {GoSearchComponent} from './go-search.component';
 import {RouterModule, Routes} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 import {VendorsModule} from "../../modules/vendors/vendors.module";
+import {GenesListModule} from "../../components/shared/genes-list/genes-list.module";
 
 const routes: Routes = [
   {path: '', component: GoSearchComponent}
@@ -15,7 +16,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     TranslateModule,
-    VendorsModule
+    VendorsModule,
+    GenesListModule
   ]
 })
 export class GoSearchModule {

@@ -55,9 +55,6 @@
         <div class="col-lg-12 col-xl-10">
             <app-genes-list
               [dataSource]="genes"
-              (filterCluster)="filterByFuncClusters($event)"
-              (filterExpression)="filterByExpressionChange($event)"
-              (filtersCleared)="filtersCleared()"
               *ngIf="genes">
             </app-genes-list>
           </div>

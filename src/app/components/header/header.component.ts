@@ -6,7 +6,7 @@ import {
   OnDestroy, Output
 } from '@angular/core';
 import {Router} from '@angular/router';
-import {GenesListService} from '../../modules/genes-list/genes-list.service';
+import {FilterService} from '../shared/genes-list/services/filter.service';
 import {FavouritesService} from '../../core/services/favourites.service';
 import {Subscription} from 'rxjs';
 
@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly router: Router,
-    private readonly genesListService: GenesListService,
+    private readonly filterService: FilterService,
     private favouritesService: FavouritesService,
     private readonly cdRef: ChangeDetectorRef
   ) {
@@ -37,8 +37,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   /**
    * Сброс фильтров таблицы генов
    */
-  clearFilters(all) {
-    this.genesListService.clearFilters(all);
+  clearFilters() {
+    this.filterService.clearFilters();
   }
 
 

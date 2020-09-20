@@ -15,9 +15,11 @@
     <div class="container">
       <div class="row">
         <section class="col col-12 content">
-          <ng-container *ngFor="let gene of genes">
-            {{ gene.symbol }} {{ gene.terms }}
-          </ng-container>
+          <app-genes-list
+            [isFilterPanel]="false"
+            [dataSource]="genes"
+            *ngIf="genes">
+          </app-genes-list>
         </section>
       </div>
     </div>

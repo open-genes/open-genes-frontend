@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {ApiService} from '../../core/services/api.service';
-import {GoTermsByQuery} from '../../core/models';
+import {Genes} from '../../core/models';
 
 @Component({
   selector: 'app-go-search',
@@ -9,7 +9,7 @@ import {GoTermsByQuery} from '../../core/models';
   styleUrls: ['./go-search.component.scss']
 })
 export class GoSearchComponent implements OnInit {
-  genes: GoTermsByQuery[];
+  genes: Genes[];
   queryString = 'cyto'; // to lowercase only
   error: any;
 

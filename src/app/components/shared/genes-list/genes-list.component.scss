@@ -1,9 +1,9 @@
-@import "../../components/styles";
-@import "./styles/variables";
+@import "../../styles";
+@import "styles/variables";
 @import "styles/controls";
 @import "styles/item";
-@import "./styles/ast-table";
-@import "./styles/as-cards";
+@import "styles/ast-table";
+@import "styles/as-cards";
 
 :host {
   display: block;

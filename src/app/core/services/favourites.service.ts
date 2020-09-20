@@ -30,7 +30,7 @@ export class FavouritesService {
 
   public addToFavourites(data: number) {
     this.favourites.push(data);
-    localStorage.clear();
+    this.storedData = [];
     localStorage.setItem('favourites', JSON.stringify(this.favourites));
   }
 
