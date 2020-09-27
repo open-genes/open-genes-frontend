@@ -19,7 +19,7 @@
     <button
       *ngIf="filters.byClasses.length > 0"
       class="filter __active functional-classes-filter"
-      (click)="clearFilters('classes')"
+      (click)="clearFilters(filterTypes.classes)"
     >
       {{ 'functional_classes' | translate }}
       <span class="fa fal fa-times"></span>
@@ -28,15 +28,15 @@
     <button
       *ngIf="filters.byExpressionChange"
       class="filter __active expression-change-filter"
-      (click)="clearFilters('expressionChange')"
+      (click)="clearFilters(filterTypes.expressionChange)"
     >
       {{ 'main_page_table_expression' | translate }}
       <span class="fa fal fa-times"></span>
     </button>
 
     <button class="btn btn--small btn-purple"
-            (click)="clearFilters('all')"
-            *ngIf="(filters.byName && filters.byAge || filters.byExpressionChange || filters.byClasses.length > 0)"
+            (click)="clearFilters()"
+            *ngIf="areFiltersApplied"
     >
       <span class="fa fal fa-filter"></span> {{ 'filters_reset' | translate }}
     </button>

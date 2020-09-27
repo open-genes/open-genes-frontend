@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {FilterService} from '../shared/genes-list/services/filter.service';
 import {FavouritesService} from '../../core/services/favourites.service';
 import {Subscription} from 'rxjs';
+import {FilterTypesEnum} from "../shared/genes-list/services/filter-types.enum";
 
 
 @Component({
@@ -37,8 +38,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   /**
    * Сброс фильтров таблицы генов
    */
-  clearFilters() {
-    this.filterService.clearFilters();
+  public clearFilters(filter?: FilterTypesEnum) {
+    this.filterService.clearFilters(filter);
   }
 
 

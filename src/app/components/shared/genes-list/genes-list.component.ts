@@ -26,7 +26,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   @Input() isFilterPanel = true;
 
   searchedData: Genes[];
-  genesPerPage = 30;
+  genesPerPage = 20;
   loadedGenesQuantity = this.genesPerPage;
   isLoading = true;
   asCards = true;

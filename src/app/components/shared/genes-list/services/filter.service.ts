@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {Filter} from '../../../../core/models';
-import {FilterTypesEnum} from "./filter-types.enum";
+import {FilterTypesEnum} from './filter-types.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -58,5 +58,9 @@ export class FilterService {
         byExpressionChange: 0
       };
     }
+  }
+
+  public whatFiltersApplied(): Observable<any> {
+    return of(this.filters);
   }
 }

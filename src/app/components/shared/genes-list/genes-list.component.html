@@ -2,6 +2,7 @@
 <ng-container *ngIf="searchedData?.length !== 0 && !isLoading">
   <app-filters
     *ngIf="isFilterPanel"
+    [searchedData]="dataSource"
     [dataSource]="dataSource"
   >
     <button class="toggler"
