@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 import {FilterService} from '../shared/genes-list/services/filter.service';
 import {FavouritesService} from '../../core/services/favourites.service';
 import {Subscription} from 'rxjs';
-import {FilterTypesEnum} from "../shared/genes-list/services/filter-types.enum";
+import {FilterTypesEnum} from '../shared/genes-list/services/filter-types.enum';
 
 
 @Component({

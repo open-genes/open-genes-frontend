@@ -1,5 +1,14 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {Filter, Genes} from '../../../../../core/models';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
+import {Genes} from '../../../../../core/models';
 import {FilterService} from '../../services/filter.service';
 import {FilterTypesEnum} from '../../services/filter-types.enum';
 import {takeUntil} from 'rxjs/operators';
@@ -8,11 +17,12 @@ import {Subject} from 'rxjs';
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.scss']
+  styleUrls: ['./filters.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class FiltersComponent implements OnInit, OnDestroy {
-  private ngUnsubscribe = new Subject;
+  private ngUnsubscribe = new Subject();
 
   // @Input() Filters: Filter;
   @Input() dataSource: Genes[];
@@ -27,14 +37,16 @@ export class FiltersComponent implements OnInit, OnDestroy {
 
   public filters = this.filterService.filters;
   public filterTypes = FilterTypesEnum;
-  public areFiltersApplied: boolean;
+  public isClearFiltersBtnShown = false;
 
   constructor(
     private filterService: FilterService,
+    private readonly cdRef: ChangeDetectorRef
   ) {
   }
 
   ngOnInit(): void {
+    this.areMoreThan2FiltersApplied();
   }
 
   ngOnDestroy(): void {
@@ -67,9 +79,11 @@ export class FiltersComponent implements OnInit, OnDestroy {
     if (sortBy === 'name') {
       this.filters.byName ? this.reverse() : this.sortByName();
       this.filters.byName = !this.filters.byName;
+      this.cdRef.markForCheck();
     } else {
       this.filters.byAge ? this.reverse() : this.sortByAge();
       this.filters.byAge = !this.filters.byAge;
+      this.cdRef.markForCheck();
     }
   }
 
@@ -78,10 +92,12 @@ export class FiltersComponent implements OnInit, OnDestroy {
    */
   public filterByFuncClusters(id: number) {
     this.filterService.filterByFuncClusters(id);
+    this.cdRef.markForCheck();
   }
 
   public filterByExpressionChange(id: number) {
     this.filterService.filterByExpressionChange(id);
+    this.cdRef.markForCheck();
   }
 
   /**
@@ -89,23 +105,20 @@ export class FiltersComponent implements OnInit, OnDestroy {
    */
   public clearFilters(filter?: FilterTypesEnum) {
     this.filterService.clearFilters(filter);
+    this.cdRef.markForCheck();
   }
 
   /**
    * Are filters applied
    */
-  private areMoreThanTwoFiltersApplied() {
-
-  this.filterService.whatFiltersApplied().pipe(
+  private areMoreThan2FiltersApplied() {
+  this.filterService.areMoreThan2FiltersApplied().pipe(
       takeUntil(this.ngUnsubscribe)
-    )
-      .subscribe(
-        (filters) => {
-          this.areFiltersApplied = true;
-        },
-        // () => {
-        // // error
-        // },
+    ).subscribe(
+        (areApplied) => {
+          this.isClearFiltersBtnShown = areApplied.getValue();
+          this.cdRef.markForCheck();
+        }
       );
   }
 }

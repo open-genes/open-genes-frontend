@@ -3,11 +3,20 @@
 :host {
   display: block;
   width: 100%;
+  position: relative;
+}
+
+button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
 }
 
 code {
   display: block;
   width: 100%;
+  font-family: monospace sans-serif;
   background-color: $color-black;
   color: #fff;
   white-space: normal; // вместо pre/pre-wrap оборачиваем строки в div'ы

@@ -1,16 +1,18 @@
 <div class="view-panel">
   <div class="filters-group view-panel__filters">
-    <button class="filter name-filter"
-            (click)="sortBy('name')"
-            [class.__active]="filters.byName"
+    <button
+      class="filter name-filter"
+      (click)="sortBy('name')"
+      [class.__active]="filters.byName"
     >
       {{ 'main_page_table_name' | translate }}
       <span class="fa far fa-sort-down"></span>
     </button>
 
-    <button class="filter age-filter"
-            (click)="sortBy('age')"
-            [class.__active]="filters.byAge"
+    <button
+      class="filter age-filter"
+      (click)="sortBy('age')"
+      [class.__active]="filters.byAge"
     >
       {{ 'age' | translate }} ({{ 'million_years' | translate }})
       <span class="fa far fa-sort-down"></span>
@@ -36,7 +38,7 @@
 
     <button class="btn btn--small btn-purple"
             (click)="clearFilters()"
-            *ngIf="areFiltersApplied"
+            *ngIf="isClearFiltersBtnShown"
     >
       <span class="fa fal fa-filter"></span> {{ 'filters_reset' | translate }}
     </button>

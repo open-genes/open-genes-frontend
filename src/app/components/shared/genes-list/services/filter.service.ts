@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable, of, BehaviorSubject} from 'rxjs';
 import {Filter} from '../../../../core/models';
 import {FilterTypesEnum} from './filter-types.enum';
 
@@ -15,15 +15,18 @@ export class FilterService {
     byExpressionChange: 0,
   };
 
-  // TODO: потом сохранять этот объект в localStorage
+  private areMt2FiltersApplied = new BehaviorSubject(false);
+
+  // TODO: save this object in localStorage
 
   constructor() {
   }
 
-  public filterByFuncClusters(id: number): Observable<any[]> {
+  // Filter
+  public filterByFuncClusters(id: number): Observable<number[]> {
     if (!this.filters.byClasses.includes(id)) {
       this.filters.byClasses.push(id);
-
+      console.log(this.filters.byClasses);
     } else {
       this.filters.byClasses = this.filters.byClasses.filter(item => item !== id);
     }
@@ -34,6 +37,7 @@ export class FilterService {
   public filterByExpressionChange(expression: number): Observable<number> {
     if (this.filters.byExpressionChange !== expression) {
       this.filters.byExpressionChange = expression;
+      console.log(expression);
     } else {
       this.filters.byExpressionChange = 0;
     }
@@ -41,6 +45,17 @@ export class FilterService {
     return of(this.filters.byExpressionChange);
   }
 
+  // Get
+  public getByFuncClusters(): Observable<number[]> {
+    console.log('byClasses: ', this.filters.byClasses);
+    return of(this.filters.byClasses);
+  }
+
+  public getByExpressionChange(): Observable<number> {
+    return of(this.filters.byExpressionChange);
+  }
+
+  // Clear
   public clearFilters(filter?: FilterTypesEnum) {
     const {classes, expressionChange, age, name} = FilterTypesEnum; // destructuring
     if (filter === name) {
@@ -61,6 +76,21 @@ export class FilterService {
   }
 
   public whatFiltersApplied(): Observable<any> {
+    console.log('Applied: ', this.filters);
     return of(this.filters);
+  }
+
+  public areMoreThan2FiltersApplied(): Observable<BehaviorSubject<boolean>> {
+    const n = Number(this.filters.byName); // 0
+    const a = Number(this.filters.byAge); // 0
+    const c = this.filters.byClasses.length; // 0
+    const e = this.filters.byExpressionChange; // 0
+
+    // then if flters change and their sum is more than 2:
+    if ((n + a + c + e) >= 2) {
+      this.areMt2FiltersApplied.next(true);
+    }
+
+    return of(this.areMt2FiltersApplied);
   }
 }

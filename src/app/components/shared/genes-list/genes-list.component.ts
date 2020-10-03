@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Genes} from '../../../core/models';
@@ -14,7 +8,8 @@ import {FilterService} from './services/filter.service';
 @Component({
   selector: 'app-genes-list',
   templateUrl: './genes-list.component.html',
-  styleUrls: ['./genes-list.component.scss']
+  styleUrls: ['./genes-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 // (filterCluster)="filterByFuncClusters($event)"
@@ -38,7 +33,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
     private filterService: FilterService,
     private snackBar: MatSnackBar,
     private favouritesService: FavouritesService,
-    private readonly cdr: ChangeDetectorRef,
+    private readonly cdRef: ChangeDetectorRef,
   ) {
     this.favouritesService.getItems();
   }
@@ -50,7 +45,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   getSearchData() {
     this.searchedData = this.dataSource;
     this.isLoading = false;
-    this.cdr.markForCheck();
+    this.cdRef.markForCheck();
   }
 
   updateSearchedData(event: Genes[]) {
@@ -62,11 +57,15 @@ export class GenesListComponent implements OnInit, OnDestroy {
   }
 
   public filterByFuncClusters(id: number) {
+    console.log('click on class filter in gene card passed value to a service');
     this.filterService.filterByFuncClusters(id);
+    this.cdRef.markForCheck();
   }
 
   public filterByExpressionChange(id: number) {
+    console.log('click on expression filter in gene card passed value to a service');
     this.filterService.filterByExpressionChange(id);
+    this.cdRef.markForCheck();
   }
 
   public loadMoreGenes() {
@@ -81,7 +80,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
       duration: 600
     });
     this.isFaved(geneId);
-    // console.log(this.favouritesService.favourites);
   }
 
   public unFavItem(geneId: number) {

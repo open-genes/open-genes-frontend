@@ -1,9 +1,9 @@
 /**
- * Интерфейс, описывающий набор фильтров таблицы генов
+ * Model describing a common filters set for genes list
  */
 export interface Filter {
-  byName: boolean;            // по названию гена
-  byAge: boolean;             // по возрасту, смотрит на origin.order
-  byClasses: number[];        // по функциональным классам
-  byExpressionChange: number; // по варианту возрастного изменения экспрессии
+  byName: boolean;            // by gene name
+  byAge: boolean;             // by gene evolutionary age (origin.order field)
+  byClasses: number[];        // by functional classes
+  byExpressionChange: number; // by gene's age related expression change variant
 }

@@ -24,8 +24,8 @@ export class ApiService {
     return this.http.get<Genes[]>(`${this.url}/api/gene/by-latest`);
   }
 
-  getGenesByFunctionalClusters(fc: number[]): Observable<Genes[]> {
-    return this.http.get<Genes[]>(`${this.url}/api/gene/by-functional-cluster/${fc}?lang=${this.translate.currentLang}`);
+  getGenesByFunctionalClusters(list: number[]): Observable<Genes[]> {
+    return this.http.get<Genes[]>(`${this.url}/api/gene/by-functional-cluster/${list}?lang=${this.translate.currentLang}`);
   }
 
   getGenesByExpressionChange(expression: number): Observable<Genes[]> {

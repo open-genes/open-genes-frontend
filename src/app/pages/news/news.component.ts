@@ -1,16 +1,19 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, OnDestroy, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {Genes} from '../../core/models';
 import {ApiService} from '../../core/services/api.service';
+import {takeUntil} from "rxjs/operators";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html'
 })
-export class NewsComponent implements OnInit {
+export class NewsComponent implements OnInit, OnDestroy {
   genes: Genes[];
   error: number;
   portion: number;
+  private ngUnsubscribe = new Subject();
 
   constructor(
     private readonly apiService: ApiService,
@@ -22,8 +25,15 @@ export class NewsComponent implements OnInit {
     this.getGenes();
   }
 
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
   private getGenes() {
-    this.apiService.getGenes().subscribe((genes) => {
+    this.apiService.getGenes().pipe(
+      takeUntil(this.ngUnsubscribe)
+    ).subscribe((genes) => {
       this.genes = genes;
     }, error => this.error = error);
   }
