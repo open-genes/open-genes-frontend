@@ -1,20 +1,64 @@
 <app-search [dataSource]="dataSource" (dataSourceChange)="updateSearchedData($event)"></app-search>
 <ng-container *ngIf="searchedData?.length !== 0 && !isLoading">
-  <app-filters
-    *ngIf="isFilterPanel"
-    [searchedData]="dataSource"
-    [dataSource]="dataSource"
-  >
-    <button class="toggler"
-            (click)="toggleGenesView()"
-            [ngClass]="asCards == true ? 'toggler--def' : 'toggler--alt'">
-      <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
-      <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
-    </button>
-  </app-filters>
+  <div class="view-panel" *ngIf="isFilterPanel">
+    <div class="filters-group view-panel__filters">
+      <button
+        class="filter name-filter"
+        (click)="sortBy('name')"
+        [class.__active]="filters.byName"
+      >
+        {{ 'main_page_table_name' | translate }}
+        <span class="fa far fa-sort-down"></span>
+      </button>
 
-  <section class="view-content notranslate" [ngClass]="asCards == true ? 'view-content--as-table' : 'view-content--as-cards'">
-    <div class="thead">
+      <button
+        class="filter age-filter"
+        (click)="sortBy('age')"
+        [class.__active]="filters.byAge"
+      >
+        {{ 'age' | translate }} ({{ 'million_years' | translate }})
+        <span class="fa far fa-sort-down"></span>
+      </button>
+
+      <button
+        *ngIf="filters.byClasses.length > 0"
+        class="filter __active functional-classes-filter"
+        (click)="clearFilters(filterTypes.classes)"
+      >
+        {{ 'functional_classes' | translate }}
+        <span class="fa fal fa-times"></span>
+      </button>
+
+      <button
+        *ngIf="filters.byExpressionChange"
+        class="filter __active expression-change-filter"
+        (click)="clearFilters(filterTypes.expressionChange)"
+      >
+        {{ 'main_page_table_expression' | translate }}
+        <span class="fa fal fa-times"></span>
+      </button>
+
+      <button class="btn btn--small btn-purple"
+              (click)="clearFilters"
+              *ngIf="isClearFiltersBtnShown"
+      >
+        <span class="fa fal fa-filter"></span> {{ 'filters_reset' | translate }}
+      </button>
+    </div>
+
+    <div class="view-panel__buttons">
+      <button class="toggler"
+              (click)="toggleGenesView()"
+              [ngClass]="asTableRow ? 'toggler--def' : 'toggler--alt'">
+        <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
+        <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
+      </button>
+    </div>
+  </div>
+
+  <section class="view-content notranslate"
+           [ngClass]="asTableRow ? 'view-content--as-table' : 'view-content--as-cards'">
+    <div class="thead" *ngIf="asTableRow">
       <div class="th">
         <div class="th__title">
           {{ 'main_page_table_name' | translate }}
@@ -28,7 +72,7 @@
       <div class="th">
         <div class="th__title">
           {{ 'ncbi_homologs' | translate }}
-      </div>
+        </div>
       </div>
       <div class="th">
         <div class="th__title">
@@ -46,107 +90,17 @@
     </div>
 
     <div class="tbody">
-      <div class="tr" *ngFor="let data of searchedData | slice: 0: loadedGenesQuantity">
-        <div class="td cell td-name">
-          <div class="td__title">
-            <a [routerLink]="['/gene', data.symbol]" class="link link--gray">
-              <b>{{data.symbol}}</b> {{data.name}}
-            </a>
-          </div>
-        </div>
-        <div class="td cell td-age-mya">
-          <b>{{data.origin.phylum}}</b><br>
-          {{data.origin.age}} <span *ngIf="data.origin.age">({{ 'million_years' | translate }})</span>
-        </div>
-        <div class="td cell td-age-homologs">
-          <span class="td__label" *ngIf="data.homologueTaxon">
-            {{ 'ncbi_homologs' | translate }}
-          </span>
-          <b>{{data.homologueTaxon}}</b>
-        </div>
-        <div class="td cell td-clusters">
-          <div class="td-clusters__limiter">
-            <span class="td__label" *ngIf="data.functionalClusters">
-              {{ 'functional_classes' | translate }}
-            </span>
-            <button class="tag"
-                  *ngFor="let item of data.functionalClusters"
-                  (click)="filterByFuncClusters(item['id'])"
-                  [class.__active]="filters.byClasses.includes(item['id'])"
-            >
-              <span class="tag__inner">{{item["name"]}}</span>
-            </button>
-          </div>
-        </div>
-        <div class="td cell td-expression">
-          <span class="td__label">
-            {{ 'main_page_table_expression' | translate }}
-          </span>
-          <button class="tag"
-                  name="{{ data.expressionChange }}"
-                (click)="filterByExpressionChange(data.expressionChange)"
-                [class.__active]="(filters.byExpressionChange === data.expressionChange) && (data.expressionChange !== 0)"
-          >
-            <div class="tag__inner">{{ getExpressionLocaleKey(data.expressionChange) | translate }}</div>
-          </button>
-        </div>
-        <div class="td td-actions">
-          <button
-            mat-icon-button
-            class="td-actions__menu"
-            [matMenuTriggerFor]="geneListItemMenu"
-            aria-label="Меню гена в списке"
-          >
-            <mat-icon>
-              <span class="fa far fa-ellipsis-v"></span>
-            </mat-icon>
-          </button>
-          <mat-menu #geneListItemMenu="matMenu">
-            <button mat-menu-item [matMenuTriggerFor]="geneListItemSubMenu"
-            >{{ 'gene_list_menu_this_gene_on' | translate }}</button>
-            <button mat-menu-item
-                    *ngIf="this.isFaved(data.id)"
-                    (click)="unFavItem(data.id)"
-            >{{ 'favourites_remove' | translate }}</button>
-            <button mat-menu-item
-                    *ngIf="!this.isFaved(data.id)"
-                    (click)="favItem(data.id)"
-            >{{ 'favourites_add' | translate }}</button>
-          </mat-menu>
+      <ng-container
+        *ngIf="asTableRow"
+        [ngTemplateOutlet]="asTableRowsTmpl"
+        >
+      </ng-container>
 
-          <mat-menu #geneListItemSubMenu="matMenu">
-            <a mat-menu-item
-               href="http://disgenet.org/browser/1/1/0/{{data.ncbiId}}/"
-               target="_blank">
-              <span class="legend __brand-color-disgenet"></span>
-              DisGenet
-            </a>
-
-            <a mat-menu-item
-               href="https://thebiogrid.org/search.php?search={{data.symbol}}&organism=9606/"
-               target="_blank">
-              <span class="legend __brand-color-biogrid"></span>
-              BioGrid
-            </a>
-
-            <a mat-menu-item
-               href="https://genomics.senescence.info/genes/entry.php?hgnc={{data.symbol}}">
-              <span class="legend __brand-color-geneage"></span>
-              GeneAge
-            </a>
-            <a mat-menu-item
-              href="https://www.ncbi.nlm.nih.gov/gene/{{data.symbol}}">
-              <span class="legend __brand-color-entrez"></span>
-              EntrezGene
-            </a>
-            <a mat-menu-item
-               href="https://www.uniprot.org/uniprot/{{data.symbol}}_HUMAN">
-              <span class="legend __brand-color-uniprot"></span>
-              UniProt
-            </a>
-          </mat-menu>
-        </div>
-      </div>
+      <ng-container
+        *ngIf="!asTableRow"
+        [ngTemplateOutlet]="asCardsTmpl"
+      >
+      </ng-container>
     </div>
   </section>
 
@@ -175,3 +129,113 @@
   </div>
 </section>
 
+
+<ng-template #asTableRowsTmpl>
+  <div class="tr"
+       *ngFor="let data of searchedData | slice: 0: loadedGenesQuantity"
+  >
+    <div class="td cell td-name">
+      <div class="td__title">
+        <a [routerLink]="['/gene', data.symbol]" class="link link--gray">
+          <b>{{data.symbol}}</b> {{data.name}}
+        </a>
+      </div>
+    </div>
+    <div class="td cell td-age-mya">
+      <b>{{data.origin.phylum}}</b><br>
+      {{data.origin.age}} <span *ngIf="data.origin.age">({{ 'million_years' | translate }})</span>
+    </div>
+    <div class="td cell td-age-homologs">
+          <span class="td__label" *ngIf="data.homologueTaxon">
+            {{ 'ncbi_homologs' | translate }}
+          </span>
+      <b>{{data.homologueTaxon}}</b>
+    </div>
+    <div class="td cell td-clusters">
+      <div class="td-clusters__limiter">
+            <span class="td__label" *ngIf="data.functionalClusters">
+              {{ 'functional_classes' | translate }}
+            </span>
+        <button class="tag"
+                *ngFor="let item of data.functionalClusters"
+                (click)="filterByFuncClusters(item['id'])"
+                [class.__active]="filters.byClasses.includes(item['id'])"
+        >
+          <span class="tag__inner">{{item["name"]}}</span>
+        </button>
+      </div>
+    </div>
+    <div class="td cell td-expression">
+          <span class="td__label">
+            {{ 'main_page_table_expression' | translate }}
+          </span>
+      <button class="tag"
+              name="{{ data.expressionChange }}"
+              (click)="filterByExpressionChange(data.expressionChange)"
+              [class.__active]="(filters.byExpressionChange === data.expressionChange) && (data.expressionChange !== 0)"
+      >
+        <div class="tag__inner">{{ getExpressionLocaleKey(data.expressionChange) | translate }}</div>
+      </button>
+    </div>
+    <div class="td td-actions">
+      <button
+        mat-icon-button
+        class="td-actions__menu"
+        [matMenuTriggerFor]="geneListItemMenu"
+        aria-label="Меню гена в списке"
+      >
+        <mat-icon>
+          <span class="fa far fa-ellipsis-v"></span>
+        </mat-icon>
+      </button>
+      <mat-menu #geneListItemMenu="matMenu">
+        <button mat-menu-item [matMenuTriggerFor]="geneListItemSubMenu"
+        >{{ 'gene_list_menu_this_gene_on' | translate }}</button>
+        <button mat-menu-item
+                *ngIf="this.isFaved(data.id)"
+                (click)="unFavItem(data.id)"
+        >{{ 'favourites_remove' | translate }}</button>
+        <button mat-menu-item
+                *ngIf="!this.isFaved(data.id)"
+                (click)="favItem(data.id)"
+        >{{ 'favourites_add' | translate }}</button>
+      </mat-menu>
+
+      <mat-menu #geneListItemSubMenu="matMenu">
+        <a mat-menu-item
+           href="http://disgenet.org/browser/1/1/0/{{data.ncbiId}}/"
+           target="_blank">
+          <span class="legend __brand-color-disgenet"></span>
+          DisGenet
+        </a>
+
+        <a mat-menu-item
+           href="https://thebiogrid.org/search.php?search={{data.symbol}}&organism=9606/"
+           target="_blank">
+          <span class="legend __brand-color-biogrid"></span>
+          BioGrid
+        </a>
+
+        <a mat-menu-item
+           href="https://genomics.senescence.info/genes/entry.php?hgnc={{data.symbol}}">
+          <span class="legend __brand-color-geneage"></span>
+          GeneAge
+        </a>
+        <a mat-menu-item
+           href="https://www.ncbi.nlm.nih.gov/gene/{{data.symbol}}">
+          <span class="legend __brand-color-entrez"></span>
+          EntrezGene
+        </a>
+        <a mat-menu-item
+           href="https://www.uniprot.org/uniprot/{{data.symbol}}_HUMAN">
+          <span class="legend __brand-color-uniprot"></span>
+          UniProt
+        </a>
+      </mat-menu>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #asCardsTmpl>
+  <mat-card>Шаблон карточки</mat-card>
+</ng-template>

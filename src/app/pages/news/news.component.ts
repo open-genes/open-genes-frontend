@@ -2,8 +2,8 @@ import {Component, EventEmitter, OnInit, OnDestroy, Output} from '@angular/core'
 import {TranslateService} from '@ngx-translate/core';
 import {Genes} from '../../core/models';
 import {ApiService} from '../../core/services/api.service';
-import {takeUntil} from "rxjs/operators";
-import {Subject} from "rxjs";
+import {takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-news',

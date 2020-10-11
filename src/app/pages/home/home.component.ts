@@ -1,7 +1,8 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ApiService} from '../../core/services/api.service';
-import {Genes, Filter} from '../../core/models';
+import {Genes} from '../../core/models';
 import {FilterService} from '../../components/shared/genes-list/services/filter.service';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -9,41 +10,47 @@ import {FilterService} from '../../components/shared/genes-list/services/filter.
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent implements OnInit {
+
+export class HomeComponent implements OnInit, OnDestroy {
   genes: Genes[];
   lastGenes: Genes[];
-  filters: Filter;
   error: number;
+
+  private ngUnsubscribe = new Subject();
 
   constructor(
     private readonly apiService: ApiService,
     private filterService: FilterService,
-    private readonly cdRef: ChangeDetectorRef,
+    private readonly cdRef: ChangeDetectorRef
   ) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getGenes();
     this.getLastEditedGenes();
     this.updateGenesByFuncClusters();
     this.updateGenesByExpressionChange();
   }
 
-  private getGenes() {
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
+  public getGenes() {
     this.apiService.getGenes().subscribe((genes) => {
       this.genes = genes;
       this.cdRef.markForCheck();
     }, error => this.error = error);
   }
 
-  private getLastEditedGenes() {
+  public getLastEditedGenes() {
     this.apiService.getLastEditedGene().subscribe((genes) => {
       this.lastGenes = genes;
     });
   }
 
-  // TODO: вот тут не обновляются данные при подписке
-  private updateGenesByFuncClusters() {
+  public updateGenesByFuncClusters() {
     console.log('updateGenesByFuncClusters called');
     this.filterService.getByFuncClusters().subscribe((list) => {
       console.log('getByFuncClusters subscribed');
@@ -55,14 +62,14 @@ export class HomeComponent implements OnInit {
           this.genes = genes;
           this.cdRef.markForCheck();
           console.log('getByFuncClusters markForCheck');
-        }, error => this.error = error);
+        }, error => this.errorLogger(this, error));
       } else {
         this.getGenes();
       }
-    }, error => this.error = error);
+    }, error => this.errorLogger(this, error));
   }
 
-  private updateGenesByExpressionChange() {
+  public updateGenesByExpressionChange() {
     console.log('updateGenesByExpressionChange called');
     this.filterService.getByExpressionChange().subscribe((expression) => {
       console.log('getByExpressionChange subscribed');
@@ -74,10 +81,14 @@ export class HomeComponent implements OnInit {
           this.genes = genes;
           this.cdRef.markForCheck();
           console.log('getByExpressionChange markForCheck');
-        }, error => this.error = error);
+        }, error => this.errorLogger(this, error));
       } else {
         this.getGenes();
       }
-    }, error => this.error = error);
+    }, error => this.errorLogger(this, error));
+  }
+
+  private errorLogger(context: any, error: any) {
+    console.warn(error);
   }
 }
