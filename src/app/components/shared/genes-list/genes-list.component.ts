@@ -29,8 +29,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
   @Input() dataSource: Genes[];
   @Input() isFilterPanel = true;
   @Output() updateGenesList = new EventEmitter();
-  @Output() updateGenesByFuncClusters = new EventEmitter();
-  @Output() updateGenesByExpressionChange = new EventEmitter();
 
   private ngUnsubscribe = new Subject();
   public filters = this.filterService.filters;
@@ -71,6 +69,32 @@ export class GenesListComponent implements OnInit, OnDestroy {
     this.searchedData = this.dataSource;
     this.isLoading = false;
     this.cdRef.markForCheck();
+  }
+
+  public filterByFuncClusters(id: number) {
+    console.log('updateGenesByFuncClusters called');
+    this.filterService.filterByFuncClusters(id);
+    this.filterService.getByFuncClusters().subscribe((list) => {
+      if (list.length !== 0) {
+        this.apiService.getGenesByFunctionalClusters(list).subscribe((genes) => {
+          this.searchedData = genes;
+          this.cdRef.markForCheck();
+        }, error => this.errorLogger(this, error));
+      }
+    }, error => this.errorLogger(this, error));
+  }
+
+  public filterByExpressionChange(id: number) {
+    console.log('updateGenesByExpressionChange called');
+    this.filterService.filterByExpressionChange(id);
+    this.filterService.getByExpressionChange().subscribe((expression) => {
+      if (expression) {
+        this.apiService.getGenesByExpressionChange(expression).subscribe(genes => {
+          this.searchedData = genes;
+          this.cdRef.markForCheck();
+        }, error => this.errorLogger(this, error));
+      }
+    }, error => this.errorLogger(this, error));
   }
 
   /**
@@ -151,23 +175,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Filters
-   */
-  public filterByFuncClusters(id: number) {
-    console.log('click on class filter in gene card passed value to a service');
-    this.filterService.filterByFuncClusters(id);
-    this.updateGenesByFuncClusters.emit();
-    this.cdRef.markForCheck();
-  }
-
-  public filterByExpressionChange(id: number) {
-    console.log('click on expression filter in gene card passed value to a service');
-    this.filterService.filterByExpressionChange(id);
-    this.updateGenesByExpressionChange.emit();
-    this.cdRef.markForCheck();
-  }
-
-  /**
    * Filters translations
    */
   public getExpressionLocaleKey(expression: number) {
@@ -186,7 +193,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
    */
   public clearFilters(filter?: FilterTypesEnum) {
     this.filterService.clearFilters(filter);
-    this.updateGenesList.emit();
+    this.searchedData = this.dataSource;
     this.cdRef.markForCheck();
   }
 
@@ -202,5 +209,12 @@ export class GenesListComponent implements OnInit, OnDestroy {
         this.cdRef.markForCheck();
       }
     );
+  }
+
+  /**
+   * Error handling
+   */
+  private errorLogger(context: any, error: any) {
+    console.warn(error);
   }
 }

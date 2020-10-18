@@ -17,8 +17,8 @@ export class NewsListComponent implements OnInit, OnChanges, OnDestroy {
   @Input() limit;
   @Input() showDates = false;
 
-  newsList: News[];
-  isLoading: boolean;
+  newsList: News[] = [];
+  isLoading = true;
   error: number;
   private subscription$ = new Subject();
 
@@ -26,8 +26,6 @@ export class NewsListComponent implements OnInit, OnChanges, OnDestroy {
     public translate: TranslateService,
     private pubmedApiService: PubmedApiService
   ) {
-    this.newsList = [];
-    this.isLoading = true;
   }
 
   ngOnInit() {

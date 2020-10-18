@@ -56,9 +56,6 @@
             <app-genes-list
               *ngIf="genes"
               [dataSource]="genes"
-              (updateGenesList)="getGenes()"
-              (updateGenesByFuncClusters)="updateGenesByExpressionChange()"
-              (updateGenesByExpressionChange)="updateGenesByExpressionChange()"
             ></app-genes-list>
           </div>
 

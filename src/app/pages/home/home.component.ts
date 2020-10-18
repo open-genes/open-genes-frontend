@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 import {ApiService} from '../../core/services/api.service';
 import {Genes} from '../../core/models';
 import {FilterService} from '../../components/shared/genes-list/services/filter.service';
@@ -12,6 +21,8 @@ import {Subject} from 'rxjs';
 })
 
 export class HomeComponent implements OnInit, OnDestroy {
+  @Output() dataSourceUpdate: EventEmitter<Genes[]> = new EventEmitter<Genes[]>();
+
   genes: Genes[];
   lastGenes: Genes[];
   error: number;
@@ -28,8 +39,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getGenes();
     this.getLastEditedGenes();
-    this.updateGenesByFuncClusters();
-    this.updateGenesByExpressionChange();
   }
 
   ngOnDestroy(): void {
@@ -48,47 +57,5 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.apiService.getLastEditedGene().subscribe((genes) => {
       this.lastGenes = genes;
     });
-  }
-
-  public updateGenesByFuncClusters() {
-    console.log('updateGenesByFuncClusters called');
-    this.filterService.getByFuncClusters().subscribe((list) => {
-      console.log('getByFuncClusters subscribed');
-      console.log(list);
-
-      if (list.length !== 0) {
-        console.log('getByFuncClusters list.length !== 0');
-        this.apiService.getGenesByFunctionalClusters(list).subscribe((genes) => {
-          this.genes = genes;
-          this.cdRef.markForCheck();
-          console.log('getByFuncClusters markForCheck');
-        }, error => this.errorLogger(this, error));
-      } else {
-        this.getGenes();
-      }
-    }, error => this.errorLogger(this, error));
-  }
-
-  public updateGenesByExpressionChange() {
-    console.log('updateGenesByExpressionChange called');
-    this.filterService.getByExpressionChange().subscribe((expression) => {
-      console.log('getByExpressionChange subscribed');
-      console.log(expression);
-
-      if (expression) {
-        console.log('getByFuncClusters expression !== null');
-        this.apiService.getGenesByExpressionChange(expression).subscribe(genes => {
-          this.genes = genes;
-          this.cdRef.markForCheck();
-          console.log('getByExpressionChange markForCheck');
-        }, error => this.errorLogger(this, error));
-      } else {
-        this.getGenes();
-      }
-    }, error => this.errorLogger(this, error));
-  }
-
-  private errorLogger(context: any, error: any) {
-    console.warn(error);
   }
 }
