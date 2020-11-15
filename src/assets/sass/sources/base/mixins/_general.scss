@@ -6,8 +6,8 @@
 }
 
 // Стили панели
-@mixin panel($padding: '10px') {
-  display: block;
+@mixin panel($display: 'block', $padding: '10px') {
+  display: $display;
   width: 100%;
   background-color: #fff;
   border: 1px solid $color-borders;

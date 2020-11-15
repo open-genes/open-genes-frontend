@@ -1,0 +1,72 @@
+// В виде карточек
+@mixin cards {
+  .card {
+    position: relative;
+    @include panel(flex, #{10px 0});
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: $font-size;
+
+    &__content,
+    &__actions,
+    &__section {
+      display: inline-block;
+      width: 100%;
+    }
+
+    &__section {
+      padding: 0 12px;
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &__title {
+      padding-right: 30px;
+      margin-bottom: 5px;
+
+      .title {
+        font-size: $font-size-huge;
+
+        .link {
+          text-decoration: none;
+        }
+      }
+    }
+
+    &__age-mya {
+      font-size: $font-size-bigger;
+    }
+
+    &__age-phylo {
+      font-size: $font-size-big;
+    }
+
+    &__actions {
+      justify-self: flex-end;
+      margin-top: 20px;
+      border-top: 1px solid $color-borders;
+      padding-top: 12px;
+    }
+
+    .label {
+      display: block;
+      width: 100%;
+      font-size: $font-size-small;
+      color: $color-gray-halfing;
+      margin-bottom: 5px;
+    }
+
+    @include resolution_phablet-and-up {
+      flex: 0 0 calc(50% - 5px);
+    }
+
+    @include resolution_phone {
+      flex: 0 0 100%;
+    }
+  }
+}
+

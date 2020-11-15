@@ -13,7 +13,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {LoaderPlaceholderModule} from '../loader-placeholder/loader-placeholder.module';
 import {FavouritesService} from '../../../core/services/favourites.service';
-import {MatCardModule} from "@angular/material/card";
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,7 @@ import {MatCardModule} from "@angular/material/card";
   ],
   exports: [
     GenesListComponent,
-    SearchComponent
+    SearchComponent,
   ]
 })
 export class GenesListModule {
