@@ -8,18 +8,6 @@
     }
   }
 
-  td {
-    border-left: 1px solid $color-border-light;
-
-    &:first-child {
-      border-left: none;
-    }
-
-    &:last-child {
-      border-left: none;
-    }
-  }
-
   thead {
     background-color: $color-general-light;
 
