@@ -16,10 +16,10 @@
       <div class="row">
         <section class="col col-12 content">
           <app-genes-list
-            [isFilterPanel]="false"
+            *ngIf="genes"
             [dataSource]="genes"
-            *ngIf="genes">
-          </app-genes-list>
+            [isGoTermsMode]="true"
+          ></app-genes-list>
         </section>
       </div>
     </div>

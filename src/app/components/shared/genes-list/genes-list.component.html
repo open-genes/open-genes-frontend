@@ -59,8 +59,9 @@
   </div>
 
   <!-- Content -->
-  <section class="view-content notranslate"
-           [ngClass]="asTableRow ? 'view-content--as-table' : 'view-content--as-cards'">
+  <section
+    class="view-content notranslate"
+    [ngClass]="asTableRow ? 'view-content--as-table' : 'view-content--as-cards'">
 
     <!-- Content views -->
     <table
@@ -83,18 +84,29 @@
             {{ 'ncbi_homologs' | translate }}
           </div>
         </td>
+
+        <ng-container *ngIf="!isGoTermsMode; else GoModeHeader">
+          <td>
+            <div class="overflow">
+              {{ 'functional_classes' | translate }}
+            </div>
+          </td>
+          <td>
+            <div class="overflow">
+              {{ 'main_page_table_expression' | translate }}
+            </div>
+          </td>
+        </ng-container>
+        <ng-template #GoModeHeader>
+          <td colspan="2">
+            <div class="overflow">
+              GO Terms
+            </div>
+          </td>
+        </ng-template>
         <td>
           <div class="overflow">
-            {{ 'functional_classes' | translate }}
           </div>
-        </td>
-        <td>
-          <div class="overflow">
-            {{ 'main_page_table_expression' | translate }}
-          </div>
-        </td>
-        <td>
-          <div class="overflow"></div>
         </td>
       </tr>
       </thead>
@@ -148,7 +160,7 @@
 <!-- Templates -->
 <ng-template #asTableRowsTmpl let-item="itemRow">
   <tr class="item table-row">
-    <td class="cell cell-name">
+    <td class="cell cell__name">
       <div class="title">
         <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
           <b>{{item.symbol}}</b> {{item.name}}
@@ -156,40 +168,67 @@
       </div>
     </td>
 
-    <td class="cell cell-age-mya">
+    <td class="cell cell__age-mya">
       <b>{{item.origin.phylum}}</b><br>
       {{item.origin.age}} <span *ngIf="item.origin.age">({{ 'million_years' | translate }})</span>
     </td>
 
-    <td class="cell cell-age-homologs">
+    <td class="cell cell__age-homologs">
 
       <b>{{item.homologueTaxon}}</b>
     </td>
 
-    <td class="cell cell-clusters">
-      <div class="td-clusters__limiter">
+    <ng-container *ngIf="!isGoTermsMode; else GoModeCell">
+      <td class="cell cell__clusters">
+        <div class="cell__limiter">
+          <button
+            class="tag"
+            *ngFor="let item of item.functionalClusters"
+            (click)="filterByFuncClusters(item['id'])"
+            [class.__active]="filters.byClasses.includes(item['id'])"
+          >
+            <span class="tag__inner">{{item["name"]}}</span>
+          </button>
+        </div>
+      </td>
+
+      <td class="cell cell__expression">
         <button
           class="tag"
-          *ngFor="let item of item.functionalClusters"
-          (click)="filterByFuncClusters(item['id'])"
-          [class.__active]="filters.byClasses.includes(item['id'])"
+          name="{{ item.expressionChange }}"
+          (click)="filterByExpressionChange(item.expressionChange)"
+          [class.__active]="(filters.byExpressionChange === item.expressionChange) && (item.expressionChange !== 0)"
         >
-          <span class="tag__inner">{{item["name"]}}</span>
+          <span class="tag__inner">{{ getExpressionLocaleKey(item.expressionChange) | translate }}</span>
         </button>
-      </div>
-    </td>
+      </td>
+    </ng-container>
 
-    <td class="cell cell-expression">
-      <button
-        class="tag"
-        name="{{ item.expressionChange }}"
-        (click)="filterByExpressionChange(item.expressionChange)"
-        [class.__active]="(filters.byExpressionChange === item.expressionChange) && (item.expressionChange !== 0)"
-      >
-        <span class="tag__inner">{{ getExpressionLocaleKey(item.expressionChange) | translate }}</span>
-      </button>
-    </td>
-    <td class="td-actions">
+    <ng-template #GoModeCell>
+      <td
+        colspan="2"
+        class="cell cell__clusters">
+        <div class="cell__limiter">
+          <a *ngFor="let term of item.terms.biological_process | keyvalue"
+             href="#"
+             class="tag">
+            Gene Term
+          </a>
+          <a *ngFor="let term of item.terms.cellular_component | keyvalue"
+             href="#"
+             class="tag">
+            Gene Term
+          </a>
+          <a *ngFor="let term of item.terms.molecular_activity | keyvalue"
+             href="#"
+             class="tag">
+            Gene Term
+          </a>
+        </div>
+      </td>
+    </ng-template>
+
+    <td class="cell cell__actions">
       <!-- menu -->
     </td>
   </tr>
@@ -222,35 +261,55 @@
     </div>
 
     <div class="card__actions">
-      <div
-        *ngIf="item.functionalClusters"
-        class="card__section">
-      <span class="label">
-          {{ 'functional_classes' | translate }}
-      </span>
-        <button
-          class="tag"
-          *ngFor="let item of item.functionalClusters"
-          (click)="filterByFuncClusters(item['id'])"
-          [class.__active]="filters.byClasses.includes(item['id'])"
-        >
-          <span class="tag__inner">{{item["name"]}}</span>
-        </button>
-      </div>
+      <ng-container *ngIf="!isGoTermsMode; else GoModeCardActions">
+        <div *ngIf="item.functionalClusters"
+             class="card__section">
+        <span class="label">
+            {{ 'functional_classes' | translate }}
+        </span>
+          <button
+            class="tag"
+            *ngFor="let cluster of item.functionalClusters"
+            (click)="filterByFuncClusters(cluster['id'])"
+            [class.__active]="filters.byClasses.includes(cluster['id'])"
+          >
+            <span class="tag__inner">{{cluster["name"]}}</span>
+          </button>
+        </div>
 
-      <div class="card__section">
-      <span class="label">
-        {{ 'main_page_table_expression' | translate }}
-      </span>
-        <button
-          class="tag"
-          name="{{ item.expressionChange }}"
-          (click)="filterByExpressionChange(item.expressionChange)"
-          [class.__active]="(filters.byExpressionChange === item.expressionChange) && (item.expressionChange !== 0)"
-        >
-          <span class="tag__inner">{{ getExpressionLocaleKey(item.expressionChange) | translate }}</span>
-        </button>
-      </div>
+        <div class="card__section">
+        <span class="label">
+          {{ 'main_page_table_expression' | translate }}
+        </span>
+          <button
+            class="tag"
+            name="{{ item.expressionChange }}"
+            (click)="filterByExpressionChange(item.expressionChange)"
+            [class.__active]="(filters.byExpressionChange === item.expressionChange) && (item.expressionChange !== 0)"
+          >
+            <span class="tag__inner">{{ getExpressionLocaleKey(item.expressionChange) | translate }}</span>
+          </button>
+        </div>
+      </ng-container>
+      <ng-template #GoModeCardActions>
+        <div class="card__section">
+          <a *ngFor="let term of item.terms.biological_process | keyvalue"
+             href="#"
+             class="tag">
+            Gene Term
+          </a>
+          <a *ngFor="let term of item.terms.cellular_component | keyvalue"
+             href="#"
+             class="tag">
+            Gene Term
+          </a>
+          <a *ngFor="let term of item.terms.molecular_activity | keyvalue"
+             href="#"
+             class="tag">
+            Gene Term
+          </a>
+        </div>
+      </ng-template>
     </div>
   </div>
 </ng-template>

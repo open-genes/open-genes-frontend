@@ -28,6 +28,7 @@ import {ApiService} from '../../../core/services/api.service';
 export class GenesListComponent implements OnInit, OnDestroy {
   @Input() dataSource: Genes[];
   @Input() isFilterPanel = true;
+  @Input() isGoTermsMode = false;
   @Output() updateGenesList = new EventEmitter();
 
   private ngUnsubscribe = new Subject();
