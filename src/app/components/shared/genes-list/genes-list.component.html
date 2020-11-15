@@ -208,7 +208,8 @@
       <td
         colspan="2"
         class="cell cell__clusters">
-        <div class="cell__limiter">
+        <div *ngIf="item.terms"
+             class="cell__limiter">
           <a *ngFor="let term of item.terms.biological_process | keyvalue"
              href="#"
              class="tag">
@@ -292,7 +293,7 @@
         </div>
       </ng-container>
       <ng-template #GoModeCardActions>
-        <div class="card__section">
+        <div class="card__section" *ngIf="item.terms">
           <a *ngFor="let term of item.terms.biological_process | keyvalue"
              href="#"
              class="tag">
