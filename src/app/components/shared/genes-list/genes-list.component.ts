@@ -17,6 +17,7 @@ import {takeUntil} from 'rxjs/operators';
 import {FilterTypesEnum} from './services/filter-types.enum';
 import {TranslateService} from '@ngx-translate/core';
 import {ApiService} from '../../../core/services/api.service';
+import {PageClass} from '../../../pages/page.class';
 
 @Component({
   selector: 'app-genes-list',
@@ -25,7 +26,7 @@ import {ApiService} from '../../../core/services/api.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class GenesListComponent implements OnInit, OnDestroy {
+export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   @Input() dataSource: Genes[];
   @Input() isFilterPanel = true;
   @Input() isGoTermsMode = false;
@@ -50,6 +51,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
     private favouritesService: FavouritesService,
     private readonly cdRef: ChangeDetectorRef
   ) {
+    super();
     this.favouritesService.getItems();
   }
 
@@ -79,6 +81,10 @@ export class GenesListComponent implements OnInit, OnDestroy {
       if (list.length !== 0) {
         this.apiService.getGenesByFunctionalClusters(list).subscribe((genes) => {
           this.searchedData = genes;
+
+          // Map data if it's presented:
+          // TODO: Map data with toMap method
+
           this.cdRef.markForCheck();
         }, error => this.errorLogger(this, error));
       }

@@ -1,9 +1,10 @@
-import {Component, OnInit, AfterViewInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import {ApiService} from '../../core/services/api.service';
-import {Gene} from '../../core/models';
 import {TranslateService} from '@ngx-translate/core';
+import {takeUntil} from 'rxjs/operators';
+import {PageClass} from '../page.class';
 
 @Component({
   selector: 'app-gene',
@@ -12,7 +13,7 @@ import {TranslateService} from '@ngx-translate/core';
 })
 
 
-export class GeneComponent implements OnInit, OnDestroy {
+export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   public gene: any;
   public symbol: string;
   public dateInitial = 1562960035; // July 12 2019 - date when the first data was added
@@ -22,33 +23,16 @@ export class GeneComponent implements OnInit, OnDestroy {
   public commentsReferenceLinksMap: Map<string, string>;
   public expressionMaxValue: number;
 
-  private subscription: Subscription;
+  private ngUnsubscribe = new Subject();
+  private routeSubscribe: Subscription;
 
   constructor(
     public translate: TranslateService,
     private activateRoute: ActivatedRoute,
     private apiService: ApiService
   ) {
-    this.subscription = activateRoute.params.subscribe(params => this.symbol = params.id);
-  }
-
-  static toMap(object) {
-    const mappedObj = new Map();
-    try {
-      // if there is an array of objects
-      for (const element of object) {
-        for (const [key, value] of Object.entries(element)) {
-          mappedObj.set(key, value);
-        }
-      }
-    } catch (e) {
-      // if object is not iterable
-      for (const [key, value] of Object.entries(object)) {
-        mappedObj.set(key, value);
-      }
-    }
-
-    return mappedObj;
+    super();
+    this.routeSubscribe = activateRoute.params.subscribe(params => this.symbol = params.id);
   }
 
   static chartMaxValue(object) {
@@ -59,23 +43,20 @@ export class GeneComponent implements OnInit, OnDestroy {
     return Math.max(...objArray);
   }
 
-  ngOnInit() {
-    this.getGene();
-  }
-
-  private getGene() {
-    this.apiService.getGeneByHGNCsymbol(this.symbol).subscribe((geneInterface) => {
+  ngOnInit(): void {
+    this.apiService.getGeneByHGNCsymbol(this.symbol).pipe(
+      takeUntil(this.ngUnsubscribe)
+    ).subscribe((geneInterface) => {
       this.gene = geneInterface;
-      this.geneOntologyProcessMap = GeneComponent.toMap(this.gene.terms.biological_process);
-      this.geneOntologyComponentMap = GeneComponent.toMap(this.gene.terms.cellular_component);
-      this.geneOntologyActivityMap = GeneComponent.toMap(this.gene.terms.molecular_activity);
+      this.geneOntologyProcessMap = this.toMap(this.gene.terms.biological_process);
+      this.geneOntologyComponentMap = this.toMap(this.gene.terms.cellular_component);
+      this.geneOntologyActivityMap = this.toMap(this.gene.terms.molecular_activity);
       this.expressionMaxValue = GeneComponent.chartMaxValue(this.gene.expression);
-      this.commentsReferenceLinksMap = GeneComponent.toMap(this.gene.commentsReferenceLinks);
+      this.commentsReferenceLinksMap = this.toMap(this.gene.commentsReferenceLinks);
     });
   }
 
   // Traits to define if content exists
-
   public isContent() {
     return !!(this.gene.commentEvolution ||
       this.gene.commentFunction ||
@@ -112,6 +93,8 @@ export class GeneComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+    this.routeSubscribe.unsubscribe();
   }
 }
