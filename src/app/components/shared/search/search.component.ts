@@ -13,6 +13,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   @Inject (Document) public document: Document;
   @Input() dataSource: Genes[];
   @Output() dataSourceChange: EventEmitter<Genes[]> = new EventEmitter<Genes[]>();
+  @Input() isGoTermsMode: boolean;
   searchedData: Genes[];
   searchForm: FormGroup;
   public showResult: boolean;

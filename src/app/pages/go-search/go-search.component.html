@@ -1,26 +1,48 @@
 <div class="page">
   <div class="page__inner __pb-60">
-    <div class="main-page__header wrapper">
+    <div class="wrapper main-page__header">
       <div class="container-fluid">
         <div class="row">
           <div class="col col-12">
             <div class="page__title">
-              <h1>Поиск генов по аннотациям Gene Ontology</h1>
+              <h1 class="notranslate">{{ 'product_name' | translate }}</h1>
+            </div>
+            <div class="header__description">
+              {{ 'main_page_header_description' | translate }}
+            </div>
+            <div class="header__button">
+              <a mat-flat-button
+                 color="secondary"
+                 routerLink="/about"
+              >{{ 'main_page_header_button' | translate }}</a>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
-        <section class="col col-12 content">
+        <div class="col-lg-12 col-xl-2 __mb-btm">
+          <div class="sidebar">
+            <div class="sidebar__inner">
+              <div class="sidebar__item sidebar__item--magic">
+                <div class="sidebar__title">
+                  Ищите гены по аннотациям Gene Ontology
+                </div>
+
+                <p>Теперь вы можете искать гены по GO-terms в категориях «Биологический процесс», «Молекулярная функция» и «Клеточный компартмент»</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 col-xl-10">
           <app-genes-list
             *ngIf="genes"
             [dataSource]="genes"
             [isGoTermsMode]="true"
           ></app-genes-list>
-        </section>
+        </div>
       </div>
     </div>
   </div>

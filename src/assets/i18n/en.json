@@ -114,7 +114,7 @@
   "участие_гена_в_связанных_со_старением_процессах_механизмах": "Gene involvement in aging-related processes or mechanisms",
   "ген_регулирует_связанные_со_старением_гены": "Gene regulates aging-related genes",
   "использование_продукта_гена_в_часах_старения": "Gene product involvement in Aging Clock",
-  "search": "Search",
+  "search": "Start typing HGNC or name",
   "items_found": "Items found",
   "nothing_found": "Nothing found",
   "show_more": "Show more",
@@ -138,5 +138,7 @@
   "gene_list_menu_this_gene_on": "This gene on...",
   "favourites_add": "Add to Favourites",
   "favourites_remove": "Remove from Favourites",
-  "favourites_clear": "Clear"
+  "favourites_clear": "Clear",
+  "search-for-functions": "by classes",
+  "search-for-go-terms": "by GO-terms"
 }

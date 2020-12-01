@@ -14,15 +14,39 @@
       <span class="fa fal fa-arrow-left"></span>
     </button>
 
-    <div class="search-form__field-wrapper">
+    <div class="search-form__wrapper">
+      <button
+        class="fa fal fa-search search-form__submit"
+        type="submit"
+        (click)="search()"
+      ></button>
+
       <input formControlName="searchField"
              type="text"
              placeholder="{{ 'search' | translate }}"
-             class="field search-form__search"
+             class="field search-form__field"
              required
              #searchQuery
              (focusin)="search()"
       >
+      <button
+        [matMenuTriggerFor]="searchMenu"
+        class="search-form__switch"
+      >{{ (isGoTermsMode ? 'search-for-go-terms' : 'search-for-functions') | translate }} <span class="fa far fa-sort-down"></span>
+      </button>
+
+      <mat-menu #searchMenu>
+        <button mat-menu-item
+                routerLink="/"
+                [disabled]="!isGoTermsMode"
+        >{{ 'search-for-functions' | translate }}
+        </button>
+        <button mat-menu-item
+                routerLink="/go-search"
+                [disabled]="isGoTermsMode"
+        >{{ 'search-for-go-terms' | translate }}
+        </button>
+      </mat-menu>
     </div>
 
     <div class="search-form__autocomplete-list"

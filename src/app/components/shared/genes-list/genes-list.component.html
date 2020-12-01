@@ -1,4 +1,8 @@
-<app-search [dataSource]="dataSource" (dataSourceChange)="updateSearchedData($event)"></app-search>
+<app-search
+  [dataSource]="dataSource"
+  (dataSourceChange)="updateSearchedData($event)"
+  [isGoTermsMode]="isGoTermsMode"
+></app-search>
 <ng-container *ngIf="searchedData?.length !== 0 && !isLoading">
 
   <!-- Filters -->

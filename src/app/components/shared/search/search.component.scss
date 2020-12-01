@@ -1,5 +1,7 @@
 @import "../../styles";
 
+$search-input-height: 40px;
+
 :host {
   display: block;
   width: 100%;
@@ -10,9 +12,13 @@
 }
 
 .cancel-search-button {
-  display: none;
+  flex: 0 0 $search-input-height;
+  min-width: $search-input-height;
   align-self: flex-start;
-  margin: 8px 10px 0 0;
+  height: $search-input-height;
+  align-items: center;
+  justify-content: center;
+  display: none;
 }
 
 .search-form {
@@ -27,22 +33,106 @@
     width: 100%;
   }
 
-  &__field-wrapper {
-    display: block;
-    width: 100%
+  &__wrapper {
+    position: relative;
+    display: flex;
+    width: 100%;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
   }
 
-  &__search { // input
-    font-size: 16px;
-    display: block;
-    width: 100%;
-    line-height: 40px;
-    height: 40px;
-    padding: 0 10px;
+  $input-border-radius: 5px;
+
+  // Field
+  &__field {
+    display: flex;
+    flex: 1 1 auto;
+    max-width: 100%;
+    height: $search-input-height;
+    line-height: $search-input-height;
+    padding: 0 10px 0 $search-input-height;
     resize: none;
+    font-size: $font-size-big;
     font-weight: $font-weight-medium;
     color: $color-black;
-    background-color: #fff;
+    background-color: $color-white;
+    border-radius: #{$input-border-radius} 0 0 #{$input-border-radius};
+    border: 1px solid $color-borders;
+    border-right: 0;
+    appearance: none;
+    transition: border .15s linear;
+
+    &::-ms-clear {
+      display: none !important; // скрываем иконку очистки поля на IE/Edge
+    }
+
+    $prefixed-selectors: (
+      '::placeholder',
+      '::-webkit-input-placeholder',
+      '::-moz-placeholder',
+      ':-moz-placeholder',
+      ':-ms-input-placeholder'
+    );
+
+    @mixin placeholder-color() {
+      @each $prefixed-selector in $prefixed-selectors {
+        &#{$prefixed-selector} {
+          @content;
+        }
+      }
+    }
+
+    @include placeholder-color {
+      color: $color-gray-halfing;
+    }
+
+    &:focus {
+      border-color: $color-borders-active;
+      @include placeholder-color {
+        color: transparent;
+      }
+    }
+  }
+
+  &__submit {
+    width: $search-input-height;
+    height: $search-input-height;
+    font-size: $search-input-height / 2;
+    color: $color-gray-semi;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    left: 0;
+  }
+
+  &__switch {
+    position: relative;
+    display: flex;
+    flex: 1 0 100px;
+    min-width: 100px;
+    align-items: center;
+    justify-content: center;
+    max-width: 100px;
+    width: $search-input-height * 1.5;
+    height: $search-input-height;
+    background: linear-gradient($color-general, $color-base);
+    font-size: $font-size-small;
+    color: $color-white;
+    padding: 0 10px;
+    text-align: center;
+    @include text-overflow;
+    border-radius: 0 #{$input-border-radius} #{$input-border-radius} 0;
+
+    .fa {
+      display: inline-block;
+      height: 16px;
+      line-height: 1;
+      font-size: 16px;
+      margin-left: .5em;
+      position: relative;
+      top: -3px
+    }
   }
 
   &__autocomplete-list {
@@ -105,24 +195,23 @@
 
   // TODO: сделать без переопределений
   @include resolution_smartphone-and-tablet {
-  &--active {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 60px;
-    margin: 0;
-    background-color: #fff;
-    z-index: 1001;
-    box-shadow: 0 5px 5px 0 rgba($color-black, .15);
+    &--active {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 60px;
+      margin: 0;
+      background-color: #fff;
+      z-index: z('search');
+      box-shadow: 0 5px 5px 0 rgba($color-black, .15);
 
-    .search-form__panel {
-
+      .search-form__panel {
         padding: 10px;
         z-index: 1;
 
         .cancel-search-button {
-          display: inline-flex;
+          display: flex;
         }
 
         .search-form__autocomplete-list {
