@@ -8,16 +8,17 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import {Subject} from 'rxjs';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {Subject, Observable} from 'rxjs';
+import {PageClass} from '../../../pages/page.class';
+import {takeUntil} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
+import {ApiService} from '../../../core/services/api/open-genes.api.service';
 import {Genes} from '../../../core/models';
 import {FavouritesService} from 'src/app/core/services/favourites.service';
 import {FilterService} from './services/filter.service';
-import {takeUntil} from 'rxjs/operators';
+import {WindowService} from 'src/app/core/services/browser/window.service';
 import {FilterTypesEnum} from './services/filter-types.enum';
-import {TranslateService} from '@ngx-translate/core';
-import {ApiService} from '../../../core/services/api.service';
-import {PageClass} from '../../../pages/page.class';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-genes-list',
@@ -25,23 +26,23 @@ import {PageClass} from '../../../pages/page.class';
   styleUrls: ['./genes-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   @Input() dataSource: Genes[];
   @Input() isFilterPanel = true;
   @Input() isGoTermsMode = false;
   @Output() updateGenesList = new EventEmitter();
 
-  private ngUnsubscribe = new Subject();
+  public searchedData: Genes[];
+  public genesPerPage = 20;
+  public loadedGenesQuantity = this.genesPerPage;
+  public isLoading = true;
+  public asTableRow = true;
   public filters = this.filterService.filters;
   public filterTypes = FilterTypesEnum;
   public isClearFiltersBtnShown = false;
-
-  searchedData: Genes[];
-  genesPerPage = 20;
-  loadedGenesQuantity = this.genesPerPage;
-  isLoading = true;
-  asTableRow = true;
+  private resMobile = 959.98;
+  public isMobile: boolean;
+  private ngUnsubscribe = new Subject();
 
   constructor(
     private readonly apiService: ApiService,
@@ -49,7 +50,8 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     private filterService: FilterService,
     private snackBar: MatSnackBar,
     private favouritesService: FavouritesService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
+    private windowService: WindowService,
   ) {
     super();
     this.favouritesService.getItems();
@@ -58,6 +60,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   ngOnInit() {
     this.areMoreThan2FiltersApplied();
     this.getSearchData();
+    this.detectWindowWidth();
   }
 
   ngOnDestroy(): void {
@@ -105,9 +108,8 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   /**
-   * Update and load
+   * Update and load data
    */
-
   updateSearchedData(event: Genes[]) {
     this.searchedData = event;
   }
@@ -123,6 +125,16 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   toggleGenesView() {
     return this.asTableRow = !this.asTableRow;
+  }
+
+  private detectWindowWidth(): void {
+    this.windowService.windowWidth$.pipe(
+      takeUntil(this.ngUnsubscribe)
+    ).subscribe((width) => {
+      this.isMobile = width <= this.resMobile;
+      console.log(this.isMobile, ' but should be true');
+      this.cdRef.markForCheck();
+    });
   }
 
   /**

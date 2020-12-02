@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, OnDestroy
 import {Genes} from 'src/app/core/models/genes.model';
 import {FavouritesService} from 'src/app/core/services/favourites.service';
 import {TranslateService} from '@ngx-translate/core';
-import {ApiService} from '../../core/services/api.service';
+import {ApiService} from '../../core/services/api/open-genes.api.service';
 import {Subscription} from 'rxjs';
 
 @Component({

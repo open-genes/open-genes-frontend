@@ -1,5 +1,5 @@
 import {Component, Input, Output, OnInit, OnChanges, OnDestroy} from '@angular/core';
-import {PubmedApiService} from '../../../core/services/pubmed.api.service';
+import {PubmedApiService} from '../../../core/services/api/pubmed.api.service';
 import {News} from '../../../core/models/news.model';
 import {Genes} from '../../../core/models';
 import {finalize, switchMap, takeUntil} from 'rxjs/operators';

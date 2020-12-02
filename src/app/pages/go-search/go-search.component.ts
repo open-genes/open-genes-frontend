@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {ApiService} from '../../core/services/api.service';
+import {ApiService} from '../../core/services/api/open-genes.api.service';
 import {Genes} from '../../core/models';
 
 @Component({

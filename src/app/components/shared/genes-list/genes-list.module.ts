@@ -14,6 +14,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {LoaderPlaceholderModule} from '../loader-placeholder/loader-placeholder.module';
 import {FavouritesService} from '../../../core/services/favourites.service';
 import {MatCardModule} from '@angular/material/card';
+import {WindowService} from '../../../core/services/browser/window.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {MatCardModule} from '@angular/material/card';
     MatCardModule
   ],
   providers: [
-    FavouritesService
+    FavouritesService,
+    WindowService,
   ],
   exports: [
     GenesListComponent,

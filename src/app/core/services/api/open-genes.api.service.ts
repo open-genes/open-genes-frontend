@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Gene, Genes} from '../models';
-import {environment} from '../../../environments/environment';
+import {Gene, Genes} from '../../models';
+import {environment} from '../../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
