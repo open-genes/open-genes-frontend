@@ -79,7 +79,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   public filterByFuncClusters(id: number) {
-    console.log('updateGenesByFuncClusters called');
     this.filterService.filterByFuncClusters(id);
     this.filterService.getByFuncClusters().subscribe((list) => {
       if (list.length !== 0) {
@@ -96,7 +95,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   public filterByExpressionChange(id: number) {
-    console.log('updateGenesByExpressionChange called');
     this.filterService.filterByExpressionChange(id);
     this.filterService.getByExpressionChange().subscribe((expression) => {
       if (expression) {

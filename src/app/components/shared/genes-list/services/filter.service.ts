@@ -26,7 +26,6 @@ export class FilterService {
   public filterByFuncClusters(id: number): Observable<number[]> {
     if (!this.filters.byClasses.includes(id)) {
       this.filters.byClasses.push(id);
-      console.log(this.filters.byClasses);
     } else {
       this.filters.byClasses = this.filters.byClasses.filter(item => item !== id);
     }
@@ -37,7 +36,6 @@ export class FilterService {
   public filterByExpressionChange(expression: number): Observable<number> {
     if (this.filters.byExpressionChange !== expression) {
       this.filters.byExpressionChange = expression;
-      console.log(expression);
     } else {
       this.filters.byExpressionChange = 0;
     }
@@ -47,7 +45,6 @@ export class FilterService {
 
   // Get
   public getByFuncClusters(): Observable<number[]> {
-    console.log('byClasses: ', this.filters.byClasses);
     return of(this.filters.byClasses);
   }
 
@@ -76,7 +73,6 @@ export class FilterService {
   }
 
   public whatFiltersApplied(): Observable<any> {
-    console.log('Applied: ', this.filters);
     return of(this.filters);
   }
 
