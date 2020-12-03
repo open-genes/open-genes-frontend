@@ -234,7 +234,12 @@
     </ng-template>
 
     <td class="cell cell__actions">
-      <!-- menu -->
+      <app-gene-menu
+        [gene]="item"
+        [isFaved]="isAddedToFavorites"
+        (unFav)="unFavOnEvent($event)"
+        (fav)="favOnEvent($event)"
+      ></app-gene-menu>
     </td>
   </tr>
 </ng-template>
@@ -247,6 +252,15 @@
           <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
             <b>{{item.symbol}}</b> {{item.name}}
           </a>
+        </div>
+
+        <div class="card__actions">
+          <app-gene-menu
+            [gene]="item"
+            [isFaved]="isAddedToFavorites"
+            (unFav)="unFavOnEvent($event)"
+            (fav)="favOnEvent($event)"
+          ></app-gene-menu>
         </div>
       </div>
 
@@ -265,7 +279,7 @@
       </div>
     </div>
 
-    <div class="card__actions">
+    <div class="card__controls">
       <ng-container *ngIf="!isGoTermsMode; else GoModeCardActions">
         <div *ngIf="item.functionalClusters"
              class="card__section">

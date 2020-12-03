@@ -1,0 +1,60 @@
+<button
+  mat-icon-button
+  class="td-actions__menu"
+  [matMenuTriggerFor]="geneListItemMenu"
+  aria-label="Меню гена в списке"
+>
+  <mat-icon>
+    <span class="fa far fa-ellipsis-v"></span>
+  </mat-icon>
+</button>
+
+<mat-menu #geneListItemMenu="matMenu">
+  <button mat-menu-item [matMenuTriggerFor]="geneListItemSubMenu"
+  >{{ 'gene_list_menu_this_gene_on' | translate }}</button>
+  <button mat-menu-item
+          *ngIf="this.isAddToFavoritesShown"
+          (click)="unFavItem(gene['id'])"
+  >{{ 'favourites_remove' | translate }}</button>
+  <button mat-menu-item
+          *ngIf="!this.isAddToFavoritesShown"
+          (click)="favItem(gene['id'])"
+  >{{ 'favourites_add' | translate }}</button>
+</mat-menu>
+
+<mat-menu #geneListItemSubMenu="matMenu">
+  <a mat-menu-item
+     href="http://disgenet.org/browser/1/1/0/{{gene['ncbiId']}}/"
+     target="_blank">
+    <span class="legend __brand-color-disgenet"></span>
+    DisGenet
+  </a>
+  <a mat-menu-item
+     href="https://thebiogrid.org/search.php?search={{gene['symbol']}}&organism=9606/"
+     target="_blank">
+    <span class="legend __brand-color-biogrid"></span>
+    BioGrid
+  </a>
+  <a mat-menu-item
+     href="https://genomics.senescence.info/genes/entry.php?hgnc={{gene['symbol']}}">
+    <span class="legend __brand-color-geneage"></span>
+    GeneAge
+  </a>
+  <a mat-menu-item
+     href="https://www.ncbi.nlm.nih.gov/gene/{{gene['symbol']}}">
+    <span class="legend __brand-color-entrez"></span>
+    EntrezGene
+  </a>
+  <a mat-menu-item
+     href="https://www.uniprot.org/uniprot/{{gene['symbol']}}_HUMAN">
+    <span class="legend __brand-color-uniprot"></span>
+    UniProt
+  </a>
+</mat-menu>
+
+
+
+
+
+
+

@@ -15,11 +15,13 @@ import {LoaderPlaceholderModule} from '../loader-placeholder/loader-placeholder.
 import {FavouritesService} from '../../../core/services/favourites.service';
 import {MatCardModule} from '@angular/material/card';
 import {WindowService} from '../../../core/services/browser/window.service';
+import {GeneMenuComponent} from './components/gene-menu.component';
 
 @NgModule({
   declarations: [
     GenesListComponent,
-    SearchComponent
+    SearchComponent,
+    GeneMenuComponent,
   ],
   imports: [
     CommonModule,

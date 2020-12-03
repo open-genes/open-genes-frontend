@@ -8,7 +8,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import {Subject, Observable} from 'rxjs';
+import {Subject, Observable, BehaviorSubject} from 'rxjs';
 import {PageClass} from '../../../pages/page.class';
 import {takeUntil} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
@@ -32,6 +32,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   @Input() isGoTermsMode = false;
   @Output() updateGenesList = new EventEmitter();
 
+  public isAddedToFavorites = new BehaviorSubject<boolean>(false);
   public searchedData: Genes[];
   public genesPerPage = 20;
   public loadedGenesQuantity = this.genesPerPage;
@@ -132,7 +133,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
       takeUntil(this.ngUnsubscribe)
     ).subscribe((width) => {
       this.isMobile = width <= this.resMobile;
-      console.log(this.isMobile, ' but should be true');
       this.cdRef.markForCheck();
     });
   }
@@ -140,24 +140,35 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   /**
    * Favorites
    */
-  public favItem(geneId: number) {
+  public favItem(geneId: number): void {
     this.favouritesService.addToFavourites(geneId);
     this.snackBar.open('Добавлено в Избранное!', '', {
       duration: 600
     });
     this.isFaved(geneId);
+    this.cdRef.markForCheck();
   }
 
-  public unFavItem(geneId: number) {
+  public unFavItem(geneId: number): void {
     this.favouritesService.removeFromFavourites(geneId);
     this.snackBar.open('Убрано из Избранного!', '', {
       duration: 600
     });
     this.isFaved(geneId);
+    this.cdRef.markForCheck();
   }
 
-  public isFaved(geneId: number) {
-    return this.favouritesService.isInFavourites(geneId);
+  favOnEvent(event: number): void {
+    this.favItem(event);
+  }
+
+  unFavOnEvent(event: number): void {
+    this.unFavItem(event);
+  }
+
+  public isFaved(geneId: number): void {
+    const state = this.favouritesService.isInFavourites(geneId);
+    this.isAddedToFavorites.next(state);
   }
 
   /**

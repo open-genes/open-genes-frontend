@@ -67,7 +67,7 @@
 
   @include resolution_all-but-widescreen {
     flex: 0 0 100%;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
   }
 
   @include resolution_tablet-and-desktop {

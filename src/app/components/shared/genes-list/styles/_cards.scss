@@ -9,7 +9,7 @@
     font-size: $font-size;
 
     &__content,
-    &__actions,
+    &__controls,
     &__section {
       display: inline-block;
       width: 100%;
@@ -35,6 +35,13 @@
           text-decoration: none;
         }
       }
+
+      .card__actions {
+        position: absolute;
+        top: 3px;
+        right: 0;
+        z-index: 1;
+      }
     }
 
     &__age-mya {
@@ -45,7 +52,7 @@
       font-size: $font-size-big;
     }
 
-    &__actions {
+    &__controls {
       justify-self: flex-end;
       margin-top: 20px;
       border-top: 1px solid $color-borders;
