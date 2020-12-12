@@ -15,42 +15,47 @@
     </button>
 
     <div class="search-form__wrapper">
-      <button
+      <span
+        *ngIf="!isGoSearchMode"
         class="fa fal fa-search search-form__submit"
+      ></span>
+      <button
+        *ngIf="isGoSearchMode"
+        class="fa fal fa-search search-form__submit search-form__submit--active"
         type="submit"
-        (click)="search()"
+        (click)="triggerGoSearch()"
       ></button>
 
+      <button
+        [matMenuTriggerFor]="searchMenu"
+        class="search-form__switch"
+      >{{ (isGoSearchMode ? 'search-for-go-terms' : 'search-for-functions') | translate }} <span class="fa far fa-sort-down"></span>
+      </button>
       <input formControlName="searchField"
              type="text"
-             placeholder="{{ 'search' | translate }}"
+             placeholder="{{ (isGoSearchMode ? 'search_field_tap_search' : 'search_field_start_typing') | translate }}"
              class="field search-form__field"
              required
              #searchQuery
              (focusin)="search()"
       >
-      <button
-        [matMenuTriggerFor]="searchMenu"
-        class="search-form__switch"
-      >{{ (isGoTermsMode ? 'search-for-go-terms' : 'search-for-functions') | translate }} <span class="fa far fa-sort-down"></span>
-      </button>
 
       <mat-menu #searchMenu>
         <button mat-menu-item
-                routerLink="/"
-                [disabled]="!isGoTermsMode"
+                (click)="setGoSearchMode(false)"
+                [disabled]="!isGoSearchMode"
         >{{ 'search-for-functions' | translate }}
         </button>
         <button mat-menu-item
-                routerLink="/go-search"
-                [disabled]="isGoTermsMode"
+                (click)="setGoSearchMode(true)"
+                [disabled]="isGoSearchMode"
         >{{ 'search-for-go-terms' | translate }}
         </button>
       </mat-menu>
     </div>
 
     <div class="search-form__autocomplete-list"
-         *ngIf="showResult">
+         *ngIf="showResult && !isGoSearchMode">
       <ng-container *ngFor="let data of searchedData; let i = index">
         <button
           *ngIf="i < 3"
@@ -74,8 +79,4 @@
   </div>
 </form>
 
-<div class="page__subtitle __mt-10"
-     *ngIf="searchForm.valid">
-  {{ 'items_found' | translate }} {{searchedData?.length}}
-</div>
 

@@ -49,18 +49,18 @@ $search-input-height: 40px;
     display: flex;
     flex: 1 1 auto;
     max-width: 100%;
+    appearance: none;
     height: $search-input-height;
     line-height: $search-input-height;
-    padding: 0 10px 0 $search-input-height;
+    padding: 0 $search-input-height 0 10px;
     resize: none;
     font-size: $font-size-big;
     font-weight: $font-weight-medium;
     color: $color-black;
     background-color: $color-white;
-    border-radius: #{$input-border-radius} 0 0 #{$input-border-radius};
+    border-radius: 0 #{$input-border-radius} #{$input-border-radius} 0;
     border: 1px solid $color-borders;
-    border-right: 0;
-    appearance: none;
+    border-left: 0;
     transition: border .15s linear;
 
     &::-ms-clear {
@@ -95,15 +95,23 @@ $search-input-height: 40px;
     }
   }
 
-  &__submit {
+  &__submit { // any element, not clickable
+    display: block;
     width: $search-input-height;
     height: $search-input-height;
+    line-height: $search-input-height;
     font-size: $search-input-height / 2;
     color: $color-gray-semi;
+    text-align: center;
     position: absolute;
     top: 0;
     z-index: 1;
-    left: 0;
+    right: 0;
+
+    &--active { // button
+      color: $color-general;
+      line-height: normal;
+    }
   }
 
   &__switch {
@@ -122,7 +130,7 @@ $search-input-height: 40px;
     padding: 0 10px;
     text-align: center;
     @include text-overflow;
-    border-radius: 0 #{$input-border-radius} #{$input-border-radius} 0;
+    border-radius: #{$input-border-radius} 0 0 #{$input-border-radius};
 
     .fa {
       display: inline-block;

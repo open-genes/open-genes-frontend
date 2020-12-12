@@ -9,9 +9,8 @@ import {Genes} from '../../core/models';
   styleUrls: ['./go-search.component.scss']
 })
 export class GoSearchComponent implements OnInit {
-  genes: Genes[];
-  queryString = 'cyto'; // to lowercase only
-  error: any;
+  public genes: Genes[];
+  public isLoaded = false;
 
   constructor(
     public translate: TranslateService,
@@ -20,12 +19,5 @@ export class GoSearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.performSearch(this.queryString);
-  }
-
-  private performSearch(request: string) {
-    this.apiService.getGoTermMatchByString(request).subscribe((genes) => {
-      this.genes = genes; // If nothing found, will return empty array
-      }, error => this.error = error);
   }
 }

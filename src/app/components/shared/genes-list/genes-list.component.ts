@@ -29,9 +29,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   @Input() dataSource: Genes[];
   @Input() isFilterPanel = true;
-  @Input() isGoTermsMode = false;
+  @Input() isGoSearchPerformed: boolean;
   @Output() updateGenesList = new EventEmitter();
+  @Output() passQuery: EventEmitter<string> = new EventEmitter<string>();
 
+  public isGoTermsMode = false;
   public isAddedToFavorites = new BehaviorSubject<boolean>(false);
   public searchedData: Genes[];
   public genesPerPage = 20;
@@ -41,8 +43,11 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public filters = this.filterService.filters;
   public filterTypes = FilterTypesEnum;
   public isClearFiltersBtnShown = false;
-  private resMobile = 959.98;
+  public biologicalProcess: Map<any, any>;
+  public cellularComponent: Map<any, any>;
+  public molecularActivity: Map<any, any>;
   public isMobile: boolean;
+  private resMobile = 959.98;
   private ngUnsubscribe = new Subject();
 
   constructor(
@@ -60,7 +65,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.areMoreThan2FiltersApplied();
-    this.getSearchData();
+    this.showPassedData();
     this.detectWindowWidth();
   }
 
@@ -72,29 +77,31 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   /**
    * HTTP
    */
-  getSearchData() {
+  showPassedData() {
     this.searchedData = this.dataSource;
+    // Map data if it's presented:
+    this.biologicalProcess = this.toMap(this.searchedData['terms']?.biological_process);
+    this.cellularComponent = this.toMap(this.searchedData['terms']?.cellular_component);
+    this.molecularActivity = this.toMap(this.searchedData['terms']?.molecular_activity);
+    console.log(this.biologicalProcess, this.cellularComponent, this.molecularActivity);
+
     this.isLoading = false;
     this.cdRef.markForCheck();
   }
 
-  public filterByFuncClusters(id: number) {
+  public filterByFuncClusters(id: number): void {
     this.filterService.filterByFuncClusters(id);
     this.filterService.getByFuncClusters().subscribe((list) => {
       if (list.length !== 0) {
         this.apiService.getGenesByFunctionalClusters(list).subscribe((genes) => {
           this.searchedData = genes;
-
-          // Map data if it's presented:
-          // TODO: Map data with toMap method
-
           this.cdRef.markForCheck();
         }, error => this.errorLogger(this, error));
       }
     }, error => this.errorLogger(this, error));
   }
 
-  public filterByExpressionChange(id: number) {
+  public filterByExpressionChange(id: number): void {
     this.filterService.filterByExpressionChange(id);
     this.filterService.getByExpressionChange().subscribe((expression) => {
       if (expression) {
@@ -109,13 +116,36 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   /**
    * Update and load data
    */
-  updateSearchedData(event: Genes[]) {
-    this.searchedData = event;
+  updateGeneListOnTyping(event: Genes[]) {
+    if (!this.isGoTermsMode) {
+      this.searchedData = event;
+    }
   }
 
   loadMoreGenes() {
     if (this.searchedData.length >= this.loadedGenesQuantity) {
       this.loadedGenesQuantity += this.genesPerPage;
+    }
+  }
+
+  /**
+   * Search genes by GO term string match
+   */
+  public setGoSearchMode(event: boolean): void {
+    this.isGoTermsMode = event;
+  }
+
+  public searchGenesByGoTerm(query: string): void {
+    if (query) {
+      const request = query.toLowerCase();
+      this.apiService.getGoTermMatchByString(request).subscribe((genes) => {
+        this.searchedData = genes; // If nothing found, will return empty array
+        this.isGoSearchPerformed = true;
+        this.cdRef.markForCheck();
+      }, error => this.errorLogger(this, error));
+    } else {
+      this.isGoSearchPerformed = false;
+      this.cdRef.markForCheck();
     }
   }
 
@@ -237,6 +267,13 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
         this.cdRef.markForCheck();
       }
     );
+  }
+
+  /**
+   * Components interaction
+   */
+  passQueryUpper($event: string): void {
+    this.passQuery.emit($event);
   }
 
   /**
