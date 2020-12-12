@@ -229,22 +229,25 @@
       <td
         colspan="2"
         class="cell cell__clusters">
-        <div *ngIf="biologicalProcess"
+        <div *ngIf="item.terms"
              class="cell__limiter">
           <a *ngFor="let term of biologicalProcess | keyvalue"
-             href="#"
-             class="tag">
-            Gene Term
+             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+             class="tag"
+             matTooltip="{{ term.value }}">
+            {{ term.key | zero }}
           </a>
           <a *ngFor="let term of cellularComponent | keyvalue"
-             href="#"
-             class="tag">
-            Gene Term
+             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+             class="tag"
+             matTooltip="{{ term.value }}">
+            {{ term.key | zero }}
           </a>
           <a *ngFor="let term of molecularActivity | keyvalue"
-             href="#"
-             class="tag">
-            Gene Term
+             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+             class="tag"
+             matTooltip="{{ term.value }}">
+            {{ term.key | zero }}
           </a>
         </div>
       </td>
@@ -329,20 +332,23 @@
       </ng-container>
       <ng-template #GoModeCardActions>
         <div class="card__section" *ngIf="item.terms">
-          <a *ngFor="let term of item.terms.biological_process | keyvalue"
-             href="#"
-             class="tag">
-            Gene Term
+          <a *ngFor="let term of biologicalProcess | keyvalue"
+             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+             class="tag"
+             matTooltip="{{ term.value }}">
+            {{ term.key | zero }}
           </a>
-          <a *ngFor="let term of item.terms.cellular_component | keyvalue"
-             href="#"
-             class="tag">
-            Gene Term
+          <a *ngFor="let term of cellularComponent | keyvalue"
+             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+             class="tag"
+             matTooltip="{{ term.value }}">
+            {{ term.key | zero }}
           </a>
-          <a *ngFor="let term of item.terms.molecular_activity | keyvalue"
-             href="#"
-             class="tag">
-            Gene Term
+          <a *ngFor="let term of molecularActivity | keyvalue"
+             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+             class="tag"
+             matTooltip="{{ term.value }}">
+            {{ term.key | zero }}
           </a>
         </div>
       </ng-template>

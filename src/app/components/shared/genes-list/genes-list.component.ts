@@ -152,16 +152,15 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
         this.isGoSearchPerformed = true;
 
         // Map data if it's presented:
-        this.biologicalProcess = this.toMap(this.searchedData['terms']?.biological_process);
-        this.cellularComponent = this.toMap(this.searchedData['terms']?.cellular_component);
-        this.molecularActivity = this.toMap(this.searchedData['terms']?.molecular_activity);
-        console.log(this.biologicalProcess, this.cellularComponent, this.molecularActivity);
+        for (const item of this.searchedData) {
+          this.biologicalProcess = this.toMap(item['terms']?.biological_process);
+          this.cellularComponent = this.toMap(item['terms']?.cellular_component);
+          this.molecularActivity = this.toMap(item['terms']?.molecular_activity);
+          console.log(item);
+        }
 
         const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
-
-        if (isAnyTermFound) {
-          this.isGoTermsModeError = true;
-        }
+        this.isGoTermsModeError = !isAnyTermFound;
 
         this.snackBar.open(`${this.searchResultsFound.nativeElement.textContent} ${this.searchedData.length}`, '', {
           duration: 600

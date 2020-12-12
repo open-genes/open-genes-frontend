@@ -22,10 +22,12 @@
 
       <button
         *ngIf="isGoSearchMode"
-        class="fa fal fa-search search-form__submit search-form__submit--active"
+        mat-icon-button
+        class="search-form__submit search-form__submit--active"
         type="submit"
         (click)="triggerGoSearch()"
-      ></button>
+      ><span class="fa fal fa-search"></span>
+      </button>
 
       <button
         [matMenuTriggerFor]="searchMenu"
@@ -34,6 +36,7 @@
         class="fa far fa-sort-down"></span>
       </button>
 
+      <!-- TODO: Use matNativeControl -->
       <input
         formControlName="searchField"
         type="text"
@@ -41,7 +44,9 @@
         class="field search-form__field"
         required
         #searchQuery
-        (focusin)="search()">
+        (focusin)="!isGoSearchMode? search() : triggerGoSearch()"
+        (keydown.enter)="!isGoSearchMode? search(): triggerGoSearch()"
+      >
 
       <mat-menu #searchMenu>
         <button mat-menu-item
