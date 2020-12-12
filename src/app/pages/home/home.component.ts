@@ -23,10 +23,9 @@ import {Subject} from 'rxjs';
 export class HomeComponent implements OnInit, OnDestroy {
   @Output() dataSourceUpdate: EventEmitter<Genes[]> = new EventEmitter<Genes[]>();
 
-  genes: Genes[];
-  lastGenes: Genes[];
-  error: number;
-
+  public genes: Genes[];
+  public lastGenes: Genes[];
+  public error: number;
   private ngUnsubscribe = new Subject();
 
   constructor(
@@ -46,7 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  public getGenes() {
+  public getGenes(): void {
     this.apiService.getGenes().subscribe((genes) => {
       this.genes = genes;
       this.cdRef.markForCheck();

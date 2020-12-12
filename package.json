@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.5.0",
   "scripts": {
-    "clear-sprites": "rm -r src/assets/images/icons/sprites",
+    "clear-sprites": "rm -r src/assets/images/icons/sprites/symbol",
     "spriteset-general": "svg-sprite --symbol --dest=src/assets/images/icons/sprites src/assets/images/icons/source/general/*.svg --symbol-sprite=general.sprite.svg",
     "spriteset-landing": "svg-sprite --symbol --dest=src/assets/images/icons/sprites src/assets/images/icons/source/landing/*.svg --symbol-sprite=landing.sprite.svg",
     "spritesheets": "npm run spriteset-general & npm run spriteset-landing",
@@ -33,10 +33,10 @@
     "angular-pipes": "^10.0.0",
     "bootstrap": "^4.4.1",
     "font-awesome": "^4.7.0",
+    "hammerjs": "^2.0.8",
     "rxjs": "^6.6.2",
     "tslib": "^1.10.0",
-    "zone.js": "~0.10.2",
-    "hammerjs": "^2.0.8"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.12",
@@ -56,9 +56,9 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "protractor": "~5.4.0",
+    "svg-sprite": "^1.5.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.8.3",
-    "svg-sprite": "^1.5.0"
+    "typescript": "~3.8.3"
   }
 }
