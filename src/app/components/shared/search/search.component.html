@@ -19,6 +19,7 @@
         *ngIf="!isGoSearchMode"
         class="fa fal fa-search search-form__submit"
       ></span>
+
       <button
         *ngIf="isGoSearchMode"
         class="fa fal fa-search search-form__submit search-form__submit--active"
@@ -29,27 +30,29 @@
       <button
         [matMenuTriggerFor]="searchMenu"
         class="search-form__switch"
-      >{{ (isGoSearchMode ? 'search-for-go-terms' : 'search-for-functions') | translate }} <span class="fa far fa-sort-down"></span>
+      >{{ (isGoSearchMode ? 'search_for_go_terms' : 'search_for_functions') | translate }} <span
+        class="fa far fa-sort-down"></span>
       </button>
-      <input formControlName="searchField"
-             type="text"
-             placeholder="{{ (isGoSearchMode ? 'search_field_tap_search' : 'search_field_start_typing') | translate }}"
-             class="field search-form__field"
-             required
-             #searchQuery
-             (focusin)="search()"
-      >
+
+      <input
+        formControlName="searchField"
+        type="text"
+        placeholder="{{ (isGoSearchMode ? 'search_field_tap_search' : 'search_field_start_typing') | translate }}"
+        class="field search-form__field"
+        required
+        #searchQuery
+        (focusin)="search()">
 
       <mat-menu #searchMenu>
         <button mat-menu-item
                 (click)="setGoSearchMode(false)"
                 [disabled]="!isGoSearchMode"
-        >{{ 'search-for-functions' | translate }}
+        >{{ 'search_for_functions' | translate }}
         </button>
         <button mat-menu-item
                 (click)="setGoSearchMode(true)"
                 [disabled]="isGoSearchMode"
-        >{{ 'search-for-go-terms' | translate }}
+        >{{ 'search_for_go_terms' | translate }}
         </button>
       </mat-menu>
     </div>

@@ -115,9 +115,10 @@
   "ген_регулирует_связанные_со_старением_гены": "Gene regulates aging-related genes",
   "использование_продукта_гена_в_часах_старения": "Gene product involvement in Aging Clock",
   "search_field_start_typing": "Start typing",
-  "search_field_tap_search": "Type and then tap 'Search'",
+  "search_field_tap_search": "Type and then tap \uD83D\uDD0D",
   "items_found": "Items found",
   "nothing_found": "Nothing found",
+  "go_results_start_typing": "Start typing — results will appear",
   "show_more": "Show more",
   "show_more_short": "More",
   "news_list_title": "Related articles on PubMed",
@@ -140,6 +141,8 @@
   "favourites_add": "Add to Favourites",
   "favourites_remove": "Remove from Favourites",
   "favourites_clear": "Clear",
-  "search-for-functions": "by classes",
-  "search-for-go-terms": "by GO-terms"
+  "search_for_functions": "by genes",
+  "search_for_go_terms": "by GO-terms",
+  "favourites_added": "Added to Favourites! ✨",
+  "favourites_removed": "Removed from Favourites \uD83D\uDCAB"
 }

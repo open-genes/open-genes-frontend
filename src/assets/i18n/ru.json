@@ -116,9 +116,10 @@
   "ген_регулирует_связанные_со_старением_гены": "Ген регулирует связанные со старением гены",
   "использование_продукта_гена_в_часах_старения": "Использование продукта гена в часах старения",
   "search_field_start_typing": "Начните вводить",
-  "search_field_tap_search": "Введите и нажмите «Поиск»",
+  "search_field_tap_search": "Введите и нажмите \uD83D\uDD0D",
   "items_found": "Найдено:",
   "nothing_found": "Ничего не найдено",
+  "go_results_start_typing": "Начните печатать — результаты отобразятся тут",
   "show_more": "Показать еще",
   "show_more_short": "Еще",
   "news_list_title": "Новые публикации на PubMed",
@@ -141,6 +142,8 @@
   "favourites_add": "Добавить в Избранное",
   "favourites_remove": "Убрать из Избранного",
   "favourites_clear": "Очистить",
-  "search-for-functions": "по генам",
-  "search-for-go-terms": "по GO-terms"
+  "search_for_functions": "по генам",
+  "search_for_go_terms": "по GO-terms",
+  "favourites_added": "Добавлено в Избранное! ✨",
+  "favourites_removed": "Убрано из Избранного! \uD83D\uDCAB"
 }

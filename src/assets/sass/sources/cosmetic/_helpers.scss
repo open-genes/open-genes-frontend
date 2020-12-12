@@ -22,6 +22,12 @@ $sizes: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60);
   .__mb-#{$size} {
     margin-bottom: #{$size}px !important;
   }
+  .__ml-#{$size} {
+    margin-left: #{$size}px !important;
+  }
+  .__mr-#{$size} {
+    margin-right: #{$size}px !important;
+  }
 }
 
 @each $size in $sizes {
@@ -33,6 +39,12 @@ $sizes: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60);
   }
   .__pb-#{$size} {
     padding-bottom: #{$size}px !important;
+  }
+  .__pl-#{$size} {
+    padding-left: #{$size}px !important;
+  }
+  .__pr-#{$size} {
+    padding-right: #{$size}px !important;
   }
 }
 

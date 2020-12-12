@@ -36,9 +36,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Сброс фильтров таблицы генов
+   * Resetting Gene list filters
    */
-  public clearFilters(filter?: FilterTypesEnum) {
+  public clearSearch(filter?: FilterTypesEnum) {
     this.filterService.clearFilters(filter);
   }
 

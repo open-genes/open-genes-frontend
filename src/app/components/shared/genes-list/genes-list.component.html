@@ -6,11 +6,7 @@
   (isGoSearchTriggered)="searchGenesByGoTerm($event)"
 ></app-search>
 
-<ng-container *ngIf="searchedData?.length !== 0 && !isLoading">
-  <div class="page__subtitle __mt-10 __mb-30">
-    {{ 'items_found' | translate }} {{ searchedData?.length }}
-  </div>
-
+<ng-container *ngIf="(isGoTermsMode && isGoSearchPerformed && !isGoTermsModeError) || (!isGoTermsMode && searchedData?.length !== 0 && !isLoading)">
   <!-- Filters -->
   <div *ngIf="isFilterPanel" class="view-panel">
     <div class="filters-group view-panel__filters">
@@ -74,9 +70,7 @@
     [ngClass]="asTableRow && !isMobile ? 'view-content--as-table' : 'view-content--as-cards'">
 
     <!-- Content views -->
-    <table
-      *ngIf="asTableRow && !isMobile"
-    >
+    <table *ngIf="asTableRow && !isMobile">
       <thead>
       <tr>
         <td>
@@ -156,7 +150,7 @@
 
 <!-- No content error message -->
 <section
-  *ngIf="searchedData?.length == 0"
+  *ngIf="(isGoTermsMode && isGoTermsModeError) || (!isGoTermsMode && searchedData?.length == 0)"
   class="no-content"
 >
   <div class="no-content__inner">
@@ -164,6 +158,21 @@
     <div class="no-content__title">
       <div class="title__center">
         {{ 'nothing_found' | translate }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GO search mode start message -->
+<section
+  *ngIf="isGoTermsMode && !isGoSearchPerformed"
+  class="no-content"
+>
+  <div class="no-content__inner">
+    <div class="no-content__icon no-content__icon-standard"></div>
+    <div class="no-content__title">
+      <div class="title__center">
+        {{ 'go_results_start_typing' | translate }}
       </div>
     </div>
   </div>
@@ -341,8 +350,22 @@
   </div>
 </ng-template>
 
-<ng-template #GoModeStartTyping>
-  Для поиска генов с аннотациями Gene Ontology, начните вводить имя или HGNC гена
-</ng-template>
+<!-- Snack Bar templates -->
+<!-- TODO: Find a way to pass TemplateRef to SnackBar component -->
+<div style="display: none">
+  <div #templateAddedToFavorites>
+    {{ 'favourites_added' | translate }}
+  </div>
+
+  <div #templateRemovedFromFavorites>
+    {{ 'favourites_added' | translate }}
+  </div>
+
+  <div #searchResultsFound>
+    {{ 'items_found' | translate }}
+  </div>
+</div>
+
+
 
 

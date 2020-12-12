@@ -2,11 +2,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
-  Output
+  Output,
+  ViewChild
 } from '@angular/core';
 import {Subject, Observable, BehaviorSubject} from 'rxjs';
 import {PageClass} from '../../../pages/page.class';
@@ -32,22 +34,30 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   @Input() isGoSearchPerformed: boolean;
   @Output() updateGenesList = new EventEmitter();
   @Output() passQuery: EventEmitter<string> = new EventEmitter<string>();
+  @ViewChild('templateAddedToFavorites') templateAddedToFavorites: ElementRef;
+  @ViewChild('templateRemovedFromFavorites') templateRemovedFromFavorites: ElementRef;
+  @ViewChild('searchResultsFound') searchResultsFound: ElementRef;
 
-  public isGoTermsMode = false;
-  public isAddedToFavorites = new BehaviorSubject<boolean>(false);
   public searchedData: Genes[];
   public genesPerPage = 20;
   public loadedGenesQuantity = this.genesPerPage;
+
   public isLoading = true;
   public asTableRow = true;
   public filters = this.filterService.filters;
   public filterTypes = FilterTypesEnum;
   public isClearFiltersBtnShown = false;
+  public isAddedToFavorites = new BehaviorSubject<boolean>(false);
+
+  public isGoTermsMode = false;
+  public isGoTermsModeError = false;
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
+
   public isMobile: boolean;
   private resMobile = 959.98;
+
   private ngUnsubscribe = new Subject();
 
   constructor(
@@ -79,12 +89,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   showPassedData() {
     this.searchedData = this.dataSource;
-    // Map data if it's presented:
-    this.biologicalProcess = this.toMap(this.searchedData['terms']?.biological_process);
-    this.cellularComponent = this.toMap(this.searchedData['terms']?.cellular_component);
-    this.molecularActivity = this.toMap(this.searchedData['terms']?.molecular_activity);
-    console.log(this.biologicalProcess, this.cellularComponent, this.molecularActivity);
-
     this.isLoading = false;
     this.cdRef.markForCheck();
   }
@@ -114,11 +118,15 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   /**
-   * Update and load data
+   * Update already loaded and then filtered data on typing
    */
   updateGeneListOnTyping(event: Genes[]) {
     if (!this.isGoTermsMode) {
       this.searchedData = event;
+
+      this.snackBar.open(`${this.searchResultsFound.nativeElement.textContent} ${this.searchedData.length}`, '', {
+        duration: 600
+      });
     }
   }
 
@@ -135,12 +143,30 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     this.isGoTermsMode = event;
   }
 
+  // TODO: this function isn't pure
   public searchGenesByGoTerm(query: string): void {
     if (query) {
       const request = query.toLowerCase();
       this.apiService.getGoTermMatchByString(request).subscribe((genes) => {
         this.searchedData = genes; // If nothing found, will return empty array
         this.isGoSearchPerformed = true;
+
+        // Map data if it's presented:
+        this.biologicalProcess = this.toMap(this.searchedData['terms']?.biological_process);
+        this.cellularComponent = this.toMap(this.searchedData['terms']?.cellular_component);
+        this.molecularActivity = this.toMap(this.searchedData['terms']?.molecular_activity);
+        console.log(this.biologicalProcess, this.cellularComponent, this.molecularActivity);
+
+        const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
+
+        if (isAnyTermFound) {
+          this.isGoTermsModeError = true;
+        }
+
+        this.snackBar.open(`${this.searchResultsFound.nativeElement.textContent} ${this.searchedData.length}`, '', {
+          duration: 600
+        });
+
         this.cdRef.markForCheck();
       }, error => this.errorLogger(this, error));
     } else {
@@ -170,7 +196,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   public favItem(geneId: number): void {
     this.favouritesService.addToFavourites(geneId);
-    this.snackBar.open('Добавлено в Избранное!', '', {
+    this.snackBar.open(this.templateAddedToFavorites.nativeElement.textContent, '', {
       duration: 600
     });
     this.isFaved(geneId);
@@ -179,7 +205,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   public unFavItem(geneId: number): void {
     this.favouritesService.removeFromFavourites(geneId);
-    this.snackBar.open('Убрано из Избранного!', '', {
+    this.snackBar.open(this.templateRemovedFromFavorites.nativeElement.textContent, '', {
       duration: 600
     });
     this.isFaved(geneId);
