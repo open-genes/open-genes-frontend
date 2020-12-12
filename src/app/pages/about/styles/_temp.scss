@@ -1,88 +1,45 @@
 .onboarding {
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-flow: column;
   flex-flow: column;
   height: 100%
 }
 
-.kard.kard-mobile {
-  display: none
-}
-
-.kard .main-title {
-  font-family: AvenirNextLTPro-Bold, Helvetica, Arial, sans-serif;
-  font-size: 32px;
-  margin: 0;
-  letter-spacing: .9px
-}
-
-.kard .title {
-  font-family: AvenirNextLTPro-Demi, Helvetica, Arial, sans-serif;
-  font-size: 32px;
-  margin: 0;
-  letter-spacing: .9px
-}
-
-.kard .kard-text {
-  margin-top: 12px;
-  opacity: .92;
-  letter-spacing: .5px;
-  font-family: AvenirNextLTPro-Medium, Helvetica, Arial, sans-serif;
-  font-size: 16px
-}
-
-
-  .compare-block-title {
-    font-size: 36px;
-    line-height: 1;
-    letter-spacing: 1px;
-    color: #fff;
-    margin-bottom: 24px;
-    z-index: 1
+.kard {
+  .kard-mobile {
+    display: none
   }
 
+  .main-title {
+    font-family: AvenirNextLTPro-Bold, Helvetica, Arial, sans-serif;
+    font-size: 32px;
+    margin: 0;
+    letter-spacing: .9px
+  }
 
-.photo-compare {
-  position: relative;
-  display: flex;
-  border-radius: 8px;
-  padding: 40px;
-  background: linear-gradient(90deg, #91cefd, #9bb5fa 20%, #a4a4f7 40%, #c2adf5 60%, #d9b5f3 80%, #ebbdf2)
-}
+  .title {
+    font-family: AvenirNextLTPro-Demi, Helvetica, Arial, sans-serif;
+    font-size: 32px;
+    margin: 0;
+    letter-spacing: .9px
+  }
 
-.photo-compare .router-link__how-to-use {
-  -webkit-flex: 1 0 25%;
-  flex: 1 0 25%;
-  position: relative;
-  font-family: AvenirNextLTPro-Demi, Helvetica, Arial, sans-serif;
-  font-size: 24px;
-  color: #fff;
-  line-height: 1;
-  letter-spacing: 1px;
-  opacity: .92;
-  z-index: 1;
-  cursor: pointer;
-  margin-right: 64px
-}
-
-.photo-compare .router-link__how-to-use__text {
-  text-decoration: underline
-}
-
-.photo-compare .photo-compare-block-top {
-  -webkit-flex: 1 0 30%;
-  flex: 1 0 30%;
-  margin-right: 64px
+  .kard-text {
+    margin-top: 12px;
+    opacity: .92;
+    letter-spacing: .5px;
+    font-family: AvenirNextLTPro-Medium, Helvetica, Arial, sans-serif;
+    font-size: 16px
+  }
 }
 
 .compare-block-title {
-  margin-bottom: 64px
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: #fff;
+  margin-bottom: 24px;
+  z-index: 1
 }
-
-
-
-
 
 .compare-block-feature__description {
   font-family: AvenirNextLTPro-Regular, Helvetica, Arial, sans-serif;
@@ -91,119 +48,151 @@
   line-height: 1.5
 }
 
-
-.photo-compare-block-bottom {
-  display: -webkit-flex;
+.compare {
+  position: relative;
   display: flex;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-  -webkit-justify-content: space-between;
-  justify-content: space-between
-}
+  border-radius: 8px;
+  padding: 40px;
+  background: linear-gradient(90deg, #91cefd, #9bb5fa 20%, #a4a4f7 40%, #c2adf5 60%, #d9b5f3 80%, #ebbdf2);
 
+  .compare-block-title {
+    margin-bottom: 64px
+  }
 
-
-.photo-compare .photo-compare-block-bottom .description__wrapper {
-  display: -webkit-flex;
-  display: flex;
-  margin: 0 -26px;
-  z-index: 1
-}
-
-.photo-compare .photo-compare-block-bottom .description {
-  -webkit-flex-basis: 33.3%;
-  flex-basis: 33.3%;
-  margin: 0 26px
-}
-
-.photo-compare .photo-compare-block-bottom .description__title {
-  margin-top: 0;
-  margin-bottom: 16px;
-  font-family: AvenirNextLTPro-Bold, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  color: #fff
-}
-
-.photo-compare .photo-compare-block-bottom .description__text {
-  font-family: AvenirNextLTPro-Medium, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  margin: 0
-}
-
-@media (max-width: 992px) {
-  .photo-compare {
-    -webkit-flex-direction: column;
-    flex-direction: column
-  }
-  .photo-compare .photo-compare-block-top {
-    margin-right: 0
-  }
-  .photo-compare .photo-compare-block-top .router-link__how-to-use {
-    display: none
-  }
-  .photo-compare .photo-compare-block-top .compare-block-title {
-    margin-bottom: 72px
-  }
-  .photo-compare .photo-compare-block-top .compare-block-title .title {
-    font-size: 32px
-  }
-  .photo-compare .photo-compare-block-top .compare-block-feature {
-    background-color: transparent;
-    padding: 0;
-    color: #fff;
-    min-height: 0;
-    margin-bottom: 72px
-  }
-  .photo-compare .photo-compare-block-top .compare-block-feature__illustration {
-    display: block;
-    margin-bottom: 32px
-  }
-  .photo-compare .photo-compare-block-top .compare-block-feature__image {
-    width: 100%;
-    max-width: 100%
-  }
-  .photo-compare .photo-compare-block-top .compare-block-feature__description {
-    color: #fff
-  }
-  .photo-compare .kard-top {
-    margin: 0 0 30px;
-    padding-right: 0 !important
-  }
-  .photo-compare .photo-compare-block-bottom {
-    -webkit-flex-direction: column;
-    flex-direction: column;
-    -webkit-align-items: flex-start;
-    align-items: flex-start
-  }
-  .photo-compare .photo-compare-block-bottom .router-link__how-to-use {
-    -webkit-flex: 1;
-    flex: 1;
-    display: block;
-    margin-top: 18px;
-    -webkit-order: 1;
-    order: 1
-  }
-  .photo-compare .photo-compare-block-bottom .compared-images {
-    display: none
-  }
-  .photo-compare .photo-compare-block-bottom .description__wrapper {
-    -webkit-flex-direction: column;
-    flex-direction: column;
-    margin: 0
-  }
-  .photo-compare .photo-compare-block-bottom .description {
-    margin: 0 0 72px
-  }
-  .photo-compare .photo-compare-block-bottom .description-illustration {
-    display: block;
-    margin-bottom: 32px
-  }
-  .photo-compare .photo-compare-block-bottom .description-image {
-    width: 100%;
-    max-width: 100%
-  }
-  .photo-compare .photo-compare-block-bottom .description__title {
+  .router-link__how-to-use {
+    flex: 1 0 25%;
+    position: relative;
     font-family: AvenirNextLTPro-Demi, Helvetica, Arial, sans-serif;
-    font-size: 32px
+    font-size: 24px;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: 1px;
+    opacity: .92;
+    z-index: 1;
+    cursor: pointer;
+    margin-right: 64px;
+
+    &__text {
+      text-decoration: underline
+    }
+  }
+
+  .compare-block-top {
+    flex: 1 0 30%;
+    margin-right: 64px
+  }
+
+  .compare-block-bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .description__wrapper {
+      display: flex;
+      z-index: 1
+    }
+
+    .description {
+      -webkit-flex-basis: 33.3%;
+      flex-basis: 33.3%;
+      margin: 0 26px;
+
+      &__title {
+        margin-top: 0;
+        margin-bottom: 16px;
+        font-family: AvenirNextLTPro-Bold, Helvetica, Arial, sans-serif;
+        font-size: 24px;
+        color: #fff
+      }
+
+      &__text {
+        font-family: AvenirNextLTPro-Medium, Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        margin: 0
+      }
+    }
+  }
+
+  @include resolution_smartphone-and-tablet {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .router-link__how-to-use {
+      flex: 1;
+      display: block;
+      margin-top: 18px;
+      order: 1
+    }
+
+    .compared-images {
+      display: none
+    }
+
+    .description__wrapper {
+      flex-direction: column;
+      margin: 0
+    }
+
+    .description {
+      margin: 0 0 72px
+    }
+
+    .description-illustration {
+      display: block;
+      margin-bottom: 32px
+    }
+
+    .description-image {
+      width: 100%;
+      max-width: 100%
+    }
+
+    .compare-block-bottom .description__wrapper {
+      margin: 0 -26px;
+    }
+  }
+
+  @include resolution_desktop-and-up {
+    .compare-block-top {
+      margin-right: 0;
+
+      .router-link__how-to-use {
+        display: none
+      }
+
+      .compare-block-title {
+        margin-bottom: 72px
+      }
+
+      .compare-block-title .title {
+        font-size: 32px
+      }
+
+      .compare-block-feature {
+        background-color: transparent;
+        padding: 0;
+        min-height: 0;
+        margin-bottom: 72px
+      }
+
+      .compare-block-feature__illustration {
+        display: block;
+        margin-bottom: 32px
+      }
+
+      .compare-block-feature__image {
+        width: 100%;
+        max-width: 100%
+      }
+    }
+
+    .kard-top {
+      margin: 0 0 30px;
+      padding-right: 0 !important
+    }
   }
 }
+
+
+
+
