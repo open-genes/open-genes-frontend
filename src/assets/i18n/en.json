@@ -72,7 +72,6 @@
   "header_menu_about": "About",
   "header_menu_api": "API",
   "header_menu_favourites": "Favourites",
-  "header_menu_go_search": "GO search",
   "footer_json_data": "JSON data",
   "alert_error_invalid_username": "Invalid username or password.",
   "alert_error_login_unsuccessful": "Unsuccessful login attempt. Please try again.",
