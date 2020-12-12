@@ -73,6 +73,7 @@
   "header_menu_about": "О базе",
   "header_menu_api": "API",
   "header_menu_favourites": "Избранное",
+  "header_menu_go_search": "Поиск по GO",
   "footer_json_data": "Данные в JSON",
   "alert_error_invalid_username": "Неверное имя пользователя или пароль.",
   "alert_error_login_unsuccessful": "Ошибка входа. Попробуйте войти снова.",

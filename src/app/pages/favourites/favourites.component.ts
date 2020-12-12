@@ -30,14 +30,14 @@ export class FavouritesComponent implements OnInit, OnDestroy {
 
   public unFavItem(geneId: number) {
     this.favouritesService.removeFromFavourites(geneId);
+    this.favouriteGenesIds = this.favouritesService.favourites;
     this.cdRef.markForCheck();
-    return this.favouriteGenesIds;
   }
 
   public clearFavs() {
     this.favouritesService.clearFavourites();
+    this.favouriteGenesIds = this.favouritesService.favourites;
     this.cdRef.markForCheck();
-    return this.favouriteGenesIds;
   }
 
   ngOnInit() {

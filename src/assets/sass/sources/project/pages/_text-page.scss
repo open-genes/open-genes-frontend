@@ -1,6 +1,7 @@
 .text-page { // .page
   // &__inner { }
   &__header {
+    min-height: 140px;
     background: $color-general-light;
     padding: 30px 0 35px 0;
     margin-bottom: 20px;
