@@ -2,11 +2,9 @@
   "name": "frontend",
   "version": "0.5.0",
   "scripts": {
-    "clear-sprites": "rm -r src/assets/images/icons/sprites/symbol",
     "spriteset-general": "svg-sprite --symbol --dest=src/assets/images/icons/sprites src/assets/images/icons/source/general/*.svg --symbol-sprite=general.sprite.svg",
     "spriteset-landing": "svg-sprite --symbol --dest=src/assets/images/icons/sprites src/assets/images/icons/source/landing/*.svg --symbol-sprite=landing.sprite.svg",
-    "spritesheets": "npm run spriteset-general & npm run spriteset-landing",
-    "sprites": "npm run clear-sprites && npm run spritesheets",
+    "sprites": "npm run spriteset-general & npm run spriteset-landing",
     "ng": "ng",
     "start": "npm run sprites && ng serve",
     "build": "npm run sprites && ng build",
