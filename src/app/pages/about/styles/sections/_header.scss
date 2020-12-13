@@ -3,7 +3,7 @@
     background: linear-gradient(#91cefd, $color-base);
 
     .header__centering {
-      height: calc(70vh - 50px);
+      height: calc(60vh - 50px);
       min-height: 430px;
       display: flex;
       flex-flow: row wrap;
@@ -25,7 +25,6 @@
 
     .header__text {
       color: #fff;
-      padding-left: 10%;
 
       h1 {
         margin-bottom: .8em;
@@ -33,7 +32,7 @@
       }
 
       p {
-        font-size: 1.2em;
+        font-size: 1.5em;
       }
 
       button {
@@ -45,16 +44,20 @@
         background-color: $color-accent;
         color: $color-white;
         border-radius: 28px;
-        font-size: 1.8em;
+        font-size: 1.5em;
         font-weight: $font-weight-regular;
         padding: 16px 32px;
         margin-top: 24px;
-        opacity: .85; // TODO: opacities map
+        text-shadow: 0 1px 0 rgba(0, 0, 0, .25);
 
         &:hover,
         &:active {
-          opacity: 1;
+          background-color: darken($color-accent, 5%);
         }
+      }
+
+      @include resolution_desktop-and-up {
+        padding-left: 10%;
       }
     }
   }

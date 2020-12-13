@@ -1,0 +1,33 @@
+.about-page {
+  &__features {
+    padding: 60px 0 40px 0;
+    background-color: $color-black;
+    color: $color-white;
+
+    .features {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: stretch;
+    }
+
+    .feature {
+      position: relative;
+      flex: 1 2 33%;
+      font-size: 15px;
+      padding: 40px 40px 40px 24px;
+
+      &::before {
+        content: ' ';
+        display: block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: $color-accent;
+        position: absolute;
+        left: 0;
+        top: 45px;
+        z-index: 0;
+      }
+    }
+  }
+}
