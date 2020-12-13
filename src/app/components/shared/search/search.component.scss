@@ -1,4 +1,4 @@
-@import "../../styles";
+@import "src/app/components/styles";
 
 $search-input-height: 40px;
 
@@ -54,7 +54,7 @@ $search-input-height: 40px;
     line-height: $search-input-height;
     padding: 0 $search-input-height 0 10px;
     resize: none;
-    font-size: $font-size-big;
+    font-size: $font-size + 1;
     font-weight: $font-weight-medium;
     color: $color-black;
     background-color: $color-white;
@@ -111,6 +111,12 @@ $search-input-height: 40px;
     &--active { // button
       color: $color-general;
       line-height: normal;
+
+      .fa {
+        position: relative;
+        top: -1px; // fix for mat-icon-button
+        font-weight: $font-weight-medium;
+      }
     }
   }
 

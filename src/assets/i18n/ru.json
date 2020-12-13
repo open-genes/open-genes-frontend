@@ -73,7 +73,7 @@
   "header_menu_about": "О базе",
   "header_menu_api": "API",
   "header_menu_favourites": "Избранное",
-  "header_menu_go_search": "Поиск по GO",
+  "header_menu_help": "Справочная Информация",
   "footer_json_data": "Данные в JSON",
   "alert_error_invalid_username": "Неверное имя пользователя или пароль.",
   "alert_error_login_unsuccessful": "Ошибка входа. Попробуйте войти снова.",
@@ -145,5 +145,7 @@
   "search_for_functions": "по генам",
   "search_for_go_terms": "по GO-terms",
   "favourites_added": "Добавлено в Избранное! ✨",
-  "favourites_removed": "Убрано из Избранного! \uD83D\uDCAB"
+  "favourites_removed": "Убрано из Избранного! \uD83D\uDCAB",
+  "help_page_title": "Справочная информация",
+  "help_page_description": "Все, что вы хотели знать об Open Genes на русском."
 }

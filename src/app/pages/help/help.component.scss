@@ -1,0 +1,9 @@
+@import "src/app/components/styles";
+
+mat-panel-title {
+  font-weight: $font-weight-medium;
+}
+
+mat-expansion-panel + mat-expansion-panel {
+  margin-top: 10px;
+}
