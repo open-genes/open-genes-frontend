@@ -9,7 +9,7 @@
     "sprites": "npm run clear-sprites && npm run spritesheets",
     "ng": "ng",
     "start": "npm run sprites && ng serve",
-    "build": "npm run sprites && npm run ng build",
+    "build": "npm run sprites && ng build",
     "build-staging": "npm run sprites && ng build --configuration=staging",
     "build-prod": "npm run sprites && ng build --prod --output-hashing=all",
     "test": "ng test",
