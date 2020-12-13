@@ -1,0 +1,110 @@
+// SIZES
+// Base
+$ui-base-height: 26px;
+$padding-regular: 10px;
+$padding-medium: 15px;
+$padding-large: 25px;
+$border-radius-regular: 5px;
+$border-radius-medium: 10px;
+$box-shadow: 0 1px 4px 0 rgba(5, 5, 5, .14);
+
+// Fonts
+// TODO: replace with atomic values like: font-size-100, font-size-200, etc.
+$font-size: 14px; // TODO: replace with em
+$font-size-very-small: ($font-size - 3);
+$font-size-small: ($font-size - 2);
+$font-size-smaller: ($font-size - 1);
+$font-size-bigger: ($font-size + 1);
+$font-size-big: ($font-size + 2);
+$font-size-huge: ($font-size + 3);
+$font-size-max: ($font-size + 6);
+
+$font-line-height: 1.42857;
+
+$font-weight-thin: 100;
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+$font-weight-black: 900;
+
+// COLORS
+// TODO: Store colors in maps and use variables with map item value:
+//  $color-black: map-get($base-theme-colors, "color-black");
+
+// Base
+$color-base: #7673d1;
+$color-general-light: #edeefb;
+$color-general-semi: #b7bcf1;
+$color-general: #4d58dc;
+$color-general-dark: darken($color-general, 15%);
+$color-accent: #fe6231;
+
+// UI
+$color-black: #27292e;
+$color-gray-500: #2d323b; // TODO: go to this notation
+$color-black-light: #42464e;
+$color-gray: #838689;
+$color-gray-halfing: #a3a6ab;
+$color-gray-semi: #ced2d7;
+$color-gray-light: #d7d7d7;
+$color-gray-soft: #efefef;
+$color-gray-very-light: #f8f9fd;
+$color-white: #fff;
+$color-purple: $color-general;
+$color-blue: #4FA1DD;
+$color-green-light: #84D082;
+$color-green-medium: #2dbf70;
+$color-green: #28aa64;
+$color-green-dark: #1f864f;
+$color-orange: darken(desaturate(#FFC769, 2%), 10%);
+$color-yellow: #ffd700;
+$color-red-light: #fbe5e1;
+$color-red-medium: #f39f96;
+$color-red-text: #c0341d;
+$color-red: #FF4E1A;
+$color-red-dark: darken($color-red, 5%);
+
+// States variables
+$color-hover: darken(#e8ebfd, 2%);
+$color-selected: #cfd1f6;
+$color-active: lighten($color-orange, 30%);
+$success-color: $color-green-medium;
+$error-color: $color-red-medium;
+
+// Elements variables
+// - typography
+$color-indent: #575757;
+
+// - borders
+$color-borders: $color-gray-light;
+$color-border-light: #e3e4e8;
+$color-borders-active: darken($color-hover, 10%);
+
+// - header
+$header-height: 50px;
+
+// - preloader
+$preloader-spinner-size: 50px;
+$preloader-spinner-color: $color-general;
+
+// - dark-panel
+$dark-panel-100: #64676f;
+$dark-panel-200: #323439;
+
+
+// PATHS
+$path-images: '../images';
+$path-fonts: '../fonts';
+
+// Fonts
+$path-font-roboto-thin: $path-fonts + '/roboto/thin.woff2';
+$path-font-roboto-thin-woff: $path-fonts + '/roboto/thin.woff';
+$path-font-roboto-light: $path-fonts + '/roboto/light.woff2';
+$path-font-roboto-light-woff: $path-fonts + '/roboto/light.woff';
+$path-font-roboto-regular: $path-fonts + '/roboto/regular.woff2';
+$path-font-roboto-regular-woff: $path-fonts + '/roboto/regular.woff';
+$path-font-roboto-medium: $path-fonts + '/roboto/medium.woff2';
+$path-font-roboto-medium-woff: $path-fonts + '/roboto/medium.woff';
+$path-font-roboto-bold: $path-fonts + '/roboto/bold.woff2';
+$path-font-roboto-bold-woff: $path-fonts + '/roboto/bold.woff';

@@ -24,7 +24,7 @@ import {LanguageComponent} from './components/language/language.component';
 import {BurgerMenuComponent} from './components/burger-menu/burger-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {VendorsModule} from './modules/vendors/vendors.module';
-import {MatBadgeModule} from "@angular/material/badge";
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
   declarations: [

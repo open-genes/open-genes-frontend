@@ -1,6 +1,6 @@
 export interface Term {
   object: {
-    id: string;
+    id: number;
     comment: string;
   };
 }

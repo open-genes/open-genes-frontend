@@ -1,0 +1,66 @@
+@import "../../styles";
+@import "styles/variables";
+@import "styles/item";
+@import "styles/table";
+@import "styles/cards";
+
+:host {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.view-content {
+  width: 100%;
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 10px; // для кнопки подгрузки
+
+  @include item;
+  @include table;
+  @include cards;
+
+  &--as-table {
+    display: block;
+    overflow: auto;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid $color-borders;
+    border-radius: 5px;
+  }
+
+  &--as-cards {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-top: -10px;
+  }
+}
+
+.view-panel {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  &__filters {
+    padding-right: 5px;
+  }
+
+  // Переключать вид можно только на десктопе.
+  // На мобильном контент всегда выглядит в виде карточек.
+  &__buttons {
+    padding-left: 5px;
+    display: flex;
+    align-items: center;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    @include resolution_smartphone-and-tablet {
+      display: none;
+    }
+  }
+}
+

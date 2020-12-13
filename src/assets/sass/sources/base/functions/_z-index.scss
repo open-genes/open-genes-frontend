@@ -1,0 +1,11 @@
+@function z($layer) {
+  $z-indeces: (
+    'loader': 1001,
+    'menus': 1000,
+    'search': 999,
+    'header': 998,
+    'overlay': 99
+  );
+
+  @return map-get($z-indeces, $layer);
+}

@@ -1,0 +1,258 @@
+@import "src/app/components/styles";
+
+$search-input-height: 40px;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+::ng-deep mark.text-highlight { // being generated dynamically
+  background-color: $color-hover;
+}
+
+.cancel-search-button {
+  flex: 0 0 $search-input-height;
+  min-width: $search-input-height;
+  align-self: flex-start;
+  height: $search-input-height;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.search-form {
+  margin-bottom: 10px;
+
+  &,
+  &__panel {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+  }
+
+  &__wrapper {
+    position: relative;
+    display: flex;
+    width: 100%;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  $input-border-radius: 5px;
+
+  // Field
+  &__field {
+    display: flex;
+    flex: 1 1 auto;
+    max-width: 100%;
+    appearance: none;
+    height: $search-input-height;
+    line-height: $search-input-height;
+    padding: 0 $search-input-height 0 10px;
+    resize: none;
+    font-size: $font-size + 1;
+    font-weight: $font-weight-medium;
+    color: $color-black;
+    background-color: $color-white;
+    border-radius: 0 #{$input-border-radius} #{$input-border-radius} 0;
+    border: 1px solid $color-borders;
+    border-left: 0;
+    transition: border .15s linear;
+
+    &::-ms-clear {
+      display: none !important; // скрываем иконку очистки поля на IE/Edge
+    }
+
+    $prefixed-selectors: (
+      '::placeholder',
+      '::-webkit-input-placeholder',
+      '::-moz-placeholder',
+      ':-moz-placeholder',
+      ':-ms-input-placeholder'
+    );
+
+    @mixin placeholder-color() {
+      @each $prefixed-selector in $prefixed-selectors {
+        &#{$prefixed-selector} {
+          @content;
+        }
+      }
+    }
+
+    @include placeholder-color {
+      color: $color-gray-halfing;
+    }
+
+    &:focus {
+      border-color: $color-borders-active;
+      @include placeholder-color {
+        color: transparent;
+      }
+    }
+  }
+
+  &__submit { // any element, not clickable
+    display: block;
+    width: $search-input-height;
+    height: $search-input-height;
+    line-height: $search-input-height;
+    font-size: $search-input-height / 2;
+    color: $color-gray-semi;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    right: 0;
+
+    &--active { // button
+      color: $color-general;
+      line-height: normal;
+
+      .fa {
+        position: relative;
+        top: -1px; // fix for mat-icon-button
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+
+  &__switch {
+    position: relative;
+    display: flex;
+    flex: 1 0 100px;
+    min-width: 100px;
+    align-items: center;
+    justify-content: center;
+    max-width: 100px;
+    width: $search-input-height * 1.5;
+    height: $search-input-height;
+    background: linear-gradient($color-general, $color-base);
+    font-size: $font-size-small;
+    color: $color-white;
+    padding: 0 10px;
+    text-align: center;
+    @include text-overflow;
+    border-radius: #{$input-border-radius} 0 0 #{$input-border-radius};
+
+    .fa {
+      display: inline-block;
+      height: 16px;
+      line-height: 1;
+      font-size: 16px;
+      margin-left: .5em;
+      position: relative;
+      top: -3px
+    }
+  }
+
+  &__autocomplete-list {
+    position: absolute;
+    top: 100%;
+    max-height: (39px * 5) + 18px;
+    width: 100%;
+    overflow-y: scroll;
+    background: #fff;
+    border-radius: 5px;
+    z-index: 12;
+
+    &:not(:empty) {
+      border: 1px solid $color-borders;
+      padding: 8px 0;
+      box-shadow: 0 5px 5px 0 rgba($color-black, .15);
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+      background: $color-gray-halfing;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: $color-gray;
+    }
+  }
+
+  &__autocomplete-item {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    text-align: left;
+
+    .item__symbol {
+      font-weight: $font-weight-medium;
+    }
+
+    .item__name {
+      color: $color-gray;
+    }
+
+    .item__name,
+    .item__symbol {
+      &.__highlight {
+        color: $color-orange;
+      }
+    }
+
+    &:hover,
+    &:active {
+      background-color: rgba($color-hover, .3);
+    }
+  }
+
+  // TODO: сделать без переопределений
+  @include resolution_smartphone-and-tablet {
+    &--active {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 60px;
+      margin: 0;
+      background-color: #fff;
+      z-index: z('search');
+      box-shadow: 0 5px 5px 0 rgba($color-black, .15);
+
+      .search-form__panel {
+        padding: 10px;
+        z-index: 1;
+
+        .cancel-search-button {
+          display: flex;
+        }
+
+        .search-form__autocomplete-list {
+          top: 50px;
+          border: 0;
+        }
+      }
+    }
+  }
+}
+
+.search-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  z-index: 1;
+
+  @include resolution_smartphone-and-tablet {
+    z-index: 0;
+  }
+}
+
+
+
+
+
+

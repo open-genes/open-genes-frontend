@@ -26,6 +26,10 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/api-reference/api-reference.module').then(m => m.ApiReferenceModule)
   },
   {
+    path: 'help',
+    loadChildren: () => import('./pages/help/help.module').then(m => m.HelpModule)
+  },
+  {
     path: '404',
     loadChildren: () => import('./pages/404/404.module').then(m => m.Error404Module)
   },

@@ -6,28 +6,35 @@ import {Injectable} from '@angular/core';
 })
 
 export class FavouritesService {
-  favourites = []; // TODO: заменить массив на мапу или обращаться к local storage напрямую
-  storedData = JSON.parse(localStorage.getItem('favourites'));
+  public favourites = []; // TODO: replace an array with a map
+  public storedData = JSON.parse(localStorage.getItem('favourites'));
 
-  // Работа с хранилищем происходит через массив
-  getItems(): Observable<any> {
+  // All interaction with a storage comes through an array
+  public getItems(): Observable<any[]> {
     if (this.storedData) {
       this.favourites = [...this.storedData];
-      // очищаем и заново заполняем массив,
-      // так как для каждого инстанса сервиса создается отдельный массив
-      // console.log(this.favourites);
+      // We clear and fill array with updated data
+      // because there is a separate array for every service instance.
     }
 
     return of(this.storedData);
   }
 
-  addToFavourites(data: number) {
+  public getNumberOfItems(): Observable<number> {
+    if (this.storedData) {
+      return of(this.storedData.length);
+    } else {
+      return of(0);
+    }
+  }
+
+  public addToFavourites(data: number) {
     this.favourites.push(data);
-    localStorage.clear();
+    this.storedData = [];
     localStorage.setItem('favourites', JSON.stringify(this.favourites));
   }
 
-  removeFromFavourites(data: number) {
+  public removeFromFavourites(data: number) {
     const index = this.favourites.indexOf(data);
     if (index > -1) {
       this.favourites.splice(index, 1);
@@ -35,7 +42,7 @@ export class FavouritesService {
     }
   }
 
-  isInFavourites(data: number) {
+  public isInFavourites(data: number) {
     if (this.favourites.length !== 0) {
       return this.favourites.indexOf(data) > -1;
     } else {
@@ -43,7 +50,7 @@ export class FavouritesService {
     }
   }
 
-  clearFavourites() {
+  public clearFavourites() {
     this.favourites = [];
     localStorage.setItem('favourites', JSON.stringify(this.favourites));
   }

@@ -1,0 +1,36 @@
+<ng-container *ngIf="!staticSrc && iconSrc">
+  <div class="icon-wrapper"
+       [ngClass]="{
+            'icon-wrapper--custom': size === SizeEnum.custom,
+            'icon-wrapper--xs': size === SizeEnum.extraSmall,
+            'icon-wrapper--sm': size === SizeEnum.small,
+            'icon-wrapper--rg': size === SizeEnum.regular,
+            'icon-wrapper--md': size === SizeEnum.medium,
+            'icon-wrapper--lg': size === SizeEnum.large
+          }"
+       [ngStyle]="customStyles"
+  >
+    <svg class="icon">
+      <!-- Use href because we support IE11 -->
+      <use [attr.xlink:href]="iconSrc" />
+    </svg>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="staticSrc && !iconSrc">
+  <div class="icon-wrapper"
+       [ngClass]="{
+        'icon-wrapper--custom': size === SizeEnum.custom,
+        'icon-wrapper--xs': size === SizeEnum.extraSmall,
+        'icon-wrapper--sm': size === SizeEnum.small,
+        'icon-wrapper--rg': size === SizeEnum.regular,
+        'icon-wrapper--md': size === SizeEnum.medium,
+        'icon-wrapper--lg': size === SizeEnum.large
+        }"
+       [ngStyle]="customStyles"
+  >
+    <img [attr.src]="staticSrc"
+         class="icon"
+         alt="Icon"/>
+  </div>
+</ng-container>

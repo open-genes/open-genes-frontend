@@ -1,0 +1,40 @@
+@mixin item {
+  .item {
+    animation: fadeIn .5s linear forwards; // при рендеринге/подгрузке элемент мингнет
+
+    .title {
+      font-weight: $font-weight-medium;
+      color: $color-gray;
+      line-height: 1;
+
+      .link {
+        vertical-align: middle;
+        margin-right: 5px;
+        text-decoration: underline;
+      }
+
+      .alias {
+        vertical-align: 1px;
+        margin-bottom: 0;
+      }
+    }
+
+    b {
+      color: $color-black;
+      font-weight: bold;
+      margin-right: 3px;
+    }
+
+    .actions__menu {
+      position: absolute;
+      z-index: 1;
+      right: 5px;
+    }
+
+    // TODO: временный костыль
+    .tag[name="0"] {
+      pointer-events: none;
+      opacity: .5;
+    }
+  }
+}

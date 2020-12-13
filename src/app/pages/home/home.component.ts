@@ -1,73 +1,60 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, Output} from '@angular/core';
-
-import {ApiService} from '../../core/services/api.service';
-import {Genes, Filter} from '../../core/models';
-import {TranslateService} from '@ngx-translate/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
+import {ApiService} from '../../core/services/api/open-genes.api.service';
+import {Genes} from '../../core/models';
+import {FilterService} from '../../components/shared/genes-list/services/filter.service';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent implements OnInit {
-  genes: Genes[];
-  lastGenes: Genes[];
-  filters: Filter;
-  error: number;
+
+export class HomeComponent implements OnInit, OnDestroy {
+  @Output() dataSourceUpdate: EventEmitter<Genes[]> = new EventEmitter<Genes[]>();
+
+  public genes: Genes[];
+  public lastGenes: Genes[];
+  public error: number;
+  private ngUnsubscribe = new Subject();
 
   constructor(
     private readonly apiService: ApiService,
-    private readonly translate: TranslateService
+    private filterService: FilterService,
+    private readonly cdRef: ChangeDetectorRef
   ) {
-    this.filters = {
-      byName: false,
-      byAge: false,
-      byClasses: [],
-      byExpressionChange: 0 // !
-    };
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getGenes();
     this.getLastEditedGenes();
   }
 
-  private getGenes() {
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
+  public getGenes(): void {
     this.apiService.getGenes().subscribe((genes) => {
       this.genes = genes;
+      this.cdRef.markForCheck();
     }, error => this.error = error);
   }
 
-  private getLastEditedGenes() {
+  public getLastEditedGenes() {
     this.apiService.getLastEditedGene().subscribe((genes) => {
       this.lastGenes = genes;
     });
-  }
-
-  public filterByFuncClusters(fc: number[]) {
-    if (fc.length > 0) {
-      this.apiService.getGenesByFunctionalClusters(fc).subscribe((genes) => {
-        this.genes = genes;
-      }, error => this.error = error);
-    } else {
-      this.getGenes();
-    }
-  }
-
-  public filterByExpressionChange(expression: number) {
-    if (expression) {
-      this.apiService.getGenesByExpressionChange(expression).subscribe(genes => {
-        this.genes = genes;
-      }, error => this.error = error);
-    } else {
-      this.getGenes();
-    }
-  }
-
-  /**
-   * Сброс фильтров таблицы генов
-   */
-  public filtersCleared() {
-    this.getGenes();
   }
 }

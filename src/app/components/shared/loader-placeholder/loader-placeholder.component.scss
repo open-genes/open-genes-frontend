@@ -43,10 +43,6 @@ $skeleton-line-height: ($ui-base-height / 2);
       width: 80%;
     }
 
-    &--3 {
-      width: 50%
-    }
-
     &:not(:last-of-type) {
       margin-bottom: ($skeleton-line-height / 1.5);
     }

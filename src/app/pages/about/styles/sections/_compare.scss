@@ -1,0 +1,120 @@
+.about-page {
+  $base-padding: 24px;
+
+  font-family: Helvetica, Arial, sans-serif;
+
+  &__compare {
+    padding: $padding-large + 10px 0;
+    background-color: $color-black;
+    position: relative;
+    display: flex;
+    color: $color-white;
+    background: linear-gradient(90deg, #91cefd, #9bb5fa 20%, #a4a4f7 40%, #c2adf5 60%, #d9b5f3 80%, #ebbdf2);
+  }
+
+  .compare {
+    .compare-block-top {
+      display: flex;
+      flex-flow: column;
+      justify-content: space-between;
+
+      .compare-block-title,
+      .panel,
+      .description {
+        display: inline-flex;
+        flex-flow: column;
+        width: 100%;
+      }
+
+      .panel {
+        min-height: 300px;
+        margin-bottom: 20px;
+
+        h2 {
+          font-family: AvenirNextLTPro-Demi, Helvetica, Arial, sans-serif;
+          line-height: 1.5;
+          margin: 0 0 24px
+        }
+      }
+
+      .compare-block-title {
+        font-size: 36px;
+        line-height: 1;
+        letter-spacing: 1px;
+        z-index: 1
+      }
+
+      .compare-block-text {
+        font-size: $base-padding;
+        margin: 20px 0;
+      }
+
+      .compare-block-footer {
+        font-size: 16px;
+
+        p:first-child {
+          font-size: $base-padding;
+        }
+      }
+    }
+
+    .compare-block-bottom {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0;
+
+      .screenshot {
+        margin-top: -20px;
+      }
+
+      .description__wrapper {
+        display: flex;
+        z-index: 1
+      }
+
+      .description {
+        flex-basis: 33.3%;
+        margin: 24px 24px 0 $base-padding;
+
+        &__title {
+          font-size: 20px;
+          margin-bottom: 16px;
+        }
+
+        &__text {
+          font-size: 16px;
+        }
+
+        &__footer {
+          width: 100%;
+          font-size: 16px;
+          margin-top: $base-padding;
+        }
+      }
+    }
+
+    @include resolution_desktop-and-up {
+      .compare-block-top {
+        padding: 0 $base-padding 0 0;
+      }
+    }
+
+    @include resolution_smartphone-and-tablet {
+      .compare-block-top {
+        padding: 0;
+      }
+
+      .compare-block-bottom {
+        .compare-block-footer {
+          margin-bottom: $base-padding;
+        }
+
+        .description__wrapper {
+          flex-direction: column;
+          margin: 0 -#{$base-padding};
+        }
+      }
+    }
+  }
+}

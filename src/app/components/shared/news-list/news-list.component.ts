@@ -1,8 +1,8 @@
-import {Component, Input, Output, OnInit, OnChanges} from '@angular/core';
-import {PubmedApiService} from '../../../core/services/pubmed.api.service';
+import {Component, Input, Output, OnInit, OnChanges, OnDestroy} from '@angular/core';
+import {PubmedApiService} from '../../../core/services/api/pubmed.api.service';
 import {News} from '../../../core/models/news.model';
 import {Genes} from '../../../core/models';
-import {finalize, switchMap} from 'rxjs/operators';
+import {finalize, switchMap, takeUntil} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
 import {Subject} from 'rxjs';
@@ -12,21 +12,20 @@ import {Subject} from 'rxjs';
   templateUrl: './news-list.component.html',
   styleUrls: ['./news-list.component.scss']
 })
-export class NewsListComponent implements OnInit, OnChanges {
+export class NewsListComponent implements OnInit, OnChanges, OnDestroy {
   @Input() genesList: Genes[];
   @Input() limit;
   @Input() showDates = false;
 
-  newsList: News[];
-  isLoading: boolean;
+  newsList: News[] = [];
+  isLoading = true;
   error: number;
+  private subscription$ = new Subject();
 
   constructor(
     public translate: TranslateService,
     private pubmedApiService: PubmedApiService
   ) {
-    this.newsList = [];
-    this.isLoading = true;
   }
 
   ngOnInit() {
@@ -47,6 +46,7 @@ export class NewsListComponent implements OnInit, OnChanges {
       symbolsQuery += `${gene.symbol}[Title]`;
       symbolsQuery += index < array.length - 1 ? '+OR+' : ''; // соединяем HGNC генов в запросе
     });
+
     // Делаем длинный запрос сразу по всем генам, но просим вернуть всего n статей в ответе
     this.pubmedApiService.getNewsList(symbolsQuery, limit).pipe(
       switchMap(news => {
@@ -58,7 +58,7 @@ export class NewsListComponent implements OnInit, OnChanges {
       finalize(() => {
         this.isLoading = false;
       })
-    ).subscribe(data => {
+    ).pipe(takeUntil(this.subscription$)).subscribe(data => {
       data.result.uids.forEach(id => {
         filteredGenes.forEach((gene: Genes) => {
           if (data.result[id].title.toLowerCase().indexOf(gene.symbol.toLowerCase()) !== -1) {
@@ -72,5 +72,9 @@ export class NewsListComponent implements OnInit, OnChanges {
         });
       });
     }, error => this.error = error);
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 }

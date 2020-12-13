@@ -2,13 +2,15 @@
   <div class="header__centering">
     <a class="header__logo __hoverable"
        [routerLink]="'/'"
-       (click)="clearFilters('all')"
+       (click)="clearSearch()"
        title="{{'main_page_link' | translate}}">
     </a>
 
     <div class="header__right">
       <app-language relative="fixed"></app-language>
-      <app-burger-menu></app-burger-menu>
+      <app-burger-menu
+        favsCounter="{{this.favsCounter}}"
+      ></app-burger-menu>
     </div>
   </div>
 </header>

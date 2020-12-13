@@ -1,34 +1,31 @@
-import {Component, OnInit} from '@angular/core';
-import {FavouritesService} from '../../core/services/favourites.service';
+import {
+  Component,
+  OnInit,
+  Inject, Input,
+} from '@angular/core';
 
 @Component({
   selector: 'app-burger-menu',
   templateUrl: './burger-menu.component.html',
-  styleUrls: ['./burger-menu.component.scss'],
+  styleUrls: ['./burger-menu.component.scss']
 })
+
 export class BurgerMenuComponent implements OnInit {
 
-  constructor(
-    private favouritesService: FavouritesService
-  ) {}
+  @Inject(Document) public document: Document;
 
-  favsCounter: number;
-  menuVisible = false;
-
-  ngOnInit() {
-    this.getCounters();
+  constructor() {
   }
 
-  private getCounters() {
-    this.favouritesService.getItems().subscribe((genes) => {
-      this.favsCounter = this.favouritesService.favourites.length;
-    }, error => this.favsCounter = 0);
+  @Input() favsCounter: string;
+  isMenuVisible = false;
+
+  ngOnInit() {
   }
 
   toggleMenu() {
-    this.menuVisible = !this.menuVisible;
-
-    if (this.menuVisible === true) {
+    this.isMenuVisible = !this.isMenuVisible;
+    if (this.isMenuVisible === true) {
       document.body.classList.add('body--still');
     } else {
       document.body.classList.remove('body--still');

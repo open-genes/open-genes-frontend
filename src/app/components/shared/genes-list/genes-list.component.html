@@ -1,0 +1,377 @@
+<app-search
+  [dataSource]="dataSource"
+  (queryChange)="passQueryUpper($event)"
+  (dataSourceChange)="updateGeneListOnTyping($event)"
+  (isGoModeTriggered)="setGoSearchMode($event)"
+  (isGoSearchTriggered)="searchGenesByGoTerm($event)"
+></app-search>
+
+<ng-container *ngIf="(isGoTermsMode && isGoSearchPerformed && !isGoTermsModeError) || (!isGoTermsMode && searchedData?.length !== 0 && !isLoading)">
+  <!-- Filters -->
+  <div *ngIf="isFilterPanel" class="view-panel">
+    <div class="filters-group view-panel__filters">
+      <button
+        class="filter name-filter"
+        (click)="sortBy('name')"
+        [class.__active]="filters.byName"
+      >
+        {{ 'main_page_table_name' | translate }}
+        <span class="fa far fa-sort-down"></span>
+      </button>
+
+      <button
+        class="filter age-filter"
+        (click)="sortBy('age')"
+        [class.__active]="filters.byAge"
+      >
+        {{ 'age' | translate }} ({{ 'million_years' | translate }})
+        <span class="fa far fa-sort-down"></span>
+      </button>
+
+      <button
+        *ngIf="filters.byClasses.length > 0"
+        class="filter __active functional-classes-filter"
+        (click)="clearFilters(filterTypes.classes)"
+      >
+        {{ 'functional_classes' | translate }}
+        <span class="fa fal fa-times"></span>
+      </button>
+
+      <button
+        *ngIf="filters.byExpressionChange"
+        class="filter __active expression-change-filter"
+        (click)="clearFilters(filterTypes.expressionChange)"
+      >
+        {{ 'main_page_table_expression' | translate }}
+        <span class="fa fal fa-times"></span>
+      </button>
+
+      <button class="btn btn--small btn-purple"
+              (click)="clearFilters"
+              *ngIf="isClearFiltersBtnShown"
+      >
+        <span class="fa fal fa-filter"></span> {{ 'filters_reset' | translate }}
+      </button>
+    </div>
+
+    <div class="view-panel__buttons">
+      <button class="toggler"
+              (click)="toggleGenesView()"
+              [ngClass]="asTableRow ? 'toggler--def' : 'toggler--alt'">
+        <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
+        <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <section
+    class="view-content notranslate"
+    [ngClass]="asTableRow && !isMobile ? 'view-content--as-table' : 'view-content--as-cards'">
+
+    <!-- Content views -->
+    <table *ngIf="asTableRow && !isMobile">
+      <thead>
+      <tr>
+        <td>
+          <div class="overflow">
+            {{ 'main_page_table_name' | translate }}
+          </div>
+        </td>
+        <td>
+          <div class="overflow">
+            {{ 'phylogeny' | translate }}, {{ 'age_lowercase' | translate }}
+          </div>
+        </td>
+        <td>
+          <div class="overflow">
+            {{ 'ncbi_homologs' | translate }}
+          </div>
+        </td>
+
+        <ng-container *ngIf="!isGoTermsMode; else GoModeHeader">
+          <td>
+            <div class="overflow">
+              {{ 'functional_classes' | translate }}
+            </div>
+          </td>
+          <td>
+            <div class="overflow">
+              {{ 'main_page_table_expression' | translate }}
+            </div>
+          </td>
+        </ng-container>
+        <ng-template #GoModeHeader>
+          <td colspan="2">
+            <div class="overflow">
+              GO Terms
+            </div>
+          </td>
+        </ng-template>
+        <td>
+          <div class="overflow">
+          </div>
+        </td>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container
+        *ngFor="let item of searchedData | slice: 0: loadedGenesQuantity"
+        [ngTemplateOutlet]="asTableRowsTmpl"
+        [ngTemplateOutletContext]="{itemRow: item}">
+      </ng-container>
+      </tbody>
+    </table>
+
+    <ng-container *ngIf="!asTableRow || isMobile">
+      <ng-container
+        *ngFor="let item of searchedData | slice: 0: loadedGenesQuantity"
+        [ngTemplateOutlet]="asCardsTmpl"
+        [ngTemplateOutletContext]="{item: item}"
+      >
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="isGoTermsMode && !isGoSearchPerformed"></ng-container>
+  </section>
+  <!-- / Content views -->
+
+  <div class="btn-wrap show-more" *ngIf="searchedData?.length > loadedGenesQuantity">
+    <button
+      (click)="loadMoreGenes()"
+      class="btn show-more__button"
+    >{{ 'show_more' | translate }}</button>
+  </div>
+</ng-container>
+
+<!-- When content is loading -->
+<app-loader-placeholder *ngIf="isLoading">
+</app-loader-placeholder>
+
+<!-- No content error message -->
+<section
+  *ngIf="(isGoTermsMode && isGoTermsModeError) || (!isGoTermsMode && searchedData?.length == 0)"
+  class="no-content"
+>
+  <div class="no-content__inner">
+    <div class="no-content__icon no-content__icon-standard"></div>
+    <div class="no-content__title">
+      <div class="title__center">
+        {{ 'nothing_found' | translate }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GO search mode start message -->
+<section
+  *ngIf="isGoTermsMode && !isGoSearchPerformed"
+  class="no-content"
+>
+  <div class="no-content__inner">
+    <div class="no-content__icon no-content__icon-standard"></div>
+    <div class="no-content__title">
+      <div class="title__center">
+        {{ 'go_results_start_typing' | translate }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Templates -->
+<ng-template #asTableRowsTmpl let-item="itemRow">
+  <tr class="item table-row">
+    <td class="cell cell__name">
+      <div class="title">
+        <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
+          <b>{{item.symbol}}</b> {{item.name}}
+        </a>
+      </div>
+    </td>
+
+    <td class="cell cell__age-mya">
+      <b>{{item.origin.phylum}}</b><br>
+      {{item.origin.age}} <span *ngIf="item.origin.age">({{ 'million_years' | translate }})</span>
+    </td>
+
+    <td class="cell cell__age-homologs">
+
+      <b>{{item.homologueTaxon}}</b>
+    </td>
+
+    <ng-container *ngIf="!isGoTermsMode; else GoModeCell">
+      <td class="cell cell__clusters">
+        <div class="cell__limiter">
+          <button
+            class="tag"
+            *ngFor="let item of item.functionalClusters"
+            (click)="filterByFuncClusters(item['id'])"
+            [class.__active]="filters.byClasses.includes(item['id'])"
+          >
+            <span class="tag__inner">{{item["name"]}}</span>
+          </button>
+        </div>
+      </td>
+
+      <td class="cell cell__expression">
+        <button
+          class="tag"
+          name="{{ item.expressionChange }}"
+          (click)="filterByExpressionChange(item.expressionChange)"
+          [class.__active]="(filters.byExpressionChange === item.expressionChange) && (item.expressionChange !== 0)"
+        >
+          <span class="tag__inner">{{ getExpressionLocaleKey(item.expressionChange) | translate }}</span>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-template #GoModeCell>
+      <td
+        colspan="2"
+        class="cell cell__clusters">
+        <div *ngIf="item.terms"
+             class="cell__limiter">
+          <a *ngFor="let term of biologicalProcess | keyvalue"
+             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+             class="tag"
+             matTooltip="{{ term.value }}">
+            {{ term.key | zero }}
+          </a>
+          <a *ngFor="let term of cellularComponent | keyvalue"
+             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+             class="tag"
+             matTooltip="{{ term.value }}">
+            {{ term.key | zero }}
+          </a>
+          <a *ngFor="let term of molecularActivity | keyvalue"
+             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+             class="tag"
+             matTooltip="{{ term.value }}">
+            {{ term.key | zero }}
+          </a>
+        </div>
+      </td>
+    </ng-template>
+
+    <td class="cell cell__actions">
+      <app-gene-menu
+        [gene]="item"
+        [isFaved]="isAddedToFavorites"
+        (unFav)="unFavOnEvent($event)"
+        (fav)="favOnEvent($event)"
+      ></app-gene-menu>
+    </td>
+  </tr>
+</ng-template>
+
+<ng-template #asCardsTmpl let-item="item">
+  <div class="item card">
+    <div class="card__content">
+      <div class="card__section card__title">
+        <div class="title">
+          <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
+            <b>{{item.symbol}}</b> {{item.name}}
+          </a>
+        </div>
+
+        <div class="card__actions">
+          <app-gene-menu
+            [gene]="item"
+            [isFaved]="isAddedToFavorites"
+            (unFav)="unFavOnEvent($event)"
+            (fav)="favOnEvent($event)"
+          ></app-gene-menu>
+        </div>
+      </div>
+
+      <div class="card__section card__age-mya">
+        <b>{{item.origin.phylum}}</b>
+        {{item.origin.age}} <span *ngIf="item.origin.age">({{ 'million_years' | translate }})</span>
+      </div>
+
+      <div
+        *ngIf="item.homologueTaxon"
+        class="card__section card__age-homologs">
+      <span class="label">
+        {{ 'ncbi_homologs' | translate }}
+      </span>
+        {{item.homologueTaxon}}
+      </div>
+    </div>
+
+    <div class="card__controls">
+      <ng-container *ngIf="!isGoTermsMode; else GoModeCardActions">
+        <div *ngIf="item.functionalClusters"
+             class="card__section">
+        <span class="label">
+            {{ 'functional_classes' | translate }}
+        </span>
+          <button
+            class="tag"
+            *ngFor="let cluster of item.functionalClusters"
+            (click)="filterByFuncClusters(cluster['id'])"
+            [class.__active]="filters.byClasses.includes(cluster['id'])"
+          >
+            <span class="tag__inner">{{cluster["name"]}}</span>
+          </button>
+        </div>
+
+        <div class="card__section">
+        <span class="label">
+          {{ 'main_page_table_expression' | translate }}
+        </span>
+          <button
+            class="tag"
+            name="{{ item.expressionChange }}"
+            (click)="filterByExpressionChange(item.expressionChange)"
+            [class.__active]="(filters.byExpressionChange === item.expressionChange) && (item.expressionChange !== 0)"
+          >
+            <span class="tag__inner">{{ getExpressionLocaleKey(item.expressionChange) | translate }}</span>
+          </button>
+        </div>
+      </ng-container>
+      <ng-template #GoModeCardActions>
+        <div class="card__section" *ngIf="item.terms">
+          <a *ngFor="let term of biologicalProcess | keyvalue"
+             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+             class="tag"
+             matTooltip="{{ term.value }}">
+            {{ term.key | zero }}
+          </a>
+          <a *ngFor="let term of cellularComponent | keyvalue"
+             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+             class="tag"
+             matTooltip="{{ term.value }}">
+            {{ term.key | zero }}
+          </a>
+          <a *ngFor="let term of molecularActivity | keyvalue"
+             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+             class="tag"
+             matTooltip="{{ term.value }}">
+            {{ term.key | zero }}
+          </a>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Snack Bar templates -->
+<!-- TODO: Find a way to pass TemplateRef to SnackBar component -->
+<div style="display: none">
+  <div #templateAddedToFavorites>
+    {{ 'favourites_added' | translate }}
+  </div>
+
+  <div #templateRemovedFromFavorites>
+    {{ 'favourites_added' | translate }}
+  </div>
+
+  <div #searchResultsFound>
+    {{ 'items_found' | translate }}
+  </div>
+</div>
+
+
+
+

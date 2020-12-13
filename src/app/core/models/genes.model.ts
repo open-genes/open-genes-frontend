@@ -15,6 +15,7 @@ export interface Genes {
   origin: Origin;
   homologueTaxon: string;
   timestamp: string;
+  terms?: Terms;
 }
 
 export interface Gene {
@@ -47,8 +48,8 @@ export interface Gene {
   researches: Researches;
   expression: Array<any>;
   expressionEN: string;
-  proteinClasses: string[];
-  terms: Terms;
+  proteinClasses: string[]; // TODO: они не совпадают по порядку перечисления с human_protein_atlas.ProteinClass
+  terms?: Terms;
   commentsReferenceLinks: any;
   rating: any;
   timestamp: any;
