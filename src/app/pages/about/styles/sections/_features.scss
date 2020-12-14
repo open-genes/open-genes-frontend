@@ -12,9 +12,8 @@
 
     .feature {
       position: relative;
-      flex: 1 2 33%;
-      font-size: 15px;
-      padding: 40px 40px 40px 24px;
+      font-size: 1em;
+      padding: 1.2em 40px 1.2em 24px;
 
       &::before {
         content: ' ';
@@ -25,7 +24,8 @@
         background-color: $color-accent;
         position: absolute;
         left: 0;
-        top: 45px;
+        top: 1.2em;
+        margin-top: 2px;
         z-index: 0;
       }
     }

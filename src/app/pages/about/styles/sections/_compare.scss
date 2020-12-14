@@ -23,12 +23,13 @@
       .description {
         display: inline-flex;
         flex-flow: column;
-        width: 100%;
       }
+
 
       .panel {
         min-height: 300px;
         margin-bottom: 20px;
+        width: 100%;
 
         h2 {
           font-family: AvenirNextLTPro-Demi, Helvetica, Arial, sans-serif;
@@ -38,22 +39,23 @@
       }
 
       .compare-block-title {
-        font-size: 36px;
-        line-height: 1;
-        letter-spacing: 1px;
-        z-index: 1
-      }
+        width: 100%;
 
-      .compare-block-text {
-        font-size: $base-padding;
-        margin: 20px 0;
+        .title {
+          font-size: 2em;
+        }
+
+        .compare-block-text {
+          font-size: 1.3em;
+          margin: 20px 0;
+        }
       }
 
       .compare-block-footer {
-        font-size: 16px;
+        font-size: 1em;
 
         p:first-child {
-          font-size: $base-padding;
+          font-size: 1.2em;
         }
       }
     }
@@ -62,6 +64,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      font-size: 1.2em;
       padding: 0;
 
       .screenshot {
@@ -74,22 +77,17 @@
       }
 
       .description {
-        flex-basis: 33.3%;
-        margin: 24px 24px 0 $base-padding;
+        padding: 24px 24px 0 $base-padding;
 
         &__title {
-          font-size: 20px;
+          width: 100%;
+          font-size: 1.3em;
           margin-bottom: 16px;
         }
 
         &__text {
-          font-size: 16px;
-        }
-
-        &__footer {
           width: 100%;
-          font-size: 16px;
-          margin-top: $base-padding;
+          font-size: 1em;
         }
       }
     }

@@ -2,14 +2,23 @@
   &__about {
     padding: $padding-large + 10px 0;
     background: linear-gradient($color-base, $color-general);
+
     h2 {
       color: $color-black;
       line-height: 1.5;
+
+      @include resolution_smartphone-and-tablet {
+        padding-right: .8em;
+      }
+
+      @include resolution_smartphone-and-tablet {
+        margin-bottom: .8em;
+      }
     }
 
-    .about__secondary-text {
-      color: $color-gray;
-      font-size: 14px;
+    p {
+      font-size: .8em;
+      color: $color-black-light
     }
   }
 }
