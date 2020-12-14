@@ -1,6 +1,8 @@
 <div class="panel">
   <div class="panel__group row">
-    <div class="col-sm-3"><h6>Protein Classes</h6></div>
+    <div class="col-sm-3">
+      <h6>{{ 'gene_page_hpa_protein_classes' | translate }}</h6>
+    </div>
     <ul class="panel__item col list list--bulletted">
       <!-- TODO: These are two different objects parsed from the one source at different time  -->
       <ng-container *ngIf="translate.currentLang === 'ru' && gene.proteinClasses">
@@ -29,8 +31,11 @@
     </ul>
   </div>
 
-  <div class="panel__group row">
-    <div class="col-sm-3"><h6>Biological Process</h6></div>
+  <div *ngIf="hpa.BiologicalProcess"
+       class="panel__group row">
+    <div class="col-sm-3">
+      <h6>{{ 'gene_page_hpa_biological_process' | translate }}</h6>
+    </div>
     <ul class="panel__item col list list--bulletted">
 
       <li *ngFor="let item of hpa.BiologicalProcess">
@@ -39,8 +44,11 @@
     </ul>
   </div>
 
-  <div class="panel__group row">
-    <div class="col-sm-3"><h6>Molecular Function</h6></div>
+  <div *ngIf="hpa.MolecularFunction"
+       class="panel__group row">
+    <div class="col-sm-3">
+      <h6>{{ 'gene_page_hpa_molecular_function' | translate }}</h6>
+    </div>
     <ul class="panel__item col list list--bulletted">
       <li *ngFor="let item of hpa.MolecularFunction">
         {{ item }}
@@ -48,16 +56,19 @@
     </ul>
   </div>
 
-  <div class="panel__group row">
-    <div class="col-12 col-sm-3"><h6>Subcellular Location</h6></div>
+  <div *ngIf="hpa.SubcellularLocation || hpa.SubcellularMainLocation || hpa.SubcellularAdditionalLocation"
+       class="panel__group row">
+    <div class="col-12 col-sm-3">
+      <h6>{{ 'gene_page_hpa_subcellular_location' | translate }}</h6>
+    </div>
 
     <div class="panel__item col">
-        <ng-container *ngIf="hpa.SubcellularLocation">
+      <ng-container *ngIf="hpa.SubcellularLocation">
           <span *ngFor="let item of hpa.SubcellularLocation"
                 class="alias"
           >{{ item }}
           </span>
-        </ng-container>
+      </ng-container>
 
       <ng-container *ngIf="hpa.SubcellularMainLocation">
         <ng-container *ngIf="!isSimilar(hpa.SubcellularLocation, hpa.SubcellularMainLocation)">
@@ -67,22 +78,23 @@
           </span>
         </ng-container>
       </ng-container>
-    </div>
 
-    <ng-container
-      *ngIf="hpa.SubcellularAdditionalLocation"
-    >
-      <ng-container *ngIf="!isSimilar(hpa.SubcellularMainLocation, hpa.SubcellularAdditionalLocation)">
+      <ng-container *ngIf="hpa.SubcellularAdditionalLocation">
+        <ng-container *ngIf="!isSimilar(hpa.SubcellularMainLocation, hpa.SubcellularAdditionalLocation)">
         <span *ngFor="let item of hpa.SubcellularAdditionalLocation"
-            class="alias"
+              class="alias"
         >{{ item }}
         </span>
+        </ng-container>
       </ng-container>
-    </ng-container>
+    </div>
   </div>
 
-  <div class="panel__group row">
-    <div class="col-sm-3"><h6>Disease Involvement</h6></div>
+  <div *ngIf="hpa.DiseaseInvolvement"
+       class="panel__group row">
+    <div class="col-sm-3">
+      <h6></h6>
+    </div>
     <ul class="panel__item col list list--bulletted">
       <li *ngFor="let item of hpa.DiseaseInvolvement">
         {{ item }}
