@@ -4,7 +4,7 @@ import {Pipe, PipeTransform} from '@angular/core';
   name: 'linkify'
 })
 export class LinkifyPipe implements PipeTransform {
-  references: any = /(\[\w])/ig;
+  references: any = /(\[(\S)*])/ig;
 
   transform(text: string) {
     return this.parseUrl(text);
