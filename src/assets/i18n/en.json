@@ -146,5 +146,10 @@
   "favourites_added": "Added to Favourites! ✨",
   "favourites_removed": "Removed from Favourites \uD83D\uDCAB",
   "help_page_title": "Help Center",
-  "help_page_description": "All you need to know about Open Genes in Русский."
+  "help_page_description": "Все, что вы хотели знать об Open Genes",
+  "gene_page_hpa_protein_classes": "Protein classes",
+  "gene_page_hpa_biological_process": "Biological process",
+  "gene_page_hpa_molecular_function": "Molecular activity",
+  "gene_page_hpa_subcellular_location": "Cellular component",
+  "gene_page_hpa_disease_involvement": "Disease involvement"
 }

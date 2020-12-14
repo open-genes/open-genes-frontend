@@ -59,7 +59,6 @@
   "researches_age_group_1": "Возраст группы 1",
   "researches_age_group_2": "Возраст группы 2",
   "gene_page_intervention_moderates_aging": "Вмешательство в работу гена/продукта предотвращает связанное со старением ухудшение процесса или системы",
-
   "intervention_aging_result": "Результат",
   "intervention_aging_process": "Процесс/Система",
   "gene_page_researches_protein_regulates_genes": "Участие продукта гена в регуляции генов, связанных со старением",
@@ -73,7 +72,7 @@
   "header_menu_about": "О базе",
   "header_menu_api": "API",
   "header_menu_favourites": "Избранное",
-  "header_menu_help": "Справочная Информация",
+  "header_menu_help": "Справочная информация",
   "footer_json_data": "Данные в JSON",
   "alert_error_invalid_username": "Неверное имя пользователя или пароль.",
   "alert_error_login_unsuccessful": "Ошибка входа. Попробуйте войти снова.",
@@ -147,5 +146,11 @@
   "favourites_added": "Добавлено в Избранное! ✨",
   "favourites_removed": "Убрано из Избранного! \uD83D\uDCAB",
   "help_page_title": "Справочная информация",
-  "help_page_description": "Все, что вы хотели знать об Open Genes на русском."
+  "help_page_description": "Все, что вы хотели знать об Open Genes",
+  "gene_page_hpa_protein_classes": "Классы белков",
+  "gene_page_hpa_biological_process": "Биологический процесс",
+  "gene_page_hpa_molecular_function": "Молекулярное взаимодействие",
+  "gene_page_hpa_subcellular_location": "Клеточный компонент",
+  "gene_page_hpa_disease_involvement": "Связь с заболеваниями"
+
 }
