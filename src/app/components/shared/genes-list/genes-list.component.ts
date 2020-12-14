@@ -76,6 +76,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   ngOnInit() {
     this.areMoreThan2FiltersApplied();
     this.showPassedData();
+    this.initWindowWidth();
     this.detectWindowWidth();
   }
 
@@ -179,6 +180,15 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   toggleGenesView() {
     return this.asTableRow = !this.asTableRow;
+  }
+
+  private initWindowWidth(): void {
+    this.windowService.setWindowWidth().pipe(
+      takeUntil(this.ngUnsubscribe)
+    ).subscribe((width) => {
+      this.isMobile = width <= this.resMobile;
+      this.cdRef.markForCheck();
+    });
   }
 
   private detectWindowWidth(): void {

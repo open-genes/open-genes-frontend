@@ -16,7 +16,7 @@ import {FavouritesService} from '../../../core/services/favourites.service';
 import {MatCardModule} from '@angular/material/card';
 import {WindowService} from '../../../core/services/browser/window.service';
 import {GeneMenuComponent} from './components/gene-menu.component';
-import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [

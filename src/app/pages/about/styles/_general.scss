@@ -1,6 +1,6 @@
 .about-page {
   h2 {
-    font-size: 1.6rem;
+    font-size: 1.6em;
   }
 
   .panel {
@@ -8,10 +8,10 @@
   }
 
   @include resolution_desktop-and-up {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   @include resolution_smartphone-and-tablet {
-    font-size: 14px;
+    font-size: 11px;
   }
 }
