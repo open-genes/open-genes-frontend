@@ -77,7 +77,7 @@
       }
 
       .description {
-        padding: 24px 24px 0 $base-padding;
+        padding: $base-padding $base-padding 0 0;
 
         &__title {
           width: 100%;
@@ -96,6 +96,12 @@
       .compare-block-top {
         padding: 0 $base-padding 0 0;
       }
+
+      .compare-block-bottom {
+        .description__wrapper {
+          padding: 0 4%;
+        }
+      }
     }
 
     @include resolution_smartphone-and-tablet {
@@ -110,7 +116,6 @@
 
         .description__wrapper {
           flex-direction: column;
-          margin: 0 -#{$base-padding};
         }
       }
     }

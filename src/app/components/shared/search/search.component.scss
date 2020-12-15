@@ -1,6 +1,8 @@
 @import "src/app/components/styles";
 
 $search-input-height: 40px;
+$search-switch-width: 50px;
+$mobile-container-vertical-padding: 5px;
 
 :host {
   display: block;
@@ -12,12 +14,12 @@ $search-input-height: 40px;
 }
 
 .cancel-search-button {
-  flex: 0 0 $search-input-height;
-  min-width: $search-input-height;
-  align-self: flex-start;
+  position: absolute;
+  top: #{$mobile-container-vertical-padding};
+  left: 0;
+  z-index: 1;
+  width: $search-input-height;
   height: $search-input-height;
-  align-items: center;
-  justify-content: center;
   display: none;
 }
 
@@ -46,19 +48,18 @@ $search-input-height: 40px;
 
   // Field
   &__field {
-    display: flex;
-    flex: 1 1 auto;
-    max-width: 100%;
     appearance: none;
+    display: block;
+    width: 100%;
     height: $search-input-height;
     line-height: $search-input-height;
-    padding: 0 $search-input-height 0 10px;
+    padding: 0 $search-input-height 0 #{$search-switch-width + 10px};
     resize: none;
     font-size: $font-size + 1;
     font-weight: $font-weight-medium;
     color: $color-black;
     background-color: $color-white;
-    border-radius: 0 #{$input-border-radius} #{$input-border-radius} 0;
+    border-radius: $input-border-radius;
     border: 1px solid $color-borders;
     border-left: 0;
     transition: border .15s linear;
@@ -121,31 +122,33 @@ $search-input-height: 40px;
   }
 
   &__switch {
-    position: relative;
-    display: flex;
-    flex: 1 0 100px;
-    min-width: 100px;
-    align-items: center;
-    justify-content: center;
-    max-width: 100px;
-    width: $search-input-height * 1.5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: block;
+    width: $search-switch-width;
     height: $search-input-height;
     background: linear-gradient($color-general, $color-base);
     font-size: $font-size-small;
     color: $color-white;
-    padding: 0 10px;
+    padding: 0;
     text-align: center;
     @include text-overflow;
     border-radius: #{$input-border-radius} 0 0 #{$input-border-radius};
 
     .fa {
       display: inline-block;
+      vertical-align: middle;
       height: 16px;
       line-height: 1;
       font-size: 16px;
-      margin-left: .5em;
       position: relative;
-      top: -3px
+
+      &.fa-sort-down {
+        top: -2px; // fix
+        margin-left: 5px;
+      }
     }
   }
 
@@ -221,15 +224,17 @@ $search-input-height: 40px;
       box-shadow: 0 5px 5px 0 rgba($color-black, .15);
 
       .search-form__panel {
-        padding: 10px;
+        padding: #{$mobile-container-vertical-padding} 10px #{$mobile-container-vertical-padding} 40px;
         z-index: 1;
 
         .cancel-search-button {
-          display: flex;
+          display: block;
         }
 
         .search-form__autocomplete-list {
+          position: fixed;
           top: 50px;
+          left: 0;
           border: 0;
         }
       }

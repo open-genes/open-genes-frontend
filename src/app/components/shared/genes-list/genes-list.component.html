@@ -8,7 +8,7 @@
 
 <ng-container *ngIf="(isGoTermsMode && isGoSearchPerformed && !isGoTermsModeError) || (!isGoTermsMode && searchedData?.length !== 0 && !isLoading)">
   <!-- Filters -->
-  <div *ngIf="isFilterPanel" class="view-panel">
+  <div *ngIf="isFilterPanel && !isMobile" class="view-panel">
     <div class="filters-group view-panel__filters">
       <button
         class="filter name-filter"
