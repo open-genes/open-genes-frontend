@@ -32,8 +32,12 @@
       <button
         [matMenuTriggerFor]="searchMenu"
         class="search-form__switch"
-      >{{ (isGoSearchMode ? 'search_for_go_terms' : 'search_for_functions') | translate }} <span
-        class="fa far fa-sort-down"></span>
+        [matTooltip]="(isGoSearchMode ? 'search_for_go_terms' : 'search_for_functions') | translate"
+      >
+        <span
+          [ngClass]="isGoSearchMode ? 'fa-book' : 'fa-dna'"
+          class="fa far"></span>
+        <span class="fa far fa-sort-down"></span>
       </button>
 
       <!-- TODO: Use matNativeControl -->
@@ -47,17 +51,16 @@
         (focusin)="!isGoSearchMode? search() : triggerGoSearch()"
         (keydown.enter)="!isGoSearchMode? search(): triggerGoSearch()"
       >
-
       <mat-menu #searchMenu>
         <button mat-menu-item
                 (click)="setGoSearchMode(false)"
                 [disabled]="!isGoSearchMode"
-        >{{ 'search_for_functions' | translate }}
+        ><span class="fa fal fa-dna __mr-5"></span> {{ 'search_for_functions' | translate }}
         </button>
         <button mat-menu-item
                 (click)="setGoSearchMode(true)"
                 [disabled]="isGoSearchMode"
-        >{{ 'search_for_go_terms' | translate }}
+        ><span class="fa fal fa-book __mr-5"></span> {{ 'search_for_go_terms' | translate }}
         </button>
       </mat-menu>
     </div>

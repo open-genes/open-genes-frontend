@@ -3,8 +3,13 @@
     font-size: 1.6em;
   }
 
+  p {
+    word-break: break-word;
+    hyphens: auto;
+  }
+
   .panel {
-    padding: 40px;
+    padding: 40px 24px;
   }
 
   @include resolution_desktop-and-up {
