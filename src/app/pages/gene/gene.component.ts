@@ -22,6 +22,8 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   public geneOntologyActivityMap: Map<string, string>;
   public commentsReferenceLinksMap: Map<string, string>;
   public expressionMaxValue: number;
+  public isAnyContent: boolean;
+  public isAnyResearchFilled: boolean;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
@@ -35,9 +37,9 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
     this.routeSubscribe = activateRoute.params.subscribe(params => this.symbol = params.id);
   }
 
-  static chartMaxValue(object) {
+  static chartMaxValue(obj: object): number {
     const objArray = [];
-    for (const value of Object.values(object)) {
+    for (const value of Object.values(obj)) {
       objArray.push(value['exp_rpkm']);
     }
     return Math.max(...objArray);
@@ -54,34 +56,38 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
       this.expressionMaxValue = GeneComponent.chartMaxValue(this.gene.expression);
       this.commentsReferenceLinksMap = this.toMap(this.gene.commentsReferenceLinks);
     });
+
+    this.isContent();
+    this.areResearches();
   }
 
   // Traits to define if content exists
-  public isContent() {
-    return !!(this.gene.commentEvolution ||
-      this.gene.commentFunction ||
-      this.gene.commentCause.length !== 0 ||
-      this.gene.commentAging ||
-      this.gene.researches.increaseLifespan.length !== 0 ||
-      this.gene.researches.ageRelatedChangesOfGene.length !== 0 ||
-      this.gene.researches.interventionToGeneImprovesVitalProcesses.length !== 0 ||
-      this.gene.researches.proteinRegulatesOtherGenes.length !== 0 ||
-      this.gene.researches.geneAssociatedWithProgeriaSyndromes.length !== 0 ||
-      this.gene.researches.geneAssociatedWithLongevityEffects.length !== 0 ||
-      this.gene.expression.length !== 0 ||
-      this.gene.orthologs.length !== 0 ||
-      this.gene.terms);
+  public isContent(): void {
+    this.isAnyContent =
+      this.gene?.commentEvolution ||
+      this.gene?.commentFunction ||
+      this.gene?.commentCause.length !== 0 ||
+      this.gene?.commentAging ||
+      this.gene?.researches.increaseLifespan.length !== 0 ||
+      this.gene?.researches.ageRelatedChangesOfGene.length !== 0 ||
+      this.gene?.researches.interventionToGeneImprovesVitalProcesses.length !== 0 ||
+      this.gene?.researches.proteinRegulatesOtherGenes.length !== 0 ||
+      this.gene?.researches.geneAssociatedWithProgeriaSyndromes.length !== 0 ||
+      this.gene?.researches.geneAssociatedWithLongevityEffects.length !== 0 ||
+      this.gene?.expression.length !== 0 ||
+      this.gene?.orthologs.length !== 0 ||
+      this.gene?.terms;
+    console.log(this.isAnyContent);
   }
 
-  public areResearches() {
-    return !!(
-      this.gene.researches.increaseLifespan.length !== 0 ||
-      this.gene.researches.ageRelatedChangesOfGene.length !== 0 ||
-      this.gene.researches.interventionToGeneImprovesVitalProcesses.length !== 0 ||
-      this.gene.researches.proteinRegulatesOtherGenes.length !== 0 ||
-      this.gene.researches.geneAssociatedWithProgeriaSyndromes.length !== 0 ||
-      this.gene.researches.geneAssociatedWithLongevityEffects.length !== 0
-    );
+  private areResearches(): void {
+    this.isAnyResearchFilled =
+      this.gene?.researches.increaseLifespan.length !== 0 ||
+      this.gene?.researches.ageRelatedChangesOfGene.length !== 0 ||
+      this.gene?.researches.interventionToGeneImprovesVitalProcesses.length !== 0 ||
+      this.gene?.researches.proteinRegulatesOtherGenes.length !== 0 ||
+      this.gene?.researches.geneAssociatedWithProgeriaSyndromes.length !== 0 ||
+      this.gene?.researches.geneAssociatedWithLongevityEffects.length !== 0;
   }
 
   public isGeneOntology() {

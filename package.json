@@ -8,8 +8,9 @@
     "ng": "ng",
     "start": "npm run sprites && ng serve",
     "build": "npm run sprites && ng build",
+    "build-dev": "npm run sprites && ng build --configuration=develop",
     "build-staging": "npm run sprites && ng build --configuration=staging",
-    "build-prod": "npm run sprites && ng build --prod --output-hashing=all",
+    "build-prod": "npm run sprites && ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
