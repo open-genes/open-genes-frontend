@@ -208,23 +208,38 @@
                 </section>
 
                 <section *ngIf="isAnyResearchFilled">
-                  <h2>{{ 'gene_page_title_researches' | translate }}</h2>
+                  <h2 class="__mb-15">{{ 'gene_page_title_researches' | translate }}</h2>
                   <app-researches [gene]="gene"></app-researches>
                 </section>
 
-                <section *ngIf="!isAnyResearchFilled">
-                  <h2>{{ 'gene_page_title_summary' | translate }}</h2>
-                  <app-manual-descriptions [gene]="gene"></app-manual-descriptions>
-                </section>
+                <section>
+                  <h2 *ngIf="gene.commentEvolution || gene.commentEvolution || (!isAnyResearchFilled && gene.commentAging)"
+                      class="__mb-15"
+                  >{{ 'gene_page_title_summary' | translate }}</h2>
 
-                <section *ngIf="gene.commentFunction">
-                  <h3>{{ 'gene_page_title_function' | translate }}</h3>
-                  <article
-                    appDynamicContentAnchors
-                    id="function"
-                    [innerHTML]="gene.commentFunction | linkify"
-                  >
-                  </article>
+                  <ng-container *ngIf="gene.commentEvolution">
+                    <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
+                    <article
+                      appDynamicContentAnchors
+                      id="evolution"
+                      [innerHTML]="gene.commentEvolution | linkify"
+                    >
+                    </article>
+                  </ng-container>
+
+                  <ng-container *ngIf="gene.commentFunction">
+                    <h3>{{ 'gene_page_title_function' | translate }}</h3>
+                    <article
+                      appDynamicContentAnchors
+                      id="function"
+                      [innerHTML]="gene.commentFunction | linkify"
+                    >
+                    </article>
+                  </ng-container>
+
+                  <ng-container *ngIf="!isAnyResearchFilled && gene.commentAging">
+                    <app-deprecated-descriptions [gene]="gene"></app-deprecated-descriptions>
+                  </ng-container>
                 </section>
 
                 <section

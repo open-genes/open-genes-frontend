@@ -1,5 +1,7 @@
 # Open Genes — Frontend
 
+[https://localhost:3000/](https://localhost:3000/)
+
 Local JIT build: `npm run start`
 
 Dev. stand test build: `npm run build`

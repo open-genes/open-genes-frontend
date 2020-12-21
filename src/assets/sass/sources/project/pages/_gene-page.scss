@@ -44,7 +44,10 @@
 
       .title__vendors { // this block may go under the title
         max-width: 100%;
-        padding-top: 5px; // because .alias inside have the same margin-bottom
+
+        @include resolution_tablet-and-up {
+          padding-top: 5px; // because .alias inside have the same margin-bottom
+        }
       }
 
       .title__updated { // date always remains on top right corner

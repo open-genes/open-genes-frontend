@@ -80,14 +80,14 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
     console.log(this.isAnyContent);
   }
 
-  private areResearches(): void {
+  private areResearches(): void { // TODO: backend should always return these fields, not only when the form is filled
     this.isAnyResearchFilled =
-      this.gene?.researches.increaseLifespan.length !== 0 ||
-      this.gene?.researches.ageRelatedChangesOfGene.length !== 0 ||
-      this.gene?.researches.interventionToGeneImprovesVitalProcesses.length !== 0 ||
-      this.gene?.researches.proteinRegulatesOtherGenes.length !== 0 ||
-      this.gene?.researches.geneAssociatedWithProgeriaSyndromes.length !== 0 ||
-      this.gene?.researches.geneAssociatedWithLongevityEffects.length !== 0;
+      this.gene?.increaseLifespan.length !== 0 ||
+      this.gene?.geneAssociatedWithProgeriaSyndromes.length !== 0 ||
+      this.gene?.geneAssociatedWithLongevityEffects.length !== 0 ||
+      this.gene?.ageRelatedChangesOfGene.length !== 0 ||
+      this.gene?.interventionToGeneImprovesVitalProcesses.length !== 0 ||
+      this.gene?.proteinRegulatesOtherGenes.length !== 0;
   }
 
   public isGeneOntology() {

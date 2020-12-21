@@ -3,16 +3,17 @@
   <div class="table-section __mt-20 __w-content">
     <table class="table">
       <thead>
-      <th>{{ "gene_intervention_type" | translate }}</th>
+      <th class="__cell-width-small">{{ "gene_intervention_type" | translate }}</th>
       <th>{{ "gene_intervention_result" | translate }}</th>
       <th>{{ "researches_model_organism" | translate }}</th>
       <th>{{ "researches_organism_line" | translate }}</th>
       <th>{{ "researches_age" | translate }}<sup>*</sup></th>
+      <th>{{ "researches_genotype" | translate }}<sup>*</sup></th>
       <th><span class="fa fal fa-mars"></span></th>
       <th><span class="fa fal fa-venus"></span></th>
       <th><span class="fa fal fa-venus"></span><span class="fa fal fa-mars"></span></th>
+      <th class="__cell-width-medium">{{ "researches_comment" | translate }}</th>
       <th>{{ "researches_reference" | translate }}</th>
-      <th>{{ "researches_comment" | translate }}</th>
       </thead>
 
       <tr *ngFor="let object of gene.researches.increaseLifespan; let i = index">
@@ -32,6 +33,9 @@
           {{ object.age }}
         </td>
         <td class="__nowrap">
+          {{ object.genotype }}
+        </td>
+        <td class="__nowrap">
           {{ object.valueForMale }}
         </td>
         <td class="__nowrap">
@@ -41,11 +45,11 @@
           {{ object.valueForAll }}
         </td>
         <td>
-          <a href="https://doi.org/{{ object.reference }}" class="link"
-             about="_blank">{{ object.reference }}</a>
+          {{ object.comment }}
         </td>
         <td>
-          {{ object.comment }}
+          <a href="https://doi.org/{{ object.reference }}" class="link"
+             about="_blank">{{ object.reference }}</a>
         </td>
       </tr>
     </table>
@@ -60,16 +64,17 @@
   <div class="table-section __mt-20 __w-content">
     <table class="table">
       <thead>
-      <th>{{ "age_related_changes_type" | translate }}</th>
+      <th class="__cell-width-small">{{ "age_related_changes_type" | translate }}</th>
       <th>{{ "age_related_changes_sample" | translate }}</th>
       <th>{{ "researches_model_organism" | translate }}</th>
       <th>{{ "researches_age_group_1" | translate }}</th>
-      <th>{{ "researches_age_group_2" | translate }} </th>
+      <th>{{ "researches_age_group_2" | translate }}</th>
+      <th>{{ "age_related_changes_mrna_or_protein" | translate }}</th>
       <th><span class="fa fal fa-mars"></span></th>
       <th><span class="fa fal fa-venus"></span></th>
       <th><span class="fa fal fa-venus"></span><span class="fa fal fa-mars"></span></th>
+      <th class="__cell-width-medium">{{ "researches_comment" | translate }}</th>
       <th>{{ "researches_reference" | translate }}</th>
-      <th>{{ "researches_comment" | translate }}</th>
       </thead>
 
       <tr *ngFor="let object of gene.researches.ageRelatedChangesOfGene; let i = index">
@@ -89,6 +94,9 @@
           {{ object.ageTo }}
         </td>
         <td class="__nowrap">
+          {{ object.measurementType }}
+        </td>
+        <td class="__nowrap">
           {{ object.valueForMale }}
         </td>
         <td class="__nowrap">
@@ -98,11 +106,11 @@
           {{ object.valueForAll }}
         </td>
         <td>
-          <a href="https://doi.org/{{ object.reference }}" class="link"
-             about="_blank">{{ object.reference }}</a>
+          {{ object.comment }}
         </td>
         <td>
-          {{ object.comment }}
+          <a href="https://doi.org/{{ object.reference }}" class="link"
+             about="_blank">{{ object.reference }}</a>
         </td>
       </tr>
     </table>
@@ -114,15 +122,15 @@
   <div class="table-section __mt-20 __w-content">
     <table class="table">
       <thead>
-      <th>{{ "gene_intervention_type" | translate }}</th>
+      <th class="__cell-width-small">{{ "gene_intervention_type" | translate }}</th>
       <th>{{ "intervention_aging_process" | translate }}</th>
       <th>{{ "researches_model_organism" | translate }}</th>
 
       <th>{{ "researches_organism_line" | translate }}</th>
       <th>{{ "researches_age" | translate }}<sup>*</sup></th>
       <th>{{ "researches_sex" | translate }}</th>
+      <th class="__cell-width-medium">{{ "researches_comment" | translate }}</th>
       <th>{{ "researches_reference" | translate }}</th>
-      <th>{{ "researches_comment" | translate }}</th>
       </thead>
 
       <tr
@@ -146,11 +154,11 @@
           {{ object.sex }}
         </td>
         <td>
-          <a href="https://doi.org/{{ object.reference }}" class="link"
-             about="_blank">{{ object.reference }}</a>
+          {{ object.comment }}
         </td>
         <td>
-          {{ object.comment }}
+          <a href="https://doi.org/{{ object.reference }}" class="link"
+             about="_blank">{{ object.reference }}</a>
         </td>
       </tr>
     </table>
@@ -165,10 +173,10 @@
   <div class="table-section __mt-20 __w-content">
     <table class="table">
       <thead>
-      <th>{{ "protein_regulates_genes_activity" | translate }}</th>
+      <th class="__cell-width-small">{{ "protein_regulates_genes_activity" | translate }}</th>
       <th>{{ "gene" | translate }}</th>
+      <th class="__cell-width-medium">{{ "researches_comment" | translate }}</th>
       <th>{{ "researches_reference" | translate }}</th>
-      <th>{{ "researches_comment" | translate }}</th>
       </thead>
 
       <tr *ngFor="let object of gene.researches.proteinRegulatesOtherGenes; let i = index">
@@ -181,11 +189,11 @@
           >{{ object.regulatedGene.symbol }}</a>
         </td>
         <td>
-          <a href="https://doi.org/{{ object.reference }}" class="link"
-             about="_blank">{{ object.reference }}</a>
+          {{ object.comment }}
         </td>
         <td>
-          {{ object.comment }}
+          <a href="https://doi.org/{{ object.reference }}" class="link"
+             about="_blank">{{ object.reference }}</a>
         </td>
       </tr>
     </table>
@@ -198,8 +206,8 @@
     <table class="table">
       <thead>
       <th>{{ "progeria_syndrome" | translate }}</th>
+      <th class="__cell-width-medium">{{ "researches_comment" | translate }}</th>
       <th>{{ "researches_reference" | translate }}</th>
-      <th>{{ "researches_comment" | translate }}</th>
       </thead>
 
       <tr *ngFor="let object of gene.researches.geneAssociatedWithProgeriaSyndromes; let i = index">
@@ -207,11 +215,11 @@
           {{ object.progeriaSyndrome }}
         </td>
         <td>
-          <a href="https://doi.org/{{ object.reference }}" class="link"
-             about="_blank">{{ object.reference }}</a>
+          {{ object.comment }}
         </td>
         <td>
-          {{ object.comment }}
+          <a href="https://doi.org/{{ object.reference }}" class="link"
+             about="_blank">{{ object.reference }}</a>
         </td>
       </tr>
     </table>
@@ -223,11 +231,11 @@
   <div class="table-section __mt-20 __w-content">
     <table class="table">
       <thead>
-      <th>{{ "gene_page_allelic_polymorphism" | translate }}</th>
+      <th class="__cell-width-small">{{ "gene_page_allelic_polymorphism" | translate }}</th>
       <th>{{ "longevity_effects_effect" | translate }}</th>
       <th>{{ "researches_sex" | translate }}</th>
+      <th class="__cell-width-medium">{{ "researches_comment" | translate }}</th>
       <th>{{ "researches_reference" | translate }}</th>
-      <th>{{ "researches_comment" | translate }}</th>
       </thead>
 
       <tr *ngFor="let object of gene.researches.geneAssociatedWithLongevityEffects; let i = index">
@@ -241,11 +249,11 @@
           {{ object.sex }}
         </td>
         <td>
-          <a href="https://doi.org/{{ object.reference }}" class="link"
-             about="_blank">{{ object.reference }}</a>
+          {{ object.comment }}
         </td>
         <td>
-          {{ object.comment }}
+          <a href="https://doi.org/{{ object.reference }}" class="link"
+             about="_blank">{{ object.reference }}</a>
         </td>
       </tr>
     </table>
