@@ -9,6 +9,7 @@ table.table {
   thead th,
   tfoot th {
     color: $color-black-light;
+    text-align: left;
     background: rgba(0,0,0, .1);
   }
 
@@ -19,6 +20,13 @@ table.table {
   td {
     padding: .5em;
     border: 1px solid $color-border-light;
+
+    &:before {
+      content: ' ';
+      display: block;
+      min-width: 30px;
+      height: 0;
+    }
   }
 
   &--zebra,
@@ -52,6 +60,18 @@ table.table {
     td {
       padding: .5em;
       border: 1px solid $color-borders;
+    }
+  }
+
+  .__cell-width-small {
+    &:before {
+      width: 120px;
+    }
+  }
+
+  .__cell-width-medium {
+    &:before {
+      width: 200px;
     }
   }
 }
