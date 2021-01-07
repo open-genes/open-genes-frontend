@@ -1,3 +1,40 @@
+ul, ol {
+  &.list {
+    width: 100%;
+
+    li {
+      width: 100%;
+      position: relative;
+
+      .alias {
+        vertical-align: top;
+      }
+    }
+
+    li + li {
+      margin-top: .8ex;
+    }
+  }
+}
+
+ul.list--bulletted {
+  li {
+    padding-left: 1.8ex;
+
+    &:before {
+      content: " ";
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: $color-general;
+      position: absolute;
+      left: 0;
+      top: 1ex;
+      z-index: 0;
+    }
+  }
+}
 
 article,
 section {
@@ -70,45 +107,6 @@ section {
   & > a,
   & > p a {
     @extend .link;
-  }
-}
-
-ul, ol {
-  &.list {
-    width: 100%;
-    margin-bottom: 2ex;
-
-    li {
-      width: 100%;
-      position: relative;
-
-      .alias {
-        vertical-align: top;
-      }
-    }
-
-    li + li {
-      margin-top: .8ex;
-    }
-  }
-}
-
-ul.list--bulletted {
-  li {
-    padding-left: 1.8ex;
-
-    &:before {
-      content: " ";
-      display: block;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background-color: $color-general;
-      position: absolute;
-      left: 0;
-      top: 1ex;
-      z-index: 0;
-    }
   }
 }
 

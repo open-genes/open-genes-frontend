@@ -58,7 +58,7 @@
 
                 <b>{{ 'gene_page_title_contents' | translate }}</b>
 
-                <mat-nav-list *ngIf="isContent()">
+                <mat-nav-list *ngIf="isAnyContent">
                   <a mat-list-item
                      *ngIf="gene.commentEvolution"
                      [routerLink]="['/gene', symbol]" fragment="evolution">
@@ -195,7 +195,7 @@
 
             <section class="wrapper gene-page__articles">
               <div class="__w-100 articles__content"
-                   *ngIf="isContent();
+                   *ngIf="isAnyContent;
                       else noContent">
 
                 <section *ngIf="gene.commentCause.length !== 0">
@@ -207,37 +207,45 @@
                   </article>
                 </section>
 
-                <section *ngIf="areResearches()">
-                  <h3>{{ 'gene_page_title_researches' | translate }}</h3>
+                <section *ngIf="isAnyResearchFilled">
+                  <h2 class="__mb-15">{{ 'gene_page_title_researches' | translate }}</h2>
                   <app-researches [gene]="gene"></app-researches>
                 </section>
 
-                <section *ngIf="areResearches()">
-                  <app-manual-descriptions [gene]="gene"></app-manual-descriptions>
-                </section>
+                <section>
+                  <h2 *ngIf="gene.commentEvolution || gene.commentEvolution || (!isAnyResearchFilled && gene.commentAging)"
+                      class="__mb-15"
+                  >{{ 'gene_page_title_summary' | translate }}</h2>
 
-                <section *ngIf="gene.commentFunction">
-                  <h3>{{ 'gene_page_title_function' | translate }}</h3>
+                  <ng-container *ngIf="gene.commentEvolution">
+                    <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
+                    <article
+                      appDynamicContentAnchors
+                      id="evolution"
+                      [innerHTML]="gene.commentEvolution | linkify"
+                    >
+                    </article>
+                  </ng-container>
 
-                  <div class="__w-100 __mt-10 __mb-10">
-                    <ng-container *ngFor="let item of gene.functionalClusters">
-                      <span class="alias">{{item.name}}</span>
-                    </ng-container>
-                  </div>
+                  <ng-container *ngIf="gene.commentFunction">
+                    <h3>{{ 'gene_page_title_function' | translate }}</h3>
+                    <article
+                      appDynamicContentAnchors
+                      id="function"
+                      [innerHTML]="gene.commentFunction | linkify"
+                    >
+                    </article>
+                  </ng-container>
 
-                  <article
-                    appDynamicContentAnchors
-                    id="function"
-                    [innerHTML]="gene.commentFunction | linkify"
-                  >
-                  </article>
+                  <ng-container *ngIf="!isAnyResearchFilled && gene.commentAging">
+                    <app-deprecated-descriptions [gene]="gene"></app-deprecated-descriptions>
+                  </ng-container>
                 </section>
 
                 <section
                   *ngIf="isGeneOntology"
                   id="terms"
                 >
-
                   <h3 class="notranslate">Gene Ontology</h3>
                   <app-gene-ontology
                     [gene]="gene"
@@ -266,7 +274,7 @@
 
                 <app-reference
                   #Reference
-                  *ngIf="gene.commentsReferenceLinks"
+                  *ngIf="gene.commentsReferenceLinks.length !== 0"
                   class="__mt-30"
                   [gene]="this.commentsReferenceLinksMap"
                 ></app-reference>

@@ -4,8 +4,9 @@ export interface Lifespan {
   modelOrganism: string;
   organismLine: string;
   age: string;
-  valueForMale: any; // TODO: бэк не должен возвращать null
-  valueForFemale: any; // TODO: бэк не должен возвращать null
+  genotype: string; // Can have only these values: ++/--/+- TODO: change response to 0, 1, -1?
+  valueForMale: any; // TODO: backend shouldn't return null, but an empty value of the same type
+  valueForFemale: any; // TODO: backend shouldn't return null, but an empty value of the same type
   valueForAll: string;
   reference: string;
   comment: string;
@@ -18,16 +19,17 @@ export interface AgeRelatedChanges {
   organismLine: string;
   ageFrom: string;
   ageTo: string;
-  valueForMale: any; // TODO: бэк не должен возвращать null
-  valueForFemale: any; // TODO: бэк не должен возвращать null
-  valueForAll: string;
+  valueForMale: any; // TODO: backend shouldn't return null, but an empty value of the same type
+  valueForFemale: any; // TODO: backend shouldn't return null, but an empty value of the same type
+  valueForAll: any; // TODO: backend shouldn't return null, but an empty value of the same type
+  measurementType: string; // "MRNA" or "protein" in English version. TODO: change response to 0 and 1?
   reference: string;
   comment: string;
 }
 
 export interface InterventionAffectsAgingProcess {
   geneIntervention: string;
-  interventionResultForVitalProcess: string; // TODO: переименовать название вводящее в заблуждение
+  interventionResultForVitalProcess: string; // TODO: misleading name, rename
   vitalProcess: string;
   modelOrganism: string;
   organismLine: string;
@@ -63,7 +65,7 @@ export interface LongevityEffects {
   comment: string;
 }
 
-export interface Researches {
+export interface Researches { // TODO: backend should always return these fields, not only when the form is filled
   increaseLifespan: Lifespan[];
   ageRelatedChangesOfGene: AgeRelatedChanges[];
   interventionToGeneImprovesVitalProcesses: InterventionAffectsAgingProcess[];
