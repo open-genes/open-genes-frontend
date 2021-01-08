@@ -1,5 +1,5 @@
 export interface IconStyles {
-  width?: string,
-  height?: string,
-  transform?: string
+  width?: string;
+  height?: string;
+  transform?: string;
 }

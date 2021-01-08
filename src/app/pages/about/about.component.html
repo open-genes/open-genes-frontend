@@ -8,16 +8,12 @@
           </div>
           <div class="col header__text">
             <h1>
-              Открытые данные о&nbsp;связи генов и&nbsp;старения
+              {{ 'about_page_title' | translate }}
             </h1>
-            <p>
-              Мы даем исследователям в&nbsp;области генетики старения и&nbsp;связанных с&nbsp;ним
-              процессов возможность строить гипотезы, <br>используя проверенные данные,
-              и&nbsp;предоставляем необходимые инструменты.
-            </p>
+            <p>{{ 'about_page_subtitle' | translate }}</p>
 
             <button routerLink="/">
-              Начать поиск
+              {{ 'about_page_button' | translate }}
             </button>
           </div>
         </div>
@@ -28,23 +24,19 @@
         <div class="panel panel--w-shadow">
           <div class="row no-gutters">
             <div class="col-12 col-lg-6">
-              <h2>
-                Open Longevity Genes&nbsp;&mdash; это база данных генов человека,
-                ассоциированных со&nbsp;старением и&nbsp;продолжительностью жизни.
+              <h2>{{ 'about_page_about_section_title' | translate }}
+                <a href="{{ 'about_page_about_section_title_link' | translate }}"
+                   about="_blank">Open Longevity</a>
               </h2>
             </div>
             <div class="col-12 col-lg-6">
               <article>
                 <p>
-                  Одной из задач, стоящих перед исследователями, является хранение информации.
-                  Когда речь идет о&nbsp;биологических базах данных, часто подразумевают целый комплекс программных
-                  решений для хранения, сбора, добавления, курирования и&nbsp;представления данных.
+                  {{ 'about_page_about_section_desc1' | translate }}
                 </p>
 
                 <p>
-                  На сегодняшний день можно насчитать тысячи известных биологических баз данных.
-                  Биологических база данных старения, однако, не так много.
-                  Поэтому му занимаемся разработкой базы данных генов человека, связанных со старением.
+                  {{ 'about_page_about_section_desc2' | translate }}
                 </p>
               </article>
             </div>
@@ -58,30 +50,30 @@
         <div class="row no-gutters">
           <div class="col-12">
             <h2>
-              Чего нам не&nbsp;хватает в&nbsp;существующих базах генов
+              {{ 'about_page_why_section_title' | translate }}
             </h2>
           </div>
           <div class="col-12 features __mt-35">
             <div class="row no-gutters">
               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 feature">
-                Полной структурированной информации об&nbsp;изменениях работы генов, продлевающих жизнь млекопитающим
+                {{ 'about_page_why_section_1' | translate }}
               </div>
               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 feature">
-                Информации об аллельных вариантах генов, ассоциированных с долголетием у людей
+                {{ 'about_page_why_section_2' | translate }}
               </div>
               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 feature">
-                Полной информации о&nbsp;возрастных среднепопуляционных изменениях экспрессии гена по&nbsp;тканям у &nbsp;человека и&nbsp;животных
+                {{ 'about_page_why_section_3' | translate }}
               </div>
             </div>
             <div class="row no-gutters">
               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 feature">
-                Наиболее полных данных об эволюционной истории гена
+                {{ 'about_page_why_section_4' | translate }}
               </div>
               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 feature">
-                Представления списка всех генов и&nbsp;их основных характеристик в одном месте
+                {{ 'about_page_why_section_5' | translate }}
               </div>
               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 feature">
-                Возможности группировать и&nbsp;сравнивать гены по разным критериям и&nbsp;их сочетаниям;
+                {{ 'about_page_why_section_6' | translate }}
               </div>
             </div>
           </div>
@@ -96,12 +88,11 @@
 
             <div class="compare-block-title">
               <h1 class="title">
-                Курируемая база данных
+                {{ 'about_page_curated_section_title' | translate }}
               </h1>
 
               <p class="compare-block-text">
-                Биологи вручную собирают информацию об&nbsp;эволюции гена, его функциях, а&nbsp;также методах
-                определения ассоциации гена со&nbsp;старением и&nbsp;продолжительностью жизни.
+                {{ 'about_page_curated_section_subtitle' | translate }}
               </p>
             </div>
 
@@ -109,14 +100,14 @@
               <p>
                 <a class="link link--white link--underline"
                    routerLink="/help"
-                >Частые вопросы
+                >{{ 'about_page_faq' | translate }}
                 </a>
               </p>
               <p>
-                Например:
+                {{ 'about_page_example' | translate }}
                 <a class="link link--white link--underline"
                    routerLink="/help"
-                >Критерии отбора генов в&nbsp;базу
+                >{{ 'about_page_question_link' | translate }}
                 </a>
               </p>
             </div>
@@ -128,23 +119,27 @@
                    alt="Screenshot"></div>
             <div class="row no-gutters description__wrapper">
               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 description">
-                <h4 class="description__title">Исследуйте</h4>
+                <h4 class="description__title">
+                  {{ 'about_page_features_1_title' | translate }}
+                </h4>
                 <p class="description__text">
-                  Мы собрали данные о&nbsp;генах человека, ассоциированных со&nbsp;старением и&nbsp;о том, в какие процессы
-                  вовлечены их проудкты.
+                  {{ 'about_page_features_1_desc' | translate }}
                 </p>
               </div>
               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 description">
-                <h4 class="description__title">Сравнивайте</h4>
+                <h4 class="description__title">
+                  {{ 'about_page_features_2_title' | translate }}
+                </h4>
                 <p class="description__text">
-                  Сранвивайте гены по функциям, экспрессии, эволюционному возрасту, смотрите связи с другими генами при
-                  помощи GO.
+                  {{ 'about_page_features_2_desc' | translate }}
                 </p>
               </div>
               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 description">
-                <h4 class="description__title">Выгружайте</h4>
+                <h4 class="description__title">
+                  {{ 'about_page_features_3_title' | translate }}
+                </h4>
                 <p class="description__text">
-                  Работайте со&nbsp;всеми собранными и&nbsp;добавленными данными через веб-интерфейс и&nbsp;API.
+                  {{ 'about_page_features_3_desc' | translate }}
                 </p>
               </div>
             </div>

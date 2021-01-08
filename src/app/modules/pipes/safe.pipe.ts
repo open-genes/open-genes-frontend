@@ -1,30 +1,39 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { DomSanitizer, SafeHtml, SafeResourceUrl, SafeScript, SafeStyle, SafeUrl } from '@angular/platform-browser';
+import { Pipe, PipeTransform } from "@angular/core";
+import {
+  DomSanitizer,
+  SafeHtml,
+  SafeResourceUrl,
+  SafeScript,
+  SafeStyle,
+  SafeUrl,
+} from "@angular/platform-browser";
 
 @Pipe({
-  name: 'safe',
+  name: "safe",
 })
 export class SafePipe implements PipeTransform {
-  constructor(protected sanitizer: DomSanitizer) {
-  }
+  constructor(protected sanitizer: DomSanitizer) {}
 
-  public transform(value: any, type: string): SafeHtml | SafeStyle | SafeScript | SafeUrl | SafeResourceUrl {
+  public transform(
+    value: any,
+    type: string
+  ): SafeHtml | SafeStyle | SafeScript | SafeUrl | SafeResourceUrl {
     switch (type) {
-      case 'html':
+      case "html":
         return this.sanitizer.bypassSecurityTrustHtml(value);
-      case 'style':
+      case "style":
         return this.sanitizer.bypassSecurityTrustStyle(value);
-      case 'styleUrl':
+      case "styleUrl":
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         return this.sanitizer.bypassSecurityTrustStyle(`url(${value})`);
-      case 'script':
+      case "script":
         return this.sanitizer.bypassSecurityTrustScript(value);
-      case 'url':
+      case "url":
         return this.sanitizer.bypassSecurityTrustUrl(value);
-      case 'resourceUrl':
+      case "resourceUrl":
         return this.sanitizer.bypassSecurityTrustResourceUrl(value);
       default:
         throw new Error(`Invalid safe type specified: ${type}`);
     }
   }
 }
-

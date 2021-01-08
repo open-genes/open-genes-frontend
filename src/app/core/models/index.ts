@@ -1,2 +1,2 @@
-export * from './genes.model';
-export * from './filter.model';
+export * from "./genes.model";
+export * from "./filter.model";

@@ -1,8 +1,6 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { NgModule } from "@angular/core";
 
 // Angular Material Components
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatCheckboxModule,
   MatButtonModule,
@@ -33,7 +31,8 @@ import {
   MatSnackBarModule,
   MatTableModule,
   MatSortModule,
-  MatPaginatorModule} from '@angular/material/./';
+  MatPaginatorModule,
+} from "@angular/material/./";
 
 @NgModule({
   imports: [
@@ -66,7 +65,7 @@ import {
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
   ],
   exports: [
     MatCheckboxModule,
@@ -98,9 +97,7 @@ import {
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
-  ]
+    MatPaginatorModule,
+  ],
 })
-
-export class VendorsModule {
-}
+export class VendorsModule {}
