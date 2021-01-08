@@ -1,18 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from "@angular/core";
 
 @Component({
-  selector: 'app-reference',
-  templateUrl: './reference.component.html',
-  styleUrls: ['./reference.component.scss']
+  selector: "app-reference",
+  templateUrl: "./reference.component.html",
+  styleUrls: ["./reference.component.scss"],
 })
-
-export class ReferenceComponent implements OnInit {
+export class ReferenceComponent {
   @Input() gene: any;
 
-  constructor() { }
-
-  ngOnInit() {
-
+  constructor() {
+    // empty
   }
-
 }

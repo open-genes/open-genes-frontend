@@ -8,25 +8,25 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild
-} from '@angular/core';
-import {Subject, Observable, BehaviorSubject} from 'rxjs';
-import {PageClass} from '../../../pages/page.class';
-import {takeUntil} from 'rxjs/operators';
-import {TranslateService} from '@ngx-translate/core';
-import {ApiService} from '../../../core/services/api/open-genes.api.service';
-import {Genes} from '../../../core/models';
-import {FavouritesService} from 'src/app/core/services/favourites.service';
-import {FilterService} from './services/filter.service';
-import {WindowService} from 'src/app/core/services/browser/window.service';
-import {FilterTypesEnum} from './services/filter-types.enum';
-import {MatSnackBar} from '@angular/material/snack-bar';
+  ViewChild,
+} from "@angular/core";
+import { Subject, BehaviorSubject } from "rxjs";
+import { PageClass } from "../../../pages/page.class";
+import { takeUntil } from "rxjs/operators";
+import { TranslateService } from "@ngx-translate/core";
+import { ApiService } from "../../../core/services/api/open-genes.api.service";
+import { Genes } from "../../../core/models";
+import { FavouritesService } from "src/app/core/services/favourites.service";
+import { FilterService } from "./services/filter.service";
+import { WindowService } from "src/app/core/services/browser/window.service";
+import { FilterTypesEnum } from "./services/filter-types.enum";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
-  selector: 'app-genes-list',
-  templateUrl: './genes-list.component.html',
-  styleUrls: ['./genes-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: "app-genes-list",
+  templateUrl: "./genes-list.component.html",
+  styleUrls: ["./genes-list.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   @Input() dataSource: Genes[];
@@ -34,9 +34,10 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   @Input() isGoSearchPerformed: boolean;
   @Output() updateGenesList = new EventEmitter();
   @Output() passQuery: EventEmitter<string> = new EventEmitter<string>();
-  @ViewChild('templateAddedToFavorites') templateAddedToFavorites: ElementRef;
-  @ViewChild('templateRemovedFromFavorites') templateRemovedFromFavorites: ElementRef;
-  @ViewChild('searchResultsFound') searchResultsFound: ElementRef;
+  @ViewChild("templateAddedToFavorites") templateAddedToFavorites: ElementRef;
+  @ViewChild("templateRemovedFromFavorites")
+  templateRemovedFromFavorites: ElementRef;
+  @ViewChild("searchResultsFound") searchResultsFound: ElementRef;
 
   public searchedData: Genes[];
   public genesPerPage = 20;
@@ -67,13 +68,13 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private favouritesService: FavouritesService,
     private readonly cdRef: ChangeDetectorRef,
-    private windowService: WindowService,
+    private windowService: WindowService
   ) {
     super();
     this.favouritesService.getItems();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.areMoreThan2FiltersApplied();
     this.showPassedData();
     this.initWindowWidth();
@@ -88,7 +89,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   /**
    * HTTP
    */
-  showPassedData() {
+  showPassedData(): void {
     this.searchedData = this.dataSource;
     this.isLoading = false;
     this.cdRef.markForCheck();
@@ -96,42 +97,58 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   public filterByFuncClusters(id: number): void {
     this.filterService.filterByFuncClusters(id);
-    this.filterService.getByFuncClusters().subscribe((list) => {
-      if (list.length !== 0) {
-        this.apiService.getGenesByFunctionalClusters(list).subscribe((genes) => {
-          this.searchedData = genes;
-          this.cdRef.markForCheck();
-        }, error => this.errorLogger(this, error));
-      }
-    }, error => this.errorLogger(this, error));
+    this.filterService.getByFuncClusters().subscribe(
+      (list) => {
+        if (list.length !== 0) {
+          this.apiService.getGenesByFunctionalClusters(list).subscribe(
+            (genes) => {
+              this.searchedData = genes;
+              this.cdRef.markForCheck();
+            },
+            (error) => this.errorLogger(this, error)
+          );
+        }
+      },
+      (error) => this.errorLogger(this, error)
+    );
   }
 
   public filterByExpressionChange(id: number): void {
     this.filterService.filterByExpressionChange(id);
-    this.filterService.getByExpressionChange().subscribe((expression) => {
-      if (expression) {
-        this.apiService.getGenesByExpressionChange(expression).subscribe(genes => {
-          this.searchedData = genes;
-          this.cdRef.markForCheck();
-        }, error => this.errorLogger(this, error));
-      }
-    }, error => this.errorLogger(this, error));
+    this.filterService.getByExpressionChange().subscribe(
+      (expression) => {
+        if (expression) {
+          this.apiService.getGenesByExpressionChange(expression).subscribe(
+            (genes) => {
+              this.searchedData = genes;
+              this.cdRef.markForCheck();
+            },
+            (error) => this.errorLogger(this, error)
+          );
+        }
+      },
+      (error) => this.errorLogger(this, error)
+    );
   }
 
   /**
    * Update already loaded and then filtered data on typing
    */
-  updateGeneListOnTyping(event: Genes[]) {
+  public updateGeneListOnTyping(event: Genes[]): void {
     if (!this.isGoTermsMode) {
       this.searchedData = event;
 
-      this.snackBar.open(`${this.searchResultsFound.nativeElement.textContent} ${this.searchedData.length}`, '', {
-        duration: 600
-      });
+      this.snackBar.open(
+        `${this.searchResultsFound.nativeElement.textContent} ${this.searchedData.length}`,
+        "",
+        {
+          duration: 600,
+        }
+      );
     }
   }
 
-  loadMoreGenes() {
+  public loadMoreGenes(): void {
     if (this.searchedData.length >= this.loadedGenesQuantity) {
       this.loadedGenesQuantity += this.genesPerPage;
     }
@@ -148,27 +165,37 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public searchGenesByGoTerm(query: string): void {
     if (query) {
       const request = query.toLowerCase();
-      this.apiService.getGoTermMatchByString(request).subscribe((genes) => {
-        this.searchedData = genes; // If nothing found, will return empty array
-        this.isGoSearchPerformed = true;
+      this.apiService.getGoTermMatchByString(request).subscribe(
+        (genes) => {
+          this.searchedData = genes; // If nothing found, will return empty array
+          this.isGoSearchPerformed = true;
 
-        // Map data if it's presented:
-        for (const item of this.searchedData) {
-          this.biologicalProcess = this.toMap(item['terms']?.biological_process);
-          this.cellularComponent = this.toMap(item['terms']?.cellular_component);
-          this.molecularActivity = this.toMap(item['terms']?.molecular_activity);
-          console.log(item);
-        }
+          // Map data if it's presented:
+          for (const item of this.searchedData) {
+            this.biologicalProcess = this.toMap(item.terms?.biological_process);
+            this.cellularComponent = this.toMap(item.terms?.cellular_component);
+            this.molecularActivity = this.toMap(item.terms?.molecular_activity);
+            console.log(item);
+          }
 
-        const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
-        this.isGoTermsModeError = !isAnyTermFound;
+          const isAnyTermFound =
+            this.biologicalProcess ||
+            this.cellularComponent ||
+            this.molecularActivity;
+          this.isGoTermsModeError = !isAnyTermFound;
 
-        this.snackBar.open(`${this.searchResultsFound.nativeElement.textContent} ${this.searchedData.length}`, '', {
-          duration: 600
-        });
+          this.snackBar.open(
+            `${this.searchResultsFound.nativeElement.textContent} ${this.searchedData.length}`,
+            "",
+            {
+              duration: 600,
+            }
+          );
 
-        this.cdRef.markForCheck();
-      }, error => this.errorLogger(this, error));
+          this.cdRef.markForCheck();
+        },
+        (error) => this.errorLogger(this, error)
+      );
     } else {
       this.isGoSearchPerformed = false;
       this.cdRef.markForCheck();
@@ -178,26 +205,8 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   /**
    * View
    */
-  toggleGenesView() {
-    return this.asTableRow = !this.asTableRow;
-  }
-
-  private initWindowWidth(): void {
-    this.windowService.setWindowWidth().pipe(
-      takeUntil(this.ngUnsubscribe)
-    ).subscribe((width) => {
-      this.isMobile = width <= this.resMobile;
-      this.cdRef.markForCheck();
-    });
-  }
-
-  private detectWindowWidth(): void {
-    this.windowService.windowWidth$.pipe(
-      takeUntil(this.ngUnsubscribe)
-    ).subscribe((width) => {
-      this.isMobile = width <= this.resMobile;
-      this.cdRef.markForCheck();
-    });
+  toggleGenesView(): boolean {
+    return (this.asTableRow = !this.asTableRow);
   }
 
   /**
@@ -205,18 +214,26 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   public favItem(geneId: number): void {
     this.favouritesService.addToFavourites(geneId);
-    this.snackBar.open(this.templateAddedToFavorites.nativeElement.textContent, '', {
-      duration: 600
-    });
+    this.snackBar.open(
+      this.templateAddedToFavorites.nativeElement.textContent,
+      "",
+      {
+        duration: 600,
+      }
+    );
     this.isFaved(geneId);
     this.cdRef.markForCheck();
   }
 
   public unFavItem(geneId: number): void {
     this.favouritesService.removeFromFavourites(geneId);
-    this.snackBar.open(this.templateRemovedFromFavorites.nativeElement.textContent, '', {
-      duration: 600
-    });
+    this.snackBar.open(
+      this.templateRemovedFromFavorites.nativeElement.textContent,
+      "",
+      {
+        duration: 600,
+      }
+    );
     this.isFaved(geneId);
     this.cdRef.markForCheck();
   }
@@ -232,6 +249,54 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public isFaved(geneId: number): void {
     const state = this.favouritesService.isInFavourites(geneId);
     this.isAddedToFavorites.next(state);
+  }
+
+  sortBy(sortBy: string): void {
+    // TODO: use enum types here
+    if (sortBy === "name") {
+      if (this.filters.byName) {
+        this.reverse();
+      } else {
+        this.sortByName();
+      }
+      this.filters.byName = !this.filters.byName;
+      this.cdRef.markForCheck();
+    } else {
+      if (this.filters.byAge) {
+        this.reverse();
+      } else {
+        this.sortByAge();
+      }
+      this.filters.byAge = !this.filters.byAge;
+      this.cdRef.markForCheck();
+    }
+  }
+
+  /**
+   * Filters translations
+   */
+  public getExpressionLocaleKey(expression: number): string {
+    const expressionTranslations = new Map([
+      [0, "expression_change_no_data"],
+      [1, "expression_change_decreased"],
+      [2, "expression_change_increased"],
+      [3, "expression_change_mixed"],
+    ]);
+
+    return expressionTranslations.get(expression);
+  }
+
+  /**
+   * Filter reset
+   */
+  public clearFilters(filter?: FilterTypesEnum): void {
+    this.filterService.clearFilters(filter);
+    this.searchedData = this.dataSource;
+    this.cdRef.markForCheck();
+  }
+
+  passQueryUpper($event: string): void {
+    this.passQuery.emit($event);
   }
 
   /**
@@ -250,65 +315,39 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   private sortByAge() {
-    this.searchedData.sort((a, b) => {
-      return a.origin.order - b.origin.order;
-    });
+    this.searchedData.sort((a, b) => a.origin.order - b.origin.order);
   }
 
-  sortBy(sortBy) { // TODO: use enum types here
-    if (sortBy === 'name') {
-      this.filters.byName ? this.reverse() : this.sortByName();
-      this.filters.byName = !this.filters.byName;
-      this.cdRef.markForCheck();
-    } else {
-      this.filters.byAge ? this.reverse() : this.sortByAge();
-      this.filters.byAge = !this.filters.byAge;
-      this.cdRef.markForCheck();
-    }
+  private initWindowWidth(): void {
+    this.windowService
+      .setWindowWidth()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((width) => {
+        this.isMobile = width <= this.resMobile;
+        this.cdRef.markForCheck();
+      });
   }
 
-  /**
-   * Filters translations
-   */
-  public getExpressionLocaleKey(expression: number) {
-    const expressionTranslations = new Map([
-      [0, 'expression_change_no_data'],
-      [1, 'expression_change_decreased'],
-      [2, 'expression_change_increased'],
-      [3, 'expression_change_mixed']
-    ]);
-
-    return expressionTranslations.get(expression);
-  }
-
-  /**
-   * Filter reset
-   */
-  public clearFilters(filter?: FilterTypesEnum) {
-    this.filterService.clearFilters(filter);
-    this.searchedData = this.dataSource;
-    this.cdRef.markForCheck();
+  private detectWindowWidth(): void {
+    this.windowService.windowWidth$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((width) => {
+        this.isMobile = width <= this.resMobile;
+        this.cdRef.markForCheck();
+      });
   }
 
   /**
    * Are filters applied
    */
   private areMoreThan2FiltersApplied() {
-    this.filterService.areMoreThan2FiltersApplied().pipe(
-      takeUntil(this.ngUnsubscribe)
-    ).subscribe(
-      (areApplied) => {
+    this.filterService
+      .areMoreThan2FiltersApplied()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((areApplied) => {
         this.isClearFiltersBtnShown = areApplied.getValue();
         this.cdRef.markForCheck();
-      }
-    );
-  }
-
-  /**
-   * Components interaction
-   */
-  passQueryUpper($event: string): void {
-    this.passQuery.emit($event);
+      });
   }
 
   /**

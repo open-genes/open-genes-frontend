@@ -53,7 +53,7 @@ export interface ProteinRegulatesGenes {
 
 export interface ProgeriaSyndromes {
   progeriaSyndrome: string;
-  reference: string ;
+  reference: string;
   comment: string;
 }
 
@@ -61,11 +61,12 @@ export interface LongevityEffects {
   longevityEffect: string;
   allelicPolymorphism: string;
   sex: string;
-  reference: string ;
+  reference: string;
   comment: string;
 }
 
-export interface Researches { // TODO: backend should always return these fields, not only when the form is filled
+export interface Researches {
+  // TODO: backend should always return these fields, not only when the form is filled
   increaseLifespan: Lifespan[];
   ageRelatedChangesOfGene: AgeRelatedChanges[];
   interventionToGeneImprovesVitalProcesses: InterventionAffectsAgingProcess[];

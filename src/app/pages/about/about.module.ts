@@ -1,14 +1,12 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {AboutComponent} from './about.component';
-import {RouterModule, Routes} from '@angular/router';
-import {TranslateModule} from '@ngx-translate/core';
-import {VendorsModule} from '../../modules/vendors/vendors.module';
-import {IconModule} from '../../components/shared/icon/app-icon.module';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { AboutComponent } from "./about.component";
+import { RouterModule, Routes } from "@angular/router";
+import { TranslateModule } from "@ngx-translate/core";
+import { VendorsModule } from "../../modules/vendors/vendors.module";
+import { IconModule } from "../../components/shared/icon/app-icon.module";
 
-const routes: Routes = [
-  {path: '', component: AboutComponent}
-];
+const routes: Routes = [{ path: "", component: AboutComponent }];
 
 @NgModule({
   declarations: [AboutComponent],
@@ -17,8 +15,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     TranslateModule,
     VendorsModule,
-    IconModule
-  ]
+    IconModule,
+  ],
 })
-export class AboutModule {
-}
+export class AboutModule {}

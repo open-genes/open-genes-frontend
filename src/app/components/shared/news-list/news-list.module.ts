@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {NewsListComponent} from './news-list.component';
-import {TranslateModule} from '@ngx-translate/core';
-import {PipesModule} from '../../../modules/pipes/pipes.module';
-import {LoaderPlaceholderModule} from '../loader-placeholder/loader-placeholder.module';
-import {RouterModule} from '@angular/router';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { NewsListComponent } from "./news-list.component";
+import { TranslateModule } from "@ngx-translate/core";
+import { PipesModule } from "../../../modules/pipes/pipes.module";
+import { LoaderPlaceholderModule } from "../loader-placeholder/loader-placeholder.module";
+import { RouterModule } from "@angular/router";
 
 @NgModule({
   declarations: [NewsListComponent],
@@ -13,11 +13,8 @@ import {RouterModule} from '@angular/router';
     TranslateModule,
     PipesModule,
     LoaderPlaceholderModule,
-    RouterModule
+    RouterModule,
   ],
-  exports: [
-    NewsListComponent
-  ]
+  exports: [NewsListComponent],
 })
-export class NewsListModule {
-}
+export class NewsListModule {}
