@@ -6,22 +6,23 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output
-} from '@angular/core';
-import {ApiService} from '../../core/services/api/open-genes.api.service';
-import {Genes} from '../../core/models';
-import {FilterService} from '../../components/shared/genes-list/services/filter.service';
-import {Subject} from 'rxjs';
+  Output,
+} from "@angular/core";
+import { ApiService } from "../../core/services/api/open-genes.api.service";
+import { Genes } from "../../core/models";
+import { FilterService } from "../../components/shared/genes-list/services/filter.service";
+import { Subject } from "rxjs";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: "app-home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class HomeComponent implements OnInit, OnDestroy {
-  @Output() dataSourceUpdate: EventEmitter<Genes[]> = new EventEmitter<Genes[]>();
+  @Output() dataSourceUpdate: EventEmitter<Genes[]> = new EventEmitter<
+    Genes[]
+  >();
 
   public genes: Genes[];
   public lastGenes: Genes[];
@@ -32,8 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private readonly apiService: ApiService,
     private filterService: FilterService,
     private readonly cdRef: ChangeDetectorRef
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getGenes();
@@ -46,13 +46,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public getGenes(): void {
-    this.apiService.getGenes().subscribe((genes) => {
-      this.genes = genes;
-      this.cdRef.markForCheck();
-    }, error => this.error = error);
+    this.apiService.getGenes().subscribe(
+      (genes) => {
+        this.genes = genes;
+        this.cdRef.markForCheck();
+      },
+      (err) => {
+        this.error = err;
+      }
+    );
   }
 
-  public getLastEditedGenes() {
+  public getLastEditedGenes(): void {
     this.apiService.getLastEditedGene().subscribe((genes) => {
       this.lastGenes = genes;
     });

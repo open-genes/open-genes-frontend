@@ -1,11 +1,18 @@
-import { AfterViewInit, Directive, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from "@angular/core";
 
 @Directive({
-  selector: '[appHighlight]'
+  selector: "[appHighlight]",
 })
 export class HighlightDirective implements OnChanges, AfterViewInit {
-  @Input() highlightText: string;         // Фрагмент текста, который необходимо выделить
-  @Input() highlightMinLength: number;    // Минимальное количество символов для выделения
+  @Input() highlightText: string; // Фрагмент текста, который необходимо выделить
+  @Input() highlightMinLength: number; // Минимальное количество символов для выделения
 
   constructor(private readonly element: ElementRef) {
     this.highlightMinLength = 3;
@@ -19,7 +26,9 @@ export class HighlightDirective implements OnChanges, AfterViewInit {
    * Очистка элемента от блоков выделения
    */
   clearHighlight() {
-    const wrappers = this.element.nativeElement.querySelector('.text-highlight-wrapper');
+    const wrappers = this.element.nativeElement.querySelector(
+      ".text-highlight-wrapper"
+    );
     if (wrappers) {
       const parent = wrappers.parentNode;
       const text = parent.textContent;
@@ -36,23 +45,32 @@ export class HighlightDirective implements OnChanges, AfterViewInit {
    */
   highlightTextFragment() {
     if (this.highlightText.length >= this.highlightMinLength) {
-      const index = this.element.nativeElement.textContent.toLowerCase().indexOf(this.highlightText.toLowerCase());
+      const index: number = this.element.nativeElement.textContent
+        .toLowerCase()
+        .indexOf(this.highlightText.toLowerCase());
       if (index !== -1) {
         const range = new Range();
         range.setStart(this.element.nativeElement.childNodes[0], index);
-        range.setEnd(this.element.nativeElement.childNodes[0], index + this.highlightText.length);
-        const wrapper = document.createElement('mark');
-        wrapper.classList.add('text-highlight');
+        range.setEnd(
+          this.element.nativeElement.childNodes[0],
+          index + this.highlightText.length
+        );
+        const wrapper = document.createElement("mark");
+        wrapper.classList.add("text-highlight");
         try {
           range.surroundContents(wrapper);
         } catch (e) {
+          // catch exception
         }
       }
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.highlightText.currentValue && changes.highlightTextcurrentValue !== changes.highlightText.previousValue) {
+    if (
+      changes.highlightText.currentValue &&
+      changes.highlightTextcurrentValue !== changes.highlightText.previousValue
+    ) {
       this.clearHighlight();
       this.highlightTextFragment();
     } else {

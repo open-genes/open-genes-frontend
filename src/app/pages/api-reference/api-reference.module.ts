@@ -1,14 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ApiReferenceComponent } from './api-reference.component';
-import { RouterModule, Routes } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
-import { PipesModule } from '../../modules/pipes/pipes.module';
-import { CodeBlockModule } from '../../components/shared/code-block/code-block.module';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { ApiReferenceComponent } from "./api-reference.component";
+import { RouterModule, Routes } from "@angular/router";
+import { TranslateModule } from "@ngx-translate/core";
+import { PipesModule } from "../../modules/pipes/pipes.module";
+import { CodeBlockModule } from "../../components/shared/code-block/code-block.module";
 
-const routes: Routes = [
-  {path: '', component: ApiReferenceComponent}
-];
+const routes: Routes = [{ path: "", component: ApiReferenceComponent }];
 
 @NgModule({
   declarations: [ApiReferenceComponent],
@@ -17,8 +15,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     TranslateModule,
     PipesModule,
-    CodeBlockModule
-  ]
+    CodeBlockModule,
+  ],
 })
-export class ApiReferenceModule {
-}
+export class ApiReferenceModule {}

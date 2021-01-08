@@ -2,6 +2,7 @@ export abstract class PageClass {
   /*
    * Method used for mapping complex objects from http response
    */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   toMap(object): Map<any, any> {
     if (object) {
       const mappedObj = new Map();

@@ -1,12 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Observable, of, BehaviorSubject} from 'rxjs';
-import {Filter} from '../../../../core/models';
-import {FilterTypesEnum} from './filter-types.enum';
+import { Injectable } from "@angular/core";
+import { Observable, of, BehaviorSubject } from "rxjs";
+import { Filter } from "../../../../core/models";
+import { FilterTypesEnum } from "./filter-types.enum";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
-
 export class FilterService {
   public filters: Filter = {
     byName: false,
@@ -19,15 +18,14 @@ export class FilterService {
 
   // TODO: save this object in localStorage
 
-  constructor() {
-  }
-
   // Filter
   public filterByFuncClusters(id: number): Observable<number[]> {
     if (!this.filters.byClasses.includes(id)) {
       this.filters.byClasses.push(id);
     } else {
-      this.filters.byClasses = this.filters.byClasses.filter(item => item !== id);
+      this.filters.byClasses = this.filters.byClasses.filter(
+        (item) => item !== id
+      );
     }
 
     return of(this.filters.byClasses);
@@ -53,11 +51,12 @@ export class FilterService {
   }
 
   // Clear
-  public clearFilters(filter?: FilterTypesEnum) {
-    const {classes, expressionChange, age, name} = FilterTypesEnum; // destructuring
+  public clearFilters(filter?: FilterTypesEnum): void {
+    const { classes, expressionChange, age, name } = FilterTypesEnum; // destructuring
     if (filter === name) {
       this.filters.byName = false;
     } else if (filter === age) {
+      // TODO: set something
     } else if (filter === classes) {
       this.filters.byClasses = [];
     } else if (filter === expressionChange) {
@@ -67,7 +66,7 @@ export class FilterService {
         byName: false,
         byAge: false,
         byClasses: [],
-        byExpressionChange: 0
+        byExpressionChange: 0,
       };
     }
   }
@@ -83,7 +82,7 @@ export class FilterService {
     const e = this.filters.byExpressionChange; // 0
 
     // then if flters change and their sum is more than 2:
-    if ((n + a + c + e) >= 2) {
+    if (n + a + c + e >= 2) {
       this.areMt2FiltersApplied.next(true);
     }
 

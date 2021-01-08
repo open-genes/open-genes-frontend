@@ -1,16 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CodeBlockComponent } from './code-block.component';
+import { CodeBlockComponent } from "./code-block.component";
 
-describe('CodeComponent', () => {
+describe("CodeComponent", () => {
   let component: CodeBlockComponent;
   let fixture: ComponentFixture<CodeBlockComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CodeBlockComponent ]
-    })
-    .compileComponents();
+      declarations: [CodeBlockComponent],
+    });
+    fixture = TestBed.createComponent(CodeBlockComponent);
   }));
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('CodeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it("should create", () => {
+    void expect(component).toBeTruthy();
   });
 });
