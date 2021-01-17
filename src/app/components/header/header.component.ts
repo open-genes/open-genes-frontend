@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.favsCounter = genes.toString();
           this.cdRef.markForCheck();
         },
-        (error) => (this.favsCounter = "0")
+        () => (this.favsCounter = "0")
       );
   }
 }
