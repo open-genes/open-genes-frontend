@@ -20,14 +20,17 @@
         <div class="col col-12 news-page__news">
           <app-news-list
             [genesList]="genes"
-            [limit]="portion"
+            [loadTotal]="itemsTotalLimit"
+            [itemsForPage]="itemsOnPage"
             [showDates]="true"
             *ngIf="genes"
           ></app-news-list>
         </div>
-        <div class="col col-12 __mt-15 btn-wrap show-more">
+        <div
+          *ngIf="itemsTotalLimit >= itemsOnPage"
+          class="col col-12 __mt-15 btn-wrap show-more">
           <button class="btn show-more__button"
-                  (click)="loadMore(5)"
+                  (click)="loadMore()"
           >{{ 'show_more' | translate }}</button>
         </div>
       </div>
