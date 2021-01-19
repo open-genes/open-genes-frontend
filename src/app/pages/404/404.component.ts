@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
+import { Component } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
-  selector: 'app-error-404',
-  templateUrl: './404.component.html'
+  selector: "app-error-404",
+  templateUrl: "./404.component.html",
 })
-export class Error404Component implements OnInit {
-
-  constructor(public translate: TranslateService) { }
-
-  ngOnInit() {
-  }
-
+export class Error404Component {
+  constructor(public translate: TranslateService) {}
 }

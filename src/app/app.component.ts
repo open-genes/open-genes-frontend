@@ -1,10 +1,10 @@
-import {Component, OnInit, AfterViewChecked} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {environment} from '../environments/environment';
+import { Component, AfterViewChecked } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
+import { environment } from "../environments/environment";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html'
+  selector: "app-root",
+  templateUrl: "./app.component.html",
 })
 export class AppComponent implements OnInit, AfterViewChecked {
   private lang: string;
@@ -21,12 +21,10 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.translate.use(this.lang);
   }
 
-  ngOnInit() {
-  }
-
-  ngAfterViewChecked() {
-    setTimeout(() => { // TODO: find a proper way to wait for the full DOM loading considering all modules
-      document.body.classList.remove('body--loading');
+  public ngAfterViewChecked(): void {
+    setTimeout(() => {
+      // TODO: find a proper way to wait for the full DOM loading considering all modules
+      document.body.classList.remove("body--loading");
     }, 500);
   }
 }

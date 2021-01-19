@@ -1,18 +1,16 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Subject, Subscription} from 'rxjs';
-import {ApiService} from '../../core/services/api/open-genes.api.service';
-import {TranslateService} from '@ngx-translate/core';
-import {takeUntil} from 'rxjs/operators';
-import {PageClass} from '../page.class';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { Subject, Subscription } from "rxjs";
+import { ApiService } from "../../core/services/api/open-genes.api.service";
+import { TranslateService } from "@ngx-translate/core";
+import { takeUntil } from "rxjs/operators";
+import { PageClass } from "../page.class";
 
 @Component({
-  selector: 'app-gene',
-  templateUrl: './gene.component.html',
-  styleUrls: ['./gene.component.scss']
+  selector: "app-gene",
+  templateUrl: "./gene.component.html",
+  styleUrls: ["./gene.component.scss"],
 })
-
-
 export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   public gene: any;
   public symbol: string;
@@ -34,28 +32,41 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
     private apiService: ApiService
   ) {
     super();
-    this.routeSubscribe = activateRoute.params.subscribe(params => this.symbol = params.id);
+    this.routeSubscribe = activateRoute.params.subscribe((params) => {
+      this.symbol = params.id;
+    });
   }
 
   static chartMaxValue(obj: object): number {
     const objArray = [];
     for (const value of Object.values(obj)) {
-      objArray.push(value['exp_rpkm']);
+      objArray.push(value.exp_rpkm);
     }
     return Math.max(...objArray);
   }
 
   ngOnInit(): void {
-    this.apiService.getGeneByHGNCsymbol(this.symbol).pipe(
-      takeUntil(this.ngUnsubscribe)
-    ).subscribe((geneInterface) => {
-      this.gene = geneInterface;
-      this.geneOntologyProcessMap = this.toMap(this.gene.terms.biological_process);
-      this.geneOntologyComponentMap = this.toMap(this.gene.terms.cellular_component);
-      this.geneOntologyActivityMap = this.toMap(this.gene.terms.molecular_activity);
-      this.expressionMaxValue = GeneComponent.chartMaxValue(this.gene.expression);
-      this.commentsReferenceLinksMap = this.toMap(this.gene.commentsReferenceLinks);
-    });
+    this.apiService
+      .getGeneByHGNCsymbol(this.symbol)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((geneInterface) => {
+        this.gene = geneInterface;
+        this.geneOntologyProcessMap = this.toMap(
+          this.gene.terms.biological_process
+        );
+        this.geneOntologyComponentMap = this.toMap(
+          this.gene.terms.cellular_component
+        );
+        this.geneOntologyActivityMap = this.toMap(
+          this.gene.terms.molecular_activity
+        );
+        this.expressionMaxValue = GeneComponent.chartMaxValue(
+          this.gene.expression
+        );
+        this.commentsReferenceLinksMap = this.toMap(
+          this.gene.commentsReferenceLinks
+        );
+      });
 
     this.isContent();
     this.areResearches();
@@ -70,7 +81,8 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
       this.gene?.commentAging ||
       this.gene?.researches.increaseLifespan.length !== 0 ||
       this.gene?.researches.ageRelatedChangesOfGene.length !== 0 ||
-      this.gene?.researches.interventionToGeneImprovesVitalProcesses.length !== 0 ||
+      this.gene?.researches.interventionToGeneImprovesVitalProcesses.length !==
+        0 ||
       this.gene?.researches.proteinRegulatesOtherGenes.length !== 0 ||
       this.gene?.researches.geneAssociatedWithProgeriaSyndromes.length !== 0 ||
       this.gene?.researches.geneAssociatedWithLongevityEffects.length !== 0 ||
@@ -80,7 +92,8 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
     console.log(this.isAnyContent);
   }
 
-  private areResearches(): void { // TODO: backend should always return these fields, not only when the form is filled
+  private areResearches(): void {
+    // TODO: backend should always return these fields, not only when the form is filled
     this.isAnyResearchFilled =
       this.gene?.increaseLifespan.length !== 0 ||
       this.gene?.geneAssociatedWithProgeriaSyndromes.length !== 0 ||

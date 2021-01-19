@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {LOADER_TYPES} from './conf/loader-types.enum';
+import { Component, Input } from "@angular/core";
+import { LOADER_TYPES } from "./conf/loader-types.enum";
 
 @Component({
-  selector: 'app-loader-placeholder',
-  templateUrl: './loader-placeholder.component.html',
-  styleUrls: ['./loader-placeholder.component.scss']
+  selector: "app-loader-placeholder",
+  templateUrl: "./loader-placeholder.component.html",
+  styleUrls: ["./loader-placeholder.component.scss"],
 })
-export class LoaderPlaceholderComponent implements OnInit {
+export class LoaderPlaceholderComponent {
   @Input()
   type = LOADER_TYPES.loader;
 
@@ -14,10 +14,4 @@ export class LoaderPlaceholderComponent implements OnInit {
   groups: number;
 
   quantity = Array;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

@@ -33,6 +33,4 @@ export interface HumanProteinAtlas {
    * Example: CAB002058
    */
   Antibody?: string[];
-
-
 }

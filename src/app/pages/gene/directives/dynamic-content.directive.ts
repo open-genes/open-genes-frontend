@@ -1,33 +1,25 @@
-import {
-  Directive,
-  AfterViewInit,
-  NgZone
-} from '@angular/core';
+import { Directive, AfterViewInit, NgZone } from "@angular/core";
 
 @Directive({
-  selector: '[appDynamicContentAnchors]'
+  selector: "[appDynamicContentAnchors]",
 })
-
 export class DynamicContentAnchorsDirective implements AfterViewInit {
-  constructor(
-    private ngZone: NgZone) {
-  }
+  constructor(private ngZone: NgZone) {}
 
   // TODO: Use Element Ref instead of getting DOM elements directly
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.ngZone.runOutsideAngular(() => {
       setTimeout(() => {
-        const anchors = document.getElementsByClassName('link--anchor');
-        const referenceList = document.getElementById('reference');
+        const anchors = document.getElementsByClassName("link--anchor");
+        const referenceList = document.getElementById("reference");
 
         if (anchors && referenceList) {
-          for (const [key, link] of Object.entries(anchors)) {
-            link.addEventListener('click', anchorScroll, false);
-          }
-
-          function anchorScroll() {
+          const anchorScroll = () => {
             const destinationOffset = referenceList.offsetTop + 10;
             window.scrollTo(0, destinationOffset);
+          };
+          for (const [key, link] of Object.entries(anchors)) {
+            link.addEventListener("click", anchorScroll, false);
           }
         }
       });

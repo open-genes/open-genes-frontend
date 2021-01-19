@@ -3,22 +3,21 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
-  OnDestroy, Output
-} from '@angular/core';
-import {Router} from '@angular/router';
-import {FilterService} from '../shared/genes-list/services/filter.service';
-import {FavouritesService} from '../../core/services/favourites.service';
-import {Subscription} from 'rxjs';
-import {FilterTypesEnum} from '../shared/genes-list/services/filter-types.enum';
-
+  OnDestroy,
+  Output,
+} from "@angular/core";
+import { Router } from "@angular/router";
+import { FilterService } from "../shared/genes-list/services/filter.service";
+import { FavouritesService } from "../../core/services/favourites.service";
+import { Subscription } from "rxjs";
+import { FilterTypesEnum } from "../shared/genes-list/services/filter-types.enum";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class HeaderComponent implements OnInit, OnDestroy {
   @Output() favsCounter: string; // counter output
   private favouritesSubscription: Subscription;
@@ -28,11 +27,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private readonly filterService: FilterService,
     private favouritesService: FavouritesService,
     private readonly cdRef: ChangeDetectorRef
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.getCounters();
+  }
+
+  ngOnDestroy(): void {
+    this.favouritesSubscription.unsubscribe();
   }
 
   /**
@@ -42,15 +44,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.filterService.clearFilters(filter);
   }
 
-
   private getCounters() {
-    this.favouritesSubscription = this.favouritesService.getNumberOfItems().subscribe((genes) => {
-      this.favsCounter = genes.toString();
-      this.cdRef.markForCheck();
-    }, error => this.favsCounter = '0');
-  }
-
-  ngOnDestroy(): void {
-    this.favouritesSubscription.unsubscribe();
+    this.favouritesSubscription = this.favouritesService
+      .getNumberOfItems()
+      .subscribe(
+        (genes) => {
+          this.favsCounter = genes.toString();
+          this.cdRef.markForCheck();
+        },
+        (error) => (this.favsCounter = "0")
+      );
   }
 }

@@ -1,31 +1,25 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { TestBed, async, ComponentFixture } from "@angular/core/testing";
+import { AppComponent } from "./app.component";
 
-describe('AppComponent', () => {
+describe("AppComponent", () => {
+  let fixture: ComponentFixture<AppComponent>;
+
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+    void TestBed.configureTestingModule({
+      declarations: [AppComponent],
+    });
+    fixture = TestBed.createComponent(AppComponent);
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+  it("should create the app", () => {
+    void expect(fixture.debugElement.componentInstance).toBeTruthy();
   });
 
-  it(`should have as title 'frontend'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('frontend');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  it("should render title", () => {
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('frontend app is running!');
+    const compiled = fixture.debugElement.nativeElement.querySelector(
+      ".content span"
+    );
+    void expect(compiled.textContent).toContain("frontend app is running!");
   });
 });

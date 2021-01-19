@@ -1,5 +1,5 @@
 <ul class="news" *ngIf="!isLoading">
-  <li *ngFor="let item of newsList"
+  <li *ngFor="let item of newsList | slice: 0 : itemsForPage"
       class="news__item"
   >
     <div class="item__gene">
@@ -28,7 +28,7 @@
 <app-loader-placeholder
   *ngIf="isLoading || error"
   type="skeleton"
-  [groups]="limit"
+  [groups]="itemsForPage"
 ></app-loader-placeholder>
 
 

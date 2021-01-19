@@ -1,20 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, Input } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
-  selector: 'app-gene-ontology',
-  templateUrl: './gene-ontology.component.html'
+  selector: "app-gene-ontology",
+  templateUrl: "./gene-ontology.component.html",
 })
-
-export class GeneOntologyComponent implements OnInit {
+export class GeneOntologyComponent {
   @Input() public gene: any;
   @Input() public process: Map<string, string>;
   @Input() public component: Map<string, string>;
   @Input() public activity: Map<string, string>;
 
-  constructor(public translate: TranslateService) { }
-
-  ngOnInit() {
-
-  }
+  constructor(public translate: TranslateService) {}
 }

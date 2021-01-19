@@ -1,14 +1,14 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-  name: 'stripTags'
+  name: "stripTags",
 })
 export class StripTagsPipe implements PipeTransform {
   transform(value: string): any {
     return value
-      .replace(/&#{0,1}[a-z0-9]+;/gmi, '')                    // Замена html entities
-      .replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '')   // Замена html-тегов
-      .replace(/^\[/gmi, '')                                  // Замена открывающей [
-      .replace(/\].$/gmi, '.');                               // Замена закрывающей ]
+      .replace(/&#{0,1}[a-z0-9]+;/gim, "") // Замена html entities
+      .replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gim, "") // Замена html-тегов
+      .replace(/^\[/gim, "") // Замена открывающей [
+      .replace(/\].$/gim, "."); // Замена закрывающей ]
   }
 }

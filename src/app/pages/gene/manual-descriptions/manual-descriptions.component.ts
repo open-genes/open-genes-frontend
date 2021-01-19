@@ -1,17 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, Input } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
-  selector: 'app-deprecated-descriptions',
-  templateUrl: './manual-descriptions.component.html'
+  selector: "app-deprecated-descriptions",
+  templateUrl: "./manual-descriptions.component.html",
 })
-
-export class ManualDescriptionsComponent implements OnInit {
+export class ManualDescriptionsComponent {
   @Input() public gene: any;
 
-  constructor(public translate: TranslateService) { }
-
-  ngOnInit() {
-
-  }
+  constructor(public translate: TranslateService) {}
 }
