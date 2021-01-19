@@ -7,10 +7,18 @@ import {environment} from '../environments/environment';
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit, AfterViewChecked {
+  private lang: string;
+
   constructor(private translate: TranslateService) {
     this.translate.addLangs(environment.languages);
-    const lang = localStorage.getItem('lang') || navigator.language.substring(0, 2);
-    this.translate.use(lang);
+    if (localStorage.getItem('lang')) {
+      this.lang = localStorage.getItem('lang')
+    } else if (navigator.language.substring(0, 2) === 'en' || navigator.language.substring(0, 2) === 'ru') {
+       this.lang = navigator.language.substring(0, 2)
+    } else {
+      this.lang = environment.languages[0];
+    }
+    this.translate.use(this.lang);
   }
 
   ngOnInit() {
