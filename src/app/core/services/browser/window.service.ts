@@ -10,7 +10,7 @@ export class WindowService {
 
   constructor(@Inject(DOCUMENT) public document: Document) {
     this.windowWidth$ = fromEvent(window, "resize").pipe(
-      map((event) => {
+      map(() => {
         const documentElement = document.documentElement;
         const bodyElement =
           document.body || document.getElementsByTagName("body")[0];
@@ -23,7 +23,7 @@ export class WindowService {
     );
 
     this.scroll$ = fromEvent(window, "scroll").pipe(
-      map((event) => window.scrollY || this.document.documentElement.scrollTop)
+      map(() => window.scrollY || this.document.documentElement.scrollTop)
     );
   }
 
