@@ -9,7 +9,7 @@ import {environment} from '../environments/environment';
 export class AppComponent implements OnInit, AfterViewChecked {
   constructor(private translate: TranslateService) {
     this.translate.addLangs(environment.languages);
-    const lang = localStorage.getItem('lang') || environment.languages[0];
+    const lang = localStorage.getItem('lang') || navigator.language.substring(0, 2);
     this.translate.use(lang);
   }
 
