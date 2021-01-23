@@ -26,7 +26,8 @@
             <div class="col-12 col-lg-6">
               <h2>{{ 'about_page_about_section_title' | translate }}
                 <a href="{{ 'about_page_about_section_title_link' | translate }}"
-                   about="_blank">Open Longevity</a>
+                   class="link link--underline"
+                   target="_blank">Open&nbsp;Longevity</a>
               </h2>
             </div>
             <div class="col-12 col-lg-6">
@@ -48,11 +49,10 @@
     <div class="about-page__features wrapper">
       <div class="container-fluid">
         <div class="row no-gutters">
-          <div class="col-12">
-            <h2>
-              {{ 'about_page_why_section_title' | translate }}
-            </h2>
-          </div>
+          <h2 class="col-12 features__title">
+            {{ 'about_page_why_section_title' | translate }}
+          </h2>
+
           <div class="col-12 features __mt-35">
             <div class="row no-gutters">
               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 feature">
@@ -84,19 +84,18 @@
     <div class="about-page__compare wrapper">
       <div class="container-fluid compare">
         <div class="row no-gutters">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 compare-block-top">
-
-            <div class="compare-block-title">
-              <h1 class="title">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 compare-block__top">
+            <div class="compare-block__header">
+              <h2 class="compare-block__title">
                 {{ 'about_page_curated_section_title' | translate }}
-              </h1>
+              </h2>
 
-              <p class="compare-block-text">
+              <p class="compare-block__text">
                 {{ 'about_page_curated_section_subtitle' | translate }}
               </p>
             </div>
 
-            <div class="compare-block-footer">
+            <div class="compare-block__footer">
               <p>
                 <a class="link link--white link--underline"
                    routerLink="/help"
@@ -113,7 +112,7 @@
             </div>
           </div>
 
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 compare-block-bottom">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 compare-block__bottom">
             <div class="screenshot __only-on-desktop">
               <img src="/assets/images/appscreenshot.png"
                    alt="Screenshot"></div>
@@ -148,6 +147,56 @@
       </div>
     </div>
 
+    <div class="about-page__contribute wrapper">
+      <div class="container-fluid contribute">
+        <div class="row no-gutters">
+          <h2 class="col-12 contribute__title">
+            {{ 'about_page_contribute_title' | translate }}
+          </h2>
 
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 contribute__section contribute__donate">
+            <h3 class="section__title donate__title">
+              <span class="fa fal fa-donate"></span>
+              {{ 'about_page_donation_title' | translate }}
+            </h3>
+
+            <div class="section__description">
+              <p>
+                {{ 'about_page_donation_text' | translate }}
+              </p>
+            </div>
+
+            <div class="section__buttons">
+              <a mat-flat-button
+                 color="secondary"
+                 href="https://donorbox.org/open-genes"
+                 target="_blank"
+              >{{ 'about_page_donation_button' | translate }}</a>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 contribute__section contribute__participate">
+            <h3 class="section__title participate__title">
+              <span class="fa fal fa-users"></span>
+              {{ 'about_page_participation_title' | translate }}
+            </h3>
+
+            <div class="section__description">
+              <p>
+                {{ 'about_page_participation_text' | translate }}
+              </p>
+            </div>
+
+            <div class="section__buttons">
+              <a mat-flat-button
+                 color="secondary"
+                 href="https://github.com/open-genes"
+                 target="_blank"
+              >{{ 'about_page_participation_button' | translate }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

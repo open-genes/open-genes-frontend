@@ -1,6 +1,6 @@
 .about-page {
   &__features {
-    padding: 60px 0 40px 0;
+    padding: #{$padding-large + 10px} 0 40px 0;
     background-color: $color-black;
     color: $color-white;
 
@@ -8,24 +8,29 @@
       display: flex;
       flex-flow: row wrap;
       align-items: stretch;
+
+      &__title {
+        text-align: center;
+      }
     }
 
     .feature {
       position: relative;
       font-size: 1em;
-      padding: 1.2em 40px 1.2em 24px;
+      padding: 1em 40px 1em 24px;
 
       &::before {
+        $marker-size: 10px;
         content: ' ';
-        display: block;
-        width: 10px;
-        height: 10px;
+        display: inline-block;
+        vertical-align: middle;
+        width: $marker-size;
+        height: $marker-size;
         border-radius: 50%;
         background-color: $color-accent;
-        position: absolute;
-        left: 0;
-        top: 1.2em;
-        margin-top: 2px;
+        position: relative;
+        margin-left: -1em;
+        left: -10px;
         z-index: 0;
       }
     }

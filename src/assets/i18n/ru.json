@@ -155,7 +155,7 @@
   "gene_page_hpa_molecular_function": "Молекулярное взаимодействие",
   "gene_page_hpa_subcellular_location": "Клеточный компонент",
   "gene_page_hpa_disease_involvement": "Связь с заболеваниями",
-  "about_page_subtitle": "Мы даем исследователям в области генетики старения и связанных с ним\n процессов возможность строить гипотезы, <br>используя проверенные данные,\n и предоставляем необходимые инструменты.",
+  "about_page_subtitle": "Мы даем исследователям в области генетики старения и связанных с ним\n процессов возможность строить гипотезы, \nиспользуя проверенные данные,\n и предоставляем необходимые инструменты.",
   "about_page_button": "Начать поиск",
   "about_page_about_section_title": "Open Genes — это база данных генов человека,\n ассоциированных со старением и продолжительностью жизни, разрабатываемая",
   "about_page_about_section_title_link": "https://openlongevity.org/",
@@ -178,6 +178,12 @@
   "about_page_features_2_title": "Сравнивайте",
   "about_page_features_2_desc": "Сравнивайте гены по функциям, экспрессии, эволюционному возрасту, смотрите связи с другими генами.",
   "about_page_features_3_title": "Выгружайте",
-  "about_page_features_3_desc": "Работайте со всеми собранными данными через веб-интерфейс и API. Используйте его в своих приложениях."
-
+  "about_page_features_3_desc": "Работайте со всеми собранными данными через веб-интерфейс и API. Используйте его в своих приложениях.",
+  "about_page_contribute_title": "Внесите свой вклад",
+  "about_page_donation_title": "Пожертвование",
+  "about_page_donation_text": "Сделайте пожертвование и поддержите проект.\n Даже небольшая сумма будет полезна.",
+  "about_page_donation_button": "Пожертвовать",
+  "about_page_participation_title": "Участие",
+  "about_page_participation_text": "Присоединяйтесь к команде разработчиков Open Genes на GitHub.\n Для вас есть много разных задач.",
+  "about_page_participation_button": "Перейти"
 }
