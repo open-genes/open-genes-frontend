@@ -49,8 +49,8 @@ export class FavouritesComponent implements OnInit, OnDestroy {
 
   private getGenes() {
     this.favouritesSubscription$ = this.favouritesService.getItems().subscribe(
-      () => {
-        this.favouriteGenesIds = this.favouritesService.favourites;
+      (genes) => {
+        this.favouriteGenesIds = genes;
         this.cdRef.markForCheck();
       },
       () => {
