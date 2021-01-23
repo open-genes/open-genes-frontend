@@ -155,7 +155,7 @@
   "gene_page_hpa_molecular_function": "Molecular activity",
   "gene_page_hpa_subcellular_location": "Cellular component",
   "gene_page_hpa_disease_involvement": "Disease involvement",
-  "about_page_subtitle": "We give researchers in the field of aging genetics and related\n processes an ability to build hypotheses,  using proven data,\n and provide the necessary tools.",
+  "about_page_subtitle": "We give researchers in the field of aging genetics and related\n processes an ability to build hypotheses using proven data,\n and provide the necessary tools.",
   "about_page_button": "Start search",
   "about_page_about_section_title": "Open Genes  is a biological database of human genes,\n associated with aging and lifespan being maintained by",
   "about_page_about_section_title_link": "http://eng.openlongevity.org/",
@@ -178,6 +178,12 @@
   "about_page_features_2_title": "Compare",
   "about_page_features_2_desc": "Compare genes by function, expression, evolutionary age, see correlations with other genes.",
   "about_page_features_3_title": "Retrieve",
-  "about_page_features_3_desc": "Work with all collected data using the web interface and API. Use it in your apps."
-
+  "about_page_features_3_desc": "Work with all collected data using the web interface and API. Use it in your apps.",
+  "about_page_contribute_title": "Contribute to the project",
+  "about_page_donation_title": "Donation",
+  "about_page_donation_text": "Make a donation and support the project.\n Even small amount matters.",
+  "about_page_donation_button": "Donate",
+  "about_page_participation_title": "Participation",
+  "about_page_participation_text": "Join Open Genes developers team on GitHub.\n We have many different tasks for you.",
+  "about_page_participation_button": "Visit"
 }

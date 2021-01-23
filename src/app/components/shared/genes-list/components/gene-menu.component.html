@@ -13,11 +13,11 @@
   <button mat-menu-item [matMenuTriggerFor]="geneListItemSubMenu"
   >{{ 'gene_list_menu_this_gene_on' | translate }}</button>
   <button mat-menu-item
-          *ngIf="this.isAddToFavoritesShown"
+          *ngIf="this.isAdded | async"
           (click)="unFavItem(gene['id'])"
   >{{ 'favourites_remove' | translate }}</button>
   <button mat-menu-item
-          *ngIf="!this.isAddToFavoritesShown"
+          *ngIf="!(this.isAdded | async)"
           (click)="favItem(gene['id'])"
   >{{ 'favourites_add' | translate }}</button>
 </mat-menu>

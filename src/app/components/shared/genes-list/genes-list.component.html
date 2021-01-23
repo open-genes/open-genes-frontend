@@ -256,7 +256,7 @@
     <td class="cell cell__actions">
       <app-gene-menu
         [gene]="item"
-        [isFaved]="isAddedToFavorites"
+        [isAdded]="isFaved(item.id)"
         (unFav)="unFavOnEvent($event)"
         (fav)="favOnEvent($event)"
       ></app-gene-menu>
@@ -277,7 +277,7 @@
         <div class="card__actions">
           <app-gene-menu
             [gene]="item"
-            [isFaved]="isAddedToFavorites"
+            [isAdded]="isFaved(item.id)"
             (unFav)="unFavOnEvent($event)"
             (fav)="favOnEvent($event)"
           ></app-gene-menu>
@@ -364,7 +364,7 @@
   </div>
 
   <div #templateRemovedFromFavorites>
-    {{ 'favourites_added' | translate }}
+    {{ 'favourites_removed' | translate }}
   </div>
 
   <div #searchResultsFound>

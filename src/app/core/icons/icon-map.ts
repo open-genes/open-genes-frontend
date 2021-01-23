@@ -1,9 +1,9 @@
-const url_root = `/assets/images/icons/sprites/symbol/`;
+const urlRoot = `/assets/images/icons/sprites/symbol/`;
 // uncolored
-const url_general = `${url_root}general.sprite.svg`;
-const url_landing = `${url_root}landing.sprite.svg`;
+const urlGeneral = `${urlRoot}general.sprite.svg`;
+// const urlLanding = `${urlRoot}landing.sprite.svg`;
 
 export const icons: { [id: string]: string } = {
-  cross: url_general,
-  delete: url_general,
+  cross: urlGeneral,
+  delete: urlGeneral,
 };

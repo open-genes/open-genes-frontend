@@ -1,10 +1,10 @@
 import {
   Component,
   Input,
-  Output,
   OnInit,
-  OnChanges,
   OnDestroy,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from "@angular/core";
 import { PubmedApiService } from "../../../core/services/api/pubmed.api.service";
 import { News } from "../../../core/models/news.model";
@@ -18,55 +18,48 @@ import { Subject } from "rxjs";
   selector: "app-news-list",
   templateUrl: "./news-list.component.html",
   styleUrls: ["./news-list.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewsListComponent implements OnInit, OnChanges, OnDestroy {
+export class NewsListComponent implements OnInit, OnDestroy {
   @Input() genesList: Genes[];
-  @Input() limit;
   @Input() showDates = false;
-
-  newsList: News[] = [];
-  isLoading = true;
-  error: number;
+  @Input() itemsForPage: number;
+  @Input() loadTotal: number;
+  public isLoading = true;
+  public error: number;
+  public newsList: News[] = [];
+  private minGeneFunctionsCriteria: number = 3;
   private subscription$ = new Subject();
 
   constructor(
     public translate: TranslateService,
-    private pubmedApiService: PubmedApiService
+    private pubmedApiService: PubmedApiService,
+    private readonly cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.makeNewsList(this.limit);
+    this.makeNewsList(this.loadTotal);
   }
 
-  ngOnChanges(changes) {
-    if (
-      changes &&
-      changes.limit &&
-      changes.limit.currentValue > changes.limit.previousValue
-    ) {
-      this.makeNewsList(this.limit);
-    }
-  }
-
-  private makeNewsList(limit) {
+  private makeNewsList(limit: number): void {
     let symbolsQuery = "";
-    // Формируем запрос по всем генам в базе c n количеством функциональных классов
+    // 1. Form a request for all genes in the database that meet the minimal number of gene functions
     const filteredGenes = this.genesList.filter(
-      (gene: Genes) => gene.functionalClusters.length > 3
+      (gene: Genes) => gene.functionalClusters.length > this.minGeneFunctionsCriteria
     );
     filteredGenes.forEach((gene: Genes, index: number, array: Genes[]) => {
       symbolsQuery += `${gene.symbol}[Title]`;
-      symbolsQuery += index < array.length - 1 ? "+OR+" : ""; // соединяем HGNC генов в запросе
+      symbolsQuery += index < array.length - 1 ? "+OR+" : ""; // concat genes' HGNC in the request
     });
 
-    // Делаем длинный запрос сразу по всем генам, но просим вернуть всего n статей в ответе
+    // 2. Make a long query string for all genes at once, but ask to return only n articles in the response
     this.pubmedApiService
       .getNewsList(symbolsQuery, limit)
       .pipe(
         switchMap((news) =>
           this.pubmedApiService.getNewsData(
             news.esearchresult.idlist
-            // Сортировать не надо, первыми API возвращает публикации от новых к старым
+            // There is no need to sort publications. API returns a list of publications from new to old.
           )
         ),
         finalize(() => {
@@ -92,6 +85,7 @@ export class NewsListComponent implements OnInit, OnChanges, OnDestroy {
               }
             });
           });
+          this.cdRef.markForCheck();
         },
         (error) => (this.error = error)
       );

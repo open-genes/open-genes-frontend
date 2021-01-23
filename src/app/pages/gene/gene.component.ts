@@ -37,6 +37,7 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
   static chartMaxValue(obj: object): number {
     const objArray = [];
     for (const value of Object.values(obj)) {
@@ -89,7 +90,6 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
       this.gene?.expression.length !== 0 ||
       this.gene?.orthologs.length !== 0 ||
       this.gene?.terms;
-    console.log(this.isAnyContent);
   }
 
   private areResearches(): void {
