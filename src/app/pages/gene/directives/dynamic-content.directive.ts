@@ -18,6 +18,7 @@ export class DynamicContentAnchorsDirective implements AfterViewInit {
             const destinationOffset = referenceList.offsetTop + 10;
             window.scrollTo(0, destinationOffset);
           };
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           for (const [key, link] of Object.entries(anchors)) {
             link.addEventListener("click", anchorScroll, false);
           }

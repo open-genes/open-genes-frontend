@@ -14,6 +14,7 @@ export class HumanProteinAtlasComponent {
   /**
    * Checks if two objects are similar
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public isSimilar(object1: object, object2: object): boolean {
     return JSON.stringify(object1) === JSON.stringify(object2); // boolean
   }
