@@ -19,9 +19,7 @@ import { Subject } from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  @Output() dataSourceUpdate: EventEmitter<Genes[]> = new EventEmitter<
-    Genes[]
-  >();
+  @Output() dataSourceUpdate: EventEmitter<Genes[]> = new EventEmitter<Genes[]>();
 
   public genes: Genes[];
   public lastGenes: Genes[];
