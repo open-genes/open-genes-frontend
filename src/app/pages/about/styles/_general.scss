@@ -1,4 +1,6 @@
 .about-page {
+  font-family: Helvetica, Arial, sans-serif;
+
   h2 {
     font-size: 1.6em;
   }
@@ -13,10 +15,10 @@
   }
 
   @include resolution_desktop-and-up {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   @include resolution_smartphone-and-tablet {
-    font-size: 11px;
+    font-size: 13px;
   }
 }
