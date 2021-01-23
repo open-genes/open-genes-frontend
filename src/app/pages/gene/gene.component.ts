@@ -90,7 +90,6 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
       this.gene?.expression.length !== 0 ||
       this.gene?.orthologs.length !== 0 ||
       this.gene?.terms;
-    console.log(this.isAnyContent);
   }
 
   private areResearches(): void {

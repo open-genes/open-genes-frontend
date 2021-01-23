@@ -10,7 +10,7 @@ import {
   Output,
   ViewChild,
 } from "@angular/core";
-import { Subject, BehaviorSubject } from "rxjs";
+import { Subject, of, Observable } from "rxjs";
 import { PageClass } from "../../../pages/page.class";
 import { takeUntil } from "rxjs/operators";
 import { TranslateService } from "@ngx-translate/core";
@@ -48,7 +48,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public filters = this.filterService.filters;
   public filterTypes = FilterTypesEnum;
   public isClearFiltersBtnShown = false;
-  public isAddedToFavorites = new BehaviorSubject<boolean>(false);
 
   public isGoTermsMode = false;
   public isGoTermsModeError = false;
@@ -175,7 +174,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
             this.biologicalProcess = this.toMap(item.terms?.biological_process);
             this.cellularComponent = this.toMap(item.terms?.cellular_component);
             this.molecularActivity = this.toMap(item.terms?.molecular_activity);
-            console.log(item);
           }
 
           const isAnyTermFound =
@@ -246,11 +244,13 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     this.unFavItem(event);
   }
 
-  public isFaved(geneId: number): void {
-    const state = this.favouritesService.isInFavourites(geneId);
-    this.isAddedToFavorites.next(state);
+  public isFaved(geneId: number): Observable<boolean> {
+    return of(this.favouritesService.isInFavourites(geneId));
   }
 
+  /**
+   * Sorting
+   */
   sortBy(sortBy: string): void {
     // TODO: use enum types here
     if (sortBy === "name") {
@@ -354,6 +354,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    * Error handling
    */
   private errorLogger(context: any, error: any) {
-    console.warn(error);
+    console.warn(context, error);
   }
 }
