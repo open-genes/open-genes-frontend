@@ -9,7 +9,8 @@ import { Genes } from "src/app/core/models/genes.model";
 import { FavouritesService } from "src/app/core/services/favourites.service";
 import { TranslateService } from "@ngx-translate/core";
 import { ApiService } from "../../core/services/api/open-genes.api.service";
-import { Subscription } from "rxjs";
+import { Subject } from "rxjs";
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: "app-favourites",
@@ -18,11 +19,10 @@ import { Subscription } from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FavouritesComponent implements OnInit, OnDestroy {
-  private favouritesSubscription$: Subscription;
-  private genesSubscription$: Subscription;
-  public favouriteGenesIds: any;
+  public favouriteGenesIds: number[] = [];
   public genes: Genes[];
-  error: number;
+  public error: number;
+  private subscription$ = new Subject();
 
   constructor(
     public translate: TranslateService,
@@ -47,10 +47,14 @@ export class FavouritesComponent implements OnInit, OnDestroy {
     this.cdRef.markForCheck();
   }
 
-  private getGenes() {
-    this.favouritesSubscription$ = this.favouritesService.getItems().subscribe(
+  private getGenes(): void {
+    this.favouritesService.getItems()
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
       (genes) => {
-        this.favouriteGenesIds = genes;
+        if (genes) {
+          this.favouriteGenesIds = genes;
+        }
         this.cdRef.markForCheck();
       },
       () => {
@@ -58,7 +62,9 @@ export class FavouritesComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.genesSubscription$ = this.apiService.getGenes().subscribe(
+    this.apiService.getGenes()
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
       (genes) => {
         this.genes = genes;
         this.cdRef.markForCheck();
@@ -70,7 +76,6 @@ export class FavouritesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.favouritesSubscription$.unsubscribe();
-    this.genesSubscription$.unsubscribe();
+    this.subscription$.unsubscribe();
   }
 }
