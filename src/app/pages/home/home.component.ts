@@ -11,6 +11,7 @@ import { ApiService } from "../../core/services/api/open-genes.api.service";
 import { Genes } from "../../core/models";
 import { FilterService } from "../../components/shared/genes-list/services/filter.service";
 import { Subject } from "rxjs";
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: "app-home",
@@ -24,7 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public genes: Genes[];
   public lastGenes: Genes[];
   public error: number;
-  private ngUnsubscribe = new Subject();
+  private subscription$ = new Subject();
 
   constructor(
     private readonly apiService: ApiService,
@@ -38,12 +39,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.subscription$.unsubscribe();
   }
 
   public getGenes(): void {
-    this.apiService.getGenes().subscribe(
+    this.apiService.getGenes()
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
       (genes) => {
         this.genes = genes;
         this.cdRef.markForCheck();

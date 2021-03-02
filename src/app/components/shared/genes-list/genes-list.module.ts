@@ -15,11 +15,13 @@ import { LoaderPlaceholderModule } from "../loader-placeholder/loader-placeholde
 import { FavouritesService } from "../../../core/services/favourites.service";
 import { MatCardModule } from "@angular/material/card";
 import { WindowService } from "../../../core/services/browser/window.service";
-import { GeneMenuComponent } from "./components/gene-menu.component";
+import { GeneMenuComponent } from "./components/gene/menu/gene-menu.component";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { ItemComponent } from './components/gene/item/item.component';
+import { ResearchChartComponent } from './components/research-chart/research-chart.component';
 
 @NgModule({
-  declarations: [GenesListComponent, SearchComponent, GeneMenuComponent],
+  declarations: [GenesListComponent, SearchComponent, GeneMenuComponent, ItemComponent, ResearchChartComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

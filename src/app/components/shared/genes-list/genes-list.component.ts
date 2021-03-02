@@ -21,6 +21,11 @@ import { FilterService } from "./services/filter.service";
 import { WindowService } from "src/app/core/services/browser/window.service";
 import { FilterTypesEnum } from "./services/filter-types.enum";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import {
+  InterventionAffectsAgingProcess, LongevityEffects,
+  ProgeriaSyndromes,
+  ProteinRegulatesGenes
+} from '../../../core/models/researches.model';
 
 @Component({
   selector: "app-genes-list",
@@ -58,7 +63,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public isMobile: boolean;
   private resMobile = 959.98;
 
-  private ngUnsubscribe = new Subject();
+  private subscription$ = new Subject();
 
   constructor(
     private readonly apiService: ApiService,
@@ -81,8 +86,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.subscription$.unsubscribe();
   }
 
   /**
@@ -321,7 +325,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   private initWindowWidth(): void {
     this.windowService
       .setWindowWidth()
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.subscription$))
       .subscribe((width) => {
         this.isMobile = width <= this.resMobile;
         this.cdRef.markForCheck();
@@ -330,7 +334,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   private detectWindowWidth(): void {
     this.windowService.windowWidth$
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.subscription$))
       .subscribe((width) => {
         this.isMobile = width <= this.resMobile;
         this.cdRef.markForCheck();
@@ -343,7 +347,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   private areMoreThan2FiltersApplied() {
     this.filterService
       .areMoreThan2FiltersApplied()
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.subscription$))
       .subscribe((areApplied) => {
         this.isClearFiltersBtnShown = areApplied.getValue();
         this.cdRef.markForCheck();

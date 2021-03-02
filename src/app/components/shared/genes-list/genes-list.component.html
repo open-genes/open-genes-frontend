@@ -100,6 +100,11 @@
               {{ 'main_page_table_expression' | translate }}
             </div>
           </td>
+          <td>
+            <div class="overflow">
+              На ком проводились исследования
+            </div>
+          </td>
         </ng-container>
         <ng-template #GoModeHeader>
           <td colspan="2">
@@ -222,6 +227,10 @@
         >
           <span class="tag__inner">{{ getExpressionLocaleKey(item.expressionChange) | translate }}</span>
         </button>
+      </td>
+
+      <td class="cell cell__research-type">
+        <app-research-chart [hgnc]="item.symbol"></app-research-chart>
       </td>
     </ng-container>
 

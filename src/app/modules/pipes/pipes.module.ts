@@ -1,23 +1,33 @@
 import { NgModule } from "@angular/core";
 
-import { SafePipe } from "./safe.pipe";
-import { StripTagsPipe } from "./strip-tags.pipe";
-import { SplitByPipe } from "./split-by.pipe";
-import { ZeroPadding } from "./zero-padding.pipe";
-import { LocalizedDatePipe } from "./i18n-date.pipe";
-import { UnixTimeFormatterPipe } from "./unix-time-formatter.pipe";
-import { ReplacePipe } from "./replace.pipe";
-import { LinkifyPipe } from "./linkify.pipe";
+import { SafePipe } from "./general/safe.pipe";
+import { StripTagsPipe } from "./general/strip-tags.pipe";
+import { SplitByPipe } from "./general/split-by.pipe";
+import { LocalizedDatePipe } from "./general/i18n-date.pipe";
+import { UnixTimeFormatterPipe } from "./general/unix-time-formatter.pipe";
+import { ReplacePipe } from "./general/replace.pipe";
+import { ZeroPaddingPipe } from "./specific/zero-padding.pipe";
+import { LinkifyPipe } from "./specific/linkify.pipe";
+import { getResearchStatsById } from './specific/getResearchStatsById.pipe';
 
-const PIPES = [
+const GENERAL_PIPES = [
   SafePipe,
   StripTagsPipe,
   SplitByPipe,
-  ZeroPadding,
   LocalizedDatePipe,
   UnixTimeFormatterPipe,
-  ReplacePipe,
+  ReplacePipe
+];
+
+const SPECIFIC_PIPES = [
+  ZeroPaddingPipe,
   LinkifyPipe,
+  getResearchStatsById
+];
+
+const PIPES = [
+  ...GENERAL_PIPES,
+  ...SPECIFIC_PIPES
 ];
 
 @NgModule({

@@ -1,0 +1,12 @@
+<table>
+  <tr *ngFor="let research of researchStatsObj | keyvalue">
+    <ng-container *ngIf="research.value">
+      <td>
+        Тип {{ research.key }}:
+      </td>
+      <td>
+        {{ research.value }} исследований
+      </td>
+    </ng-container>
+  </tr>
+</table>
