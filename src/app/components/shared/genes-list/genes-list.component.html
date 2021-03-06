@@ -95,7 +95,7 @@
 
           <td>
             <div class="overflow">
-              {{ "phylogeny" | translate }}, {{ "age_lowercase" | translate }}
+              {{ "phylogeny" | translate }}, {{ "age_lowercase" | translate }} /
             </div>
             <div class="overflow">
               {{ "ncbi_homologs" | translate }}
@@ -161,7 +161,7 @@
 </ng-container>
 
 <!-- When content is loading -->
-<app-loader-placeholder *ngIf="isLoading"> </app-loader-placeholder>
+<app-spinner *ngIf="isLoading"> </app-spinner>
 
 <!-- No content error message -->
 <section
@@ -205,51 +205,40 @@
     </td>
 
     <td class="cell cell__age-mya">
-      <button
-        *ngIf="item.origin.age"
-        class="tag">
-        <span class="tag__inner">
-          <b>{{ item.origin.phylum }}</b>
-        </span>
-      </button>
-      <br>
-      <button
-        *ngIf="item.origin.age"
-        class="tag">
-        <span class="tag__inner">
-          <b>{{ item.homologueTaxon }}</b>
-        </span>
-      </button>
+      <span class="alias">
+        <ng-container *ngIf="item.origin.phylum">
+          {{ item.origin.phylum }} ({{ item.origin.age }} {{ "million_years" | translate }})
+        </ng-container>
+        <ng-container *ngIf="!item.origin.phylum">
+          {{ "age_unknown" | translate }}
+        </ng-container>
+      </span>
+      <span class="alias">
+        {{ item.homologueTaxon? item.homologueTaxon : ("age_unknown" | translate) }}
+      </span>
     </td>
 
     <ng-container *ngIf="!isGoTermsMode; else GoModeCell">
       <td class="cell cell__clusters">
         <div class="cell__limiter">
-          <button
-            class="tag"
+          <app-tag
             *ngFor="let item of item.functionalClusters"
             (click)="filterByFuncClusters(item['id'])"
-            [class.__active]="filters.byClasses.includes(item['id'])"
-          >
-            <span class="tag__inner">{{ item["name"] }}</span>
-          </button>
+            [isActive]="filters.byClasses.includes(item['id'])"
+          >{{ item["name"] }}
+          </app-tag>
         </div>
       </td>
 
       <td class="cell cell__expression">
-        <button
-          class="tag"
-          name="{{ item.expressionChange }}"
+        <app-tag
           (click)="filterByExpressionChange(item.expressionChange)"
-          [class.__active]="
+          [isDisabled]="item.expressionChange === 0"
+          [isActive]="
             filters.byExpressionChange === item.expressionChange &&
-            item.expressionChange !== 0
-          "
-        >
-          <span class="tag__inner">{{
-            getExpressionLocaleKey(item.expressionChange) | translate
-          }}</span>
-        </button>
+            item.expressionChange !== 0"
+        >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
+        </app-tag>
       </td>
 
       <td class="cell cell__research-type">
@@ -339,33 +328,26 @@
           <span class="label">
             {{ "functional_classes" | translate }}
           </span>
-          <button
-            class="tag"
+          <app-tag
             *ngFor="let cluster of item.functionalClusters"
             (click)="filterByFuncClusters(cluster['id'])"
-            [class.__active]="filters.byClasses.includes(cluster['id'])"
-          >
-            <span class="tag__inner">{{ cluster["name"] }}</span>
-          </button>
+            [isActive]="filters.byClasses.includes(cluster['id'])"
+          >{{ cluster["name"] }}
+          </app-tag>
         </div>
 
         <div class="card__section">
           <span class="label">
             {{ "main_page_table_expression" | translate }}
           </span>
-          <button
-            class="tag"
-            name="{{ item.expressionChange }}"
+          <app-tag
             (click)="filterByExpressionChange(item.expressionChange)"
-            [class.__active]="
+            [isDisabled]="item.expressionChange !== 0"
+            [isActive]="
               filters.byExpressionChange === item.expressionChange &&
-              item.expressionChange !== 0
-            "
-          >
-            <span class="tag__inner">{{
-              getExpressionLocaleKey(item.expressionChange) | translate
-            }}</span>
-          </button>
+              item.expressionChange !== 0"
+          >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
+          </app-tag>
         </div>
       </ng-container>
       <ng-template #GoModeCardActions>

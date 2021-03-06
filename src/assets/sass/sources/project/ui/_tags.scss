@@ -1,6 +1,5 @@
 // Tags
 
-
 .tag {
   display: inline-block;
   vertical-align: middle;
@@ -50,8 +49,13 @@
     }
   }
 
-  &.__active{
+  &.__active:not(.__disabled) {
     border-color: $color-general;
     color: $color-general;
+  }
+
+  &.__disabled {
+    pointer-events: none;
+    opacity: .5;
   }
 }

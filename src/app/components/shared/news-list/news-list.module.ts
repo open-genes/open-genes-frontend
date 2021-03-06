@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { NewsListComponent } from "./news-list.component";
 import { TranslateModule } from "@ngx-translate/core";
 import { PipesModule } from "../../../modules/pipes/pipes.module";
-import { LoaderPlaceholderModule } from "../loader-placeholder/loader-placeholder.module";
+import { UiComponentsModule } from '../../ui-components/ui-components.module';
 import { RouterModule } from "@angular/router";
 
 @NgModule({
@@ -12,7 +12,7 @@ import { RouterModule } from "@angular/router";
     CommonModule,
     TranslateModule,
     PipesModule,
-    LoaderPlaceholderModule,
+    UiComponentsModule,
     RouterModule,
   ],
   exports: [NewsListComponent],

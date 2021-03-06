@@ -11,17 +11,21 @@ import { DirectivesModule } from "../../../directives/directives.module";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-import { LoaderPlaceholderModule } from "../loader-placeholder/loader-placeholder.module";
+import { UiComponentsModule } from '../../ui-components/ui-components.module';
 import { FavouritesService } from "../../../core/services/favourites.service";
 import { MatCardModule } from "@angular/material/card";
 import { WindowService } from "../../../core/services/browser/window.service";
 import { GeneMenuComponent } from "./components/gene/menu/gene-menu.component";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { ItemComponent } from './components/gene/item/item.component';
-import { ResearchChartComponent } from './components/research-chart/research-chart.component';
+import { ResearchChartComponent } from './components/gene/research-chart/research-chart.component';
 
 @NgModule({
-  declarations: [GenesListComponent, SearchComponent, GeneMenuComponent, ItemComponent, ResearchChartComponent],
+  declarations: [
+    GenesListComponent,
+    SearchComponent,
+    GeneMenuComponent,
+    ResearchChartComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -33,7 +37,7 @@ import { ResearchChartComponent } from './components/research-chart/research-cha
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    LoaderPlaceholderModule,
+    UiComponentsModule,
     MatCardModule,
     MatTooltipModule,
   ],

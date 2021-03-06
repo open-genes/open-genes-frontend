@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { ApiService } from '../../../../../core/services/api/open-genes.api.service';
+import { ApiService } from '../../../../../../core/services/api/open-genes.api.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
