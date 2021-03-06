@@ -3,8 +3,8 @@ import { ApiService } from '../../../../../core/services/api/open-genes.api.serv
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-interface IResearchTypes {
-  [n: number]: number
+interface ICommentCauseTypes {
+  [n: number]: string
 }
 
 @Component({
@@ -15,8 +15,7 @@ interface IResearchTypes {
 })
 export class ResearchChartComponent implements OnInit {
   @Input() hgnc: string;
-  public researchStatsObj: IResearchTypes;
-  public researchStatsStr: string;
+  public commentCauseStats: ICommentCauseTypes;
   private subscription$ = new Subject();
 
   constructor(
@@ -26,30 +25,20 @@ export class ResearchChartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getResearchStats();
+    this.getCommentCause();
   }
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
   }
 
-  private getResearchStats(): void {
+  private getCommentCause(): void {
     this.apiService.getGeneByHGNCsymbol(this.hgnc)
       .pipe(takeUntil(this.subscription$))
       .subscribe(
         (gene) => {
-          const a = gene?.['researches'];
+          gene?.['commentCause'] ? this.commentCauseStats = gene?.['commentCause'] : this.commentCauseStats = { 1: ""};
 
-            a ? this.researchStatsObj = {
-              1: a.increaseLifespan.length,
-              2: a.ageRelatedChangesOfGene.length,
-              3: a.interventionToGeneImprovesVitalProcesses.length,
-              4: a.proteinRegulatesOtherGenes.length,
-              5: a.geneAssociatedWithProgeriaSyndromes.length,
-              6: a.geneAssociatedWithLongevityEffects.length
-            } : {};
-
-          this.researchStatsStr = JSON.stringify(this.researchStatsObj);
           this.cdRef.markForCheck();
         });
   }

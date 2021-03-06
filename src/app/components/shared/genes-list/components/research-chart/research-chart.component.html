@@ -1,12 +1,7 @@
-<table>
-  <tr *ngFor="let research of researchStatsObj | keyvalue">
-    <ng-container *ngIf="research.value">
-      <td>
-        Тип {{ research.key }}:
-      </td>
-      <td>
-        {{ research.value }} исследований
-      </td>
-    </ng-container>
-  </tr>
-</table>
+<ng-container *ngFor="let research of commentCauseStats | keyvalue">
+  <button *ngIf="research.value.length !== 0" class="tag tag--multiline">
+    <span class="tag__inner">
+      {{ research.value }}
+    </span>
+  </button>
+</ng-container>
