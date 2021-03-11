@@ -1,11 +1,16 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { ApiService } from '../../../../../../core/services/api/open-genes.api.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-
-interface ICommentCauseTypes {
-  [n: number]: string
-}
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  Output,
+  OnInit, EventEmitter,
+} from "@angular/core";
+import { ApiService } from "../../../../../../core/services/api/open-genes.api.service";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { SelectionCriteria } from "../../../../../../core/models/selection-criteria.model";
+import { FilterService } from '../../../services/filter.service';
 
 @Component({
   selector: 'app-research-chart',
@@ -15,12 +20,14 @@ interface ICommentCauseTypes {
 })
 export class ResearchChartComponent implements OnInit {
   @Input() hgnc: string;
-  public commentCauseStats: ICommentCauseTypes;
+  @Output() criateriaChosen: EventEmitter<string> = new EventEmitter();
+  public commentCauseStats: SelectionCriteria;
   private subscription$ = new Subject();
 
   constructor(
     private apiService: ApiService,
     private readonly cdRef: ChangeDetectorRef,
+    private filterService: FilterService,
   ) {
   }
 
@@ -37,9 +44,14 @@ export class ResearchChartComponent implements OnInit {
       .pipe(takeUntil(this.subscription$))
       .subscribe(
         (gene) => {
-          gene?.['commentCause'] ? this.commentCauseStats = gene?.['commentCause'] : this.commentCauseStats = { 1: ""};
+          gene?.['commentCause'] ? this.commentCauseStats =
+              gene?.['commentCause'] : this.commentCauseStats = { 1: ""};
 
           this.cdRef.markForCheck();
         });
+  }
+
+  public filterBySelectionCriteria(criteria: string): void {
+    this.criateriaChosen.emit(criteria);
   }
 }

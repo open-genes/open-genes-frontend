@@ -21,11 +21,7 @@ import { FilterService } from "./services/filter.service";
 import { WindowService } from "src/app/core/services/browser/window.service";
 import { FilterTypesEnum } from "./services/filter-types.enum";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import {
-  InterventionAffectsAgingProcess, LongevityEffects,
-  ProgeriaSyndromes,
-  ProteinRegulatesGenes
-} from '../../../core/models/researches.model';
+import { SelectionCriteria } from '../../../core/models/selection-criteria.model';
 
 @Component({
   selector: "app-genes-list",
@@ -128,6 +124,18 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
             },
             (error) => this.errorLogger(this, error)
           );
+        }
+      },
+      (error) => this.errorLogger(this, error)
+    );
+  }
+
+  public filterBySelectionCriteria(str: string): void {
+    this.filterService.filterBySelectionCriteria(str);
+    this.filterService.getBySelectionCriteria().subscribe(
+      (list) => {
+        if (list.length !== 0) {
+
         }
       },
       (error) => this.errorLogger(this, error)

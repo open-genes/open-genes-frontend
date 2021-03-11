@@ -6,4 +6,5 @@ export interface Filter {
   byAge: boolean; // by gene evolutionary age (origin.order field)
   byClasses: number[]; // by functional classes
   byExpressionChange: number; // by gene's age related expression change variant
+  bySelectionCriteria: string[]; // see selection criteria list
 }

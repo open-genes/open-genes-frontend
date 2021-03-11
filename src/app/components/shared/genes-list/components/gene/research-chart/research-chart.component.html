@@ -1,5 +1,3 @@
-<ng-container *ngFor="let research of commentCauseStats | keyvalue">
-  <app-tag *ngIf="research.value.length !== 0" isMultiline="true">
-    {{ research.value }}
-  </app-tag>
-</ng-container>
+<ul *ngFor="let research of commentCauseStats | keyvalue" class="list">
+  <li *ngIf="research.value.toString().length !== 0">{{ research.value }}</li>
+</ul>
