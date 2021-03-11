@@ -1,11 +1,11 @@
 stages:
   - build
-  - staging
-  - release
+  - test-stand
+  - prod-stand
 
 variables:
   PROJECT_DEV_NAME: open-genes-dev
-  PROJECT_STAGE_NAME: open-genes-stage
+  PROJECT_DEMO_NAME: open-genes-demo
   PROJECT_NAME: open-genes
 
 build-dev:
@@ -21,12 +21,12 @@ build-dev:
   except:
     - master
 
-build-staging:
+build-demo:
   stage: build
   image: alexsuch/angular-cli:7.3.8
   script:
     - npm install
-    - npm run build-staging
+    - npm run build-demo
   artifacts:
     paths:
       - dist/
@@ -61,11 +61,11 @@ deploy-dev:
 deploy-stage:
   extends: .deploy
   dependencies:
-    - build-staging
+    - build-demo
   environment:
     name: stage
   variables:
-    PROJECT_DIR: /var/www/${PROJECT_STAGE_NAME}
+    PROJECT_DIR: /var/www/${PROJECT_DEMO_NAME}
   except:
     - master
 
@@ -87,7 +87,7 @@ deploy-prod-to-stage:
   environment:
     name: develop
   variables:
-    PROJECT_DIR: /var/www/${PROJECT_STAGE_NAME}
+    PROJECT_DIR: /var/www/${PROJECT_DEMO_NAME}
   only:
     - master
 
@@ -95,7 +95,7 @@ deploy-prod:
   extends: .deploy
   dependencies:
     - build-prod
-  stage: release
+  stage: prod-stand
   environment:
     name: production
   variables:
@@ -104,7 +104,7 @@ deploy-prod:
     - master
 
 .deploy:
-  stage: staging
+  stage: test-stand
   image: instrumentisto/rsync-ssh
   script:
     - rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' dist/frontend/ ${DROPLET_USER}@${DROPLET_IP}:${PROJECT_DIR}/frontend/
