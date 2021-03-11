@@ -58,12 +58,12 @@ deploy-dev:
   except:
     - master
 
-deploy-stage:
+deploy-demo:
   extends: .deploy
   dependencies:
     - build-demo
   environment:
-    name: stage
+    name: demo
   variables:
     PROJECT_DIR: /var/www/${PROJECT_DEMO_NAME}
   except:
