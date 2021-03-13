@@ -4,7 +4,7 @@ stages:
   - prod-stand
 
 variables:
-  PROJECT_DEV_NAME: open-genes-dev
+  PROJECT_DEV_NAME: open-genes-test
   PROJECT_DEMO_NAME: open-genes-demo
   PROJECT_NAME: open-genes
 
