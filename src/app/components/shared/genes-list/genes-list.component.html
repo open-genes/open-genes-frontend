@@ -242,7 +242,9 @@
       </td>
 
       <td class="cell cell__research-type">
-        <app-research-chart [hgnc]="item.symbol"></app-research-chart>
+        <ul *ngFor="let research of item.commentCause | keyvalue" class="list">
+          <li *ngIf="research.value.toString().length !== 0">{{ research.value }}</li>
+        </ul>
       </td>
     </ng-container>
 

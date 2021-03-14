@@ -44,10 +44,4 @@ export class ApiService {
   getGoTermMatchByString(request: string): Observable<Genes[]> {
     return this.http.get<Genes[]>(`${this.url}/api/gene/by-go-term/${request}`);
   }
-
-  getGenesBySelectionCriteria(criteria: number[]): Observable<Genes[]> {
-    return this.http.get<Genes[]>(
-      `${this.url}/api/gene/by-selection-criteria/${criteria}?lang=${this.translate.currentLang}`
-    );
-  }
 }

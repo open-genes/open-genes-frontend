@@ -17,14 +17,12 @@ import { MatCardModule } from "@angular/material/card";
 import { WindowService } from "../../../core/services/browser/window.service";
 import { GeneMenuComponent } from "./components/gene/menu/gene-menu.component";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { ResearchChartComponent } from './components/gene/research-chart/research-chart.component';
 
 @NgModule({
   declarations: [
     GenesListComponent,
     SearchComponent,
     GeneMenuComponent,
-    ResearchChartComponent
   ],
   imports: [
     CommonModule,
