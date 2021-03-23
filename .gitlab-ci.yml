@@ -54,7 +54,7 @@ deploy-dev:
   environment:
     name: develop
   variables:
-    PROJECT_DIR: /var/www/${PROJECT_DEV_NAME}
+    PROJECT_DIR: /var/www/${PROJECT_TEST_DOMAIN}
   except:
     - master
 
