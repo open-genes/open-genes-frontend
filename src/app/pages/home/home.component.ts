@@ -24,7 +24,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public genes: Genes[];
   public lastGenes: Genes[];
-  public error: number;
+  public isAvailable: boolean = true;
+  public errorStatus: string;
   private subscription$ = new Subject();
 
   constructor(
@@ -51,7 +52,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.cdRef.markForCheck();
       },
       (err) => {
-        this.error = err;
+        this.isAvailable = false;
+        this.errorStatus = err.statusText;
+        this.cdRef.markForCheck();
       }
     );
   }
