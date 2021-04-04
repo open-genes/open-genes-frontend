@@ -243,7 +243,7 @@
 
       <td class="cell cell__research-type">
         <ul *ngFor="let research of item.commentCause | keyvalue" class="list">
-          <li *ngIf="research.value.toString().length !== 0">{{ research.value }}</li>
+          <li>{{ research.value }}</li>
         </ul>
       </td>
     </ng-container>

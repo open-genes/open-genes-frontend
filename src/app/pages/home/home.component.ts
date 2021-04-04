@@ -12,6 +12,7 @@ import { Genes } from "../../core/models";
 import { FilterService } from "../../components/shared/genes-list/services/filter.service";
 import { Subject } from "rxjs";
 import { takeUntil } from 'rxjs/operators';
+import { MockApiService } from '../../core/services/api/mock.api.service';
 
 @Component({
   selector: "app-home",
@@ -31,7 +32,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private readonly apiService: ApiService,
     private filterService: FilterService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
+    private mockApiService: MockApiService,
   ) {}
 
   ngOnInit(): void {
@@ -52,9 +54,16 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.cdRef.markForCheck();
       },
       (err) => {
-        this.isAvailable = false;
-        this.errorStatus = err.statusText;
-        this.cdRef.markForCheck();
+        // this.isAvailable = false;
+        // this.errorStatus = err.statusText;
+
+        this.mockApiService.getMockResponse()
+        .pipe(takeUntil(this.subscription$))
+            .subscribe(
+              (genes) => {
+                this.genes = genes;
+                this.cdRef.markForCheck();
+        });
       }
     );
   }
