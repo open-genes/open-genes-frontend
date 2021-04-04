@@ -6,4 +6,5 @@ export const environment = {
   proteinAtlasUrl: "https://www.proteinatlas.org/",
   debugMode: false,
   languages: ["ru", "en"],
+  mockJsonUrl: "assets/data/api.mock.json",
 };
