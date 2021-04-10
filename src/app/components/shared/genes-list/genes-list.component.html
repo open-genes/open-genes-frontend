@@ -241,15 +241,14 @@
         </app-tag>
       </td>
 
+
       <td class="cell cell__research-type">
-        <ul *ngFor="let research of item.commentCause | keyvalue" class="list">
-          <li>{{ research.value }}</li>
-        </ul>
+        <app-selection-criteria [geneCriteria]="item.commentCause"></app-selection-criteria>
       </td>
     </ng-container>
 
     <ng-template #GoModeCell>
-      <td colspan="2" class="cell cell__clusters">
+      <td colspan="3" class="cell cell__clusters">
         <div *ngIf="item.terms" class="cell__limiter">
           <a
             *ngFor="let term of biologicalProcess | keyvalue"

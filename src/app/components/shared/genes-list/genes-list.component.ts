@@ -21,7 +21,6 @@ import { FilterService } from "./services/filter.service";
 import { WindowService } from "src/app/core/services/browser/window.service";
 import { FilterTypesEnum } from "./services/filter-types.enum";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { SelectionCriteria } from '../../../core/models/selection-criteria.model';
 
 @Component({
   selector: "app-genes-list",
@@ -55,10 +54,8 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
-
   public isMobile: boolean;
   private resMobile = 959.98;
-
   private subscription$ = new Subject();
 
   constructor(
@@ -173,6 +170,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   // TODO: this function isn't pure
+
   public searchGenesByGoTerm(query: string): void {
     if (query) {
       const request = query.toLowerCase();

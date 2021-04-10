@@ -6,24 +6,23 @@ import { SkeletonLoaderComponent } from './components/skeleton/skeleton.componen
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TagComponent } from './components/tag/tag.component';
 import { PipesModule } from '../../modules/pipes/pipes.module';
+import { AccordionComponent } from './components/accordion/accordion.component';
 
 @NgModule({
   declarations: [
+    AccordionComponent,
     CodeBlockComponent,
     SkeletonLoaderComponent,
     SpinnerComponent,
-    TagComponent
+    TagComponent,
   ],
   exports: [
     CodeBlockComponent,
     SpinnerComponent,
     SkeletonLoaderComponent,
-    TagComponent
+    TagComponent,
+    AccordionComponent,
   ],
-  imports: [
-    CommonModule,
-    IconModule,
-    PipesModule
-  ]
+  imports: [CommonModule, IconModule, PipesModule],
 })
-export class UiComponentsModule { }
+export class UiComponentsModule {}

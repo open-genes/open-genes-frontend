@@ -11,18 +11,19 @@ import { DirectivesModule } from "../../../directives/directives.module";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-import { UiComponentsModule } from '../../ui-components/ui-components.module';
+import { UiComponentsModule } from "../../ui-components/ui-components.module";
 import { FavouritesService } from "../../../core/services/favourites.service";
 import { MatCardModule } from "@angular/material/card";
 import { WindowService } from "../../../core/services/browser/window.service";
 import { GeneMenuComponent } from "./components/gene/menu/gene-menu.component";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { SelectionCriteriaModule } from "../selection-criteria/selection-criteria.module";
 
 @NgModule({
   declarations: [
     GenesListComponent,
     SearchComponent,
-    GeneMenuComponent,
+    GeneMenuComponent
   ],
   imports: [
     CommonModule,
@@ -38,6 +39,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     UiComponentsModule,
     MatCardModule,
     MatTooltipModule,
+    SelectionCriteriaModule,
   ],
   providers: [FavouritesService, WindowService],
   exports: [GenesListComponent, SearchComponent],
