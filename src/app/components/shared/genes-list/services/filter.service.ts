@@ -12,6 +12,7 @@ export class FilterService {
     byAge: false,
     byClasses: [],
     byExpressionChange: 0,
+    bySelectionCriteria: []
   };
 
   private areMt2FiltersApplied = new BehaviorSubject(false);
@@ -41,6 +42,19 @@ export class FilterService {
     return of(this.filters.byExpressionChange);
   }
 
+  // TODO: Ask backend to send unique id's for each criteria, type will change to number[]
+  public filterBySelectionCriteria(str: string): Observable<string[]> {
+      if (!this.filters.bySelectionCriteria.includes(str)) {
+      this.filters.bySelectionCriteria.push(str);
+    } else {
+      this.filters.bySelectionCriteria = this.filters.bySelectionCriteria.filter(
+        (item) => item !== str
+      );
+    }
+
+    return of(this.filters.bySelectionCriteria);
+  }
+
   // Get
   public getByFuncClusters(): Observable<number[]> {
     return of(this.filters.byClasses);
@@ -48,6 +62,10 @@ export class FilterService {
 
   public getByExpressionChange(): Observable<number> {
     return of(this.filters.byExpressionChange);
+  }
+
+  public getBySelectionCriteria(): Observable<string[]> {
+    return of(this.filters.bySelectionCriteria);
   }
 
   // Clear
@@ -67,6 +85,7 @@ export class FilterService {
         byAge: false,
         byClasses: [],
         byExpressionChange: 0,
+        bySelectionCriteria: []
       };
     }
   }
@@ -80,9 +99,10 @@ export class FilterService {
     const a = Number(this.filters.byAge); // 0
     const c = this.filters.byClasses.length; // 0
     const e = this.filters.byExpressionChange; // 0
+    const s = this.filters.bySelectionCriteria.length; // 0
 
     // then if flters change and their sum is more than 2:
-    if (n + a + c + e >= 2) {
+    if (n + a + c + e + s >= 2) {
       this.areMt2FiltersApplied.next(true);
     }
 

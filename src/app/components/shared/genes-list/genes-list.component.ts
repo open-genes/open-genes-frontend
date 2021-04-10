@@ -54,11 +54,9 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
-
   public isMobile: boolean;
   private resMobile = 959.98;
-
-  private ngUnsubscribe = new Subject();
+  private subscription$ = new Subject();
 
   constructor(
     private readonly apiService: ApiService,
@@ -81,8 +79,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.subscription$.unsubscribe();
   }
 
   /**
@@ -130,6 +127,18 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     );
   }
 
+  public filterBySelectionCriteria(str: string): void {
+    this.filterService.filterBySelectionCriteria(str);
+    this.filterService.getBySelectionCriteria().subscribe(
+      (list) => {
+        if (list.length !== 0) {
+
+        }
+      },
+      (error) => this.errorLogger(this, error)
+    );
+  }
+
   /**
    * Update already loaded and then filtered data on typing
    */
@@ -161,6 +170,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   // TODO: this function isn't pure
+
   public searchGenesByGoTerm(query: string): void {
     if (query) {
       const request = query.toLowerCase();
@@ -321,7 +331,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   private initWindowWidth(): void {
     this.windowService
       .setWindowWidth()
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.subscription$))
       .subscribe((width) => {
         this.isMobile = width <= this.resMobile;
         this.cdRef.markForCheck();
@@ -330,7 +340,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   private detectWindowWidth(): void {
     this.windowService.windowWidth$
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.subscription$))
       .subscribe((width) => {
         this.isMobile = width <= this.resMobile;
         this.cdRef.markForCheck();
@@ -343,7 +353,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   private areMoreThan2FiltersApplied() {
     this.filterService
       .areMoreThan2FiltersApplied()
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.subscription$))
       .subscribe((areApplied) => {
         this.isClearFiltersBtnShown = areApplied.getValue();
         this.cdRef.markForCheck();

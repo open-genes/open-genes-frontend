@@ -4,7 +4,7 @@ import { AboutComponent } from "./about.component";
 import { RouterModule, Routes } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
 import { VendorsModule } from "../../modules/vendors/vendors.module";
-import { IconModule } from "../../components/shared/icon/app-icon.module";
+import { IconModule } from "../../components/ui-components/components/icon/app-icon.module";
 
 const routes: Routes = [{ path: "", component: AboutComponent }];
 

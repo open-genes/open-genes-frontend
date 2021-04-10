@@ -11,6 +11,8 @@ import { ApiService } from "../../core/services/api/open-genes.api.service";
 import { Genes } from "../../core/models";
 import { FilterService } from "../../components/shared/genes-list/services/filter.service";
 import { Subject } from "rxjs";
+import { takeUntil } from 'rxjs/operators';
+import { MockApiService } from '../../core/services/api/mock.api.service';
 
 @Component({
   selector: "app-home",
@@ -23,13 +25,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public genes: Genes[];
   public lastGenes: Genes[];
-  public error: number;
-  private ngUnsubscribe = new Subject();
+  public isAvailable: boolean = true;
+  public errorStatus: string;
+  private subscription$ = new Subject();
 
   constructor(
     private readonly apiService: ApiService,
     private filterService: FilterService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
+    private mockApiService: MockApiService,
   ) {}
 
   ngOnInit(): void {
@@ -38,18 +42,31 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.subscription$.unsubscribe();
   }
 
   public getGenes(): void {
-    this.apiService.getGenes().subscribe(
+    this.apiService.getGenes()
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
       (genes) => {
         this.genes = genes;
         this.cdRef.markForCheck();
       },
       (err) => {
-        this.error = err;
+        this.isAvailable = false;
+        this.errorStatus = err.statusText;
+
+        /* Use this mock service to mock data when it's unavailable */
+        /*
+        this.mockApiService.getMockResponse()
+        .pipe(takeUntil(this.subscription$))
+            .subscribe(
+              (genes) => {
+                this.genes = genes;
+                this.cdRef.markForCheck();
+        });
+         */
       }
     );
   }

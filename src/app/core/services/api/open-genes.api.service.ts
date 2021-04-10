@@ -19,7 +19,6 @@ export class ApiService {
     );
   }
 
-  // Эндпоинт возвращает четыре последних отредактированных гена
   getLastEditedGene(): Observable<Genes[]> {
     return this.http.get<Genes[]>(`${this.url}/api/gene/by-latest`);
   }
