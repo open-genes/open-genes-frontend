@@ -205,17 +205,7 @@
     </td>
 
     <td class="cell cell__age-mya">
-      <span class="alias">
-        <ng-container *ngIf="item.origin.phylum">
-          {{ item.origin.phylum }} ({{ item.origin.age }} {{ "million_years" | translate }})
-        </ng-container>
-        <ng-container *ngIf="!item.origin.phylum">
-          {{ "age_unknown" | translate }}
-        </ng-container>
-      </span>
-      <span class="alias">
-        {{ item.homologueTaxon? item.homologueTaxon : ("age_unknown" | translate) }}
-      </span>
+      <app-gene-age gene="item"></app-gene-age>
     </td>
 
     <ng-container *ngIf="!isGoTermsMode; else GoModeCell">

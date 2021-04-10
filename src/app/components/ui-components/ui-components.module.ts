@@ -7,6 +7,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TagComponent } from './components/tag/tag.component';
 import { PipesModule } from '../../modules/pipes/pipes.module';
 import { AccordionComponent } from './components/accordion/accordion.component';
+import { GeneAgeComponent } from './components/gene-age/gene-age.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { AccordionComponent } from './components/accordion/accordion.component';
     SkeletonLoaderComponent,
     SpinnerComponent,
     TagComponent,
+    GeneAgeComponent,
   ],
   exports: [
     CodeBlockComponent,
@@ -22,6 +24,7 @@ import { AccordionComponent } from './components/accordion/accordion.component';
     SkeletonLoaderComponent,
     TagComponent,
     AccordionComponent,
+    GeneAgeComponent,
   ],
   imports: [CommonModule, IconModule, PipesModule],
 })
