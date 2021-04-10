@@ -17,6 +17,7 @@
   "functional_classes": "Возрастозависимые процессы/системы:",
   "filters_reset": "Сбросить",
   "main_page_table_expression": "Возрастные изменения экспрессии:",
+  "main_page_table_criteria": "Критерии отбора",
   "ncbi_homologs": "Консервативен у:",
   "gene_page_title_aliases": "Синонимы (HGNC)",
   "gene_page_title_criteria": "Критерии отбора",
@@ -185,5 +186,6 @@
   "about_page_donation_button": "Пожертвовать",
   "about_page_participation_title": "Участие",
   "about_page_participation_text": "Присоединяйтесь к команде разработчиков Open Genes на GitHub.\n Для вас есть много разных задач.",
-  "about_page_participation_button": "Перейти"
+  "about_page_participation_button": "Перейти",
+  "go_terms": "GO Terms"
 }

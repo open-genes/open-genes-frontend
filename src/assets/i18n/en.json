@@ -16,6 +16,7 @@
   "functional_classes": "Age-related processes/systems",
   "filters_reset": "Reset",
   "main_page_table_expression": "Age-related changes in expression:",
+  "main_page_table_criteria": "Selection criteria",
   "ncbi_homologs": "Conservative in:",
   "gene_page_title_aliases": "Aliases (HGNC)",
   "gene_page_title_criteria": "Selection criteria",
@@ -185,5 +186,6 @@
   "about_page_donation_button": "Donate",
   "about_page_participation_title": "Participation",
   "about_page_participation_text": "Join Open Genes developers team on GitHub.\n We have many different tasks for you.",
-  "about_page_participation_button": "Visit"
+  "about_page_participation_button": "Visit",
+  "go_terms": "GO Terms"
 }
