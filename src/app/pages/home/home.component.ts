@@ -54,9 +54,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.cdRef.markForCheck();
       },
       (err) => {
-        // this.isAvailable = false;
-        // this.errorStatus = err.statusText;
+        this.isAvailable = false;
+        this.errorStatus = err.statusText;
 
+        /* Use this mock service to mock data when it's unavailable */
+        /*
         this.mockApiService.getMockResponse()
         .pipe(takeUntil(this.subscription$))
             .subscribe(
@@ -64,6 +66,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                 this.genes = genes;
                 this.cdRef.markForCheck();
         });
+         */
       }
     );
   }
