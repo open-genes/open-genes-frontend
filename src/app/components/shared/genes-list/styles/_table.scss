@@ -32,10 +32,15 @@
         margin-left: 5px;
       }
 
-      // Задаем минимальную и максимальную ширину колонкам
+      // Setting width to columns
       &:first-child {
         .overflow {
           width: 200px;
+        }
+      }
+      &:nth-child(2){
+        .overflow {
+          width: 140px;
         }
       }
 

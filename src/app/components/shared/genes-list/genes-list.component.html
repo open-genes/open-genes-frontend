@@ -95,7 +95,7 @@
 
           <td>
             <div class="overflow">
-              {{ "phylogeny" | translate }}, {{ "age_lowercase" | translate }} /
+              {{ "phylogeny" | translate }},
             </div>
             <div class="overflow">
               {{ "ncbi_homologs" | translate }}
@@ -205,17 +205,7 @@
     </td>
 
     <td class="cell cell__age-mya">
-      <span class="alias">
-        <ng-container *ngIf="item.origin.phylum">
-          {{ item.origin.phylum }} ({{ item.origin.age }} {{ "million_years" | translate }})
-        </ng-container>
-        <ng-container *ngIf="!item.origin.phylum">
-          {{ "age_unknown" | translate }}
-        </ng-container>
-      </span>
-      <span class="alias">
-        {{ item.homologueTaxon? item.homologueTaxon : ("age_unknown" | translate) }}
-      </span>
+      <app-gene-age [gene]="item"></app-gene-age>
     </td>
 
     <ng-container *ngIf="!isGoTermsMode; else GoModeCell">
@@ -310,16 +300,17 @@
       </div>
 
       <div class="card__section card__age-mya">
-        <b>{{ item.origin.phylum }}</b>
-        {{ item.origin.age }}
-        <span *ngIf="item.origin.age">({{ "million_years" | translate }})</span>
+        <span class="label">
+          {{ "phylogeny" | translate }}
+        </span>
+        <app-gene-age [gene]="item" show="origin"></app-gene-age>
       </div>
 
       <div *ngIf="item.homologueTaxon" class="card__section card__age-homologs">
         <span class="label">
           {{ "ncbi_homologs" | translate }}
         </span>
-        {{ item.homologueTaxon }}
+        <app-gene-age [gene]="item" show="homologs"></app-gene-age>
       </div>
     </div>
 
