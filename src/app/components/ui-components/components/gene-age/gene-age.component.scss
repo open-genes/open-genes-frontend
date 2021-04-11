@@ -1,109 +1,36 @@
 @import '../../../styles';
 
-:host,
-.gene-age {
+:host  {
   display: inline-block;
   width: 100%;
 }
 
 .gene-age {
+  width: 100%;
+  display: block;
+
   &__type {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: stretch;
-    flex-grow: 0 !important;
-
-    .type__inner {
+    &, .type__title {
+      display: inline-block;
       width: 100%;
-      padding: 10px;
-      border: 1px solid $color-borders;
-      border-radius: $border-radius-medium;
-    }
-
-    .type__inner + .type__inner {
-      margin-top: 5px;
     }
 
     .type__title {
-      flex: 0 0 100%;
-      font-size: $font-size-smaller;
-      color: $color-gray;
-      margin-bottom: 5px;
+      font-weight: 500;
+      margin-bottom: .2em;
     }
 
     .type__value {
-      flex: 1 1 auto;
-      font-size: $font-size-small;
-      color: $color-black;
+      font-size: .8em;
 
-      small {
-        font-size: $font-size-smaller;
+      dfn {
+        color: $color-gray;
+        font-style: italic;
       }
     }
+  }
 
-    .type__description { // optional block
-      flex: 1 1 80%;
-      font-size: $font-size-smaller;
-      padding-left: 10px;
-    }
-
-    &.gene-age__rating {
-      .type__title {
-        margin-top: -3px;
-      }
-
-      .type__value {
-        flex-grow: 0;
-        flex-basis: 36px;
-      }
-    }
-
-    &.gene-age__diseases,
-    &.gene-age__interactions {
-      &:hover,
-      &:active {
-        .badge {
-          transition: all .15s ease-in
-        }
-
-        .type__title {
-          color: #fff;
-        }
-
-        .badge {
-          padding-left: 0;
-          padding-right: 16px;
-        }
-      }
-    }
-
-    &.gene-age__diseases {
-      .type__inner {
-        &:hover {
-          background-color: lighten(#7774D1, 10%);
-        }
-      }
-    }
-
-    &.gene-age__interactions {
-      .type__inner {
-        &:hover,
-        &:active {
-          background-color: darken(desaturate(#FFC769, 2%), 10%);
-        }
-      }
-    }
-
-    &.gene-age__orthologs {
-      .list {
-        .alias {
-          text-transform: uppercase;
-
-          &:empty {
-            display: none; // TODO: это костыль для пустых значений ортологов из GeneAge, нужно добавить проверку
-          }
-        }
-      }
-    }
+  &__type + &__type {
+    margin-top: 1em;
   }
 }

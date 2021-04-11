@@ -39,12 +39,6 @@ export abstract class GenePhylaClass {
       age: '900–1100',
       order: 3,
     },
-    7: {
-      translationString: 'phylum_teleostomi',
-      name: 'Teleostomi',
-      age: null,
-      order: 12,
-    },
     8: {
       translationString: 'phylum_procaryota',
       name: 'Procaryota',
@@ -136,8 +130,8 @@ export abstract class GenePhylaClass {
       order: 22,
     },
     23: {
-      translationString: 'phylum_primates',
-      name: 'Primates',
+      translationString: 'phylum_primatibus',
+      name: 'Primatibus',
       age: null,
       order: 23,
     },
