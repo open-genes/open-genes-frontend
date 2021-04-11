@@ -300,16 +300,17 @@
       </div>
 
       <div class="card__section card__age-mya">
-        <b>{{ item.origin.phylum }}</b>
-        {{ item.origin.age }}
-        <span *ngIf="item.origin.age">({{ "million_years" | translate }})</span>
+        <span class="label">
+          {{ "phylogeny" | translate }}
+        </span>
+        <app-gene-age [gene]="item" show="origin"></app-gene-age>
       </div>
 
       <div *ngIf="item.homologueTaxon" class="card__section card__age-homologs">
         <span class="label">
           {{ "ncbi_homologs" | translate }}
         </span>
-        {{ item.homologueTaxon }}
+        <app-gene-age [gene]="item" show="homologs"></app-gene-age>
       </div>
     </div>
 
