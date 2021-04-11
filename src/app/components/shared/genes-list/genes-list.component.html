@@ -205,7 +205,7 @@
     </td>
 
     <td class="cell cell__age-mya">
-      <app-gene-age gene="item"></app-gene-age>
+      <app-gene-age [gene]="item"></app-gene-age>
     </td>
 
     <ng-container *ngIf="!isGoTermsMode; else GoModeCell">

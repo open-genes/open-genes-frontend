@@ -15,7 +15,6 @@
 
     .type__inner {
       width: 100%;
-      min-height: 100px;
       padding: 10px;
       border: 1px solid $color-borders;
       border-radius: $border-radius-medium;
@@ -34,11 +33,11 @@
 
     .type__value {
       flex: 1 1 auto;
-      font-size: 24px;
+      font-size: $font-size-small;
       color: $color-black;
 
       small {
-        font-size: $font-size-big;
+        font-size: $font-size-smaller;
       }
     }
 

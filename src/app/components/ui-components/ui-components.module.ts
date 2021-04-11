@@ -8,6 +8,7 @@ import { TagComponent } from './components/tag/tag.component';
 import { PipesModule } from '../../modules/pipes/pipes.module';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { GeneAgeComponent } from './components/gene-age/gene-age.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,6 @@ import { GeneAgeComponent } from './components/gene-age/gene-age.component';
     AccordionComponent,
     GeneAgeComponent,
   ],
-  imports: [CommonModule, IconModule, PipesModule],
+  imports: [CommonModule, IconModule, PipesModule, TranslateModule],
 })
 export class UiComponentsModule {}

@@ -21,8 +21,6 @@ export class SelectionCriteriaComponent implements OnInit {
   }
 
   private setCriteriaListLength(criteria: SelectionCriteria): void {
-    console.log(Object.keys(criteria).length);
-
     if (criteria) {
       this.commentCauseLength = Object.keys(criteria).length;
     }

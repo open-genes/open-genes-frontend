@@ -1,17 +1,8 @@
-interface Iphyla {
-  [n: number]: Iphylum
-}
-
-interface Iphylum {
-  translationString: string,
-  name: string,
-  age: string,
-  order: number,
-}
+import { Phyla, Phylum } from '../../../../core/models/phylum.model';
 
 export abstract class GenePhylaClass {
   // TODO: Discuss with backend if we can have it as a dictionary
-  protected phyla: Iphyla = {
+  protected phyla: Phyla = {
     1: {
       translationString: 'phylum_chordata',
       name: 'Chordata',
@@ -158,7 +149,15 @@ export abstract class GenePhylaClass {
     },
   }
 
-  protected getPhylumDataByID(phylumID: number): Iphylum {
+  protected getPhylumDataByID(phylumID: number): Phylum {
     return this.phyla[phylumID];
+  }
+
+  protected getPhylumDataByName(phylumName: string): Phylum {
+    for (const [key, value] of Object.entries(this.phyla)) {
+        if (value.name === phylumName) {
+          return value;
+        }
+    }
   }
 }

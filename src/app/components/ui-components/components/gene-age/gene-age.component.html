@@ -1,31 +1,17 @@
-<ng-container *ngIf="gene.origin.phylum">
-  {{ gene.origin.phylum }} ({{ gene.origin.geneage }} {{ "million_years" | translate }})
-</ng-container>
-<ng-container *ngIf="!gene.origin.phylum">
-  {{ "gene-age_unknown" | translate }}
-</ng-container>
-
-
-{{ gene.homologueTaxon ? gene.homologueTaxon : ("gene-age_unknown" | translate) }}
-
-
 <div class="gene-age__type gene-age__phylogeny">
   <section class="type__inner">
     <div class="type__title">
       {{ 'phylogeny' | translate }}
     </div>
 
-    <div
-      *ngIf="gene.origin.phylum"
-      class="type__value">
-      {{ gene.origin.phylum }}
+    <div class="type__value">
+      <!-- TODO: {{ phylumOrigin.translationString }}  locale string -->
+      {{ gene.origin.phylum || "gene-age_unknown" | translate }}
     </div>
 
-    <div
-      *ngIf="gene.origin.age"
-      class="type__value">
-      {{ gene.origin.age }}
-      <small>{{ 'million_years' | translate }}</small>
+    <div class="type__value">
+      {{ gene.origin.age || "gene-age_unknown" | translate }}
+      <small *ngIf="gene.origin.age">{{ 'million_years' | translate }}</small>
     </div>
   </section>
 
@@ -34,9 +20,12 @@
       {{ 'ncbi_homologs' | translate }}
     </div>
     <div class="type__value">
-      <!-- TODO: change locale string -->
-      <!-- {{ gene.origin.phylum || ('gene_page_no_data' | translate) }} -->
-      {{ gene.homologueTaxon }}
+      {{ gene.homologueTaxon || "gene-age_unknown" | translate }}
+    </div>
+
+    <div class="type__value">
+      {{ phylumHomolog.age || "gene-age_unknown" | translate }}
+      <small *ngIf="phylumHomolog.age">{{ 'million_years' | translate }}</small>
     </div>
   </section>
 </div>
