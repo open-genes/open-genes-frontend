@@ -1,5 +1,9 @@
 @import '../../styles';
 
+.no-criteria {
+  color: $color-gray;
+}
+
 .criteria-accordion {
   min-width: 200px;
   box-sizing: border-box;
