@@ -7,7 +7,7 @@
       </div>
       <span class="type__value">
         <dfn>({{ gene.origin.phylum }})</dfn>&#32;
-        {{ gene.origin.age || 'gene-age_unknown' | translate }}&#32;
+        {{ gene.origin.age || 'age_unknown' | translate }}&#32;
         {{ gene.origin.age ? ('million_years' | translate) : '' }}&#32;
     </span>
     </div>
@@ -20,7 +20,7 @@
       </div>
       <span class="type__value">
       <dfn>({{ gene.homologueTaxon }})</dfn>&#32;
-        {{ phylumHomolog.age || 'gene-age_unknown' | translate }}&#32;
+        {{ phylumHomolog.age || 'age_unknown' | translate }}&#32;
         {{ phylumHomolog.age ? ('million_years' | translate) : '' }}
     </span>
     </div>
@@ -28,5 +28,5 @@
 </div>
 
 <ng-template #notSpecified>
-  <app-tag>{{ 'gene-age_unknown' | translate }}</app-tag>
+  <app-tag>{{ 'age_unknown' | translate }}</app-tag>
 </ng-template>
