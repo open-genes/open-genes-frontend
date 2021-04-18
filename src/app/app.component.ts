@@ -20,7 +20,7 @@ export class AppComponent implements AfterViewChecked {
     } else if (navigator.language.substring(0, 2) === 'en' || navigator.language.substring(0, 2) === 'ru') {
       this.lang = navigator.language.substring(0, 2)
     } else {
-      this.lang = environment.languages[0];
+      this.lang = environment.languages[1];
     }
     this.translate.use(this.lang);
   }
