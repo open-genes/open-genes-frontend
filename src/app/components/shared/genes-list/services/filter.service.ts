@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, of, BehaviorSubject } from "rxjs";
-import { Filter } from "../../../../core/models";
+import { Filter } from "./filter.model";
 import { FilterTypesEnum } from "./filter-types.enum";
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SelectionCriteria } from '../../../core/models/selection-criteria.model';
+import { SelectionCriteria } from '../../../core/models/API/selection-criteria.model';
 
 @Component({
   selector: 'app-selection-criteria',

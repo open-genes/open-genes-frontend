@@ -1,2 +1,1 @@
-export * from "./genes.model";
-export * from "./filter.model";
+export * from "./API/genes.model";
