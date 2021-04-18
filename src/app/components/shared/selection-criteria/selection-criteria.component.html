@@ -35,4 +35,8 @@
   </ng-template>
 </ng-container>
 
-<ng-template #noCriteria> Error while getting criteria list </ng-template>
+<ng-template #noCriteria>
+  <div class="no-criteria">
+    {{ 'no_criteria' | translate }}
+  </div>
+</ng-template>

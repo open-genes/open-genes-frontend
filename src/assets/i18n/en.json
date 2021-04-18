@@ -210,5 +210,6 @@
   "phylum_boreoeutheria": "Boreoeutheria",
   "phylum_euarchontoglires": "Euarchontoglires",
   "phylum_primatibus": "Primates",
-  "phylum_not_specified": "Not specified"
+  "phylum_not_specified": "Not specified",
+  "no_criteria": "Can't get criteria list"
 }

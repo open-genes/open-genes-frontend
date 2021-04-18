@@ -210,5 +210,6 @@
   "phylum_boreoeutheria": "Бореоэутерии",
   "phylum_euarchontoglires": "Эуархонтоглиры",
   "phylum_primatibus": "Приматы",
-  "phylum_not_specified": "Не задано"
+  "phylum_not_specified": "Не задано",
+  "no_criteria": "Не удалось получить список"
 }
