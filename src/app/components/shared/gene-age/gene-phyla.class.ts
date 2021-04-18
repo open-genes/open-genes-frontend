@@ -1,4 +1,4 @@
-import { Phyla, Phylum } from '../../../../core/models/phylum.model';
+import { Phyla, Phylum } from './phylum.model';
 
 export abstract class GenePhylaClass {
   // TODO: Discuss with backend if we can have it as a dictionary

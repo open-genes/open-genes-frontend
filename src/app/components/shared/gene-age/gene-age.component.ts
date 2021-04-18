@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Gene } from '../../../../core/models';
+import { Gene } from '../../../core/models';
 import { GenePhylaClass } from './gene-phyla.class';
-import { Phylum } from '../../../../core/models/phylum.model';
+import { Phylum } from './phylum.model';
 import { ShowOptionsEnum } from './show-options.enum';
 
 @Component({

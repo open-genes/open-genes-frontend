@@ -5,7 +5,7 @@ import {
   OnInit,
   OnDestroy,
 } from "@angular/core";
-import { Genes } from "src/app/core/models/genes.model";
+import { Genes } from "src/app/core/models/API/genes.model";
 import { FavouritesService } from "src/app/core/services/favourites.service";
 import { TranslateService } from "@ngx-translate/core";
 import { ApiService } from "../../core/services/api/open-genes.api.service";
