@@ -71,6 +71,22 @@
           class="fa far fa-th-large toggler__icon toggler__icon--alt"
         ></span>
       </button>
+      <button
+        class="btn btn--blue btn--icon-only"
+      (click)="toggleSettingsMenu()">
+        <span class="fa far fa-cog"></span>
+      </button>
+      <app-popover *ngIf="isSettingsMenu">
+        <ng-container popover-header>
+          Настройки
+        </ng-container>
+        <ng-container popover-content>
+          <mat-checkbox
+            (change)="changeGenesListSettings('diseases')">
+            Заболевания
+          </mat-checkbox>
+        </ng-container>
+      </app-popover>
     </div>
   </div>
 
@@ -100,6 +116,11 @@
             <div class="overflow">
               {{ "ncbi_homologs" | translate }}
             </div>
+          </td>
+
+          <td
+            *ngIf="listSettings.ifShowDiseases === true">
+            Заболевания
           </td>
 
           <ng-container *ngIf="!isGoTermsMode; else GoModeHeader">
@@ -206,6 +227,12 @@
 
     <td class="cell cell__age-mya">
       <app-gene-age [gene]="item"></app-gene-age>
+    </td>
+
+    <td
+      *ngIf="listSettings.ifShowDiseases === true"
+      class="cell">
+      Заболевания
     </td>
 
     <ng-container *ngIf="!isGoTermsMode; else GoModeCell">

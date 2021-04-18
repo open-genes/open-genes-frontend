@@ -32,6 +32,7 @@ import {
   MatTableModule,
   MatSortModule,
   MatPaginatorModule,
+  MatBottomSheetModule,
 } from "@angular/material/./";
 
 @NgModule({
@@ -66,6 +67,7 @@ import {
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
+    MatBottomSheetModule,
   ],
   exports: [
     MatCheckboxModule,
@@ -98,6 +100,7 @@ import {
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
+    MatBottomSheetModule,
   ],
 })
 export class VendorsModule {}

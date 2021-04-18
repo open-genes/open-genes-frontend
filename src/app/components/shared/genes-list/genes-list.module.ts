@@ -18,13 +18,10 @@ import { WindowService } from "../../../core/services/browser/window.service";
 import { GeneMenuComponent } from "./components/gene/menu/gene-menu.component";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { SelectionCriteriaModule } from "../selection-criteria/selection-criteria.module";
+import { VendorsModule } from '../../../modules/vendors/vendors.module';
 
 @NgModule({
-  declarations: [
-    GenesListComponent,
-    SearchComponent,
-    GeneMenuComponent
-  ],
+  declarations: [GenesListComponent, SearchComponent, GeneMenuComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -40,6 +37,7 @@ import { SelectionCriteriaModule } from "../selection-criteria/selection-criteri
     MatCardModule,
     MatTooltipModule,
     SelectionCriteriaModule,
+    VendorsModule,
   ],
   providers: [FavouritesService, WindowService],
   exports: [GenesListComponent, SearchComponent],

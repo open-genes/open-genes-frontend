@@ -21,6 +21,7 @@ import { FilterService } from "./services/filter.service";
 import { WindowService } from "src/app/core/services/browser/window.service";
 import { FilterTypesEnum } from "./services/filter-types.enum";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { GenesListSettings } from './genes-list-settings.model';
 
 @Component({
   selector: "app-genes-list",
@@ -34,6 +35,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   @Input() isGoSearchPerformed: boolean;
   @Output() updateGenesList = new EventEmitter();
   @Output() passQuery: EventEmitter<string> = new EventEmitter<string>();
+  @Output() listSettingsChanged: EventEmitter<GenesListSettings> = new EventEmitter();
   @ViewChild("templateAddedToFavorites") templateAddedToFavorites: ElementRef;
   @ViewChild("templateRemovedFromFavorites")
   templateRemovedFromFavorites: ElementRef;
@@ -55,6 +57,12 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
   public isMobile: boolean;
+  public isSettingsMenu: boolean = false;
+  public listSettings: GenesListSettings = {
+    ifShowDiseases: false,
+    ifShowCriteria: true,
+  };
+
   private resMobile = 959.98;
   private subscription$ = new Subject();
 
@@ -216,6 +224,10 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   toggleGenesView(): boolean {
     return (this.asTableRow = !this.asTableRow);
   }
+  toggleSettingsMenu():boolean {
+    console.log(this.isSettingsMenu);
+    return (this.isSettingsMenu = !this.isSettingsMenu);
+  }
 
   /**
    * Favorites
@@ -259,28 +271,22 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   /**
-   * Sorting
+   * List view settings
    */
-  sortBy(sortBy: string): void {
-    // TODO: use enum types here
-    if (sortBy === "name") {
-      if (this.filters.byName) {
-        this.reverse();
-      } else {
-        this.sortByName();
-      }
-      this.filters.byName = !this.filters.byName;
-      this.cdRef.markForCheck();
-    } else {
-      if (this.filters.byAge) {
-        this.reverse();
-      } else {
-        this.sortByAge();
-      }
-      this.filters.byAge = !this.filters.byAge;
-      this.cdRef.markForCheck();
+  changeGenesListSettings(parameter: string): void {
+    switch (parameter) {
+      case 'diseases':
+        this.listSettings.ifShowDiseases = !this.listSettings.ifShowDiseases
+        break;
+      case 'criteria':
+        this.listSettings.ifShowCriteria = !this.listSettings.ifShowCriteria
+        break;
+      default:
+        break;
     }
+    this.listSettingsChanged.emit(this.listSettings);
   }
+
 
   /**
    * Filters translations
@@ -312,6 +318,27 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   /**
    * Sorting
    */
+  sortBy(sortBy: string): void {
+    // TODO: use enum types here
+    if (sortBy === "name") {
+      if (this.filters.byName) {
+        this.reverse();
+      } else {
+        this.sortByName();
+      }
+      this.filters.byName = !this.filters.byName;
+      this.cdRef.markForCheck();
+    } else {
+      if (this.filters.byAge) {
+        this.reverse();
+      } else {
+        this.sortByAge();
+      }
+      this.filters.byAge = !this.filters.byAge;
+      this.cdRef.markForCheck();
+    }
+  }
+
   private reverse() {
     this.searchedData.reverse();
   }

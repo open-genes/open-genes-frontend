@@ -1,0 +1,77 @@
+@import '../../../styles';
+
+.popover {
+  display: block;
+  position: absolute;
+  left: 10px;
+  top: 35px;
+  right: 10px;
+  z-index: 2;
+  background-color: #fff;
+  border: 1px solid $color-borders;
+  border-radius: $border-radius-regular;
+  box-shadow: $box-shadow;
+
+  @include resolution_tablet-and-up {
+    max-width: 100%;
+  }
+
+  @include resolution_smartphone {
+    max-width: 280px;
+  }
+
+  &__arrow {
+    position: absolute;
+    top: -12px;
+    z-index: 0;
+    border-bottom: 12px solid $color-borders;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+
+    &,
+    &:before {
+      content: ' ';
+      display: block;
+      width: 0;
+      height: 0;
+    }
+
+    &:before {
+      position: relative;
+      top: -1px;
+      left: 1px;
+      z-index: 1;
+      margin-left: -10px;
+      border-bottom: 10px solid #fff;
+      border-right: 10px solid transparent;
+      border-left: 10px solid transparent;
+    }
+  }
+
+  &__header {
+    width: 100%;
+    font-size: 15px;
+    color: $color-indent;
+    font-weight: bold;
+    padding: 20px 20px 10px 20px;
+  }
+
+  &__content {
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 20px;
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: none;
+      width: 4px;
+      border-radius: 2px;
+      background-color: $color-gray-semi;
+    }
+
+    &::-webkit-scrollbar {
+      width: 4px;
+      background-color: $color-gray-soft;
+    }
+  }
+}
