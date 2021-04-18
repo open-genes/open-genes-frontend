@@ -1,12 +1,12 @@
 stages:
   - build
-  - staging
-  - release
+  - test-stand
+  - prod-stand
 
 variables:
-  PROJECT_DEV_NAME: open-genes-dev
-  PROJECT_STAGE_NAME: open-genes-stage
-  PROJECT_NAME: open-genes
+  PROJECT_TEST_DOMAIN: test.open-genes.com
+  PROJECT_DEMO_DOMAIN: demo.open-genes.com
+  PROJECT_DOMAIN: open-genes
 
 build-dev:
   stage: build
@@ -21,12 +21,12 @@ build-dev:
   except:
     - master
 
-build-staging:
+build-demo:
   stage: build
   image: alexsuch/angular-cli:7.3.8
   script:
     - npm install
-    - npm run build-staging
+    - npm run build-demo
   artifacts:
     paths:
       - dist/
@@ -54,18 +54,18 @@ deploy-dev:
   environment:
     name: develop
   variables:
-    PROJECT_DIR: /var/www/${PROJECT_DEV_NAME}
+    PROJECT_DIR: /var/www/${PROJECT_TEST_DOMAIN}
   except:
     - master
 
-deploy-stage:
+deploy-demo:
   extends: .deploy
   dependencies:
-    - build-staging
+    - build-demo
   environment:
-    name: stage
+    name: demo
   variables:
-    PROJECT_DIR: /var/www/${PROJECT_STAGE_NAME}
+    PROJECT_DIR: /var/www/${PROJECT_DEMO_DOMAIN}
   except:
     - master
 
@@ -76,7 +76,7 @@ deploy-prod-to-dev:
   environment:
     name: develop
   variables:
-    PROJECT_DIR: /var/www/${PROJECT_DEV_NAME}
+    PROJECT_DIR: /var/www/${PROJECT_TEST_DOMAIN}
   only:
     - master
 
@@ -87,7 +87,7 @@ deploy-prod-to-stage:
   environment:
     name: develop
   variables:
-    PROJECT_DIR: /var/www/${PROJECT_STAGE_NAME}
+    PROJECT_DIR: /var/www/${PROJECT_DEMO_DOMAIN}
   only:
     - master
 
@@ -95,16 +95,16 @@ deploy-prod:
   extends: .deploy
   dependencies:
     - build-prod
-  stage: release
+  stage: prod-stand
   environment:
     name: production
   variables:
-    PROJECT_DIR: /var/www/${PROJECT_NAME}
+    PROJECT_DIR: /var/www/${PROJECT_DOMAIN}
   only:
     - master
 
 .deploy:
-  stage: staging
+  stage: test-stand
   image: instrumentisto/rsync-ssh
   script:
     - rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' dist/frontend/ ${DROPLET_USER}@${DROPLET_IP}:${PROJECT_DIR}/frontend/

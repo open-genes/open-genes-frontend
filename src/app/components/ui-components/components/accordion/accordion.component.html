@@ -1,0 +1,9 @@
+<div class="accordion" [class.accordion--open]="isOpen">
+  <div class="accordion__header"
+       role="button">
+    <ng-content select="[accordion-header]"></ng-content>
+  </div>
+  <div class="accordion__body">
+    <ng-content select="[accordion-body]"></ng-content>
+  </div>
+</div>

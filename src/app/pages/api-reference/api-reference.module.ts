@@ -4,7 +4,7 @@ import { ApiReferenceComponent } from "./api-reference.component";
 import { RouterModule, Routes } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
 import { PipesModule } from "../../modules/pipes/pipes.module";
-import { CodeBlockModule } from "../../components/shared/code-block/code-block.module";
+import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
 
 const routes: Routes = [{ path: "", component: ApiReferenceComponent }];
 
@@ -15,7 +15,7 @@ const routes: Routes = [{ path: "", component: ApiReferenceComponent }];
     RouterModule.forChild(routes),
     TranslateModule,
     PipesModule,
-    CodeBlockModule,
+    UiComponentsModule,
   ],
 })
 export class ApiReferenceModule {}

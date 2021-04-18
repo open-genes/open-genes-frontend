@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from "@angular/core";
-import { Genes } from "../../../../core/models";
+import { Genes } from "../../../../../../core/models";
 import { Observable } from "rxjs";
 
 @Component({

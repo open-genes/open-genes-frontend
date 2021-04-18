@@ -1,0 +1,36 @@
+@import '../../../styles';
+
+:host  {
+  display: inline-block;
+  width: 100%;
+}
+
+.gene-age {
+  width: 100%;
+  display: block;
+
+  &__type {
+    &, .type__title {
+      display: inline-block;
+      width: 100%;
+    }
+
+    .type__title {
+      font-weight: 500;
+      margin-bottom: .2em;
+    }
+
+    .type__value {
+      font-size: .8em;
+
+      dfn {
+        color: $color-gray;
+        font-style: italic;
+      }
+    }
+  }
+
+  &__type + &__type {
+    margin-top: 1em;
+  }
+}

@@ -71,11 +71,11 @@
                 }
               ]
             },
-            "staging": {
+            "demo": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.staging.ts"
+                  "with": "src/environments/environment.demo.ts"
                 }
               ],
               "optimization": true,
@@ -103,7 +103,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.dev.ts"
+                  "with": "src/environments/environment.develop.ts"
                 }
               ],
               "optimization": true,
@@ -141,6 +141,12 @@
           "configurations": {
             "production": {
               "browserTarget": "frontend:build:production"
+            },
+            "develop": {
+              "browserTarget": "frontend:build:develop"
+            },
+            "demo": {
+              "browserTarget": "frontend:build:demo"
             }
           }
         },

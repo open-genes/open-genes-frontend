@@ -1,0 +1,32 @@
+<div class="gene-page">
+  <ng-container *ngIf="isShowOnlyHomologs === false">
+    <div *ngIf="gene.origin.phylum; else notSpecified"
+         class="gene-age__type">
+      <div class="type__title">
+        {{ phylumOrigin.translationString || 'phylum_not_specified' | translate }}
+      </div>
+      <span class="type__value">
+        <dfn>({{ gene.origin.phylum }})</dfn>&#32;
+        {{ gene.origin.age || 'gene-age_unknown' | translate }}&#32;
+        {{ gene.origin.age ? ('million_years' | translate) : '' }}&#32;
+    </span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isShowOnlyOrigin === false">
+    <div *ngIf="gene.homologueTaxon; else notSpecified" class="gene-age__type">
+      <div class="type__title">
+        {{ phylumHomolog.translationString || 'phylum_not_specified' | translate }}
+      </div>
+      <span class="type__value">
+      <dfn>({{ gene.homologueTaxon }})</dfn>&#32;
+        {{ phylumHomolog.age || 'gene-age_unknown' | translate }}&#32;
+        {{ phylumHomolog.age ? ('million_years' | translate) : '' }}
+    </span>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #notSpecified>
+  <app-tag>{{ 'gene-age_unknown' | translate }}</app-tag>
+</ng-template>

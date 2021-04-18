@@ -66,7 +66,6 @@ export interface LongevityEffects {
 }
 
 export interface Researches {
-  // TODO: backend should always return these fields, not only when the form is filled
   increaseLifespan: Lifespan[];
   ageRelatedChangesOfGene: AgeRelatedChanges[];
   interventionToGeneImprovesVitalProcesses: InterventionAffectsAgingProcess[];

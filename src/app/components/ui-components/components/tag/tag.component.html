@@ -1,0 +1,12 @@
+<button
+  class="tag"
+  [ngClass]="{
+    '__active': isActive,
+    '__disabled': isDisabled,
+    'tag--multiline': isMultiline
+  }"
+>
+  <span class="tag__inner">
+    <ng-content></ng-content>
+  </span>
+</button>
