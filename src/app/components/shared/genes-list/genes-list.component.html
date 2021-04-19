@@ -13,7 +13,7 @@
   "
 >
   <!-- Filters -->
-  <div *ngIf="isFilterPanel && !isMobile" class="view-panel">
+  <div *ngIf="isFilterPanel" class="view-panel">
     <div class="filters-group view-panel__filters">
       <button
         class="filter name-filter"
@@ -72,11 +72,19 @@
         ></span>
       </button>
       <button
-        class="btn btn--blue btn--icon-only"
+        class="btn btn-gray btn--icon-only"
       (click)="toggleSettingsMenu()">
         <span class="fa far fa-cog"></span>
       </button>
-      <app-popover *ngIf="isSettingsMenu">
+      <app-popover
+        *ngIf="isSettingsMenu"
+        width="300px"
+        top="24px"
+        right="0"
+        zIndex="1"
+        arrowPositionRight="6px"
+        (closeEvent)="toggleSettingsMenu()"
+      >
         <ng-container popover-header>
           Настройки
         </ng-container>

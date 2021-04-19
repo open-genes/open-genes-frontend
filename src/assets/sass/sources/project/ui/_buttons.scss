@@ -13,9 +13,11 @@
   cursor: pointer;
   user-select: none;
   border-radius: 3px;
-  // Обрезаем текст, если он шире кнопки
-  // ! Не работает, пока кнопке на задана ширина
-  @include text-overflow;
+
+  // Truncate text if it's wider than button
+  &:not(.btn--icon-only) {
+    @include text-overflow;
+  }
 
   &.disabled {
     opacity: 0.5;
@@ -34,8 +36,8 @@
   }
 }
 
-// Типы
-// Кнопка без бордера и фона
+// Types
+// Button without a border and background
 @mixin btn-flat {
   width: auto;
   min-width: 0;
@@ -52,8 +54,8 @@
   @include btn-flat;
 }
 
-// Цвета
-@mixin btn-color($name, $color) { // переменная $name должна быть строкой
+// Colors
+@mixin btn-color($name, $color) {
   .btn-#{$name} {
     &:not(.btn-fill) {
       color: $color;
@@ -114,8 +116,9 @@
 @include btn-color('red', $color-red-medium);
 @include btn-color('green', $color-green-medium);
 @include btn-color('purple', $color-purple);
+@include btn-color('gray', $color-gray);
 
-// РАЗМЕРЫ
+// SIZES
 
 @mixin btn--small {
   $btn-height: $ui-base-height;
@@ -163,10 +166,35 @@
   line-height: 0;
   border-radius: 50%;
   border: 0;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    bottom: -4px;
+    left: -4px;
+    z-index: 0;
+    border-radius: 50%;
+    background-color: rgba($color-hover, .75);
+    opacity: 0;
+    transition: color, opacity, .15s ease-in-out;
+  }
+
   .fa {
+    position: relative;
     width: 1em;
     height: 1em;
     line-height: 1em;
+    z-index: 1;
+  }
+
+  &:hover,
+  &:active {
+    &::after {
+      opacity: 1;
+    }
   }
 }
 
@@ -174,7 +202,7 @@
   @include btn--icon-only;
 }
 
-// Кнопка подгрузки
+// A button for contend preloading
 .show-more {
   &__button {
     width: 100%;
@@ -194,7 +222,7 @@
   }
 }
 
-// Исправления
+// Fixes
 button.btn {
   line-height: normal;
 }
