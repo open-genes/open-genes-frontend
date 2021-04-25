@@ -39,26 +39,44 @@
 
 .view-panel {
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
+  display: grid;
+  grid-auto-flow: column;
+  align-items: start;
   margin-bottom: 20px;
 
   &__filters {
     padding-right: 5px;
   }
 
-  // Переключать вид можно только на десктопе.
-  // На мобильном контент всегда выглядит в виде карточек.
+  // You can switch the view only on the desktop.
+  // On mobile, content always looks like cards.
   &__buttons {
+    position: relative;
     padding-left: 5px;
     display: flex;
     align-items: center;
     flex-flow: row nowrap;
     justify-content: flex-end;
+
+    button + button {
+      margin-left: 10px;
+    }
+
     @include resolution_smartphone-and-tablet {
-      display: none;
+      .toggler {
+        display: none;
+      }
+    }
+  }
+
+  &__settings {
+    mat-checkbox {
+      display: flex;
+      width: 100%;
+    }
+
+    mat-checkbox + mat-checkbox {
+      margin-top: 5px;
     }
   }
 }

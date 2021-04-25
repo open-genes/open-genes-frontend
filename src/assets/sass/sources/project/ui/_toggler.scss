@@ -6,7 +6,7 @@
   position: relative;
   user-select: none;
 
-  &:after { // TODO: добавить шаблон
+  &:after { // TODO: make a ripple mixin
     content: '';
     display: block;
     position: absolute;
@@ -36,7 +36,8 @@
     }
   }
 
-  &:hover {
+  &:hover,
+  &:active {
     &::after {
       opacity: 1;
     }

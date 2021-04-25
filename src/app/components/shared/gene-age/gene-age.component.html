@@ -1,4 +1,4 @@
-<div class="gene-page">
+<div class="gene-age">
   <ng-container *ngIf="isShowOnlyHomologs === false">
     <div *ngIf="gene.origin.phylum; else notSpecified"
          class="gene-age__type">
@@ -28,5 +28,5 @@
 </div>
 
 <ng-template #notSpecified>
-  <app-tag>{{ 'age_unknown' | translate }}</app-tag>
+  <div class="gene-age__error">{{ 'age_unknown' | translate }}</div>
 </ng-template>
