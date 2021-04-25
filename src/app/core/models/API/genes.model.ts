@@ -3,19 +3,22 @@ import { Origin } from "./origin.model";
 import { Terms } from "./gene-ontology.model";
 import { HumanProteinAtlas } from "./human-protein-atlas.model";
 import { SelectionCriteria } from "./selection-criteria.model";
+import { AssociatedDiseases } from './associated-diseases.model';
 
 export interface Genes {
   id: number;
-  symbol: string;
   aliases: string[];
+  commentCause: SelectionCriteria[],
+  diseases: AssociatedDiseases[],
+  expressionChange?: number;
+  functionalClusters: string | string[];
+  homologueTaxon: string;
   name: string;
   ncbiId: number;
-  uniprot: string;
-  functionalClusters: string | string[];
-  expressionChange?: number;
   origin: Origin;
-  homologueTaxon: string;
+  symbol: string;
   timestamp: string;
+  uniprot: string;
   terms?: Terms;
 }
 

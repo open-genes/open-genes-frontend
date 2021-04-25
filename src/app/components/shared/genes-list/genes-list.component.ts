@@ -56,10 +56,15 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
+
   public isMobile: boolean;
   public isSettingsMenu: boolean = false;
   public listSettings: GenesListSettings = {
-    ifShowDiseases: false,
+    // Default:
+    ifShowAge: true,
+    ifShowClasses: true,
+    ifShowExpression: true,
+    ifShowDiseases: true,
     ifShowCriteria: true,
   };
 
@@ -225,7 +230,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     return (this.asTableRow = !this.asTableRow);
   }
   toggleSettingsMenu():boolean {
-    console.log(this.isSettingsMenu);
     return (this.isSettingsMenu = !this.isSettingsMenu);
   }
 
@@ -273,8 +277,18 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   /**
    * List view settings
    */
+  // TODO: Refactor this method
   changeGenesListSettings(parameter: string): void {
     switch (parameter) {
+      case 'gene-age':
+        this.listSettings.ifShowAge = !this.listSettings.ifShowAge
+        break;
+      case 'classes':
+        this.listSettings.ifShowClasses = !this.listSettings.ifShowClasses
+        break;
+      case 'expression':
+        this.listSettings.ifShowExpression = !this.listSettings.ifShowExpression
+        break;
       case 'diseases':
         this.listSettings.ifShowDiseases = !this.listSettings.ifShowDiseases
         break;
@@ -284,9 +298,9 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
       default:
         break;
     }
+
     this.listSettingsChanged.emit(this.listSettings);
   }
-
 
   /**
    * Filters translations
@@ -355,6 +369,9 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     this.searchedData.sort((a, b) => a.origin.order - b.origin.order);
   }
 
+  /**
+   * Responsiveness
+   */
   private initWindowWidth(): void {
     this.windowService
       .setWindowWidth()
