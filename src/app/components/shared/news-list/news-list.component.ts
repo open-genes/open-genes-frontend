@@ -7,7 +7,7 @@ import {
   ChangeDetectorRef,
 } from "@angular/core";
 import { PubmedApiService } from "../../../core/services/api/pubmed.api.service";
-import { News } from "../../../core/models/news.model";
+import { News } from "../../../core/models/API/news.model";
 import { Genes } from "../../../core/models";
 import { finalize, switchMap, takeUntil } from "rxjs/operators";
 import { environment } from "../../../../environments/environment";

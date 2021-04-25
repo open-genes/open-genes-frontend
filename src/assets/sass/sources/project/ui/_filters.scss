@@ -12,7 +12,6 @@ $element-base-color: $color-general;
   display: block;
   float: left;
   width: auto;
-  max-width: 150px;
   height: 26px;
   margin: 0 5px 5px 0;
   position: relative;
@@ -53,5 +52,13 @@ $element-base-color: $color-general;
     &:hover {
       background-color: $element-base-color;
     }
+  }
+
+  @include resolution_desktop-and-up {
+    max-width: 150px;
+  }
+
+  @include resolution_smartphone-and-tablet {
+    max-width: 120px;
   }
 }

@@ -1,4 +1,4 @@
-@import '../../../styles';
+@import '../../styles';
 
 :host  {
   display: inline-block;
@@ -32,5 +32,11 @@
 
   &__type + &__type {
     margin-top: 1em;
+  }
+
+  &__error {
+    width: 100%;
+    margin-top: 5px;
+    color: $color-gray;
   }
 }

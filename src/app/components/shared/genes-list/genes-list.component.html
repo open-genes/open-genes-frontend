@@ -13,7 +13,7 @@
   "
 >
   <!-- Filters -->
-  <div *ngIf="isFilterPanel && !isMobile" class="view-panel">
+  <div *ngIf="isFilterPanel" class="view-panel">
     <div class="filters-group view-panel__filters">
       <button
         class="filter name-filter"
@@ -65,12 +65,60 @@
         class="toggler"
         (click)="toggleGenesView()"
         [ngClass]="asTableRow ? 'toggler--def' : 'toggler--alt'"
+        matTooltip="{{ 'gene_list_view' |translate }}"
       >
         <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
         <span
           class="fa far fa-th-large toggler__icon toggler__icon--alt"
         ></span>
       </button>
+      <button *ngIf="!isGoTermsMode"
+              class="btn btn-gray btn--icon-only"
+              (click)="toggleSettingsMenu()">
+        <span class="fa far fa-cog"></span>
+      </button>
+      <app-popover
+        *ngIf="isSettingsMenu"
+        class="view-panel__settings"
+        width="280px"
+        top="24px"
+        right="0"
+        zIndex="1"
+        arrowPositionRight="6px"
+        matTooltip="{{ 'settings' |translate }}"
+        (closeEvent)="toggleSettingsMenu()"
+      >
+        <ng-container popover-header>
+          {{ "settings" |translate }}
+        </ng-container>
+        <ng-container popover-content>
+          <mat-checkbox
+            (change)="changeGenesListSettings('gene-age')"
+            [checked]="listSettings.ifShowAge"
+          >{{ "gene_list_evolutionary_age" | translate }}
+          </mat-checkbox>
+          <mat-checkbox
+            (change)="changeGenesListSettings('classes')"
+            [checked]="listSettings.ifShowClasses"
+          >{{ "functional_classes" | translate }}
+          </mat-checkbox>
+          <mat-checkbox
+            [checked]="listSettings.ifShowExpression"
+            (change)="changeGenesListSettings('expression')"
+          >{{ "main_page_table_expression" | translate }}
+          </mat-checkbox>
+          <mat-checkbox
+            [checked]="listSettings.ifShowDiseases"
+            (change)="changeGenesListSettings('diseases')">
+            {{ "gene_list_diseases" | translate }}
+          </mat-checkbox>
+          <mat-checkbox
+            [checked]="listSettings.ifShowCriteria"
+            (change)="changeGenesListSettings('criteria')">
+            {{ "main_page_table_criteria" | translate }}
+          </mat-checkbox>
+        </ng-container>
+      </app-popover>
     </div>
   </div>
 
@@ -86,46 +134,10 @@
     <!-- Content views -->
     <table *ngIf="asTableRow && !isMobile">
       <thead>
-        <tr>
-          <td>
-            <div class="overflow">
-              {{ "main_page_table_name" | translate }}
-            </div>
-          </td>
-
-          <td>
-            <div class="overflow">
-              {{ "phylogeny" | translate }},
-            </div>
-            <div class="overflow">
-              {{ "ncbi_homologs" | translate }}
-            </div>
-          </td>
-
-          <ng-container *ngIf="!isGoTermsMode; else GoModeHeader">
-            <td>
-              <div class="overflow">
-                {{ "functional_classes" | translate }}
-              </div>
-            </td>
-            <td>
-              <div class="overflow">
-                {{ "main_page_table_expression" | translate }}
-              </div>
-            </td>
-            <td>
-              <div class="overflow">{{ "main_page_table_criteria" | translate }}</div>
-            </td>
-          </ng-container>
-          <ng-template #GoModeHeader>
-            <td colspan="2">
-              <div class="overflow">{{ "go_terms" | translate }}</div>
-            </td>
-          </ng-template>
-          <td>
-            <div class="overflow"></div>
-          </td>
-        </tr>
+        <app-genes-table-header
+          [settings]="listSettings"
+          [isGoTermsMode]="isGoTermsMode"
+        ></app-genes-table-header>
       </thead>
       <tbody>
         <ng-container
@@ -204,12 +216,21 @@
       </div>
     </td>
 
-    <td class="cell cell__age-mya">
+    <td *ngIf="isGoTermsMode || listSettings.ifShowAge"
+        class="cell cell__age-mya">
       <app-gene-age [gene]="item"></app-gene-age>
     </td>
 
+    <td *ngIf="isGoTermsMode || listSettings.ifShowDiseases"
+        class="cell">
+        <app-associated-diseases
+          [geneDiseases]="item.diseases"
+        ></app-associated-diseases>
+    </td>
+
     <ng-container *ngIf="!isGoTermsMode; else GoModeCell">
-      <td class="cell cell__clusters">
+      <td *ngIf="listSettings.ifShowClasses"
+          class="cell cell__clusters">
         <div class="cell__limiter">
           <app-tag
             *ngFor="let item of item.functionalClusters"
@@ -220,7 +241,8 @@
         </div>
       </td>
 
-      <td class="cell cell__expression">
+      <td *ngIf="listSettings.ifShowExpression"
+          class="cell cell__expression">
         <app-tag
           (click)="filterByExpressionChange(item.expressionChange)"
           [isDisabled]="item.expressionChange === 0"
@@ -231,8 +253,8 @@
         </app-tag>
       </td>
 
-
-      <td class="cell cell__research-type">
+      <td *ngIf="listSettings.ifShowCriteria"
+          class="cell cell__criteria">
         <app-selection-criteria [geneCriteria]="item.commentCause"></app-selection-criteria>
       </td>
     </ng-container>
@@ -245,24 +267,21 @@
             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
             class="tag"
             matTooltip="{{ term.value }}"
-          >
-            {{ term.key | zero }}
+          >{{ term.key | zero }}
           </a>
           <a
             *ngFor="let term of cellularComponent | keyvalue"
             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
             class="tag"
             matTooltip="{{ term.value }}"
-          >
-            {{ term.key | zero }}
+          >{{ term.key | zero }}
           </a>
           <a
             *ngFor="let term of molecularActivity | keyvalue"
             href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
             class="tag"
             matTooltip="{{ term.value }}"
-          >
-            {{ term.key | zero }}
+          >{{ term.key | zero }}
           </a>
         </div>
       </td>
@@ -299,24 +318,29 @@
         </div>
       </div>
 
-      <div class="card__section card__age-mya">
+      <ng-container *ngIf="listSettings.ifShowAge">
+        <div class="card__section card__age-mya">
         <span class="label">
           {{ "phylogeny" | translate }}
         </span>
-        <app-gene-age [gene]="item" show="origin"></app-gene-age>
-      </div>
+          <app-gene-age [gene]="item" show="origin"></app-gene-age>
+        </div>
 
-      <div *ngIf="item.homologueTaxon" class="card__section card__age-homologs">
+        <div *ngIf="item.homologueTaxon" class="card__section card__age-homologs">
         <span class="label">
           {{ "ncbi_homologs" | translate }}
         </span>
-        <app-gene-age [gene]="item" show="homologs"></app-gene-age>
-      </div>
+          <app-gene-age [gene]="item" show="homologs"></app-gene-age>
+        </div>
+      </ng-container>
     </div>
 
-    <div class="card__controls">
+    <div *ngIf="isGoTermsMode ||
+    listSettings.ifShowClasses ||
+    listSettings.ifShowExpression"
+         class="card__controls">
       <ng-container *ngIf="!isGoTermsMode; else GoModeCardActions">
-        <div *ngIf="item.functionalClusters" class="card__section">
+        <div *ngIf="item.functionalClusters && listSettings.ifShowClasses" class="card__section">
           <span class="label">
             {{ "functional_classes" | translate }}
           </span>
@@ -328,7 +352,8 @@
           </app-tag>
         </div>
 
-        <div class="card__section">
+        <div *ngIf="listSettings.ifShowExpression"
+             class="card__section">
           <span class="label">
             {{ "main_page_table_expression" | translate }}
           </span>
@@ -342,6 +367,7 @@
           </app-tag>
         </div>
       </ng-container>
+
       <ng-template #GoModeCardActions>
         <div class="card__section" *ngIf="item.terms">
           <a

@@ -18,12 +18,16 @@ import { WindowService } from "../../../core/services/browser/window.service";
 import { GeneMenuComponent } from "./components/gene/menu/gene-menu.component";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { SelectionCriteriaModule } from "../selection-criteria/selection-criteria.module";
+import { VendorsModule } from '../../../modules/vendors/vendors.module';
+import { GenesTableHeaderComponent } from './components/genes-table-header/genes-table-header.component';
+import { AssociatedDiseasesModule } from '../associated-diseases/associated-diseases.module';
 
 @NgModule({
   declarations: [
     GenesListComponent,
     SearchComponent,
-    GeneMenuComponent
+    GeneMenuComponent,
+    GenesTableHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +44,8 @@ import { SelectionCriteriaModule } from "../selection-criteria/selection-criteri
     MatCardModule,
     MatTooltipModule,
     SelectionCriteriaModule,
+    VendorsModule,
+    AssociatedDiseasesModule,
   ],
   providers: [FavouritesService, WindowService],
   exports: [GenesListComponent, SearchComponent],

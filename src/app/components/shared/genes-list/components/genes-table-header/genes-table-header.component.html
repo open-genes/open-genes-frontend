@@ -1,0 +1,46 @@
+<td>
+  <div class="overflow">
+    {{ "main_page_table_name" | translate }}
+  </div>
+</td>
+
+<td *ngIf="isGoTermsMode || settings.ifShowAge">
+  <div class="overflow">
+    {{ "phylogeny" | translate }},
+  </div>
+  <div class="overflow">
+    {{ "ncbi_homologs" | translate }}
+  </div>
+</td>
+
+<td *ngIf="isGoTermsMode || settings.ifShowDiseases">
+  {{ "gene_list_diseases" | translate }}
+</td>
+
+<ng-container *ngIf="!isGoTermsMode; else GoModeHeader">
+  <td *ngIf="settings.ifShowClasses">
+    <div class="overflow">
+      {{ "functional_classes" | translate }}
+    </div>
+  </td>
+  <td *ngIf="settings.ifShowExpression">
+    <div class="overflow">
+      {{ "main_page_table_expression" | translate }}
+    </div>
+  </td>
+  <td *ngIf="settings.ifShowCriteria">
+    <div class="overflow">{{ "main_page_table_criteria" | translate }}</div>
+  </td>
+</ng-container>
+<td>
+  <div class="overflow"></div>
+</td>
+
+<ng-template #GoModeHeader>
+  <td colspan="3">
+    <div class="overflow">{{ "go_terms" | translate }}</div>
+  </td>
+</ng-template>
+
+
+

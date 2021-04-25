@@ -9,53 +9,8 @@
   }
 
   thead {
+    width: 100%;
     background-color: $color-general-light;
-
-    td {
-      width: (100% / $columns-quantity); // Фикс для пустой таблицы
-      color: $color-black;
-      font-size: 12px;
-      font-weight: $font-weight-medium;
-      text-align: left;
-      padding: 8px 10px 10px 10px;
-      border-bottom: 2px solid $color-borders;
-      position: relative;
-
-      .overflow {
-        width: 100%;
-        @include overflow-lines(12px, 1.3, 3, 0);
-      }
-
-      .fa {
-        display: inline;
-        font-size: 12px;
-        margin-left: 5px;
-      }
-
-      // Setting width to columns
-      &:first-child {
-        .overflow {
-          width: 200px;
-        }
-      }
-      &:nth-child(2){
-        .overflow {
-          width: 140px;
-        }
-      }
-
-      &:nth-child(3) {
-        .overflow {
-          width: 300px;
-        }
-      }
-
-      &:last-child {
-        .overflow {
-          width: 24px;
-        }
-      }
-    }
   }
 
   .table-row { // tr

@@ -7,8 +7,9 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TagComponent } from './components/tag/tag.component';
 import { PipesModule } from '../../modules/pipes/pipes.module';
 import { AccordionComponent } from './components/accordion/accordion.component';
-import { GeneAgeComponent } from './components/gene-age/gene-age.component';
+import { GeneAgeComponent } from '../shared/gene-age/gene-age.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { PopoverComponent } from './components/popover/popover.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
     SpinnerComponent,
     TagComponent,
     GeneAgeComponent,
+    PopoverComponent,
   ],
   exports: [
     CodeBlockComponent,
@@ -26,6 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TagComponent,
     AccordionComponent,
     GeneAgeComponent,
+    PopoverComponent,
   ],
   imports: [CommonModule, IconModule, PipesModule, TranslateModule],
 })
