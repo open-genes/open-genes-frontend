@@ -333,6 +333,20 @@
           <app-gene-age [gene]="item" show="homologs"></app-gene-age>
         </div>
       </ng-container>
+
+      <div *ngIf="listSettings.ifShowDiseases"
+          class="card__section">
+        <app-associated-diseases
+          [geneDiseases]="item.diseases"
+        ></app-associated-diseases>
+      </div>
+
+      <div *ngIf="listSettings.ifShowCriteria"
+           class="card__section">
+        <app-selection-criteria
+          [geneCriteria]="item.commentCause"
+        ></app-selection-criteria>
+      </div>
     </div>
 
     <div *ngIf="isGoTermsMode ||

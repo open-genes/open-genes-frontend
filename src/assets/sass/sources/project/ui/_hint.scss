@@ -1,10 +1,30 @@
 .hint {
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: flex-start;
+  justify-content: flex-start;
+  align-items: flex-start;
   width: 100%;
-  padding: 20px 10px;
-  border-radius: $border-radius-regular;
-  background-color: $color-general-light;
-  color: #5C6796;
+  padding: 12px 10px;
+  border-radius: $border-radius-medium;
+  background-color: lighten(#ffc769, 20%);
+  font-size: $font-size-smaller;
+  color: #c88142;
   margin-bottom: 10px;
+
+  &__icon {
+    color: #ffac5f;
+    margin-right: 10px;
+  }
+
+  &__text {
+    line-height: 1.5;
+    white-space: normal;
+
+    .fa {
+      vertical-align: middle;
+    }
+  }
 }
 
 .reference {
