@@ -62,8 +62,8 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public listSettings: GenesListSettings = {
     // Default:
     ifShowAge: true,
-    ifShowClasses: true,
-    ifShowExpression: true,
+    ifShowClasses: false,
+    ifShowExpression: false,
     ifShowDiseases: true,
     ifShowCriteria: true,
   };
