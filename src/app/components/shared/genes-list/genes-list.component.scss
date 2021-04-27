@@ -74,14 +74,17 @@
       display: flex;
       width: 100%;
 
-      .mat-checkbox-inner-container {
-        vertical-align: top;
-        margin-top: 2px;
-      }
+      &::ng-deep {
+        .mat-checkbox-inner-container {
+          vertical-align: top;
+          margin-top: 2px;
+        }
 
-      .mat-checkbox-label {
-        line-height: 1.5;
-        white-space: normal;
+        .mat-checkbox-layout,
+        .mat-checkbox-label {
+          line-height: 1.5;
+          white-space: normal;
+        }
       }
     }
 
