@@ -217,5 +217,5 @@
   "no_criteria": "Can't get criteria list",
   "no_diseases": "Can't get diseases list",
   "settings": "Settings",
-  "main_page_hint_table_settings": "The gene list is now customizable. You can remove and add columns in the table, just tap on the button"
+  "main_page_hint_table_settings": "The gene list is now customizable. You can remove and add columns in the data table, just tap on "
 }
