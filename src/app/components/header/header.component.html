@@ -4,10 +4,21 @@
        [routerLink]="'/'"
        (click)="clearSearch()"
        title="{{'main_page_link' | translate}}">
+      <app-icon
+        staticSrc="/assets/images/logo.svg"
+        size="custom"
+        customWidth="90px"
+        customHeight="30px"
+      ></app-icon>
     </a>
 
     <div class="header__right">
-      <app-language relative="fixed"></app-language>
+      <a
+        href="https://donorbox.org/open-genes"
+        class="header__button"
+        target="_blank"
+      ><span class="fa far fa-donate"></span>&nbsp;{{ 'about_page_donation_button' | translate }}
+      </a>
       <app-burger-menu
         favsCounter="{{this.favsCounter}}"
       ></app-burger-menu>

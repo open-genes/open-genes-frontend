@@ -1,0 +1,56 @@
+@import "../styles";
+
+.header {
+  width: 100%;
+  height: $header-height;
+  color: #fff;
+  background-color: $color-base;
+  padding: 0 5px;
+  box-shadow: $box-shadow;
+
+  &__centering {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+
+    @media screen and (min-width: 1600px) {
+      padding: 0 calc(50% - 800px);
+    }
+  }
+
+  &__logo {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    margin: 5px 0;
+  }
+
+  &__button {
+    display: inline-flex;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    background-color: $color-white;
+    color: $color-black;
+    padding: 0 10px;
+    border-radius: 3px;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: $header-height;
+    position: relative;
+
+    app-burger-menu {
+      position: relative;
+      width: 55px;
+    }
+  }
+}
