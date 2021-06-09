@@ -10,9 +10,21 @@
   background-color: $color-black;
   color: #fff;
 
-  .link {
-    color: #fff;
+  .footer__link,
+  .footer__button {
     margin-right: 1em;
+  }
+
+  .footer__link {
+    color: $color-white;
+  }
+
+  .footer__button {
+    display: inline-block;
+    background-color: $color-white;
+    color: $color-black;
+    padding: 4px;
+    border-radius: 3px;
   }
 
   .footer__language {

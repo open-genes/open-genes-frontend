@@ -29,6 +29,7 @@ import { BurgerMenuComponent } from "./components/burger-menu/burger-menu.compon
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { VendorsModule } from "./modules/vendors/vendors.module";
 import { MatBadgeModule } from "@angular/material/badge";
+import { IconModule } from './components/ui-components/components/icon/app-icon.module';
 
 // required for AOT compilation
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
@@ -57,8 +58,9 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     BrowserAnimationsModule,
     VendorsModule,
     MatBadgeModule,
+    IconModule,
   ],
-  providers: [TranslateService, { provide: LOCALE_ID, useValue: "ru" }],
+  providers: [TranslateService, { provide: LOCALE_ID, useValue: 'ru' }],
   exports: [VendorsModule],
   bootstrap: [AppComponent],
 })

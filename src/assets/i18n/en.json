@@ -215,7 +215,7 @@
   "phylum_primatibus": "Primates",
   "phylum_not_specified": "Not specified",
   "no_criteria": "Can't get criteria list",
-  "no_diseases": "Can't get diseases list",
+  "no_diseases": "No diseases specified",
   "settings": "Settings",
   "main_page_hint_table_settings": "The gene list is now customizable. You can remove and add columns in the data table, just tap on "
 }

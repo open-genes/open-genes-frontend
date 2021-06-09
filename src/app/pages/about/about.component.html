@@ -81,6 +81,58 @@
       </div>
     </div>
 
+    <div class="about-page__contribute wrapper">
+      <div class="container-fluid contribute">
+        <div class="row no-gutters">
+          <h2 class="col-12 contribute__title">
+            {{ 'about_page_contribute_title' | translate }}
+          </h2>
+
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 contribute__section contribute__donate">
+            <h3 class="section__title donate__title">
+              <span class="fa fal fa-donate"></span>
+              {{ 'about_page_donation_title' | translate }}
+            </h3>
+
+            <div class="section__description">
+              <p>
+                {{ 'about_page_donation_text' | translate }}
+              </p>
+            </div>
+
+            <div class="section__buttons">
+              <a mat-flat-button
+                 color="secondary"
+                 href="https://donorbox.org/open-genes"
+                 target="_blank"
+              >{{ 'about_page_donation_button' | translate }}</a>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 contribute__section contribute__participate">
+            <h3 class="section__title participate__title">
+              <span class="fa fal fa-users"></span>
+              {{ 'about_page_participation_title' | translate }}
+            </h3>
+
+            <div class="section__description">
+              <p>
+                {{ 'about_page_participation_text' | translate }}
+              </p>
+            </div>
+
+            <div class="section__buttons">
+              <a mat-flat-button
+                 color="secondary"
+                 href="https://github.com/open-genes"
+                 target="_blank"
+              >{{ 'about_page_participation_button' | translate }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="about-page__compare wrapper">
       <div class="container-fluid compare">
         <div class="row no-gutters">
@@ -141,58 +193,6 @@
                   {{ 'about_page_features_3_desc' | translate }}
                 </p>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="about-page__contribute wrapper">
-      <div class="container-fluid contribute">
-        <div class="row no-gutters">
-          <h2 class="col-12 contribute__title">
-            {{ 'about_page_contribute_title' | translate }}
-          </h2>
-
-          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 contribute__section contribute__donate">
-            <h3 class="section__title donate__title">
-              <span class="fa fal fa-donate"></span>
-              {{ 'about_page_donation_title' | translate }}
-            </h3>
-
-            <div class="section__description">
-              <p>
-                {{ 'about_page_donation_text' | translate }}
-              </p>
-            </div>
-
-            <div class="section__buttons">
-              <a mat-flat-button
-                 color="secondary"
-                 href="https://donorbox.org/open-genes"
-                 target="_blank"
-              >{{ 'about_page_donation_button' | translate }}</a>
-            </div>
-          </div>
-
-          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 contribute__section contribute__participate">
-            <h3 class="section__title participate__title">
-              <span class="fa fal fa-users"></span>
-              {{ 'about_page_participation_title' | translate }}
-            </h3>
-
-            <div class="section__description">
-              <p>
-                {{ 'about_page_participation_text' | translate }}
-              </p>
-            </div>
-
-            <div class="section__buttons">
-              <a mat-flat-button
-                 color="secondary"
-                 href="https://github.com/open-genes"
-                 target="_blank"
-              >{{ 'about_page_participation_button' | translate }}</a>
             </div>
           </div>
         </div>
