@@ -1,7 +1,26 @@
-@import "../styles";
+@import '../styles';
 
 :host {
   display: inline-block;
+}
+
+.signin-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  z-index: 6;
+  font-size: 20px;
+
+  .fa {
+    line-height: normal;
+    vertical-align: -1px;
+  }
+
+  &.active,
+  &:hover {
+    color: #fe6231;
+  }
 }
 
 .header__menu {
@@ -14,7 +33,7 @@
   bottom: 0;
   left: 0;
   z-index: 2;
-  background-color: rgba($color-general-dark, .15);
+  background-color: rgba($color-general-dark, 0.15);
 }
 
 .menu__panel {
@@ -26,7 +45,7 @@
   bottom: 0;
   z-index: 1;
   background-color: #fff;
-  box-shadow: -1px 0 4px 0 rgba(5, 5, 5, .3);
+  box-shadow: -1px 0 4px 0 rgba(5, 5, 5, 0.3);
 
   @include resolution_tablet-and-up {
     width: 320px;
@@ -51,7 +70,8 @@
       font-weight: $font-weight-medium;
       border-top: 1px solid $color-borders;
 
-      &, a {
+      &,
+      a {
         display: block;
         width: 100%;
         position: relative;
@@ -61,7 +81,7 @@
         padding: 15px 30px 15px 10px;
 
         &:before {
-          content: " ";
+          content: ' ';
           display: block;
           width: 5px;
           height: 100%;
@@ -73,7 +93,7 @@
           left: 0;
           z-index: 0;
           opacity: 0;
-          transition: opacity .2s ease-in;
+          transition: opacity 0.2s ease-in;
         }
 
         &:link,
@@ -84,7 +104,7 @@
         &:hover,
         &:active {
           color: $color-general-dark;
-          background-color: rgba($color-general-dark, .15);
+          background-color: rgba($color-general-dark, 0.15);
         }
 
         &.current {
