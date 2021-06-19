@@ -103,4 +103,4 @@ import {
     MatBottomSheetModule,
   ],
 })
-export class VendorsModule {}
+export class MaterialModule {}
