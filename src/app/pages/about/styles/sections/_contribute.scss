@@ -82,7 +82,13 @@
 
     &__participate {
       .participate__title {
-        color: $color-general;
+        color: $color-base;
+      }
+    }
+
+    &__biology {
+      .biology__title {
+        color: $color-green-light;
       }
     }
   }
