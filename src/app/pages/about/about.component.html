@@ -88,7 +88,8 @@
             {{ 'about_page_contribute_title' | translate }}
           </h2>
 
-          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 contribute__section contribute__donate">
+          <div *ngIf="isDonationEnabled"
+               class="col-xs-12 col-sm-12 col-md-6 col-lg-6 contribute__section contribute__donate">
             <h3 class="section__title donate__title">
               <span class="fa fal fa-donate"></span>
               {{ 'about_page_donation_title' | translate }}
@@ -109,7 +110,29 @@
             </div>
           </div>
 
-          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 contribute__section contribute__participate">
+          <div *ngIf="translate.currentLang==='ru'"
+               class="col-xs-12 col-sm-12 col-md-6 col-lg-6 contribute__section contribute__biology">
+            <h3 class="section__title biology__title">
+              <span class="fa fal fa-dna"></span>
+              Биология
+            </h3>
+
+            <div class="section__description">
+              <p>
+                Open Genes нужны специалисты в&nbsp;области молекулярной эволюции и&nbsp;филогенетики для добавления данных из&nbsp;исследований
+              </p>
+            </div>
+
+            <div class="section__buttons">
+              <a mat-flat-button
+                 color="secondary"
+                 href="https://blastim.ru/job/3273/"
+                 target="_blank"
+              >Смотреть вакансию</a>
+            </div>
+          </div>
+
+          <div class="col contribute__section contribute__participate">
             <h3 class="section__title participate__title">
               <span class="fa fal fa-users"></span>
               {{ 'about_page_participation_title' | translate }}
