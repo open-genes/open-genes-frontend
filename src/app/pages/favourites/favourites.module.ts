@@ -4,7 +4,7 @@ import { FavouritesComponent } from "./favourites.component";
 import { RouterModule, Routes } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
 import { PipesModule } from "../../modules/pipes/pipes.module";
-import { VendorsModule } from "../../modules/vendors/vendors.module";
+import { MaterialModule } from "../../modules/vendors/material.module";
 import { NgCapitalizePipeModule, NgToArrayPipeModule } from "angular-pipes";
 
 const routes: Routes = [{ path: "", component: FavouritesComponent }];
@@ -16,7 +16,7 @@ const routes: Routes = [{ path: "", component: FavouritesComponent }];
     RouterModule.forChild(routes),
     TranslateModule,
     PipesModule,
-    VendorsModule,
+    MaterialModule,
     NgToArrayPipeModule,
     NgCapitalizePipeModule,
   ],

@@ -9,7 +9,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatListModule } from "@angular/material/list";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { PipesModule } from "../../modules/pipes/pipes.module";
-import { VendorsModule } from "../../modules/vendors/vendors.module";
+import { MaterialModule } from "../../modules/vendors/material.module";
 import { NgToArrayPipeModule } from "angular-pipes";
 import { ResearchesComponent } from "./researches/researches.component";
 import { ManualDescriptionsComponent } from "./manual-descriptions/manual-descriptions.component";
@@ -39,7 +39,7 @@ import { DynamicContentAnchorsDirective } from "./directives/dynamic-content.dir
     MatListModule,
     MatExpansionModule,
     PipesModule,
-    VendorsModule,
+    MaterialModule,
     NgToArrayPipeModule,
   ],
 })
