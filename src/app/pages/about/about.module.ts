@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { AboutComponent } from "./about.component";
 import { RouterModule, Routes } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
-import { VendorsModule } from "../../modules/vendors/vendors.module";
+import { MaterialModule } from "../../modules/vendors/material.module";
 import { IconModule } from "../../components/ui-components/components/icon/app-icon.module";
 
 const routes: Routes = [{ path: "", component: AboutComponent }];
@@ -14,7 +14,7 @@ const routes: Routes = [{ path: "", component: AboutComponent }];
     CommonModule,
     RouterModule.forChild(routes),
     TranslateModule,
-    VendorsModule,
+    MaterialModule,
     IconModule,
   ],
 })

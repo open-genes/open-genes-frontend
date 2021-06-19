@@ -18,7 +18,7 @@ import { WindowService } from "../../../core/services/browser/window.service";
 import { GeneMenuComponent } from "./components/gene/menu/gene-menu.component";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { SelectionCriteriaModule } from "../selection-criteria/selection-criteria.module";
-import { VendorsModule } from '../../../modules/vendors/vendors.module';
+import { MaterialModule } from '../../../modules/vendors/material.module';
 import { GenesTableHeaderComponent } from './components/genes-table-header/genes-table-header.component';
 import { AssociatedDiseasesModule } from '../associated-diseases/associated-diseases.module';
 
@@ -44,7 +44,7 @@ import { AssociatedDiseasesModule } from '../associated-diseases/associated-dise
     MatCardModule,
     MatTooltipModule,
     SelectionCriteriaModule,
-    VendorsModule,
+    MaterialModule,
     AssociatedDiseasesModule,
   ],
   providers: [FavouritesService, WindowService],
