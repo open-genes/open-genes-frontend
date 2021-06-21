@@ -13,7 +13,7 @@ build-dev:
   image: alexsuch/angular-cli:7.3.8
   script:
     - npm install
-    - npm run build
+    - npm run build-dev
   artifacts:
     paths:
       - dist/
