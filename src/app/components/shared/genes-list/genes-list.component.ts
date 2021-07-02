@@ -9,24 +9,24 @@ import {
   OnInit,
   Output,
   ViewChild,
-} from "@angular/core";
-import { Subject, of, Observable } from "rxjs";
-import { PageClass } from "../../../pages/page.class";
-import { takeUntil } from "rxjs/operators";
-import { TranslateService } from "@ngx-translate/core";
-import { ApiService } from "../../../core/services/api/open-genes.api.service";
-import { Genes } from "../../../core/models";
-import { FavouritesService } from "src/app/core/services/favourites.service";
-import { FilterService } from "./services/filter.service";
-import { WindowService } from "src/app/core/services/browser/window.service";
-import { FilterTypesEnum } from "./services/filter-types.enum";
-import { MatSnackBar } from "@angular/material/snack-bar";
+} from '@angular/core';
+import { Subject, of, Observable } from 'rxjs';
+import { PageClass } from '../../../pages/page.class';
+import { takeUntil } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
+import { ApiService } from '../../../core/services/api/open-genes.api.service';
+import { Genes } from '../../../core/models';
+import { FavouritesService } from 'src/app/core/services/favourites.service';
+import { FilterService } from './services/filter.service';
+import { WindowService } from 'src/app/core/services/browser/window.service';
+import { FilterTypesEnum } from './services/filter-types.enum';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenesListSettings } from './genes-list-settings.model';
 
 @Component({
-  selector: "app-genes-list",
-  templateUrl: "./genes-list.component.html",
-  styleUrls: ["./genes-list.component.scss"],
+  selector: 'app-genes-list',
+  templateUrl: './genes-list.component.html',
+  styleUrls: ['./genes-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
@@ -35,11 +35,12 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   @Input() isGoSearchPerformed: boolean;
   @Output() updateGenesList = new EventEmitter();
   @Output() passQuery: EventEmitter<string> = new EventEmitter<string>();
-  @Output() listSettingsChanged: EventEmitter<GenesListSettings> = new EventEmitter();
-  @ViewChild("templateAddedToFavorites") templateAddedToFavorites: ElementRef;
-  @ViewChild("templateRemovedFromFavorites")
+  @Output()
+  listSettingsChanged: EventEmitter<GenesListSettings> = new EventEmitter();
+  @ViewChild('templateAddedToFavorites') templateAddedToFavorites: ElementRef;
+  @ViewChild('templateRemovedFromFavorites')
   templateRemovedFromFavorites: ElementRef;
-  @ViewChild("searchResultsFound") searchResultsFound: ElementRef;
+  @ViewChild('searchResultsFound') searchResultsFound: ElementRef;
 
   public searchedData: Genes[];
   public genesPerPage = 20;
@@ -57,7 +58,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
 
-  public isMobile: boolean;
+  @Input() isMobile: boolean;
   public isSettingsMenu: boolean = false;
   public listSettings: GenesListSettings = {
     // Default:
@@ -68,7 +69,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     ifShowCriteria: true,
   };
 
-  private resMobile = 959.98;
   private subscription$ = new Subject();
 
   constructor(
@@ -78,7 +78,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private favouritesService: FavouritesService,
     private readonly cdRef: ChangeDetectorRef,
-    private windowService: WindowService
   ) {
     super();
     this.favouritesService.getItems();
@@ -87,8 +86,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.areMoreThan2FiltersApplied();
     this.showPassedData();
-    this.initWindowWidth();
-    this.detectWindowWidth();
   }
 
   ngOnDestroy(): void {
@@ -145,7 +142,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     this.filterService.getBySelectionCriteria().subscribe(
       (list) => {
         if (list.length !== 0) {
-
         }
       },
       (error) => this.errorLogger(this, error)
@@ -161,7 +157,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
       this.snackBar.open(
         `${this.searchResultsFound.nativeElement.textContent} ${this.searchedData.length}`,
-        "",
+        '',
         {
           duration: 600,
         }
@@ -207,7 +203,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
           this.snackBar.open(
             `${this.searchResultsFound.nativeElement.textContent} ${this.searchedData.length}`,
-            "",
+            '',
             {
               duration: 600,
             }
@@ -229,7 +225,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   toggleGenesView(): boolean {
     return (this.asTableRow = !this.asTableRow);
   }
-  toggleSettingsMenu():boolean {
+  toggleSettingsMenu(): boolean {
     return (this.isSettingsMenu = !this.isSettingsMenu);
   }
 
@@ -240,7 +236,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     this.favouritesService.addToFavourites(geneId);
     this.snackBar.open(
       this.templateAddedToFavorites.nativeElement.textContent,
-      "",
+      '',
       {
         duration: 600,
       }
@@ -253,7 +249,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     this.favouritesService.removeFromFavourites(geneId);
     this.snackBar.open(
       this.templateRemovedFromFavorites.nativeElement.textContent,
-      "",
+      '',
       {
         duration: 600,
       }
@@ -281,19 +277,20 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   changeGenesListSettings(parameter: string): void {
     switch (parameter) {
       case 'gene-age':
-        this.listSettings.ifShowAge = !this.listSettings.ifShowAge
+        this.listSettings.ifShowAge = !this.listSettings.ifShowAge;
         break;
       case 'classes':
-        this.listSettings.ifShowClasses = !this.listSettings.ifShowClasses
+        this.listSettings.ifShowClasses = !this.listSettings.ifShowClasses;
         break;
       case 'expression':
-        this.listSettings.ifShowExpression = !this.listSettings.ifShowExpression
+        this.listSettings.ifShowExpression = !this.listSettings
+          .ifShowExpression;
         break;
       case 'diseases':
-        this.listSettings.ifShowDiseases = !this.listSettings.ifShowDiseases
+        this.listSettings.ifShowDiseases = !this.listSettings.ifShowDiseases;
         break;
       case 'criteria':
-        this.listSettings.ifShowCriteria = !this.listSettings.ifShowCriteria
+        this.listSettings.ifShowCriteria = !this.listSettings.ifShowCriteria;
         break;
       default:
         break;
@@ -307,10 +304,10 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   public getExpressionLocaleKey(expression: number): string {
     const expressionTranslations = new Map([
-      [0, "expression_change_no_data"],
-      [1, "expression_change_decreased"],
-      [2, "expression_change_increased"],
-      [3, "expression_change_mixed"],
+      [0, 'expression_change_no_data'],
+      [1, 'expression_change_decreased'],
+      [2, 'expression_change_increased'],
+      [3, 'expression_change_mixed'],
     ]);
 
     return expressionTranslations.get(expression);
@@ -334,7 +331,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   sortBy(sortBy: string): void {
     // TODO: use enum types here
-    if (sortBy === "name") {
+    if (sortBy === 'name') {
       if (this.filters.byName) {
         this.reverse();
       } else {
@@ -367,28 +364,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   private sortByAge() {
     this.searchedData.sort((a, b) => a.origin.order - b.origin.order);
-  }
-
-  /**
-   * Responsiveness
-   */
-  private initWindowWidth(): void {
-    this.windowService
-      .setWindowWidth()
-      .pipe(takeUntil(this.subscription$))
-      .subscribe((width) => {
-        this.isMobile = width <= this.resMobile;
-        this.cdRef.markForCheck();
-      });
-  }
-
-  private detectWindowWidth(): void {
-    this.windowService.windowWidth$
-      .pipe(takeUntil(this.subscription$))
-      .subscribe((width) => {
-        this.isMobile = width <= this.resMobile;
-        this.cdRef.markForCheck();
-      });
   }
 
   /**

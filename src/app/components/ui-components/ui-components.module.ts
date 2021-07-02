@@ -10,26 +10,22 @@ import { AccordionComponent } from './components/accordion/accordion.component';
 import { GeneAgeComponent } from '../shared/gene-age/gene-age.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PopoverComponent } from './components/popover/popover.component';
+import { HintComponent } from './components/hint/hint.component';
+
+const modules = [
+  AccordionComponent,
+  CodeBlockComponent,
+  SkeletonLoaderComponent,
+  SpinnerComponent,
+  TagComponent,
+  GeneAgeComponent,
+  PopoverComponent,
+  HintComponent,
+];
 
 @NgModule({
-  declarations: [
-    AccordionComponent,
-    CodeBlockComponent,
-    SkeletonLoaderComponent,
-    SpinnerComponent,
-    TagComponent,
-    GeneAgeComponent,
-    PopoverComponent,
-  ],
-  exports: [
-    CodeBlockComponent,
-    SpinnerComponent,
-    SkeletonLoaderComponent,
-    TagComponent,
-    AccordionComponent,
-    GeneAgeComponent,
-    PopoverComponent,
-  ],
+  declarations: [...modules],
+  exports: [...modules],
   imports: [CommonModule, IconModule, PipesModule, TranslateModule],
 })
 export class UiComponentsModule {}
