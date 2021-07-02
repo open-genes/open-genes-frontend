@@ -23,18 +23,21 @@
     <div class="container-fluid">
       <div class="row">
         <ng-container *ngIf="isAvailable; else errorMessage">
+          <div *ngIf="isTablet"
+               class="col-12 __mb-10">
+            <app-hint>
+              <ng-container text>{{ "main_page_hint_table_settings" | translate }}<span class="fa far fa-cog"></span></ng-container>
+            </app-hint>
+          </div>
+
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 __mb-btm">
             <div class="sidebar">
               <div class="sidebar__inner">
                 <div *ngIf="genes"
                      class="sidebar__item sidebar__item--desktop-50">
-                  <div class="hint">
-                    <div class="hint__icon fa far fa-info"></div>
-                    <div class="hint__text">
-                    {{ "main_page_hint_table_settings" | translate }}
-                      <span class="fa far fa-cog"></span>
-                    </div>
-                  </div>
+                  <app-hint *ngIf="!isTablet">
+                    <ng-container text>{{ "main_page_hint_table_settings" | translate }}<span class="fa far fa-cog"></span></ng-container>
+                  </app-hint>
                   <div class="sidebar__title">
                     {{ 'news_list_title' | translate }}
                     <a href="/news" class="link link--gray __ml-10">
@@ -64,6 +67,7 @@
             <app-genes-list
               *ngIf="genes"
               [dataSource]="genes"
+              [isMobile]="isMobile"
             ></app-genes-list>
           </div>
         </ng-container>
