@@ -120,3 +120,12 @@ h2 + section,
 h2 + article {
   margin-top: 30px;
 }
+
+.reference {
+  font-size: 80%;
+  margin-top: 1em;
+
+  p + p {
+    margin-top: .8em;
+  }
+}
