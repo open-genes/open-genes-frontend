@@ -1,5 +1,4 @@
 export interface Lifespan {
-  interventionType: string;
   interventionResult: string;
   modelOrganism: string;
   organismLine: string;
@@ -22,7 +21,7 @@ export interface AgeRelatedChanges {
   valueForMale: any; // TODO: backend shouldn't return null, but an empty value of the same type
   valueForFemale: any; // TODO: backend shouldn't return null, but an empty value of the same type
   valueForAll: any; // TODO: backend shouldn't return null, but an empty value of the same type
-  measurementType: string; // "MRNA" or "protein" in English version. TODO: change response to 0 and 1?
+  measurementType: string; // "mRNA" or "protein" in English version. TODO: change response to 0 and 1?
   reference: string;
   comment: string;
 }
@@ -58,11 +57,15 @@ export interface ProgeriaSyndromes {
 }
 
 export interface LongevityEffects {
-  longevityEffect: string;
   allelicPolymorphism: string;
-  sex: string;
-  reference: string;
+  allelicVariant: string;
+  changeType: string; // TODO: backend: rename to 'regulationType'
+  longevityEffect: string;
+  modelOrganism: string; // new
   comment: string;
+  dataType: string; // new
+  reference: string;
+  sex: string;
 }
 
 export interface Researches {
