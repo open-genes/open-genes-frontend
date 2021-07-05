@@ -22,6 +22,8 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   public expressionMaxValue: number;
   public isAnyContent: boolean;
   public isAnyResearchFilled: boolean;
+  public isAnyOrtholog: boolean;
+  public isHpa: boolean;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
@@ -67,6 +69,10 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
         this.commentsReferenceLinksMap = this.toMap(
           this.gene.commentsReferenceLinks
         );
+
+        this.isAnyOrtholog =
+          Object.values(this.gene.orthologs).toString() !== ''; // TODO: backend: instead of {"":""} should be an empty array of objects
+        this.isHpa = this.gene.human_protein_atlas !== '';
       });
 
     this.isContent();
@@ -88,7 +94,7 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
       this.gene?.researches.geneAssociatedWithProgeriaSyndromes.length !== 0 ||
       this.gene?.researches.geneAssociatedWithLongevityEffects.length !== 0 ||
       this.gene?.expression.length !== 0 ||
-      this.gene?.orthologs.length !== 0 ||
+      this.isAnyOrtholog ||
       this.gene?.terms;
   }
 

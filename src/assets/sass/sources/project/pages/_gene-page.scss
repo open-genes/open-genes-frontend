@@ -70,6 +70,8 @@
   }
 
   &__age {
+    margin: 0 -5px;
+
     .age__types {
       display: flex;
       flex-flow: row wrap;
@@ -81,25 +83,26 @@
         display: flex;
         flex-flow: row wrap;
         align-items: stretch;
-        flex-grow: 0 !important;
+        justify-content: flex-start;
+        flex: 1 1 20%;
+        align-content: stretch;
+        flex-wrap: nowrap;
 
         .type__inner {
           width: 100%;
+          min-width: 200px;
           min-height: 100px;
           padding: 10px;
           border: 1px solid $color-borders;
           border-radius: $border-radius-medium;
-        }
-
-        .type__inner + .type__inner {
-          margin-top: 5px;
+          margin: 5px;
         }
 
         .type__title {
           flex: 0 0 100%;
           font-size: $font-size-smaller;
           color: $color-gray;
-          margin-bottom: 5px;
+          margin: 5px;
         }
 
         .type__value {
@@ -178,26 +181,9 @@
         }
       }
 
-      @include resolution_tablet-and-up {
-        .age__type {
-          width: 25%;
-
-          &.age__orthologs {
-            width: 50%;
-          }
-        }
-
-        .age__type + .age__type {
-          padding-left: 10px;
-        }
-      }
       @include resolution_smartphone {
         .age__type {
-          width: 100%;
-        }
-
-        .age__type + .age__type {
-          margin-top: 10px;
+         flex: 0 0 100%;
         }
       }
     }
