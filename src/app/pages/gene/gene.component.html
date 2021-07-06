@@ -99,6 +99,12 @@
                   </a>
 
                   <a mat-list-item
+                     *ngIf="isHpa"
+                     [routerLink]="['/gene', symbol]" fragment="human-protein-atlas">
+                    Human Protein Atlas
+                  </a>
+
+                  <a mat-list-item
                      *ngIf="gene.commentsReferenceLinks.length > 1"
                      [routerLink]="['/gene', symbol]" fragment="reference">
                     {{ 'gene_page_title_reference' | translate }}
@@ -136,9 +142,9 @@
                   </div>
                 </div>
 
-                <div class="age__type">
-                  <div class="type__inner"
-                       *ngIf="gene.band || gene.locationStart || gene.locationEnd">
+                <div *ngIf="gene.band || gene.locationStart || gene.locationEnd"
+                     class="age__type">
+                  <div class="type__inner">
                     <div class="type__title">
                       {{ 'gene_page_title_position' | translate }}
                     </div>
@@ -176,7 +182,7 @@
                 </div>
 
                 <div
-                  *ngIf="gene.orthologs.length !== 0"
+                  *ngIf="isAnyOrtholog"
                   class="age__type age__orthologs"> <!-- TODO: отображается пустое, приходит {"":""} -->
                   <div class="type__inner">
                     <div class="type__title">
@@ -202,7 +208,8 @@
                   <h3>{{ 'gene_page_title_criteria' | translate }}</h3>
                   <article id="cause">
                     <ul class="list list--bulletted">
-                      <li *ngFor="let item of gene.commentCause">{{item}}</li>
+                      <!-- TODO: backend: return array of objects instead of object with objects -->
+                      <li *ngFor="let item of gene.commentCause | toArray">{{item}}</li>
                     </ul>
                   </article>
                 </section>
@@ -264,8 +271,11 @@
                   ></app-expression>
                 </section>
 
-                <section class="wrapper" id="hpa">
-                  <h3 class="notranslate __mb-20">Human Protein Atlas</h3>
+                <section class="wrapper" id="human-protein-atlas"
+                *ngIf="isHpa">
+                  <h3 class="notranslate __mb-20">
+                    {{'human_protein_atlas' | translate}}
+                  </h3>
                   <app-human-protein-atlas
                     [gene]="gene"
                     [hpa]="gene.human_protein_atlas"

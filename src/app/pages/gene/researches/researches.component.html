@@ -3,27 +3,19 @@
   <div class="table-section __mt-20 __w-content">
     <table class="table">
       <thead>
-      <th class="__cell-width-small">{{ "gene_intervention_type" | translate }}</th>
-      <th>{{ "gene_intervention_result" | translate }}</th>
       <th>{{ "researches_model_organism" | translate }}</th>
       <th>{{ "researches_organism_line" | translate }}</th>
       <th>{{ "researches_age" | translate }}<sup>*</sup></th>
-      <th>{{ "researches_genotype" | translate }}<sup>*</sup></th>
-      <th><span class="fa fal fa-mars"></span></th>
-      <th><span class="fa fal fa-venus"></span></th>
-      <th><span class="fa fal fa-venus"></span><span class="fa fal fa-mars"></span></th>
+      <th>{{ "researches_genotype" | translate }}</th>
+      <th class="__nowrap"><span class="fa fal fa-mars"></span><sup>**</sup></th>
+      <th class="__nowrap"><span class="fa fal fa-venus"></span><sup>**</sup></th>
+      <th class="__nowrap"><span class="fa fal fa-venus"></span>&nbsp;<span class="fa fal fa-mars"></span><sup>**</sup></th>
       <th class="__cell-width-medium">{{ "researches_comment" | translate }}</th>
       <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
       <tr *ngFor="let object of gene.researches.increaseLifespan; let i = index">
-        <td>
-          {{ object.interventionType }}
-        </td>
-        <td>
-          {{ object.interventionResult }}
-        </td>
-        <td>
+        <td class="__nowrap">
           {{ object.modelOrganism }}
         </td>
         <td>
@@ -53,9 +45,10 @@
         </td>
       </tr>
     </table>
-    <div class="reference">
-      *{{ 'gene_page_researches_lifespan_hint' | translate }}
-    </div>
+    <legend class="reference">
+      <p><sup>*</sup>{{ 'gene_page_researches_lifespan_hint1' | translate }}</p>
+      <p><sup>**</sup>{{ 'gene_page_researches_lifespan_hint2' | translate }}</p>
+    </legend>
   </div>
 </section>
 
@@ -72,7 +65,7 @@
       <th>{{ "age_related_changes_mrna_or_protein" | translate }}</th>
       <th><span class="fa fal fa-mars"></span></th>
       <th><span class="fa fal fa-venus"></span></th>
-      <th><span class="fa fal fa-venus"></span><span class="fa fal fa-mars"></span></th>
+      <th><span class="fa fal fa-venus"></span>&nbsp;<span class="fa fal fa-mars"></span></th>
       <th class="__cell-width-medium">{{ "researches_comment" | translate }}</th>
       <th>{{ "researches_reference" | translate }}</th>
       </thead>
@@ -84,7 +77,7 @@
         <td>
           {{ object.sample }}
         </td>
-        <td>
+        <td class="__nowrap">
           {{ object.modelOrganism }}
         </td>
         <td class="__nowrap">
@@ -141,7 +134,7 @@
         <td>
           {{ object.vitalProcess }}
         </td>
-        <td>
+        <td class="__nowrap">
           {{ object.modelOrganism }}
         </td>
         <td>
@@ -163,9 +156,9 @@
       </tr>
     </table>
   </div>
-  <div class="reference">
-    *{{ 'gene_page_researches_lifespan_hint' | translate }}
-  </div>
+  <legend class="reference">
+    <sup>*</sup>{{ 'gene_page_researches_lifespan_hint1' | translate }}
+  </legend>
 </section>
 
 <section *ngIf="gene.researches.proteinRegulatesOtherGenes.length !== 0">
@@ -231,9 +224,23 @@
   <div class="table-section __mt-20 __w-content">
     <table class="table">
       <thead>
+      <!--
+      allelicPolymorphism: string;
+      allelicVariant: string;
+      changeType: string; // TODO: backend: rename to 'method'
+      longevityEffect: string;
+      modelOrganism: string; // new
+      comment: string;
+      dataType: string; // new
+      reference: string;
+      sex: string; -->
       <th class="__cell-width-small">{{ "gene_page_allelic_polymorphism" | translate }}</th>
+      <th class="__cell-width-small">{{ "researches_allelic_variant" | translate }}</th>
+      <th>{{ "researches_regulation_type" | translate }}</th>
       <th>{{ "longevity_effects_effect" | translate }}</th>
+      <th>{{ "researches_model_organism" | translate }}}</th>
       <th>{{ "researches_sex" | translate }}</th>
+      <th>{{ "researches_data_type" | translate }}</th>
       <th class="__cell-width-medium">{{ "researches_comment" | translate }}</th>
       <th>{{ "researches_reference" | translate }}</th>
       </thead>
@@ -243,10 +250,22 @@
           {{ object.allelicPolymorphism }}
         </td>
         <td>
+          {{ object.allelicVariant }}
+        </td>
+        <td>
+          {{ object.changeType }}
+        </td>
+        <td>
           {{ object.longevityEffect }}
+        </td>
+        <td class="__nowrap">
+          {{ object.modelOrganism }}
         </td>
         <td>
           {{ object.sex }}
+        </td>
+        <td>
+          {{ object.dataType }}
         </td>
         <td>
           {{ object.comment }}
