@@ -18,6 +18,7 @@ import { HumanProteinAtlasComponent } from "./human-protein-atlas/human-protein-
 import { ExpressionComponent } from "./expression/expression.component";
 import { ReferenceComponent } from "./reference/reference.component";
 import { DynamicContentAnchorsDirective } from "./directives/dynamic-content.directive";
+import { UiComponentsModule } from "../../components/ui-components/ui-components.module";
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { DynamicContentAnchorsDirective } from "./directives/dynamic-content.dir
     PipesModule,
     MaterialModule,
     NgToArrayPipeModule,
+    UiComponentsModule,
   ],
 })
 export class GeneModule {}
