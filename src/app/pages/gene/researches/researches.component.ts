@@ -1,9 +1,10 @@
-import { Component, Input } from "@angular/core";
-import { TranslateService } from "@ngx-translate/core";
+import { Component, Input } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: "app-researches",
-  templateUrl: "./researches.component.html",
+  selector: 'app-researches',
+  templateUrl: './researches.component.html',
+  styleUrls: ['./researches.component.scss'],
 })
 export class ResearchesComponent {
   @Input() public gene: any;
