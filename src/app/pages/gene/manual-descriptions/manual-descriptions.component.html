@@ -1,9 +1,0 @@
-<section *ngIf="gene.commentAging">
-  <h3>{{ 'gene_page_title_aging' | translate }}</h3>
-  <article
-    appDynamicContentAnchors
-    id="aging"
-    [innerHTML]="gene.commentAging | linkify"
-  >
-  </article>
-</section>

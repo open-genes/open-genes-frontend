@@ -1,0 +1,36 @@
+$research-tables: (
+  age-related-change: #c8e5fd, // Возрастные изменения экспрессии гена или активности белка
+  gene-intervention-to-vital-processes: #c1e2aa, // Влияние модуляции активности гена на возрастной процесс
+  protein-to-gene: #fbea95, // Участие продукта гена в регуляции генов, связанных со старением
+  gene-to-progeria: #ffd8a9, // Ассоциация гена с ускоренным старением у человека
+  gene-to-longevity-effect: #f5c3c2, // Геномные, транскриптомные и протеомные ассоциации с продолжительностью жизни/возрастным фенотипом
+  gene-to-additional-evidence: #cacaca // Другие подтверждения ассоциации гена со старением
+);
+
+.table {
+  th {
+    position: relative;
+
+    &:first-child {
+      padding-left: 1em;
+
+      &::before {
+        content: ' ';
+        display: block;
+        width: .5em;
+        position: absolute;
+        top: -1px;
+        bottom: -1px;
+        left: -1px;
+        z-index: 0;
+        background: #cbcbef; // По умолчанию: Влияние модуляции активности гена на продолжительность жизни
+      }
+    }
+  }
+
+  @each $class, $color in $research-tables {
+    &--#{$class} th:first-child::before {
+      background: $color;
+    }
+  }
+}
