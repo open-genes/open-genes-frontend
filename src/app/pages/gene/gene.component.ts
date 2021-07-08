@@ -1,15 +1,15 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { Subject, Subscription } from "rxjs";
-import { ApiService } from "../../core/services/api/open-genes.api.service";
-import { TranslateService } from "@ngx-translate/core";
-import { takeUntil } from "rxjs/operators";
-import { PageClass } from "../page.class";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subject, Subscription } from 'rxjs';
+import { ApiService } from '../../core/services/api/open-genes.api.service';
+import { TranslateService } from '@ngx-translate/core';
+import { takeUntil } from 'rxjs/operators';
+import { PageClass } from '../page.class';
 
 @Component({
-  selector: "app-gene",
-  templateUrl: "./gene.component.html",
-  styleUrls: ["./gene.component.scss"],
+  selector: 'app-gene',
+  templateUrl: './gene.component.html',
+  styleUrls: ['./gene.component.scss'],
 })
 export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   public gene: any;
@@ -21,9 +21,9 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   public commentsReferenceLinksMap: Map<string, string>;
   public expressionMaxValue: number;
   public isAnyContent: boolean;
-  public isAnyResearchFilled: boolean;
   public isAnyOrtholog: boolean;
   public isHpa: boolean;
+  public isAnyResearchFilled: boolean;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
@@ -70,13 +70,18 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
           this.gene.commentsReferenceLinks
         );
 
+        const researchesLengths = [];
+        Object.values(this.gene.researches).forEach((value) => {
+          researchesLengths.push(Number(Object.entries(value).length));
+        });
+        this.isAnyResearchFilled = Math.max(...researchesLengths) !== 0;
+
         this.isAnyOrtholog =
           Object.values(this.gene.orthologs).toString() !== ''; // TODO: backend: instead of {"":""} should be an empty array of objects
         this.isHpa = this.gene.human_protein_atlas !== '';
       });
 
     this.isContent();
-    this.areResearches();
   }
 
   // Traits to define if content exists
@@ -86,27 +91,10 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
       this.gene?.commentFunction ||
       this.gene?.commentCause.length !== 0 ||
       this.gene?.commentAging ||
-      this.gene?.researches.increaseLifespan.length !== 0 ||
-      this.gene?.researches.ageRelatedChangesOfGene.length !== 0 ||
-      this.gene?.researches.interventionToGeneImprovesVitalProcesses.length !==
-        0 ||
-      this.gene?.researches.proteinRegulatesOtherGenes.length !== 0 ||
-      this.gene?.researches.geneAssociatedWithProgeriaSyndromes.length !== 0 ||
-      this.gene?.researches.geneAssociatedWithLongevityEffects.length !== 0 ||
+      this.isAnyResearchFilled ||
       this.gene?.expression.length !== 0 ||
       this.isAnyOrtholog ||
       this.gene?.terms;
-  }
-
-  private areResearches(): void {
-    // TODO: backend should always return these fields, not only when the form is filled
-    this.isAnyResearchFilled =
-      this.gene?.increaseLifespan.length !== 0 ||
-      this.gene?.geneAssociatedWithProgeriaSyndromes.length !== 0 ||
-      this.gene?.geneAssociatedWithLongevityEffects.length !== 0 ||
-      this.gene?.ageRelatedChangesOfGene.length !== 0 ||
-      this.gene?.interventionToGeneImprovesVitalProcesses.length !== 0 ||
-      this.gene?.proteinRegulatesOtherGenes.length !== 0;
   }
 
   public isGeneOntology() {

@@ -216,7 +216,7 @@
 
                 <section *ngIf="isAnyResearchFilled">
                   <h2 class="__mb-15">{{ 'gene_page_title_researches' | translate }}</h2>
-                  <app-researches [gene]="gene"></app-researches>
+                  <app-researches [researches]="gene.researches"></app-researches>
                 </section>
 
                 <section>
@@ -244,9 +244,15 @@
                     </article>
                   </ng-container>
 
-                  <ng-container *ngIf="!isAnyResearchFilled && gene.commentAging">
-                    <app-deprecated-descriptions [gene]="gene"></app-deprecated-descriptions>
-                  </ng-container>
+                  <section *ngIf="!isAnyResearchFilled && gene.commentAging">
+                    <h3>{{ 'gene_page_title_aging' | translate }}</h3>
+                    <article
+                      appDynamicContentAnchors
+                      id="aging"
+                      [innerHTML]="gene.commentAging | linkify"
+                    >
+                    </article>
+                  </section>
                 </section>
 
                 <section
