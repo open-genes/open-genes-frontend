@@ -1,10 +1,10 @@
-<section *ngIf="gene.researches.increaseLifespan.length !== 0">
+<section *ngIf="isIncreaseLifespan">
   <h4>{{ "gene_page_researches_lifespan" | translate }}</h4>
   <div class="table-section __mt-20 __w-content">
     <table class="table">
       <thead>
-        <th>{{ "researches_method" | translate }}</th>
-        <th>{{ "researches_result" | translate }}</th>
+        <th class="__cell-width-medium">{{ "researches_method" | translate }}</th>
+        <th class="__cell-width-medium">{{ "researches_result" | translate }}</th>
         <th>{{ "researches_object" | translate }}</th>
         <th>{{ "researches_line" | translate }}</th>
         <th>{{ "researches_age" | translate }}<sup>*</sup></th>
@@ -27,7 +27,7 @@
         <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
-      <tr *ngFor="let item of gene.researches.increaseLifespan">
+      <tr *ngFor="let item of researches.increaseLifespan">
         <td>
           {{ item.changeType }}
         </td>
@@ -75,7 +75,7 @@
   </div>
 </section>
 
-<section *ngIf="gene.researches.ageRelatedChangesOfGene.length !== 0">
+<section *ngIf="isAgeRelatedChanges">
   <h4>{{ "gene_page_researches_age_related_changes" | translate }}</h4>
   <div class="table-section __mt-20 __w-content">
     <table class="table table--age-related-change">
@@ -102,7 +102,7 @@
         <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
-      <tr *ngFor="let item of gene.researches.ageRelatedChangesOfGene">
+      <tr *ngFor="let item of researches.ageRelatedChangesOfGene">
         <td>
           {{ item.changeType }}
         </td>
@@ -147,7 +147,7 @@
   </div>
 </section>
 
-<section *ngIf="gene.researches.interventionToGeneImprovesVitalProcesses.length !== 0">
+<section *ngIf="isInterventionAffectsAgingProcess">
   <h4>{{ "gene_page_intervention_moderates_aging" | translate }}</h4>
   <div class="table-section __mt-20 __w-content">
     <table class="table table--gene-intervention-to-vital-processes">
@@ -170,7 +170,7 @@
         <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
-      <tr *ngFor="let item of gene.researches.interventionToGeneImprovesVitalProcesses">
+      <tr *ngFor="let item of researches.interventionToGeneImprovesVitalProcesses">
         <td>
           {{ item.geneIntervention }}
         </td>
@@ -212,7 +212,7 @@
   </legend>
 </section>
 
-<section *ngIf="gene.researches.proteinRegulatesOtherGenes.length !== 0">
+<section *ngIf="isProteinRegulatesOtherGenes">
   <h4>{{ "gene_page_researches_protein_regulates_genes" | translate }}</h4>
   <div class="table-section __mt-20 __w-content">
     <table class="table table--protein-to-gene">
@@ -228,7 +228,7 @@
         <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
-      <tr *ngFor="let item of gene.researches.proteinRegulatesOtherGenes">
+      <tr *ngFor="let item of researches.proteinRegulatesOtherGenes">
         <td>
           {{ item.proteinActivity }}
         </td>
@@ -254,7 +254,7 @@
   </div>
 </section>
 
-<section *ngIf="gene.researches.geneAssociatedWithProgeriaSyndromes.length !== 0">
+<section *ngIf="isGeneAssociatedWithProgeriaSyndromes">
   <h4>{{ "gene_page_researches_progeria" | translate }}</h4>
   <div class="table-section __mt-20 __w-content">
     <table class="table table--gene-to-progeria">
@@ -266,7 +266,7 @@
         <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
-      <tr *ngFor="let item of gene.researches.geneAssociatedWithProgeriaSyndromes">
+      <tr *ngFor="let item of researches.geneAssociatedWithProgeriaSyndromes">
         <td>
           {{ item.progeriaSyndrome }}
         </td>
@@ -284,13 +284,13 @@
   </div>
 </section>
 
-<section *ngIf="gene.researches.geneAssociatedWithLongevityEffects.length !== 0">
+<section *ngIf="isGeneAssociatedWithLongevityEffects">
   <h4>{{ "gene_page_researches_longevity_effects" | translate }}</h4>
   <div class="table-section __mt-20 __w-content">
     <table class="table table--gene-to-longevity-effect">
       <thead>
         <th>{{ "researches_data_type" | translate }}</th>
-        <th>{{ "researches_phenotype" | translate }}</th>
+        <th class="__cell-width-small">{{ "researches_phenotype" | translate }}</th>
         <th class="__cell-width-small">
           {{ "gene_page_allelic_polymorphism" | translate }}
         </th>
@@ -307,7 +307,7 @@
       </thead>
 
       <tr
-        *ngFor="let item of gene.researches.geneAssociatedWithLongevityEffects"
+        *ngFor="let item of researches.geneAssociatedWithLongevityEffects"
       >
         <td>
           {{ item.dataType }}
@@ -344,7 +344,7 @@
   </div>
 </section>
 
-<section *ngIf="gene.researches.additionalEvidences.length !== 0">
+<section *ngIf="isAdditionalEvidences">
   <h4>{{ "gene_page_researches_additional_evidence" | translate }}</h4>
   <div class="table-section __mt-20 __w-content">
     <table class="table table--gene-to-additional-evidence">
@@ -356,7 +356,7 @@
       </thead>
 
       <tr
-        *ngFor="let item of gene.researches.geneAssociatedWithLongevityEffects"
+        *ngFor="let item of researches.additionalEvidences"
       >
         <td>
           {{ item.comment }}

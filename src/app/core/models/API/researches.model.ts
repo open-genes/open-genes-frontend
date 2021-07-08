@@ -1,4 +1,6 @@
-export interface Lifespan {
+export interface increaseLifespan {
+  changeType: string;
+  longevityEffect: string;
   interventionResult: string;
   modelOrganism: string; // TODO: backend: rename to 'object'
   organismLine: string; // TODO: backend: rename to 'line'
@@ -84,7 +86,7 @@ export interface AdditionalEvidences {
 
 // TODO: backend: misleading names of researches
 export interface Researches {
-  increaseLifespan: Lifespan[];
+  increaseLifespan: increaseLifespan[];
   ageRelatedChangesOfGene: AgeRelatedChanges[];
   interventionToGeneImprovesVitalProcesses: InterventionAffectsAgingProcess[];
   proteinRegulatesOtherGenes: ProteinRegulatesGenes[];
