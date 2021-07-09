@@ -1,5 +1,5 @@
 export interface increaseLifespan {
-  changeType: string;
+  interventionType: string;
   longevityEffect: string;
   interventionResult: string;
   modelOrganism: string; // TODO: backend: rename to 'object'
