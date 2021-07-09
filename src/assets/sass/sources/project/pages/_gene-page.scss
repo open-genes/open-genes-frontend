@@ -179,11 +179,10 @@
             }
           }
         }
-      }
 
-      @include resolution_smartphone {
-        .age__type {
-         flex: 0 0 100%;
+        @include resolution_smartphone {
+          flex: 0 0 100%;
+          flex-wrap: wrap;
         }
       }
     }
