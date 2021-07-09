@@ -76,6 +76,12 @@ table.table {
       width: 12em;
     }
   }
+
+  .__cell-width-large {
+    &:after {
+      width: 16em;
+    }
+  }
 }
 
 .table-section {

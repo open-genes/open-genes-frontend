@@ -32,7 +32,6 @@ export class getResearchStatsById implements PipeTransform {
             6: a.geneAssociatedWithLongevityEffects.length
           };
 
-          console.log(JSON.stringify(this.researchStatsObj));
         }).unsubscribe();
   }
 }

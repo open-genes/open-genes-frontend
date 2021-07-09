@@ -98,7 +98,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((width) => {
         this.isMobile = width <= this.resMobile;
         this.isTablet = width <= this.resPhablet;
-        console.log(this.isTablet);
         this.cdRef.markForCheck();
       });
   }
@@ -109,7 +108,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((width) => {
         this.isMobile = width <= this.resMobile;
         this.isTablet = width <= this.resPhablet;
-        console.log(this.isTablet);
         this.cdRef.markForCheck();
       });
   }
