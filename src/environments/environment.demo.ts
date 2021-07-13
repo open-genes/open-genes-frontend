@@ -4,6 +4,7 @@ export const environment = {
   pubmedApiUrl: 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils',
   pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',
   proteinAtlasUrl: 'https://www.proteinatlas.org/',
+  openLongevity80LevelCMS: 'https://everything.openlongevity.org',
   debugMode: false,
   languages: ['ru', 'en'],
   mockJsonUrl: 'assets/data/api.mock.json',

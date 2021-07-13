@@ -1,0 +1,21 @@
+@import "../../styles";
+
+:host {
+  width: 100%;
+
+  &:empty {
+    display: none; // фикс для момента во время подгрузки
+  }
+}
+
+app-skeleton {
+  margin-top: 10px;
+}
+
+.articles {
+  width: 100%;
+
+  &__article {
+    margin: 5px;
+  }
+}

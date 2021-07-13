@@ -1,0 +1,30 @@
+<div class="row articles" *ngIf="!isLoading">
+  <mat-card *ngFor="let article of articlesList"
+            class="articles__article col-xs-12 col-sm-4">
+    <mat-card-header>
+      <img mat-card-avatar
+           src="{{article.author.avatar || defaultAvatar }}"
+           alt="">
+      <mat-card-title>{{article.title}}</mat-card-title>
+      <mat-card-subtitle>{{article.date}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image
+         src="{{article.image.src2x}}"
+         alt="">
+    <mat-card-content>
+      {{article.description}}
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<app-skeleton
+  *ngIf="isLoading || error"
+  [groups]="3"
+></app-skeleton>
+
+
+
+
+
+
+

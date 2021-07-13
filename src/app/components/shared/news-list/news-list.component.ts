@@ -5,19 +5,19 @@ import {
   OnDestroy,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-} from "@angular/core";
-import { PubmedApiService } from "../../../core/services/api/pubmed.api.service";
-import { News } from "../../../core/models/API/news.model";
-import { Genes } from "../../../core/models";
-import { finalize, switchMap, takeUntil } from "rxjs/operators";
-import { environment } from "../../../../environments/environment";
-import { TranslateService } from "@ngx-translate/core";
-import { Subject } from "rxjs";
+} from '@angular/core';
+import { PubmedApiService } from '../../../core/services/api/pubmed.api.service';
+import { News } from '../../../core/models/vendorsApi/pubMed/news.model';
+import { Genes } from '../../../core/models';
+import { finalize, switchMap, takeUntil } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
 
 @Component({
-  selector: "app-news-list",
-  templateUrl: "./news-list.component.html",
-  styleUrls: ["./news-list.component.scss"],
+  selector: 'app-news-list',
+  templateUrl: './news-list.component.html',
+  styleUrls: ['./news-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewsListComponent implements OnInit, OnDestroy {
@@ -42,14 +42,15 @@ export class NewsListComponent implements OnInit, OnDestroy {
   }
 
   private makeNewsList(limit: number): void {
-    let symbolsQuery = "";
+    let symbolsQuery = '';
     // 1. Form a request for all genes in the database that meet the minimal number of gene functions
     const filteredGenes = this.genesList.filter(
-      (gene: Genes) => gene.functionalClusters.length > this.minGeneFunctionsCriteria
+      (gene: Genes) =>
+        gene.functionalClusters.length > this.minGeneFunctionsCriteria
     );
     filteredGenes.forEach((gene: Genes, index: number, array: Genes[]) => {
       symbolsQuery += `${gene.symbol}[Title]`;
-      symbolsQuery += index < array.length - 1 ? "+OR+" : ""; // concat genes' HGNC in the request
+      symbolsQuery += index < array.length - 1 ? '+OR+' : ''; // concat genes' HGNC in the request
     });
 
     // 2. Make a long query string for all genes at once, but ask to return only n articles in the response

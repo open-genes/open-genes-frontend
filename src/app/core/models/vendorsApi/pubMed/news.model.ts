@@ -1,4 +1,4 @@
-import { Genes } from "./genes.model";
+import { Genes } from '../../openGenesApi/genes.model';
 
 export interface News {
   url: string;
