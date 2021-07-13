@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Researches } from '../../../core/models/API/researches.model';
+import { Researches } from '../../../core/models/openGenesApi/researches.model';
 
 @Component({
   selector: 'app-researches',
