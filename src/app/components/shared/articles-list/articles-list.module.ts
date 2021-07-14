@@ -6,6 +6,7 @@ import { PipesModule } from '../../../modules/pipes/pipes.module';
 import { UiComponentsModule } from '../../ui-components/ui-components.module';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../../../modules/vendors/material.module';
+import { NgTruncatePipeModule } from 'angular-pipes';
 
 @NgModule({
   declarations: [ArticlesListComponent],
@@ -16,6 +17,7 @@ import { MaterialModule } from '../../../modules/vendors/material.module';
     UiComponentsModule,
     RouterModule,
     MaterialModule,
+    NgTruncatePipeModule,
   ],
   exports: [ArticlesListComponent],
 })

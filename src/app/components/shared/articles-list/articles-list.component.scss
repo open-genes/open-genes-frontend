@@ -1,7 +1,14 @@
 @import "../../styles";
 
+$articles-gap: 10px;
+
 :host {
-  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-items: stretch;
+  min-width: 100%;
+  margin-left: -#{$articles-gap};
+  margin-right: -#{$articles-gap};
 
   &:empty {
     display: none; // фикс для момента во время подгрузки
@@ -12,10 +19,120 @@ app-skeleton {
   margin-top: 10px;
 }
 
-.articles {
-  width: 100%;
+.article {
+  display: inline-block;
+  padding: #{$articles-gap};
 
-  &__article {
-    margin: 5px;
+  &__card {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
   }
+
+  &__cover {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: $ui-base-height * 10;
+    background-color: $color-gray-very-light;
+    border-radius: $border-radius-medium;
+    overflow: hidden;
+
+    .cover__backdrop {
+      $filter-depth: 20px;
+
+      position: absolute;
+      top: -#{$filter-depth};
+      right: -#{$filter-depth};
+      left: -#{$filter-depth};
+      bottom: -#{$filter-depth};
+      z-index: 0;
+      display: block;
+      background: center / cover no-repeat;
+      filter: blur($filter-depth);
+      border-radius: inherit;
+
+      &::after {
+        content: ' ';
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+        display: block;
+        background-color: rgba($color-white, .75);
+        border-radius: inherit;
+      }
+    }
+  }
+
+  &__top-group,
+  &__tags {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__image,
+  &__text {
+    display: block;
+    width: 100%;
+  }
+
+  &__text,
+  &__tags {
+    padding: 0 $padding-regular;
+  }
+
+  &__tags {
+    margin: 15px 0;
+  }
+
+  &__image {
+    width: 100%;
+    height: $ui-base-height * 3;
+    padding: $padding-regular;
+    background: $color-gray-very-light center / cover no-repeat;
+    border-radius: $border-radius-medium $border-radius-medium 0 0;
+    margin-bottom: 10px;
+  }
+
+  &__tags {
+    margin-top: 15px;
+  }
+
+  &__author {
+    display: flex;
+    flex: 0 0 100%;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-items: flex-start;
+    margin-top: 5px;
+
+    .author__avatar,
+    .author__name {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .author__avatar {
+      height: $ui-base-height;
+      width: $ui-base-height;
+      border-radius: 50%;
+      background: $color-general-light center / cover no-repeat;
+      margin-right: .5em;
+    }
+  }
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
 }

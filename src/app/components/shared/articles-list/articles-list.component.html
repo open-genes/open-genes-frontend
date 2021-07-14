@@ -1,21 +1,51 @@
-<div class="row articles" *ngIf="!isLoading">
-  <mat-card *ngFor="let article of articlesList"
-            class="articles__article col-xs-12 col-sm-4">
-    <mat-card-header>
-      <img mat-card-avatar
-           src="{{article.author.avatar || defaultAvatar }}"
-           alt="">
-      <mat-card-title>{{article.title}}</mat-card-title>
-      <mat-card-subtitle>{{article.date}}</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image
-         src="{{article.image.src2x}}"
-         alt="">
-    <mat-card-content>
-      {{article.description}}
-    </mat-card-content>
-  </mat-card>
-</div>
+<ng-container *ngIf="!isLoading">
+  <ng-container *ngFor="let article of articlesList">
+    <div class="article col-xs-12 col-sm-6">
+      <div class="article__card">
+        <div class="article__cover">
+          <div class="cover__backdrop"
+               [style.backgroundImage]="article.image.src2x.length !== 0
+               ? 'url(' + article.image.src2x + ')'
+               : 'url(' + defaultCover + ')'"></div>
+
+          <div class="article__top-group">
+            <div class="article__image"
+                 [style.backgroundImage]="article.image.src.length !== 0
+               ? 'url(' + article.image.src2x + ')'
+               : 'url(' + defaultCover + ')'"
+            ></div>
+            <article class="article__text">
+              <h2>{{article.title}}</h2>
+              <p>{{article.description | truncate: 200}}</p>
+            </article>
+          </div>
+
+          <div class="article__tags">
+            <a *ngFor="let tag of article.tags"
+               href="{{tag.slug}}"
+               target="_blank"
+               class="alias">
+              {{tag.name}}
+            </a>
+          </div>
+        </div>
+
+        <div class="article__footer">
+          <div class="article__author">
+            <div class="author__avatar"
+                 [style.backgroundImage]="article.author.avatar.length !== 0
+               ? 'url(' + article.author.avatar + ')'
+               : 'url(' + defaultAvatar + ')'"
+            ></div>
+            <div class="author__name">
+              {{article.author.name}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
 
 <app-skeleton
   *ngIf="isLoading || error"

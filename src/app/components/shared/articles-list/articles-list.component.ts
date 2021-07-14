@@ -24,7 +24,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public environment = environment;
   public isLoading = true;
   public error: number;
-  public defaultAvatar: 'assets/images/avatar.png';
+  public defaultAvatar = '/assets/images/avatar.png';
+  public defaultCover = '/assets/images/home-background.png'; // TODO: draw a default cover
   private subscription$ = new Subject();
 
   constructor(
