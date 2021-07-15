@@ -3,58 +3,74 @@
     <div class="article col-xs-12 col-sm-6">
       <div class="article__card">
         <div class="article__cover">
-          <div class="cover__backdrop"
-               [style.backgroundImage]="article.image.src2x.length !== 0
-               ? 'url(' + article.image.src2x + ')'
-               : 'url(' + defaultCover + ')'"></div>
+          <div
+            class="cover__backdrop"
+            [style.backgroundImage]="
+              article.image.src.length !== 0
+                ? 'url(' + article.image.src + ')'
+                : 'url(' + defaultCover + ')'
+            "
+          ></div>
 
           <div class="article__top-group">
-            <div class="article__image"
-                 [style.backgroundImage]="article.image.src.length !== 0
-               ? 'url(' + article.image.src2x + ')'
-               : 'url(' + defaultCover + ')'"
+            <div
+              class="article__image"
+              [style.backgroundImage]="
+                article.image.src.length !== 0
+                  ? 'url(' + article.image.src2x + ')'
+                  : 'url(' + defaultCover + ')'
+              "
             ></div>
-            <article class="article__text">
-              <h2>{{article.title}}</h2>
-              <p>{{article.description | truncate: 200}}</p>
-            </article>
+            <section class="article__text">
+              <h2>
+                <a
+                  href="{{ environment.openLongevity80LevelCMS }}/articles/{{
+                    article.slug
+                  }}"
+                  >{{ article.title }}</a
+                >
+              </h2>
+              <div class="truncated-text">
+                {{ article.description | truncate: 250 }}
+              </div>
+            </section>
           </div>
 
           <div class="article__tags">
-            <a *ngFor="let tag of article.tags"
-               href="{{tag.slug}}"
-               target="_blank"
-               class="alias">
-              {{tag.name}}
+            <a
+              *ngFor="let tag of article.tags"
+              href="{{ environment.openLongevity80LevelCMS }}/{{ tag.slug }}"
+              target="_blank"
+              class="alias"
+            >
+              {{ tag.name }}
             </a>
           </div>
         </div>
 
         <div class="article__footer">
-          <div class="article__author">
-            <div class="author__avatar"
-                 [style.backgroundImage]="article.author.avatar.length !== 0
-               ? 'url(' + article.author.avatar + ')'
-               : 'url(' + defaultAvatar + ')'"
+          <a
+            href="{{ environment.openLongevity80LevelCMS }}/author/{{
+              article.author.pseudonym
+            }}"
+            class="article__author"
+          >
+            <div
+              class="author__avatar"
+              [style.backgroundImage]="
+                article.author.avatar.length !== 0
+                  ? 'url(' + article.author.avatar + ')'
+                  : 'url(' + defaultAvatar + ')'
+              "
             ></div>
             <div class="author__name">
-              {{article.author.name}}
+              {{ article.author.name }}
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
   </ng-container>
 </ng-container>
 
-<app-skeleton
-  *ngIf="isLoading || error"
-  [groups]="3"
-></app-skeleton>
-
-
-
-
-
-
-
+<app-skeleton *ngIf="isLoading || error" [groups]="3"></app-skeleton>

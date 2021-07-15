@@ -89,6 +89,17 @@ app-skeleton {
     padding: 0 $padding-regular;
   }
 
+  // TODO: caniinclude
+  &__text {
+    h2 {
+      color: $color-black;
+    }
+
+    .truncated-text {
+      @include overflow-lines($font-size, 1.5, 3, 0);
+    }
+  }
+
   &__tags {
     margin: 15px 0;
   }
@@ -103,7 +114,7 @@ app-skeleton {
   }
 
   &__tags {
-    margin-top: 15px;
+    margin: 15px 0 10px;
   }
 
   &__author {

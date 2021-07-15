@@ -40,29 +40,31 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   private makeArticlesList(): void {
-    // this.eightyLevelService
-    // .getArticles(null)
-    // .pipe(takeUntil(this.subscription$))
-    // .subscribe(
-    //   (data) => {
-    //     this.articlesList = data.articles.items;
-    //     this.isLoading = false;
-    //     this.cdRef.markForCheck();
-    //   },
-    //   (error) => (this.error = error)
-    // );
-
-    this.mock
-      .getMockResponse()
-      .pipe(takeUntil(this.subscription$))
-      .subscribe(
-        (data) => {
-          this.articlesList = data.articles.items;
-          this.isLoading = false;
-          this.cdRef.markForCheck();
-        },
-        (error) => (this.error = error)
-      );
+    if (this.environment.production) {
+      this.eightyLevelService
+        .getArticles(null)
+        .pipe(takeUntil(this.subscription$))
+        .subscribe(
+          (data) => {
+            this.articlesList = data.articles.items;
+            this.isLoading = false;
+            this.cdRef.markForCheck();
+          },
+          (error) => (this.error = error)
+        );
+    } else {
+      this.mock
+        .getMockResponse()
+        .pipe(takeUntil(this.subscription$))
+        .subscribe(
+          (data) => {
+            this.articlesList = data.articles.items;
+            this.isLoading = false;
+            this.cdRef.markForCheck();
+          },
+          (error) => (this.error = error)
+        );
+    }
   }
 
   ngOnDestroy() {
