@@ -49,6 +49,6 @@ interface I80levelSidebarBlock {
 }
 
 export interface I80levelArticleQueryParams {
-  page: number;
-  sort: 'new' | 'old';
+  page?: number;
+  sort?: 'new' | 'old';
 }

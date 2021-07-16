@@ -42,7 +42,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   private makeArticlesList(): void {
     if (this.environment.production) {
       this.eightyLevelService
-        .getArticles(null)
+        .getArticles({ page: 1 })
         .pipe(takeUntil(this.subscription$))
         .subscribe(
           (data) => {
