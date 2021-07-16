@@ -1,0 +1,423 @@
+{
+  "articles": {
+    "total": "8",
+    "title": "",
+    "image": "",
+    "items": [
+      {
+        "id": 6,
+        "slug": "vozrastnaya-makulyarnaya-degeneraciya",
+        "title": "Возрастная макулярная дегенерация",
+        "author": {
+          "name": "Ксения Шабалина",
+          "pseudonym": "kseniya-shabalina",
+          "position": null,
+          "avatar": ""
+        },
+        "date": "Jul 15, 2021",
+        "description": "Механизмы заболевания и перспективы терапии",
+        "image": {
+          "original": "http://openlongevity.tk/upload/post/6/60f039bece708.jpg",
+          "src": "http://openlongevity.tk/upload/post/6/images/60f039bece708/contain_400x360.jpg",
+          "src2x": "http://openlongevity.tk/upload/post/6/images/60f039bece708/contain_800x720.jpg",
+          "blur": "http://openlongevity.tk/upload/post/6/images/60f039bece708/blur_d38ad5eb_0x0.jpg"
+        },
+        "preview": {
+          "original": "http://openlongevity.tk/upload/post/6/60f039beceb91.jpg",
+          "src": "http://openlongevity.tk/upload/post/6/images/60f039beceb91/contain_516x268.jpg",
+          "src2x": "http://openlongevity.tk/upload/post/6/images/60f039beceb91/contain_1032x536.jpg"
+        },
+        "tags": [
+          {
+            "name": "Биология для инвесторов",
+            "slug": "Biology-for-investors"
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "slug": "gen-bdnf-i-ego-rol-v-borbe-s-boleznyu-alcgeimera",
+        "title": "Ген BDNF и его роль в борьбе с болезнью Альцгеймера",
+        "author": {
+          "name": "Светлана Бозрова",
+          "pseudonym": "svetlana-bozrova",
+          "position": null,
+          "avatar": ""
+        },
+        "date": "Jul 14, 2021",
+        "description": "Пользу введения BDNF пациентам с болезнью Альцгеймера проверят в клиническом исследовании",
+        "image": {
+          "original": "http://openlongevity.tk/upload/post/9/60ef01caa5a41.jpg",
+          "src": "http://openlongevity.tk/upload/post/9/images/60ef01caa5a41/contain_400x360.jpg",
+          "src2x": "http://openlongevity.tk/upload/post/9/images/60ef01caa5a41/contain_800x720.jpg",
+          "blur": "http://openlongevity.tk/upload/post/9/images/60ef01caa5a41/blur_c3dfe2af_0x0.jpg"
+        },
+        "preview": {
+          "original": "http://openlongevity.tk/upload/post/9/60f135377a49b.jpeg",
+          "src": "http://openlongevity.tk/upload/post/9/images/60f135377a49b/contain_516x268.jpeg",
+          "src2x": "http://openlongevity.tk/upload/post/9/images/60f135377a49b/contain_1032x536.jpeg"
+        },
+        "tags": [
+          {
+            "name": "Генетика старения и долголетия",
+            "slug": "genetika-stareniya-i-dolgoletiya"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "slug": "epizyme-vse-nadezhdy-na-prodazhi-tazverik",
+        "title": "Epizyme: все надежды на продажи Tazverik",
+        "author": {
+          "name": "Author Test",
+          "pseudonym": "author-test",
+          "position": null,
+          "avatar": ""
+        },
+        "date": "Jul 14, 2021",
+        "description": "Тazvеrik — основной актив компании Epizyme, который был одобрен FDA для лечения эпителиоидной саркомы в начале 2020 года, а затем фолликулярной лимфомы в июне того же года. Основное внимание Epizyme сосредоточено на том, чтобы продолжить увеличивать рост по двум показаниям, для которых Tazverik в настоящее время одобрен, а также продолжать проводить многочисленные исследования для расширения утвержденных показаний.",
+        "image": {
+          "original": "http://openlongevity.tk/upload/post/7/60eee396d8741.png",
+          "src": "http://openlongevity.tk/upload/post/7/images/60eee396d8741/contain_400x360.png",
+          "src2x": "http://openlongevity.tk/upload/post/7/images/60eee396d8741/contain_800x720.png",
+          "blur": "http://openlongevity.tk/upload/post/7/images/60eee396d8741/blur_2f9ee85b_0x0.png"
+        },
+        "preview": {
+          "original": "http://openlongevity.tk/upload/post/7/60eee396d90c2.png",
+          "src": "http://openlongevity.tk/upload/post/7/images/60eee396d90c2/contain_516x268.png",
+          "src2x": "http://openlongevity.tk/upload/post/7/images/60eee396d90c2/contain_1032x536.png"
+        },
+        "tags": [
+          {
+            "name": "Биология для инвесторов",
+            "slug": "Biology-for-investors"
+          },
+          {
+            "name": "эпигенетика",
+            "slug": "epigenetika"
+          },
+          {
+            "name": "эпигенетическая онкология",
+            "slug": "epigeneticheskaya-onkologiya"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "slug": "koeffitsent-prr",
+        "title": "Коэффициент PRR",
+        "author": {
+          "name": "user duplicate",
+          "pseudonym": "user-123f4fd3d3d",
+          "position": null,
+          "avatar": ""
+        },
+        "date": "Jul 13, 2021",
+        "description": "Один американский миллиардер по имени Кеннет Фишер, сделавший состояние на фондовой бирже, придумал как просто оценивать потенциал высокотехнологичных компаний. По его мнению, нужно разделить капитализацию (стоимость всех акций компании) на годовые затраты на исследования. Эмпирическим путем он выяснил, что самое оптимальное соотношение этих показателей — от 5 до 10. Мы попытались оценить потенциал небольших фармкомпаний и получили очень большой разброс. К примеру, у Cassava капитализация в 929 раз превышает ее траты на R&D. Что это, хайп или что-то другое?",
+        "image": {
+          "original": "http://openlongevity.tk/upload/post/5/60ed64a656d6e.png",
+          "src": "http://openlongevity.tk/upload/post/5/images/60ed64a656d6e/contain_400x360.png",
+          "src2x": "http://openlongevity.tk/upload/post/5/images/60ed64a656d6e/contain_800x720.png",
+          "blur": "http://openlongevity.tk/upload/post/5/images/60ed64a656d6e/blur_3badc858_0x0.png"
+        },
+        "preview": {
+          "original": "http://openlongevity.tk/upload/post/5/60ed64a6573b3.png",
+          "src": "http://openlongevity.tk/upload/post/5/images/60ed64a6573b3/contain_516x268.png",
+          "src2x": "http://openlongevity.tk/upload/post/5/images/60ed64a6573b3/contain_1032x536.png"
+        },
+        "tags": [
+          {
+            "name": "Советы в биотехе",
+            "slug": "Biotech-advice"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "slug": "kalendar-pdufa-iyul",
+        "title": "Календарь PDUFA - июль",
+        "author": {
+          "name": "Алексей Чуров",
+          "pseudonym": "aleksei-churov",
+          "position": null,
+          "avatar": ""
+        },
+        "date": "Jun 30, 2021",
+        "description": "Календарь дат PDUFA - это когда FDA выносит решения о допуске препарата к обороту. Решения сильно влияют на стоимость акций компаний. Давайте посмотрим, что интересного нас ждет в июле!",
+        "image": {
+          "original": "http://openlongevity.tk/upload/post/10/60ef2d9dc9f63.jpg",
+          "src": "http://openlongevity.tk/upload/post/10/images/60ef2d9dc9f63/contain_400x360.jpg",
+          "src2x": "http://openlongevity.tk/upload/post/10/images/60ef2d9dc9f63/contain_800x720.jpg",
+          "blur": "http://openlongevity.tk/upload/post/10/images/60ef2d9dc9f63/blur_1cd0897e_0x0.jpg"
+        },
+        "preview": {
+          "original": "http://openlongevity.tk/upload/post/10/60ef2cedb825d.jpg",
+          "src": "http://openlongevity.tk/upload/post/10/images/60ef2cedb825d/contain_516x268.jpg",
+          "src2x": "http://openlongevity.tk/upload/post/10/images/60ef2cedb825d/contain_1032x536.jpg"
+        },
+        "tags": [
+          {
+            "name": "Я календарь переверну",
+            "slug": "ya-kalendar-perevernu"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "slug": "research-roadmap",
+        "title": "Research Roadmap",
+        "author": {
+          "name": "Ксения Шабалина",
+          "pseudonym": "kseniya-shabalina",
+          "position": null,
+          "avatar": ""
+        },
+        "date": "Jun 24, 2021",
+        "description": "\r\n\r\nSince biological aging is a complex phenomenon, this document discusses the widest possible range of fundamental research and applied developments in the field of aging and body rejuvenation. All research and development proposed by this roadmap should make it easier to achieve the goal of reversal the biological aging of a person\r\n\r\n",
+        "image": {
+          "original": "http://openlongevity.tk/upload/post/4/60d452fb9be79.jpg",
+          "src": "http://openlongevity.tk/upload/post/4/images/60d452fb9be79/contain_400x360.jpg",
+          "src2x": "http://openlongevity.tk/upload/post/4/images/60d452fb9be79/contain_800x720.jpg",
+          "blur": "http://openlongevity.tk/upload/post/4/images/60d452fb9be79/blur_7152e36a_0x0.jpg"
+        },
+        "preview": {
+          "original": "http://openlongevity.tk/upload/post/4/60d452fb9c9fd.jpg",
+          "src": "http://openlongevity.tk/upload/post/4/images/60d452fb9c9fd/contain_516x268.jpg",
+          "src2x": "http://openlongevity.tk/upload/post/4/images/60d452fb9c9fd/contain_1032x536.jpg"
+        },
+        "tags": []
+      },
+      {
+        "id": 11,
+        "slug": "cassava-sciences",
+        "title": "Cassava Sciences",
+        "author": {
+          "name": "user duplicate",
+          "pseudonym": "user-123f4fd3d3d",
+          "position": null,
+          "avatar": ""
+        },
+        "date": "Jun 23, 2021",
+        "description": "Симуфилам для лечения болезни Альцгеймера",
+        "image": {
+          "original": "http://openlongevity.tk/upload/post/11/60f02223abeba.png",
+          "src": "http://openlongevity.tk/upload/post/11/images/60f02223abeba/contain_400x360.png",
+          "src2x": "http://openlongevity.tk/upload/post/11/images/60f02223abeba/contain_800x720.png",
+          "blur": "http://openlongevity.tk/upload/post/11/images/60f02223abeba/blur_7549d35f_0x0.png"
+        },
+        "preview": {
+          "original": "http://openlongevity.tk/upload/post/11/60f02223ac8ad.png",
+          "src": "http://openlongevity.tk/upload/post/11/images/60f02223ac8ad/contain_516x268.png",
+          "src2x": "http://openlongevity.tk/upload/post/11/images/60f02223ac8ad/contain_1032x536.png"
+        },
+        "tags": [
+          {
+            "name": "Биология для инвесторов",
+            "slug": "Biology-for-investors"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "slug": "terminy-biotekha",
+        "title": "Термины Биотеха",
+        "author": {
+          "name": "Ксения Шабалина",
+          "pseudonym": "kseniya-shabalina",
+          "position": null,
+          "avatar": ""
+        },
+        "date": "Jun 16, 2021",
+        "description": "Капитализация, выручка, издержки и бизнес-модели",
+        "image": {
+          "original": "http://openlongevity.tk/upload/post/2/60c9cd5289cbb.png",
+          "src": "http://openlongevity.tk/upload/post/2/images/60c9cd5289cbb/contain_400x360.png",
+          "src2x": "http://openlongevity.tk/upload/post/2/images/60c9cd5289cbb/contain_800x720.png",
+          "blur": "http://openlongevity.tk/upload/post/2/images/60c9cd5289cbb/blur_731bcf33_0x0.png"
+        },
+        "preview": {
+          "original": "http://openlongevity.tk/upload/post/2/60c9cd528acce.png",
+          "src": "http://openlongevity.tk/upload/post/2/images/60c9cd528acce/contain_516x268.png",
+          "src2x": "http://openlongevity.tk/upload/post/2/images/60c9cd528acce/contain_1032x536.png"
+        },
+        "tags": [
+          {
+            "name": "Советы в биотехе",
+            "slug": "Biotech-advice"
+          }
+        ]
+      }
+    ]
+  },
+  "sidebar": [
+    {
+      "id": 39,
+      "type": "trending",
+      "content": {
+        "title": "Trending Articles",
+        "max": 6,
+        "image": "",
+        "items": [
+          {
+            "id": 7,
+            "slug": "epizyme-vse-nadezhdy-na-prodazhi-tazverik",
+            "title": "Epizyme: все надежды на продажи Tazverik",
+            "description": "Тazvеrik — основной актив компании Epizyme, который был одобрен FDA для лечения эпителиоидной саркомы в начале 2020 года, а затем фолликулярной лимфомы в июне того же года. Основное внимание Epizyme сосредоточено на том, чтобы продолжить увеличивать рост по двум показаниям, для которых Tazverik в настоящее время одобрен, а также продолжать проводить многочисленные исследования для расширения утвержденных показаний.",
+            "image": {
+              "original": "http://openlongevity.tk/upload/post/7/60eee396d8741.png",
+              "src": "http://openlongevity.tk/upload/post/7/images/60eee396d8741/contain_96x96.png",
+              "src2x": "http://openlongevity.tk/upload/post/7/images/60eee396d8741/contain_192x192.png",
+              "blur": "http://openlongevity.tk/upload/post/7/images/60eee396d8741/blur_2f9ee85b_0x0.png"
+            },
+            "tags": [
+              {
+                "name": "Биология для инвесторов",
+                "slug": "Biology-for-investors"
+              },
+              {
+                "name": "эпигенетика",
+                "slug": "epigenetika"
+              },
+              {
+                "name": "эпигенетическая онкология",
+                "slug": "epigeneticheskaya-onkologiya"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "slug": "koeffitsent-prr",
+            "title": "Коэффициент PRR",
+            "description": "Один американский миллиардер по имени Кеннет Фишер, сделавший состояние на фондовой бирже, придумал как просто оценивать потенциал высокотехнологичных компаний. По его мнению, нужно разделить капитализацию (стоимость всех акций компании) на годовые затраты на исследования. Эмпирическим путем он выяснил, что самое оптимальное соотношение этих показателей — от 5 до 10. Мы попытались оценить потенциал небольших фармкомпаний и получили очень большой разброс. К примеру, у Cassava капитализация в 929 раз превышает ее траты на R&D. Что это, хайп или что-то другое?",
+            "image": {
+              "original": "http://openlongevity.tk/upload/post/5/60ed64a656d6e.png",
+              "src": "http://openlongevity.tk/upload/post/5/images/60ed64a656d6e/contain_96x96.png",
+              "src2x": "http://openlongevity.tk/upload/post/5/images/60ed64a656d6e/contain_192x192.png",
+              "blur": "http://openlongevity.tk/upload/post/5/images/60ed64a656d6e/blur_3badc858_0x0.png"
+            },
+            "tags": [
+              {
+                "name": "Советы в биотехе",
+                "slug": "Biotech-advice"
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "slug": "gen-bdnf-i-ego-rol-v-borbe-s-boleznyu-alcgeimera",
+            "title": "Ген BDNF и его роль в борьбе с болезнью Альцгеймера",
+            "description": "Пользу введения BDNF пациентам с болезнью Альцгеймера проверят в клиническом исследовании",
+            "image": {
+              "original": "http://openlongevity.tk/upload/post/9/60ef01caa5a41.jpg",
+              "src": "http://openlongevity.tk/upload/post/9/images/60ef01caa5a41/contain_96x96.jpg",
+              "src2x": "http://openlongevity.tk/upload/post/9/images/60ef01caa5a41/contain_192x192.jpg",
+              "blur": "http://openlongevity.tk/upload/post/9/images/60ef01caa5a41/blur_c3dfe2af_0x0.jpg"
+            },
+            "tags": [
+              {
+                "name": "Генетика старения и долголетия",
+                "slug": "genetika-stareniya-i-dolgoletiya"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "slug": "research-roadmap",
+            "title": "Research Roadmap",
+            "description": "\r\n\r\nSince biological aging is a complex phenomenon, this document discusses the widest possible range of fundamental research and applied developments in the field of aging and body rejuvenation. All research and development proposed by this roadmap should make it easier to achieve the goal of reversal the biological aging of a person\r\n\r\n",
+            "image": {
+              "original": "http://openlongevity.tk/upload/post/4/60d452fb9be79.jpg",
+              "src": "http://openlongevity.tk/upload/post/4/images/60d452fb9be79/contain_96x96.jpg",
+              "src2x": "http://openlongevity.tk/upload/post/4/images/60d452fb9be79/contain_192x192.jpg",
+              "blur": "http://openlongevity.tk/upload/post/4/images/60d452fb9be79/blur_7152e36a_0x0.jpg"
+            },
+            "tags": []
+          },
+          {
+            "id": 10,
+            "slug": "kalendar-pdufa-iyul",
+            "title": "Календарь PDUFA - июль",
+            "description": "Календарь дат PDUFA - это когда FDA выносит решения о допуске препарата к обороту. Решения сильно влияют на стоимость акций компаний. Давайте посмотрим, что интересного нас ждет в июле!",
+            "image": {
+              "original": "http://openlongevity.tk/upload/post/10/60ef2d9dc9f63.jpg",
+              "src": "http://openlongevity.tk/upload/post/10/images/60ef2d9dc9f63/contain_96x96.jpg",
+              "src2x": "http://openlongevity.tk/upload/post/10/images/60ef2d9dc9f63/contain_192x192.jpg",
+              "blur": "http://openlongevity.tk/upload/post/10/images/60ef2d9dc9f63/blur_1cd0897e_0x0.jpg"
+            },
+            "tags": [
+              {
+                "name": "Я календарь переверну",
+                "slug": "ya-kalendar-perevernu"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "slug": "vozrastnaya-makulyarnaya-degeneraciya",
+            "title": "Возрастная макулярная дегенерация",
+            "description": "Механизмы заболевания и перспективы терапии",
+            "image": {
+              "original": "http://openlongevity.tk/upload/post/6/60f039bece708.jpg",
+              "src": "http://openlongevity.tk/upload/post/6/images/60f039bece708/contain_96x96.jpg",
+              "src2x": "http://openlongevity.tk/upload/post/6/images/60f039bece708/contain_192x192.jpg",
+              "blur": "http://openlongevity.tk/upload/post/6/images/60f039bece708/blur_d38ad5eb_0x0.jpg"
+            },
+            "tags": [
+              {
+                "name": "Биология для инвесторов",
+                "slug": "Biology-for-investors"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "meta": {
+    "meta-title": {
+      "type": "name",
+      "name": "title",
+      "content": "Articles"
+    },
+    "schema-name": {
+      "type": "itemprop",
+      "name": "name",
+      "content": "Articles"
+    },
+    "og-og:title": {
+      "type": "property",
+      "name": "og:title",
+      "content": "Articles"
+    },
+    "og-og:type": {
+      "type": "property",
+      "name": "og:type",
+      "content": "article"
+    },
+    "article-article:published_time": {
+      "type": "property",
+      "name": "article:published_time",
+      "content": "2021-06-10T12:59:01+00:00"
+    },
+    "article-article:modified_time": {
+      "type": "property",
+      "name": "article:modified_time",
+      "content": "2021-06-10T12:59:01+00:00"
+    },
+    "twitter-twitter:card": {
+      "type": "name",
+      "name": "twitter:card",
+      "content": "summary_large_image"
+    },
+    "twitter-twitter:title": {
+      "type": "name",
+      "name": "twitter:title",
+      "content": "Articles"
+    }
+  },
+  "promo": {
+    "header": [],
+    "content": [],
+    "footer": []
+  }
+}

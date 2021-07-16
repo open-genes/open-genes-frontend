@@ -7,6 +7,6 @@ export const environment = {
   openLongevity80LevelCMS: 'https://openlongevity.tk',
   debugMode: false,
   languages: ['ru', 'en'],
-  mockJsonUrl: null,
+  mockJsonUrl: ['../data/articles-1.json', '../data/articles-2.json'],
   gaTrackingCode: 'G-825YYNSJFC',
-}
+};

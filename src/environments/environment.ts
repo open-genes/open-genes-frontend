@@ -11,9 +11,9 @@ export const environment = {
   openLongevity80LevelCMS: 'https://openlongevity.tk',
   debugMode: true,
   languages: ['ru', 'en'],
-  mockJsonUrl: null,
+  mockJsonUrl: ['data/articles-1.json', 'data/articles-2.json'],
   gaTrackingCode: 'G-825YYNSJFC',
-}
+};
 
 /*
  * For easier debugging in development mode, you can import the following file

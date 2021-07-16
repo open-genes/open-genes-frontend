@@ -14,7 +14,9 @@
 
     <div class="container">
       <section class="row no-gutters">
-        <app-articles-list *ngIf="translate.currentLang === 'ru'; else noContentOnYourLanguage"></app-articles-list>
+        <app-articles-list *ngIf="translate.currentLang === 'ru'; else noContentOnYourLanguage"
+                           (newArticlesLoaded)="updateView()"
+        ></app-articles-list>
         <ng-template #noContentOnYourLanguage>
           <div class="col col-12">
             There is no content on your language yet.

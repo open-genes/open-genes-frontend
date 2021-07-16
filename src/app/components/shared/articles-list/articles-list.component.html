@@ -39,7 +39,7 @@
           <div class="article__tags">
             <a
               *ngFor="let tag of article.tags"
-              href="{{ environment.openLongevity80LevelCMS }}/{{ tag.slug }}"
+              href="{{ environment.openLongevity80LevelCMS }}/articles/{{ tag.slug }}"
               target="_blank"
               class="alias"
             >
@@ -72,5 +72,14 @@
     </div>
   </ng-container>
 </ng-container>
+
+<mat-paginator
+  (page)="handlePageEvent($event)"
+  [length]="length"
+  [pageSize]="pageSize"
+  [showFirstLastButtons]="showFirstLastButtons"
+  [pageSizeOptions]="pageSizeOptions"
+  [pageIndex]="pageIndex">
+</mat-paginator>
 
 <app-skeleton *ngIf="isLoading || error" [groups]="3"></app-skeleton>

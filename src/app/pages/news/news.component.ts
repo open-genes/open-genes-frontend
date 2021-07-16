@@ -46,6 +46,11 @@ export class NewsComponent implements OnInit, OnDestroy {
     }
   }
 
+  public updateView(): void {
+    console.log('view update');
+    this.cdRef.markForCheck();
+  }
+
   private getGenes() {
     this.apiService
       .getGenes()

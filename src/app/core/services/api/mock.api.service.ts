@@ -9,8 +9,11 @@ import { Observable, of } from 'rxjs';
 export class MockApiService {
   constructor(private http: HttpClient) {}
 
-  public getMockResponse(): Observable<any> {
-    const mock = this.http.get(environment.mockJsonUrl);
+  public getMockResponse(params = null): Observable<any> {
+    // Mock request params
+    const page = params?.page ?? 0;
+
+    const mock = this.http.get(environment.mockJsonUrl[page]);
     return mock ? mock : of({});
   }
 }
