@@ -1,6 +1,6 @@
 <ng-container *ngIf="!isLoading">
 
-  <ng-container *ngIf="this.articlesList; else noArticles">
+  <ng-container *ngIf="articlesTotal !== 0; else noArticles">
     <ng-container *ngFor="let article of articlesList">
       <div class="article col-xs-12 col-sm-6">
         <div class="article__card">

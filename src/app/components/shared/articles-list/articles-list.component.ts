@@ -31,6 +31,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public isMocked = true;
   public pageIndex = 0;
   public showMoreButtonVisible = false;
+  public articlesTotal: number;
 
   private subscription$ = new Subject();
 
@@ -51,7 +52,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   // TODO: Now I know articles quantity, this.pageIndex =< articles.total
   // rewrite using this
   public showMore() {
-    try {
+    if (this.pageIndex >= this.articlesTotal / this.articlesList.length) {
       ++this.pageIndex;
       console.log(this.pageIndex);
       if (this.articlesList) {
@@ -59,8 +60,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       } else {
         this.showMoreButtonVisible = false;
       }
-    } catch (e) {
-      this.showMoreButtonVisible = false;
     }
   }
 
@@ -72,6 +71,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         .subscribe(
           (data) => {
             this.articlesList = data.articles.items;
+            this.articlesTotal = data.articles.total;
             console.log(this.articlesList);
             if (this.articlesList) {
               this.showMoreButtonVisible = true;
@@ -90,7 +90,12 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         .subscribe(
           (data) => {
             this.articlesList = data.articles.items;
-            // TODO: this.pageIndex =< articles.total
+            this.articlesTotal = data.articles.total;
+            if (this.articlesList) {
+              this.showMoreButtonVisible = true;
+              this.newArticlesLoaded.emit(true);
+            }
+
             this.isLoading = false;
             this.cdRef.markForCheck();
           },
