@@ -13,6 +13,11 @@ $articles-gap: 10px;
   &:empty {
     display: none; // фикс для момента во время подгрузки
   }
+
+  .no-content {
+    padding-right: #{$articles-gap};
+    padding-left: #{$articles-gap};
+  }
 }
 
 app-skeleton {

@@ -14,7 +14,6 @@ import { takeUntil } from 'rxjs/operators';
 import { EightyLevelService } from '../../../core/services/api/80level.api.service';
 import { environment } from '../../../../environments/environment';
 import { MockApiService } from '../../../core/services/api/mock.api.service';
-import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-articles-list',
@@ -30,12 +29,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public defaultAvatar = '/assets/images/avatar.png';
   public defaultCover = '/assets/images/home-background.png'; // TODO: draw a default cover
   public isMocked = true;
-
-  public length = 1;
-  public pageSize = 10;
   public pageIndex = 0;
-  public pageSizeOptions = [5, 10, 25];
-  public showFirstLastButtons = false;
+  public showMoreButtonVisible = false;
 
   private subscription$ = new Subject();
 
@@ -53,12 +48,20 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.makeArticlesList();
   }
 
-  public handlePageEvent(event: PageEvent) {
-    this.length = event.length;
-    this.pageSize = event.pageSize;
-    this.pageIndex = event.pageIndex;
-
-    this.makeArticlesList();
+  // TODO: Now I know articles quantity, this.pageIndex =< articles.total
+  // rewrite using this
+  public showMore() {
+    try {
+      ++this.pageIndex;
+      console.log(this.pageIndex);
+      if (this.articlesList) {
+        this.makeArticlesList();
+      } else {
+        this.showMoreButtonVisible = false;
+      }
+    } catch (e) {
+      this.showMoreButtonVisible = false;
+    }
   }
 
   private makeArticlesList(): void {
@@ -69,11 +72,16 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         .subscribe(
           (data) => {
             this.articlesList = data.articles.items;
+            console.log(this.articlesList);
+            if (this.articlesList) {
+              this.showMoreButtonVisible = true;
+              this.newArticlesLoaded.emit(true);
+            }
+
             this.isLoading = false;
             this.cdRef.markForCheck();
-            this.newArticlesLoaded.emit(true);
           },
-          (error) => (this.error = error)
+          (error) => (this.error = error) // TODO: add loging
         );
     } else {
       this.eightyLevelService
@@ -82,7 +90,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         .subscribe(
           (data) => {
             this.articlesList = data.articles.items;
-            // TODO: calculate pages quantity?
+            // TODO: this.pageIndex =< articles.total
             this.isLoading = false;
             this.cdRef.markForCheck();
           },

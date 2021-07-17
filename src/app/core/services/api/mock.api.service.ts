@@ -11,7 +11,8 @@ export class MockApiService {
 
   public getMockResponse(params = null): Observable<any> {
     // Mock request params
-    const page = params?.page ?? 0;
+    const page = params?.page ? params.page - 1 : 0;
+    console.log('array item: ', page);
 
     const mock = this.http.get(environment.mockJsonUrl[page]);
     return mock ? mock : of({});

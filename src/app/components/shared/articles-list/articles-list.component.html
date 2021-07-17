@@ -1,85 +1,100 @@
 <ng-container *ngIf="!isLoading">
-  <ng-container *ngFor="let article of articlesList">
-    <div class="article col-xs-12 col-sm-6">
-      <div class="article__card">
-        <div class="article__cover">
-          <div
-            class="cover__backdrop"
-            [style.backgroundImage]="
+
+  <ng-container *ngIf="this.articlesList; else noArticles">
+    <ng-container *ngFor="let article of articlesList">
+      <div class="article col-xs-12 col-sm-6">
+        <div class="article__card">
+          <div class="article__cover">
+            <div
+              class="cover__backdrop"
+              [style.backgroundImage]="
               article.image.src.length !== 0
                 ? 'url(' + article.image.src + ')'
                 : 'url(' + defaultCover + ')'
             "
-          ></div>
+            ></div>
 
-          <div class="article__top-group">
-            <div
-              class="article__image"
-              [style.backgroundImage]="
+            <div class="article__top-group">
+              <div
+                class="article__image"
+                [style.backgroundImage]="
                 article.image.src.length !== 0
                   ? 'url(' + article.image.src2x + ')'
                   : 'url(' + defaultCover + ')'
               "
-            ></div>
-            <section class="article__text">
-              <h2>
-                <a
-                  href="{{ environment.openLongevity80LevelCMS }}/articles/{{
+              ></div>
+              <section class="article__text">
+                <h2>
+                  <a
+                    href="{{ environment.openLongevity80LevelCMS }}/articles/{{
                     article.slug
                   }}"
                   >{{ article.title }}</a
-                >
-              </h2>
-              <div class="truncated-text">
-                {{ article.description | truncate: 250 }}
-              </div>
-            </section>
+                  >
+                </h2>
+                <div class="truncated-text">
+                  {{ article.description | truncate: 250 }}
+                </div>
+              </section>
+            </div>
+
+            <div class="article__tags">
+              <a
+                *ngFor="let tag of article.tags"
+                href="{{ environment.openLongevity80LevelCMS }}/articles/{{
+                tag.slug
+              }}"
+                target="_blank"
+                class="alias"
+              >
+                {{ tag.name }}
+              </a>
+            </div>
           </div>
 
-          <div class="article__tags">
+          <div class="article__footer">
             <a
-              *ngFor="let tag of article.tags"
-              href="{{ environment.openLongevity80LevelCMS }}/articles/{{ tag.slug }}"
-              target="_blank"
-              class="alias"
-            >
-              {{ tag.name }}
-            </a>
-          </div>
-        </div>
-
-        <div class="article__footer">
-          <a
-            href="{{ environment.openLongevity80LevelCMS }}/author/{{
+              href="{{ environment.openLongevity80LevelCMS }}/author/{{
               article.author.pseudonym
             }}"
-            class="article__author"
-          >
-            <div
-              class="author__avatar"
-              [style.backgroundImage]="
+              class="article__author"
+            >
+              <div
+                class="author__avatar"
+                [style.backgroundImage]="
                 article.author.avatar.length !== 0
                   ? 'url(' + article.author.avatar + ')'
                   : 'url(' + defaultAvatar + ')'
               "
-            ></div>
-            <div class="author__name">
-              {{ article.author.name }}
-            </div>
-          </a>
+              ></div>
+              <div class="author__name">
+                {{ article.author.name }}
+              </div>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
   </ng-container>
 </ng-container>
 
-<mat-paginator
-  (page)="handlePageEvent($event)"
-  [length]="length"
-  [pageSize]="pageSize"
-  [showFirstLastButtons]="showFirstLastButtons"
-  [pageSizeOptions]="pageSizeOptions"
-  [pageIndex]="pageIndex">
-</mat-paginator>
+<div *ngIf="showMoreButtonVisible" class="__mt-15 btn-wrap show-more">
+  <button class="btn show-more__button" (click)="showMore()">
+    {{ "show_more" | translate }}
+  </button>
+</div>
 
 <app-skeleton *ngIf="isLoading || error" [groups]="3"></app-skeleton>
+
+<ng-template #noArticles>
+  <section class="col-12 no-content">
+    <div class="no-content__inner">
+      <div class="no-content__icon no-content__icon-standard"></div>
+      <div class="no-content__title">
+        <div class="title__center">
+          {{ 'news_page_no_articles' | translate }}
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>

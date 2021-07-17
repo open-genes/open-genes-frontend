@@ -8,8 +8,8 @@ export const environment = {
   debugMode: false,
   languages: ['ru', 'en'],
   mockJsonUrl: [
-    'assets/data/articles-page-1.mock.json',
     'assets/data/articles-page-2.mock.json',
+    'assets/data/articles-page-1.mock.json',
   ],
   gaTrackingCode: 'G-825YYNSJFC',
 };
