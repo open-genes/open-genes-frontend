@@ -1,8 +1,8 @@
-import { Genes } from '../../openGenesApi/genes.model';
-
 export interface News {
+  gene: string;
+  uid: string;
   url: string;
   title: string;
+  sortTitle: string;
   date: string;
-  gene: Genes;
 }

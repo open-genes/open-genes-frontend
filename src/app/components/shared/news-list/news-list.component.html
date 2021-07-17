@@ -1,38 +1,27 @@
 <ul class="news" *ngIf="!isLoading">
-  <li *ngFor="let item of newsList | slice: 0 : itemsForPage"
-      class="news__item"
-  >
+  <li *ngFor="let news of newsList | slice: 0:itemsForPage" class="news__item">
     <div class="item__gene">
-      <a [routerLink]="['/gene', item.gene?.symbol]"
-         class="alias">{{item.gene?.symbol}}</a>
+      <a [routerLink]="['/gene', news.gene]" class="alias">{{ news.gene }}</a>
     </div>
 
     <div class="item__title">
-      <a href="{{item.url}}"
-         class="item__caption link link--gray"
-         target="_blank"
-      >{{item.title | stripTags}}</a>
+      <a
+        href="{{ news.url }}"
+        class="item__caption link link--gray"
+        target="_blank"
+        >{{ news.title | stripTags }}</a
+      >
 
-      <ng-container *ngIf="showDates === true">
-      <div class="item__date" *ngIf="translate.currentLang === 'ru'">
-        {{item.date | localizedDate:'d MMMM'}}
-      </div>
-      <div class="item__date" *ngIf="translate.currentLang === 'en'">
-        {{item.date | localizedDate:'d MMMM'}}
-      </div>
+      <ng-container *ngIf="news.date && showDates === true">
+        <div class="item__date" *ngIf="translate.currentLang === 'ru'">
+          {{ news.date | localizedDate: "d MMMM" }}
+        </div>
+        <div class="item__date" *ngIf="translate.currentLang === 'en'">
+          {{ news.date | localizedDate: "d MMMM" }}
+        </div>
       </ng-container>
     </div>
   </li>
 </ul>
 
-<app-skeleton
-  *ngIf="isLoading || error"
-  [groups]="itemsForPage"
-></app-skeleton>
-
-
-
-
-
-
-
+<app-skeleton *ngIf="isLoading || error" [groups]="itemsForPage"></app-skeleton>
