@@ -14,7 +14,8 @@ $articles-gap: 10px;
     display: none; // фикс для момента во время подгрузки
   }
 
-  .no-content {
+  .no-content,
+  .show-more {
     padding-right: #{$articles-gap};
     padding-left: #{$articles-gap};
   }

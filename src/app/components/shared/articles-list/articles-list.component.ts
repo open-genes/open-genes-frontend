@@ -29,7 +29,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public defaultAvatar = '/assets/images/avatar.png';
   public defaultCover = '/assets/images/home-background.png'; // TODO: draw a default cover
   public isMocked = true;
-  public pageIndex = 0;
+  public pageIndex = 1;
   public showMoreButtonVisible = false;
   public articlesTotal: number;
 
@@ -52,14 +52,11 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   // TODO: Now I know articles quantity, this.pageIndex =< articles.total
   // rewrite using this
   public showMore() {
-    if (this.pageIndex >= this.articlesTotal / this.articlesList.length) {
+    if (this.articlesTotal / this.articlesList.length > this.pageIndex) {
+      // before
       ++this.pageIndex;
       console.log(this.pageIndex);
-      if (this.articlesList) {
-        this.makeArticlesList();
-      } else {
-        this.showMoreButtonVisible = false;
-      }
+      this.makeArticlesList();
     }
   }
 
@@ -72,12 +69,19 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
           (data) => {
             this.articlesList = data.articles.items;
             this.articlesTotal = data.articles.total;
-            console.log(this.articlesList);
-            if (this.articlesList) {
-              this.showMoreButtonVisible = true;
-              this.newArticlesLoaded.emit(true);
-            }
 
+            if (this.articlesList) {
+              this.newArticlesLoaded.emit(true);
+
+              // Check if there is more content to show
+              if (
+                this.articlesTotal / this.articlesList.length >
+                this.pageIndex
+              ) {
+                // after
+                this.showMoreButtonVisible = true;
+              }
+            }
             this.isLoading = false;
             this.cdRef.markForCheck();
           },
@@ -89,15 +93,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.subscription$))
         .subscribe(
           (data) => {
-            this.articlesList = data.articles.items;
-            this.articlesTotal = data.articles.total;
-            if (this.articlesList) {
-              this.showMoreButtonVisible = true;
-              this.newArticlesLoaded.emit(true);
-            }
-
-            this.isLoading = false;
-            this.cdRef.markForCheck();
+            // TODO: transfer the code above here when the real data becomes available
           },
           (error) => (this.error = error)
         );

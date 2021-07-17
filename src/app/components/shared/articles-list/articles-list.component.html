@@ -15,20 +15,24 @@
             ></div>
 
             <div class="article__top-group">
-              <div
+              <a
+                href="{{ environment.openLongevity80LevelCMS }}/articles/{{
+                    article.slug"
+                target="_blank"
                 class="article__image"
                 [style.backgroundImage]="
                 article.image.src.length !== 0
                   ? 'url(' + article.image.src2x + ')'
                   : 'url(' + defaultCover + ')'
               "
-              ></div>
+              ></a>
               <section class="article__text">
                 <h2>
                   <a
                     href="{{ environment.openLongevity80LevelCMS }}/articles/{{
                     article.slug
                   }}"
+                    target="_blank"
                   >{{ article.title }}</a
                   >
                 </h2>
@@ -57,6 +61,7 @@
               href="{{ environment.openLongevity80LevelCMS }}/author/{{
               article.author.pseudonym
             }}"
+              target="_blank"
               class="article__author"
             >
               <div
@@ -78,7 +83,8 @@
   </ng-container>
 </ng-container>
 
-<div *ngIf="showMoreButtonVisible" class="__mt-15 btn-wrap show-more">
+<div *ngIf="showMoreButtonVisible"
+     class="__mt-15 btn-wrap show-more">
   <button class="btn show-more__button" (click)="showMore()">
     {{ "show_more" | translate }}
   </button>
