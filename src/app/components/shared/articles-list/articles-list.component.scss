@@ -42,7 +42,7 @@ app-skeleton {
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    height: $ui-base-height * 10;
+    min-height: $ui-base-height * 10;
     background-color: $color-gray-very-light;
     border-radius: $border-radius-medium;
     overflow: hidden;
@@ -117,6 +117,13 @@ app-skeleton {
     background: $color-gray-very-light center / cover no-repeat;
     border-radius: $border-radius-medium $border-radius-medium 0 0;
     margin-bottom: 10px;
+    //overflow: hidden;
+    //
+    //img {
+    //  width: 100%;
+    //  height: auto;
+    //  object-fit: cover;
+    //}
   }
 
   &__tags {

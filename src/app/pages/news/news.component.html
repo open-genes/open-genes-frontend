@@ -24,11 +24,11 @@
         <h1 class="col col-12">{{ 'news_page_title' | translate }}</h1>
         <div class="col col-12 news-page__news">
           <app-news-list
+            *ngIf="genes"
             [genesList]="genes"
             [loadTotal]="itemsTotalLimit"
             [itemsForPage]="itemsOnPage"
             [showDates]="true"
-            *ngIf="genes"
           ></app-news-list>
         </div>
         <div

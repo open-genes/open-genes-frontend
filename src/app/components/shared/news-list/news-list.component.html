@@ -9,15 +9,14 @@
         href="{{ news.url }}"
         class="item__caption link link--gray"
         target="_blank"
-        >{{ news.title | stripTags }}</a
+      >{{ news.title | stripTags }}</a
       >
 
       <ng-container *ngIf="news.date && showDates === true">
-        <div class="item__date" *ngIf="translate.currentLang === 'ru'">
-          {{ news.date | localizedDate: "d MMMM" }}
-        </div>
-        <div class="item__date" *ngIf="translate.currentLang === 'en'">
-          {{ news.date | localizedDate: "d MMMM" }}
+        <div class="item__date">
+          {{ (news.date | localizedDate: "d MMMM y")
+          || (news.date | localizedDate: "MMMM y")
+          }}
         </div>
       </ng-container>
     </div>

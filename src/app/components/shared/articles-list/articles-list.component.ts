@@ -49,9 +49,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.makeArticlesList();
   }
 
-  // TODO: Now I know articles quantity, this.pageIndex =< articles.total
-  // rewrite using this
-  public showMore() {
+  public showMore(): void {
     if (this.articlesTotal / this.articlesList.length > this.pageIndex) {
       // before
       ++this.pageIndex;

@@ -55,7 +55,7 @@ export class NewsListComponent implements OnInit, OnDestroy {
     // TODO: optimize
     // 2. Make a long query string for all genes at once, but ask to return only n articles in the response
     this.pubmedApiService
-      .getNewsList(symbolsQuery, this.loadTotal)
+      .getNewsList(symbolsQuery, limit)
       .pipe(takeUntil(this.subscription$))
       .subscribe(
         (response) => {
