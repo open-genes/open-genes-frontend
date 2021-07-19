@@ -93,6 +93,9 @@ $preloader-spinner-color: $color-general;
 $dark-panel-100: #64676f;
 $dark-panel-200: #323439;
 
+// - hint
+$color-hint-bg: lighten(#ffc769, 20%);
+$color-hint-text: #c88142;
 
 // PATHS
 $path-images: '../images';

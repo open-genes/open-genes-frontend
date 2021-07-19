@@ -14,9 +14,9 @@
   width: 100%;
   padding: 12px 10px;
   border-radius: $border-radius-medium;
-  background-color: lighten(#ffc769, 20%);
+  background-color: $color-hint-bg;
   font-size: $font-size-smaller;
-  color: #c88142;
+  color: $color-hint-text;
   margin-bottom: 10px;
 
   &__icon {

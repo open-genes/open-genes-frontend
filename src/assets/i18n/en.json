@@ -61,6 +61,7 @@
   "footer_json_data": "JSON data",
   "functional_classes": "Age-related processes/systems",
   "gene": "Ген",
+  "gene_candidate": "Candidate gene",
   "gene_intervention_result": "Result",
   "gene_intervention_type": "Method",
   "gene_list_diseases": "Associated diseases",

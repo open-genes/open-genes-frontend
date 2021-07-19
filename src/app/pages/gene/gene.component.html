@@ -30,6 +30,9 @@
           <div class="col col-12 header__short-comment">
             <span class="str_source-GeneAge">
               {{gene.name}}
+              <span *ngIf="isGeneCandidate" class="alias alias--small alias--warning"
+              >{{ "gene_candidate" | translate }}
+              </span>
             </span>
           </div>
           <div class="col col-12 header__functional-clusters">

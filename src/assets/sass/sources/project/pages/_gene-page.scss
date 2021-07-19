@@ -16,7 +16,7 @@
       .title__caption,
       .title__vendors {
         display: block;
-        height: $header-title-height;
+        min-height: $header-title-height;
         width: auto;
         float: left; // floats are more simple there
       }
@@ -64,6 +64,11 @@
       font-size: $font-size-bigger;
       color: $color-gray;
       margin-bottom: 15px;
+
+      .alias {
+        margin: 0;
+        vertical-align: middle;
+      }
     }
 
     // .header__functional-clusters { }

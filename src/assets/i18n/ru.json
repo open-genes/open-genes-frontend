@@ -61,6 +61,7 @@
   "footer_json_data": "Данные в JSON",
   "functional_classes": "Возрастозависимые процессы/системы",
   "gene": "Ген",
+  "gene_candidate": "Ген-кандидат",
   "gene_intervention_result": "Результат",
   "gene_intervention_type": "Метод",
   "gene_list_diseases": "Связанные заболевания",
