@@ -20,7 +20,7 @@ import { EightyLevelService } from '../../core/services/api/80level.api.service'
 export class NewsComponent implements OnInit, OnDestroy {
   public genes: Genes[];
   public itemsOnPage = 20;
-  public itemsTotalLimit = 100;
+  public itemsTotalLimit = 80;
   private ngUnsubscribe = new Subject();
 
   constructor(

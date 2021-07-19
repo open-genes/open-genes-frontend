@@ -1,5 +1,5 @@
 <ul class="news" *ngIf="!isLoading">
-  <li *ngFor="let news of newsList | slice: 0:itemsForPage" class="news__item">
+  <li *ngFor="let news of newsList" class="news__item">
     <div class="item__gene">
       <a [routerLink]="['/gene', news.gene]" class="alias">{{ news.gene }}</a>
     </div>

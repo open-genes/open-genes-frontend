@@ -12,9 +12,6 @@ export class PubmedApiService {
   constructor(private http: HttpClient) {}
 
   public getNewsList(symbols: string[], limit: number): Observable<any> {
-    return this.http.post(
-      `${this.url}publication/all`,
-      JSON.stringify({ symbols, limit })
-    );
+    return this.http.post(`${this.url}publication/all`, { symbols, limit });
   }
 }

@@ -61,6 +61,7 @@ export class NewsListComponent implements OnInit, OnDestroy {
         (response) => {
           this.newsList = response;
           this.cdRef.markForCheck();
+          this.isLoading = false;
         },
         (error) => (this.error = error)
       );
