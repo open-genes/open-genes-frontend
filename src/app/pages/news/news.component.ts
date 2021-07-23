@@ -23,8 +23,6 @@ import { NewsListComponent } from '../../components/shared/news-list/news-list.c
 })
 export class NewsComponent implements OnInit, OnDestroy {
   public genes: Genes[];
-  public itemsOnPage = 10;
-  public itemsTotalLimit = 80;
   private ngUnsubscribe = new Subject();
 
   @Output() loadMoreNewsEvent: EventEmitter<null> = new EventEmitter<null>();

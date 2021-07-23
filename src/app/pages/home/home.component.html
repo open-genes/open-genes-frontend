@@ -33,6 +33,17 @@
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 __mb-btm">
             <div class="sidebar">
               <div class="sidebar__inner">
+                <div class="sidebar__item sidebar__item--desktop-50"
+                     *ngIf="lastGenes"
+                >
+                  <div class="sidebar__title">
+                    {{ 'main_page_last' | translate }}
+                  </div>
+                  <app-mini-cards
+                    [lastGenes]="lastGenes"
+                  ></app-mini-cards>
+                </div>
+
                 <div *ngIf="genes"
                      class="sidebar__item sidebar__item--desktop-50">
                   <app-hint *ngIf="!isTablet">
@@ -44,22 +55,16 @@
                       {{ 'show_more_short' | translate }}
                     </a>
                   </div>
+                  <app-articles-list
+                    [isMiniMode]="true"
+                    [sliceTo]="2"
+                  ></app-articles-list>
                   <app-news-list
                     [genesList]="genes"
                     [loadTotal]="2"
                     [itemsForPage]="2"
                     [isShowMoreButton]="false"
                   ></app-news-list>
-                </div>
-                <div class="sidebar__item sidebar__item--desktop-50"
-                     *ngIf="lastGenes"
-                >
-                  <div class="sidebar__title">
-                    {{ 'main_page_last' | translate }}
-                  </div>
-                  <app-mini-cards
-                    [lastGenes]="lastGenes"
-                  ></app-mini-cards>
                 </div>
               </div>
             </div>

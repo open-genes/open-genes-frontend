@@ -15,8 +15,10 @@
     <div class="container">
       <section class="row no-gutters">
         <h1 class="col col-12">{{ 'news_page_articles_title' | translate }}</h1>
-        <app-articles-list (newArticlesLoaded)="updateView()"
-                           class="__mt-10"
+        <app-articles-list
+          (newArticlesLoaded)="updateView()"
+          [loadTotal]="2"
+          class="__mt-10"
         ></app-articles-list>
       </section>
 
@@ -26,7 +28,7 @@
           <app-news-list
             *ngIf="genes"
             [genesList]="genes"
-            [loadTotal]="itemsTotalLimit"
+            [loadTotal]="80"
             [itemsForPage]="10"
             [showDates]="true"
           ></app-news-list>

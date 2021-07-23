@@ -1,6 +1,6 @@
 <ng-container *ngIf="!isLoading && articlesList.length !== 0; else skeleton">
-  <ng-container *ngFor="let article of articlesList">
-    <div class="article col-xs-12 col-sm-6">
+  <ng-container *ngFor="let article of articlesList | slice: 0:sliceTo">
+    <div class="article {{ isMiniMode ? 'article--w-100' : 'col-xs-12 col-sm-6' }}">
       <div class="article__card">
         <div class="article__cover">
           <div
@@ -40,7 +40,8 @@
             </section>
           </div>
 
-          <div class="article__tags">
+          <div *ngIf="!isMiniMode"
+               class="article__tags">
             <a
               *ngFor="let tag of article.tags"
               href="{{ environment.openLongevity80LevelCMS }}/articles/{{
@@ -54,7 +55,8 @@
           </div>
         </div>
 
-        <div class="article__footer">
+        <div *ngIf="!isMiniMode"
+             class="article__footer">
           <a
             href="{{ environment.openLongevity80LevelCMS }}/author/{{
             article.author.pseudonym

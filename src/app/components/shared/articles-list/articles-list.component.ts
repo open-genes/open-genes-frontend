@@ -6,6 +6,7 @@ import {
   ChangeDetectorRef,
   EventEmitter,
   Output,
+  Input,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
@@ -37,6 +38,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   private subscription$ = new Subject();
   private httpCallsCounter = 0;
 
+  @Input() isMiniMode: false;
+  @Input() sliceTo: number | undefined = undefined;
   @Output()
   newArticlesLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
