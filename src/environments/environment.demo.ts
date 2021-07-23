@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
   apiUrl: 'https://demo.open-genes.com',
   searchApiUrl: 'https://publications-search-api-2yf55.ondigitalocean.app/',
   pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',
