@@ -33,6 +33,9 @@
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 __mb-btm">
             <div class="sidebar">
               <div class="sidebar__inner">
+                <app-hint *ngIf="!isTablet">
+                  <ng-container text>{{ "main_page_hint_table_settings" | translate }}<span class="fa far fa-cog"></span></ng-container>
+                </app-hint>
                 <div class="sidebar__item sidebar__item--desktop-50"
                      *ngIf="lastGenes"
                 >
@@ -46,9 +49,6 @@
 
                 <div *ngIf="genes"
                      class="sidebar__item sidebar__item--desktop-50">
-                  <app-hint *ngIf="!isTablet">
-                    <ng-container text>{{ "main_page_hint_table_settings" | translate }}<span class="fa far fa-cog"></span></ng-container>
-                  </app-hint>
                   <div class="sidebar__title">
                     {{ 'news_list_title' | translate }}
                     <a href="/news" class="link link--gray __ml-10">

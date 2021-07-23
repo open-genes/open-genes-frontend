@@ -1,6 +1,6 @@
 <ng-container *ngIf="!isLoading && articlesList.length !== 0; else skeleton">
   <ng-container *ngFor="let article of articlesList | slice: 0:sliceTo">
-    <div class="article {{ isMiniMode ? 'article--w-100' : 'col-xs-12 col-sm-6' }}">
+    <div class="article {{ isMiniMode ? 'article--mini' : 'col-xs-12 col-sm-6' }}">
       <div class="article__card">
         <div class="article__cover">
           <div
@@ -24,8 +24,8 @@
                 : 'url(' + defaultCover + ')'
             "
             ></a>
-            <section class="article__text">
-              <h2>
+            <div class="article__text">
+              <h3>
                 <a
                   href="{{ environment.openLongevity80LevelCMS }}/articles/{{
                   article.slug
@@ -33,11 +33,12 @@
                   target="_blank"
                 >{{ article.title }}</a
                 >
-              </h2>
-              <div class="truncated-text">
+              </h3>
+              <div *ngIf="!isMiniMode"
+                   class="truncated-text">
                 {{ article.description | truncate: 250 }}
               </div>
-            </section>
+            </div>
           </div>
 
           <div *ngIf="!isMiniMode"
