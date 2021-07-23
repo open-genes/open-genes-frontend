@@ -1,98 +1,100 @@
-<ng-container *ngIf="!isLoading">
+<ng-container *ngIf="!isLoading && articlesList.length !== 0; else skeleton">
+  <ng-container *ngFor="let article of articlesList">
+    <div class="article col-xs-12 col-sm-6">
+      <div class="article__card">
+        <div class="article__cover">
+          <div
+            class="cover__backdrop"
+            [style.backgroundImage]="
+            article.image.src.length !== 0
+              ? 'url(' + article.image.src + ')'
+              : 'url(' + defaultCover + ')'
+          "
+          ></div>
 
-  <ng-container *ngIf="articlesTotal !== 0; else noArticles">
-    <ng-container *ngFor="let article of articlesList">
-      <div class="article col-xs-12 col-sm-6">
-        <div class="article__card">
-          <div class="article__cover">
-            <div
-              class="cover__backdrop"
+          <div class="article__top-group">
+            <a
+              href="{{ environment.openLongevity80LevelCMS }}/articles/{{
+                  article.slug"
+              target="_blank"
+              class="article__image"
               [style.backgroundImage]="
               article.image.src.length !== 0
-                ? 'url(' + article.image.src + ')'
+                ? 'url(' + article.image.src2x + ')'
                 : 'url(' + defaultCover + ')'
             "
-            ></div>
-
-            <div class="article__top-group">
-              <a
-                href="{{ environment.openLongevity80LevelCMS }}/articles/{{
-                    article.slug"
-                target="_blank"
-                class="article__image"
-                [style.backgroundImage]="
-                article.image.src.length !== 0
-                  ? 'url(' + article.image.src2x + ')'
-                  : 'url(' + defaultCover + ')'
-              "
-              ></a>
-              <section class="article__text">
-                <h2>
-                  <a
-                    href="{{ environment.openLongevity80LevelCMS }}/articles/{{
-                    article.slug
-                  }}"
-                    target="_blank"
-                  >{{ article.title }}</a
-                  >
-                </h2>
-                <div class="truncated-text">
-                  {{ article.description | truncate: 250 }}
-                </div>
-              </section>
-            </div>
-
-            <div class="article__tags">
-              <a
-                *ngFor="let tag of article.tags"
-                href="{{ environment.openLongevity80LevelCMS }}/articles/{{
-                tag.slug
-              }}"
-                target="_blank"
-                class="alias"
-              >
-                {{ tag.name }}
-              </a>
-            </div>
+            ></a>
+            <section class="article__text">
+              <h2>
+                <a
+                  href="{{ environment.openLongevity80LevelCMS }}/articles/{{
+                  article.slug
+                }}"
+                  target="_blank"
+                >{{ article.title }}</a
+                >
+              </h2>
+              <div class="truncated-text">
+                {{ article.description | truncate: 250 }}
+              </div>
+            </section>
           </div>
 
-          <div class="article__footer">
+          <div class="article__tags">
             <a
-              href="{{ environment.openLongevity80LevelCMS }}/author/{{
-              article.author.pseudonym
+              *ngFor="let tag of article.tags"
+              href="{{ environment.openLongevity80LevelCMS }}/articles/{{
+              tag.slug
             }}"
               target="_blank"
-              class="article__author"
+              class="alias"
             >
-              <div
-                class="author__avatar"
-                [style.backgroundImage]="
-                article.author.avatar.length !== 0
-                  ? 'url(' + article.author.avatar + ')'
-                  : 'url(' + defaultAvatar + ')'
-              "
-              ></div>
-              <div class="author__name">
-                {{ article.author.name }}
-              </div>
+              {{ tag.name }}
             </a>
           </div>
         </div>
+
+        <div class="article__footer">
+          <a
+            href="{{ environment.openLongevity80LevelCMS }}/author/{{
+            article.author.pseudonym
+          }}"
+            target="_blank"
+            class="article__author"
+          >
+            <div
+              class="author__avatar"
+              [style.backgroundImage]="
+              article.author.avatar.length !== 0
+                ? 'url(' + article.author.avatar + ')'
+                : 'url(' + defaultAvatar + ')'
+            "
+            ></div>
+            <div class="author__name">
+              {{ article.author.name }}
+            </div>
+          </a>
+        </div>
       </div>
-    </ng-container>
+    </div>
   </ng-container>
 </ng-container>
 
 <div *ngIf="showMoreButtonVisible"
      class="__mt-15 btn-wrap show-more">
-  <button class="btn show-more__button" (click)="showMore()">
+  <button class="btn show-more__button"
+          (click)="showMore()"
+          [disabled]="isLoading">
     {{ "show_more" | translate }}
+    <span *ngIf="isLoading" class="fas fa-circle-notch fa-spin"></span>
   </button>
 </div>
 
-<app-skeleton *ngIf="isLoading || error" [groups]="3"></app-skeleton>
+<ng-template #skeleton>
+  <app-skeleton [groups]="3"></app-skeleton>
+</ng-template>
 
-<ng-template #noArticles>
+<ng-template *ngIf="articlesTotal === 0 || error">
   <section class="col-12 no-content">
     <div class="no-content__inner">
       <div class="no-content__icon no-content__icon-standard"></div>

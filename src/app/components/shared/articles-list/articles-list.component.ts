@@ -22,7 +22,7 @@ import { MockApiService } from '../../../core/services/api/mock.api.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticlesListComponent implements OnInit, OnDestroy {
-  public articlesList: I80levelResponseArticle[];
+  public articlesList: I80levelResponseArticle[] = [];
   public environment = environment;
   public isLoading = true;
   public error: number;
@@ -32,8 +32,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public pageIndex = 1;
   public showMoreButtonVisible = false;
   public articlesTotal: number;
+  public responsePagePortion: number;
 
   private subscription$ = new Subject();
+  private httpCallsCounter = 0;
 
   @Output()
   newArticlesLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -50,10 +52,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public showMore(): void {
-    if (this.articlesTotal / this.articlesList.length > this.pageIndex) {
-      // before
+    if (this.articlesTotal / this.responsePagePortion > this.pageIndex) {
       ++this.pageIndex;
-      console.log(this.pageIndex);
+      this.isLoading = true;
+      this.cdRef.markForCheck();
       this.makeArticlesList();
     }
   }
@@ -65,21 +67,31 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.subscription$))
         .subscribe(
           (data) => {
-            this.articlesList = data.articles.items;
+            this.articlesList.push(...data.articles.items);
             this.articlesTotal = data.articles.total;
 
-            if (this.articlesList) {
+            if (this.articlesList?.length !== 0) {
+              // Set page length after checking the length of the 1st page
+              this.httpCallsCounter === 1
+                ? (this.responsePagePortion = this.articlesList.length)
+                : this.httpCallsCounter;
+
+              // Emit event to update view
               this.newArticlesLoaded.emit(true);
 
               // Check if there is more content to show
+              // and show/hide 'Show more' button
               if (
-                this.articlesTotal / this.articlesList.length >
+                this.articlesTotal / this.responsePagePortion >
                 this.pageIndex
               ) {
-                // after
                 this.showMoreButtonVisible = true;
+              } else {
+                this.showMoreButtonVisible = false;
               }
             }
+
+            // All content is loaded
             this.isLoading = false;
             this.cdRef.markForCheck();
           },

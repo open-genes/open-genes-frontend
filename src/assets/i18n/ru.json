@@ -147,6 +147,7 @@
   "news_page_articles_title": "Статьи",
   "news_list_title": "Новые публикации на PubMed",
   "news_page_no_articles": "Статей на вашем языке еще нет. \nНо очень скоро будут! ✨",
+  "news_page_no_news": "Произошла ошибка и новостная лента не загрузилась.",
   "news_page_title": "Новости",
   "no_criteria": "Не удалось получить список",
   "no_diseases": "Заболевания не указаны",

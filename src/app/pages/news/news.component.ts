@@ -4,6 +4,9 @@ import {
   OnDestroy,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  EventEmitter,
+  Output,
+  ViewChild,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Genes } from '../../core/models';
@@ -11,6 +14,7 @@ import { ApiService } from '../../core/services/api/open-genes.api.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { EightyLevelService } from '../../core/services/api/80level.api.service';
+import { NewsListComponent } from '../../components/shared/news-list/news-list.component';
 
 @Component({
   selector: 'app-news',
@@ -19,9 +23,11 @@ import { EightyLevelService } from '../../core/services/api/80level.api.service'
 })
 export class NewsComponent implements OnInit, OnDestroy {
   public genes: Genes[];
-  public itemsOnPage = 20;
+  public itemsOnPage = 10;
   public itemsTotalLimit = 80;
   private ngUnsubscribe = new Subject();
+
+  @Output() loadMoreNewsEvent: EventEmitter<null> = new EventEmitter<null>();
 
   constructor(
     private readonly apiService: ApiService,
@@ -39,15 +45,7 @@ export class NewsComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  public loadMore(): void {
-    if (this.itemsTotalLimit >= this.itemsOnPage) {
-      this.itemsOnPage += this.itemsOnPage;
-      this.cdRef.markForCheck();
-    }
-  }
-
   public updateView(): void {
-    console.log('view update');
     this.cdRef.markForCheck();
   }
 

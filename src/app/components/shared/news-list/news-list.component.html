@@ -1,4 +1,4 @@
-<ul class="news" *ngIf="!isLoading">
+<ul class="news" *ngIf="!isLoading && newsList.length !== 0; else skeleton">
   <li *ngFor="let news of newsList" class="news__item">
     <div class="item__gene">
       <a [routerLink]="['/gene', news.gene]" class="alias">{{ news.gene }}</a>
@@ -9,13 +9,14 @@
         href="{{ news.url }}"
         class="item__caption link link--gray"
         target="_blank"
-      >{{ news.title | stripTags }}</a
+        >{{ news.title | stripTags }}</a
       >
 
       <ng-container *ngIf="news.date && showDates === true">
         <div class="item__date">
-          {{ (news.date | localizedDate: "d MMMM y")
-          || (news.date | localizedDate: "MMMM y")
+          {{
+            (news.date | localizedDate: "d MMMM y") ||
+              (news.date | localizedDate: "MMMM y")
           }}
         </div>
       </ng-container>
@@ -23,4 +24,32 @@
   </li>
 </ul>
 
-<app-skeleton *ngIf="isLoading || error" [groups]="itemsForPage"></app-skeleton>
+<div
+  *ngIf="showMoreButtonVisible && isShowMoreButton"
+  class="col col-12 __mt-15 btn-wrap show-more"
+>
+  <button class="btn show-more__button"
+          (click)="showMore()"
+          [disabled]="isLoading">
+    {{ "show_more" | translate }}
+    <span *ngIf="isLoading" class="fas fa-circle-notch fa-spin"></span>
+  </button>
+</div>
+
+<ng-template #skeleton>
+  <app-skeleton
+    *ngIf="isLoading || error"
+    [groups]="newsList.length !== 0 ? newsList.length : itemsForPage"
+  ></app-skeleton>
+</ng-template>
+
+<section class="col-12 no-content" *ngIf="error">
+  <div class="no-content__inner">
+    <div class="no-content__icon no-content__icon-standard"></div>
+    <div class="no-content__title">
+      <div class="title__center">
+        {{ "news_page_no_news" | translate }}
+      </div>
+    </div>
+  </div>
+</section>
