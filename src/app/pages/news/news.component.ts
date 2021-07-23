@@ -6,7 +6,6 @@ import {
   ChangeDetectorRef,
   EventEmitter,
   Output,
-  ViewChild,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Genes } from '../../core/models';
@@ -14,7 +13,7 @@ import { ApiService } from '../../core/services/api/open-genes.api.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { EightyLevelService } from '../../core/services/api/80level.api.service';
-import { NewsListComponent } from '../../components/shared/news-list/news-list.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-news',
@@ -23,6 +22,7 @@ import { NewsListComponent } from '../../components/shared/news-list/news-list.c
 })
 export class NewsComponent implements OnInit, OnDestroy {
   public genes: Genes[];
+  public environment = environment;
   private ngUnsubscribe = new Subject();
 
   @Output() loadMoreNewsEvent: EventEmitter<null> = new EventEmitter<null>();

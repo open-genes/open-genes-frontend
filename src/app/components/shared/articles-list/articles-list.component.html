@@ -1,6 +1,6 @@
 <ng-container *ngIf="!isLoading && articlesList.length !== 0; else skeleton">
   <ng-container *ngFor="let article of articlesList | slice: 0:sliceTo">
-    <div class="article {{ isMiniMode ? 'article--mini' : 'col-xs-12 col-sm-6' }}">
+    <div class="article {{ isMiniMode ? 'article--mini' : 'col-xs-12 col-sm-6 col-lg-6 col-xl-3' }}">
       <div class="article__card">
         <div class="article__cover">
           <div

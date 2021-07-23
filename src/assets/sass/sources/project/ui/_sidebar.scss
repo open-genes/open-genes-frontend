@@ -1,20 +1,13 @@
 @mixin two-sidebar-items-in-a-row {
   &__inner {
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   &__item {
-    &--desktop-50 {
-      flex: 0 1 50%;
-
-      &:first-child {
-        padding-right: 10px;
-      }
-
-      &:nth-child(2) {
-        padding-left: 10px;
-      }
-    }
+    flex: 0 1 50%;
+    padding: 10px;
   }
 }
 

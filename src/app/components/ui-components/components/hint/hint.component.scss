@@ -13,14 +13,15 @@
   align-items: flex-start;
   width: 100%;
   padding: 12px 10px;
-  border-radius: $border-radius-medium;
+  border-radius: $border-radius-regular;
   background-color: $color-hint-bg;
-  font-size: $font-size-smaller;
+  font-size: $font-size;
   color: $color-hint-text;
   margin-bottom: 10px;
 
   &__icon {
     color: #ffac5f;
+    margin-right: 10px;
   }
 
   &__text {

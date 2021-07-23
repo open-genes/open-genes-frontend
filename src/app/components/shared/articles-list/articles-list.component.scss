@@ -30,18 +30,21 @@ app-skeleton {
 .article {
   display: inline-block;
 
-  &__card {
-    display: block;
+  &__card,
+  &__cover {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__card {
+    flex-wrap: nowrap;
   }
 
   &__cover {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
     background-color: $color-gray-very-light;
     border-radius: $border-radius-medium;
     overflow: hidden;
@@ -136,6 +139,7 @@ app-skeleton {
     align-items: center;
     justify-items: flex-start;
     font-size: $font-size-small;
+    font-weight: $font-weight-medium;
     margin-top: 5px;
 
     .author__avatar,
@@ -156,8 +160,8 @@ app-skeleton {
 
   &--mini {
     width: 100%;
-    max-width: 210px;
-    padding: #{$articles-gap-s} #{$articles-gap-l};
+    max-width: 210px + ($articles-gap-l * 2);
+    padding: $articles-gap-s $articles-gap-l;
 
     .#{$a}__text {
       h3 {
@@ -167,7 +171,7 @@ app-skeleton {
   }
 
   &:not(.#{$a}--mini) {
-    padding: #{$articles-gap-l};
+    padding: $articles-gap-l;
 
     .article__card {
       min-height: $ui-base-height * 10;
@@ -175,7 +179,7 @@ app-skeleton {
 
     .#{$a}__text {
       h3 {
-        font-size: calc(0.2vw + 20px);
+        font-size: calc(0.2vw + 18px);
       }
     }
   }

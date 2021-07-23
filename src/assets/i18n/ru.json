@@ -41,6 +41,7 @@
   "alert_error_login_unsuccessful": "Ошибка входа. Попробуйте войти снова.",
   "api-page_description": "Раздел для разработчиков.",
   "api-page_title": "Справка по API",
+  "articles_list_title": "Статьи сообщества",
   "error_connection": "Возникли проблемы с соединением",
   "error_page_404": "Такой страницы не существует или что-то пошло не так",
   "error_page_soon": "Этот раздел скоро дополнится.",
