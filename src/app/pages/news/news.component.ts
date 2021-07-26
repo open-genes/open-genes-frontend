@@ -18,6 +18,7 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
+  styleUrls: ['news.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewsComponent implements OnInit, OnDestroy {

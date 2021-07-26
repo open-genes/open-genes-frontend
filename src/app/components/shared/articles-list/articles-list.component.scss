@@ -9,8 +9,6 @@ $articles-gap-l: 10px;
   flex-wrap: wrap;
   justify-items: stretch;
   min-width: 100%;
-  margin-left: -#{$articles-gap-l};
-  margin-right: -#{$articles-gap-l};
 
   &:empty {
     display: none; // фикс для момента во время подгрузки
@@ -28,7 +26,7 @@ app-skeleton {
 }
 
 .article {
-  display: inline-block;
+  display: inline-flex;
 
   &__card,
   &__cover {
@@ -159,9 +157,9 @@ app-skeleton {
   }
 
   &--mini {
-    width: 100%;
-    max-width: 210px + ($articles-gap-l * 2);
-    padding: $articles-gap-s $articles-gap-l;
+    flex: 2 1 50%;
+    min-width: 182px;
+    padding: $articles-gap-s;
 
     .#{$a}__text {
       h3 {

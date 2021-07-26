@@ -38,7 +38,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   private subscription$ = new Subject();
   private httpCallsCounter = 0;
 
-  @Input() isMiniMode: false;
+  @Input() isMiniMode = false;
   @Input() sliceTo: number | undefined = undefined;
   @Output()
   newArticlesLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();

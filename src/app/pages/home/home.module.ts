@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NewsListModule } from '../../components/shared/news-list/news-list.module';
 import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
 import { ArticlesListModule } from '../../components/shared/articles-list/articles-list.module';
+import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 
 @NgModule({
   declarations: [HomeComponent, MiniCardsComponent],
@@ -26,6 +27,7 @@ import { ArticlesListModule } from '../../components/shared/articles-list/articl
     NewsListModule,
     UiComponentsModule,
     ArticlesListModule,
+    SidebarModule,
   ],
   exports: [PipesModule],
 })

@@ -5,16 +5,15 @@
         <div class="row no-gutters">
           <div class="col col-12">
             <div class="page__title">
-              <h1 class="notranslate">{{ 'product_name' | translate }}</h1>
+              <h1 class="notranslate">{{ "product_name" | translate }}</h1>
             </div>
             <div class="header__description">
-              {{ 'main_page_header_description' | translate }}
+              {{ "main_page_header_description" | translate }}
             </div>
             <div class="header__button">
-              <a mat-flat-button
-                 color="secondary"
-                 routerLink="/about"
-              >{{ 'main_page_header_button' | translate }}</a>
+              <a mat-flat-button color="secondary" routerLink="/about">{{
+                "main_page_header_button" | translate
+              }}</a>
             </div>
           </div>
         </div>
@@ -25,55 +24,58 @@
         <ng-container *ngIf="isAvailable; else errorMessage">
           <div class="col-12 __mb-10">
             <app-hint>
-              <ng-container icon><span class="fa far fa-info"></span></ng-container>
-              <ng-container text>{{ "main_page_hint_table_settings" | translate }}<span class="fa far fa-cog"></span></ng-container>
+              <ng-container icon
+                ><span class="fa far fa-info"></span
+              ></ng-container>
+              <ng-container text
+                >{{ "main_page_hint_table_settings" | translate
+                }}<span class="fa far fa-cog"></span
+              ></ng-container>
             </app-hint>
           </div>
 
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 __mb-btm">
-            <div class="sidebar">
-              <div class="sidebar__inner">
-                <div *ngIf="lastGenes"
-                     class="sidebar__item">
-                  <div class="sidebar__title">
-                    {{ 'main_page_last' | translate }}
-                  </div>
-                  <app-mini-cards
-                    [lastGenes]="lastGenes"
-                  ></app-mini-cards>
-                </div>
+            <app-sidebar>
+              <app-sidebar-item *ngIf="lastGenes">
+                <ng-container title>
+                  {{ "main_page_last" | translate }}
+                </ng-container>
+                <app-mini-cards
+                  content
+                  [lastGenes]="lastGenes"
+                ></app-mini-cards>
+              </app-sidebar-item>
 
-                <div *ngIf="genes && !environment.production"
-                     class="sidebar__item">
-                  <div class="sidebar__title">
-                    {{ 'articles_list_title' | translate }}
-                    <a href="/news" class="link link--gray __ml-10">
-                      {{ 'show_more_short' | translate }}
-                    </a>
-                  </div>
-                  <app-articles-list
-                    [isMiniMode]="true"
-                    [sliceTo]="2"
-                  ></app-articles-list>
-                </div>
+              <app-sidebar-item *ngIf="genes && !environment.production">
+                <ng-container title>
+                  {{ "articles_list_title" | translate }}
+                  <a href="/news" class="link link--gray __ml-10">
+                    {{ "show_more_short" | translate }}
+                  </a>
+                </ng-container>
+                <app-articles-list
+                  content
+                  [isMiniMode]="true"
+                  [sliceTo]="2"
+                ></app-articles-list>
+              </app-sidebar-item>
 
-                <div *ngIf="genes"
-                     class="sidebar__item">
-                  <div class="sidebar__title">
-                    {{ 'news_list_title' | translate }}
-                    <a href="/news" class="link link--gray __ml-10">
-                      {{ 'show_more_short' | translate }}
-                    </a>
-                  </div>
-                  <app-news-list
-                    [genesList]="genes"
-                    [loadTotal]="2"
-                    [itemsForPage]="2"
-                    [isShowMoreButton]="false"
-                  ></app-news-list>
-                </div>
-              </div>
-            </div>
+              <app-sidebar-item *ngIf="genes">
+                <ng-container title>
+                  {{ "news_list_title" | translate }}
+                  <a href="/news" class="link link--gray __ml-10">
+                    {{ "show_more_short" | translate }}
+                  </a>
+                </ng-container>
+                <app-news-list
+                  content
+                  [genesList]="genes"
+                  [loadTotal]="2"
+                  [itemsForPage]="2"
+                  [isShowMoreButton]="false"
+                ></app-news-list>
+              </app-sidebar-item>
+            </app-sidebar>
           </div>
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
             <app-genes-list
@@ -94,7 +96,7 @@
       <div class="no-content__icon no-content__icon-standard"></div>
       <div class="no-content__title">
         <div class="title__center">
-          {{ 'error_connection' | translate }} <br>
+          {{ "error_connection" | translate }} <br />
           ({{ errorStatus }})
         </div>
       </div>

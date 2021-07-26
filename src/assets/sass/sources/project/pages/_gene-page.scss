@@ -328,19 +328,3 @@
   }
 }
 
-// Fixed header
-//.gene-page {
-//  $fixed-header-height: (130px + 20px);
-//  @include resolution_desktop-and-up {
-//     padding-top: $fixed-header-height;
-//    .gene-page__header {
-//      position: fixed;
-//      top: $header-height;
-//      z-index: 50; // между хедером и контентом
-//    }
-//
-//    .sidebar {
-//      top: 100px;
-//    }
-//  }
-//}
