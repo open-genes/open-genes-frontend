@@ -1,0 +1,46 @@
+@import "../../styles";
+
+@mixin two-sidebar-items-in-a-row {
+  :host {
+    flex-direction: row;
+  }
+
+  app-sidebar-item {
+    flex: 2 1 50%;
+  }
+}
+
+@mixin one-sidebar-item-on-another {
+  :host {
+    flex-direction: column;
+  }
+
+  app-sidebar-item {
+    flex: 0 0 100%;
+  }
+}
+
+:host {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  font-size: $font-size;
+
+  app-sidebar-item {
+    margin-bottom: 10px;
+  }
+
+  @include resolution_widescreen {
+      @include one-sidebar-item-on-another;
+  }
+
+  @include resolution_tablet-and-desktop {
+    @include two-sidebar-items-in-a-row;
+  }
+
+  @include resolution_smartphone {
+    @include one-sidebar-item-on-another;
+  }
+}

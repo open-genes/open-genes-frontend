@@ -1,0 +1,29 @@
+@import "../../../styles";
+
+%content-styles {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+}
+
+:host {
+  @extend %content-styles;
+}
+
+.title {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  justify-content: space-between; // для ссылки "Все" рядом с заголовком
+  position: relative;
+  width: 100%;
+  color: $color-black;
+  font-weight: $font-weight-medium;
+}
+
+.content {
+  @extend %content-styles;
+  flex: 1 0 100%;
+  margin: 0 -5px; // TODO: use css variables for this margin and margins for content blocks
+}
+
