@@ -14,8 +14,7 @@
 
           <div class="article__top-group">
             <a
-              href="{{ environment.openLongevity80LevelCMS }}/articles/{{
-                  article.slug"
+              href="{{ environment.openLongevity80LevelCMS }}articles/{{ article.slug }}"
               target="_blank"
               class="article__image"
               [style.backgroundImage]="
@@ -27,9 +26,7 @@
             <div class="article__text">
               <h3>
                 <a
-                  href="{{ environment.openLongevity80LevelCMS }}/articles/{{
-                  article.slug
-                }}"
+                  href="{{ environment.openLongevity80LevelCMS }}articles/{{ article.slug }}"
                   target="_blank"
                 >{{ article.title }}</a
                 >
@@ -45,9 +42,7 @@
                class="article__tags">
             <a
               *ngFor="let tag of article.tags"
-              href="{{ environment.openLongevity80LevelCMS }}/articles/{{
-              tag.slug
-            }}"
+              href="{{ environment.openLongevity80LevelCMS }}articles/{{ tag.slug }}"
               target="_blank"
               class="alias"
             >
@@ -59,9 +54,7 @@
         <div *ngIf="!isMiniMode"
              class="article__footer">
           <a
-            href="{{ environment.openLongevity80LevelCMS }}/author/{{
-            article.author.pseudonym
-          }}"
+            href="{{ environment.openLongevity80LevelCMS }}author/{{ article.author.pseudonym }}"
             target="_blank"
             class="article__author"
           >
