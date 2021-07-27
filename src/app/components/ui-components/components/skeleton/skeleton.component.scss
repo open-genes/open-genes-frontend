@@ -15,7 +15,7 @@ $skeleton-line-height: ($ui-base-height / 2);
     display: inline-block;
 
     & + & {
-      margin-top: $skeleton-line-height / 2;
+      margin-top: $skeleton-line-height;
     }
   }
 

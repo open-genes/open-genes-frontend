@@ -2,10 +2,9 @@
 
 :host {
   display: flex;
-  flex-flow: row wrap;
-  align-items: stretch;
+  flex-flow: column;
   align-content: stretch;
-  justify-content: space-evenly;
+  justify-content: stretch;
 }
 
 .title {
@@ -21,7 +20,7 @@
 
 .content {
   display: flex;
-  flex: 1 0 100%;
+  flex: 0 1 100%;
   flex-wrap: wrap;
   flex-direction: row;
   align-content: stretch;

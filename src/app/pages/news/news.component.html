@@ -13,7 +13,7 @@
     </div>
 
     <div class="container">
-      <section *ngIf="!environment.production"
+      <section *ngIf="genes"
                class="row no-gutters">
         <h1 class="col col-12">{{ 'news_page_articles_title' | translate }}</h1>
         <app-articles-list

@@ -15,7 +15,8 @@ $articles-gap-l: 10px;
   }
 
   .no-content,
-  .show-more {
+  .show-more,
+  .skeleton {
     padding-right: #{$articles-gap-l};
     padding-left: #{$articles-gap-l};
   }

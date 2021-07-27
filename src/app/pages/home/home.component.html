@@ -46,7 +46,7 @@
                 ></app-mini-cards>
               </app-sidebar-item>
 
-              <app-sidebar-item *ngIf="genes && !environment.production">
+              <app-sidebar-item *ngIf="genes">
                 <ng-container title>
                   {{ "articles_list_title" | translate }}
                   <a href="/news" class="link link--gray __ml-10">

@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isLoading && articlesList.length !== 0; else skeleton">
+<ng-container *ngIf="articlesList.length !== 0; else skeleton">
   <ng-container *ngFor="let article of articlesList | slice: 0:sliceTo">
     <div class="article {{ isMiniMode ? 'article--mini' : 'col-xs-12 col-sm-6 col-lg-6 col-xl-3' }}">
       <div class="article__card">
@@ -83,7 +83,7 @@
   </ng-container>
 </ng-container>
 
-<div *ngIf="showMoreButtonVisible"
+<div *ngIf="!isMiniMode && showMoreButtonVisible"
      class="__mt-15 btn-wrap show-more">
   <button class="btn show-more__button"
           (click)="showMore()"
@@ -94,7 +94,11 @@
 </div>
 
 <ng-template #skeleton>
-  <app-skeleton [groups]="3"></app-skeleton>
+  <div class="skeleton">
+    <app-skeleton
+      [groups]="responsePagePortion"
+    ></app-skeleton>
+  </div>
 </ng-template>
 
 <ng-template *ngIf="articlesTotal === 0 || error">

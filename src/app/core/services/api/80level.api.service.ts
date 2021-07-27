@@ -8,7 +8,7 @@ import { I80levelArticleQueryParams } from '../../models/vendorsApi/80level/80le
   providedIn: 'root',
 })
 export class EightyLevelService {
-  private url = environment.openLongevity80LevelCMS;
+  private url = `${environment.openLongevity80LevelCMS}api/articles`;
 
   constructor(private http: HttpClient) {}
 
@@ -20,6 +20,6 @@ export class EightyLevelService {
       });
     }
 
-    return this.http.get(this.url + (params ? `/?${querySelectors}` : ''));
+    return this.http.get(this.url + (params ? `?${querySelectors}` : ''));
   }
 }

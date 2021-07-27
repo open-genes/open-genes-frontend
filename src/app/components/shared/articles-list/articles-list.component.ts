@@ -29,7 +29,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public error: number;
   public defaultAvatar = '/assets/images/avatar.png';
   public defaultCover = '/assets/images/home-background.png'; // TODO: draw a default cover
-  public isMocked = true;
+  public isMocked = false;
   public pageIndex = 1;
   public showMoreButtonVisible = false;
   public articlesTotal: number;
@@ -63,6 +63,35 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     }
   }
 
+  private handleResponse(data): void {
+    this.articlesList.push(...data.articles.items);
+    this.articlesTotal = data.articles.total;
+
+    if (this.articlesList?.length !== 0) {
+      // Set page length after checking the length of the 1st page
+      this.httpCallsCounter++;
+      if (this.httpCallsCounter === 1) {
+        this.responsePagePortion = this.articlesList.length;
+      }
+
+      // Emit event to update view
+      this.newArticlesLoaded.emit(true);
+
+      // Check if there is more content to show
+      // and show/hide 'Show more' button
+      if (this.articlesTotal / this.responsePagePortion > this.pageIndex) {
+        this.showMoreButtonVisible = true;
+      } else {
+        this.showMoreButtonVisible = false;
+      }
+    }
+    console.log(this.articlesTotal, this.responsePagePortion, this.pageIndex);
+
+    // All content is loaded
+    this.isLoading = false;
+    this.cdRef.markForCheck();
+  }
+
   private makeArticlesList(): void {
     if (this.isMocked) {
       this.mock
@@ -70,33 +99,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.subscription$))
         .subscribe(
           (data) => {
-            this.articlesList.push(...data.articles.items);
-            this.articlesTotal = data.articles.total;
-
-            if (this.articlesList?.length !== 0) {
-              // Set page length after checking the length of the 1st page
-              this.httpCallsCounter === 1
-                ? (this.responsePagePortion = this.articlesList.length)
-                : this.httpCallsCounter;
-
-              // Emit event to update view
-              this.newArticlesLoaded.emit(true);
-
-              // Check if there is more content to show
-              // and show/hide 'Show more' button
-              if (
-                this.articlesTotal / this.responsePagePortion >
-                this.pageIndex
-              ) {
-                this.showMoreButtonVisible = true;
-              } else {
-                this.showMoreButtonVisible = false;
-              }
-            }
-
-            // All content is loaded
-            this.isLoading = false;
-            this.cdRef.markForCheck();
+            this.handleResponse(data);
           },
           (error) => (this.error = error) // TODO: add loging
         );
@@ -106,7 +109,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.subscription$))
         .subscribe(
           (data) => {
-            // TODO: transfer the code above here when the real data becomes available
+            this.handleResponse(data);
           },
           (error) => (this.error = error)
         );
