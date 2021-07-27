@@ -28,7 +28,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public isLoading = true;
   public error: number;
   public defaultAvatar = '/assets/images/avatar.png';
-  public defaultCover = '/assets/images/home-background.png'; // TODO: draw a default cover
+  public defaultCover = '/assets/images/default-article-cover.jpg';
   public isMocked = false;
   public pageIndex = 1;
   public showMoreButtonVisible = false;
