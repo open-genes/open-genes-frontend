@@ -4,6 +4,7 @@ $skeleton-line-height: ($ui-base-height / 2);
 
 :host {
   display: block;
+  width: 100%;
 }
 
 .skeleton {
@@ -14,7 +15,7 @@ $skeleton-line-height: ($ui-base-height / 2);
     display: inline-block;
 
     & + & {
-      margin-top: $skeleton-line-height;
+      margin-top: $skeleton-line-height / 2;
     }
   }
 
