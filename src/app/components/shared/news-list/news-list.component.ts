@@ -9,7 +9,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { PubmedApiService } from '../../../core/services/api/pubmed.api.service';
-import { News } from '../../../core/models/vendorsApi/pubMed/news.model';
+import { IPublication } from '../../../core/models/vendorsApi/pubMed/news.model';
 import { Gene, Genes } from '../../../core/models';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -33,7 +33,7 @@ export class NewsListComponent implements OnInit, OnDestroy {
 
   public isLoading = true;
   public error: number;
-  public newsList: News[] = [];
+  public newsList: IPublication[] = [];
   public pageIndex = 1;
   public showMoreButtonVisible = false;
   public newsTotal: number;

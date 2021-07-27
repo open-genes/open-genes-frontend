@@ -5,8 +5,10 @@
     flex-direction: row;
   }
 
-  app-sidebar-item {
+  ::ng-deep app-sidebar-item {
     flex: 2 1 50%;
+    padding-right: 5px;
+    padding-left: 5px;
   }
 }
 
@@ -15,7 +17,7 @@
     flex-direction: column;
   }
 
-  app-sidebar-item {
+  ::ng-deep app-sidebar-item {
     flex: 0 0 100%;
   }
 }
@@ -24,12 +26,12 @@
   flex-wrap: wrap;
   justify-content: space-between;
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   width: 100%;
   font-size: $font-size;
 
-  app-sidebar-item {
-    margin-bottom: 10px;
+  ::ng-deep app-sidebar-item {
+    padding-bottom: 10px;
   }
 
   @include resolution_widescreen {

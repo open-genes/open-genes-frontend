@@ -1,13 +1,11 @@
 @import "../../../styles";
 
-%content-styles {
+:host {
   display: flex;
   flex-flow: row wrap;
-  align-items: flex-start;
-}
-
-:host {
-  @extend %content-styles;
+  align-items: stretch;
+  align-content: stretch;
+  justify-content: space-evenly;
 }
 
 .title {
@@ -22,8 +20,12 @@
 }
 
 .content {
-  @extend %content-styles;
+  display: flex;
   flex: 1 0 100%;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: stretch;
   margin: 0 -5px; // TODO: use css variables for this margin and margins for content blocks
 }
 
