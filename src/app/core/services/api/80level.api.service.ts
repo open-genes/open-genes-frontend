@@ -13,11 +13,13 @@ export class EightyLevelService {
   constructor(private http: HttpClient) {}
 
   public getArticles(params: I80levelArticleQueryParams): Observable<any> {
+    const querySelectorsArray = [];
     let querySelectors = '';
     if (params) {
       Object.entries(params).forEach(([param, value]) => {
-        querySelectors += `${param}=${value}`;
+        querySelectorsArray.push(`${param}=${value}`);
       });
+      querySelectors = querySelectorsArray.join('&');
     }
 
     return this.http.get(this.url + (params ? `?${querySelectors}` : ''));

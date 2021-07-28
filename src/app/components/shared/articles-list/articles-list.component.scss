@@ -14,16 +14,26 @@ $articles-gap-l: 10px;
     display: none; // фикс для момента во время подгрузки
   }
 
-  .no-content,
+  .no-content:not(.no-content--mini),
   .show-more,
   .skeleton {
     padding-right: #{$articles-gap-l};
     padding-left: #{$articles-gap-l};
   }
+
+  .no-content.no-content--mini {
+    padding-right: #{$articles-gap-s};
+    padding-left: #{$articles-gap-s};
+    margin-top: 5px;
+  }
 }
 
 app-skeleton {
   margin-top: 10px;
+}
+
+.tag-list {
+  margin: 0 -5px 20px -5px;
 }
 
 .article {
@@ -49,7 +59,7 @@ app-skeleton {
     overflow: hidden;
 
     .cover__backdrop {
-      $filter-depth: 20px;
+      $filter-depth: 150px;
 
       position: absolute;
       top: -#{$filter-depth};
@@ -71,7 +81,7 @@ app-skeleton {
         bottom: 0;
         z-index: 1;
         display: block;
-        background-color: rgba($color-white, .75);
+        background-color: rgba($color-white, .65);
         border-radius: inherit;
       }
     }

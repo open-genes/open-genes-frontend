@@ -7,6 +7,8 @@ import { NewsListModule } from '../../components/shared/news-list/news-list.modu
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { ArticlesListModule } from '../../components/shared/articles-list/articles-list.module';
+import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
+import { MatListModule } from '@angular/material/list';
 
 const routes: Routes = [{ path: '', component: NewsComponent }];
 
@@ -20,6 +22,8 @@ const routes: Routes = [{ path: '', component: NewsComponent }];
     MatButtonModule,
     FormsModule,
     ArticlesListModule,
+    SidebarModule,
+    MatListModule,
   ],
 })
 export class NewsModule {}

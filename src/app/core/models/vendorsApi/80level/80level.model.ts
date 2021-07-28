@@ -32,7 +32,7 @@ export interface I80levelResponseArticle {
   tags: IArticleTag[];
 }
 
-interface IArticleTag {
+export interface IArticleTag {
   name: string;
   slug: string;
 }
@@ -49,6 +49,7 @@ interface I80levelSidebarBlock {
 }
 
 export interface I80levelArticleQueryParams {
+  category?: string;
   page?: number;
   sort?: 'new' | 'old';
 }

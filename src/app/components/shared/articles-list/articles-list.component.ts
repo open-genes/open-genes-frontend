@@ -28,15 +28,17 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public isLoading = true;
   public error: number;
   public defaultAvatar = '/assets/images/avatar.png';
-  public defaultCover = '/assets/images/home-background.png'; // TODO: draw a default cover
+  public defaultCover = '/assets/images/default-article-cover.jpg';
   public isMocked = false;
   public pageIndex = 1;
   public showMoreButtonVisible = false;
   public articlesTotal: number;
   public responsePagePortion: number;
+  public articleTags: any[] = [];
 
   private subscription$ = new Subject();
   private httpCallsCounter = 0;
+  private showOnlyForOpenGenes = true;
 
   @Input() isMiniMode = false;
   @Input() sliceTo: number | undefined = undefined;
@@ -74,6 +76,13 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         this.responsePagePortion = this.articlesList.length;
       }
 
+      // Populate tag list avoiding duplicates
+      data.articles.items.forEach((article) => {
+        if (article?.tags.length !== 0) {
+          this.articleTags = [...new Set(article.tags)];
+        }
+      });
+
       // Emit event to update view
       this.newArticlesLoaded.emit(true);
 
@@ -85,7 +94,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         this.showMoreButtonVisible = false;
       }
     }
-    console.log(this.articlesTotal, this.responsePagePortion, this.pageIndex);
 
     // All content is loaded
     this.isLoading = false;
@@ -104,15 +112,27 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
           (error) => (this.error = error) // TODO: add loging
         );
     } else {
-      this.eightyLevelService
-        .getArticles({ page: this.pageIndex })
-        .pipe(takeUntil(this.subscription$))
-        .subscribe(
-          (data) => {
-            this.handleResponse(data);
-          },
-          (error) => (this.error = error)
-        );
+      if (!this.showOnlyForOpenGenes) {
+        this.eightyLevelService
+          .getArticles({ page: this.pageIndex })
+          .pipe(takeUntil(this.subscription$))
+          .subscribe(
+            (data) => {
+              this.handleResponse(data);
+            },
+            (error) => (this.error = error)
+          );
+      } else {
+        this.eightyLevelService
+          .getArticles({ category: 'open-genes', page: this.pageIndex })
+          .pipe(takeUntil(this.subscription$))
+          .subscribe(
+            (data) => {
+              this.handleResponse(data);
+            },
+            (error) => (this.error = error)
+          );
+      }
     }
   }
 

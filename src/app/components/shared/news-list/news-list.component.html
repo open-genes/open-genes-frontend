@@ -9,8 +9,7 @@
         href="{{ news.url }}"
         class="item__caption link link--gray"
         target="_blank"
-        >{{ news.title | stripTags }}</a
-      >
+        >{{ news.title | stripTags }}</a>
 
       <ng-container *ngIf="news.date && showDates === true">
         <div class="item__date">
@@ -26,8 +25,7 @@
 
 <div
   *ngIf="showMoreButtonVisible && isShowMoreButton"
-  class="col col-12 __mt-15 btn-wrap show-more"
->
+  class="col col-12 __mt-5 btn-wrap show-more">
   <button class="btn show-more__button"
           (click)="showMore()"
           [disabled]="isLoading">
@@ -43,7 +41,8 @@
   ></app-skeleton>
 </ng-template>
 
-<section class="col-12 no-content" *ngIf="error">
+<section *ngIf="error"
+         class="col-12 no-content">
   <div class="no-content__inner">
     <div class="no-content__icon no-content__icon-standard"></div>
     <div class="no-content__title">

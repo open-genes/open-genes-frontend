@@ -112,7 +112,6 @@ export class NewsListComponent implements OnInit, OnDestroy {
           // All content is loaded
           this.isLoading = false;
           this.cdRef.markForCheck();
-          console.log(this.pageIndex);
         },
         (error) => (this.error = error)
       );
