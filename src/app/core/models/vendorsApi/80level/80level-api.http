@@ -14,3 +14,6 @@ Accept: application/json
 GET http://openlongevity.tk/api/articles?page=1&sort=new
 Accept: application/json
 
+###Get articles list filtered by category or tag
+GET https://openlongevity.tk/api/articles?category=open-genes&page=2
+Accept: application/json

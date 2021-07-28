@@ -37,6 +37,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   private subscription$ = new Subject();
   private httpCallsCounter = 0;
+  private showOnlyForOpenGenes = true;
 
   @Input() isMiniMode = false;
   @Input() sliceTo: number | undefined = undefined;
@@ -85,7 +86,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         this.showMoreButtonVisible = false;
       }
     }
-    console.log(this.articlesTotal, this.responsePagePortion, this.pageIndex);
 
     // All content is loaded
     this.isLoading = false;
@@ -104,15 +104,27 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
           (error) => (this.error = error) // TODO: add loging
         );
     } else {
-      this.eightyLevelService
-        .getArticles({ page: this.pageIndex })
-        .pipe(takeUntil(this.subscription$))
-        .subscribe(
-          (data) => {
-            this.handleResponse(data);
-          },
-          (error) => (this.error = error)
-        );
+      if (!this.showOnlyForOpenGenes) {
+        this.eightyLevelService
+          .getArticles({ page: this.pageIndex })
+          .pipe(takeUntil(this.subscription$))
+          .subscribe(
+            (data) => {
+              this.handleResponse(data);
+            },
+            (error) => (this.error = error)
+          );
+      } else {
+        this.eightyLevelService
+          .getArticles({ category: 'open-genes', page: this.pageIndex })
+          .pipe(takeUntil(this.subscription$))
+          .subscribe(
+            (data) => {
+              this.handleResponse(data);
+            },
+            (error) => (this.error = error)
+          );
+      }
     }
   }
 

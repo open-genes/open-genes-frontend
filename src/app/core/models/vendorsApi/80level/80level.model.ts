@@ -49,6 +49,7 @@ interface I80levelSidebarBlock {
 }
 
 export interface I80levelArticleQueryParams {
+  category?: string;
   page?: number;
   sort?: 'new' | 'old';
 }

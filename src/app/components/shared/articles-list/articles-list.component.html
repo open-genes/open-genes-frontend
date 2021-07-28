@@ -40,14 +40,15 @@
 
           <div *ngIf="!isMiniMode"
                class="article__tags">
-            <a
-              *ngFor="let tag of article.tags"
-              href="{{ environment.openLongevity80LevelCMS }}articles/{{ tag.slug }}"
-              target="_blank"
-              class="alias"
-            >
-              {{ tag.name }}
-            </a>
+            <ng-container *ngFor="let tag of article.tags">
+              <a
+                *ngIf="tag.slug !== 'open-genes'"
+                href="{{ environment.openLongevity80LevelCMS }}articles/{{ tag.slug }}"
+                target="_blank"
+                class="alias"
+              >{{ tag.name }}
+              </a>
+            </ng-container>
           </div>
         </div>
 
