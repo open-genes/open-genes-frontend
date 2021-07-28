@@ -1,6 +1,19 @@
 <ng-container *ngIf="articlesList.length !== 0; else skeleton">
+  <div *ngIf="!isMiniMode && articleTags.length !== 0"
+       class="tag-list col-12">
+    <ng-container *ngFor="let tag of articleTags">
+      <a *ngIf="tag.slug !== 'open-genes'"
+         href="{{ environment.openLongevity80LevelCMS }}category/{{ tag.slug }}"
+         target="_blank"
+         class="alias">
+        {{ tag.name }}
+        <span class="fa fal fa-external-link"></span>
+      </a>
+    </ng-container>
+  </div>
+
   <ng-container *ngFor="let article of articlesList | slice: 0:sliceTo">
-    <div class="article {{ isMiniMode ? 'article--mini' : 'col-xs-12 col-sm-6 col-lg-6 col-xl-3' }}">
+    <div class="article {{ isMiniMode ? 'article--mini' : 'col-xs-12 col-sm-6 col-lg-6 col-xl-4' }}">
       <div class="article__card">
         <div class="article__cover">
           <div
@@ -78,7 +91,7 @@
 </ng-container>
 
 <div *ngIf="!isMiniMode && showMoreButtonVisible"
-     class="__mt-15 btn-wrap show-more">
+     class="__mt-5 btn-wrap show-more">
   <button class="btn show-more__button"
           (click)="showMore()"
           [disabled]="isLoading">

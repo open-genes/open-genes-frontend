@@ -34,6 +34,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public showMoreButtonVisible = false;
   public articlesTotal: number;
   public responsePagePortion: number;
+  public articleTags: any[] = [];
 
   private subscription$ = new Subject();
   private httpCallsCounter = 0;
@@ -74,6 +75,13 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       if (this.httpCallsCounter === 1) {
         this.responsePagePortion = this.articlesList.length;
       }
+
+      // Populate tag list avoiding duplicates
+      data.articles.items.forEach((article) => {
+        if (article?.tags.length !== 0) {
+          this.articleTags = [...new Set(article.tags)];
+        }
+      });
 
       // Emit event to update view
       this.newArticlesLoaded.emit(true);

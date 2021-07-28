@@ -32,7 +32,7 @@ export interface I80levelResponseArticle {
   tags: IArticleTag[];
 }
 
-interface IArticleTag {
+export interface IArticleTag {
   name: string;
   slug: string;
 }
