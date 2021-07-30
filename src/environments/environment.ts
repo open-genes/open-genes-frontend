@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  name: 'default',
   production: false,
   apiUrl: 'https://open-genes.com',
   searchApiUrl: 'https://publications-search-api-2yf55.ondigitalocean.app/',
