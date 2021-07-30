@@ -67,7 +67,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   private handleResponse(data): void {
     console.log(environment.name);
-    if (environment.name !== 'default') {
+    if (environment.name !== 'prod') {
       this.articlesList.push(...data.articles.items);
       this.articlesTotal = data.articles.total;
     }
