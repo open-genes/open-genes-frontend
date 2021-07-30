@@ -24,6 +24,7 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   public isAnyOrtholog: boolean;
   public isHpa: boolean;
   public isAnyResearchFilled: boolean;
+  public isGeneCandidate: boolean;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
@@ -79,6 +80,10 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
         this.isAnyOrtholog =
           Object.values(this.gene.orthologs).toString() !== ''; // TODO: backend: instead of {"":""} should be an empty array of objects
         this.isHpa = this.gene.human_protein_atlas !== '';
+
+        this.isGeneCandidate =
+          this.gene.researches?.isAdditionalEvidences &&
+          this.gene.researches.isAdditionalEvidences.length !== 0;
       });
 
     this.isContent();

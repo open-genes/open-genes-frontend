@@ -1,0 +1,19 @@
+###Get one article data
+GET https://openlongevity.tk/api/articles/{{item}}
+Accept: application/json
+
+###Get articles list
+GET http://openlongevity.tk/api/articles
+Accept: application/json
+
+###Get articles list with pagination
+GET http://openlongevity.tk/api/articles?page=1
+Accept: application/json
+
+###Get articles list filtered from the newest
+GET http://openlongevity.tk/api/articles?page=1&sort=new
+Accept: application/json
+
+###Get articles list filtered by category or tag
+GET https://openlongevity.tk/api/articles?category=open-genes&page=2
+Accept: application/json

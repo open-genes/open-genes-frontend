@@ -1,1 +1,1 @@
-export * from "./API/genes.model";
+export * from './openGenesApi/genes.model';

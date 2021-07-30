@@ -19,6 +19,11 @@
     padding: 3px 2px;
   }
 
+  &--warning {
+    background-color: $color-hint-bg;
+    color: $color-hint-text;
+  }
+
   @include resolution_smartphone-and-tablet {
     min-height: 17px;
     font-size: 10px;
@@ -30,4 +35,9 @@
     height: 23px;
     min-width: 100px;
   }
+}
+
+a.alias {
+  color: $color-clikable-500;
+  background-color: $color-clikable-100;
 }

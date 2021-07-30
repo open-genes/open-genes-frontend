@@ -1,19 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SelectionCriteria } from '../../../core/models/API/selection-criteria.model';
+import { SelectionCriteria } from '../../../core/models/openGenesApi/selection-criteria.model';
 
 @Component({
   selector: 'app-selection-criteria',
   templateUrl: './selection-criteria.component.html',
-  styleUrls: ['./selection-criteria.component.scss']
+  styleUrls: ['./selection-criteria.component.scss'],
 })
 export class SelectionCriteriaComponent implements OnInit {
   @Input() geneCriteria: SelectionCriteria;
-  public commentCauseLength: number = 0;
-  public isAccordion: boolean = false;
-  public maxItemsToShow: number = 1;
+  public commentCauseLength = 0;
+  public isAccordion = false;
+  public maxItemsToShow = 1;
   public isAccordionOpen: boolean;
-
-  constructor() { }
 
   ngOnInit(): void {
     this.setCriteriaListLength(this.geneCriteria);

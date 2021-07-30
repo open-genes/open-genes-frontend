@@ -5,31 +5,43 @@ import {
   OnDestroy,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-} from "@angular/core";
-import { PubmedApiService } from "../../../core/services/api/pubmed.api.service";
-import { News } from "../../../core/models/API/news.model";
-import { Genes } from "../../../core/models";
-import { finalize, switchMap, takeUntil } from "rxjs/operators";
-import { environment } from "../../../../environments/environment";
-import { TranslateService } from "@ngx-translate/core";
-import { Subject } from "rxjs";
+  Output,
+  EventEmitter,
+} from '@angular/core';
+import { PubmedApiService } from '../../../core/services/api/pubmed.api.service';
+import { IPublication } from '../../../core/models/vendorsApi/pubMed/news.model';
+import { Gene, Genes } from '../../../core/models';
+import { takeUntil } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
 
 @Component({
-  selector: "app-news-list",
-  templateUrl: "./news-list.component.html",
-  styleUrls: ["./news-list.component.scss"],
+  selector: 'app-news-list',
+  templateUrl: './news-list.component.html',
+  styleUrls: ['./news-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewsListComponent implements OnInit, OnDestroy {
   @Input() genesList: Genes[];
   @Input() showDates = false;
-  @Input() itemsForPage: number;
   @Input() loadTotal: number;
+  @Input() itemsForPage: number;
+  @Input() isShowMoreButton = true;
+
+  @Output()
+  newItemsLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   public isLoading = true;
   public error: number;
-  public newsList: News[] = [];
-  private minGeneFunctionsCriteria: number = 3;
+  public newsList: IPublication[] = [];
+  public pageIndex = 1;
+  public showMoreButtonVisible = false;
+  public newsTotal: number;
+  public responsePagePortion: number;
+
+  private minGeneFunctionsCriteria = 3;
   private subscription$ = new Subject();
+  private httpCallsCounter = 0;
 
   constructor(
     public translate: TranslateService,
@@ -38,53 +50,67 @@ export class NewsListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.makeNewsList(this.loadTotal);
+    this.makeNewsList();
   }
 
-  private makeNewsList(limit: number): void {
-    let symbolsQuery = "";
+  public showMore(): void {
+    // console.log('showMore()');
+    // console.log(
+    //   this.newsTotal / this.responsePagePortion > this.pageIndex,
+    //   `page ${this.pageIndex} of ${this.newsTotal / this.responsePagePortion}`
+    // );
+
+    if (this.newsTotal / this.responsePagePortion > this.pageIndex) {
+      ++this.pageIndex;
+      this.isLoading = true;
+      this.cdRef.markForCheck();
+      this.makeNewsList();
+    }
+  }
+
+  private makeNewsList(): void {
+    this.httpCallsCounter++;
+
     // 1. Form a request for all genes in the database that meet the minimal number of gene functions
+    const symbolsQuery = [];
     const filteredGenes = this.genesList.filter(
-      (gene: Genes) => gene.functionalClusters.length > this.minGeneFunctionsCriteria
+      (gene: Genes) =>
+        gene.functionalClusters.length > this.minGeneFunctionsCriteria
     );
-    filteredGenes.forEach((gene: Genes, index: number, array: Genes[]) => {
-      symbolsQuery += `${gene.symbol}[Title]`;
-      symbolsQuery += index < array.length - 1 ? "+OR+" : ""; // concat genes' HGNC in the request
+    filteredGenes.forEach((gene: Gene) => {
+      symbolsQuery.push(gene.symbol);
     });
 
-    // 2. Make a long query string for all genes at once, but ask to return only n articles in the response
+    // 2. Make a long query string for all genes at once, but ask to return only n news in the response
     this.pubmedApiService
-      .getNewsList(symbolsQuery, limit)
-      .pipe(
-        switchMap((news) =>
-          this.pubmedApiService.getNewsData(
-            news.esearchresult.idlist
-            // There is no need to sort publications. API returns a list of publications from new to old.
-          )
-        ),
-        finalize(() => {
-          this.isLoading = false;
-        })
-      )
+      .getNewsList(symbolsQuery, this.loadTotal, this.pageIndex)
       .pipe(takeUntil(this.subscription$))
       .subscribe(
-        (data) => {
-          data.result.uids.forEach((id) => {
-            filteredGenes.forEach((gene: Genes) => {
-              if (
-                data.result[id].title
-                  .toLowerCase()
-                  .indexOf(gene.symbol.toLowerCase()) !== -1
-              ) {
-                this.newsList.push({
-                  url: `${environment.pubmedUrl}${id}`,
-                  title: data.result[id].title,
-                  date: data.result[id].pubdate,
-                  gene,
-                });
-              }
-            });
-          });
+        (response) => {
+          // Get data
+          this.newsTotal = response.total;
+          this.newsList.push(...response.items);
+
+          if (this.newsList?.length !== 0) {
+            // Set page length after checking the length of the 1st page
+            this.httpCallsCounter === 1
+              ? (this.responsePagePortion = this.newsList.length)
+              : this.httpCallsCounter;
+
+            // Emit event to update view
+            this.newItemsLoaded.emit(true);
+
+            // Check if there is more content to show
+            // and show/hide 'Show more' button
+            if (this.newsTotal / this.responsePagePortion > this.pageIndex) {
+              this.showMoreButtonVisible = true;
+            } else {
+              this.showMoreButtonVisible = false;
+            }
+          }
+
+          // All content is loaded
+          this.isLoading = false;
           this.cdRef.markForCheck();
         },
         (error) => (this.error = error)

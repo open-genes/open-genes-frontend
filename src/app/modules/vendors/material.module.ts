@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 
 // Angular Material Components
 import {
@@ -33,7 +33,7 @@ import {
   MatSortModule,
   MatPaginatorModule,
   MatBottomSheetModule,
-} from "@angular/material/./";
+} from '@angular/material/./';
 
 @NgModule({
   imports: [

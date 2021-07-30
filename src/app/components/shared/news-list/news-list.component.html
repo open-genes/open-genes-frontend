@@ -1,38 +1,54 @@
-<ul class="news" *ngIf="!isLoading">
-  <li *ngFor="let item of newsList | slice: 0 : itemsForPage"
-      class="news__item"
-  >
+<ul class="news" *ngIf="!isLoading && newsList.length !== 0; else skeleton">
+  <li *ngFor="let news of newsList" class="news__item">
     <div class="item__gene">
-      <a [routerLink]="['/gene', item.gene?.symbol]"
-         class="alias">{{item.gene?.symbol}}</a>
+      <a [routerLink]="['/gene', news.gene]" class="alias">{{ news.gene }}</a>
     </div>
 
     <div class="item__title">
-      <a href="{{item.url}}"
-         class="item__caption link link--gray"
-         target="_blank"
-      >{{item.title | stripTags}}</a>
+      <a
+        href="{{ news.url }}"
+        class="item__caption link link--gray"
+        target="_blank"
+        >{{ news.title | stripTags }}</a>
 
-      <ng-container *ngIf="showDates === true">
-      <div class="item__date" *ngIf="translate.currentLang === 'ru'">
-        {{item.date | localizedDate:'d MMMM'}}
-      </div>
-      <div class="item__date" *ngIf="translate.currentLang === 'en'">
-        {{item.date | localizedDate:'d MMMM'}}
-      </div>
+      <ng-container *ngIf="news.date && showDates === true">
+        <div class="item__date">
+          {{
+            (news.date | localizedDate: "d MMMM y") ||
+              (news.date | localizedDate: "MMMM y")
+          }}
+        </div>
       </ng-container>
     </div>
   </li>
 </ul>
 
-<app-skeleton
-  *ngIf="isLoading || error"
-  [groups]="itemsForPage"
-></app-skeleton>
+<div
+  *ngIf="showMoreButtonVisible && isShowMoreButton"
+  class="col col-12 __mt-5 btn-wrap show-more">
+  <button class="btn show-more__button"
+          (click)="showMore()"
+          [disabled]="isLoading">
+    {{ "show_more" | translate }}
+    <span *ngIf="isLoading" class="fas fa-circle-notch fa-spin"></span>
+  </button>
+</div>
 
+<ng-template #skeleton>
+  <app-skeleton
+    *ngIf="isLoading || error"
+    [groups]="newsList.length !== 0 ? newsList.length : itemsForPage"
+  ></app-skeleton>
+</ng-template>
 
-
-
-
-
-
+<section *ngIf="error"
+         class="col-12 no-content">
+  <div class="no-content__inner">
+    <div class="no-content__icon no-content__icon-standard"></div>
+    <div class="no-content__title">
+      <div class="title__center">
+        {{ "news_page_no_news" | translate }}
+      </div>
+    </div>
+  </div>
+</section>

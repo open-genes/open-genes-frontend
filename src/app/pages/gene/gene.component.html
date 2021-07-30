@@ -30,6 +30,9 @@
           <div class="col col-12 header__short-comment">
             <span class="str_source-GeneAge">
               {{gene.name}}
+              <span *ngIf="isGeneCandidate" class="alias alias--small alias--warning"
+              >{{ "gene_candidate" | translate }}
+              </span>
             </span>
           </div>
           <div class="col col-12 header__functional-clusters">
@@ -52,67 +55,64 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2">
-          <div class="sidebar">
-            <div class="sidebar__inner">
-              <div class="__not-flex __w-100">
+          <app-sidebar>
+            <div class="__not-flex __w-100">
+              <b>{{ 'gene_page_title_contents' | translate }}</b>
 
-                <b>{{ 'gene_page_title_contents' | translate }}</b>
+              <mat-nav-list *ngIf="isAnyContent">
+                <a mat-list-item
+                   *ngIf="gene.commentEvolution"
+                   [routerLink]="['/gene', symbol]" fragment="evolution">
+                  {{ 'gene_page_title_evolution' | translate }}
+                </a>
 
-                <mat-nav-list *ngIf="isAnyContent">
-                  <a mat-list-item
-                     *ngIf="gene.commentEvolution"
-                     [routerLink]="['/gene', symbol]" fragment="evolution">
-                    {{ 'gene_page_title_evolution' | translate }}
-                  </a>
+                <a mat-list-item
+                   *ngIf="gene.commentFunction"
+                   [routerLink]="['/gene', symbol]" fragment="function">
+                  {{ 'gene_page_title_function' | translate }}
+                </a>
 
-                  <a mat-list-item
-                     *ngIf="gene.commentFunction"
-                     [routerLink]="['/gene', symbol]" fragment="function">
-                    {{ 'gene_page_title_function' | translate }}
-                  </a>
+                <a mat-list-item
+                   *ngIf="gene.commentCause.length !== 0"
+                   [routerLink]="['/gene', symbol]" fragment="cause">
+                  {{ 'gene_page_title_criteria' | translate }}
+                </a>
 
-                  <a mat-list-item
-                     *ngIf="gene.commentCause.length !== 0"
-                     [routerLink]="['/gene', symbol]" fragment="cause">
-                    {{ 'gene_page_title_criteria' | translate }}
-                  </a>
+                <a mat-list-item
+                   *ngIf="gene.commentAging"
+                   [routerLink]="['/gene', symbol]" fragment="aging">
+                  {{ 'gene_page_title_aging' | translate }}
+                </a>
 
-                  <a mat-list-item
-                     *ngIf="gene.commentAging"
-                     [routerLink]="['/gene', symbol]" fragment="aging">
-                    {{ 'gene_page_title_aging' | translate }}
-                  </a>
+                <a mat-list-item
+                   *ngIf="gene.expression.length !== 0"
+                   [routerLink]="['/gene', symbol]" fragment="expression">
+                  {{ 'gene_page_title_expression' | translate }}
+                </a>
 
-                  <a mat-list-item
-                     *ngIf="gene.expression.length !== 0"
-                     [routerLink]="['/gene', symbol]" fragment="expression">
-                    {{ 'gene_page_title_expression' | translate }}
-                  </a>
-
-                  <a mat-list-item
-                     *ngIf="
+                <a mat-list-item
+                   *ngIf="
                     gene.terms.biological_process.length >= 1 ||
                     gene.terms.cellular_component.length >= 1 ||
                     gene.terms.molecular_activity.length >= 1"
-                     [routerLink]="['/gene', symbol]" fragment="terms">
-                    Gene Ontology
-                  </a>
+                   [routerLink]="['/gene', symbol]" fragment="terms">
+                  Gene Ontology
+                </a>
 
-                  <a mat-list-item
-                     *ngIf="isHpa"
-                     [routerLink]="['/gene', symbol]" fragment="human-protein-atlas">
-                    Human Protein Atlas
-                  </a>
+                <a mat-list-item
+                   *ngIf="isHpa"
+                   [routerLink]="['/gene', symbol]" fragment="human-protein-atlas">
+                  Human Protein Atlas
+                </a>
 
-                  <a mat-list-item
-                     *ngIf="gene.commentsReferenceLinks.length > 1"
-                     [routerLink]="['/gene', symbol]" fragment="reference">
-                    {{ 'gene_page_title_reference' | translate }}
-                  </a>
-                </mat-nav-list>
-              </div>
+                <a mat-list-item
+                   *ngIf="gene.commentsReferenceLinks.length > 1"
+                   [routerLink]="['/gene', symbol]" fragment="reference">
+                  {{ 'gene_page_title_reference' | translate }}
+                </a>
+              </mat-nav-list>
             </div>
-          </div>
+          </app-sidebar>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-8">

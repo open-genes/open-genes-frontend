@@ -1,3 +1,17 @@
+.page {
+  app-sidebar {
+    @include resolution_widescreen {
+      position: sticky;
+      top: 70px;
+      margin-bottom: 60px;
+    }
+    @include resolution_all-but-widescreen {
+      flex: 0 0 100%;
+      margin-bottom: 20px;
+    }
+  }
+}
+
 // TODO: Move into separate components styles
 @import "pages/main-page";
 @import "pages/text-page";

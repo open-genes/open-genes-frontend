@@ -1,25 +1,25 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { environment } from "../../../../environments/environment";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class PubmedApiService {
-  private url = environment.pubmedApiUrl;
-  private params = "db=pubmed&retmode=json";
+  private url = environment.searchApiUrl;
 
   constructor(private http: HttpClient) {}
 
-  public getNewsList(symbols: string, limit: number): Observable<any> {
-    // eslint-disable-next-line max-len
-    return this.http.get(
-      `${this.url}/esearch.fcgi?${this.params}&retmax=${limit}&term=${symbols}&datetype=pdat&reldate=180`
-    );
-  }
-
-  public getNewsData(id: number): Observable<any> {
-    return this.http.get(`${this.url}/esummary.fcgi?${this.params}&id=${id}`);
+  public getNewsList(
+    symbols: string[],
+    limit: number,
+    page: number
+  ): Observable<any> {
+    return this.http.post(`${this.url}publication/all`, {
+      symbols,
+      limit,
+      page,
+    });
   }
 }

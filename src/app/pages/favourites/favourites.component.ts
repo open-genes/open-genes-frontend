@@ -4,17 +4,17 @@ import {
   Component,
   OnInit,
   OnDestroy,
-} from "@angular/core";
-import { Genes } from "src/app/core/models/API/genes.model";
-import { FavouritesService } from "src/app/core/services/favourites.service";
-import { TranslateService } from "@ngx-translate/core";
-import { ApiService } from "../../core/services/api/open-genes.api.service";
-import { Subject } from "rxjs";
+} from '@angular/core';
+import { Genes } from 'src/app/core/models';
+import { FavouritesService } from 'src/app/core/services/favourites.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ApiService } from '../../core/services/api/open-genes.api.service';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: "app-favourites",
-  templateUrl: "./favourites.component.html",
+  selector: 'app-favourites',
+  templateUrl: './favourites.component.html',
   providers: [FavouritesService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -48,31 +48,33 @@ export class FavouritesComponent implements OnInit, OnDestroy {
   }
 
   private getGenes(): void {
-    this.favouritesService.getItems()
+    this.favouritesService
+      .getItems()
       .pipe(takeUntil(this.subscription$))
       .subscribe(
-      (genes) => {
-        if (genes) {
-          this.favouriteGenesIds = genes;
+        (genes) => {
+          if (genes) {
+            this.favouriteGenesIds = genes;
+          }
+          this.cdRef.markForCheck();
+        },
+        () => {
+          this.favouriteGenesIds = [];
         }
-        this.cdRef.markForCheck();
-      },
-      () => {
-        this.favouriteGenesIds = [];
-      }
-    );
+      );
 
-    this.apiService.getGenes()
+    this.apiService
+      .getGenes()
       .pipe(takeUntil(this.subscription$))
       .subscribe(
-      (genes) => {
-        this.genes = genes;
-        this.cdRef.markForCheck();
-      },
-      (err) => {
-        this.error = err;
-      }
-    );
+        (genes) => {
+          this.genes = genes;
+          this.cdRef.markForCheck();
+        },
+        (err) => {
+          this.error = err;
+        }
+      );
   }
 
   ngOnDestroy(): void {

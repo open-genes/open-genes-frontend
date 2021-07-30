@@ -12,7 +12,7 @@ import { Genes } from '../../core/models';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MockApiService } from '../../core/services/api/mock.api.service';
+import { environment } from '../../../environments/environment';
 import { WindowService } from '../../core/services/browser/window.service';
 
 @Component({
@@ -30,19 +30,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   public lastGenes: Genes[];
   public isAvailable = true;
   public errorStatus: string;
+  public environment = environment;
   private subscription$ = new Subject();
   public isMobile: boolean;
-  public isTablet: boolean;
-  private resMobile = 959.98;
-  private resPhablet = 767.98;
+  private resDesktop = 951.98;
 
   constructor(
     private readonly apiService: ApiService,
     private filterService: FilterService,
     private readonly cdRef: ChangeDetectorRef,
-    private windowService: WindowService, // eslint-disable-line
-    // private mockApiService: MockApiService
-    ) {}
+    private windowService: WindowService
+  ) {}
 
   ngOnInit(): void {
     this.getGenes();
@@ -67,17 +65,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         (err) => {
           this.isAvailable = false;
           this.errorStatus = err.statusText;
-
-          /* Use this mock service to mock data when it's unavailable */
-          /*
-            this.mockApiService.getMockResponse()
-            .pipe(takeUntil(this.subscription$))
-                .subscribe(
-                  (genes) => {
-                    this.genes = genes;
-                    this.cdRef.markForCheck();
-            });
-          */
         }
       );
   }
@@ -96,8 +83,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .setWindowWidth()
       .pipe(takeUntil(this.subscription$))
       .subscribe((width) => {
-        this.isMobile = width <= this.resMobile;
-        this.isTablet = width <= this.resPhablet;
+        this.isMobile = width <= this.resDesktop;
         this.cdRef.markForCheck();
       });
   }
@@ -106,8 +92,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.windowService.windowWidth$
       .pipe(takeUntil(this.subscription$))
       .subscribe((width) => {
-        this.isMobile = width <= this.resMobile;
-        this.isTablet = width <= this.resPhablet;
+        this.isMobile = width <= this.resDesktop;
         this.cdRef.markForCheck();
       });
   }

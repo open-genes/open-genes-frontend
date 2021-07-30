@@ -93,6 +93,13 @@ $preloader-spinner-color: $color-general;
 $dark-panel-100: #64676f;
 $dark-panel-200: #323439;
 
+// - hint
+$color-hint-bg: lighten(#ffc769, 20%);
+$color-hint-text: #c88142;
+
+// - clickable badges
+$color-clikable-500: #832AF5;
+$color-clikable-100: #F2E9FE;
 
 // PATHS
 $path-images: '../images';

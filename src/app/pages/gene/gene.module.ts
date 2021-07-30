@@ -18,6 +18,7 @@ import { ExpressionComponent } from './expression/expression.component';
 import { ReferenceComponent } from './reference/reference.component';
 import { DynamicContentAnchorsDirective } from './directives/dynamic-content.directive';
 import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
+import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { UiComponentsModule } from '../../components/ui-components/ui-components
     MaterialModule,
     NgToArrayPipeModule,
     UiComponentsModule,
+    SidebarModule,
   ],
 })
 export class GeneModule {}
