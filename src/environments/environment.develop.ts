@@ -1,4 +1,5 @@
 export const environment = {
+  name: 'dev',
   production: false,
   apiUrl: 'https://test.open-genes.com',
   searchApiUrl: 'http://localhost:8080/',

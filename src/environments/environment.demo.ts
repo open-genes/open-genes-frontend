@@ -1,4 +1,5 @@
 export const environment = {
+  name: 'demo',
   production: true,
   apiUrl: 'https://demo.open-genes.com',
   searchApiUrl: 'https://publications-search-api-2yf55.ondigitalocean.app/',

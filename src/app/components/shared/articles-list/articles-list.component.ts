@@ -32,7 +32,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public isMocked = false;
   public pageIndex = 1;
   public showMoreButtonVisible = false;
-  public articlesTotal: number;
+  public articlesTotal = 0;
   public responsePagePortion: number;
   public articleTags: any[] = [];
 
@@ -66,8 +66,11 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   private handleResponse(data): void {
-    this.articlesList.push(...data.articles.items);
-    this.articlesTotal = data.articles.total;
+    console.log(environment.name);
+    if (environment.name !== 'prod') {
+      this.articlesList.push(...data.articles.items);
+      this.articlesTotal = data.articles.total;
+    }
 
     if (this.articlesList?.length !== 0) {
       // Set page length after checking the length of the 1st page
