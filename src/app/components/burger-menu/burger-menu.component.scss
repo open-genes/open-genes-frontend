@@ -51,8 +51,7 @@
     width: 320px;
   }
   @include resolution_smartphone {
-    width: 100%;
-    min-width: 320px;
+    width: 260px;
   }
 
   form {
@@ -68,7 +67,6 @@
     .menu__link {
       font-size: $font-size-bigger;
       font-weight: $font-weight-medium;
-      border-top: 1px solid $color-borders;
 
       &,
       a {
@@ -80,20 +78,8 @@
       a {
         padding: 15px 30px 15px 10px;
 
-        &:before {
-          content: ' ';
-          display: block;
-          width: 5px;
-          height: 100%;
-          border-top-right-radius: 100%;
-          border-bottom-right-radius: 100%;
-          background-color: $color-general;
-          position: absolute;
-          top: 0;
-          left: 0;
-          z-index: 0;
-          opacity: 0;
-          transition: opacity 0.2s ease-in;
+        .fa {
+          margin-right: 5px;
         }
 
         &:link,
@@ -101,16 +87,19 @@
           color: $color-general;
         }
 
-        &:hover,
-        &:active {
+        &:hover {
           color: $color-general-dark;
           background-color: rgba($color-general-dark, 0.15);
         }
 
+        &:active {
+          color: $color-general-dark;
+          background-color: rgba($color-general-dark, 0.25);
+        }
+
         &.current {
-          &:before {
-            opacity: 1;
-          }
+          color: $color-white;
+          background-color: $color-general;
         }
       }
     }

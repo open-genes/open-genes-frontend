@@ -1,9 +1,13 @@
 <button mat-icon-button
-        class="signin-button js_signin-btn"
+        class="signin-button"
         (click)="toggleMenu()"
         [class.active]="isMenuVisible"
-        aria-label="Меню"><span
-  class="fa fal fa-bars"></span> <!-- TODO: use MatIconRegistry to use icon set -->
+        aria-label="Меню">
+  <span *ngIf="!isMenuVisible"
+  class="fa fal fa-bars"></span>
+  <span *ngIf="isMenuVisible"
+    class="fa fal fa-times"></span>
+  <!-- TODO: use MatIconRegistry to use icon set -->
 </button>
 
 <div class="header__menu"
@@ -14,17 +18,22 @@
       <li class="menu__link">
         <a [routerLink]="'/about'"
            routerLinkActive="current"
-        >{{ 'header_menu_about' | translate }}</a>
+        >
+          <span class="fa far fa-dna"></span>
+          {{ 'header_menu_about' | translate }}</a>
       </li>
       <li class="menu__link">
         <a [routerLink]="'/help'"
            routerLinkActive="current"
-        >{{ 'header_menu_help' | translate }}</a>
+        >
+          <span class="fa far fa-question-circle"></span>
+          {{ 'header_menu_help' | translate }}</a>
       </li>
       <li class="menu__link">
         <a [routerLink]="'/favourites'"
            routerLinkActive="current"
         >
+          <span class="fa far fa-star"></span>
           <span
             [matBadge]="favsCounter"
             [matBadgeHidden]="favsCounter === '0'"
@@ -36,12 +45,16 @@
       <li class="menu__link">
         <a [routerLink]="'/news'"
            routerLinkActive="current"
-        >{{ 'header_menu_news' | translate }}</a>
+        >
+          <span class="fa far fa-book"></span>
+          {{ 'header_menu_news' | translate }}</a>
       </li>
       <li class="menu__link">
         <a [routerLink]="'/developers'"
            routerLinkActive="current"
-        >{{ 'header_menu_api' | translate }}</a>
+        >
+          <span class="fa far fa-database"></span>
+          {{ 'header_menu_api' | translate }}</a>
       </li>
     </ul>
   </div>
