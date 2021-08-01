@@ -1,5 +1,6 @@
 <div class="panel">
-  <div *ngIf="hpa.proteinClasses"
+  <div *ngIf="hpa.proteinClass || gene.proteinClasses"
+       id="protein-classes"
        class="panel__group row">
     <div class="col-sm-3">
       <h6>{{ 'gene_page_hpa_protein_classes' | translate }}</h6>
