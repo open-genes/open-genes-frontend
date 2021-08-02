@@ -22,6 +22,9 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   public expressionMaxValue: number;
   public isAnyContent: boolean;
   public isAnyOrtholog: boolean;
+  public isNcbiDescription: boolean;
+  public isLocationData: boolean;
+  public isAnyGoCategory: boolean;
   public isHpa: boolean;
   public isAnyResearchFilled: boolean;
   public isGeneCandidate: boolean;
@@ -53,8 +56,10 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
     this.apiService
       .getGeneByHGNCsymbol(this.symbol)
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((geneInterface) => {
-        this.gene = geneInterface;
+      .subscribe((response) => {
+        this.gene = response;
+
+        // Map fields
         this.geneOntologyProcessMap = this.toMap(
           this.gene.terms.biological_process
         );
@@ -71,6 +76,7 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
           this.gene.commentsReferenceLinks
         );
 
+        // Traits to define if content exists
         const researchesLengths = [];
         Object.values(this.gene.researches).forEach((value) => {
           researchesLengths.push(Number(Object.entries(value).length));
@@ -84,30 +90,29 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
         this.isGeneCandidate =
           this.gene.researches?.isAdditionalEvidences &&
           this.gene.researches.isAdditionalEvidences.length !== 0;
+
+        this.isAnyContent =
+          this.gene?.commentEvolution ||
+          this.gene?.commentFunction ||
+          this.gene?.commentCause.length !== 0 ||
+          this.gene?.commentAging ||
+          this.isAnyResearchFilled ||
+          this.gene?.expression.length !== 0 ||
+          this.isAnyOrtholog ||
+          this.gene?.terms;
+
+        this.isAnyGoCategory =
+          this.gene?.terms.biological_process.length >= 1 ||
+          this.gene?.terms.cellular_component.length >= 1 ||
+          this.gene?.terms.molecular_activity.length >= 1;
+
+        this.isNcbiDescription = this.gene?.descriptionNCBI.length !== 0;
+
+        this.isLocationData =
+          this.gene?.band?.length ||
+          this.gene?.locationStart?.length ||
+          this.gene?.locationEnd?.length;
       });
-
-    this.isContent();
-  }
-
-  // Traits to define if content exists
-  public isContent(): void {
-    this.isAnyContent =
-      this.gene?.commentEvolution ||
-      this.gene?.commentFunction ||
-      this.gene?.commentCause.length !== 0 ||
-      this.gene?.commentAging ||
-      this.isAnyResearchFilled ||
-      this.gene?.expression.length !== 0 ||
-      this.isAnyOrtholog ||
-      this.gene?.terms;
-  }
-
-  public isGeneOntology() {
-    return !!(
-      this.gene.terms.biological_process.length >= 1 ||
-      this.gene.terms.cellular_component.length >= 1 ||
-      this.gene.terms.molecular_activity.length >= 1
-    );
   }
 
   ngOnDestroy(): void {
