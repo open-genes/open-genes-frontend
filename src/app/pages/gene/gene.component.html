@@ -79,7 +79,7 @@
                 </a>
 
                 <a mat-list-item
-                   *ngIf="gene.commentAging"
+                   *ngIf="!isAnyResearchFilled && gene.commentAging"
                    [routerLink]="['/gene', symbol]" fragment="aging">
                   {{ 'gene_page_title_aging' | translate }}
                 </a>
@@ -221,7 +221,7 @@
                 </section>
 
                 <section>
-                  <h2 *ngIf="gene.commentEvolution || gene.commentEvolution || (!isAnyResearchFilled && gene.commentAging)"
+                  <h2 *ngIf="gene.commentEvolution || (!isAnyResearchFilled && gene.commentAging)"
                       class="__mb-15"
                   >{{ 'gene_page_title_summary' | translate }}</h2>
 
@@ -230,7 +230,7 @@
                     <article
                       appDynamicContentAnchors
                       id="evolution"
-                      [innerHTML]="gene.commentEvolution | linkify"
+                      [innerHTML]="gene.commentEvolution | linkify: 'link'"
                     >
                     </article>
                   </ng-container>
@@ -240,7 +240,7 @@
                     <article
                       appDynamicContentAnchors
                       id="function"
-                      [innerHTML]="gene.commentFunction | linkify"
+                      [innerHTML]="gene.commentFunction | linkify: 'link'"
                     >
                     </article>
                   </ng-container>
@@ -250,7 +250,7 @@
                     <article
                       appDynamicContentAnchors
                       id="aging"
-                      [innerHTML]="gene.commentAging | linkify"
+                      [innerHTML]="gene.commentAging | linkify: 'link'"
                     >
                     </article>
                   </section>

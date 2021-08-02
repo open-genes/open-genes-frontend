@@ -1,25 +1,33 @@
-import { Pipe, PipeTransform } from "@angular/core";
+import { Pipe, PipeTransform } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Pipe({
-  name: "linkify",
+  name: 'linkify',
 })
 export class LinkifyPipe implements PipeTransform {
-  references: any = /(\[(\S)*])/gi;
+  constructor(private translateService: TranslateService) {}
+  references: any = /\[(\S+)\]/gi;
 
-  transform(text: string) {
-    return this.parseUrl(text);
+  transform(textFragment: string, localeStr: string) {
+    return this.parseUrl(textFragment, localeStr);
   }
 
-  private parseUrl(text: string) {
+  private parseUrl(textFragment: string, localeStr: string) {
+    let result = undefined;
+
+    console.log(this.translateService.instant('link'));
+
     // Find/Replace reference links ([1, 2]) in text
     // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
-    if (text.match(this.references)) {
-      text = text.replace(
+    if (textFragment.match(this.references)) {
+      result = textFragment.replace(
         this.references,
-        '<span class="link link--anchor">$1</span>'
+        '<a href="$1" class="link link--publication">%LINK%</a>'
       );
+      const translation = this.translateService.instant(localeStr);
+      return result.replace('%LINK%', translation, '/g');
     }
 
-    return text;
+    return textFragment;
   }
 }
