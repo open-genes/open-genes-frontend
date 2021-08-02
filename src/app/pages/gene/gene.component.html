@@ -142,45 +142,6 @@
                   </div>
                 </div>
 
-                <div *ngIf="gene.band || gene.locationStart || gene.locationEnd"
-                     class="age__type">
-                  <div class="type__inner">
-                    <div class="type__title">
-                      {{ 'gene_page_title_position' | translate }}
-                    </div>
-                    <ul class="list">
-                      <li
-                        *ngIf="gene.band"
-                      ><b>{{ 'gene_page_cytogenetic_band' | translate }}:</b> {{ gene.band }}</li>
-
-                      <li
-                        *ngIf="gene.locationStart"
-                      ><b>{{ 'gene_page_location_start' | translate }}:</b> {{ gene.locationStart }}</li>
-
-                      <li
-                        *ngIf="gene.locationEnd"
-                      ><b>{{ 'gene_page_location_end' | translate }}:</b> {{ gene.locationEnd }}</li>
-
-                      <li
-                        *ngIf="gene.orientation"
-                      ><b>{{ 'gene_page_orientation' | translate }}:</b>
-
-                        <ng-container
-                          *ngIf="gene.orientation === 1; then plusStrand; else minusStrand"
-                        ></ng-container>
-
-                        <ng-template #plusStrand>
-                          {{ 'gene_page_orientation_plus_strand' | translate }}
-                        </ng-template>
-
-                        <ng-template #minusStrand>
-                          {{ 'gene_page_orientation_minus_strand' | translate }}
-                        </ng-template>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
                 <div
                   *ngIf="isAnyOrtholog"
                   class="age__type age__orthologs"> <!-- TODO: отображается пустое, приходит {"":""} -->
@@ -197,6 +158,46 @@
                   </div>
                 </div>
               </div>
+            </section>
+
+            <section *ngIf="isNcbiDescription || isLocationData">
+              <h3>{{ 'gene_page_title_description' | translate }}</h3>
+              <article>
+                <p *ngIf="isNcbiDescription"
+                  [innerHTML]="gene.descriptionNCBI"></p>
+
+                <ul *ngIf="isLocationData"
+                    class="list" >
+                  <li
+                    *ngIf="gene.band"
+                  ><b>{{ 'gene_page_cytogenetic_band' | translate }}:</b> {{ gene.band }}</li>
+
+                  <li
+                    *ngIf="gene.locationStart"
+                  ><b>{{ 'gene_page_location_start' | translate }}:</b> {{ gene.locationStart }}</li>
+
+                  <li
+                    *ngIf="gene.locationEnd"
+                  ><b>{{ 'gene_page_location_end' | translate }}:</b> {{ gene.locationEnd }}</li>
+
+                  <li
+                    *ngIf="gene.orientation"
+                  ><b>{{ 'gene_page_orientation' | translate }}:</b>
+
+                    <ng-container
+                      *ngIf="gene.orientation === 1; then plusStrand; else minusStrand"
+                    ></ng-container>
+
+                    <ng-template #plusStrand>
+                      {{ 'gene_page_orientation_plus_strand' | translate }}
+                    </ng-template>
+
+                    <ng-template #minusStrand>
+                      {{ 'gene_page_orientation_minus_strand' | translate }}
+                    </ng-template>
+                  </li>
+                </ul>
+              </article>
             </section>
 
             <section class="wrapper gene-page__articles">
@@ -256,7 +257,7 @@
                 </section>
 
                 <section
-                  *ngIf="isGeneOntology"
+                  *ngIf="isAnyGoCategory"
                   id="terms"
                 >
                   <h3 class="notranslate">Gene Ontology</h3>
