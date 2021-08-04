@@ -39,6 +39,7 @@ $research-tables: (
 
 .comment-modal {
   &__header,
+  &__cover
   &__body {
     width: 100%;
     box-sizing: border-box;
@@ -46,16 +47,27 @@ $research-tables: (
 
   &__header {
     position: relative;
+    padding-right: 40px;
     margin-bottom: 15px;
 
     .title {
       font-size: 16px;
+      font-weight: $font-weight-medium;
       color: $color-black;
     }
 
     .close-button {
       color: $color-accent;
       @include close-button(-10px);
+    }
+  }
+
+  &__cover {
+    margin-bottom: 10px;
+
+    img {
+      width: 100%;
+      height: auto;
     }
   }
 
