@@ -7,6 +7,8 @@ import {
   EventEmitter,
   Output,
   Input,
+  ViewChild,
+  TemplateRef,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
@@ -15,6 +17,7 @@ import { takeUntil } from 'rxjs/operators';
 import { EightyLevelService } from '../../../core/services/api/80level.api.service';
 import { environment } from '../../../../environments/environment';
 import { MockApiService } from '../../../core/services/api/mock.api.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-articles-list',
@@ -45,11 +48,14 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   @Output()
   newArticlesLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  @ViewChild('articleModalBody') dialogRef: TemplateRef<any>;
+
   constructor(
     public translate: TranslateService,
     private readonly eightyLevelService: EightyLevelService,
     private readonly mock: MockApiService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -67,10 +73,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   private handleResponse(data): void {
     console.log(environment.name);
-    if (environment.name !== 'prod') {
-      this.articlesList.push(...data.articles.items);
-      this.articlesTotal = data.articles.total;
-    }
+    this.articlesList.push(...data.articles.items);
+    this.articlesTotal = data.articles.total;
 
     if (this.articlesList?.length !== 0) {
       // Set page length after checking the length of the 1st page
@@ -137,6 +141,32 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
           );
       }
     }
+  }
+
+  public openArticleModal(slug): void {
+    // Subscribe and get one article data
+    this.eightyLevelService
+      .getArticle(slug)
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
+        (response) => {
+          console.log(response);
+          this.dialog.open(this.dialogRef, {
+            data: response,
+            panelClass: 'article-modal',
+            minWidth: '320px',
+            maxWidth: '768px',
+            maxHeight: '480px', // TODO: make a global object with modal settings
+          });
+        },
+        () => {
+          console.warn(`Can't get an article by id ${slug}`);
+          this.dialog.closeAll();
+        }
+      );
+  }
+  public closeArticleModal(): void {
+    this.dialog.closeAll();
   }
 
   ngOnDestroy() {

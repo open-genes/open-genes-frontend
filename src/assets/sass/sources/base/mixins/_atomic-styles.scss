@@ -1,0 +1,19 @@
+// Close or menu button
+@mixin close-button($right: 10px, $top: 50%) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  z-index: 6;
+  transform: translateY(-50%);
+  font-size: 20px;
+
+  .fa {
+    line-height: normal;
+    vertical-align: -1px;
+  }
+
+  &.active,
+  &:hover {
+    color: $color-accent;
+  }
+}

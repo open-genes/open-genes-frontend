@@ -30,6 +30,7 @@ mat-card {
 
     .card__inner {
       height: 100%;
+      min-height: 80px;
       border-radius: 10px;
       padding: 10px;
       font-size: $font-size-smaller;

@@ -1,6 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Researches } from '../../../core/models/openGenesApi/researches.model';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-researches',
@@ -18,7 +25,9 @@ export class ResearchesComponent implements OnInit {
   public isGeneAssociatedWithLongevityEffects: boolean;
   public isAdditionalEvidences: boolean;
 
-  constructor(public translate: TranslateService) {}
+  @ViewChild('commentModalBody') dialogRef: TemplateRef<any>;
+
+  constructor(public translate: TranslateService, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.isIncreaseLifespan =
@@ -48,5 +57,18 @@ export class ResearchesComponent implements OnInit {
     this.isAdditionalEvidences =
       this.researches?.additionalEvidences &&
       this.researches?.additionalEvidences.length !== 0;
+  }
+
+  public openCommentModal(data): void {
+    this.dialog.open(this.dialogRef, {
+      data: data,
+      panelClass: 'comment-modal',
+      minWidth: '320px',
+      maxWidth: '768px',
+      maxHeight: '480px',
+    });
+  }
+  public closeCommentModal(): void {
+    this.dialog.closeAll();
   }
 }

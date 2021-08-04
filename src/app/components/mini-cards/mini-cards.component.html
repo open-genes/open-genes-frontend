@@ -1,14 +1,19 @@
 <section class="view-latest">
   <div class="view-latest__content">
-    <a *ngFor="let item of lastGenes"
-       [routerLink]="['/gene', item.symbol]"
-       class="view-latest__card">
+    <a
+      *ngFor="let item of lastGenes"
+      [routerLink]="['/gene', item.symbol]"
+      class="view-latest__card"
+    >
       <div class="card__inner">
         <div class="card__title">{{ item.symbol }}</div>
-        <div class="card__phylo">{{ item.origin.phylum }}</div>
-        <div class="card__mya">{{ item.origin.age }} {{ 'million_years' | translate }}</div>
+        <div *ngIf="item.origin.phylum"
+             class="card__phylo">{{ item.origin.phylum || 'gene_page_no_data' | translate }}</div>
+        <div *ngIf="item.origin.age"
+             class="card__mya">
+          {{ item.origin.age }} {{ "million_years" | translate }}
+        </div>
       </div>
     </a>
   </div>
 </section>
-

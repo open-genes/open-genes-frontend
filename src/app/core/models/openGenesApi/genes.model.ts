@@ -18,7 +18,7 @@ interface GeneralGeneInfo {
   origin: Origin;
   ncbiId: number;
   uniprot: string;
-  timestamp: number;
+  timestamp: string;
   homologueTaxon: string;
 }
 
@@ -41,12 +41,10 @@ export interface Gene extends GeneralGeneInfo {
   commentEvolutionEN: string;
   commentFunctionEN: string;
   commentAgingEN: string;
-  descriptionNCBI: string;
-  ensembl: string;
+  researches: Researches;
   expression: Array<any>;
   expressionEN: string;
   proteinClasses: string[]; // TODO: they don't match by order with human_protein_atlas.ProteinClass
-  researches: Researches;
   terms?: Terms;
   commentsReferenceLinks: { [n: number]: string };
   rating: number; // TODO: delete this field
