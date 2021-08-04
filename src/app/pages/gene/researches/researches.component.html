@@ -3,25 +3,35 @@
   <div class="table-section __mt-20 __w-content">
     <table class="table">
       <thead>
-        <th class="__cell-width-medium">{{ "researches_method" | translate }}</th>
-        <th class="__cell-width-medium">{{ "researches_result" | translate }}</th>
+        <th class="__cell-width-medium">
+          {{ "researches_method" | translate }}
+        </th>
+        <th class="__cell-width-medium">
+          {{ "researches_result" | translate }}
+        </th>
         <th>{{ "researches_object" | translate }}</th>
         <th>{{ "researches_line" | translate }}</th>
         <th>{{ "researches_age" | translate }}<sup>*</sup></th>
         <th>{{ "researches_genotype" | translate }}</th>
-        <th class="__nowrap">
-          {{ "researches_change" | translate }}&nbsp;<span class="fa fal fa-mars"></span><sup>**</sup>
-        </th>
-        <th class="__nowrap">
-          {{ "researches_change" | translate }}&nbsp;<span class="fa fal fa-venus"></span><sup>**</sup>
-        </th>
-        <th class="__nowrap">
-          {{ "researches_change" | translate }}&nbsp;<span class="fa fal fa-venus"></span>&nbsp;<span
+        <th>
+          {{ "researches_change" | translate }}&nbsp;<span
             class="fa fal fa-mars"
           ></span
           ><sup>**</sup>
         </th>
-        <th class="__cell-width-large">
+        <th>
+          {{ "researches_change" | translate }}&nbsp;<span
+            class="fa fal fa-venus"
+          ></span
+          ><sup>**</sup>
+        </th>
+        <th>
+          {{ "researches_change" | translate }}&nbsp;<span
+            class="fa fal fa-venus"
+          ></span
+          >&nbsp;<span class="fa fal fa-mars"></span><sup>**</sup>
+        </th>
+        <th>
           {{ "researches_comment" | translate }}
         </th>
         <th>{{ "researches_reference" | translate }}</th>
@@ -29,34 +39,39 @@
 
       <tr *ngFor="let item of researches.increaseLifespan">
         <td>
-          {{ item.interventionType || '–' }}
+          {{ item.interventionType || "–" }}
         </td>
         <td>
-          {{ item.longevityEffect || '–' }}
+          {{ item.longevityEffect || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.modelOrganism || '–' }}
+          {{ item.modelOrganism || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.organismLine || '–' }}
+          {{ item.organismLine || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.age || '–' }}
+          {{ item.age || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.genotype || '–' }}
+          {{ item.genotype || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.valueForMale || '–' }}
+          {{ item.valueForMale || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.valueForFemale || '–' }}
+          {{ item.valueForFemale || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.valueForAll || '–' }}
+          {{ item.valueForAll || "–" }}
         </td>
         <td>
-          {{ item.comment || '–' }}
+          <button
+            class="btn btn--small btn-purple btn-flat"
+            (click)="openCommentModal(item.comment)"
+          >
+            {{ "researches_comment_button" | translate }}
+          </button>
         </td>
         <td class="__cell-width-medium">
           <ng-container
@@ -89,14 +104,23 @@
         <th>{{ "researches_age_from" | translate }}</th>
         <th>{{ "researches_age_to" | translate }}</th>
         <th>{{ "age_related_changes_measurement_method" | translate }}</th>
-        <th>{{ "researches_change" | translate }}&nbsp;<span class="fa fal fa-mars"></span></th>
-        <th>{{ "researches_change" | translate }}&nbsp;<span class="fa fal fa-venus"></span></th>
         <th>
-          {{ "researches_change" | translate }}&nbsp;<span class="fa fal fa-venus"></span>&nbsp;<span
+          {{ "researches_change" | translate }}&nbsp;<span
             class="fa fal fa-mars"
           ></span>
         </th>
-        <th class="__cell-width-large">
+        <th>
+          {{ "researches_change" | translate }}&nbsp;<span
+            class="fa fal fa-venus"
+          ></span>
+        </th>
+        <th>
+          {{ "researches_change" | translate }}&nbsp;<span
+            class="fa fal fa-venus"
+          ></span
+          >&nbsp;<span class="fa fal fa-mars"></span>
+        </th>
+        <th>
           {{ "researches_comment" | translate }}
         </th>
         <th>{{ "researches_reference" | translate }}</th>
@@ -104,37 +128,42 @@
 
       <tr *ngFor="let item of researches.ageRelatedChangesOfGene">
         <td>
-          {{ item.changeType || '–' }}
+          {{ item.changeType || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.modelOrganism || '–' }}
+          {{ item.modelOrganism || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.organismLine || '–' }}
+          {{ item.organismLine || "–" }}
         </td>
         <td>
-          {{ item.sample || '–' }}
+          {{ item.sample || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.ageFrom || '–' }}
+          {{ item.ageFrom || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.ageTo || '–' }}
+          {{ item.ageTo || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.measurementType || '–' }}
+          {{ item.measurementType || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.valueForMale || '–' }}
+          {{ item.valueForMale || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.valueForFemale || '–' }}
+          {{ item.valueForFemale || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.valueForAll || '–' }}
+          {{ item.valueForAll || "–" }}
         </td>
         <td>
-          {{ item.comment || '–' }}
+          <button
+            class="btn btn--small btn-purple btn-flat"
+            (click)="openCommentModal(item.comment)"
+          >
+            {{ "researches_comment_button" | translate }}
+          </button>
         </td>
         <td class="__cell-width-medium">
           <ng-container
@@ -164,39 +193,46 @@
         <th>{{ "researches_sex" | translate }}</th>
         <th>{{ "researches_line" | translate }}</th>
         <th>{{ "researches_genotype" | translate }}</th>
-        <th class="__cell-width-large">
+        <th>
           {{ "researches_comment" | translate }}
         </th>
         <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
-      <tr *ngFor="let item of researches.interventionToGeneImprovesVitalProcesses">
+      <tr
+        *ngFor="let item of researches.interventionToGeneImprovesVitalProcesses"
+      >
         <td>
-          {{ item.geneIntervention || '–' }}
+          {{ item.geneIntervention || "–" }}
         </td>
         <td>
-          {{ item.interventionResultForVitalProcess || '–' }}
+          {{ item.interventionResultForVitalProcess || "–" }}
         </td>
         <td>
-          {{ item.vitalProcess || '–' }}
+          {{ item.vitalProcess || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.modelOrganism || '–' }}
+          {{ item.modelOrganism || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.age || '–' }}
+          {{ item.age || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.sex || '–' }}
+          {{ item.sex || "–" }}
         </td>
         <td>
-          {{ item.organismLine || '–' }}
+          {{ item.organismLine || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.genotype || '–' }}
+          {{ item.genotype || "–" }}
         </td>
         <td>
-          {{ item.comment || '–' }}
+          <button
+            class="btn btn--small btn-purple btn-flat"
+            (click)="openCommentModal(item.comment)"
+          >
+            {{ "researches_comment_button" | translate }}
+          </button>
         </td>
         <td class="__cell-width-medium">
           <ng-container
@@ -222,7 +258,7 @@
         </th>
         <th>{{ "gene" | translate }}</th>
         <th>{{ "researches_regulation_type" | translate }}</th>
-        <th class="__cell-width-large">
+        <th>
           {{ "researches_comment" | translate }}
         </th>
         <th>{{ "researches_reference" | translate }}</th>
@@ -230,7 +266,7 @@
 
       <tr *ngFor="let item of researches.proteinRegulatesOtherGenes">
         <td>
-          {{ item.proteinActivity || '–' }}
+          {{ item.proteinActivity || "–" }}
         </td>
         <td>
           <a href="gene/{{ item.regulatedGene.symbol }}" class="link">{{
@@ -238,10 +274,15 @@
           }}</a>
         </td>
         <td>
-          {{ item.regulationType || '–' }}
+          {{ item.regulationType || "–" }}
         </td>
         <td>
-          {{ item.comment || '–' }}
+          <button
+            class="btn btn--small btn-purple btn-flat"
+            (click)="openCommentModal(item.comment)"
+          >
+            {{ "researches_comment_button" | translate }}
+          </button>
         </td>
         <td class="__cell-width-medium">
           <ng-container
@@ -260,7 +301,7 @@
     <table class="table table--gene-to-progeria">
       <thead>
         <th>{{ "progeria_syndrome" | translate }}</th>
-        <th class="__cell-width-large">
+        <th>
           {{ "researches_comment" | translate }}
         </th>
         <th>{{ "researches_reference" | translate }}</th>
@@ -268,10 +309,15 @@
 
       <tr *ngFor="let item of researches.geneAssociatedWithProgeriaSyndromes">
         <td>
-          {{ item.progeriaSyndrome || '–' }}
+          {{ item.progeriaSyndrome || "–" }}
         </td>
         <td>
-          {{ item.comment || '–' }}
+          <button
+            class="btn btn--small btn-purple btn-flat"
+            (click)="openCommentModal(item.comment)"
+          >
+            {{ "researches_comment_button" | translate }}
+          </button>
         </td>
         <td class="__cell-width-medium">
           <ng-container
@@ -290,7 +336,9 @@
     <table class="table table--gene-to-longevity-effect">
       <thead>
         <th>{{ "researches_data_type" | translate }}</th>
-        <th class="__cell-width-small">{{ "researches_phenotype" | translate }}</th>
+        <th class="__cell-width-small">
+          {{ "researches_phenotype" | translate }}
+        </th>
         <th class="__cell-width-small">
           {{ "gene_page_allelic_polymorphism" | translate }}
         </th>
@@ -300,38 +348,41 @@
         <th>{{ "gene_page_researches_transcriptome_proteome" | translate }}</th>
         <th>{{ "researches_model_organism" | translate }}</th>
         <th>{{ "researches_sex" | translate }}</th>
-        <th class="__cell-width-large">
+        <th>
           {{ "researches_comment" | translate }}
         </th>
         <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
-      <tr
-        *ngFor="let item of researches.geneAssociatedWithLongevityEffects"
-      >
+      <tr *ngFor="let item of researches.geneAssociatedWithLongevityEffects">
         <td>
-          {{ item.dataType || '–' }}
+          {{ item.dataType || "–" }}
         </td>
         <td>
-          {{ item.longevityEffect || '–' }}
+          {{ item.longevityEffect || "–" }}
         </td>
         <td>
-          {{ item.allelicPolymorphism || '–' }}
+          {{ item.allelicPolymorphism || "–" }}
         </td>
         <td>
-          {{ item.allelicVariant || '–' }}
+          {{ item.allelicVariant || "–" }}
         </td>
         <td>
-          {{ item.changeType || '–' }}
+          {{ item.changeType || "–" }}
         </td>
         <td class="__nowrap">
-          {{ item.modelOrganism || '–' }}
+          {{ item.modelOrganism || "–" }}
         </td>
         <td>
-          {{ item.sex || '–' }}
+          {{ item.sex || "–" }}
         </td>
         <td>
-          {{ item.comment || '–' }}
+          <button *ngIf="item?.comment.length !== 0"
+            class="btn btn--small btn-purple btn-flat"
+            (click)="openCommentModal(item.comment)"
+          >
+            {{ "researches_comment_button" | translate }}
+          </button>
         </td>
         <td class="__cell-width-medium">
           <ng-container
@@ -349,15 +400,13 @@
   <div class="table-section __mt-20 __w-content">
     <table class="table table--gene-to-additional-evidence">
       <thead>
-        <th class="__cell-width-large">
+        <th>
           {{ "researches_comment" | translate }}
         </th>
         <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
-      <tr
-        *ngFor="let item of researches.additionalEvidences"
-      >
+      <tr *ngFor="let item of researches.additionalEvidences">
         <td>
           {{ item.comment }}
         </td>
@@ -388,4 +437,21 @@
     target="_blank"
     >{{ item?.pmid }}</a
   ><br />
+</ng-template>
+
+<ng-template #commentModalBody let-data>
+  <div class="comment-modal__header">
+    <span class="title">
+      {{ "researches_comment" | translate }}
+    </span>
+    <button mat-icon-button
+            class="close-button"
+            (click)="closeCommentModal()"
+            aria-label="Закрыть">
+      <span class="fa fal fa-times"></span>
+    </button>
+  </div>
+  <div class="comment-modal__body">
+    {{ data }}
+  </div>
 </ng-template>

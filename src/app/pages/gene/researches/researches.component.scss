@@ -1,3 +1,5 @@
+@import "../../styles";
+
 $research-tables: (
   age-related-change: #c8e5fd, // Возрастные изменения экспрессии гена или активности белка
   gene-intervention-to-vital-processes: #c1e2aa, // Влияние модуляции активности гена на возрастной процесс
@@ -32,5 +34,32 @@ $research-tables: (
     &--#{$class} th:first-child::before {
       background: $color;
     }
+  }
+}
+
+.comment-modal {
+  &__header,
+  &__body {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &__header {
+    position: relative;
+    margin-bottom: 15px;
+
+    .title {
+      font-size: 16px;
+      color: $color-black;
+    }
+
+    .close-button {
+      color: $color-accent;
+      @include close-button(-10px);
+    }
+  }
+
+  &__body {
+    line-height: $font-line-height;
   }
 }
