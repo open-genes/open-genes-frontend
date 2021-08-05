@@ -32,6 +32,7 @@
               <div class="article__top-group">
                 <div
                   (click)="openArticleModal(article.slug)"
+                  [ngClass]="isAnyArticleModalOpen? '__disabled': ''"
                   class="article__image"
                   [style.backgroundImage]="
               article.image.src.length !== 0
@@ -39,7 +40,8 @@
                 : 'url(' + defaultCover + ')'"
                 ></div>
                 <div class="article__text">
-                  <h3 (click)="openArticleModal(article.slug)">
+                  <h3 (click)="openArticleModal(article.slug)"
+                      [ngClass]="isAnyArticleModalOpen? '__disabled': ''">
                     {{ article.title }}
                   </h3>
                   <div *ngIf="!isMiniMode"
