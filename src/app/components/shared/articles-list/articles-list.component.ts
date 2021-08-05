@@ -150,7 +150,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       .pipe(takeLast(1))
       .subscribe(
         (response) => {
-          console.log(response);
           this.dialog.open(this.dialogRef, {
             data: response,
             panelClass: 'article-modal',
