@@ -122,20 +122,31 @@
 </section>
 
 <ng-template #articleModalBody let-data>
-  <div class="article-modal__header">
-    <span class="title">
-      {{ data.title }} {{ data?.subtitle }}
-    </span>
+  <div class="article-modal__header" mat-dialog-title>
+    {{ data.title }} {{ data?.subtitle }}
+
     <button mat-icon-button
             class="close-button"
             (click)="closeArticleModal()"
             aria-label="Закрыть">
       <span class="fa fal fa-times"></span>
     </button>
+    <ng-container *ngIf="isMocked"> <!-- temporarily disabled -->
+      <!-- TODO: transfer this logic into a modal window class -->
+      <ng-container *ngFor="let item of data.content">
+        <ng-container *ngIf="item?.type === 'image-widget'">
+          <div *ngIf="item?.content?.image?.url?.src.length !== 0"
+               class="article-modal__cover">
+            <img [src]="'url(' + item?.content?.image?.url?.src + ')'"
+                 alt="">
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
   </div>
-    <ng-container *ngFor="let item of data.content">
+    <mat-dialog-content *ngFor="let item of data.content">
       <ng-container *ngIf="item?.type === 'editor'">
         <article class="article-modal__body" [innerHTML]="item.content.text"></article>
       </ng-container>
-    </ng-container>
+    </mat-dialog-content>
 </ng-template>

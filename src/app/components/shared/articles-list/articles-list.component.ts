@@ -13,7 +13,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { I80levelResponseArticle } from '../../../core/models/vendorsApi/80level/80level.model';
-import { takeUntil } from 'rxjs/operators';
+import { takeLast, takeUntil } from 'rxjs/operators';
 import { EightyLevelService } from '../../../core/services/api/80level.api.service';
 import { environment } from '../../../../environments/environment';
 import { MockApiService } from '../../../core/services/api/mock.api.service';
@@ -72,7 +72,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   private handleResponse(data): void {
-    console.log(environment.name);
     this.articlesList.push(...data.articles.items);
     this.articlesTotal = data.articles.total;
 
@@ -148,6 +147,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.eightyLevelService
       .getArticle(slug)
       .pipe(takeUntil(this.subscription$))
+      .pipe(takeLast(1))
       .subscribe(
         (response) => {
           console.log(response);
@@ -155,8 +155,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
             data: response,
             panelClass: 'article-modal',
             minWidth: '320px',
-            maxWidth: '768px',
-            maxHeight: '480px', // TODO: make a global object with modal settings
+            maxWidth: '768px', // TODO: make a global object with modal settings
           });
         },
         () => {
