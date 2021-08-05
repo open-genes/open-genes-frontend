@@ -65,7 +65,6 @@ export class ResearchesComponent implements OnInit {
       panelClass: 'comment-modal',
       minWidth: '320px',
       maxWidth: '768px',
-      maxHeight: '480px',
     });
   }
   public closeCommentModal(): void {

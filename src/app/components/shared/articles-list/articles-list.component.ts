@@ -11,7 +11,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
+import { AsyncSubject, Subject } from 'rxjs';
 import { I80levelResponseArticle } from '../../../core/models/vendorsApi/80level/80level.model';
 import { takeUntil } from 'rxjs/operators';
 import { EightyLevelService } from '../../../core/services/api/80level.api.service';
@@ -38,8 +38,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public articlesTotal = 0;
   public responsePagePortion: number;
   public articleTags: any[] = [];
+  public isAnyArticleModalOpen = false;
 
   private subscription$ = new Subject();
+  private oneArticleSubscription$ = new AsyncSubject();
   private httpCallsCounter = 0;
   private showOnlyForOpenGenes = true;
 
@@ -72,7 +74,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   private handleResponse(data): void {
-    console.log(environment.name);
     this.articlesList.push(...data.articles.items);
     this.articlesTotal = data.articles.total;
 
@@ -144,32 +145,36 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public openArticleModal(slug): void {
+    this.isAnyArticleModalOpen = true;
+
     // Subscribe and get one article data
     this.eightyLevelService
       .getArticle(slug)
-      .pipe(takeUntil(this.subscription$))
+      .pipe(takeUntil(this.oneArticleSubscription$))
       .subscribe(
         (response) => {
-          console.log(response);
+          this.isAnyArticleModalOpen = false;
+          this.cdRef.markForCheck();
           this.dialog.open(this.dialogRef, {
             data: response,
             panelClass: 'article-modal',
             minWidth: '320px',
-            maxWidth: '768px',
-            maxHeight: '480px', // TODO: make a global object with modal settings
+            maxWidth: '768px', // TODO: make a global object with modal settings
           });
         },
         () => {
           console.warn(`Can't get an article by id ${slug}`);
-          this.dialog.closeAll();
+          this.closeArticleModal();
         }
       );
   }
   public closeArticleModal(): void {
     this.dialog.closeAll();
+    this.isAnyArticleModalOpen = false;
   }
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
+    this.oneArticleSubscription$.unsubscribe();
   }
 }
