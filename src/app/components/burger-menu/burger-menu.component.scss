@@ -5,22 +5,7 @@
 }
 
 .signin-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 10px;
-  z-index: 6;
-  font-size: 20px;
-
-  .fa {
-    line-height: normal;
-    vertical-align: -1px;
-  }
-
-  &.active,
-  &:hover {
-    color: #fe6231;
-  }
+  @include close-button;
 }
 
 .header__menu {

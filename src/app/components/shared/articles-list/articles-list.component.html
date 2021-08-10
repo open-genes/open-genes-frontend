@@ -2,20 +2,20 @@
   <!-- There is no content in English yet and 80lvl API doesn't have language support -->
   <ng-container *ngIf="!isLoading; else skeleton">
     <ng-container *ngIf="articlesList.length !== 0">
-
-
-      <div *ngIf="!isMiniMode && articleTags.length !== 0"
-           class="tag-list col-12">
-        <ng-container *ngFor="let tag of articleTags">
-          <a *ngIf="tag.slug !== 'open-genes'"
-             href="{{ environment.openLongevity80LevelCMS }}category/{{ tag.slug }}"
-             target="_blank"
-             class="alias">
-            {{ tag.name }}
-            <span class="fa fal fa-external-link"></span>
-          </a>
-        </ng-container>
-      </div>
+      <ng-container *ngIf="environment.name !== 'prod'">
+        <div *ngIf="!isMiniMode && articleTags.length !== 0"
+             class="tag-list col-12">
+          <ng-container *ngFor="let tag of articleTags">
+            <a *ngIf="tag.slug !== 'open-genes'"
+               href="{{ environment.openLongevity80LevelCMS }}category/{{ tag.slug }}"
+               target="_blank"
+               class="alias">
+              {{ tag.name }}
+              <span class="fa fal fa-external-link"></span>
+            </a>
+          </ng-container>
+        </div>
+      </ng-container>
 
       <ng-container *ngFor="let article of articlesList | slice: 0:sliceTo">
         <div class="article {{ isMiniMode ? 'article--mini' : 'col-xs-12 col-sm-6 col-lg-6 col-xl-4' }}">
@@ -30,22 +30,19 @@
               ></div>
 
               <div class="article__top-group">
-                <a
-                  href="{{ environment.openLongevity80LevelCMS }}articles/{{ article.slug }}"
-                  target="_blank"
+                <div
+                  (click)="openArticleModal(article.slug)"
+                  [ngClass]="isAnyArticleModalOpen? '__disabled': ''"
                   class="article__image"
                   [style.backgroundImage]="
               article.image.src.length !== 0
                 ? 'url(' + article.image.src2x + ')'
                 : 'url(' + defaultCover + ')'"
-                ></a>
+                ></div>
                 <div class="article__text">
-                  <h3>
-                    <a
-                      href="{{ environment.openLongevity80LevelCMS }}articles/{{ article.slug }}"
-                      target="_blank"
-                    >{{ article.title }}</a
-                    >
+                  <h3 (click)="openArticleModal(article.slug)"
+                      [ngClass]="isAnyArticleModalOpen? '__disabled': ''">
+                    {{ article.title }}
                   </h3>
                   <div *ngIf="!isMiniMode"
                        class="truncated-text">
@@ -54,7 +51,7 @@
                 </div>
               </div>
 
-              <div *ngIf="!isMiniMode"
+              <div *ngIf="environment.name !== 'prod' || !isMiniMode"
                    class="article__tags">
                 <ng-container *ngFor="let tag of article.tags">
                   <a
@@ -71,8 +68,9 @@
             <div *ngIf="!isMiniMode"
                  class="article__footer">
               <a
-                href="{{ environment.openLongevity80LevelCMS }}author/{{ article.author.pseudonym }}"
-                target="_blank"
+                [href]="environment.name !== 'prod'
+                ? environment.openLongevity80LevelCMS + 'author/' + article.author.pseudonym
+                : '#'"
                 class="article__author"
               >
                 <div
@@ -124,3 +122,33 @@
     </div>
   </div>
 </section>
+
+<ng-template #articleModalBody let-data>
+  <div class="article-modal__header" mat-dialog-title>
+    {{ data.title }} {{ data?.subtitle }}
+
+    <button mat-icon-button
+            class="close-button"
+            (click)="closeArticleModal()"
+            aria-label="Закрыть">
+      <span class="fa fal fa-times"></span>
+    </button>
+    <ng-container *ngIf="isMocked"> <!-- temporarily disabled -->
+      <!-- TODO: transfer this logic into a modal window class -->
+      <ng-container *ngFor="let item of data.content">
+        <ng-container *ngIf="item?.type === 'image-widget'">
+          <div *ngIf="item?.content?.image?.url?.src.length !== 0"
+               class="article-modal__cover">
+            <img [src]="'url(' + item?.content?.image?.url?.src + ')'"
+                 alt="">
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+    <mat-dialog-content *ngFor="let item of data.content">
+      <ng-container *ngIf="item?.type === 'editor'">
+        <article class="article-modal__body" [innerHTML]="item.content.text"></article>
+      </ng-container>
+    </mat-dialog-content>
+</ng-template>
