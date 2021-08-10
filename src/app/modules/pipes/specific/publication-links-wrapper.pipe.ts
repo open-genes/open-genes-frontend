@@ -40,7 +40,7 @@ export class PublicationLinksWrapperPipe implements PipeTransform {
         // Wrap link in HTML element
         const wrappedInLink = word.replace(
           this.references,
-          '<a href="$1" class="link link--publication">%LINK%</a>'
+          '<a href="$1" target="_blank" class="link link--publication">%LINK%</a>'
         );
         const prefixedLink = wrappedInLink.replace('href="', urlPrefix);
         words[i] = prefixedLink.replace('%LINK%', translation);
