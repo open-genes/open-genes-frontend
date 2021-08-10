@@ -79,12 +79,6 @@
                 </a>
 
                 <a mat-list-item
-                   *ngIf="!isAnyResearchFilled && gene.commentAging"
-                   [routerLink]="['/gene', symbol]" fragment="aging">
-                  {{ 'gene_page_title_aging' | translate }}
-                </a>
-
-                <a mat-list-item
                    *ngIf="gene.expression.length !== 0"
                    [routerLink]="['/gene', symbol]" fragment="expression">
                   {{ 'gene_page_title_expression' | translate }}
@@ -215,7 +209,7 @@
                 </section>
 
                 <section>
-                  <h2 *ngIf="gene.commentEvolution || (!isAnyResearchFilled && gene.commentAging)"
+                  <h2 *ngIf="gene.commentEvolution || gene.commentFunction"
                       class="__mb-15"
                   >{{ 'gene_page_title_summary' | translate }}</h2>
 
@@ -236,15 +230,6 @@
                     >
                     </article>
                   </ng-container>
-
-                  <section *ngIf="!isAnyResearchFilled && gene.commentAging">
-                    <h3>{{ 'gene_page_title_aging' | translate }}</h3>
-                    <article
-                      id="aging"
-                      [innerHTML]="gene.commentAging | publicationLinksWrap: 'link'"
-                    >
-                    </article>
-                  </section>
                 </section>
 
                 <section
