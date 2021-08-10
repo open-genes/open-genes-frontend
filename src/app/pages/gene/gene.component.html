@@ -229,7 +229,7 @@
                     <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
                     <article
                       id="evolution"
-                      [innerHTML]="gene.commentEvolution | publicationLinks: 'link'"
+                      [innerHTML]="gene.commentEvolution | publicationLinksWrap: 'link'"
                     >
                     </article>
                   </ng-container>
@@ -238,7 +238,7 @@
                     <h3>{{ 'gene_page_title_function' | translate }}</h3>
                     <article
                       id="function"
-                      [innerHTML]="gene.commentFunction | publicationLinks: 'link'"
+                      [innerHTML]="gene.commentFunction | publicationLinksWrap: 'link'"
                     >
                     </article>
                   </ng-container>
@@ -247,7 +247,7 @@
                     <h3>{{ 'gene_page_title_aging' | translate }}</h3>
                     <article
                       id="aging"
-                      [innerHTML]="gene.commentAging | publicationLinks: 'link'"
+                      [innerHTML]="gene.commentAging | publicationLinksWrap: 'link'"
                     >
                     </article>
                   </section>

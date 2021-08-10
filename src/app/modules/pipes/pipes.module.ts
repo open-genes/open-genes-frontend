@@ -7,7 +7,7 @@ import { LocalizedDatePipe } from './general/i18n-date.pipe';
 import { UnixTimeFormatterPipe } from './general/unix-time-formatter.pipe';
 import { ReplacePipe } from './general/replace.pipe';
 import { ZeroPaddingPipe } from './specific/zero-padding.pipe';
-import { PublicationLinksPipe } from './specific/publication-links.pipe';
+import { PublicationLinksWrapperPipe } from './specific/publication-links-wrapper.pipe';
 import { getResearchStatsById } from './specific/getResearchStatsById.pipe';
 import { AnchorLinksPipe } from './specific/anchor-links.pipe';
 
@@ -22,7 +22,7 @@ const GENERAL_PIPES = [
 
 const SPECIFIC_PIPES = [
   ZeroPaddingPipe,
-  PublicationLinksPipe,
+  PublicationLinksWrapperPipe,
   AnchorLinksPipe,
   getResearchStatsById,
 ];
