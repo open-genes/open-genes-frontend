@@ -104,12 +104,6 @@
                    [routerLink]="['/gene', symbol]" fragment="human-protein-atlas">
                   Human Protein Atlas
                 </a>
-
-                <a mat-list-item
-                   *ngIf="gene.commentsReferenceLinks.length > 1"
-                   [routerLink]="['/gene', symbol]" fragment="reference">
-                  {{ 'gene_page_title_reference' | translate }}
-                </a>
               </mat-nav-list>
             </div>
           </app-sidebar>
@@ -285,13 +279,6 @@
                     [hpa]="gene.human_protein_atlas"
                   ></app-human-protein-atlas>
                 </section>
-
-                <app-reference
-                  #Reference
-                  *ngIf="gene.commentsReferenceLinks.length !== 0"
-                  class="__mt-30"
-                  [gene]="this.commentsReferenceLinksMap"
-                ></app-reference>
               </div>
 
               <ng-template #noContent>
