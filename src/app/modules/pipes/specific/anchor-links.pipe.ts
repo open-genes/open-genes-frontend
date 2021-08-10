@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
   name: 'anchorLinks',
 })
-export class AnchorPipe implements PipeTransform {
+export class AnchorLinksPipe implements PipeTransform {
   references: any = /(\[(\S)*])/gi;
 
   transform(text: string) {

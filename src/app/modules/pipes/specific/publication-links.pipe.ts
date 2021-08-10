@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Pipe({
   name: 'publicationLinks',
 })
-export class LinkifyPipe implements PipeTransform {
+export class PublicationLinksPipe implements PipeTransform {
   constructor(private translateService: TranslateService) {}
   references: any = /\[(\S+)\]/gi;
 
