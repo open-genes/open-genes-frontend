@@ -228,9 +228,8 @@
                   <ng-container *ngIf="gene.commentEvolution">
                     <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
                     <article
-                      appDynamicContentAnchors
                       id="evolution"
-                      [innerHTML]="gene.commentEvolution | linkify: 'link'"
+                      [innerHTML]="gene.commentEvolution | publicationLinks: 'link'"
                     >
                     </article>
                   </ng-container>
@@ -238,9 +237,8 @@
                   <ng-container *ngIf="gene.commentFunction">
                     <h3>{{ 'gene_page_title_function' | translate }}</h3>
                     <article
-                      appDynamicContentAnchors
                       id="function"
-                      [innerHTML]="gene.commentFunction | linkify: 'link'"
+                      [innerHTML]="gene.commentFunction | publicationLinks: 'link'"
                     >
                     </article>
                   </ng-container>
@@ -248,9 +246,8 @@
                   <section *ngIf="!isAnyResearchFilled && gene.commentAging">
                     <h3>{{ 'gene_page_title_aging' | translate }}</h3>
                     <article
-                      appDynamicContentAnchors
                       id="aging"
-                      [innerHTML]="gene.commentAging | linkify: 'link'"
+                      [innerHTML]="gene.commentAging | publicationLinks: 'link'"
                     >
                     </article>
                   </section>

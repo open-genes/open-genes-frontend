@@ -19,7 +19,6 @@ import { ReferenceComponent } from './reference/reference.component';
 import { DynamicContentAnchorsDirective } from './directives/anchor-links.directive';
 import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
 import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
-import { PublicationLinksDirective } from './directives/publication-links.directive';
 
 @NgModule({
   declarations: [
@@ -30,7 +29,6 @@ import { PublicationLinksDirective } from './directives/publication-links.direct
     ExpressionComponent,
     ReferenceComponent,
     DynamicContentAnchorsDirective,
-    PublicationLinksDirective,
   ],
   imports: [
     CommonModule,
