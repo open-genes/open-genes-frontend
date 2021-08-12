@@ -10,7 +10,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { Subject, of, Observable } from 'rxjs';
+import { of, Observable, ReplaySubject } from 'rxjs';
 import { PageClass } from '../../../pages/page.class';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,7 +18,6 @@ import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
 import { FavouritesService } from 'src/app/core/services/favourites.service';
 import { FilterService } from './services/filter.service';
-import { WindowService } from 'src/app/core/services/browser/window.service';
 import { FilterTypesEnum } from './services/filter-types.enum';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenesListSettings } from './genes-list-settings.model';
@@ -59,7 +58,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public molecularActivity: Map<any, any>;
 
   @Input() isMobile: boolean;
-  public isSettingsMenu: boolean = false;
+  public isSettingsMenu = false;
   public listSettings: GenesListSettings = {
     // Default:
     ifShowAge: true,
@@ -69,7 +68,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     ifShowCriteria: true,
   };
 
-  private subscription$ = new Subject();
+  private subscription$ = new ReplaySubject(1);
 
   constructor(
     private readonly apiService: ApiService,
@@ -106,13 +105,16 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     this.filterService.getByFuncClusters().subscribe(
       (list) => {
         if (list.length !== 0) {
-          this.apiService.getGenesByFunctionalClusters(list).subscribe(
-            (genes) => {
-              this.searchedData = genes;
-              this.cdRef.markForCheck();
-            },
-            (error) => this.errorLogger(this, error)
-          );
+          this.apiService
+            .getGenesByFunctionalClusters(list)
+            .pipe(takeUntil(this.subscription$))
+            .subscribe(
+              (genes) => {
+                this.searchedData = genes;
+                this.cdRef.markForCheck();
+              },
+              (error) => this.errorLogger(this, error)
+            );
         }
       },
       (error) => this.errorLogger(this, error)
@@ -121,31 +123,23 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   public filterByExpressionChange(id: number): void {
     this.filterService.filterByExpressionChange(id);
-    this.filterService.getByExpressionChange().subscribe(
-      (expression) => {
-        if (expression) {
-          this.apiService.getGenesByExpressionChange(expression).subscribe(
-            (genes) => {
-              this.searchedData = genes;
-              this.cdRef.markForCheck();
-            },
-            (error) => this.errorLogger(this, error)
-          );
-        }
-      },
-      (error) => this.errorLogger(this, error)
-    );
-  }
-
-  public filterBySelectionCriteria(str: string): void {
-    this.filterService.filterBySelectionCriteria(str);
-    this.filterService.getBySelectionCriteria().subscribe(
-      (list) => {
-        if (list.length !== 0) {
-        }
-      },
-      (error) => this.errorLogger(this, error)
-    );
+    this.filterService
+      .getByExpressionChange()
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
+        (expression) => {
+          if (expression) {
+            this.apiService.getGenesByExpressionChange(expression).subscribe(
+              (genes) => {
+                this.searchedData = genes;
+                this.cdRef.markForCheck();
+              },
+              (error) => this.errorLogger(this, error)
+            );
+          }
+        },
+        (error) => this.errorLogger(this, error)
+      );
   }
 
   /**
@@ -183,36 +177,45 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public searchGenesByGoTerm(query: string): void {
     if (query) {
       const request = query.toLowerCase();
-      this.apiService.getGoTermMatchByString(request).subscribe(
-        (genes) => {
-          this.searchedData = genes; // If nothing found, will return empty array
-          this.isGoSearchPerformed = true;
+      this.apiService
+        .getGoTermMatchByString(request)
+        .pipe(takeUntil(this.subscription$))
+        .subscribe(
+          (genes) => {
+            this.searchedData = genes; // If nothing found, will return empty array
+            this.isGoSearchPerformed = true;
 
-          // Map data if it's presented:
-          for (const item of this.searchedData) {
-            this.biologicalProcess = this.toMap(item.terms?.biological_process);
-            this.cellularComponent = this.toMap(item.terms?.cellular_component);
-            this.molecularActivity = this.toMap(item.terms?.molecular_activity);
-          }
-
-          const isAnyTermFound =
-            this.biologicalProcess ||
-            this.cellularComponent ||
-            this.molecularActivity;
-          this.isGoTermsModeError = !isAnyTermFound;
-
-          this.snackBar.open(
-            `${this.searchResultsFound.nativeElement.textContent} ${this.searchedData.length}`,
-            '',
-            {
-              duration: 600,
+            // Map data if it's presented:
+            for (const item of this.searchedData) {
+              this.biologicalProcess = this.toMap(
+                item.terms?.biological_process
+              );
+              this.cellularComponent = this.toMap(
+                item.terms?.cellular_component
+              );
+              this.molecularActivity = this.toMap(
+                item.terms?.molecular_activity
+              );
             }
-          );
 
-          this.cdRef.markForCheck();
-        },
-        (error) => this.errorLogger(this, error)
-      );
+            const isAnyTermFound =
+              this.biologicalProcess ||
+              this.cellularComponent ||
+              this.molecularActivity;
+            this.isGoTermsModeError = !isAnyTermFound;
+
+            this.snackBar.open(
+              `${this.searchResultsFound.nativeElement.textContent} ${this.searchedData.length}`,
+              '',
+              {
+                duration: 600,
+              }
+            );
+
+            this.cdRef.markForCheck();
+          },
+          (error) => this.errorLogger(this, error)
+        );
     } else {
       this.isGoSearchPerformed = false;
       this.cdRef.markForCheck();
