@@ -1,6 +1,5 @@
 export interface increaseLifespan {
   interventionType: string;
-  longevityEffect: string;
   interventionResult: string;
   modelOrganism: string; // TODO: backend: rename to 'object'
   organismLine: string; // TODO: backend: rename to 'line'
@@ -32,7 +31,7 @@ export interface AgeRelatedChanges {
 
 export interface InterventionAffectsAgingProcess {
   geneIntervention: string;
-  interventionResultForVitalProcess: string; // TODO: misleading name, rename
+  interventionResult: string; // TODO: misleading name, rename
   vitalProcess: string;
   modelOrganism: string; // TODO: backend: rename to 'object'
   organismLine: string; // TODO: backend: rename to 'line'

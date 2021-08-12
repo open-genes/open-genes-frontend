@@ -39,13 +39,13 @@
 
       <tr *ngFor="let item of researches.increaseLifespan">
         <td>
-          <ng-container *ngIf="item.interventionType ; else dash">
+          <ng-container *ngIf="item.interventionType; else dash">
             {{ item.interventionType }}
           </ng-container>
         </td>
         <td>
-          <ng-container *ngIf="item.longevityEffect ; else dash">
-            {{ item.longevityEffect }}
+          <ng-container *ngIf="item.interventionResult; else dash">
+            {{ item.interventionResult }}
           </ng-container>
         </td>
         <td class="__nowrap">
@@ -246,8 +246,8 @@
           </ng-container>
         </td>
         <td>
-          <ng-container *ngIf="item.interventionResultForVitalProcess ; else dash">
-            {{ item.interventionResultForVitalProcess }}
+          <ng-container *ngIf="item.interventionResult ; else dash">
+            {{ item.interventionResult }}
           </ng-container>
         </td>
         <td>
