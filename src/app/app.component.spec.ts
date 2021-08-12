@@ -1,7 +1,7 @@
-import { TestBed, async, ComponentFixture } from "@angular/core/testing";
-import { AppComponent } from "./app.component";
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { AppComponent } from './app.component';
 
-describe("AppComponent", () => {
+describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
 
   beforeEach(async(() => {
@@ -11,15 +11,7 @@ describe("AppComponent", () => {
     fixture = TestBed.createComponent(AppComponent);
   }));
 
-  it("should create the app", () => {
+  it('should create the app', () => {
     void expect(fixture.debugElement.componentInstance).toBeTruthy();
-  });
-
-  it("should render title", () => {
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement.querySelector(
-      ".content span"
-    );
-    void expect(compiled.textContent).toContain("frontend app is running!");
   });
 });
