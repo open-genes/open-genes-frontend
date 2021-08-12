@@ -112,6 +112,8 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
           this.gene?.band?.length ||
           this.gene?.locationStart?.length ||
           this.gene?.locationEnd?.length;
+
+        // TODO: Set properties which values depend on a selected language
       });
   }
 

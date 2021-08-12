@@ -1,9 +1,9 @@
-import { Pipe, PipeTransform } from "@angular/core";
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: "linkify",
+  name: 'anchorLinks',
 })
-export class LinkifyPipe implements PipeTransform {
+export class AnchorLinksPipe implements PipeTransform {
   references: any = /(\[(\S)*])/gi;
 
   transform(text: string) {
