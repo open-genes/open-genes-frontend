@@ -8,7 +8,7 @@ import {
 import { Genes } from 'src/app/core/models';
 import { FavouritesService } from 'src/app/core/services/favourites.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ApiService } from '../../core/services/api/open-genes.api.service';
+import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

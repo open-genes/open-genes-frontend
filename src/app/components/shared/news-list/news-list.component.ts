@@ -8,7 +8,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { PubmedApiService } from '../../../core/services/api/pubmed.api.service';
+import { PubmedApiService } from '../../../core/services/api/pubmed-api.service';
 import { IPublication } from '../../../core/models/vendorsApi/pubMed/news.model';
 import { Gene, Genes } from '../../../core/models';
 import { takeUntil } from 'rxjs/operators';

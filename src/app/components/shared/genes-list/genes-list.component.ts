@@ -14,7 +14,7 @@ import { Subject, of, Observable } from 'rxjs';
 import { PageClass } from '../../../pages/page.class';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { ApiService } from '../../../core/services/api/open-genes.api.service';
+import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
 import { FavouritesService } from 'src/app/core/services/favourites.service';
 import { FilterService } from './services/filter.service';
@@ -77,7 +77,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     private filterService: FilterService,
     private snackBar: MatSnackBar,
     private favouritesService: FavouritesService,
-    private readonly cdRef: ChangeDetectorRef,
+    private readonly cdRef: ChangeDetectorRef
   ) {
     super();
     this.favouritesService.getItems();
