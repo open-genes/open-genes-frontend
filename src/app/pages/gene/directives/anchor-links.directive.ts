@@ -1,7 +1,7 @@
-import { Directive, AfterViewInit, NgZone } from "@angular/core";
+import { Directive, AfterViewInit, NgZone } from '@angular/core';
 
 @Directive({
-  selector: "[appDynamicContentAnchors]",
+  selector: '[appDynamicContentAnchors]',
 })
 export class DynamicContentAnchorsDirective implements AfterViewInit {
   constructor(private ngZone: NgZone) {}
@@ -10,17 +10,16 @@ export class DynamicContentAnchorsDirective implements AfterViewInit {
   public ngAfterViewInit(): void {
     this.ngZone.runOutsideAngular(() => {
       setTimeout(() => {
-        const anchors = document.getElementsByClassName("link--anchor");
-        const referenceList = document.getElementById("reference");
+        const anchors = document.getElementsByClassName('link--anchor');
+        const referenceList = document.getElementById('reference');
 
         if (anchors && referenceList) {
           const anchorScroll = () => {
             const destinationOffset = referenceList.offsetTop + 10;
             window.scrollTo(0, destinationOffset);
           };
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          for (const [key, link] of Object.entries(anchors)) {
-            link.addEventListener("click", anchorScroll, false);
+          for (const [, link] of Object.entries(anchors)) {
+            link.addEventListener('click', anchorScroll, false);
           }
         }
       });

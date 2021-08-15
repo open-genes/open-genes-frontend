@@ -14,9 +14,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { AsyncSubject, Subject } from 'rxjs';
 import { I80levelResponseArticle } from '../../../core/models/vendorsApi/80level/80level.model';
 import { takeUntil } from 'rxjs/operators';
-import { EightyLevelService } from '../../../core/services/api/80level.api.service';
+import { EightyLevelService } from '../../../core/services/api/80level-api-service/80level-api.service';
 import { environment } from '../../../../environments/environment';
-import { MockApiService } from '../../../core/services/api/mock.api.service';
+import { MockApiService } from '../../../core/services/api/mock-api.service';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({

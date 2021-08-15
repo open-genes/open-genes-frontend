@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
-import { ApiService } from '../../core/services/api/open-genes.api.service';
+import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import { PageClass } from '../page.class';
@@ -112,6 +112,8 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
           this.gene?.band?.length ||
           this.gene?.locationStart?.length ||
           this.gene?.locationEnd?.length;
+
+        // TODO: Set properties which values depend on a selected language
       });
   }
 

@@ -14,7 +14,7 @@ export class AssociatedDiseasesComponent implements OnInit {
   public maxItemsToShow: number = 1;
   public isAccordionOpen: boolean;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.mapDiseases();

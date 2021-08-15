@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../../environments/environment';
-import { I80levelArticleQueryParams } from '../../models/vendorsApi/80level/80level.model';
+import { environment } from '../../../../../environments/environment';
+import { I80levelArticleQueryParams } from '../../../models/vendorsApi/80level/80level.model';
 
 @Injectable({
   providedIn: 'root',

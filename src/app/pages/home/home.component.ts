@@ -7,7 +7,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { ApiService } from '../../core/services/api/open-genes.api.service';
+import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Genes } from '../../core/models';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
 import { Subject } from 'rxjs';
