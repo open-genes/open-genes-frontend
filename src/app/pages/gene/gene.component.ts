@@ -88,8 +88,8 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
         this.isHpa = this.gene.human_protein_atlas !== '';
 
         this.isGeneCandidate =
-          this.gene.researches?.isAdditionalEvidences &&
-          this.gene.researches.isAdditionalEvidences.length !== 0;
+          this.gene.researches?.additionalEvidences &&
+          this.gene.researches.additionalEvidences.length !== 0;
 
         this.isAnyContent =
           this.gene?.commentEvolution ||
