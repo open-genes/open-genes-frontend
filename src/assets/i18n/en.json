@@ -206,6 +206,8 @@
   "show_less": "Show less",
   "show_more_short": "More",
   "title": "Open Longevity Genes — Database of human genes associated with aging",
+  "wizard_1_title": "Filter",
+  "wizard_1_description": "Filter genes by age-related processes",
   "ассоциации_гена_с_долголетием_фенотипом_старения": "Associations of the gene with longevity/phenotype of aging",
   "внутриклеточный_транспорт": "intracellular transport",
   "возрастные_изменения_экспрессии_гена_активности_белка у_не_млекопитающих": "Age-related changes in gene expression/protein activity in non-mammals",

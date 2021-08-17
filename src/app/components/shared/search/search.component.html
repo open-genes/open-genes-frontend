@@ -48,7 +48,8 @@
         class="field search-form__field"
         required
         #searchQuery
-        (focusin)="!isGoSearchMode? search() : triggerGoSearch()"
+        (focusin)="!isGoSearchMode? search() : debounce(triggerGoSearch(), 500)"
+        (keydown)="!isGoSearchMode? null : triggerGoSearch()"
         (keydown.enter)="!isGoSearchMode? search(): triggerGoSearch()"
       >
       <mat-menu #searchMenu>
