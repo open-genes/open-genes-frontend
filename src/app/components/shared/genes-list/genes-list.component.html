@@ -56,36 +56,15 @@
         (click)="(clearFilters)"
         *ngIf="isClearFiltersBtnShown"
       >
-        <span class="fa fal fa-filter"></span> {{ "filters_reset" | translate }}
+        <span class="fa fal fa-remove"></span> {{ "filters_reset" | translate }}
       </button>
 
-      <ng-container *ngIf="isSettingsMenu">
-        <mat-checkbox
-          (change)="changeGenesListSettings('gene-age')"
-          [checked]="listSettings.ifShowAge"
-        >{{ "gene_list_evolutionary_age" | translate }}
-        </mat-checkbox>
-        <mat-checkbox
-          (change)="changeGenesListSettings('classes')"
-          [checked]="listSettings.ifShowClasses"
-        >{{ "functional_classes" | translate }}
-        </mat-checkbox>
-        <mat-checkbox
-          [checked]="listSettings.ifShowExpression"
-          (change)="changeGenesListSettings('expression')"
-        >{{ "main_page_table_expression" | translate }}
-        </mat-checkbox>
-        <mat-checkbox
-          [checked]="listSettings.ifShowDiseases"
-          (change)="changeGenesListSettings('diseases')">
-          {{ "gene_list_diseases" | translate }}
-        </mat-checkbox>
-        <mat-checkbox
-          [checked]="listSettings.ifShowCriteria"
-          (change)="changeGenesListSettings('criteria')">
-          {{ "main_page_table_criteria" | translate }}
-        </mat-checkbox>
-      </ng-container>
+      <button *ngIf="!isGoTermsMode"
+              class="btn btn--small btn-purple"
+              (click)="openFiltersModal()">
+        <span class="fa far fa-plus"></span>
+        Фильтры
+      </button>
     </div>
 
     <div class="view-panel__buttons">
@@ -99,11 +78,6 @@
         <span
           class="fa far fa-th-large toggler__icon toggler__icon--alt"
         ></span>
-      </button>
-      <button *ngIf="!isGoTermsMode"
-              class="btn btn-gray btn--icon-only"
-              (click)="toggleSettingsMenu()">
-        <span class="fa far fa-cog"></span>
       </button>
     </div>
   </div>
@@ -415,3 +389,42 @@
     {{ "items_found" | translate }}
   </div>
 </div>
+
+<ng-template #filtersModalBody>
+  <div class="filters-modal__header" mat-dialog-title>
+    Фильтры
+    <button mat-icon-button
+            class="close-button"
+            (click)="closeFiltersModal()"
+            aria-label="Закрыть">
+      <span class="fa fal fa-times"></span>
+    </button>
+  </div>
+  <div class="filters-modal__body">
+  <mat-checkbox
+    (change)="changeGenesListSettings('gene-age')"
+    [checked]="listSettings.ifShowAge"
+  >{{ "gene_list_evolutionary_age" | translate }}
+  </mat-checkbox>
+  <mat-checkbox
+    (change)="changeGenesListSettings('classes')"
+    [checked]="listSettings.ifShowClasses"
+  >{{ "functional_classes" | translate }}
+  </mat-checkbox>
+  <mat-checkbox
+    [checked]="listSettings.ifShowExpression"
+    (change)="changeGenesListSettings('expression')"
+  >{{ "main_page_table_expression" | translate }}
+  </mat-checkbox>
+  <mat-checkbox
+    [checked]="listSettings.ifShowDiseases"
+    (change)="changeGenesListSettings('diseases')">
+    {{ "gene_list_diseases" | translate }}
+  </mat-checkbox>
+  <mat-checkbox
+    [checked]="listSettings.ifShowCriteria"
+    (change)="changeGenesListSettings('criteria')">
+    {{ "main_page_table_criteria" | translate }}
+  </mat-checkbox>
+  </div>
+</ng-template>

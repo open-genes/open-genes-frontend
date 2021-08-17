@@ -68,8 +68,39 @@
       }
     }
   }
+}
 
-  &__settings {
+.filters-modal {
+  &__header,
+  &__cover,
+  &__body {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &__header {
+    position: relative;
+    padding-right: 40px;
+    margin-bottom: 15px;
+
+    .close-button {
+      color: $color-accent;
+      @include close-button(-10px, 10px);
+    }
+  }
+
+  &__cover {
+    background-color: $color-gray-light;
+    min-height: 200px;
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
+
+  &__body {
     mat-checkbox {
       display: flex;
       width: 100%;
@@ -93,4 +124,5 @@
     }
   }
 }
+
 

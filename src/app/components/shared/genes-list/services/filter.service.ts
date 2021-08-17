@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { Observable, of, BehaviorSubject } from "rxjs";
-import { Filter } from "./filter.model";
-import { FilterTypesEnum } from "./filter-types.enum";
+import { Injectable } from '@angular/core';
+import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Filter } from './filter.model';
+import { FilterTypesEnum } from './filter-types.enum';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class FilterService {
   public filters: Filter = {
@@ -12,11 +12,10 @@ export class FilterService {
     byAge: false,
     byClasses: [],
     byExpressionChange: 0,
-    bySelectionCriteria: []
+    bySelectionCriteria: [],
   };
 
   private areMt2FiltersApplied = new BehaviorSubject(false);
-
   // TODO: save this object in localStorage
 
   // Filter
@@ -44,7 +43,7 @@ export class FilterService {
 
   // TODO: Ask backend to send unique id's for each criteria, type will change to number[]
   public filterBySelectionCriteria(str: string): Observable<string[]> {
-      if (!this.filters.bySelectionCriteria.includes(str)) {
+    if (!this.filters.bySelectionCriteria.includes(str)) {
       this.filters.bySelectionCriteria.push(str);
     } else {
       this.filters.bySelectionCriteria = this.filters.bySelectionCriteria.filter(
@@ -70,6 +69,7 @@ export class FilterService {
 
   // Clear
   public clearFilters(filter?: FilterTypesEnum): void {
+    console.log('clearFilters: ', filter, '\n', this.filters);
     const { classes, expressionChange, age, name } = FilterTypesEnum; // destructuring
     if (filter === name) {
       this.filters.byName = false;
@@ -85,7 +85,7 @@ export class FilterService {
         byAge: false,
         byClasses: [],
         byExpressionChange: 0,
-        bySelectionCriteria: []
+        bySelectionCriteria: [],
       };
     }
   }
@@ -94,7 +94,7 @@ export class FilterService {
     return of(this.filters);
   }
 
-  public areMoreThan2FiltersApplied(): Observable<BehaviorSubject<boolean>> {
+  public areMoreThan2FiltersApplied(): Observable<boolean> {
     const n = Number(this.filters.byName); // 0
     const a = Number(this.filters.byAge); // 0
     const c = this.filters.byClasses.length; // 0
@@ -103,9 +103,9 @@ export class FilterService {
 
     // then if flters change and their sum is more than 2:
     if (n + a + c + e + s >= 2) {
-      this.areMt2FiltersApplied.next(true);
+      return of(true);
     }
 
-    return of(this.areMt2FiltersApplied);
+    return of(false);
   }
 }

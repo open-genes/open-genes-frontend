@@ -8,11 +8,12 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { of, Observable, ReplaySubject } from 'rxjs';
 import { PageClass } from '../../../pages/page.class';
-import { takeUntil } from 'rxjs/operators';
+import { takeLast, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
@@ -21,6 +22,7 @@ import { FilterService } from './services/filter.service';
 import { FilterTypesEnum } from './services/filter-types.enum';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenesListSettings } from './genes-list-settings.model';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-genes-list',
@@ -58,7 +60,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public molecularActivity: Map<any, any>;
 
   @Input() isMobile: boolean;
-  public isSettingsMenu = false;
   public listSettings: GenesListSettings = {
     // Default:
     ifShowAge: true,
@@ -69,6 +70,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   };
 
   private subscription$ = new ReplaySubject(1);
+  @ViewChild('filtersModalBody') dialogRef: TemplateRef<any>;
 
   constructor(
     private readonly apiService: ApiService,
@@ -76,7 +78,8 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     private filterService: FilterService,
     private snackBar: MatSnackBar,
     private favouritesService: FavouritesService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
+    private dialog: MatDialog
   ) {
     super();
     this.favouritesService.getItems();
@@ -111,6 +114,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
             .subscribe(
               (genes) => {
                 this.searchedData = genes;
+                this.areMoreThan2FiltersApplied();
                 this.cdRef.markForCheck();
               },
               (error) => this.errorLogger(this, error)
@@ -132,6 +136,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
             this.apiService.getGenesByExpressionChange(expression).subscribe(
               (genes) => {
                 this.searchedData = genes;
+                this.areMoreThan2FiltersApplied();
                 this.cdRef.markForCheck();
               },
               (error) => this.errorLogger(this, error)
@@ -228,9 +233,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   toggleGenesView(): boolean {
     return (this.asTableRow = !this.asTableRow);
   }
-  toggleSettingsMenu(): boolean {
-    return (this.isSettingsMenu = !this.isSettingsMenu);
-  }
 
   /**
    * Favorites
@@ -298,8 +300,8 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
       default:
         break;
     }
-
-    this.listSettingsChanged.emit(this.listSettings);
+    this.cdRef.markForCheck();
+    // this.listSettingsChanged.emit(this.listSettings);
   }
 
   /**
@@ -317,10 +319,17 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   /**
+   * Get filters values
+   */
+  public whatFiltersApplied(): void {
+    this.filterService.whatFiltersApplied();
+  }
+
+  /**
    * Filter reset
    */
   public clearFilters(filter?: FilterTypesEnum): void {
-    this.filterService.clearFilters(filter);
+    this.filterService.clearFilters(filter ?? null);
     this.searchedData = this.dataSource;
     this.cdRef.markForCheck();
   }
@@ -341,7 +350,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
         this.sortByName();
       }
       this.filters.byName = !this.filters.byName;
-      this.cdRef.markForCheck();
     } else {
       if (this.filters.byAge) {
         this.reverse();
@@ -349,8 +357,10 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
         this.sortByAge();
       }
       this.filters.byAge = !this.filters.byAge;
-      this.cdRef.markForCheck();
     }
+
+    this.areMoreThan2FiltersApplied();
+    this.cdRef.markForCheck();
   }
 
   private reverse() {
@@ -370,14 +380,15 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   /**
-   * Are filters applied
+   * Check if more than two filters applied at once
    */
   private areMoreThan2FiltersApplied() {
     this.filterService
       .areMoreThan2FiltersApplied()
       .pipe(takeUntil(this.subscription$))
-      .subscribe((areApplied) => {
-        this.isClearFiltersBtnShown = areApplied.getValue();
+      .pipe(takeLast(1))
+      .subscribe((areApplied: boolean) => {
+        this.isClearFiltersBtnShown = areApplied;
         this.cdRef.markForCheck();
       });
   }
@@ -387,5 +398,17 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   private errorLogger(context: any, error: any) {
     console.warn(context, error);
+  }
+
+  public openFiltersModal(): void {
+    this.dialog.open(this.dialogRef, {
+      data: null,
+      panelClass: 'comment-modal',
+      minWidth: '320px',
+      maxWidth: '768px',
+    });
+  }
+  public closeFiltersModal(): void {
+    this.dialog.closeAll();
   }
 }
