@@ -22,7 +22,9 @@ interface GeneralGeneInfo {
   homologueTaxon: string;
 }
 
-export type Genes = GeneralGeneInfo;
+export interface Genes extends GeneralGeneInfo {
+  ensembl?: string;
+}
 
 export interface Gene extends GeneralGeneInfo {
   why: string;
