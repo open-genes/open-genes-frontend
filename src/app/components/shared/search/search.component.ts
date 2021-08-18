@@ -7,16 +7,16 @@ import {
   OnInit,
   Output,
   Inject,
-} from "@angular/core";
-import { Genes } from "../../../core/models";
-import { FormControl, FormGroup } from "@angular/forms";
-import { TranslateService } from "@ngx-translate/core";
-import { Subscription } from "rxjs";
+} from '@angular/core';
+import { Genes } from '../../../core/models';
+import { FormControl, FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-search",
-  templateUrl: "./search.component.html",
-  styleUrls: ["./search.component.scss"],
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit, OnDestroy {
   @Inject(Document) public document: Document;
@@ -43,7 +43,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.searchForm = new FormGroup({
-      searchField: new FormControl(""),
+      searchField: new FormControl(''),
     });
 
     this.subscription$ = this.searchForm.valueChanges.subscribe((x) => {
@@ -57,13 +57,12 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.showResult = true;
     this.renderer.addClass(
       document.body,
-      "body--search-on-main-page-is-active"
+      'body--search-on-main-page-is-active'
     );
-    const searchField = this.searchForm.get("searchField").value.toLowerCase();
+    const searchField = this.searchForm.get('searchField').value.toLowerCase();
     this.searchedData = this.dataSource.filter((item) => {
-      const searchedText = `${item.id}${item.symbol}" "${
-        item.name
-      }" "${item.aliases.join(" ")}`;
+      const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
+      ${item.symbol} ${item.name} ${item.aliases.join(' ')}`;
       return searchedText.toLowerCase().includes(searchField);
     });
     this.queryChange.emit(searchField);
@@ -74,7 +73,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.showResult = false;
     this.renderer.removeClass(
       document.body,
-      "body--search-on-main-page-is-active"
+      'body--search-on-main-page-is-active'
     );
     event.stopPropagation();
   }
@@ -85,14 +84,14 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   public triggerGoSearch(): void {
-    const query = this.searchForm.get("searchField").value.toLowerCase();
+    const query = this.searchForm.get('searchField').value.toLowerCase();
     this.isGoSearchTriggered.emit(query);
   }
 
   ngOnDestroy(): void {
     this.renderer.removeClass(
       document.body,
-      "body--search-on-main-page-is-active"
+      'body--search-on-main-page-is-active'
     );
     this.subscription$.unsubscribe();
   }
