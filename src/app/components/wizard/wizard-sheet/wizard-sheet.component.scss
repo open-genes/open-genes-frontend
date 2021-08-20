@@ -1,0 +1,39 @@
+@import '../../styles';
+
+:host {
+  display: inline-block;
+}
+
+.wizard {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  padding: $ui-base-height;
+
+  &__close-button {
+    color: $color-gray;
+    @include close-button(-10px, 20px);
+  }
+
+  &__steps {
+    width: 100%;
+    position: relative;
+
+    .steps__previous,
+    .steps__next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: $color-general;
+    }
+
+    .steps__previous {
+      left: -30px
+    }
+    .steps__next {
+      right: -30px;
+    }
+  }
+}
+
+

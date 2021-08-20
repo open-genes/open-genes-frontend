@@ -3,11 +3,9 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  HostListener,
   OnDestroy,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Genes } from '../../core/models';
@@ -16,8 +14,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { WindowService } from '../../core/services/browser/window.service';
-import { WizardSheetComponent } from '../../components/wizard-sheet/wizard-sheet.component';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { WizardService } from '../../components/wizard/wizard-service.service';
 
 @Component({
   selector: 'app-home',
@@ -26,19 +23,8 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  private bottomSheetRef: any;
   @Output()
   dataSourceUpdate: EventEmitter<Genes[]> = new EventEmitter<Genes[]>();
-
-  @ViewChild(WizardSheetComponent) WizardSheetComponent: WizardSheetComponent;
-
-  closeWizardSheet(): void {
-    console.log('I listened to an event');
-    if (!localStorage.getItem('showWizardSheet')) {
-      localStorage.setItem('showWizardSheet', JSON.stringify(false));
-    }
-    this.bottomSheetRef.dismiss();
-  }
 
   public genes: Genes[];
   public lastGenes: Genes[];
@@ -50,9 +36,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   private resDesktop = 951.98;
 
   constructor(
-    private bottomSheet: MatBottomSheet,
     private filterService: FilterService,
     private windowService: WindowService,
+    private wizardService: WizardService,
     private readonly apiService: ApiService,
     private readonly cdRef: ChangeDetectorRef
   ) {}
@@ -62,16 +48,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getLastEditedGenes();
     this.initWindowWidth();
     this.detectWindowWidth();
-    this.openWizardSheet();
+    this.loadWizard();
   }
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
   }
 
-  /**
-   * HTTP requests
-   */
   public getGenes(): void {
     this.apiService
       .getGenes()
@@ -95,12 +78,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Wizard Bottom Sheet
+   * Wizard
    */
-  public openWizardSheet(): void {
-    this.bottomSheetRef = this.bottomSheet.open(WizardSheetComponent, {
-      data: {},
-    });
+  private openWizard() {
+    this.wizardService.open();
+  }
+
+  private loadWizard() {
+    this.wizardService.openOnce();
   }
 
   /**

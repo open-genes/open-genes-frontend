@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
-// import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { WizardService } from '../wizard-service.service';
 
 @Component({
   selector: 'app-wizard-sheet',
@@ -8,12 +8,7 @@ import { MatStepper } from '@angular/material/stepper';
   styleUrls: ['./wizard-sheet.component.scss'],
 })
 export class WizardSheetComponent {
-  @Output()
-  wizardSheetCloseEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  // constructor(
-  //   @Inject(MAT_BOTTOM_SHEET_DATA) public data: {}
-  // ) {}
+  constructor(private wizardService: WizardService) {}
 
   public goBack(stepper: MatStepper) {
     stepper.previous();
@@ -24,7 +19,6 @@ export class WizardSheetComponent {
   }
 
   public close(): void {
-    console.log(this.wizardSheetCloseEvent);
-    this.wizardSheetCloseEvent.emit(true);
+    this.wizardService.close();
   }
 }
