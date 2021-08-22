@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public environment = environment;
   private subscription$ = new Subject();
   public isMobile: boolean;
-  private resDesktop = 951.98;
+  private resDesktop = 1199.98;
 
   constructor(
     private filterService: FilterService,
@@ -80,7 +80,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   /**
    * Wizard
    */
-  private openWizard() {
+  public openWizard() {
     this.wizardService.open();
   }
 
