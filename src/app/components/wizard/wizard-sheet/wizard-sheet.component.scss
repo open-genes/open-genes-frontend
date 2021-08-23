@@ -7,15 +7,20 @@
 .wizard {
   width: 100%;
   position: relative;
-  padding: $ui-base-height;
+  padding: 0 $ui-base-height;
 
   &, * {
     box-sizing: border-box;
   }
 
-  .wizard__header {
+  &__header {
+    padding: 12px 40px 12px 0;
     font-weight: $font-weight-medium;
-    padding-right: 40px;
+    color: $color-base;
+  }
+
+  &__title {
+    margin-bottom: 1em;
   }
 
   &__close-button {
