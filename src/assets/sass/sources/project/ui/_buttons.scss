@@ -19,7 +19,7 @@
     @include text-overflow;
   }
 
-  &.disabled {
+  &[disabled] {
     opacity: 0.5;
     cursor: default;
   }
@@ -31,14 +31,14 @@
     z-index: 1;
   }
 
-  &.btn-fill {
+  &.btn--fill {
     line-height: (33px - 2px);
   }
 }
 
 // Types
 // Button without a border and background
-@mixin btn-flat {
+@mixin btn--flat {
   width: auto;
   min-width: 0;
   padding: 0;
@@ -50,14 +50,14 @@
 
 }
 
-.btn.btn-flat {
-  @include btn-flat;
+.btn.btn--flat {
+  @include btn--flat;
 }
 
 // Colors
-@mixin btn-color($name, $color) {
-  .btn-#{$name} {
-    &:not(.btn-fill) {
+@mixin btn-color($name, $color, $text-color: $color-white) {
+  .btn--#{$name} {
+    &:not(.btn--fill) {
       color: $color;
 
       .loader {
@@ -71,7 +71,7 @@
       }
     }
 
-    &:not(.btn-flat):not(.btn--icon-only) {
+    &:not(.btn--flat):not(.btn--icon-only) {
       border: 1px solid lighten($color, 5%);
 
       &.disabled {
@@ -81,16 +81,16 @@
 
     &:not(.disabled):hover {
       border-color: darken($color, 10%);
-      &:not(.btn-fill) {
+      &:not(.btn--fill) {
         color: darken($color, 10%);
       }
     }
 
-    &.btn-fill {
+    &.btn--fill {
       background: $color;
       $color2: lighten(adjust-hue($color, 10deg), 5%);
       background: linear-gradient(135deg, $color 0%, $color2 100%);
-      color: #fff;
+      color: $text-color;
 
       &.disabled {
         opacity: 1;
@@ -117,6 +117,7 @@
 @include btn-color('green', $color-green-medium);
 @include btn-color('purple', $color-purple);
 @include btn-color('gray', $color-gray);
+@include btn-color('white', $color-white, $color-orange);
 
 // SIZES
 
@@ -130,8 +131,8 @@
   .loader {
     font-size: 11px;
   }
-  &.btn-fill {
-    line-height: ($btn-height - 2px);
+  &.btn--fill {
+    line-height: ($btn-height - 1px);
   }
 }
 
@@ -147,7 +148,7 @@
   font-size: $font-size;
   font-weight: $font-weight-bold;
   border-radius: 4px;
-  &.btn-fill {
+  &.btn--fill {
     line-height: ($btn-height - 2px);
   }
 }
