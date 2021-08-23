@@ -37,7 +37,8 @@
             </app-hint>
           </div>
 
-          <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 __mb-btm">
+          <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2"
+               [ngClass]="isMobile? '__mb-btm' : ''">
             <app-sidebar>
               <app-sidebar-item *ngIf="!isMobile">
                 <div content class="__pl-5 __pr-5">
@@ -119,7 +120,7 @@
 <ng-template #wizardBanner let-classes>
   <app-hint class="{{ classes }}"
             hintType="emphasized">
-    <ng-container title>С чего начать</ng-container>
+    <ng-container title><span class="fa far fa-magic"></span> С чего начать</ng-container>
     <ng-container description>Узнайте как пользоваться поиском и фильтрами</ng-container>
     <ng-container button>
       <button class="btn btn--fill btn--small btn--white"
