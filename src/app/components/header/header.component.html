@@ -1,16 +1,15 @@
 <header class="header">
   <div class="header__centering">
-    <a class="header__logo __hoverable"
-       [routerLink]="'/'"
-       (click)="clearSearch()"
-       title="{{'main_page_link' | translate}}">
-      <app-icon
-        staticSrc="/assets/images/logo.svg"
-        size="custom"
-        customWidth="100px"
-        customHeight="40px"
-      ></app-icon>
-    </a>
+    <app-icon
+      class="header__logo __hoverable"
+      staticSrc="/assets/images/logo.svg"
+      size="custom"
+      customWidth="100px"
+      customHeight="40px"
+      [routerLink]="'/'"
+      (click)="clearSearch()"
+      title="{{'main_page_link' | translate}}">
+    ></app-icon>
 
     <div class="header__right">
       <app-language theme="light"></app-language>

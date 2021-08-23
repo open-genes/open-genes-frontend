@@ -5,7 +5,7 @@
 }
 
 .signin-button {
-  @include close-button(10px, 50%, $color-white);
+  @include close-button(10px, 50%);
 }
 
 .header__menu {
@@ -42,7 +42,7 @@
   .panel__header {
     width: 100%;
     height: $header-height;
-    background-color: $color-base;
+    background-color: $color-general-light;
     margin-bottom: 15px;
   }
 

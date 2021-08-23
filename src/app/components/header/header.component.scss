@@ -3,8 +3,8 @@
 .header {
   width: 100%;
   height: $header-height;
-  color: #fff;
-  background-color: $color-base;
+  color: $color-base;
+  background-color: $color-white;
   padding: 0 5px;
   box-shadow: $box-shadow;
 
@@ -36,7 +36,7 @@
     align-items: center;
     justify-content: center;
     height: 30px;
-    background-color: $color-white;
+    background-color: $color-base;
     color: $color-black;
     padding: 0 10px;
     border-radius: 3px;
