@@ -113,11 +113,11 @@
                       {{ 'phylogeny' | translate }}
                     </div>
                     <div class="type__value">
-                      {{ gene.origin.phylum || ('gene_page_no_data' | translate) }}
+                      {{ gene?.origin?.phylum || ('gene_page_no_data' | translate) }}
                     </div>
                     <div class="type__value">
-                      {{ gene.origin.age }}
-                      <small *ngIf="gene.origin.age">{{ 'million_years' | translate }}</small>
+                      {{ gene?.origin?.age }}
+                      <small *ngIf="gene?.origin?.age">{{ 'million_years' | translate }}</small>
                     </div>
                   </div>
                   <div class="type__inner">
