@@ -366,7 +366,9 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   private sortByAge() {
-    this.searchedData.sort((a, b) => a.origin?.order - b.origin?.order);
+    this.searchedData.sort(
+      (a, b) => a.familyOrigin?.order - b.familyOrigin?.order
+    );
   }
 
   /**

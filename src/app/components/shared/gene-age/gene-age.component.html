@@ -1,13 +1,13 @@
 <div class="gene-age">
   <ng-container *ngIf="isShowOnlyHomologs === false">
-    <div *ngIf="gene.origin; else notSpecified" class="gene-age__type">
+    <div *ngIf="gene.familyOrigin; else notSpecified" class="gene-age__type">
       <div class="type__title">
         {{ phylumOrigin?.translationString || "phylum_not_specified" | translate }}
       </div>
       <span class="type__value">
-        <dfn>({{ gene?.origin?.phylum }})</dfn>&#32;
-        {{ gene?.origin?.age || "age_unknown" | translate }}&#32;
-        {{ gene?.origin?.age ? ("million_years" | translate) : "" }}&#32;
+        <dfn>({{ gene?.familyOrigin?.phylum }})</dfn>&#32;
+        {{ gene?.familyOrigin?.age || "age_unknown" | translate }}&#32;
+        {{ gene?.familyOrigin?.age ? ("million_years" | translate) : "" }}&#32;
       </span>
     </div>
   </ng-container>

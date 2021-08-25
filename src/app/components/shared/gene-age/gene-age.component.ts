@@ -22,7 +22,7 @@ export class GeneAgeComponent extends GenePhylaClass implements OnInit {
   }
 
   ngOnInit(): void {
-    this.phylumOrigin = this.getPhylumDataByID(this.gene.origin?.id);
+    this.phylumOrigin = this.getPhylumDataByID(this.gene.familyOrigin?.id);
     this.phylumHomolog = this.getPhylumDataByName(this.gene.homologueTaxon);
     this.isShowOnlyOrigin = this.show === ShowOptionsEnum['origin'];
     this.isShowOnlyHomologs = this.show === ShowOptionsEnum['homologs'];
