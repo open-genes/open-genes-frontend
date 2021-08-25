@@ -1,32 +1,33 @@
 <div class="gene-age">
+  <!-- gene family origin -->
   <ng-container *ngIf="isShowOnlyHomologs === false">
-    <div *ngIf="gene.origin.phylum; else notSpecified"
-         class="gene-age__type">
+    <div *ngIf="gene?.familyOrigin?.phylum; else notSpecified" class="gene-age__type">
       <div class="type__title">
-        {{ phylumOrigin?.translationString || 'phylum_not_specified' | translate }}
+        {{ phylumOrigin?.translationString || "phylum_not_specified" | translate }}
       </div>
       <span class="type__value">
-        <dfn>({{ gene.origin.phylum }})</dfn>&#32;
-        {{ gene.origin?.age || 'age_unknown' | translate }}&#32;
-        {{ gene.origin?.age ? ('million_years' | translate) : '' }}&#32;
-    </span>
+        <dfn>({{ gene?.familyOrigin?.phylum }})</dfn>&#32;
+        {{ gene?.familyOrigin?.age || "age_unknown" | translate }}&#32;
+        {{ gene?.familyOrigin?.age ? ("million_years" | translate) : "" }}&#32;
+      </span>
     </div>
   </ng-container>
 
+  <!-- conservative in -->
   <ng-container *ngIf="isShowOnlyOrigin === false">
     <div *ngIf="gene.homologueTaxon; else notSpecified" class="gene-age__type">
       <div class="type__title">
-        {{ phylumHomolog?.translationString || 'phylum_not_specified' | translate }}
+        {{ phylumHomolog?.translationString || "phylum_not_specified" | translate }}
       </div>
       <span class="type__value">
-      <dfn>({{ gene.homologueTaxon }})</dfn>&#32;
-        {{ phylumHomolog?.age || 'age_unknown' | translate }}&#32;
-        {{ phylumHomolog?.age ? ('million_years' | translate) : '' }}
-    </span>
+        <dfn>({{ gene.homologueTaxon }})</dfn>&#32;
+        {{ phylumHomolog?.age || "age_unknown" | translate }}&#32;
+        {{ phylumHomolog?.age ? ("million_years" | translate) : "" }}
+      </span>
     </div>
   </ng-container>
 </div>
 
 <ng-template #notSpecified>
-  <div class="gene-age__error">{{ 'age_unknown' | translate }}</div>
+  <div class="gene-age__error">{{ "age_unknown" | translate }}</div>
 </ng-template>

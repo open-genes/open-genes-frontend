@@ -15,6 +15,7 @@ interface GeneralGeneInfo {
   functionalClusters: string | string[];
   terms?: Terms;
   name: string;
+  familyOrigin: Origin;
   origin: Origin;
   ncbiId: number;
   uniprot: string;
