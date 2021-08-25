@@ -1,6 +1,7 @@
 <div class="gene-age">
+  <!-- gene family origin -->
   <ng-container *ngIf="isShowOnlyHomologs === false">
-    <div *ngIf="gene.familyOrigin; else notSpecified" class="gene-age__type">
+    <div *ngIf="gene?.familyOrigin?.phylum; else notSpecified" class="gene-age__type">
       <div class="type__title">
         {{ phylumOrigin?.translationString || "phylum_not_specified" | translate }}
       </div>
@@ -12,6 +13,7 @@
     </div>
   </ng-container>
 
+  <!-- conservative in -->
   <ng-container *ngIf="isShowOnlyOrigin === false">
     <div *ngIf="gene.homologueTaxon; else notSpecified" class="gene-age__type">
       <div class="type__title">
