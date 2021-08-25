@@ -6,13 +6,6 @@
     {{ 'wizard_title' | translate }}
   </div>
   <div class="wizard__steps">
-    <button mat-icon-button
-            class="steps__previous"
-            (click)="goBack(stepper)"
-            aria-label="Назад">
-      <span class="fa far fa-chevron-left"></span>
-    </button>
-
     <mat-vertical-stepper #stepper>
       <mat-step matStepperIcon="edit"
                 label="{{ 'wizard_1_title' | translate }}"
@@ -29,13 +22,6 @@
       >{{ 'wizard_1_description' | translate }}
       </mat-step>
     </mat-vertical-stepper>
-
-    <button mat-icon-button
-            class="steps__next"
-            (click)="goForward(stepper)"
-            aria-label="Вперед">
-      <span class="fa far fa-chevron-right"></span>
-    </button>
   </div>
 
   <button mat-icon-button

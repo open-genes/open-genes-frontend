@@ -10,14 +10,6 @@ import { WizardService } from '../wizard-service.service';
 export class WizardSheetComponent {
   constructor(private wizardService: WizardService) {}
 
-  public goBack(stepper: MatStepper) {
-    stepper.previous();
-  }
-
-  public goForward(stepper: MatStepper) {
-    stepper.next();
-  }
-
   public close(): void {
     this.wizardService.close();
   }

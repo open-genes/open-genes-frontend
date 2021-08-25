@@ -31,21 +31,6 @@
   &__steps {
     width: 100%;
     position: relative;
-
-    .steps__previous,
-    .steps__next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      color: $color-general;
-    }
-
-    .steps__previous {
-      left: -30px
-    }
-    .steps__next {
-      right: -30px;
-    }
   }
 }
 
