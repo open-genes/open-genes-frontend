@@ -141,17 +141,25 @@ export abstract class GenePhylaClass {
       age: null,
       order: 24,
     },
-  }
+  };
 
   protected getPhylumDataByID(phylumID: number): Phylum {
-    return this.phyla[phylumID];
+    if (phylumID) {
+      return this.phyla[phylumID];
+    }
+
+    return null;
   }
 
   protected getPhylumDataByName(phylumName: string): Phylum {
-    for (const [key, value] of Object.entries(this.phyla)) {
+    if (phylumName) {
+      for (const [key, value] of Object.entries(this.phyla)) {
         if (value.name === phylumName) {
           return value;
         }
+      }
     }
+
+    return null;
   }
 }

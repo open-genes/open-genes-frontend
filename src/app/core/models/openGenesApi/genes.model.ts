@@ -15,6 +15,7 @@ interface GeneralGeneInfo {
   functionalClusters: string | string[];
   terms?: Terms;
   name: string;
+  familyOrigin: Origin;
   origin: Origin;
   ncbiId: number;
   uniprot: string;
@@ -22,7 +23,9 @@ interface GeneralGeneInfo {
   homologueTaxon: string;
 }
 
-export type Genes = GeneralGeneInfo;
+export interface Genes extends GeneralGeneInfo {
+  ensembl?: string;
+}
 
 export interface Gene extends GeneralGeneInfo {
   why: string;

@@ -27,7 +27,8 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   public isAnyGoCategory: boolean;
   public isHpa: boolean;
   public isAnyResearchFilled: boolean;
-  public isGeneCandidate: boolean;
+  public isAnyStrongResearchFilled: boolean;
+  public isGeneCandidate = false;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
@@ -83,13 +84,39 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
         });
         this.isAnyResearchFilled = Math.max(...researchesLengths) !== 0;
 
+        const strongResearches = [
+          ...this.gene.researches?.increaseLifespan,
+          ...this.gene.researches?.ageRelatedChangesOfGene,
+          ...this.gene.researches?.interventionToGeneImprovesVitalProcesses,
+          ...this.gene.researches?.geneAssociatedWithProgeriaSyndromes,
+          ...this.gene.researches?.geneAssociatedWithLongevityEffects,
+        ];
+
+        if (strongResearches.length !== 0) {
+          const strongResearchesLengths = [];
+          strongResearches.forEach((value) => {
+            strongResearchesLengths.push(Number(Object.entries(value).length));
+          });
+          this.isAnyStrongResearchFilled =
+            Math.max(...strongResearchesLengths) !== 0;
+        } else {
+          this.isAnyStrongResearchFilled = false;
+        }
+
+        if (this.isAnyStrongResearchFilled) {
+          this.isGeneCandidate = false;
+        } else if (
+          (!!this.gene.researches?.proteinRegulatesOtherGenes &&
+            this.gene.researches.proteinRegulatesOtherGenes !== 0) ||
+          (!!this.gene.researches?.additionalEvidences &&
+            this.gene.researches.additionalEvidences.length !== 0)
+        ) {
+          this.isGeneCandidate = true;
+        }
+
         this.isAnyOrtholog =
           Object.values(this.gene.orthologs).toString() !== ''; // TODO: backend: instead of {"":""} should be an empty array of objects
         this.isHpa = this.gene.human_protein_atlas !== '';
-
-        this.isGeneCandidate =
-          this.gene.researches?.additionalEvidences &&
-          this.gene.researches.additionalEvidences.length !== 0;
 
         this.isAnyContent =
           this.gene?.commentEvolution ||

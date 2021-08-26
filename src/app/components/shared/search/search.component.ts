@@ -59,9 +59,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     const searchField = this.searchForm.get('searchField').value;
     const query = searchField ? searchField.toLowerCase() : '';
     this.searchedData = this.dataSource.filter((item) => {
-      const searchedText = `${item.id}${item.symbol}" "${
-        item.name
-      }" "${item.aliases.join(' ')}`;
+      const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
+      ${item.symbol} ${item.name} ${item.aliases.join(' ')}`;
       return searchedText.toLowerCase().includes(query);
     });
     this.queryChange.emit(query);
