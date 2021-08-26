@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MatStepper } from '@angular/material/stepper';
 import { WizardService } from '../wizard-service.service';
 
 @Component({
