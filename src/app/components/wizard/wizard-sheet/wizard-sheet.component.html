@@ -1,34 +1,35 @@
 <div class="wizard">
   <div class="wizard__header">
-    {{ 'wizard_header' | translate }}
+    <span class="fa far fa-magic"></span>&nbsp;{{ 'wizard_header' | translate }}
+
+    <button mat-icon-button
+            class="wizard__close-button"
+            (click)="close()"
+            aria-label="Закрыть">
+      <span class="fa fal fa-times"></span>
+    </button>
   </div>
   <div class="wizard__title">
     {{ 'wizard_title' | translate }}
   </div>
   <div class="wizard__steps">
-    <mat-vertical-stepper #stepper>
-      <mat-step matStepperIcon="edit"
-                label="{{ 'wizard_1_title' | translate }}"
+    <mat-vertical-stepper>
+      <mat-step
+        label="{{ 'wizard_1_title' | translate }}"
       >{{ 'wizard_1_description' | translate }}
       </mat-step>
 
-      <mat-step matStepperIcon="done"
-                label="{{ 'wizard_1_title' | translate }}"
-      >{{ 'wizard_1_description' | translate }}
+      <mat-step
+        label="{{ 'wizard_2_title' | translate }}"
+      >{{ 'wizard_2_description' | translate }}
       </mat-step>
 
-      <mat-step matStepperIcon="number"
-                label="{{ 'wizard_1_title' | translate }}"
-      >{{ 'wizard_1_description' | translate }}
+      <mat-step
+        label="{{ 'wizard_3_title' | translate }}"
+      >{{ 'wizard_3_description' | translate }}
       </mat-step>
     </mat-vertical-stepper>
   </div>
-
-  <button mat-icon-button
-          class="wizard__close-button"
-          (click)="close()"
-          aria-label="Закрыть">
-    <span class="fa fal fa-times"></span>
-  </button>
 </div>
+
 
