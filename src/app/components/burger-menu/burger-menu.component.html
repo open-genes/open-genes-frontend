@@ -13,7 +13,9 @@
 <div class="header__menu"
      (click)="toggleMenu()"
      *ngIf="isMenuVisible">
-  <div class="menu__panel">
+  <div appSwipeHorizontal
+       (OnSwipeRight)="toggleMenu()"
+       class="menu__panel">
     <div class="panel__header">
     </div>
 
