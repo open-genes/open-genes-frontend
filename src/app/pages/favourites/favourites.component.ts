@@ -1,16 +1,16 @@
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   OnInit,
   OnDestroy,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Genes } from 'src/app/core/models';
 import { FavouritesService } from 'src/app/core/services/favourites.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { FileExportService } from '../../core/services/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 
@@ -24,77 +24,79 @@ export class FavouritesComponent implements OnInit, OnDestroy {
   public favouriteGenes: Genes[];
   public error: number;
   public downloadLink: string | SafeResourceUrl = '#';
+  public genes: Genes[];
   private favouriteGenesIds: number[] = [];
   private subscription$ = new Subject();
-  private genes: Genes[];
 
   constructor(
     public translate: TranslateService,
+    private readonly cdRef: ChangeDetectorRef,
     private readonly apiService: ApiService,
     private favouritesService: FavouritesService,
-    private fileExportService: FileExportService,
-    private readonly cdRef: ChangeDetectorRef
+    private fileExportService: FileExportService
   ) {}
-
-  public ngOnInit(): void {
-    this.getGenes();
-  }
 
   public unFavItem(geneId: number): void {
     this.favouritesService.removeFromFavourites(geneId);
-    this.favouriteGenesIds = this.favouritesService.favourites;
-    this.cdRef.markForCheck();
+    // TODO: clutch solution as a view doesn't update because the service returns an old value
+    window.location.reload();
   }
 
   public clearFavs(): void {
     this.favouritesService.clearFavourites();
-    this.favouriteGenesIds = this.favouritesService.favourites;
-    this.cdRef.markForCheck();
+    window.location.reload();
+  }
+
+  public updateView() {
+    this.cdRef.detectChanges();
   }
 
   private downloadJson(data: any) {
     this.downloadLink = this.fileExportService.downloadJson(data);
   }
 
-  private getGenes(): void {
+  private getData(): void {
     this.favouritesService
       .getItems()
       .pipe(takeUntil(this.subscription$))
       .subscribe(
-        (genes) => {
-          if (genes) {
-            this.favouriteGenesIds = genes;
-            this.downloadJson(genes);
+        (idList) => {
+          if (idList) {
+            this.favouriteGenesIds = idList;
+            this.downloadJson(idList);
+            this.cdRef.markForCheck();
           }
-          this.cdRef.markForCheck();
         },
         () => {
           this.favouriteGenesIds = [];
         }
       );
 
-    if (this.favouriteGenesIds.length !== 0) {
-      this.apiService
-        .getGenes()
-        .pipe(takeUntil(this.subscription$))
-        .subscribe(
-          (genes) => {
-            this.genes = genes;
-            this.favouriteGenes = genes.filter((gene) =>
-              this.favouriteGenesIds.includes(gene.id)
-            );
+    this.apiService
+      .getGenes()
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
+        (genes) => {
+          this.genes = genes;
+          this.favouriteGenes = genes.filter((gene) =>
+            this.favouriteGenesIds.includes(gene.id)
+          );
 
-            this.downloadJson(this.favouriteGenes);
-            this.cdRef.markForCheck();
-          },
-          (err) => {
-            this.error = err;
-          }
-        );
-    }
+          this.downloadJson(this.favouriteGenes);
+          console.log(this.favouriteGenes);
+          this.cdRef.markForCheck();
+        },
+        (err) => {
+          this.error = err;
+        }
+      );
   }
 
-  ngOnDestroy(): void {
+  ngOnInit() {
+    this.getData();
+  }
+
+  ngOnDestroy() {
     this.subscription$.unsubscribe();
   }
 }

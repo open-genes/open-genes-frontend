@@ -4,56 +4,20 @@
       <div class="container">
         <div class="col-12">
           <div class="page__title">
-            <h1>{{ 'favourites_page_title' | translate }}</h1>
+            <h1>{{ "favourites_page_title" | translate }}</h1>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="container favourites-page__favourites"
-         *ngIf="favouriteGenes && favouriteGenes?.length !== 0; else noContent">
-      <div class="row no-gutters __mb-20 align-items-center">
-        <div class="col page__subtitle __mb-0">
-          {{ 'favourites_page_total' | translate }} {{ favouriteGenes.length }}
-        </div>
-        <div class="col d-flex flex-row-reverse">
-          <a
-            mat-flat-button
-            color="primary"
-            [href]="downloadLink"
-            target="_blank"
-            download="export.json"
-          >
-            {{ 'download' | translate }}
-          </a>
-          <button
-            mat-flat-button
-            color="secondary"
-            (click)="clearFavs()"
-          >
-            {{ 'favourites_clear' | translate }}
-          </button>
-        </div>
-      </div>
-
-      <ng-container *ngFor="let gene of favouriteGenes">
-        <div class="col-12 faved-gene"
-        >
-          <div class="faved-gene__title">
-            <a [routerLink]="['/gene', gene.symbol]">
-              <span class="tag">{{ gene.symbol }}</span> <span class="link link--gray">{{ gene.name | capitalize }}</span>
-            </a>
-          </div>
-          <button
-            class="faved-gene__actions"
-            mat-icon-button
-            (click)="unFavItem(gene.id)"
-            >
-              <span class="fa far fa-trash"></span>
-          </button>
-        </div>
-      </ng-container>
-    </div>
+      <app-favourites-list
+        *ngIf="favouriteGenes && favouriteGenes?.length !== 0; else noContent"
+        [genericGenes]="genes"
+        [favouriteGenes]="favouriteGenes"
+        [downloadLink]="downloadLink"
+        (unFav)="unFavItem($event)"
+        (clear)="clearFavs()"
+        (updateView)="updateView()"
+      ></app-favourites-list>
   </div>
 </div>
 
@@ -63,17 +27,16 @@
       <div class="no-content__icon no-content__icon-standard"></div>
       <div class="no-content__title">
         <div class="title__center">
-          {{ 'favourites_no_data' | translate }}
+          {{ "favourites_no_data" | translate }}
         </div>
       </div>
       <div class="no-content__button">
-        <a
-          mat-flat-button
-          color="primary"
-          href="/"
-        >{{ 'favourites_go_to_home_page' | translate }}
+        <a mat-flat-button color="primary" href="/"
+        >{{ "favourites_go_to_home_page" | translate }}
         </a>
       </div>
     </div>
   </section>
 </ng-template>
+
+

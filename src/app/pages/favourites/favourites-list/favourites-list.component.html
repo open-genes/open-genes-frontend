@@ -1,0 +1,46 @@
+<div class="container favourites-page__favourites">
+  <div class="row no-gutters __mb-20 align-items-center">
+    <div class="col page__subtitle __mb-10">
+      {{ "favourites_page_total" | translate }} {{ favourites.length }}
+    </div>
+    <div class="col d-flex flex-row-reverse">
+      <a
+        mat-flat-button
+        color="primary"
+        [href]="downloadLink"
+        target="_blank"
+        download="export.json"
+      >
+        {{ "download" | translate }}
+      </a>
+      <button
+        mat-flat-button
+        color="secondary"
+        (click)="clearFavs()"
+        class="__mr-10"
+      >
+        {{ "favourites_clear" | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="favourites"
+       class="row no-gutters">
+    <div *ngFor="let gene of favourites"
+         class="col-12 faved-gene">
+      <div class="faved-gene__title">
+        <a [routerLink]="['/gene', gene.symbol]">
+          <span class="tag">{{ gene.symbol }}</span>
+          <span class="link link--gray">{{ gene.name | capitalize }}</span>
+        </a>
+      </div>
+      <button
+        class="faved-gene__actions"
+        mat-icon-button
+        (click)="unFavItem(gene.id)"
+      >
+        <span class="fa far fa-trash"></span>
+      </button>
+    </div>
+  </div>
+</div>
