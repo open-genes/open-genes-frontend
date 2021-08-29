@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { icons } from "src/app/core/icons/icon-map";
+import { Injectable } from '@angular/core';
+import { icons } from 'src/app/core/maps/icon-map';
 
 @Injectable()
 export class IconService {

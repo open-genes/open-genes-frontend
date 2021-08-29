@@ -14,7 +14,6 @@ $l: 'language-switcher';
     width: $language-switcher-size;
     height: $language-switcher-size;
     line-height: $language-switcher-size;
-    background-color: rgba($color-white, .75);
     font-size: 12px;
 
     font-weight: $font-weight-medium;
@@ -23,18 +22,20 @@ $l: 'language-switcher';
     border-radius: 3px;
   }
 
-  &:active {
-    .#{$l}__inner {
-      background-color: $color-white;
-    }
-  }
-
   &--light {
-    color: $color-base;
+    color: $color-white;
+
+    .#{$l}__inner {
+      background-color: $color-base;
+    }
   }
 
   &--dark {
     color: currentColor;
+
+    .#{$l}__inner {
+      background-color: $color-white;
+    }
   }
 }
 

@@ -22,20 +22,23 @@
     <div class="container-fluid">
       <div class="row">
         <ng-container *ngIf="isAvailable; else errorMessage">
-          <div class="col-12 __mb-10">
-            <app-hint>
-              <ng-container icon
-                ><span class="fa far fa-info"></span
-              ></ng-container>
-              <ng-container text
-                >{{ "main_page_hint_table_settings" | translate
-                }}<span class="fa far fa-cog"></span
-              ></ng-container>
-            </app-hint>
+          <div class="col-12">
+            <div *ngIf="isMobile"
+                 class="__mb-10">
+              <ng-container [ngTemplateOutlet]="wizardBanner"></ng-container>
+            </div>
           </div>
 
-          <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 __mb-btm">
+          <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2"
+               [ngClass]="isMobile? '__mb-btm' : ''">
             <app-sidebar>
+              <app-sidebar-item *ngIf="!isMobile">
+                <div content class="__pl-5 __pr-5">
+                  <ng-container [ngTemplateOutlet]="wizardBanner"
+                  ></ng-container>
+                </div>
+              </app-sidebar-item>
+
               <app-sidebar-item *ngIf="lastGenes">
                 <ng-container title>
                   {{ "main_page_last" | translate }}
@@ -98,10 +101,24 @@
       <div class="no-content__icon no-content__icon-standard"></div>
       <div class="no-content__title">
         <div class="title__center">
-          {{ "error_connection" | translate }} <br />
+          {{ "error_connection" | translate }} <br>
           ({{ errorStatus }})
         </div>
       </div>
     </div>
   </section>
 </ng-template>
+
+<ng-template #wizardBanner let-classes>
+  <app-hint class="{{ classes }}"
+            hintType="emphasized">
+    <ng-container title><span class="fa far fa-magic"></span> С чего начать</ng-container>
+    <ng-container description>Узнайте как пользоваться поиском и фильтрами</ng-container>
+    <ng-container button>
+      <button class="btn btn--fill btn--small btn--white"
+              (click)="openWizard()">
+        Посмотреть
+      </button></ng-container>
+  </app-hint>
+</ng-template>
+

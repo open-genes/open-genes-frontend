@@ -5,7 +5,7 @@
 }
 
 .signin-button {
-  @include close-button;
+  @include close-button(10px, 50%);
 }
 
 .header__menu {
@@ -23,13 +23,13 @@
 
 .menu__panel {
   height: 100%;
-  padding: $header-height 0 30px 0;
+  padding: 0 0 30px 0;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   z-index: 1;
-  background-color: #fff;
+  background-color: $color-white;
   box-shadow: -1px 0 4px 0 rgba(5, 5, 5, 0.3);
 
   @include resolution_tablet-and-up {
@@ -39,15 +39,16 @@
     width: 260px;
   }
 
-  form {
+  .panel__header {
     width: 100%;
-    padding: 0 10px;
-    margin-bottom: 20px;
+    height: $header-height;
+    background-color: $color-general-light;
+    margin-bottom: 15px;
   }
 
   .menu__links {
     width: 100%;
-    padding: 0;
+    padding: 0 20px;
 
     .menu__link {
       font-size: $font-size-bigger;
@@ -61,7 +62,8 @@
       }
 
       a {
-        padding: 15px 30px 15px 10px;
+        border-radius: $border-radius-medium;
+        padding: 12px 30px 12px 10px;
 
         .fa {
           margin-right: 5px;
@@ -69,24 +71,28 @@
 
         &:link,
         &:visited {
-          color: $color-general;
+          color: $color-black;
         }
 
         &:hover {
-          color: $color-general-dark;
-          background-color: rgba($color-general-dark, 0.15);
+          color: rgba($color-general, 0.85);
+          background-color: rgba($color-general, 0.08);
         }
 
         &:active {
-          color: $color-general-dark;
-          background-color: rgba($color-general-dark, 0.25);
+          color: rgba($color-general, 0.75);
+          background-color: rgba($color-general, 0.15);
         }
 
         &.current {
-          color: $color-white;
-          background-color: $color-general;
+          color: $color-general;
+          background-color: rgba($color-general, 0.15);
         }
       }
+    }
+
+    .menu__link + .menu__link {
+      margin-top: 4px;
     }
   }
 }

@@ -10,9 +10,10 @@ import {
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Genes } from '../../core/models';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { WizardService } from '../../components/shared/wizard/wizard-service.service';
+import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 
 @Component({
@@ -21,32 +22,36 @@ import { WindowService } from '../../core/services/browser/window.service';
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnInit, OnDestroy {
-  @Output() dataSourceUpdate: EventEmitter<Genes[]> = new EventEmitter<
-    Genes[]
-  >();
+export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
+  @Output()
+  dataSourceUpdate: EventEmitter<Genes[]> = new EventEmitter<Genes[]>();
 
   public genes: Genes[];
   public lastGenes: Genes[];
   public isAvailable = true;
   public errorStatus: string;
   public environment = environment;
-  private subscription$ = new Subject();
-  public isMobile: boolean;
-  private resDesktop = 951.98;
 
   constructor(
-    private readonly apiService: ApiService,
+    public windowService: WindowService,
     private filterService: FilterService,
-    private readonly cdRef: ChangeDetectorRef,
-    private windowService: WindowService
-  ) {}
+    private wizardService: WizardService,
+    private readonly apiService: ApiService,
+    private readonly cdRef: ChangeDetectorRef
+  ) {
+    super(windowService);
+  }
 
   ngOnInit(): void {
     this.getGenes();
     this.getLastEditedGenes();
-    this.initWindowWidth();
-    this.detectWindowWidth();
+    this.initWindowWidth(() => {
+      this.cdRef.markForCheck();
+    });
+    this.detectWindowWidth(() => {
+      this.cdRef.markForCheck();
+    });
+    this.loadWizard();
   }
 
   ngOnDestroy(): void {
@@ -76,24 +81,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Responsiveness
+   * Wizard
    */
-  private initWindowWidth(): void {
-    this.windowService
-      .setWindowWidth()
-      .pipe(takeUntil(this.subscription$))
-      .subscribe((width) => {
-        this.isMobile = width <= this.resDesktop;
-        this.cdRef.markForCheck();
-      });
+  public openWizard() {
+    this.wizardService.open();
   }
 
-  private detectWindowWidth(): void {
-    this.windowService.windowWidth$
-      .pipe(takeUntil(this.subscription$))
-      .subscribe((width) => {
-        this.isMobile = width <= this.resDesktop;
-        this.cdRef.markForCheck();
-      });
+  private loadWizard() {
+    this.wizardService.openOnce();
   }
 }

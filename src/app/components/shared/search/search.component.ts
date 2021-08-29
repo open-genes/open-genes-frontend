@@ -36,10 +36,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   public showResult: boolean;
   private subscription$: Subscription;
 
-  constructor(
-    private renderer: Renderer2,
-    private translate: TranslateService
-  ) {}
+  constructor(private renderer: Renderer2) {}
 
   ngOnInit(): void {
     this.searchForm = new FormGroup({
@@ -59,13 +56,14 @@ export class SearchComponent implements OnInit, OnDestroy {
       document.body,
       'body--search-on-main-page-is-active'
     );
-    const searchField = this.searchForm.get('searchField').value.toLowerCase();
+    const searchField = this.searchForm.get('searchField').value;
+    const query = searchField ? searchField.toLowerCase() : '';
     this.searchedData = this.dataSource.filter((item) => {
       const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
       ${item.symbol} ${item.name} ${item.aliases.join(' ')}`;
-      return searchedText.toLowerCase().includes(searchField);
+      return searchedText.toLowerCase().includes(query);
     });
-    this.queryChange.emit(searchField);
+    this.queryChange.emit(query);
     this.dataSourceChange.emit(this.searchedData);
   }
 
@@ -79,13 +77,29 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   public setGoSearchMode(state: boolean): void {
+    console.log('setGoSearchMode');
     this.isGoModeTriggered.emit(state);
+    this.searchForm.reset();
     this.isGoSearchMode = state;
   }
 
   public triggerGoSearch(): void {
-    const query = this.searchForm.get('searchField').value.toLowerCase();
-    this.isGoSearchTriggered.emit(query);
+    const query = this.searchForm.get('searchField').value;
+    this.isGoSearchTriggered.emit(query ? query.toLowerCase() : '');
+  }
+
+  public debounce(callback: any, time: number): () => void {
+    let lastCall = 0;
+    let now = undefined;
+    return function () {
+      now = Date.now();
+      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+      if (now > lastCall + time) {
+        lastCall = now;
+        // eslint-disable-next-line prefer-rest-params
+        callback();
+      }
+    };
   }
 
   ngOnDestroy(): void {

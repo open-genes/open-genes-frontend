@@ -54,6 +54,7 @@ $open-genes-theme:   mat-light-theme($open-genes-primary, $open-genes-accent);
 @include angular-material-theme($open-genes-theme);
 
 // Some custom design
+// TODO: extend from material components and override styles inside a component
 
 // - Expansion-panel
 .mat-expansion-panel {
@@ -85,5 +86,15 @@ $open-genes-theme:   mat-light-theme($open-genes-primary, $open-genes-accent);
       }
     }
   }
+}
+
+// - Bottom sheet
+mat-bottom-sheet-container.mat-bottom-sheet-container {
+  max-height: calc(100vh - #{$header-height});
+}
+
+mat-step-header.mat-step-header {
+  padding-top: $ui-base-height / 2;
+  padding-bottom: $ui-base-height / 2;
 }
 

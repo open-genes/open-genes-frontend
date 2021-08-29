@@ -1,16 +1,18 @@
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   OnInit,
   OnDestroy,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Genes } from 'src/app/core/models';
 import { FavouritesService } from 'src/app/core/services/favourites.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
+import { FileExportService } from '../../core/services/file-export.service';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-favourites',
@@ -19,44 +21,51 @@ import { takeUntil } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FavouritesComponent implements OnInit, OnDestroy {
-  public favouriteGenesIds: number[] = [];
-  public genes: Genes[];
+  public favouriteGenes: Genes[];
   public error: number;
+  public downloadLink: string | SafeResourceUrl = '#';
+  public genes: Genes[];
+  private favouriteGenesIds: number[] = [];
   private subscription$ = new Subject();
 
   constructor(
     public translate: TranslateService,
+    private readonly cdRef: ChangeDetectorRef,
     private readonly apiService: ApiService,
     private favouritesService: FavouritesService,
-    private readonly cdRef: ChangeDetectorRef
+    private fileExportService: FileExportService
   ) {}
-
-  public ngOnInit(): void {
-    this.getGenes();
-  }
 
   public unFavItem(geneId: number): void {
     this.favouritesService.removeFromFavourites(geneId);
-    this.favouriteGenesIds = this.favouritesService.favourites;
-    this.cdRef.markForCheck();
+    // TODO: clutch solution as a view doesn't update because the service returns an old value
+    window.location.reload();
   }
 
   public clearFavs(): void {
     this.favouritesService.clearFavourites();
-    this.favouriteGenesIds = this.favouritesService.favourites;
-    this.cdRef.markForCheck();
+    window.location.reload();
   }
 
-  private getGenes(): void {
+  public updateView() {
+    this.cdRef.detectChanges();
+  }
+
+  private downloadJson(data: any) {
+    this.downloadLink = this.fileExportService.downloadJson(data);
+  }
+
+  private getData(): void {
     this.favouritesService
       .getItems()
       .pipe(takeUntil(this.subscription$))
       .subscribe(
-        (genes) => {
-          if (genes) {
-            this.favouriteGenesIds = genes;
+        (idList) => {
+          if (idList) {
+            this.favouriteGenesIds = idList;
+            this.downloadJson(idList);
+            this.cdRef.markForCheck();
           }
-          this.cdRef.markForCheck();
         },
         () => {
           this.favouriteGenesIds = [];
@@ -69,6 +78,12 @@ export class FavouritesComponent implements OnInit, OnDestroy {
       .subscribe(
         (genes) => {
           this.genes = genes;
+          this.favouriteGenes = genes.filter((gene) =>
+            this.favouriteGenesIds.includes(gene.id)
+          );
+
+          this.downloadJson(this.favouriteGenes);
+          console.log(this.favouriteGenes);
           this.cdRef.markForCheck();
         },
         (err) => {
@@ -77,7 +92,11 @@ export class FavouritesComponent implements OnInit, OnDestroy {
       );
   }
 
-  ngOnDestroy(): void {
+  ngOnInit() {
+    this.getData();
+  }
+
+  ngOnDestroy() {
     this.subscription$.unsubscribe();
   }
 }
