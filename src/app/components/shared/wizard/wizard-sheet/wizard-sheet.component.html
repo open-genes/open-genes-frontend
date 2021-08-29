@@ -1,0 +1,38 @@
+<div class="wizard" appSwipeVertical (OnSwipeDown)="close()">
+  <div class="wizard__header">
+    <span class="fa far fa-magic"></span>&nbsp;{{ 'wizard_header' | translate }}
+
+    <span class="wizard__drag-button"></span>
+
+    <button *ngIf="!isMobile"
+            mat-icon-button
+            class="wizard__close-button"
+            (click)="close()"
+            aria-label="Закрыть">
+      <span class="fa fal fa-times"></span>
+    </button>
+  </div>
+  <div class="wizard__title">
+    {{ 'wizard_title' | translate }}
+  </div>
+  <div class="wizard__steps">
+    <mat-vertical-stepper>
+      <mat-step
+        label="{{ 'wizard_1_title' | translate }}"
+      >{{ 'wizard_1_description' | translate }}
+      </mat-step>
+
+      <mat-step
+        label="{{ 'wizard_2_title' | translate }}"
+      >{{ 'wizard_2_description' | translate }}
+      </mat-step>
+
+      <mat-step
+        label="{{ 'wizard_3_title' | translate }}"
+      >{{ 'wizard_3_description' | translate }}
+      </mat-step>
+    </mat-vertical-stepper>
+  </div>
+</div>
+
+

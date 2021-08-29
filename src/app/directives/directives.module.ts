@@ -1,8 +1,14 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { HighlightDirective } from "./highlight.directive";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HighlightDirective } from './highlight.directive';
+import { SwipeHorizontalDirective } from './swipe-horizontal.directive';
+import { SwipeVeticalDirective } from './swipe-vertical.directive';
 
-const DIRECTIVES = [HighlightDirective];
+const DIRECTIVES = [
+  HighlightDirective,
+  SwipeHorizontalDirective,
+  SwipeVeticalDirective,
+];
 
 @NgModule({
   declarations: [...DIRECTIVES],

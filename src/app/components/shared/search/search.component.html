@@ -10,7 +10,7 @@
   <div class="search-form__panel">
     <button
       (click)="cancelSearch($event)"
-      class="btn btn-purple btn--icon-only cancel-search-button">
+      class="btn btn--purple btn--icon-only cancel-search-button">
       <span class="fa fal fa-arrow-left"></span>
     </button>
 
@@ -48,7 +48,8 @@
         class="field search-form__field"
         required
         #searchQuery
-        (focusin)="!isGoSearchMode? search() : triggerGoSearch()"
+        (focusin)="!isGoSearchMode? search() : debounce(triggerGoSearch(), 500)"
+        (keydown)="!isGoSearchMode? null : triggerGoSearch()"
         (keydown.enter)="!isGoSearchMode? search(): triggerGoSearch()"
       >
       <mat-menu #searchMenu>
