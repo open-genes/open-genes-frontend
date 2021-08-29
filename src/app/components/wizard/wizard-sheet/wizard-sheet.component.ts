@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { WizardService } from '../wizard-service.service';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { StepperOrientation } from '@angular/cdk/stepper';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { WindowWidth } from '../../../core/utils/window-width';
+import { WindowService } from '../../../core/services/browser/window.service';
 
 @Component({
   selector: 'app-wizard-sheet',
@@ -16,19 +19,24 @@ import { Observable } from 'rxjs';
       useValue: { displayDefaultIndicatorType: false },
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardSheetComponent implements OnInit {
-  public stepperOrientation: Observable<StepperOrientation>;
-
+export class WizardSheetComponent extends WindowWidth implements OnInit {
   constructor(
+    public windowService: WindowService,
     private wizardService: WizardService,
-    private breakpointObserver: BreakpointObserver
-  ) {}
+    private readonly cdRef: ChangeDetectorRef
+  ) {
+    super(windowService);
+  }
 
   ngOnInit(): void {
-    this.stepperOrientation = this.breakpointObserver
-      .observe('(min-width: 800px)')
-      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
+    this.initWindowWidth(() => {
+      this.cdRef.markForCheck();
+    });
+    this.detectWindowWidth(() => {
+      this.cdRef.markForCheck();
+    });
   }
 
   public close(): void {

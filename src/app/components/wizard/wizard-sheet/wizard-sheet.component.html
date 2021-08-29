@@ -2,7 +2,8 @@
   <div class="wizard__header">
     <span class="fa far fa-magic"></span>&nbsp;{{ 'wizard_header' | translate }}
 
-    <button mat-icon-button
+    <button *ngIf="!isMobile"
+            mat-icon-button
             class="wizard__close-button"
             (click)="close()"
             aria-label="Закрыть">

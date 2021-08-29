@@ -13,7 +13,7 @@ import { FilterService } from '../../components/shared/genes-list/services/filte
 import { takeUntil } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { WizardService } from '../../components/wizard/wizard-service.service';
-import { WindowWidth } from '../../core/abstract-classes/window-width';
+import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 
 @Component({

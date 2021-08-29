@@ -1,19 +1,21 @@
-import { Inject, Injectable } from "@angular/core";
-import { fromEvent, Observable, of } from "rxjs";
-import { map } from "rxjs/operators";
-import { DOCUMENT } from "@angular/common";
+import { Inject, Injectable } from '@angular/core';
+import { fromEvent, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { DOCUMENT } from '@angular/common';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class WindowService {
   public windowWidth$: Observable<number>;
   public scroll$: Observable<number>;
 
   constructor(@Inject(DOCUMENT) public document: Document) {
-    this.windowWidth$ = fromEvent(window, "resize").pipe(
+    this.windowWidth$ = fromEvent(window, 'resize').pipe(
       map(() => {
         const documentElement = document.documentElement;
         const bodyElement =
-          document.body || document.getElementsByTagName("body")[0];
+          document.body || document.getElementsByTagName('body')[0];
         return (
           window.innerWidth ||
           documentElement.clientWidth ||
@@ -22,7 +24,7 @@ export class WindowService {
       })
     );
 
-    this.scroll$ = fromEvent(window, "scroll").pipe(
+    this.scroll$ = fromEvent(window, 'scroll').pipe(
       map(() => window.scrollY || this.document.documentElement.scrollTop)
     );
   }
@@ -30,7 +32,7 @@ export class WindowService {
   public setWindowWidth(): Observable<number> {
     const documentElement = document.documentElement;
     const bodyElement =
-      document.body || document.getElementsByTagName("body")[0];
+      document.body || document.getElementsByTagName('body')[0];
     return of(
       window.innerWidth ||
         documentElement.clientWidth ||
