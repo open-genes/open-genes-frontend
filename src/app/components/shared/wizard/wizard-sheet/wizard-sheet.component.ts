@@ -6,8 +6,8 @@ import {
 } from '@angular/core';
 import { WizardService } from '../wizard-service.service';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { WindowWidth } from '../../../core/utils/window-width';
-import { WindowService } from '../../../core/services/browser/window.service';
+import { WindowWidth } from '../../../../core/utils/window-width';
+import { WindowService } from '../../../../core/services/browser/window.service';
 
 @Component({
   selector: 'app-wizard-sheet',

@@ -12,7 +12,7 @@ import { Genes } from '../../core/models';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
 import { takeUntil } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { WizardService } from '../../components/wizard/wizard-service.service';
+import { WizardService } from '../../components/shared/wizard/wizard-service.service';
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 
