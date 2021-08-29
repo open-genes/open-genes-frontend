@@ -11,15 +11,22 @@
     </div>
 
     <div class="container favourites-page__favourites"
-         *ngIf="favouriteGenesIds.length !== 0; else noContent">
+         *ngIf="favouriteGenes && favouriteGenes?.length !== 0; else noContent">
       <div class="row no-gutters __mb-20 align-items-center">
         <div class="col page__subtitle __mb-0">
-          {{ 'favourites_page_total' | translate }} {{ favouriteGenesIds.length }}
+          {{ 'favourites_page_total' | translate }} {{ favouriteGenes.length }}
         </div>
         <div class="col d-flex flex-row-reverse">
-          <button
+          <a
             mat-flat-button
             color="primary"
+            [href]="downloadLink"
+          >
+            {{ 'download' | translate }}
+          </a>
+          <button
+            mat-flat-button
+            color="secondary"
             (click)="clearFavs()"
           >
             {{ 'favourites_clear' | translate }}
@@ -27,9 +34,8 @@
         </div>
       </div>
 
-      <ng-container *ngFor="let gene of genes | toArray">
-        <div *ngIf="favouriteGenesIds.indexOf(gene.id) > -1"
-             class="col-12 faved-gene"
+      <ng-container *ngFor="let gene of favouriteGenes">
+        <div class="col-12 faved-gene"
         >
           <div class="faved-gene__title">
             <a [routerLink]="['/gene', gene.symbol]">

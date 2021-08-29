@@ -11,6 +11,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FileExportService } from '../../core/services/file-export.service';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-favourites',
@@ -19,15 +21,18 @@ import { takeUntil } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FavouritesComponent implements OnInit, OnDestroy {
-  public favouriteGenesIds: number[] = [];
-  public genes: Genes[];
+  public favouriteGenes: Genes[];
   public error: number;
+  public downloadLink: string | SafeResourceUrl = '#';
+  private favouriteGenesIds: number[] = [];
   private subscription$ = new Subject();
+  private genes: Genes[];
 
   constructor(
     public translate: TranslateService,
     private readonly apiService: ApiService,
     private favouritesService: FavouritesService,
+    private fileExportService: FileExportService,
     private readonly cdRef: ChangeDetectorRef
   ) {}
 
@@ -47,6 +52,10 @@ export class FavouritesComponent implements OnInit, OnDestroy {
     this.cdRef.markForCheck();
   }
 
+  private downloadJson(data: any) {
+    this.downloadLink = this.fileExportService.downloadJson(data);
+  }
+
   private getGenes(): void {
     this.favouritesService
       .getItems()
@@ -55,6 +64,7 @@ export class FavouritesComponent implements OnInit, OnDestroy {
         (genes) => {
           if (genes) {
             this.favouriteGenesIds = genes;
+            this.downloadJson(genes);
           }
           this.cdRef.markForCheck();
         },
@@ -63,18 +73,25 @@ export class FavouritesComponent implements OnInit, OnDestroy {
         }
       );
 
-    this.apiService
-      .getGenes()
-      .pipe(takeUntil(this.subscription$))
-      .subscribe(
-        (genes) => {
-          this.genes = genes;
-          this.cdRef.markForCheck();
-        },
-        (err) => {
-          this.error = err;
-        }
-      );
+    if (this.favouriteGenesIds.length !== 0) {
+      this.apiService
+        .getGenes()
+        .pipe(takeUntil(this.subscription$))
+        .subscribe(
+          (genes) => {
+            this.genes = genes;
+            this.favouriteGenes = genes.filter((gene) =>
+              this.favouriteGenesIds.includes(gene.id)
+            );
+
+            this.downloadJson(this.favouriteGenes);
+            this.cdRef.markForCheck();
+          },
+          (err) => {
+            this.error = err;
+          }
+        );
+    }
   }
 
   ngOnDestroy(): void {
