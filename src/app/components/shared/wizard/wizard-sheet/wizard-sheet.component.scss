@@ -1,7 +1,8 @@
 @import '../../../styles';
 
 :host {
-  display: inline-block;
+  display: block;
+  width: 100%;
 }
 
 .wizard {
@@ -22,6 +23,22 @@
   &__title {
     margin-bottom: 1em;
     padding-right: 40px;
+  }
+
+  &__drag-button {
+    $button-width: $ui-base-height;
+    $button-height: 4px;
+
+    position: absolute;
+    top: $button-height;
+    left: 50%;
+    z-index: 1;
+    margin-left: -#{$button-width / 2};
+    display: block;
+    width: $button-width;
+    height: $button-height;
+    border-radius: 3px;
+    background-color: $color-gray-light;
   }
 
   &__close-button {
