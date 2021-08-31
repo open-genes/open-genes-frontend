@@ -34,6 +34,8 @@ mat-card {
       border-radius: 10px;
       padding: 10px;
       font-size: $font-size-smaller;
+      word-break: keep-all;
+      hyphens: auto;
       background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
 
       .card__title {

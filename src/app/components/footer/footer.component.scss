@@ -1,6 +1,7 @@
 @import "../styles";
 
 :host {
+  width: 100%;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -30,5 +31,9 @@
   .footer__language {
     text-align: right;
     color: $color-black;
+  }
+
+  .footer__logo {
+    display: inline-block;
   }
 }
