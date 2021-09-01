@@ -5,21 +5,21 @@ import {
   OnInit,
   OnDestroy,
   Output,
-} from "@angular/core";
-import { Router } from "@angular/router";
-import { FilterService } from "../shared/genes-list/services/filter.service";
-import { FavouritesService } from "../../core/services/favourites.service";
-import { Subscription } from "rxjs";
-import { FilterTypesEnum } from "../shared/genes-list/services/filter-types.enum";
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { FilterService } from '../shared/genes-list/services/filter.service';
+import { FavouritesService } from '../../core/services/favourites.service';
+import { Subscription } from 'rxjs';
+import { FilterTypesEnum } from '../shared/genes-list/services/filter-types.enum';
 
 @Component({
-  selector: "app-header",
-  templateUrl: "./header.component.html",
-  styleUrls: ["./header.component.scss"],
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  @Output() favsCounter: string; // counter output
+  @Output() favsCounter: string;
   private favouritesSubscription: Subscription;
 
   constructor(
@@ -48,11 +48,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.favouritesSubscription = this.favouritesService
       .getNumberOfItems()
       .subscribe(
-        (genes) => {
-          this.favsCounter = genes.toString();
+        (genesNumber: number) => {
+          this.favsCounter = genesNumber.toString();
           this.cdRef.markForCheck();
         },
-        () => (this.favsCounter = "0")
+        () => (this.favsCounter = '0')
       );
   }
 }
