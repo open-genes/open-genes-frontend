@@ -15,14 +15,7 @@
 
   .table-row { // tr
     position: relative;
-
-    &:nth-child(even) {
-      background: $color-gray-very-light;
-    }
-
-    &:nth-child(odd) {
-      background: #fff;
-    }
+    background: #fff;
 
     &:last-child {
       border-bottom: none;
@@ -34,6 +27,14 @@
       word-break: keep-all;
       hyphens: auto;
     }
+  }
+
+  .table-row + .table-row {
+    border-top: 1px solid $color-borders;
+  }
+
+  .table-row + .table-row.table-row--footer {
+    border-top: 0;
   }
 
   .cell__actions {
