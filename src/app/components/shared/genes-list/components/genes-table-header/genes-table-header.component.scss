@@ -5,7 +5,7 @@
   width: 100%;
 }
 
-td {
+.table-header__cell {
   width: (100% / $columns-quantity); // Фикс для пустой таблицы
   color: $color-black;
   font-size: 12px;
@@ -27,25 +27,28 @@ td {
   }
 
   // Setting width to columns
-  &:first-child {
+  &--age {
     .overflow {
-      width: 200px;
+      width: 180px;
     }
   }
 
-  &:nth-child(2) {
+  &--expression {
     .overflow {
-      width: 140px;
+      width: 100px;
     }
   }
 
-  &:nth-child(3) {
+  &--name,
+  &--diseases,
+  &--functions,
+  &--criteria {
     .overflow {
-      width: 300px;
+      width: 220px;
     }
   }
 
-  &:last-child {
+  &--menu {
     .overflow {
       width: 24px;
     }

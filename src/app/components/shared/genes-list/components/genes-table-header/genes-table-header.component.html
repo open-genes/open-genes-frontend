@@ -1,10 +1,11 @@
-<td>
+<td class="table-header__cell table-header__cell--name">
   <div class="overflow">
     {{ "main_page_table_name" | translate }}
   </div>
 </td>
 
-<td *ngIf="isGoTermsMode || settings.ifShowAge">
+<td *ngIf="isGoTermsMode || settings.ifShowAge"
+    class="table-header__cell table-header__cell--age">
   <div class="overflow">
     {{ "phylogeny" | translate }},
   </div>
@@ -13,31 +14,27 @@
   </div>
 </td>
 
-<td *ngIf="isGoTermsMode || settings.ifShowDiseases">
-  {{ "gene_list_diseases" | translate }}
+<td *ngIf="isGoTermsMode || settings.ifShowDiseases"
+    class="table-header__cell table-header__cell--diseases">
+  <div class="overflow">{{ "gene_list_diseases" | translate }}</div>
 </td>
 
 <ng-container *ngIf="!isGoTermsMode; else GoModeHeader">
-  <td *ngIf="settings.ifShowClasses">
-    <div class="overflow">
-      {{ "functional_classes" | translate }}
-    </div>
-  </td>
-  <td *ngIf="settings.ifShowExpression">
+  <td *ngIf="settings.ifShowExpression" class="table-header__cell table-header__cell--expression">
     <div class="overflow">
       {{ "main_page_table_expression" | translate }}
     </div>
   </td>
-  <td *ngIf="settings.ifShowCriteria">
+  <td *ngIf="settings.ifShowCriteria" class="table-header__cell table-header__cell--criteria">
     <div class="overflow">{{ "main_page_table_criteria" | translate }}</div>
   </td>
 </ng-container>
-<td>
+<td class="table-header__cell table-header__cell--menu">
   <div class="overflow"></div>
 </td>
 
 <ng-template #GoModeHeader>
-  <td colspan="3">
+  <td colspan="2">
     <div class="overflow">{{ "go_terms" | translate }}</div>
   </td>
 </ng-template>
