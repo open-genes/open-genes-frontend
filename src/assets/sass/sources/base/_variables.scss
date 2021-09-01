@@ -66,6 +66,10 @@ $color-red-text: #c0341d;
 $color-red: #FF4E1A;
 $color-red-dark: darken($color-red, 5%);
 
+// Gradients
+$orange-gradient1: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, #FFC769 100%);
+$orange-gradient2: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, #FFC769 100%);
+
 // States variables
 $color-hover: darken(#e8ebfd, 2%);
 $color-selected: #cfd1f6;
