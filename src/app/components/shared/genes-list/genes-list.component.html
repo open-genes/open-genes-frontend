@@ -60,7 +60,7 @@
       </button>
 
       <button *ngIf="!isGoTermsMode"
-              class="btn btn--small btn-purple"
+              class="btn btn--small btn--purple"
               (click)="openFiltersModal()">
         <span class="fa far fa-plus"></span>
         Фильтры
@@ -183,9 +183,9 @@
 
     <td *ngIf="isGoTermsMode || listSettings.ifShowDiseases"
         class="cell">
-        <app-associated-diseases
-          [geneDiseases]="item.diseases"
-        ></app-associated-diseases>
+      <app-associated-diseases
+        [geneDiseases]="item.diseases"
+      ></app-associated-diseases>
     </td>
 
     <ng-container *ngIf="!isGoTermsMode; else GoModeCell">
@@ -208,7 +208,7 @@
     </ng-container>
 
     <ng-template #GoModeCell>
-      <td colspan="3" class="cell cell__clusters">
+      <td colspan="3" class="cell cell__funtions">
         <div *ngIf="item.terms" class="cell__limiter">
           <a
             *ngFor="let term of biologicalProcess | keyvalue"
@@ -244,18 +244,20 @@
       ></app-gene-menu>
     </td>
   </tr>
-  <tr class="footer table-row">
+
+  <tr class="table-row table-row--footer">
     <td *ngIf="!isGoTermsMode && listSettings.ifShowClasses"
-        colspan="100%"
-        class="cell cell__clusters">
-        <app-tag
-          *ngFor="let item of item.functionalClusters"
-          (click)="filterByFuncClusters(item['id'])"
-          [isActive]="filters.byClasses.includes(item['id'])"
-        >{{ item["name"] }}
-        </app-tag>
+        colspan="2"
+        class="cell cell__functions">
+      <app-tag
+        *ngFor="let item of item.functionalClusters"
+        (click)="filterByFuncClusters(item['id'])"
+        [isActive]="filters.byClasses.includes(item['id'])"
+      >{{ item["name"] }}
+      </app-tag>
     </td>
   </tr>
+
 </ng-template>
 
 <ng-template #asCardsTmpl let-item="item">
