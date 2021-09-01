@@ -56,7 +56,7 @@
         (click)="(clearFilters)"
         *ngIf="isClearFiltersBtnShown"
       >
-        <span class="fa fal fa-remove"></span> {{ "filters_reset" | translate }}
+        <span class="fa fal fa-delete"></span> {{ "filters_reset" | translate }}
       </button>
 
       <button *ngIf="!isGoTermsMode"
@@ -208,7 +208,7 @@
     </ng-container>
 
     <ng-template #GoModeCell>
-      <td colspan="3" class="cell cell__funtions">
+      <td colspan="2" class="cell cell__funtions">
         <div *ngIf="item.terms" class="cell__limiter">
           <a
             *ngFor="let term of biologicalProcess | keyvalue"
@@ -247,7 +247,7 @@
 
   <tr class="table-row table-row--footer">
     <td *ngIf="!isGoTermsMode && listSettings.ifShowClasses"
-        colspan="2"
+        colspan="100%"
         class="cell cell__functions">
       <app-tag
         *ngFor="let item of item.functionalClusters"
