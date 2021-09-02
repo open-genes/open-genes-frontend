@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import { PageClass } from '../page.class';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-gene',
@@ -36,6 +37,7 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   constructor(
     public translate: TranslateService,
     private activateRoute: ActivatedRoute,
+    private router: Router,
     private apiService: ApiService
   ) {
     super();
@@ -141,7 +143,11 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
           this.gene?.locationEnd?.length;
 
         // TODO: Set properties which values depend on a selected language
-      });
+        },
+        (error: HttpErrorResponse) => {
+          this.router.navigate(['/404']);
+        }
+      );
   }
 
   ngOnDestroy(): void {
