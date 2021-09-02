@@ -15,7 +15,6 @@
 
   .table-row { // tbody
     position: relative;
-    border-radius: $border-radius-regular;
     background: $color-white;
 
     &:nth-child(odd) {

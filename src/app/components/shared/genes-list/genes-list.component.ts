@@ -11,9 +11,9 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { of, Observable, ReplaySubject } from 'rxjs';
+import { of, Observable, ReplaySubject, interval, forkJoin } from 'rxjs';
 import { PageClass } from '../../../pages/page.class';
-import { takeLast, takeUntil } from 'rxjs/operators';
+import { takeLast, takeUntil, throttle } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
@@ -35,6 +35,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   @Input() isFilterPanel = true;
   @Input() isGoSearchPerformed: boolean;
   @Output() updateGenesList = new EventEmitter();
+  @Output() loaded = new EventEmitter<boolean>();
   @Output() passQuery: EventEmitter<string> = new EventEmitter<string>();
   @Output()
   listSettingsChanged: EventEmitter<GenesListSettings> = new EventEmitter();
@@ -47,7 +48,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public genesPerPage = 20;
   public loadedGenesQuantity = this.genesPerPage;
 
-  public isLoading = true;
   public asTableRow = true;
   public filters = this.filterService.filters;
   public filterTypes = FilterTypesEnum;
@@ -99,7 +99,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   showPassedData(): void {
     this.searchedData = this.dataSource;
-    this.isLoading = false;
+    this.loaded.emit(true);
     this.cdRef.markForCheck();
   }
 
@@ -151,21 +151,24 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    * Update already loaded and then filtered data on typing
    */
   public updateGeneListOnTyping(event: Genes[]): void {
-    if (!this.isGoTermsMode) {
-      this.searchedData = event;
+    const result = of(event).pipe(takeLast(1));
+    result.subscribe((x) => {
+      this.searchedData = x;
 
       this.snackBar.open(
-        `${this.searchResultsFound.nativeElement.textContent} ${this.searchedData.length}`,
+        `${this.searchResultsFound.nativeElement.textContent} ${
+          this.searchedData ? this.searchedData.length : 0
+        }`,
         '',
         {
           duration: 600,
         }
       );
-    }
+    });
   }
 
   public loadMoreGenes(): void {
-    if (this.searchedData.length >= this.loadedGenesQuantity) {
+    if (this.searchedData?.length >= this.loadedGenesQuantity) {
       this.loadedGenesQuantity += this.genesPerPage;
     }
   }
@@ -173,12 +176,11 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   /**
    * Search genes by GO term string match
    */
-  public setGoSearchMode(event: boolean): void {
+  public toggleGoSearchMode(event: boolean): void {
     this.isGoTermsMode = event;
   }
 
   // TODO: this function isn't pure
-
   public searchGenesByGoTerm(query: string): void {
     if (query) {
       const request = query.toLowerCase();
@@ -210,7 +212,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
             this.isGoTermsModeError = !isAnyTermFound;
 
             this.snackBar.open(
-              `${this.searchResultsFound.nativeElement.textContent} ${this.searchedData.length}`,
+              `${this.searchResultsFound.nativeElement.textContent} ${this.searchedData?.length}`,
               '',
               {
                 duration: 600,

@@ -29,6 +29,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public genes: Genes[];
   public lastGenes: Genes[];
   public isAvailable = true;
+  public genesListIsLoaded = false;
   public errorStatus: string;
   public environment = environment;
 
@@ -78,6 +79,11 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.apiService.getLastEditedGene().subscribe((genes) => {
       this.lastGenes = genes;
     });
+  }
+
+  public setIsGenesListLoaded(event: boolean): void {
+    this.genesListIsLoaded = event;
+    this.cdRef.markForCheck();
   }
 
   /**

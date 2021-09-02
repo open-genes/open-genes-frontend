@@ -4,28 +4,22 @@
 >
   <div *ngIf="showResult"
        class="search-backdrop"
-       (click)="cancelSearch($event)"
+       (click)="cancel($event)"
   ></div>
 
   <div class="search-form__panel">
     <button
-      (click)="cancelSearch($event)"
+      (click)="cancel($event)"
       class="btn btn--purple btn--icon-only cancel-search-button">
       <span class="fa fal fa-arrow-left"></span>
     </button>
 
     <div class="search-form__wrapper">
-      <span
-        *ngIf="!isGoSearchMode"
-        class="fa fal fa-search search-form__submit"
-      ></span>
-
       <button
-        *ngIf="isGoSearchMode"
         mat-icon-button
         class="search-form__submit search-form__submit--active"
         type="submit"
-        (click)="triggerGoSearch()"
+        (click)="search()"
       ><span class="fa fal fa-search"></span>
       </button>
 
@@ -46,11 +40,10 @@
         type="text"
         placeholder="{{ (isGoSearchMode ? 'search_field_tap_search' : 'search_field_start_typing') | translate }}"
         class="field search-form__field"
-        required
+        (focusin)="search()"
+        (keyup)="isGoSearchMode ? debounce(subscribeToGo, 2000) : subscribeToGenes()"
+        (keydown.enter)="search()"
         #searchQuery
-        (focusin)="!isGoSearchMode? search() : debounce(triggerGoSearch(), 500)"
-        (keydown)="!isGoSearchMode? null : triggerGoSearch()"
-        (keydown.enter)="!isGoSearchMode? search(): triggerGoSearch()"
       >
       <mat-menu #searchMenu>
         <button mat-menu-item

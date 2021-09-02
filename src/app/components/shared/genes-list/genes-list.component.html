@@ -2,14 +2,14 @@
   [dataSource]="dataSource"
   (queryChange)="passQueryUpper($event)"
   (dataSourceChange)="updateGeneListOnTyping($event)"
-  (isGoModeTriggered)="setGoSearchMode($event)"
+  (isGoModeTriggered)="toggleGoSearchMode($event)"
   (isGoSearchTriggered)="searchGenesByGoTerm($event)"
 ></app-search>
 
 <ng-container
   *ngIf="
     (isGoTermsMode && isGoSearchPerformed && !isGoTermsModeError) ||
-    (!isGoTermsMode && searchedData?.length !== 0 && !isLoading)
+    (!isGoTermsMode && searchedData?.length !== 0)
   "
 >
   <!-- Filters -->
@@ -116,8 +116,6 @@
       >
       </ng-container>
     </ng-container>
-
-    <ng-container *ngIf="isGoTermsMode && !isGoSearchPerformed"></ng-container>
   </section>
   <!-- / Content views -->
 
@@ -131,13 +129,10 @@
   </div>
 </ng-container>
 
-<!-- When content is loading -->
-<app-spinner *ngIf="isLoading"> </app-spinner>
-
 <!-- No content error message -->
 <section
   *ngIf="
-    (isGoTermsMode && isGoTermsModeError) ||
+    (isGoTermsMode && isGoSearchPerformed && searchedData?.length == 0) ||
     (!isGoTermsMode && searchedData?.length == 0)
   "
   class="no-content"
