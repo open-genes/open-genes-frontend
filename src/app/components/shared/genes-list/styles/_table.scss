@@ -13,43 +13,69 @@
     background-color: $color-general-light;
   }
 
-  .table-row { // tr
+  .table-row { // tbody
     position: relative;
-    background: #fff;
+    background: $color-white;
+
+    &:nth-child(odd) {
+      background: $color-general-light;
+    }
 
     &:last-child {
       border-bottom: none;
     }
+
+    // tbody is used as tr group
+    // tr is used for setting the main content and item footer
 
     .cell { // td
       padding: 8px;
       vertical-align: top;
       word-break: keep-all;
       hyphens: auto;
-    }
-  }
 
-  .table-row + .table-row {
-    border-top: 1px solid $color-borders;
-  }
+      &--age {
+        .overflow {
+          width: 180px;
+        }
+      }
 
-  .table-row + .table-row.table-row--footer {
-    border-top: 0;
-  }
+      &--expression {
+        .overflow {
+          width: 100px;
+        }
+      }
 
-  .cell__actions {
-    text-align: right;
+      &--name,
+      &--diseases,
+      &--functions,
+      &--criteria {
+        .overflow {
+          width: 220px;
+        }
+      }
 
-    .cell__menu {
-      top: 0;
+      &--terms {
+        .overflow {
+          max-width: 300px;
+        }
+      }
+
+      &--actions {
+        .cell__menu {
+          top: 0;
+        }
+
+        .overflow {
+          float: right;
+          width: 40px;
+          text-align: right;
+        }
+      }
     }
   }
 
   .title {
     font-size: $font-size-bigger;
-  }
-
-  .cell__limiter {
-    max-width: 300px;
   }
 }

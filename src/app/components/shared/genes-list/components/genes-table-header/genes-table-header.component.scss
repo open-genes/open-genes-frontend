@@ -48,9 +48,16 @@
     }
   }
 
-  &--menu {
+  &--terms {
     .overflow {
-      width: 24px;
+      max-width: 300px;
+    }
+  }
+
+  &--actions {
+    .overflow {
+      width: 40px;
+      text-align: right;
     }
   }
 }
