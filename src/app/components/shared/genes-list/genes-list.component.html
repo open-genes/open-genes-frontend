@@ -99,14 +99,13 @@
           [isGoTermsMode]="isGoTermsMode"
         ></app-genes-table-header>
       </thead>
-      <tbody>
-        <ng-container
-          *ngFor="let item of searchedData | slice: 0:loadedGenesQuantity"
-          [ngTemplateOutlet]="asTableRowsTmpl"
-          [ngTemplateOutletContext]="{ itemRow: item }"
-        >
-        </ng-container>
-      </tbody>
+
+      <ng-container
+        *ngFor="let item of searchedData | slice: 0:loadedGenesQuantity"
+        [ngTemplateOutlet]="asTableRowsTmpl"
+        [ngTemplateOutletContext]="{ itemRow: item }"
+      >
+      </ng-container>
     </table>
 
     <ng-container *ngIf="!asTableRow || isMobile">
@@ -167,97 +166,108 @@
 
 <!-- Templates -->
 <ng-template #asTableRowsTmpl let-item="itemRow">
-  <tr class="item table-row">
-    <td class="cell cell__name">
-      <div class="title">
-        <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
-          <b>{{ item.symbol }}</b> {{ item.name }}
-        </a>
-      </div>
-    </td>
-
-    <td *ngIf="isGoTermsMode || listSettings.ifShowAge"
-        class="cell cell__age-mya">
-      <app-gene-age [gene]="item"></app-gene-age>
-    </td>
-
-    <td *ngIf="isGoTermsMode || listSettings.ifShowDiseases"
-        class="cell">
-      <app-associated-diseases
-        [geneDiseases]="item.diseases"
-      ></app-associated-diseases>
-    </td>
-
-    <ng-container *ngIf="!isGoTermsMode; else GoModeCell">
-      <td *ngIf="listSettings.ifShowExpression"
-          class="cell cell__expression">
-        <app-tag
-          (click)="filterByExpressionChange(item.expressionChange)"
-          [isDisabled]="item.expressionChange === 0"
-          [isActive]="
-            filters.byExpressionChange === item.expressionChange &&
-            item.expressionChange !== 0"
-        >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
-        </app-tag>
-      </td>
-
-      <td *ngIf="listSettings.ifShowCriteria"
-          class="cell cell__criteria">
-        <app-selection-criteria [geneCriteria]="item.commentCause"></app-selection-criteria>
-      </td>
-    </ng-container>
-
-    <ng-template #GoModeCell>
-      <td colspan="2" class="cell cell__funtions">
-        <div *ngIf="item.terms" class="cell__limiter">
-          <a
-            *ngFor="let term of biologicalProcess | keyvalue"
-            href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-            class="tag"
-            matTooltip="{{ term.value }}"
-          >{{ term.key | zero }}
-          </a>
-          <a
-            *ngFor="let term of cellularComponent | keyvalue"
-            href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-            class="tag"
-            matTooltip="{{ term.value }}"
-          >{{ term.key | zero }}
-          </a>
-          <a
-            *ngFor="let term of molecularActivity | keyvalue"
-            href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-            class="tag"
-            matTooltip="{{ term.value }}"
-          >{{ term.key | zero }}
+  <tbody class="item table-row">
+    <tr>
+      <td class="cell cell--name">
+        <div class="title overflow">
+          <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
+            <b>{{ item.symbol }}</b> {{ item.name }}
           </a>
         </div>
       </td>
-    </ng-template>
 
-    <td class="cell cell__actions">
-      <app-gene-menu
-        [gene]="item"
-        [isAdded]="isFaved(item.id)"
-        (unFav)="unFavOnEvent($event)"
-        (fav)="favOnEvent($event)"
-      ></app-gene-menu>
-    </td>
-  </tr>
+      <td *ngIf="isGoTermsMode || listSettings.ifShowAge"
+          class="cell cell--age">
+        <div class="overflow">
+          <app-gene-age [gene]="item"></app-gene-age>
+        </div>
+      </td>
 
-  <tr class="table-row table-row--footer">
-    <td *ngIf="!isGoTermsMode && listSettings.ifShowClasses"
-        colspan="100%"
-        class="cell cell__functions">
-      <app-tag
-        *ngFor="let item of item.functionalClusters"
-        (click)="filterByFuncClusters(item['id'])"
-        [isActive]="filters.byClasses.includes(item['id'])"
-      >{{ item["name"] }}
-      </app-tag>
-    </td>
-  </tr>
+      <td *ngIf="isGoTermsMode || listSettings.ifShowDiseases"
+          class="cell">
+        <div class="overflow">
+          <app-associated-diseases
+            [geneDiseases]="item.diseases"
+          ></app-associated-diseases>
+        </div>
+      </td>
 
+      <ng-container *ngIf="!isGoTermsMode; else GoModeCell">
+        <td *ngIf="listSettings.ifShowExpression"
+            class="cell cell--expression">
+          <div class="overflow">
+            <app-tag
+              (click)="filterByExpressionChange(item.expressionChange)"
+              [isDisabled]="item.expressionChange === 0"
+              [isActive]="
+            filters.byExpressionChange === item.expressionChange &&
+            item.expressionChange !== 0"
+            >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
+            </app-tag>
+          </div>
+        </td>
+
+        <td *ngIf="listSettings.ifShowCriteria"
+            class="cell cell--criteria">
+          <div class="overflow">
+            <app-selection-criteria [geneCriteria]="item.commentCause"></app-selection-criteria>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-template #GoModeCell>
+        <td colspan="2" class="cell cell--terms">
+          <div *ngIf="item.terms" class="overflow">
+            <a
+              *ngFor="let term of biologicalProcess | keyvalue"
+              href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+              class="tag"
+              matTooltip="{{ term.value }}"
+            >{{ term.key | zero }}
+            </a>
+            <a
+              *ngFor="let term of cellularComponent | keyvalue"
+              href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+              class="tag"
+              matTooltip="{{ term.value }}"
+            >{{ term.key | zero }}
+            </a>
+            <a
+              *ngFor="let term of molecularActivity | keyvalue"
+              href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+              class="tag"
+              matTooltip="{{ term.value }}"
+            >{{ term.key | zero }}
+            </a>
+          </div>
+        </td>
+      </ng-template>
+
+      <td class="cell cell--actions">
+        <div class="overflow">
+          <app-gene-menu
+            [gene]="item"
+            [isAdded]="isFaved(item.id)"
+            (unFav)="unFavOnEvent($event)"
+            (fav)="favOnEvent($event)"
+          ></app-gene-menu>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td *ngIf="!isGoTermsMode && listSettings.ifShowClasses"
+          colspan="100%"
+          class="cell cell--functions">
+        <app-tag
+          *ngFor="let item of item.functionalClusters"
+          (click)="filterByFuncClusters(item['id'])"
+          [isActive]="filters.byClasses.includes(item['id'])"
+        >{{ item["name"] }}
+        </app-tag>
+      </td>
+    </tr>
+  </tbody>
 </ng-template>
 
 <ng-template #asCardsTmpl let-item="item">
