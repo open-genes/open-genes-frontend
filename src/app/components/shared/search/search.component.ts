@@ -4,14 +4,21 @@ import {
   OnDestroy,
   Renderer2,
   Input,
-  OnInit,
   Output,
   Inject,
+  OnInit,
 } from '@angular/core';
 import { Genes } from '../../../core/models';
 import { FormControl, FormGroup } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
+import { interval, of, pipe, Subject } from 'rxjs';
+import {
+  merge,
+  mergeAll,
+  pairwise,
+  takeLast,
+  takeUntil,
+  throttle,
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-search',
@@ -34,72 +41,101 @@ export class SearchComponent implements OnInit, OnDestroy {
   public searchedData: Genes[];
   public searchForm: FormGroup;
   public showResult: boolean;
-  private subscription$: Subscription;
+  private subscription$ = new Subject();
 
-  constructor(private renderer: Renderer2) {}
-
-  ngOnInit(): void {
+  constructor(private renderer: Renderer2) {
     this.searchForm = new FormGroup({
       searchField: new FormControl(''),
     });
-
-    this.subscription$ = this.searchForm.valueChanges.subscribe((x) => {
-      if (x) {
-        this.search();
-      }
-    });
   }
 
-  public search(): void {
+  ngOnInit(): void {
+    this.search();
+  }
+
+  private filterBySubstring(query): Genes[] {
+    const result = this.dataSource.filter((item) => {
+      const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
+      ${item.symbol} ${item.name} ${item.aliases.join(' ')}`;
+      return searchedText.toLowerCase().includes(query);
+    });
+
+    return result;
+  }
+
+  public triggerGenesSearch(query): void {
     this.showResult = true;
     this.renderer.addClass(
       document.body,
       'body--search-on-main-page-is-active'
     );
-    const searchField = this.searchForm.get('searchField').value;
-    const query = searchField ? searchField.toLowerCase() : '';
-    this.searchedData = this.dataSource.filter((item) => {
-      const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
-      ${item.symbol} ${item.name} ${item.aliases.join(' ')}`;
-      return searchedText.toLowerCase().includes(query);
-    });
-    this.queryChange.emit(query);
+
+    this.searchedData = this.filterBySubstring(query);
+    this.queryChange.emit(query ? query.toLowerCase() : '');
     this.dataSourceChange.emit(this.searchedData);
   }
 
-  public cancelSearch(event): void {
+  public debounce(callback: any, time: number): () => void {
+    let lastTime = 0;
+    return function () {
+      const now = new Date();
+
+      // first run
+      if (lastTime === 0) {
+        callback();
+      }
+
+      if (now.getTime() - lastTime >= time) {
+        callback();
+        lastTime = now.getTime();
+      }
+    };
+  }
+
+  public triggerGoSearch(query): void {
+    const value = query?.length !== 0 ? query.toLowerCase() : '';
+    this.isGoSearchTriggered.emit(value);
+    this.dataSourceChange.emit(this.searchedData);
+  }
+
+  public setGoSearchMode(state: boolean): void {
+    this.isGoModeTriggered.emit(state);
+    this.searchForm.reset();
+    this.isGoSearchMode = state;
+  }
+
+  public search(): void {
+    if (this.searchForm.get('searchField').value?.length >= 2) {
+      if (this.isGoSearchMode) {
+        this.subscribeToGo();
+      } else {
+        this.subscribeToGenes();
+      }
+    }
+  }
+
+  public subscribeToGo(): void {
+    of(this.searchForm.get('searchField').value)
+      .pipe(merge())
+      .pipe(takeLast(1))
+      .subscribe((value) => {
+        this.triggerGoSearch(value);
+      });
+  }
+
+  public subscribeToGenes(): void {
+    this.searchForm.get('searchField').valueChanges.subscribe((value) => {
+      this.triggerGenesSearch(value);
+    });
+  }
+
+  public cancel(event): void {
     this.showResult = false;
     this.renderer.removeClass(
       document.body,
       'body--search-on-main-page-is-active'
     );
     event.stopPropagation();
-  }
-
-  public setGoSearchMode(state: boolean): void {
-    console.log('setGoSearchMode');
-    this.isGoModeTriggered.emit(state);
-    this.searchForm.reset();
-    this.isGoSearchMode = state;
-  }
-
-  public triggerGoSearch(): void {
-    const query = this.searchForm.get('searchField').value;
-    this.isGoSearchTriggered.emit(query ? query.toLowerCase() : '');
-  }
-
-  public debounce(callback: any, time: number): () => void {
-    let lastCall = 0;
-    let now = undefined;
-    return function () {
-      now = Date.now();
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-      if (now > lastCall + time) {
-        lastCall = now;
-        // eslint-disable-next-line prefer-rest-params
-        callback();
-      }
-    };
   }
 
   ngOnDestroy(): void {
