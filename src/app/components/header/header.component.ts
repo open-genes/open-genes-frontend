@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.getCounters();
+    /* this.getCounters();*/
   }
 
   ngOnDestroy(): void {
@@ -44,15 +44,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.filterService.clearFilters(filter);
   }
 
-  private getCounters() {
-    this.favouritesSubscription = this.favouritesService
-      .getNumberOfItems()
-      .subscribe(
-        (genesNumber: number) => {
-          this.favsCounter = genesNumber.toString();
-          this.cdRef.markForCheck();
-        },
-        () => (this.favsCounter = '0')
-      );
-  }
+  /*  private getCounters() {
+      this.favouritesSubscription = this.favouritesService
+        .getNumberOfItems()
+        .subscribe(
+          (genesNumber: number) => {
+            this.favsCounter = genesNumber.toString();
+            this.cdRef.markForCheck();
+          },
+          () => (this.favsCounter = '0')
+        );
+    }*/
 }
