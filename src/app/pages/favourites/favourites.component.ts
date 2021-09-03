@@ -17,7 +17,6 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-favourites',
   templateUrl: './favourites.component.html',
-  providers: [FavouritesService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FavouritesComponent implements OnInit, OnDestroy {

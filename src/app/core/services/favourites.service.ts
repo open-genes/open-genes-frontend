@@ -1,12 +1,17 @@
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FavouritesService {
+  public favLength$ = new BehaviorSubject<number>(0);
   public favourites = [];
   public storedData = JSON.parse(localStorage.getItem('favourites'));
+
+  constructor() {
+    this.favLength$.next(this.storedData.length);
+  }
 
   // All interaction with a storage comes through an array
   public getItems(): Observable<any[]> {
@@ -29,6 +34,7 @@ export class FavouritesService {
   public addToFavourites(data: number): void {
     this.favourites.push(data);
     this.storedData = [];
+    this.favLength$.next(this.favourites.length);
     localStorage.setItem('favourites', JSON.stringify(this.favourites));
   }
 
@@ -36,6 +42,7 @@ export class FavouritesService {
     const index = this.favourites.indexOf(data);
     if (index > -1) {
       this.favourites.splice(index, 1);
+      this.favLength$.next(this.favourites.length);
       localStorage.setItem('favourites', JSON.stringify(this.favourites));
     }
   }
