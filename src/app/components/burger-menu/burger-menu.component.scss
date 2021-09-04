@@ -64,25 +64,22 @@
 
   .menu__links {
     width: 100%;
-    padding: 0 20px;
+    padding: 0 15px 0 10px;
 
     .menu__link {
+      display: block;
+      width: 100%;
       font-size: $font-size-bigger;
       font-weight: $font-weight-medium;
 
-      &,
       a {
-        display: block;
-        width: 100%;
         position: relative;
-      }
-
-      a {
+        display: flex;
         border-radius: $border-radius-medium;
-        padding: 12px 30px 12px 10px;
+        padding: 12px 10px 10px;
 
         .fa {
-          margin-right: 5px;
+          margin: 2px 8px 0 0;
         }
 
         &:link,
