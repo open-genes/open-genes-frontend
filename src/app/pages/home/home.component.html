@@ -90,9 +90,7 @@
               (loaded)="setIsGenesListLoaded($event)"
             ></app-genes-list>
             <!-- When content is loading -->
-            <app-spinner *ngIf="!genesListIsLoaded"
-                         class="content-spinner"
-            ></app-spinner>
+            <app-spinner *ngIf="!genesListIsLoaded"></app-spinner>
           </div>
         </ng-container>
       </div>

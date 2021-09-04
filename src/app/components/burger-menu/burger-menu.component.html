@@ -1,10 +1,14 @@
 <button mat-icon-button
-        class="signin-button"
+        class="burger-button"
         (click)="toggleMenu()"
         [class.active]="isMenuVisible"
         aria-label="Меню">
   <span *ngIf="!isMenuVisible"
-  class="fa fal fa-bars"></span>
+        class="fa fal fa-bars">
+        <span *ngIf="favsCounter !== '0'"
+              class="burger-button__update-marker"
+        ></span>
+  </span>
   <span *ngIf="isMenuVisible"
     class="fa fal fa-times"></span>
   <!-- TODO: use MatIconRegistry to use icon set -->

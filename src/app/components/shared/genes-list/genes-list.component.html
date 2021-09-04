@@ -1,6 +1,5 @@
 <app-search
-  [dataSource]="dataSource"
-  (queryChange)="passQueryUpper($event)"
+  [dataSource]="inputData"
   (dataSourceChange)="updateGeneListOnTyping($event)"
   (isGoModeTriggered)="toggleGoSearchMode($event)"
   (isGoSearchTriggered)="searchGenesByGoTerm($event)"
@@ -53,10 +52,10 @@
 
       <button
         class="btn btn--small btn--purple"
-        (click)="(clearFilters)"
+        (click)="clearFilters()"
         *ngIf="isClearFiltersBtnShown"
       >
-        <span class="fa fal fa-delete"></span> {{ "filters_reset" | translate }}
+        <span class="fa far fa-times"></span> {{ "filters_reset" | translate }}
       </button>
 
       <button *ngIf="!isGoTermsMode"
@@ -68,8 +67,16 @@
     </div>
 
     <div class="view-panel__buttons">
+      <a class="btn btn--small btn--purple"
+        [href]="downloadJsonLink"
+        target="_blank"
+        download="export.json"
+      >
+        <span class="fa far fa-download"></span> JSON
+      </a>
+
       <button
-        class="toggler"
+        class="toggler __ml-10"
         (click)="toggleGenesView()"
         [ngClass]="asTableRow ? 'toggler--def' : 'toggler--alt'"
         matTooltip="{{ 'gene_list_view' |translate }}"

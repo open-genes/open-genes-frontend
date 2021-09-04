@@ -47,7 +47,7 @@ import { AssociatedDiseasesModule } from '../associated-diseases/associated-dise
     MaterialModule,
     AssociatedDiseasesModule,
   ],
-  providers: [FavouritesService, WindowService],
+  providers: [WindowService],
   exports: [GenesListComponent, SearchComponent],
 })
 export class GenesListModule {}

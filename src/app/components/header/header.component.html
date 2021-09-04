@@ -1,21 +1,18 @@
 <header class="header">
   <div class="header__centering">
-    <app-icon
-      class="header__logo __hoverable"
-      staticSrc="/assets/images/logo.svg"
-      size="custom"
-      customWidth="90px"
-      customHeight="35px"
-      [routerLink]="'/'"
-      (click)="clearSearch()"
-      title="{{'main_page_link' | translate}}">
-    ></app-icon>
-
+    <a href="/"
+       title="{{'main_page_link' | translate}}">
+      <app-icon
+        class="header__logo __hoverable"
+        staticSrc="/assets/images/logo.svg"
+        size="custom"
+        customWidth="90px"
+        customHeight="35px"
+      ></app-icon>
+    </a>
     <div class="header__right">
       <app-language theme="light"></app-language>
-      <app-burger-menu
-        favsCounter="{{this.favsCounter}}"
-      ></app-burger-menu>
+      <app-burger-menu (favsCounterUpdate)="updateView()"></app-burger-menu>
     </div>
   </div>
 </header>
