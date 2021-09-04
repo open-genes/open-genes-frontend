@@ -1,5 +1,5 @@
 <app-search
-  [dataSource]="dataSource"
+  [dataSource]="inputData"
   (queryChange)="passQueryUpper($event)"
   (dataSourceChange)="updateGeneListOnTyping($event)"
   (isGoModeTriggered)="toggleGoSearchMode($event)"

@@ -33,7 +33,17 @@ import { SafeResourceUrl } from '@angular/platform-browser';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
-  @Input() dataSource: Genes[];
+  public inputData: Genes[] = [];
+  public searchedData: Genes[] = [];
+  @Input()
+  set dataSource(value: Genes[]) {
+    this.inputData = value;
+    this.cdRef.markForCheck();
+  }
+  get dataSource(): Genes[] {
+    return this.inputData;
+  }
+
   @Input() isFilterPanel = true;
   @Input() isGoSearchPerformed: boolean;
   @Output() updateGenesList = new EventEmitter();
@@ -46,7 +56,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   templateRemovedFromFavorites: ElementRef;
   @ViewChild('searchResultsFound') searchResultsFound: ElementRef;
 
-  public searchedData: Genes[];
   public genesPerPage = 20;
   public loadedGenesQuantity = this.genesPerPage;
 
@@ -91,7 +100,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.areMoreThan2FiltersApplied();
-    this.showPassedData();
+    this.setInitialState();
   }
 
   ngOnDestroy(): void {
@@ -101,8 +110,8 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   /**
    * HTTP
    */
-  showPassedData(): void {
-    this.searchedData = this.dataSource;
+  setInitialState(): void {
+    this.searchedData = this.inputData;
     this.downloadSearch(this.searchedData);
     this.loaded.emit(true);
     this.cdRef.markForCheck();
@@ -336,20 +345,11 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   /**
-   * Get filters values
-   */
-  public whatFiltersApplied(): void {
-    this.filterService.whatFiltersApplied();
-  }
-
-  /**
    * Filter reset
    */
   public clearFilters(filter?: FilterTypesEnum): void {
     this.filterService.clearFilters(filter ?? null);
-    this.searchedData = this.dataSource;
-    this.downloadSearch(this.searchedData);
-    this.cdRef.markForCheck();
+    this.setInitialState();
   }
 
   passQueryUpper($event: string): void {

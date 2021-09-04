@@ -10,15 +10,8 @@ import {
 } from '@angular/core';
 import { Genes } from '../../../core/models';
 import { FormControl, FormGroup } from '@angular/forms';
-import { interval, of, pipe, Subject } from 'rxjs';
-import {
-  merge,
-  mergeAll,
-  pairwise,
-  takeLast,
-  takeUntil,
-  throttle,
-} from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
+import { merge, takeLast } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search',
