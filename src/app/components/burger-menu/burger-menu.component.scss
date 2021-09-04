@@ -4,8 +4,24 @@
   display: inline-block;
 }
 
-.signin-button {
+.burger-button {
   @include close-button(10px, 50%);
+
+  .fa {
+    position: relative;
+  }
+
+  &__update-marker {
+    position: absolute;
+    right: -4px;
+    bottom: -2px;
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: $color-red;
+    border: 2px solid $color-white;
+  }
 }
 
 .header__menu {

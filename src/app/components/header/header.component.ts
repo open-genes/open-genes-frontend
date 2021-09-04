@@ -18,23 +18,21 @@ import { FilterTypesEnum } from '../shared/genes-list/services/filter-types.enum
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnInit, OnDestroy {
-  @Output() favsCounter: string;
+export class HeaderComponent implements OnDestroy {
   private favouritesSubscription: Subscription;
 
   constructor(
     private readonly router: Router,
     private readonly filterService: FilterService,
-    private favouritesService: FavouritesService,
     private readonly cdRef: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
-    /* this.getCounters();*/
-  }
-
   ngOnDestroy(): void {
     this.favouritesSubscription.unsubscribe();
+  }
+
+  public updateView(): void {
+    this.cdRef.markForCheck();
   }
 
   /**
@@ -43,16 +41,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public clearSearch(filter?: FilterTypesEnum) {
     this.filterService.clearFilters(filter);
   }
-
-  /*  private getCounters() {
-      this.favouritesSubscription = this.favouritesService
-        .getNumberOfItems()
-        .subscribe(
-          (genesNumber: number) => {
-            this.favsCounter = genesNumber.toString();
-            this.cdRef.markForCheck();
-          },
-          () => (this.favsCounter = '0')
-        );
-    }*/
 }

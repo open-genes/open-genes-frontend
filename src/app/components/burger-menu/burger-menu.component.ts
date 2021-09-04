@@ -1,4 +1,11 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FavouritesService } from '../../core/services/favourites.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -14,6 +21,8 @@ export class BurgerMenuComponent implements OnInit, OnDestroy {
   public favsCounter: string;
   private subscription$ = new Subject();
 
+  @Output() favsCounterUpdate: EventEmitter<null> = new EventEmitter();
+
   constructor(public fCounter: FavouritesService) {}
 
   ngOnInit(): void {
@@ -21,6 +30,7 @@ export class BurgerMenuComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.subscription$))
       .subscribe((counter) => {
         this.favsCounter = counter.toString();
+        this.favsCounterUpdate.emit();
       });
   }
 
