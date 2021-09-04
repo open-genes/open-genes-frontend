@@ -63,6 +63,6 @@ $element-base-color: $color-general;
   }
 
   @include resolution_smartphone-and-tablet {
-    max-width: 120px;
+    max-width: 90px;
   }
 }
