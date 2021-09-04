@@ -48,7 +48,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   @Input() isGoSearchPerformed: boolean;
   @Output() updateGenesList = new EventEmitter();
   @Output() loaded = new EventEmitter<boolean>();
-  @Output() passQuery: EventEmitter<string> = new EventEmitter<string>();
   @Output()
   listSettingsChanged: EventEmitter<GenesListSettings> = new EventEmitter();
   @ViewChild('templateAddedToFavorites') templateAddedToFavorites: ElementRef;
@@ -350,10 +349,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public clearFilters(filter?: FilterTypesEnum): void {
     this.filterService.clearFilters(filter ?? null);
     this.setInitialState();
-  }
-
-  passQueryUpper($event: string): void {
-    this.passQuery.emit($event);
   }
 
   /**
