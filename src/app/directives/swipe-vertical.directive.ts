@@ -1,10 +1,12 @@
 import {
   Directive,
+  ElementRef,
   EventEmitter,
   HostListener,
   Input,
   NgZone,
   Output,
+  Renderer2,
 } from '@angular/core';
 
 enum SwipeDirectionEnum {
@@ -30,7 +32,11 @@ export class SwipeVeticalDirective {
   private position = 0;
   private distance = 0;
 
-  constructor(private readonly zone: NgZone) {}
+  constructor(
+    private readonly zone: NgZone,
+    private readonly element: ElementRef,
+    private renderer: Renderer2
+  ) {}
 
   private get swipingDirection(): SwipeDirectionEnum {
     return this.distance > this.insensitiveDistance
@@ -92,9 +98,28 @@ export class SwipeVeticalDirective {
 
       if (touch) {
         const position = touch.clientY - this.position;
+        const height = Number(this.element.nativeElement.offsetHeight);
 
         this.distance += position - this.lastPosition;
         this.lastPosition = position;
+
+        // TODO: Make the same for horizontal directive and use DRY
+        const density = 100;
+        if (this.lastPosition > 0) {
+          if (height >= this.distance && this.distance >= density) {
+            this.renderer.setStyle(
+              this.element.nativeElement,
+              'max-height',
+              `${height - position / this.distance}px`
+            );
+          }
+        } else if (this.lastPosition < 0) {
+          this.renderer.setStyle(
+            this.element.nativeElement,
+            'max-height',
+            `100%`
+          );
+        }
       }
     });
   }
