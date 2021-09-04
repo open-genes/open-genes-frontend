@@ -2,9 +2,10 @@
   <div class="wizard__header">
     <span class="fa far fa-magic"></span>&nbsp;{{ 'wizard_header' | translate }}
 
-    <span class="wizard__drag-button"></span>
+    <span *ngIf="isTouchDevice"
+          class="wizard__drag-button"></span>
 
-    <button *ngIf="!isMobile"
+    <button *ngIf="!isTouchDevice"
             mat-icon-button
             class="wizard__close-button"
             (click)="close()"

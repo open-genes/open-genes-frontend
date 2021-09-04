@@ -37,17 +37,16 @@ export class FavouritesComponent implements OnInit, OnDestroy {
 
   public unFavItem(geneId: number): void {
     this.favouritesService.removeFromFavourites(geneId);
-    // TODO: clutch solution as a view doesn't update because the service returns an old value
-    window.location.reload();
+    this.cdRef.markForCheck();
   }
 
   public clearFavs(): void {
     this.favouritesService.clearFavourites();
-    window.location.reload();
+    this.cdRef.markForCheck();
   }
 
   public updateView() {
-    this.cdRef.detectChanges();
+    this.cdRef.markForCheck();
   }
 
   private downloadJson(data: any) {
