@@ -23,6 +23,8 @@ import { FilterTypesEnum } from './services/filter-types.enum';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenesListSettings } from './genes-list-settings.model';
 import { MatDialog } from '@angular/material/dialog';
+import { FileExportService } from '../../../core/services/file-export.service';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-genes-list',
@@ -58,6 +60,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
+  public downloadLink: string | SafeResourceUrl = '#';
 
   @Input() isMobile: boolean;
   public listSettings: GenesListSettings = {
@@ -79,7 +82,8 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private favouritesService: FavouritesService,
     private readonly cdRef: ChangeDetectorRef,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private fileExportService: FileExportService
   ) {
     super();
     this.favouritesService.getItems();
@@ -99,6 +103,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   showPassedData(): void {
     this.searchedData = this.dataSource;
+    this.downloadJson(this.searchedData);
     this.loaded.emit(true);
     this.cdRef.markForCheck();
   }
@@ -114,6 +119,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
             .subscribe(
               (genes) => {
                 this.searchedData = genes;
+                this.downloadJson(this.searchedData);
                 this.areMoreThan2FiltersApplied();
                 this.cdRef.markForCheck();
               },
@@ -136,6 +142,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
             this.apiService.getGenesByExpressionChange(expression).subscribe(
               (genes) => {
                 this.searchedData = genes;
+                this.downloadJson(this.searchedData);
                 this.areMoreThan2FiltersApplied();
                 this.cdRef.markForCheck();
               },
@@ -190,6 +197,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
         .subscribe(
           (genes) => {
             this.searchedData = genes; // If nothing found, will return empty array
+            this.downloadJson(this.searchedData);
             this.isGoSearchPerformed = true;
 
             // Map data if it's presented:
@@ -234,6 +242,13 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   toggleGenesView(): boolean {
     return (this.asTableRow = !this.asTableRow);
+  }
+
+  /**
+   * List donwnload
+   */
+  private downloadJson(data: any) {
+    this.downloadLink = this.fileExportService.downloadJson(data);
   }
 
   /**
@@ -333,6 +348,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public clearFilters(filter?: FilterTypesEnum): void {
     this.filterService.clearFilters(filter ?? null);
     this.searchedData = this.dataSource;
+    this.downloadJson(this.searchedData);
     this.cdRef.markForCheck();
   }
 
