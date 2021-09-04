@@ -15,6 +15,14 @@ export class FilterService {
     bySelectionCriteria: [],
   };
 
+  public $filters: Observable<Filter> = of({
+    byName: false,
+    byAge: false,
+    byClasses: [],
+    byExpressionChange: 0,
+    bySelectionCriteria: [],
+  });
+
   private areMt2FiltersApplied = new BehaviorSubject(false);
   // TODO: save this object in localStorage
 
@@ -69,16 +77,17 @@ export class FilterService {
 
   // Clear
   public clearFilters(filter?: FilterTypesEnum): void {
-    console.log('clearFilters: ', filter, '\n', this.filters);
-    const { classes, expressionChange, age, name } = FilterTypesEnum; // destructuring
-    if (filter === name) {
-      this.filters.byName = false;
-    } else if (filter === age) {
-      // TODO: set something
-    } else if (filter === classes) {
-      this.filters.byClasses = [];
-    } else if (filter === expressionChange) {
-      this.filters.byExpressionChange = 0;
+    const { classes, expressionChange, age, name } = FilterTypesEnum;
+    if (filter) {
+      if (filter === name) {
+        this.filters.byName = false;
+      } else if (filter === age) {
+        this.filters.byAge = false;
+      } else if (filter === classes) {
+        this.filters.byClasses = [];
+      } else if (filter === expressionChange) {
+        this.filters.byExpressionChange = 0;
+      }
     } else {
       this.filters = {
         byName: false,
@@ -90,19 +99,19 @@ export class FilterService {
     }
   }
 
-  public whatFiltersApplied(): Observable<any> {
-    return of(this.filters);
-  }
-
-  public areMoreThan2FiltersApplied(): Observable<boolean> {
+  private howManyFiltersApplied(): number {
     const n = Number(this.filters.byName); // 0
     const a = Number(this.filters.byAge); // 0
     const c = this.filters.byClasses.length; // 0
     const e = this.filters.byExpressionChange; // 0
     const s = this.filters.bySelectionCriteria.length; // 0
 
-    // then if flters change and their sum is more than 2:
-    if (n + a + c + e + s >= 2) {
+    return n + a + c + e + s;
+  }
+
+  public areMoreThan2FiltersApplied(): Observable<boolean> {
+    // when if filters change and their sum is more than 2:
+    if (this.howManyFiltersApplied() >= 2) {
       return of(true);
     }
 
