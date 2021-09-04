@@ -25,7 +25,6 @@ export class SearchComponent implements OnInit, OnDestroy {
   isGoModeTriggered: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()
   isGoSearchTriggered: EventEmitter<string> = new EventEmitter<string>();
-  @Output() queryChange: EventEmitter<string> = new EventEmitter<string>();
   @Output() dataSourceChange: EventEmitter<Genes[]> = new EventEmitter<
     Genes[]
   >();
@@ -46,6 +45,14 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.search();
   }
 
+  private updateUIonSearch(): void {
+    this.showResult = true;
+    this.renderer.addClass(
+      document.body,
+      'body--search-on-main-page-is-active'
+    );
+  }
+
   private filterBySubstring(query): Genes[] {
     const result = this.dataSource.filter((item) => {
       const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
@@ -57,14 +64,10 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   public triggerGenesSearch(query): void {
-    this.showResult = true;
-    this.renderer.addClass(
-      document.body,
-      'body--search-on-main-page-is-active'
+    this.updateUIonSearch();
+    this.searchedData = this.filterBySubstring(
+      query ? query.toLowerCase() : ''
     );
-
-    this.searchedData = this.filterBySubstring(query);
-    this.queryChange.emit(query ? query.toLowerCase() : '');
     this.dataSourceChange.emit(this.searchedData);
   }
 
@@ -86,8 +89,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   public triggerGoSearch(query): void {
-    const value = query?.length !== 0 ? query.toLowerCase() : '';
-    this.isGoSearchTriggered.emit(value);
+    this.updateUIonSearch();
+    this.isGoSearchTriggered.emit(query ? query.toLowerCase() : '');
     this.dataSourceChange.emit(this.searchedData);
   }
 

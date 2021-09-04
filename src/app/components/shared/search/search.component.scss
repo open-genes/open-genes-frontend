@@ -24,7 +24,16 @@ $mobile-container-vertical-padding: 5px;
 }
 
 .search-form {
+  flex-flow: column;
   margin-bottom: 10px;
+
+  &,
+  &__panel,
+  &__quantity,
+  &__wrapper {
+    width: 100%;
+    flex: 0 0 100%;
+  }
 
   &,
   &__panel {
@@ -32,13 +41,18 @@ $mobile-container-vertical-padding: 5px;
     align-items: flex-start;
     justify-content: center;
     position: relative;
-    width: 100%;
+  }
+
+  &__quantity {
+    display: flex;
+    font-size: $font-size-smaller;
+    color: $color-gray;
+    margin-bottom: 8px;
   }
 
   &__wrapper {
     position: relative;
     display: flex;
-    width: 100%;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
@@ -212,11 +226,15 @@ $mobile-container-vertical-padding: 5px;
       top: 0;
       right: 0;
       left: 0;
-      height: 60px;
+      min-height: 60px;
       margin: 0;
       background-color: #fff;
       z-index: z('search');
       box-shadow: 0 5px 5px 0 rgba($color-black, .15);
+
+      .search-form__quantity {
+        display: none;
+      }
 
       .search-form__panel {
         padding: #{$mobile-container-vertical-padding} 10px #{$mobile-container-vertical-padding} 40px;

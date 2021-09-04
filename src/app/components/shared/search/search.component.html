@@ -2,6 +2,10 @@
       class="search-form"
       [class.search-form--active]="showResult"
 >
+  <div class="search-form__quantity">
+      {{ 'main_page_total' | translate: { number: dataSource.length } }}
+  </div>
+
   <div *ngIf="showResult"
        class="search-backdrop"
        (click)="cancel($event)"
