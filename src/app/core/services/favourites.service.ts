@@ -15,6 +15,7 @@ export class FavouritesService {
 
   // All interaction with a storage comes through an array
   public getItems(): Observable<any[]> {
+    this.storedData = JSON.parse(localStorage.getItem('favourites'));
     if (this.storedData) {
       this.favourites = [...this.storedData];
       // We clear and fill array with updated data
@@ -23,28 +24,26 @@ export class FavouritesService {
     return of(this.favourites);
   }
 
-  public getNumberOfItems(): Observable<number> {
-    if (this.storedData) {
-      return of(this.storedData.length);
-    }
 
-    return of(0);
-  }
-
-  public addToFavourites(data: number): void {
-    this.favourites.push(data);
-    this.storedData = [];
+  public addToFavourites(geneId: number): void {
+    this.favourites.push(geneId);
     this.favLength$.next(this.favourites.length);
     localStorage.setItem('favourites', JSON.stringify(this.favourites));
   }
 
-  public removeFromFavourites(data: number): void {
-    const index = this.favourites.indexOf(data);
+  public removeFromFavourites(geneId: number): void {
+    const index = this.favourites.indexOf(geneId);
     if (index > -1) {
       this.favourites.splice(index, 1);
       this.favLength$.next(this.favourites.length);
       localStorage.setItem('favourites', JSON.stringify(this.favourites));
     }
+  }
+
+  public clearFavourites(): void {
+    this.favourites = [];
+    this.favLength$.next(this.favourites.length);
+    localStorage.setItem('favourites', JSON.stringify(this.favourites));
   }
 
   public isInFavourites(data: number): boolean {
@@ -55,8 +54,5 @@ export class FavouritesService {
     return false;
   }
 
-  public clearFavourites(): void {
-    this.favourites = [];
-    localStorage.setItem('favourites', JSON.stringify(this.favourites));
-  }
+
 }

@@ -6,39 +6,38 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Gene } from '../../../core/models';
+import { Gene, Genes } from '../../../core/models';
+import { FavouritesService } from '../../../core/services/favourites.service';
 
 @Component({
   selector: 'app-favourites-list',
   templateUrl: './favourites-list.component.html',
   styleUrls: ['./favourites-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FavouritesListComponent {
-  public genes: Gene[] = [];
-  public favourites: Gene[] = [];
-
-  @Input() set genericGenes(_genes: Gene[]) {
-    this.genes = _genes;
-    this.updateView.emit(true);
-  }
-  @Input() set favouriteGenes(_genes: Gene[]) {
+  public favourites: Genes[] = [];
+  @Input() set favouriteGenes(_genes: Genes[]) {
     this.favourites = _genes;
-    this.updateView.emit(true);
   }
-
-  @Output() unFav: EventEmitter<number> = new EventEmitter();
-  @Output() clear: EventEmitter<boolean> = new EventEmitter();
-  @Output() updateView: EventEmitter<boolean> = new EventEmitter();
   @Input() downloadLink: any;
+  @Output() updateView: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private readonly cdRef: ChangeDetectorRef) {}
 
-  public unFavItem(id): void {
-    this.unFav.emit(id);
+  constructor(
+    private readonly cdRef: ChangeDetectorRef,
+    private favouritesService: FavouritesService
+  ) {}
+
+  public unFavItem(geneId: number, index: number): void {
+    this.favourites.splice(index, 1);
+    this.favouritesService.removeFromFavourites(geneId);
+    this.cdRef.markForCheck();
   }
 
   public clearFavs(): void {
-    this.clear.emit();
+    this.favourites = [];
+    this.favouritesService.clearFavourites();
+    this.cdRef.markForCheck();
   }
 }

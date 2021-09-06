@@ -23,11 +23,16 @@ export class BurgerMenuComponent implements OnInit, OnDestroy {
 
   @Output() favsCounterUpdate: EventEmitter<null> = new EventEmitter();
 
-  constructor(public fCounter: FavouritesService) {}
+  constructor(
+    private favouritesService: FavouritesService
+  ) {}
+
 
   ngOnInit(): void {
-    this.fCounter.favLength$
-      .pipe(takeUntil(this.subscription$))
+    this.favouritesService.favLength$
+      .pipe(
+        takeUntil(this.subscription$)
+      )
       .subscribe((counter) => {
         this.favsCounter = counter.toString();
         this.favsCounterUpdate.emit();
