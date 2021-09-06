@@ -10,7 +10,9 @@ export class FavouritesService {
   public storedData = JSON.parse(localStorage.getItem('favourites'));
 
   constructor() {
-    this.favLength$.next(this.storedData.length);
+    if (this.storedData) {
+      this.favLength$.next(this.storedData.length);
+    }
   }
 
   // All interaction with a storage comes through an array
