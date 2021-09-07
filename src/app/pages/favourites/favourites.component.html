@@ -11,12 +11,7 @@
     </div>
       <app-favourites-list
         *ngIf="favouriteGenes && favouriteGenes?.length !== 0; else noContent"
-        [genericGenes]="genes"
         [favouriteGenes]="favouriteGenes"
-        [downloadLink]="downloadLink"
-        (unFav)="unFavItem($event)"
-        (clear)="clearFavs()"
-        (updateView)="updateView()"
       ></app-favourites-list>
   </div>
 </div>
