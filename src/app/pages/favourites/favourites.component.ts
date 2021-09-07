@@ -22,22 +22,18 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 export class FavouritesComponent implements OnInit, OnDestroy {
   public favouriteGenes: Genes[];
   public genes: Genes[];
-  private favouriteGenesIds: number[] = [];
   public error: number;
-  public downloadLink: string | SafeResourceUrl = '#';
+
+  private favouriteGenesIds: number[] = [];
   private subscription$ = new Subject();
 
   constructor(
     public translate: TranslateService,
-    private readonly cdRef: ChangeDetectorRef,
-    private readonly apiService: ApiService,
-    private favouritesService: FavouritesService,
-    private fileExportService: FileExportService
+    private readonly _cdRef: ChangeDetectorRef,
+    private readonly _apiService: ApiService,
+    private _favouritesService: FavouritesService,
   ) {}
 
-  private downloadJson(data: any) {
-    this.downloadLink = this.fileExportService.downloadJson(data);
-  }
 
   ngOnInit() {
     this.getData();
@@ -47,15 +43,16 @@ export class FavouritesComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
+
   private getData(): void {
-    this.favouritesService.getItems()
+    this._favouritesService.getItems()
       .pipe(
         switchMap((idList) => {
           if (idList) {
             this.favouriteGenesIds = idList;
-            this.cdRef.markForCheck();
+            this._cdRef.markForCheck();
 
-            return this.apiService.getGenes();
+            return this._apiService.getGenes();
           }
 
           return EMPTY;
@@ -68,9 +65,7 @@ export class FavouritesComponent implements OnInit, OnDestroy {
           this.favouriteGenes = genes.filter((gene) =>
             this.favouriteGenesIds.includes(gene.id)
           );
-          this.downloadJson(this.favouriteGenes);
-          console.log(this.favouriteGenes);
-          this.cdRef.markForCheck();
+          this._cdRef.markForCheck();
         },
         (err) => {
           this.error = err;
