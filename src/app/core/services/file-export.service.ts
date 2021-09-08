@@ -20,4 +20,25 @@ export class FileExportService {
       URL.createObjectURL(blob)
     );
   }
+
+  public downloadCsv(data) {
+    if (data?.length === 0) {
+      return '';
+    }
+    const replacer = (key, value) => (value === null ? '' : value); // specify how you want to handle null values here
+    const header = Object.keys(data[0]);
+    const csv = data.map((row) =>
+      header.map((fieldName) => JSON.stringify(row[fieldName])).join(',')
+    );
+    csv.unshift(header.join(','));
+    const csvArray = csv.join('\r\n');
+
+    const blob = new Blob(['\uFEFF' + csvArray], {
+      type: 'text/csv;charset=utf-8',
+    });
+
+    return this.sanitizer.bypassSecurityTrustResourceUrl(
+      URL.createObjectURL(blob)
+    );
+  }
 }

@@ -69,6 +69,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
   public downloadJsonLink: string | SafeResourceUrl = '#';
+  public downloadCsvLink: string | SafeResourceUrl = '#';
 
   @Input() isMobile: boolean;
   public listSettings: GenesListSettings = {
@@ -256,7 +257,9 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    * List donwnload
    */
   private downloadSearch(data: any) {
+    debugger;
     this.downloadJsonLink = this.fileExportService.downloadJson(data);
+    this.downloadCsvLink = this.fileExportService.downloadCsv(data);
   }
 
   /**
