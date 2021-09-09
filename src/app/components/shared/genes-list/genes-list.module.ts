@@ -12,7 +12,6 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { UiComponentsModule } from "../../ui-components/ui-components.module";
-import { FavouritesService } from "../../../core/services/favourites.service";
 import { MatCardModule } from "@angular/material/card";
 import { WindowService } from "../../../core/services/browser/window.service";
 import { GeneMenuComponent } from "./components/gene/menu/gene-menu.component";

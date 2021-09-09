@@ -15,14 +15,6 @@ export class FilterService {
     bySelectionCriteria: [],
   };
 
-  public $filters: Observable<Filter> = of({
-    byName: false,
-    byAge: false,
-    byClasses: [],
-    byExpressionChange: 0,
-    bySelectionCriteria: [],
-  });
-
   private areMt2FiltersApplied = new BehaviorSubject(false);
   // TODO: save this object in localStorage
 
@@ -89,13 +81,11 @@ export class FilterService {
         this.filters.byExpressionChange = 0;
       }
     } else {
-      this.filters = {
-        byName: false,
-        byAge: false,
-        byClasses: [],
-        byExpressionChange: 0,
-        bySelectionCriteria: [],
-      };
+      this.filters.byName = false;
+      this.filters.byAge = false;
+      this.filters.byClasses = [];
+      this.filters.byExpressionChange = 0;
+      this.filters.bySelectionCriteria = [];
     }
   }
 
