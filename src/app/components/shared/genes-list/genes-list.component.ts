@@ -42,6 +42,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     ifShowExpression: true,
     ifShowDiseases: true,
     ifShowCriteria: true,
+    ifShowMethylation: false,
   };
 
   @Input()
@@ -159,6 +160,30 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
           this.downloadSearch(this.searchedData);
           this.areMoreThan2FiltersApplied();
           this.cdRef.markForCheck();
+        },
+        (error) => this.errorLogger(this, error)
+      );
+  }
+
+  public filterByMethylationChange(correlation: string): void {
+    this.filterService.filterByMethylationChange(correlation);
+    this.filterService
+      .getByExpressionChange()
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
+        (expression) => {
+          if (expression) {
+            this.apiService.getGenes().subscribe(
+              (genes) => {
+                // TODO: special endpoint
+                this.searchedData = genes;
+                this.downloadSearch(this.searchedData);
+                this.areMoreThan2FiltersApplied();
+                this.cdRef.markForCheck();
+              },
+              (error) => this.errorLogger(this, error)
+            );
+          }
         },
         (error) => this.errorLogger(this, error)
       );

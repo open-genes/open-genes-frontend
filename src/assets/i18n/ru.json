@@ -140,6 +140,7 @@
   "main_page_link": "Главная",
   "main_page_table_criteria": "Критерии отбора",
   "main_page_table_expression": "Возрастные изменения экспрессии",
+  "main_page_table_methylation": "Возрастные изменения метилирования",
   "main_page_table_name": "HGNC, название",
   "main_page_total": "\uD83E\uDDEC Поиск по {{number}} курированным генам",
   "million_years": "млн. лет",

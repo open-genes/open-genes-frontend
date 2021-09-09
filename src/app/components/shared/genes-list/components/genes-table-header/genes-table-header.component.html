@@ -28,6 +28,10 @@
   <td *ngIf="settings.ifShowCriteria" class="table-header__cell table-header__cell--criteria">
     <div class="overflow">{{ "main_page_table_criteria" | translate }}</div>
   </td>
+  <td *ngIf="settings.ifShowMethylation"
+      class="table-header__cell table-header__cell--methylation">
+    <div class="overflow">{{ "main_page_table_methylation" | translate }}</div>
+  </td>
 </ng-container>
 <td class="table-header__cell table-header__cell--actions">
   <div class="overflow"></div>
