@@ -18,3 +18,61 @@
     color: $color;
   }
 }
+
+// Flat accordion
+@mixin flat-accordion($class) {
+
+  .no-#{$class} {
+    color: $color-gray;
+  }
+
+  .#{$class}-accordion {
+    min-width: 200px;
+    box-sizing: border-box;
+
+    $c: &;
+
+    &__header,
+    &__body {
+      width: 100%;
+    }
+
+    &__header {
+      padding-right: 20px;
+      position: relative;
+    }
+
+    &__body {
+      padding-top: 10px;
+      border-top: 1px solid rgba($color-black, 0.15);
+    }
+
+    &__arrow {
+      font-size: 14px;
+      color: $color-base;
+      opacity: .85;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
+      transition: opacity .15s linear;
+    }
+
+    &:hover {
+      #{$c}__arrow {
+        opacity: 1;
+      }
+    }
+
+    &--open {
+      #{$c}__header {
+        padding-bottom: 10px;
+      }
+
+      #{$c}__arrow {
+        transform: scale(1, -1);
+      }
+    }
+  }
+}
+

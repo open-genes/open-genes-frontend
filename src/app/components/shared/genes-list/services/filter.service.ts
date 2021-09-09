@@ -13,15 +13,8 @@ export class FilterService {
     byClasses: [],
     byExpressionChange: 0,
     bySelectionCriteria: [],
+    byMethylationChange: '',
   };
-
-  public $filters: Observable<Filter> = of({
-    byName: false,
-    byAge: false,
-    byClasses: [],
-    byExpressionChange: 0,
-    bySelectionCriteria: [],
-  });
 
   private areMt2FiltersApplied = new BehaviorSubject(false);
   // TODO: save this object in localStorage
@@ -49,6 +42,16 @@ export class FilterService {
     return of(this.filters.byExpressionChange);
   }
 
+  public filterByMethylationChange(correlation: string): Observable<string> {
+    if (this.filters.byMethylationChange !== correlation) {
+      this.filters.byMethylationChange = correlation;
+    } else {
+      this.filters.byMethylationChange = '';
+    }
+
+    return of(this.filters.byMethylationChange);
+  }
+
   // TODO: Ask backend to send unique id's for each criteria, type will change to number[]
   public filterBySelectionCriteria(str: string): Observable<string[]> {
     if (!this.filters.bySelectionCriteria.includes(str)) {
@@ -65,6 +68,10 @@ export class FilterService {
   // Get
   public getByFuncClusters(): Observable<number[]> {
     return of(this.filters.byClasses);
+  }
+
+  public getByMethylationChange(): Observable<string> {
+    return of(this.filters.byMethylationChange);
   }
 
   public getByExpressionChange(): Observable<number> {
@@ -89,13 +96,11 @@ export class FilterService {
         this.filters.byExpressionChange = 0;
       }
     } else {
-      this.filters = {
-        byName: false,
-        byAge: false,
-        byClasses: [],
-        byExpressionChange: 0,
-        bySelectionCriteria: [],
-      };
+      this.filters.byName = false;
+      this.filters.byAge = false;
+      this.filters.byClasses = [];
+      this.filters.byExpressionChange = 0;
+      this.filters.bySelectionCriteria = [];
     }
   }
 

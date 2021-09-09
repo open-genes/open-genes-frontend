@@ -32,6 +32,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { IconModule } from './components/ui-components/components/icon/app-icon.module';
 import { GoogleAnalyticsModule } from './modules/vendors/google-analytics.module';
 import { DirectivesModule } from './directives/directives.module';
+import { TermsModule } from './components/shared/terms/terms.module';
 
 // required for AOT compilation
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
@@ -63,6 +64,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     IconModule,
     GoogleAnalyticsModule,
     DirectivesModule,
+    TermsModule
   ],
   providers: [TranslateService, { provide: LOCALE_ID, useValue: 'ru' }],
   exports: [MaterialModule],

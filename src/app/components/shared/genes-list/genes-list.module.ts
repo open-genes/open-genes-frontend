@@ -12,7 +12,6 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { UiComponentsModule } from "../../ui-components/ui-components.module";
-import { FavouritesService } from "../../../core/services/favourites.service";
 import { MatCardModule } from "@angular/material/card";
 import { WindowService } from "../../../core/services/browser/window.service";
 import { GeneMenuComponent } from "./components/gene/menu/gene-menu.component";
@@ -21,14 +20,10 @@ import { SelectionCriteriaModule } from "../selection-criteria/selection-criteri
 import { MaterialModule } from '../../../modules/vendors/material.module';
 import { GenesTableHeaderComponent } from './components/genes-table-header/genes-table-header.component';
 import { AssociatedDiseasesModule } from '../associated-diseases/associated-diseases.module';
+import { AssociatedDiseaseCategoriesModule } from '../associated-disease-categories/associated-disease-categories.module';
 
 @NgModule({
-  declarations: [
-    GenesListComponent,
-    SearchComponent,
-    GeneMenuComponent,
-    GenesTableHeaderComponent,
-  ],
+  declarations: [GenesListComponent, SearchComponent, GeneMenuComponent, GenesTableHeaderComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -46,6 +41,7 @@ import { AssociatedDiseasesModule } from '../associated-diseases/associated-dise
     SelectionCriteriaModule,
     MaterialModule,
     AssociatedDiseasesModule,
+    AssociatedDiseaseCategoriesModule,
   ],
   providers: [WindowService],
   exports: [GenesListComponent, SearchComponent],

@@ -154,6 +154,14 @@
                 <p *ngIf="isNcbiDescription"
                   [innerHTML]="gene.descriptionNCBI"></p>
 
+<!--                <div style="display: flex; margin-top: 20px; border: 1px solid #ebbdf2">В это тексте содержится два термина:
+                  <span style="color: red; font-weight: bold;"
+                        (click)="showTermInfo($event, 'hemoglobin','hemo_desc')">&nbsp; {{'hemoglobin' | translate}} &nbsp;</span> - c описанием и
+                  <span style="color: red; font-weight: bold;"
+                        (click)="showTermInfo($event, 'bilirubin','')">&nbsp; {{'bilirubin' | translate}} &nbsp;</span> - без описания
+                </div>-->
+
+
                 <ul *ngIf="isLocationData"
                     class="list" >
                   <li

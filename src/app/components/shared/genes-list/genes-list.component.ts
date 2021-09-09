@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { of, Observable, ReplaySubject } from 'rxjs';
 import { PageClass } from '../../../pages/page.class';
-import { takeLast, takeUntil } from 'rxjs/operators';
+import { switchMap, takeLast, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
@@ -35,6 +35,17 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public inputData: Genes[] = [];
   public searchedData: Genes[] = [];
+  public listSettings: GenesListSettings = {
+    // Default:
+    ifShowAge: true,
+    ifShowClasses: true,
+    ifShowExpression: true,
+    ifShowDiseases: true,
+    ifShowDiseaseCategories: false,
+    ifShowCriteria: true,
+    ifShowMethylation: false,
+  };
+
   @Input()
   set dataSource(value: Genes[]) {
     this.inputData = value;
@@ -46,14 +57,18 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   @Input() isFilterPanel = true;
   @Input() isGoSearchPerformed: boolean;
+  @Input() isMobile: boolean;
+
   @Output() updateGenesList = new EventEmitter();
   @Output() loaded = new EventEmitter<boolean>();
   @Output()
   listSettingsChanged: EventEmitter<GenesListSettings> = new EventEmitter();
+
   @ViewChild('templateAddedToFavorites') templateAddedToFavorites: ElementRef;
   @ViewChild('templateRemovedFromFavorites')
   templateRemovedFromFavorites: ElementRef;
   @ViewChild('searchResultsFound') searchResultsFound: ElementRef;
+  @ViewChild('filtersModalBody') dialogRef: TemplateRef<any>;
 
   public genesPerPage = 20;
   public loadedGenesQuantity = this.genesPerPage;
@@ -70,18 +85,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public molecularActivity: Map<any, any>;
   public downloadJsonLink: string | SafeResourceUrl = '#';
 
-  @Input() isMobile: boolean;
-  public listSettings: GenesListSettings = {
-    // Default:
-    ifShowAge: true,
-    ifShowClasses: false,
-    ifShowExpression: false,
-    ifShowDiseases: true,
-    ifShowCriteria: true,
-  };
-
   private subscription$ = new ReplaySubject(1);
-  @ViewChild('filtersModalBody') dialogRef: TemplateRef<any>;
 
   constructor(
     private readonly apiService: ApiService,
@@ -118,37 +122,61 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   public filterByFuncClusters(id: number): void {
     this.filterService.filterByFuncClusters(id);
-    this.filterService.getByFuncClusters().subscribe(
-      (list) => {
-        if (list.length !== 0) {
-          this.apiService
-            .getGenesByFunctionalClusters(list)
-            .pipe(takeUntil(this.subscription$))
-            .subscribe(
-              (genes) => {
-                this.searchedData = genes;
-                this.downloadSearch(this.searchedData);
-                this.areMoreThan2FiltersApplied();
-                this.cdRef.markForCheck();
-              },
-              (error) => this.errorLogger(this, error)
-            );
-        }
-      },
-      (error) => this.errorLogger(this, error)
-    );
+    this.filterService
+      .getByFuncClusters()
+      .pipe(
+        switchMap((list) => {
+          if (list.length !== 0) {
+            return this.apiService.getGenesByFunctionalClusters(list);
+          }
+        }),
+        takeUntil(this.subscription$)
+      )
+      .subscribe(
+        (genes) => {
+          this.searchedData = genes;
+          this.downloadSearch(this.searchedData);
+          this.areMoreThan2FiltersApplied();
+          this.cdRef.markForCheck();
+        },
+        (error) => this.errorLogger(this, error)
+      );
   }
 
   public filterByExpressionChange(id: number): void {
     this.filterService.filterByExpressionChange(id);
     this.filterService
       .getByExpressionChange()
+      .pipe(
+        switchMap((expression) => {
+          if (expression) {
+            return this.apiService.getGenesByExpressionChange(expression);
+          }
+        }),
+        takeUntil(this.subscription$)
+      )
+      .subscribe(
+        (genes) => {
+          this.searchedData = genes;
+          this.downloadSearch(this.searchedData);
+          this.areMoreThan2FiltersApplied();
+          this.cdRef.markForCheck();
+        },
+        (error) => this.errorLogger(this, error)
+      );
+  }
+
+  public filterByMethylationChange(correlation: string): void {
+    this.filterService.filterByMethylationChange(correlation);
+    this.filterService
+      .getByExpressionChange()
       .pipe(takeUntil(this.subscription$))
       .subscribe(
         (expression) => {
           if (expression) {
-            this.apiService.getGenesByExpressionChange(expression).subscribe(
+            this.apiService.getGenes().subscribe(
               (genes) => {
+                // TODO: special endpoint
                 this.searchedData = genes;
                 this.downloadSearch(this.searchedData);
                 this.areMoreThan2FiltersApplied();
@@ -171,9 +199,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
       this.searchedData = x;
 
       this.snackBar.open(
-        `${this.searchResultsFound.nativeElement.textContent} ${
-          this.searchedData ? this.searchedData.length : 0
-        }`,
+        `${this.searchResultsFound.nativeElement.textContent} ${this.searchedData ? this.searchedData.length : 0}`,
         '',
         {
           duration: 600,
@@ -210,21 +236,12 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
             // Map data if it's presented:
             for (const item of this.searchedData) {
-              this.biologicalProcess = this.toMap(
-                item.terms?.biological_process
-              );
-              this.cellularComponent = this.toMap(
-                item.terms?.cellular_component
-              );
-              this.molecularActivity = this.toMap(
-                item.terms?.molecular_activity
-              );
+              this.biologicalProcess = this.toMap(item.terms?.biological_process);
+              this.cellularComponent = this.toMap(item.terms?.cellular_component);
+              this.molecularActivity = this.toMap(item.terms?.molecular_activity);
             }
 
-            const isAnyTermFound =
-              this.biologicalProcess ||
-              this.cellularComponent ||
-              this.molecularActivity;
+            const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
             this.isGoTermsModeError = !isAnyTermFound;
 
             this.snackBar.open(
@@ -264,26 +281,18 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   public favItem(geneId: number): void {
     this.favouritesService.addToFavourites(geneId);
-    this.snackBar.open(
-      this.templateAddedToFavorites.nativeElement.textContent,
-      '',
-      {
-        duration: 600,
-      }
-    );
+    this.snackBar.open(this.templateAddedToFavorites.nativeElement.textContent, '', {
+      duration: 600,
+    });
     this.isFaved(geneId);
     this.cdRef.markForCheck();
   }
 
   public unFavItem(geneId: number): void {
     this.favouritesService.removeFromFavourites(geneId);
-    this.snackBar.open(
-      this.templateRemovedFromFavorites.nativeElement.textContent,
-      '',
-      {
-        duration: 600,
-      }
-    );
+    this.snackBar.open(this.templateRemovedFromFavorites.nativeElement.textContent, '', {
+      duration: 600,
+    });
     this.isFaved(geneId);
     this.cdRef.markForCheck();
   }
@@ -313,11 +322,13 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
         this.listSettings.ifShowClasses = !this.listSettings.ifShowClasses;
         break;
       case 'expression':
-        this.listSettings.ifShowExpression = !this.listSettings
-          .ifShowExpression;
+        this.listSettings.ifShowExpression = !this.listSettings.ifShowExpression;
         break;
       case 'diseases':
         this.listSettings.ifShowDiseases = !this.listSettings.ifShowDiseases;
+        break;
+      case 'disease-categories':
+        this.listSettings.ifShowDiseaseCategories = !this.listSettings.ifShowDiseaseCategories;
         break;
       case 'criteria':
         this.listSettings.ifShowCriteria = !this.listSettings.ifShowCriteria;
@@ -349,6 +360,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public clearFilters(filter?: FilterTypesEnum): void {
     this.filterService.clearFilters(filter ?? null);
     this.setInitialState();
+    this.areMoreThan2FiltersApplied();
   }
 
   /**
@@ -389,9 +401,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   private sortByAge() {
-    this.searchedData.sort(
-      (a, b) => a.familyOrigin?.order - b.familyOrigin?.order
-    );
+    this.searchedData.sort((a, b) => a.familyOrigin?.order - b.familyOrigin?.order);
   }
 
   /**

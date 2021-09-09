@@ -22,6 +22,6 @@ const routes: Routes = [{ path: '', component: FavouritesComponent }];
     NgToArrayPipeModule,
     NgCapitalizePipeModule,
   ],
-  providers: [FavouritesService],
+  providers: [],
 })
 export class FavouritesModule {}

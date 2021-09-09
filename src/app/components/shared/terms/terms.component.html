@@ -1,0 +1,28 @@
+<div class="term" appSwipeVertical (OnSwipeDown)="onClose()">
+  <div class="term__header">
+    <span class="fa far fa-magic"></span>
+    <span class="term__title">{{'term_ref' | translate}}</span>&laquo;{{ term?.title | translate }}&raquo;
+
+    <span *ngIf="isTouchDevice"
+          class="term__drag-button"></span>
+
+    <button *ngIf="!isTouchDevice"
+            mat-icon-button
+            class="term__close-button"
+            (click)="onClose()"
+            aria-label="Закрыть">
+      <span class="fa fal fa-times"></span>
+    </button>
+  </div>
+  <ng-container *ngIf="term?.description.length; else notFound">
+    <div class="term__description" >
+      {{ term?.description | translate }}
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #notFound>
+  <div class="term__not-found">
+    Не удалось найти справку по этому термину
+  </div>
+</ng-template>

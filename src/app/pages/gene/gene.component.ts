@@ -6,6 +6,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import { PageClass } from '../page.class';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { TermsComponent } from '../../components/shared/terms/terms.component';
 
 @Component({
   selector: 'app-gene',
@@ -37,6 +39,7 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   constructor(
     public translate: TranslateService,
     private activateRoute: ActivatedRoute,
+    private _bottomSheet: MatBottomSheet,
     private router: Router,
     private apiService: ApiService
   ) {
@@ -154,5 +157,17 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
     this.routeSubscribe.unsubscribe();
+  }
+
+  public showTermInfo(ev: MouseEvent, title: string, description: string): void {
+    this._bottomSheet.open(TermsComponent, {
+      data: {
+        term: {
+          title: title,
+          description: description,
+        }
+      }
+    });
+    ev.preventDefault();
   }
 }

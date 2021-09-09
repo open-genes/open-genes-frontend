@@ -4,9 +4,9 @@ export interface increaseLifespan {
   modelOrganism: string; // TODO: backend: rename to 'object'
   organismLine: string; // TODO: backend: rename to 'line'
   age: string;
-  genotype: string; // Can have only these values: ++/--/+- TODO: change response to 0, 1, -1?
-  valueForMale: any; // TODO: backend shouldn't return null, but an empty value of the same type
-  valueForFemale: any; // TODO: backend shouldn't return null, but an empty value of the same type
+  genotype: '+-' | '--';
+  valueForMale: string;
+  valueForFemale: string;
   valueForAll: string;
   doi: string;
   pmid: string;
@@ -20,9 +20,9 @@ export interface AgeRelatedChanges {
   organismLine: string;
   ageFrom: string;
   ageTo: string;
-  valueForMale: any; // TODO: backend shouldn't return null, but an empty value of the same type
-  valueForFemale: any; // TODO: backend shouldn't return null, but an empty value of the same type
-  valueForAll: any; // TODO: backend shouldn't return null, but an empty value of the same type
+  valueForMale: string;
+  valueForFemale: string;
+  valueForAll: string;
   measurementType: string;
   doi: string;
   pmid: string;

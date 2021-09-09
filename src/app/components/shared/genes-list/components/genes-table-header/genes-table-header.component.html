@@ -19,6 +19,11 @@
   <div class="overflow">{{ "gene_list_diseases" | translate }}</div>
 </td>
 
+<td *ngIf="isGoTermsMode || settings.ifShowDiseaseCategories"
+    class="table-header__cell table-header__cell--diseases">
+  <div class="overflow">{{ "gene_list_disease_categories" | translate }}</div>
+</td>
+
 <ng-container *ngIf="!isGoTermsMode; else GoModeHeader">
   <td *ngIf="settings.ifShowExpression" class="table-header__cell table-header__cell--expression">
     <div class="overflow">
@@ -27,6 +32,10 @@
   </td>
   <td *ngIf="settings.ifShowCriteria" class="table-header__cell table-header__cell--criteria">
     <div class="overflow">{{ "main_page_table_criteria" | translate }}</div>
+  </td>
+  <td *ngIf="settings.ifShowMethylation"
+      class="table-header__cell table-header__cell--methylation">
+    <div class="overflow">{{ "main_page_table_methylation" | translate }}</div>
   </td>
 </ng-container>
 <td class="table-header__cell table-header__cell--actions">

@@ -8,6 +8,7 @@
         mat-flat-button
         color="primary"
         [href]="downloadLink"
+        (click)="downloadFavs()"
         target="_blank"
         download="export.json"
       >
@@ -26,7 +27,7 @@
 
   <div *ngIf="favourites"
        class="row no-gutters">
-    <div *ngFor="let gene of favourites"
+    <div *ngFor="let gene of favourites; let i = index"
          class="col-12 faved-gene">
       <div class="faved-gene__title">
         <a [routerLink]="['/gene', gene.symbol]">
@@ -37,7 +38,7 @@
       <button
         class="faved-gene__actions"
         mat-icon-button
-        (click)="unFavItem(gene.id)"
+        (click)="unFavItem(gene.id, i)"
       >
         <span class="fa far fa-trash"></span>
       </button>
