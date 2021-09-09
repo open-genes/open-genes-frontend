@@ -59,10 +59,10 @@
       </button>
 
       <button *ngIf="!isGoTermsMode"
-              class="btn btn--small btn--purple"
+              class="btn btn--small btn--fill btn--purple"
               (click)="openFiltersModal()">
         <span class="fa far fa-plus"></span>
-        Фильтры
+        {{ 'filters_modal_title' | translate }}
       </button>
     </div>
 
