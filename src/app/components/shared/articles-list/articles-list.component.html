@@ -51,7 +51,7 @@
                 </div>
               </div>
 
-              <div *ngIf="environment.name !== 'default' && !isMiniMode"
+              <div *ngIf="environment.name !== 'prod' && !isMiniMode"
                    class="article__tags">
                 <ng-container *ngFor="let tag of article.tags">
                   <a
