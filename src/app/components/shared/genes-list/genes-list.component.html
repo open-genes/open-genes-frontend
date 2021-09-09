@@ -194,6 +194,15 @@
         </div>
       </td>
 
+      <td *ngIf="isGoTermsMode || listSettings.ifShowDiseaseCategories"
+          class="cell">
+        <div class="overflow">
+          <app-associated-disease-categories
+            [geneDiseaseCategories]="item.diseaseCategories"
+          ></app-associated-disease-categories>
+        </div>
+      </td>
+
       <ng-container *ngIf="!isGoTermsMode; else GoModeCell">
         <td *ngIf="listSettings.ifShowExpression"
             class="cell cell--expression">
@@ -328,6 +337,13 @@
         ></app-associated-diseases>
       </div>
 
+      <div *ngIf="listSettings.ifShowDiseaseCategories"
+           class="card__section">
+        <app-associated-diseases
+          [geneDiseases]="item.diseaseCategories"
+        ></app-associated-diseases>
+      </div>
+
       <div *ngIf="listSettings.ifShowCriteria"
            class="card__section">
         <app-selection-criteria
@@ -434,7 +450,7 @@
 
 <ng-template #filtersModalBody>
   <div class="filters-modal__header" mat-dialog-title>
-    Фильтры
+    {{ 'filters_modal_title' | translate }}
     <button mat-icon-button
             class="close-button"
             (click)="closeFiltersModal()"
@@ -444,26 +460,37 @@
   </div>
   <div class="filters-modal__body">
   <mat-checkbox
+    color="primary"
     (change)="changeGenesListSettings('gene-age')"
     [checked]="listSettings.ifShowAge"
   >{{ "gene_list_evolutionary_age" | translate }}
   </mat-checkbox>
   <mat-checkbox
+    color="primary"
     (change)="changeGenesListSettings('classes')"
     [checked]="listSettings.ifShowClasses"
   >{{ "functional_classes" | translate }}
   </mat-checkbox>
   <mat-checkbox
+    color="primary"
     [checked]="listSettings.ifShowExpression"
     (change)="changeGenesListSettings('expression')"
   >{{ "main_page_table_expression" | translate }}
   </mat-checkbox>
   <mat-checkbox
+    color="primary"
     [checked]="listSettings.ifShowDiseases"
     (change)="changeGenesListSettings('diseases')">
     {{ "gene_list_diseases" | translate }}
   </mat-checkbox>
+    <mat-checkbox
+      color="primary"
+      [checked]="listSettings.ifShowDiseaseCategories"
+      (change)="changeGenesListSettings('disease-categories')">
+      {{ "gene_list_disease_categories" | translate }}
+    </mat-checkbox>
   <mat-checkbox
+    color="primary"
     [checked]="listSettings.ifShowCriteria"
     (change)="changeGenesListSettings('criteria')">
     {{ "main_page_table_criteria" | translate }}

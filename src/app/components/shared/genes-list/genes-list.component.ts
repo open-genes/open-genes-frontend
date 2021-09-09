@@ -41,6 +41,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     ifShowClasses: true,
     ifShowExpression: true,
     ifShowDiseases: true,
+    ifShowDiseaseCategories: false,
     ifShowCriteria: true,
     ifShowMethylation: false,
   };
@@ -198,9 +199,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
       this.searchedData = x;
 
       this.snackBar.open(
-        `${this.searchResultsFound.nativeElement.textContent} ${
-          this.searchedData ? this.searchedData.length : 0
-        }`,
+        `${this.searchResultsFound.nativeElement.textContent} ${this.searchedData ? this.searchedData.length : 0}`,
         '',
         {
           duration: 600,
@@ -237,21 +236,12 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
             // Map data if it's presented:
             for (const item of this.searchedData) {
-              this.biologicalProcess = this.toMap(
-                item.terms?.biological_process
-              );
-              this.cellularComponent = this.toMap(
-                item.terms?.cellular_component
-              );
-              this.molecularActivity = this.toMap(
-                item.terms?.molecular_activity
-              );
+              this.biologicalProcess = this.toMap(item.terms?.biological_process);
+              this.cellularComponent = this.toMap(item.terms?.cellular_component);
+              this.molecularActivity = this.toMap(item.terms?.molecular_activity);
             }
 
-            const isAnyTermFound =
-              this.biologicalProcess ||
-              this.cellularComponent ||
-              this.molecularActivity;
+            const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
             this.isGoTermsModeError = !isAnyTermFound;
 
             this.snackBar.open(
@@ -291,26 +281,18 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   public favItem(geneId: number): void {
     this.favouritesService.addToFavourites(geneId);
-    this.snackBar.open(
-      this.templateAddedToFavorites.nativeElement.textContent,
-      '',
-      {
-        duration: 600,
-      }
-    );
+    this.snackBar.open(this.templateAddedToFavorites.nativeElement.textContent, '', {
+      duration: 600,
+    });
     this.isFaved(geneId);
     this.cdRef.markForCheck();
   }
 
   public unFavItem(geneId: number): void {
     this.favouritesService.removeFromFavourites(geneId);
-    this.snackBar.open(
-      this.templateRemovedFromFavorites.nativeElement.textContent,
-      '',
-      {
-        duration: 600,
-      }
-    );
+    this.snackBar.open(this.templateRemovedFromFavorites.nativeElement.textContent, '', {
+      duration: 600,
+    });
     this.isFaved(geneId);
     this.cdRef.markForCheck();
   }
@@ -340,11 +322,13 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
         this.listSettings.ifShowClasses = !this.listSettings.ifShowClasses;
         break;
       case 'expression':
-        this.listSettings.ifShowExpression = !this.listSettings
-          .ifShowExpression;
+        this.listSettings.ifShowExpression = !this.listSettings.ifShowExpression;
         break;
       case 'diseases':
         this.listSettings.ifShowDiseases = !this.listSettings.ifShowDiseases;
+        break;
+      case 'disease-categories':
+        this.listSettings.ifShowDiseaseCategories = !this.listSettings.ifShowDiseaseCategories;
         break;
       case 'criteria':
         this.listSettings.ifShowCriteria = !this.listSettings.ifShowCriteria;
@@ -417,9 +401,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   private sortByAge() {
-    this.searchedData.sort(
-      (a, b) => a.familyOrigin?.order - b.familyOrigin?.order
-    );
+    this.searchedData.sort((a, b) => a.familyOrigin?.order - b.familyOrigin?.order);
   }
 
   /**
