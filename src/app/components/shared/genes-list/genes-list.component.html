@@ -76,6 +76,7 @@
       </a>
 
       <button
+        *ngIf="!isMobile"
         class="toggler __ml-10"
         (click)="toggleGenesView()"
         [ngClass]="asTableRow ? 'toggler--def' : 'toggler--alt'"
