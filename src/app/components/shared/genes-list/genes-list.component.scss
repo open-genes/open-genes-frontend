@@ -84,8 +84,7 @@
     margin-bottom: 15px;
 
     .close-button {
-      color: $color-accent;
-      @include close-button(-10px, 10px);
+      @include close-button(-10px, 15px);
     }
   }
 

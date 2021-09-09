@@ -1,0 +1,42 @@
+<ng-container *ngIf="mappedDiseaseCategories && geneDiseaseCategoriesLength !== 0; else noDisease">
+  <ng-container *ngIf="!isAccordion; else accordion">
+    <ul
+      *ngFor="let disease of mappedDiseaseCategories | keyvalue"
+      class="list list--bulletted"
+    >
+      <li><b>{{ disease.key }}</b> {{ disease.value['icd_category_name'] }}</li>
+    </ul>
+  </ng-container>
+
+  <ng-template #accordion>
+    <app-accordion
+      class="criteria-accordion"
+      [class.criteria-accordion--open]="isAccordionOpen"
+      (isStateOpen)="toggleAccordion($event)"
+    >
+      <div class="criteria-accordion__header" accordion-header>
+        <ul
+          *ngFor="let disease of mappedDiseaseCategories | keyvalue | slice: 0:maxItemsToShow"
+          class="list list--bulletted"
+        >
+          <li><b>{{ disease.key }}</b> {{ disease.value['icd_category_name'] }}</li>
+        </ul>
+        <span class="fa far fa-chevron-down criteria-accordion__arrow"></span>
+      </div>
+      <div class="criteria-accordion__body" accordion-body>
+        <ul
+          *ngFor="let disease of mappedDiseaseCategories | keyvalue | slice: maxItemsToShow"
+          class="list list--bulletted"
+        >
+          <li><b>{{ disease.key }}</b> {{ disease.value['icd_category_name'] }}</li>
+        </ul>
+      </div>
+    </app-accordion>
+  </ng-template>
+</ng-container>
+
+<ng-template #noDisease>
+  <div class="no-criteria">
+    {{ 'no_disease-categories' | translate }}
+  </div>
+</ng-template>

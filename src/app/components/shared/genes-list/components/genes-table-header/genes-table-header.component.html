@@ -19,6 +19,11 @@
   <div class="overflow">{{ "gene_list_diseases" | translate }}</div>
 </td>
 
+<td *ngIf="isGoTermsMode || settings.ifShowDiseaseCategories"
+    class="table-header__cell table-header__cell--diseases">
+  <div class="overflow">{{ "gene_list_disease_categories" | translate }}</div>
+</td>
+
 <ng-container *ngIf="!isGoTermsMode; else GoModeHeader">
   <td *ngIf="settings.ifShowExpression" class="table-header__cell table-header__cell--expression">
     <div class="overflow">
