@@ -215,6 +215,19 @@
             <app-selection-criteria [geneCriteria]="item.commentCause"></app-selection-criteria>
           </div>
         </td>
+
+        <td *ngIf="listSettings.ifShowMethylation"
+            class="cell cell--methylation">
+          <div class="overflow">
+            <app-tag
+              *ngIf="item.methylationCorrelation !== ''"
+              (click)="filterByMethylationChange(item.methylationCorrelation)"
+              [isActive]="
+              filters.byMethylationChange === item.methylationCorrelation"
+            >{{ item.methylationCorrelation }}
+            </app-tag>
+          </div>
+        </td>
       </ng-container>
 
       <ng-template #GoModeCell>
@@ -325,7 +338,8 @@
 
     <div *ngIf="isGoTermsMode ||
     listSettings.ifShowClasses ||
-    listSettings.ifShowExpression"
+    listSettings.ifShowExpression ||
+    listSettings.ifShowMethylation"
          class="card__controls">
       <ng-container *ngIf="!isGoTermsMode; else GoModeCardActions">
         <div *ngIf="item.functionalClusters && listSettings.ifShowClasses" class="card__section">
@@ -355,6 +369,20 @@
           </app-tag>
         </div>
       </ng-container>
+
+      <div *ngIf="listSettings.ifShowMethylation"
+           class="card__section">
+                  <span class="label">
+            {{ "main_page_table_methylation" | translate }}
+          </span>
+        <app-tag
+          *ngIf="item.methylationCorrelation !== ''"
+          (click)="filterByMethylationChange(item.methylationCorrelation)"
+          [isActive]="
+              filters.byMethylationChange === item.methylationCorrelation"
+        >{{ item.methylationCorrelation }}
+        </app-tag>
+      </div>
 
       <ng-template #GoModeCardActions>
         <div class="card__section" *ngIf="item.terms">

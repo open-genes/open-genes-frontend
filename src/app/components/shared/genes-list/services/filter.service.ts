@@ -13,6 +13,7 @@ export class FilterService {
     byClasses: [],
     byExpressionChange: 0,
     bySelectionCriteria: [],
+    byMethylationChange: '',
   };
 
   private areMt2FiltersApplied = new BehaviorSubject(false);
@@ -41,6 +42,16 @@ export class FilterService {
     return of(this.filters.byExpressionChange);
   }
 
+  public filterByMethylationChange(correlation: string): Observable<string> {
+    if (this.filters.byMethylationChange !== correlation) {
+      this.filters.byMethylationChange = correlation;
+    } else {
+      this.filters.byMethylationChange = '';
+    }
+
+    return of(this.filters.byMethylationChange);
+  }
+
   // TODO: Ask backend to send unique id's for each criteria, type will change to number[]
   public filterBySelectionCriteria(str: string): Observable<string[]> {
     if (!this.filters.bySelectionCriteria.includes(str)) {
@@ -57,6 +68,10 @@ export class FilterService {
   // Get
   public getByFuncClusters(): Observable<number[]> {
     return of(this.filters.byClasses);
+  }
+
+  public getByMethylationChange(): Observable<string> {
+    return of(this.filters.byMethylationChange);
   }
 
   public getByExpressionChange(): Observable<number> {

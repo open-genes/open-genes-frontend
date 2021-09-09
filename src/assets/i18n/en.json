@@ -140,6 +140,7 @@
   "main_page_link": "Main page",
   "main_page_table_criteria": "Selection criteria",
   "main_page_table_expression": "Age-related changes in expression",
+  "main_page_table_methylation": "Are-related methylation changes",
   "main_page_table_name": "HGNC, gene name",
   "main_page_total": "\uD83E\uDDEC Search trough {{number}} curated genes",
   "million_years": "m. years",

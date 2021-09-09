@@ -3,13 +3,14 @@ import { Origin } from './origin.model';
 import { Terms } from './gene-ontology.model';
 import { HumanProteinAtlas } from './human-protein-atlas.model';
 import { SelectionCriteria } from './selection-criteria.model';
-import { AssociatedDiseases } from './associated-diseases.model';
+import { AssociatedDiseases, AssociatedDiseaseCategories } from './associated-diseases.model';
 
 interface GeneralGeneInfo {
   id: number;
   symbol: string;
   aliases: string[];
   commentCause: SelectionCriteria[];
+  diseaseCategories: AssociatedDiseaseCategories[];
   diseases: AssociatedDiseases[];
   expressionChange?: number;
   functionalClusters: string | string[];
@@ -21,6 +22,7 @@ interface GeneralGeneInfo {
   uniprot: string;
   timestamp: string;
   homologueTaxon: string;
+  methylationCorrelation: 'positive' | 'negative' | '';
 }
 
 export interface Genes extends GeneralGeneInfo {
@@ -37,7 +39,9 @@ export interface Gene extends GeneralGeneInfo {
   accOrf: string;
   accCds: string;
   references: string;
-  orthologs: string;
+  orthologs: {
+    string: string;
+  };
   commentEvolution: string;
   commentFunction: string;
   commentAging: string;
