@@ -1,7 +1,7 @@
 <div class="term" appSwipeVertical (OnSwipeDown)="onClose()">
   <div class="term__header">
     <span class="fa far fa-magic"></span>
-    <span class="term__title">{{'term_ref' | translate}}</span>&laquo;{{ term?.title | translate }}&raquo;
+    <span class="term__title">{{'term_ref' | translate}}</span>&laquo;{{ term?.title | translate | capitalize }}&raquo;
 
     <span *ngIf="isTouchDevice"
           class="term__drag-button"></span>
