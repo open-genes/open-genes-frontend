@@ -36,19 +36,9 @@
 
 <ng-template #skeleton>
   <app-skeleton
-    *ngIf="isLoading || error"
+    *ngIf="isLoading"
     [groups]="newsList.length !== 0 ? newsList.length : itemsForPage"
   ></app-skeleton>
 </ng-template>
 
-<section *ngIf="error"
-         class="col-12 no-content">
-  <div class="no-content__inner">
-    <div class="no-content__icon no-content__icon-standard"></div>
-    <div class="no-content__title">
-      <div class="title__center">
-        {{ "news_page_no_news" | translate }}
-      </div>
-    </div>
-  </div>
-</section>
+<app-no-news *ngIf="error"></app-no-news>

@@ -110,11 +110,18 @@ export class NewsListComponent implements OnInit, OnDestroy {
           }
 
           // All content is loaded
-          this.isLoading = false;
-          this.cdRef.markForCheck();
+          this.stopLoader();
         },
-        (error) => (this.error = error)
+        (error) => {
+          this.error = error;
+          this.stopLoader();
+        }
       );
+  }
+
+  stopLoader(): void {
+    this.isLoading = false;
+    this.cdRef.markForCheck();
   }
 
   ngOnDestroy() {
