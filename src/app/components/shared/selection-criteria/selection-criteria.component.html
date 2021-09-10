@@ -1,4 +1,4 @@
-<ng-container *ngIf="geneCriteria && commentCauseLength !== 0; else noCriteria">
+<ng-container *ngIf="geneCriteria && listLength !== 0; else noCriteria">
   <ng-container *ngIf="!isAccordion; else accordion">
     <ul
       *ngFor="let research of geneCriteria | keyvalue"
