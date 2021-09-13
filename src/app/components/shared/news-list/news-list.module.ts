@@ -5,11 +5,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '../../../modules/pipes/pipes.module';
 import { UiComponentsModule } from '../../ui-components/ui-components.module';
 import { RouterModule } from '@angular/router';
-import { NoNewsComponent } from './no-news/no-news.component';
+import { NoContentModule } from '../no-content/no-content.module';
 
 @NgModule({
-  declarations: [NewsListComponent, NoNewsComponent],
-  imports: [CommonModule, TranslateModule, PipesModule, UiComponentsModule, RouterModule],
+  declarations: [NewsListComponent],
+  imports: [CommonModule, TranslateModule, PipesModule, UiComponentsModule, RouterModule, NoContentModule],
   exports: [NewsListComponent],
 })
 export class NewsListModule {}

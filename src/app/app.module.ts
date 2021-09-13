@@ -15,11 +15,7 @@ registerLocaleData(localeRu, 'ru');
 registerLocaleData(localeEn, 'en');
 
 // import ngx-translate and the http loader
-import {
-  TranslateLoader,
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
@@ -33,6 +29,7 @@ import { IconModule } from './components/ui-components/components/icon/app-icon.
 import { GoogleAnalyticsModule } from './modules/vendors/google-analytics.module';
 import { DirectivesModule } from './directives/directives.module';
 import { TermsModule } from './components/shared/terms/terms.module';
+import { NoContentModule } from './components/shared/no-content/no-content.module';
 
 // required for AOT compilation
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
@@ -64,7 +61,8 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     IconModule,
     GoogleAnalyticsModule,
     DirectivesModule,
-    TermsModule
+    TermsModule,
+    NoContentModule,
   ],
   providers: [TranslateService, { provide: LOCALE_ID, useValue: 'ru' }],
   exports: [MaterialModule],

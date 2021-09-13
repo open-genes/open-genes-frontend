@@ -7,7 +7,7 @@ import { PipesModule } from '../../modules/pipes/pipes.module';
 import { MaterialModule } from '../../modules/vendors/material.module';
 import { NgCapitalizePipeModule, NgToArrayPipeModule } from 'angular-pipes';
 import { FavouritesListComponent } from './favourites-list/favourites-list.component';
-import { FavouritesService } from '../../core/services/favourites.service';
+import { NoContentModule } from '../../components/shared/no-content/no-content.module';
 
 const routes: Routes = [{ path: '', component: FavouritesComponent }];
 
@@ -21,6 +21,7 @@ const routes: Routes = [{ path: '', component: FavouritesComponent }];
     MaterialModule,
     NgToArrayPipeModule,
     NgCapitalizePipeModule,
+    NoContentModule,
   ],
   providers: [],
 })

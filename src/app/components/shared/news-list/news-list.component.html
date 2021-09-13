@@ -41,4 +41,8 @@
   ></app-skeleton>
 </ng-template>
 
-<app-no-news *ngIf="error"></app-no-news>
+<app-no-content
+  *ngIf="error"
+  [title]="'news_page_no_news'"
+  [iconUrl]="'no-content__icon-standard'">
+</app-no-content>

@@ -138,34 +138,22 @@
 </ng-container>
 
 <!-- No content error message -->
-<section
+<app-no-content
   *ngIf="
     (isGoTermsMode && isGoSearchPerformed && searchedData?.length == 0) ||
-    (!isGoTermsMode && searchedData?.length == 0)
-  "
-  class="no-content"
->
-  <div class="no-content__inner">
-    <div class="no-content__icon no-content__icon-standard"></div>
-    <div class="no-content__title">
-      <div class="title__center">
-        {{ "nothing_found" | translate }}
-      </div>
-    </div>
-  </div>
-</section>
+    (!isGoTermsMode && searchedData?.length == 0)"
+  [title]="'nothing_found'"
+  [iconUrl]="'no-content__icon-standard'">
+</app-no-content>
 
 <!-- GO search mode start message -->
-<section *ngIf="isGoTermsMode && !isGoSearchPerformed" class="no-content">
-  <div class="no-content__inner">
-    <div class="no-content__icon no-content__icon-standard"></div>
-    <div class="no-content__title">
-      <div class="title__center">
-        {{ "go_results_start_typing" | translate }}
-      </div>
-    </div>
-  </div>
-</section>
+<app-no-content
+  *ngIf="isGoTermsMode && !isGoSearchPerformed"
+  [title]="'go_results_start_typing'"
+  [iconUrl]="'no-content__icon-standard'">
+</app-no-content>
+
+
 
 <!-- Templates -->
 <ng-template #asTableRowsTmpl let-item="itemRow">

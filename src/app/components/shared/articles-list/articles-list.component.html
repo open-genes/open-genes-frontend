@@ -110,18 +110,12 @@
   </ng-template>
 </ng-container>
 
-<section *ngIf="articlesTotal === 0 || translate.currentLang === 'en'"
-         class="col-12 no-content"
-         [class.no-content--mini]="isMiniMode">
-  <div class="no-content__inner">
-    <div class="no-content__icon no-content__icon-language"></div>
-    <div class="no-content__title">
-      <div class="title__center">
-        {{ 'news_page_no_articles' | translate }}
-      </div>
-    </div>
-  </div>
-</section>
+<app-no-content
+  *ngIf="articlesTotal === 0 || translate.currentLang === 'en'"
+  [title]="'news_page_no_articles'"
+  [iconUrl]="'no-content__icon-language'">
+</app-no-content>
+
 
 <ng-template #articleModalBody let-data>
   <div class="article-modal__header" mat-dialog-title>

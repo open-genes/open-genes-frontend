@@ -18,6 +18,7 @@ import { ExpressionComponent } from './expression/expression.component';
 import { DynamicContentAnchorsDirective } from './directives/anchor-links.directive';
 import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
 import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
+import { NoContentModule } from '../../components/shared/no-content/no-content.module';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
     NgToArrayPipeModule,
     UiComponentsModule,
     SidebarModule,
+    NoContentModule,
   ],
 })
 export class GeneModule {}

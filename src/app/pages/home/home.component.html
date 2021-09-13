@@ -99,17 +99,11 @@
 </div>
 
 <ng-template #errorMessage>
-  <section class="col-12 no-content">
-    <div class="no-content__inner">
-      <div class="no-content__icon no-content__icon-standard"></div>
-      <div class="no-content__title">
-        <div class="title__center">
-          {{ "error_connection" | translate }} <br>
-          ({{ errorStatus }})
-        </div>
-      </div>
-    </div>
-  </section>
+  <app-no-content
+    [title]="'error_connection'"
+    [iconUrl]="'no-content__icon-standard'">
+    <p>({{ errorStatus }})</p>
+  </app-no-content>
 </ng-template>
 
 <ng-template #wizardBanner let-classes>
