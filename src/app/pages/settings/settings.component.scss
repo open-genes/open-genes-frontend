@@ -1,0 +1,10 @@
+@import "../styles";
+
+.setting-items {
+  padding: 0 10%;
+  &__row {
+    @include panel('10px 15px');
+    position: relative;
+    font-size: $font-size;
+  }
+}

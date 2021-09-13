@@ -12,12 +12,17 @@
       </div>
     </div>
 
-    <div class="container">
-      <mat-checkbox
-        class=""
-        [(ngModel)]="settings.isHeadersDescription"
-        (change)="onGeneFamilyCheck()">Образовательные функции Open Genes (Включает подсказки для терминов и научно-популярный контент)
-      </mat-checkbox>
+    <div class="container setting-items">
+      <div class="row setting-items__row">
+        <div class="col-12">
+          <mat-checkbox
+            color="primary"
+            [(ngModel)]="settings.isHeadersDescription"
+            (change)="onInterfaceHints()">
+            {{ 'settings_educational_content' | translate }}
+          </mat-checkbox>
+        </div>
+      </div>
     </div>
   </div>
 </div>

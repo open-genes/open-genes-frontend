@@ -208,6 +208,7 @@
   "search_for_functions": "By gene's name or description",
   "search_for_go_terms": "By Gene Ontology annotations",
   "settings": "Settings",
+  "settings_educational_content": "Open Genes educational features (turns on hints for terms and educational content)",
   "show_more": "Show more",
   "show_less": "Show less",
   "show_more_short": "More",

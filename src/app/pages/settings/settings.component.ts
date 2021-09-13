@@ -20,7 +20,7 @@ export class SettingsComponent implements OnInit {
     this.settings = this._settingsService.settings;
   }
 
-  onGeneFamilyCheck(): void {
+  onInterfaceHints(): void {
     this._settingsService.setSettings();
   }
 }
