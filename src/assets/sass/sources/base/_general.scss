@@ -118,7 +118,8 @@ body {
     text-decoration: underline;
   }
 
-  &--anchor {
+  &--anchor,
+  &--term {
     @include gray-link;
     border-bottom: 1px dashed currentColor;
   }

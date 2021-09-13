@@ -11,6 +11,11 @@ import {
 import { WindowWidth } from '../../../core/utils/window-width';
 import { WindowService } from '../../../core/services/browser/window.service';
 
+interface Term {
+  title: string;
+  description: string;
+}
+
 @Component({
   selector: 'app-terms',
   templateUrl: './terms.component.html',
@@ -21,10 +26,7 @@ export class TermsComponent extends WindowWidth implements OnInit {
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA)
     public data: {
-      term: {
-        title: string;
-        description: string;
-      };
+      term: Term;
     },
     private _windowService: WindowService,
     private _bottomSheetRef: MatBottomSheetRef,
@@ -35,9 +37,11 @@ export class TermsComponent extends WindowWidth implements OnInit {
   public term = this.data.term;
 
   ngOnInit(): void {
+
     this.initWindowWidth(() => {
       this._cdRef.markForCheck();
     });
+
     this.detectWindowWidth(() => {
       this._cdRef.markForCheck();
     });
