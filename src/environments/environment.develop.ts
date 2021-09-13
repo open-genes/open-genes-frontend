@@ -12,5 +12,6 @@ export const environment = {
     'assets/data/articles-page-1.mock.json',
     'assets/data/articles-page-2.mock.json',
   ],
+  termsJsonUrl: ['assets/i18n/terms_en.json', 'assets/i18n/terms_ru.json'],
   gaTrackingCode: 'G-825YYNSJFC',
 };

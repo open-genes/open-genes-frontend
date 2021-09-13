@@ -62,7 +62,7 @@ export class TermInfoDirective implements AfterViewInit, OnDestroy {
     Object.keys(this._terms).forEach((term) => {
       this._content = this._content.replace(
         term,
-        `<span class="term" style="color: darkblue; cursor: pointer; font-weight: bolder;">${term}</span>`
+        `<span class="link link--term">${term}</span>`
       );
     });
 
