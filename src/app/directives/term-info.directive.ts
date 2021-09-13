@@ -71,7 +71,7 @@ export class TermInfoDirective implements AfterViewInit, OnDestroy {
 
   @HostListener('click', ['$event'])
   showTermInfo(evt): void {
-    if (evt.target.className !== 'term') {
+    if (evt.target.className !== 'link link--term') {
       return;
     }
 
