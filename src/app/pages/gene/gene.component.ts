@@ -7,7 +7,6 @@ import { takeUntil } from 'rxjs/operators';
 import { PageClass } from '../page.class';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { TermsComponent } from '../../components/shared/terms/terms.component';
 
 @Component({
   selector: 'app-gene',
@@ -15,6 +14,7 @@ import { TermsComponent } from '../../components/shared/terms/terms.component';
   styleUrls: ['./gene.component.scss'],
 })
 export class GeneComponent extends PageClass implements OnInit, OnDestroy {
+  testText = 'Этот текст содержит два термина гемоглобин и билирубин';
   public gene: any;
   public symbol: string;
   public dateInitial = 1562960035; // July 12 2019 - date when the first data was added
@@ -157,17 +157,5 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
     this.routeSubscribe.unsubscribe();
-  }
-
-  public showTermInfo(ev: MouseEvent, title: string, description: string): void {
-    this._bottomSheet.open(TermsComponent, {
-      data: {
-        term: {
-          title: title,
-          description: description,
-        }
-      }
-    });
-    ev.preventDefault();
   }
 }
