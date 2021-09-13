@@ -108,6 +108,11 @@
           font-size: $font-size-smaller;
           color: $color-gray;
           margin-bottom: 5px;
+
+          span:hover {
+            cursor: pointer;
+            color: $color-base;
+          }
         }
 
         .type__value {

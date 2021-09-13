@@ -1,0 +1,23 @@
+<div class="page">
+  <div class="page__inner __pb-60">
+    <div class="text-page__header wrapper">
+      <div class="container-fluid">
+        <div class="row no-gutters">
+          <div class="col col-12">
+            <div class="page__title">
+              <h1>{{ 'settings' | translate }}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <mat-checkbox
+        class=""
+        [(ngModel)]="settings.isHeadersDescription"
+        (change)="onGeneFamilyCheck()">Образовательные функции Open Genes (Включает подсказки для терминов и научно-популярный контент)
+      </mat-checkbox>
+    </div>
+  </div>
+</div>
