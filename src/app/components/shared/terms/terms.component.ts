@@ -1,13 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component, Inject,
-  OnInit
-} from '@angular/core';
-import {
-  MAT_BOTTOM_SHEET_DATA,
-  MatBottomSheetRef
-} from '@angular/material/bottom-sheet';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { WindowWidth } from '../../../core/utils/window-width';
 import { WindowService } from '../../../core/services/browser/window.service';
 
@@ -30,7 +22,7 @@ export class TermsComponent extends WindowWidth implements OnInit {
     },
     private _windowService: WindowService,
     private _bottomSheetRef: MatBottomSheetRef,
-    private readonly _cdRef: ChangeDetectorRef,
+    private readonly _cdRef: ChangeDetectorRef
   ) {
     super(_windowService);
   }

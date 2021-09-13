@@ -1,0 +1,28 @@
+<div class="page">
+  <div class="page__inner __pb-60">
+    <div class="text-page__header wrapper">
+      <div class="container-fluid">
+        <div class="row no-gutters">
+          <div class="col col-12">
+            <div class="page__title">
+              <h1>{{ 'settings' | translate }}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container setting-items">
+      <div class="row setting-items__row">
+        <div class="col-12">
+          <mat-checkbox
+            color="primary"
+            [(ngModel)]="settings.isHeadersDescription"
+            (change)="onInterfaceHints()">
+            {{ 'settings_educational_content' | translate }}
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

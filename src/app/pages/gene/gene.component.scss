@@ -1,0 +1,39 @@
+@import '../styles';
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.term {
+  width: 100%;
+  max-height: 100%;
+  position: relative;
+
+  &, * {
+    box-sizing: border-box;
+  }
+
+  &__header {
+    position: relative;
+    padding: 12px 40px 12px 0;
+    font-weight: $font-weight-medium;
+    color: $color-base;
+  }
+
+  &__title {
+    margin: 0 8px;
+  }
+
+  &__description {
+    margin: 1em 0;
+  }
+
+  &__close-button {
+    color: $color-gray;
+    @include close-button(0, 20px);
+  }
+}
+
+
+

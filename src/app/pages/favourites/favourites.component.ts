@@ -1,18 +1,10 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ChangeDetectorRef,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { Genes } from 'src/app/core/models';
 import { FavouritesService } from 'src/app/core/services/favourites.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { EMPTY, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
-import { FileExportService } from '../../core/services/file-export.service';
-import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-favourites',
@@ -31,9 +23,8 @@ export class FavouritesComponent implements OnInit, OnDestroy {
     public translate: TranslateService,
     private readonly _cdRef: ChangeDetectorRef,
     private readonly _apiService: ApiService,
-    private _favouritesService: FavouritesService,
+    private _favouritesService: FavouritesService
   ) {}
-
 
   ngOnInit() {
     this.getData();
@@ -43,9 +34,9 @@ export class FavouritesComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
-
   private getData(): void {
-    this._favouritesService.getItems()
+    this._favouritesService
+      .getItems()
       .pipe(
         switchMap((idList) => {
           if (idList) {
@@ -62,9 +53,7 @@ export class FavouritesComponent implements OnInit, OnDestroy {
       .subscribe(
         (genes) => {
           this.genes = genes;
-          this.favouriteGenes = genes.filter((gene) =>
-            this.favouriteGenesIds.includes(gene.id)
-          );
+          this.favouriteGenes = genes.filter((gene) => this.favouriteGenesIds.includes(gene.id));
           this._cdRef.markForCheck();
         },
         (err) => {
