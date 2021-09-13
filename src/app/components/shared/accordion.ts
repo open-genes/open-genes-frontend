@@ -1,10 +1,8 @@
-export abstract class Base {
-  protected listLength = 0;
-  protected isAccordion = false;
-  protected maxItemsToShow = 1;
-  protected isAccordionOpen: boolean;
-
-
+export abstract class Accordion {
+  public listLength = 0;
+  public isAccordion = false;
+  public maxItemsToShow = 1;
+  public isAccordionOpen: boolean;
 
   protected setListLength(list): void {
     if (list) {
@@ -24,7 +22,7 @@ export abstract class Base {
     }
   }
 
-  protected toggleAccordion(event: boolean): void {
+  public toggleAccordion(event: boolean): void {
     this.isAccordionOpen = event;
   }
 }

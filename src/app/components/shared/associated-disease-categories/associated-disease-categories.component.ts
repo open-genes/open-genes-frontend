@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AssociatedDiseaseCategories } from '../../../core/models/openGenesApi/associated-diseases.model';
-import { Base } from '../base';
+import { Accordion } from '../accordion';
 
 @Component({
   selector: 'app-associated-disease-categories',
   templateUrl: './associated-disease-categories.component.html',
   styleUrls: ['./associated-disease-categories.component.scss'],
 })
-export class AssociatedDiseaseCategoriesComponent extends Base implements OnInit {
+export class AssociatedDiseaseCategoriesComponent extends Accordion implements OnInit {
   @Input() geneDiseaseCategories: AssociatedDiseaseCategories;
 
   public mappedDiseaseCategories: Map<string, any> = new Map();
