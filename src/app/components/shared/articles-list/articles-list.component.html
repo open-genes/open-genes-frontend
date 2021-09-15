@@ -133,22 +133,22 @@
             aria-label="Закрыть">
       <span class="fa fal fa-times"></span>
     </button>
-    <ng-container *ngIf="isMocked"> <!-- temporarily disabled -->
+    <ng-container> <!-- temporarily disabled -->
       <!-- TODO: transfer this logic into a modal window class -->
       <ng-container *ngFor="let item of data.content">
         <ng-container *ngIf="item?.type === 'image-widget'">
           <div *ngIf="item?.content?.image?.url?.src.length !== 0"
                class="article-modal__cover">
-            <img [src]="'url(' + item?.content?.image?.url?.src + ')'"
+            <img [src]=item?.content?.image?.url?.src
                  alt="">
           </div>
         </ng-container>
       </ng-container>
     </ng-container>
   </div>
-    <mat-dialog-content *ngFor="let item of data.content">
-      <ng-container *ngIf="item?.type === 'editor'">
-        <article class="article-modal__body" [innerHTML]="item.content.text"></article>
-      </ng-container>
-    </mat-dialog-content>
+  <mat-dialog-content *ngFor="let item of data.content">
+    <ng-container *ngIf="item?.type === 'editor'">
+      <article class="article-modal__body" [innerHTML]="item.content.text"></article>
+    </ng-container>
+  </mat-dialog-content>
 </ng-template>

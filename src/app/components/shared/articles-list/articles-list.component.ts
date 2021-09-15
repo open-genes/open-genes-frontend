@@ -32,7 +32,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public error: number;
   public defaultAvatar = '/assets/images/avatar.png';
   public defaultCover = '/assets/images/default-article-cover.jpg';
-  public isMocked = false;
   public pageIndex = 1;
   public showMoreButtonVisible = false;
   public articlesTotal = 0;
@@ -109,39 +108,17 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   private makeArticlesList(): void {
-    if (this.isMocked) {
-      this.mock
-        .getMockResponse({ page: this.pageIndex })
-        .pipe(takeUntil(this.subscription$))
-        .subscribe(
-          (data) => {
-            this.handleResponse(data);
-          },
-          (error) => (this.error = error) // TODO: add loging
-        );
-    } else {
-      if (!this.showOnlyForOpenGenes) {
-        this.eightyLevelService
-          .getArticles({ page: this.pageIndex })
-          .pipe(takeUntil(this.subscription$))
-          .subscribe(
-            (data) => {
-              this.handleResponse(data);
-            },
-            (error) => (this.error = error)
-          );
-      } else {
-        this.eightyLevelService
-          .getArticles({ category: 'open-genes', page: this.pageIndex })
-          .pipe(takeUntil(this.subscription$))
-          .subscribe(
-            (data) => {
-              this.handleResponse(data);
-            },
-            (error) => (this.error = error)
-          );
-      }
-    }
+    this.eightyLevelService
+      .getArticles(
+        this.showOnlyForOpenGenes ? { category: 'open-genes', page: this.pageIndex } : { page: this.pageIndex }
+      )
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
+        (data) => {
+          this.handleResponse(data);
+        },
+        (error) => (this.error = error)
+      );
   }
 
   public openArticleModal(slug): void {
@@ -168,6 +145,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         }
       );
   }
+
   public closeArticleModal(): void {
     this.dialog.closeAll();
     this.isAnyArticleModalOpen = false;
