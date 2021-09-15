@@ -76,3 +76,32 @@
   }
 }
 
+@mixin list-item-as-filter-button {
+  cursor: pointer;
+
+  &::after {
+    display: none;
+    font-family: 'Font Awesome 5 Pro';
+    content: "\f036";
+    color: $color-general;
+    font-size: $font-size-very-small;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    z-index: 0;
+  }
+
+  &.__active,
+  &:hover {
+    color: $color-general;
+
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      display: inline-block;
+    }
+  }
+}
+
