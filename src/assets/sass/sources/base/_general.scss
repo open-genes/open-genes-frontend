@@ -67,6 +67,32 @@ body {
   }
 }
 
+@mixin base-link {
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  position: relative;
+
+  small {
+    font-size: 13px;
+    font-weight: normal;
+  }
+
+  @at-root a.link {
+    &:active {
+      color: lighten(mix($color-general, $color-blue, 5%), 3%);
+    }
+  }
+}
+
+@mixin blue-link {
+  color: $color-general;
+
+  &:hover,
+  &:active {
+    color: lighten(mix($color-general, $color-blue, 5%), 3%);
+  }
+}
+
 @mixin gray-link {
   color: mix($color-gray, $color-general, 90%);
 
@@ -86,25 +112,7 @@ body {
 }
 
 .link {
-  color: $color-general;
-  font-weight: $font-weight-medium;
-  cursor: pointer;
-  position: relative;
-
-  small {
-    font-size: 13px;
-    font-weight: normal;
-  }
-
-  &:hover {
-    color: lighten(mix($color-general, $color-blue, 5%), 3%);
-  }
-
-  @at-root a.link {
-    &:active {
-      color: lighten(mix($color-general, $color-blue, 5%), 3%);
-    }
-  }
+  @include base-link;
 
   &--gray {
     @include gray-link;
@@ -158,54 +166,6 @@ app-header,
   }
 }
 
-.page {
-  display: table;
-  width: 100%;
-  height: 100%;
-  position: relative;
-
-  &__inner {
-    display: table-cell;
-    vertical-align: top;
-
-    .page__title {
-      margin-bottom: 15px;
-
-      h1 {
-        font-size: 28px;
-        color: $color-indent;
-      }
-
-      p {
-        font-size: $font-size;
-        color: $color-gray;
-      }
-
-      .hint {
-        margin-top: 5px;
-      }
-    }
-
-    .page__subtitle {
-      font-size: 16px;
-      color: $color-black;
-      font-weight: $font-weight-medium;
-      margin-bottom: 8px;
-    }
-  }
-
-  &--dummy {
-    .page__inner {
-      vertical-align: middle;
-
-      .no-content {
-        border: 0;
-        margin-top: -100px;
-      }
-    }
-  }
-}
-
 .wrapper {
   width: 100%;
 }
@@ -223,58 +183,6 @@ app-header,
   display: block;
   width: 100%;
   margin: 10px 0;
-}
-
-.col.section__row {
-  width: 100%;
-  display: inline-block;
-  opacity: 0;
-  padding: 0;
-  font-size: 13px;
-  background-color: #fff;
-  // box-shadow: 1px 1px 10px rgba(0,0,0, .09);
-  border: 1px solid #ccc;
-  border-radius: $border-radius-regular;
-  animation: animation__appear .35s forwards ease-in-out;
-
-  .row__inner {
-    & > div {
-      padding-left: 16px;
-      padding-right: 16px;
-    }
-  }
-
-  .row__title {
-    width: 100%;
-    font-size: 16px;
-    margin-bottom: 0;
-    padding: 10px 16px;
-    border-bottom: 1px solid #ccc;
-
-    b {
-      font-weight: 700;
-      color: $color-general;
-    }
-  }
-
-  .row__age {
-    width: 100%;
-    margin: 6px 0;
-    padding: 6px 0;
-
-    b {
-      font-weight: 700;
-    }
-  }
-
-  .row__ids {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .tabs.row__go {
-    width: 100%;
-  }
 }
 
 .tabs {
@@ -327,40 +235,6 @@ app-header,
     max-height: 200px;
     overflow: scroll;
   }
-}
-
-
-.section__row .row__interactions {
-  margin-top: 15px;
-}
-
-.section__row .row__comment {
-  font-size: 13px;
-  color: mediumseagreen;
-  font-style: italic;
-  padding-left: 10px;
-  border-left: 1px solid mediumseagreen;
-  margin-top: 15px;
-}
-
-.section__row + .section__row {
-  margin-top: 15px;
-}
-
-.load-btn {
-  width: 100%;
-  height: 30px;
-  background-color: cornflowerblue;
-  font-size: 15px;
-  color: #fff;
-  line-height: 28px;
-  border: 1px solid dodgerblue;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-button.load-btn {
-  line-height: normal;
 }
 
 .hidden {

@@ -126,29 +126,28 @@
 <ng-template #articleModalBody let-data>
   <div class="article-modal__header" mat-dialog-title>
     {{ data.title }} {{ data?.subtitle }}
-
     <button mat-icon-button
             class="close-button"
             (click)="closeArticleModal()"
             aria-label="Закрыть">
       <span class="fa fal fa-times"></span>
     </button>
-    <ng-container> <!-- temporarily disabled -->
-      <!-- TODO: transfer this logic into a modal window class -->
-      <ng-container *ngFor="let item of data.content">
-        <ng-container *ngIf="item?.type === 'image-widget'">
-          <div *ngIf="item?.content?.image?.url?.src.length !== 0"
-               class="article-modal__cover">
-            <img [src]=item?.content?.image?.url?.src
-                 alt="">
-          </div>
-        </ng-container>
+  </div>
+  <mat-dialog-content>
+    <ng-container *ngFor="let item of data.content | slice: 0:1">
+      <ng-container *ngIf="item?.type === 'image-widget'">
+        <div *ngIf="item?.content?.image?.url?.src.length !== 0"
+             class="article-modal__cover">
+          <img [src]=item?.content?.image?.url?.src
+               alt="">
+        </div>
       </ng-container>
     </ng-container>
-  </div>
-  <mat-dialog-content *ngFor="let item of data.content">
-    <ng-container *ngIf="item?.type === 'editor'">
-      <article class="article-modal__body" [innerHTML]="item.content.text"></article>
-    </ng-container>
+
+    <article *ngFor="let item of data.content" class="article-modal__body">
+      <ng-container *ngIf="item?.type === 'editor'">
+        <span [innerHTML]="item.content.text | safe: 'html'"></span>
+      </ng-container>
+    </article>
   </mat-dialog-content>
 </ng-template>

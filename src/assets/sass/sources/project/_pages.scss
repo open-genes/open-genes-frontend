@@ -1,4 +1,52 @@
 .page {
+  display: table;
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  @include typography;
+
+  &__inner {
+    display: table-cell;
+    vertical-align: top;
+
+    .page__title {
+      margin-bottom: 15px;
+
+      h1 {
+        font-size: 28px;
+        color: $color-indent;
+      }
+
+      p {
+        font-size: $font-size;
+        color: $color-gray;
+      }
+
+      .hint {
+        margin-top: 5px;
+      }
+    }
+
+    .page__subtitle {
+      font-size: 16px;
+      color: $color-black;
+      font-weight: $font-weight-medium;
+      margin-bottom: 8px;
+    }
+  }
+
+  &--dummy {
+    .page__inner {
+      vertical-align: middle;
+
+      .no-content {
+        border: 0;
+        margin-top: -100px;
+      }
+    }
+  }
+
   app-sidebar {
     @include resolution_widescreen {
       position: sticky;
