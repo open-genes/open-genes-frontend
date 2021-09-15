@@ -4,7 +4,9 @@
       *ngFor="let disease of mappedDiseases"
       class="list list--bulletted"
     >
-      <li>{{ disease }}</li>
+      <li [class.__active]="activeListItem === disease">
+        {{ disease }}
+      </li>
     </ul>
   </ng-container>
 
@@ -19,7 +21,10 @@
           *ngFor="let disease of mappedDiseases | slice: 0:maxItemsToShow"
           class="list list--bulletted"
         >
-          <li>{{ disease }}</li>
+          <li [class.__active]="activeListItem === disease" 
+              (click)="emitOnClick(disease)">
+            {{ disease }}
+          </li>
         </ul>
         <span class="fa far fa-chevron-down diseases-accordion__arrow"></span>
       </div>
@@ -28,7 +33,10 @@
           *ngFor="let disease of mappedDiseases | slice: maxItemsToShow"
           class="list list--bulletted"
         >
-          <li>{{ disease }}</li>
+          <li [class.__active]="activeListItem === disease" 
+              (click)="emitOnClick(disease)">
+            {{ disease }}
+          </li>
         </ul>
       </div>
     </app-accordion>

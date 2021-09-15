@@ -1,2 +1,36 @@
 @import '../../styles';
+
 @include flat-accordion('criteria');
+
+::ng-deep .list.list--bulletted li {
+  cursor: pointer;
+  padding-left: 22px;
+
+  &::before {
+    left: 8px;
+  }
+
+  &::after {
+    display: none;
+    font-family: 'Font Awesome 5 Pro';
+    content: "\f036";
+    color: $color-general;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    z-index: 0;
+  }
+
+  &.__active,
+  &:hover {
+    color: $color-general;
+
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      display: inline-block;
+    }
+  }
+}

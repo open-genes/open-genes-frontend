@@ -1,4 +1,4 @@
-export abstract class Accordion {
+export abstract class WrapIntoAccordion {
   public listLength = 0;
   public isAccordion = false;
   public maxItemsToShow = 1;
