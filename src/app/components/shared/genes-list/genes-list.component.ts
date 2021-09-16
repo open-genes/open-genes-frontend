@@ -55,7 +55,9 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     return this.inputData;
   }
 
-  @Input() isFilterPanel = true;
+  @Input() showSearch = true;
+  @Input() showFiltersPanel = true;
+
   @Input() isGoSearchPerformed: boolean;
   @Input() isMobile: boolean;
 
