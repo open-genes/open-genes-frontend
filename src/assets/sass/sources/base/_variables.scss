@@ -58,7 +58,10 @@ $color-green-light: #84D082;
 $color-green-medium: #2dbf70;
 $color-green: #28aa64;
 $color-green-dark: #1f864f;
-$color-orange: darken(desaturate(#FFC769, 2%), 10%);
+$color-orange-100: #FFEDCF;
+$color-orange-200: #FFC769;
+$color-orange-300: darken(desaturate(#FFC769, 2%), 10%);
+$color-orange-400: #C88142;
 $color-yellow: #ffd700;
 $color-red-light: #fbe5e1;
 $color-red-medium: #f39f96;
@@ -67,13 +70,13 @@ $color-red: #FF4E1A;
 $color-red-dark: darken($color-red, 5%);
 
 // Gradients
-$orange-gradient1: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, #FFC769 100%);
-$orange-gradient2: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, #FFC769 100%);
+$orange-gradient1: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, $color-orange-200 100%);
+$orange-gradient2: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, $color-orange-200 100%);
 
 // States variables
 $color-hover: darken(#e8ebfd, 2%);
 $color-selected: #cfd1f6;
-$color-active: lighten($color-orange, 30%);
+$color-active: lighten($color-orange-300, 30%);
 $success-color: $color-green-medium;
 $error-color: $color-red-medium;
 
@@ -96,10 +99,6 @@ $preloader-spinner-color: $color-general;
 // - dark-panel
 $dark-panel-100: #64676f;
 $dark-panel-200: #323439;
-
-// - hint
-$color-hint-bg: lighten(#ffc769, 20%);
-$color-hint-text: #c88142;
 
 // - clickable badges
 $color-clikable-500: #832AF5;

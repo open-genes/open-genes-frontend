@@ -1,4 +1,5 @@
 <app-search
+  *ngIf="showSearch"
   [dataSource]="inputData"
   (dataSourceChange)="updateGeneListOnTyping($event)"
   (isGoModeTriggered)="toggleGoSearchMode($event)"
@@ -12,7 +13,7 @@
   "
 >
   <!-- Filters -->
-  <div *ngIf="isFilterPanel" class="view-panel">
+  <div *ngIf="showFiltersPanel" class="view-panel">
     <div class="filters-group view-panel__filters">
       <button
         class="filter name-filter"
@@ -435,7 +436,7 @@
 
 <!-- Snack Bar templates -->
 <!-- TODO: Find a way to pass TemplateRef to SnackBar component -->
-<div style="display: none">
+<div class="hidden">
   <div #templateAddedToFavorites>
     {{ "favourites_added" | translate }}
   </div>

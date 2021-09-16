@@ -20,8 +20,8 @@
   }
 
   &--warning {
-    background-color: $color-hint-bg;
-    color: $color-hint-text;
+    background-color: $color-orange-200;
+    color: $color-orange-400;
   }
 
   @include resolution_smartphone-and-tablet {

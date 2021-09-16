@@ -13,16 +13,28 @@
     </div>
 
     <div class="container setting-items">
-      <div class="row setting-items__row">
+      <div class="row">
         <div class="col-12">
-          <mat-checkbox
-            color="primary"
-            [(ngModel)]="settings.isHeadersDescription"
-            (change)="onInterfaceHints()">
-            {{ 'settings_educational_content' | translate }}
-          </mat-checkbox>
+          <div class="setting-items__panel setting-items__panel--emphasized">
+            <app-switch [(ngModel)]="settings.isHeadersDescription"
+                        (changeEvent)="onInterfaceHints()"
+            ></app-switch>
+            <div class="panel__label">
+              <h3>
+                {{ 'settings_educational_content_title' | translate }}
+              </h3>
+              <p>
+                {{ 'settings_educational_content_description' | translate }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<div #settingsChanged
+     class="hidden">
+  {{ "settings_settings_changed" | translate }}
 </div>
