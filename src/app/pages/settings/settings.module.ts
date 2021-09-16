@@ -6,6 +6,7 @@ import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
+import { SwitchModule } from '../../components/shared/switch/switch.module';
 
 const settingsRoutes: Routes = [{ path: '', component: SettingsComponent }];
 
@@ -18,6 +19,7 @@ const settingsRoutes: Routes = [{ path: '', component: SettingsComponent }];
     TranslateModule,
     SidebarModule,
     MatCheckboxModule,
+    SwitchModule,
   ],
 })
 export class SettingsModule {}
