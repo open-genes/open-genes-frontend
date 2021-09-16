@@ -30,6 +30,10 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/settings/settings.module').then((m) => m.SettingsModule),
   },
   {
+    path: 'diagrams',
+    loadChildren: () => import('./pages/diagrams/diagrams.module').then((m) => m.DiagramsModule),
+  },
+  {
     path: 'help',
     loadChildren: () => import('./pages/help/help.module').then((m) => m.HelpModule),
   },
