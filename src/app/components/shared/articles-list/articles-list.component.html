@@ -23,22 +23,25 @@
             <div class="article__cover">
               <div
                 class="cover__backdrop"
-                [style.backgroundImage]="
-            article.image.src.length !== 0
-              ? 'url(' + article.image.src + ')'
-              : 'url(' + defaultCover + ')'"
-              ></div>
+              >
+                <img src="{{ article.image.src ? article.image.src : defaultCover }}" alt="">
+              </div>
 
               <div class="article__top-group">
                 <div
                   (click)="openArticleModal(article.slug)"
                   [ngClass]="isAnyArticleModalOpen? '__disabled': ''"
                   class="article__image"
-                  [style.backgroundImage]="
-              article.image.src.length !== 0
-                ? 'url(' + article.image.src2x + ')'
-                : 'url(' + defaultCover + ')'"
-                ></div>
+                >
+                  <img
+                    src="{{ article.image.src2x ? article.image.src2x : defaultCover }}"
+                    srcset="{{
+                        article.image.src2x ? article.image.src2x : defaultCover + ' 800w,' +
+                        article.image.src ? article.image.src : defaultCover + ' 480w,'
+                    }}"
+                    sizes="(max-width: 480px) 440px,800px"
+                    alt="">
+                </div>
                 <div class="article__text">
                   <h3 (click)="openArticleModal(article.slug)"
                       [ngClass]="isAnyArticleModalOpen? '__disabled': ''">
@@ -75,11 +78,9 @@
               >
                 <div
                   class="author__avatar"
-                  [style.backgroundImage]="
-              article.author.avatar.length !== 0
-                ? 'url(' + article.author.avatar + ')'
-                : 'url(' + defaultAvatar + ')'"
-                ></div>
+                >
+                  <img src="{{ article.author.avatar ? article.author.avatar : defaultAvatar }}" alt="">
+                </div>
                 <div class="author__name">
                   {{ article.author.name }}
                 </div>

@@ -1,12 +1,20 @@
 .main-page { // .page
   // &__inner { }
   &__header {
-    background: $color-general-light url(../images/home-background.jpg) center center / cover no-repeat;
+    position: relative;
     padding: 30px 0 35px 0;
     margin-bottom: 20px;
     border-radius: 0 0 20px 20px;
     text-shadow: 1px 0 2px 1px $color-black;
-
+    .main-header__background__img{
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      height: 100%;
+      border-radius: 0 0 20px 20px;
+      object-fit: cover;
+    }
     .page__title,
     .header__description,
     .header__button {
