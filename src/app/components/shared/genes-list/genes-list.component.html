@@ -1,4 +1,5 @@
 <app-search
+  *ngIf="showSearch"
   [dataSource]="inputData"
   (dataSourceChange)="updateGeneListOnTyping($event)"
   (isGoModeTriggered)="toggleGoSearchMode($event)"
@@ -12,7 +13,7 @@
   "
 >
   <!-- Filters -->
-  <div *ngIf="isFilterPanel" class="view-panel">
+  <div *ngIf="showFiltersPanel" class="view-panel">
     <div class="filters-group view-panel__filters">
       <button
         class="filter name-filter"
