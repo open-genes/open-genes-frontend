@@ -1,0 +1,24 @@
+@import "../../styles";
+
+.switch {
+  width: $switch-width;
+  height: $switch-height;
+  background: $switch-background;
+  border-radius: $switch-border-radius;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1px;
+
+  &__item {
+    width: $switch-item-width;
+    height: 100%;
+    background: $switch-item-background;
+    border-radius: 100%;
+  }
+}
+
+.switch-toggle {
+  background: $switch-background-active;
+  justify-content: flex-end;
+}
