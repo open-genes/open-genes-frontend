@@ -4,7 +4,8 @@
       *ngFor="let research of geneCriteria | keyvalue"
       class="list list--bulletted"
     >
-      <li [class.__active]="activeListItem === research.value">
+      <li [class.__active]="activeListItem === research.value"
+          (click)="emitOnClick(research.value)">
         {{ research.value }}
       </li>
     </ul>

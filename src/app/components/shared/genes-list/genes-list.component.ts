@@ -170,26 +170,32 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   public filterByMethylationChange(correlation: string): void {
     this.filterService.filterByMethylationChange(correlation);
-    this.filterService
-      .getByExpressionChange()
-      .pipe(takeUntil(this.subscription$))
-      .subscribe(
-        (expression) => {
-          if (expression) {
-            this.apiService.getGenes().subscribe(
-              (genes) => {
-                // TODO: special endpoint
-                this.searchedData = genes;
-                this.downloadSearch(this.searchedData);
-                this.areMoreThan2FiltersApplied();
-                this.cdRef.markForCheck();
-              },
-              (error) => this.errorLogger(this, error)
-            );
-          }
-        },
-        (error) => this.errorLogger(this, error)
-      );
+    if (name) {
+      this.searchedData = this.searchedData.filter((gene) => {
+        Object.values(gene.methylationCorrelation).forEach((item) => {
+          return correlation === item;
+        });
+      });
+    }
+    this.downloadSearch(this.searchedData);
+    this.areMoreThan2FiltersApplied();
+    this.cdRef.markForCheck();
+  }
+
+  public filterByDisease(name: string): void {
+    console.log('filterByDisease');
+    this.filterService.filterByDisease(name);
+    if (name) {
+      this.searchedData = this.searchedData.filter((gene) => {
+        for (const [key, value] of Object.entries(gene.diseases)) {
+          console.log(name === value['name']);
+          return name === value['name'];
+        }
+      });
+    }
+    this.downloadSearch(this.searchedData);
+    this.areMoreThan2FiltersApplied();
+    this.cdRef.markForCheck();
   }
 
   /**
@@ -430,7 +436,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public openFiltersModal(): void {
     this.dialog.open(this.dialogRef, {
       data: null,
-      panelClass: 'comment-modal',
+      panelClass: 'filters-modal',
       minWidth: '320px',
       maxWidth: '768px',
     });

@@ -4,7 +4,8 @@
       *ngFor="let disease of mappedDiseaseCategories | keyvalue"
       class="list list--bulletted"
     >
-      <li [class.__active]="activeListItem === disease.key">
+      <li [class.__active]="activeListItem === disease.key"
+          (click)="emitOnClick(disease.key)">
         {{ disease.key }}{{ disease.value['icd_category_name'] }}
       </li>
     </ul>

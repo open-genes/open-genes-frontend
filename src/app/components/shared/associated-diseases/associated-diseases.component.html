@@ -4,7 +4,8 @@
       *ngFor="let disease of mappedDiseases"
       class="list list--bulletted"
     >
-      <li [class.__active]="activeListItem === disease">
+      <li [class.__active]="activeListItem === disease"
+          (click)="emitOnClick(disease)">
         {{ disease }}
       </li>
     </ul>

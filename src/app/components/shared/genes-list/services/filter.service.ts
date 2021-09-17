@@ -14,6 +14,7 @@ export class FilterService {
     byExpressionChange: 0,
     bySelectionCriteria: [],
     byMethylationChange: '',
+    byDisease: '',
   };
 
   private areMt2FiltersApplied = new BehaviorSubject(false);
@@ -24,9 +25,7 @@ export class FilterService {
     if (!this.filters.byClasses.includes(id)) {
       this.filters.byClasses.push(id);
     } else {
-      this.filters.byClasses = this.filters.byClasses.filter(
-        (item) => item !== id
-      );
+      this.filters.byClasses = this.filters.byClasses.filter((item) => item !== id);
     }
 
     return of(this.filters.byClasses);
@@ -57,12 +56,20 @@ export class FilterService {
     if (!this.filters.bySelectionCriteria.includes(str)) {
       this.filters.bySelectionCriteria.push(str);
     } else {
-      this.filters.bySelectionCriteria = this.filters.bySelectionCriteria.filter(
-        (item) => item !== str
-      );
+      this.filters.bySelectionCriteria = this.filters.bySelectionCriteria.filter((item) => item !== str);
     }
 
     return of(this.filters.bySelectionCriteria);
+  }
+
+  public filterByDisease(name: string): Observable<string> {
+    if (!this.filters.byDisease.includes(name)) {
+      this.filters.byDisease = name;
+    } else {
+      this.filters.byDisease = '';
+    }
+
+    return of(this.filters.byDisease);
   }
 
   // Get
@@ -82,9 +89,13 @@ export class FilterService {
     return of(this.filters.bySelectionCriteria);
   }
 
+  public getByDisease(): Observable<string> {
+    return of(this.filters.byDisease);
+  }
+
   // Clear
   public clearFilters(filter?: FilterTypesEnum): void {
-    const { classes, expressionChange, age, name } = FilterTypesEnum;
+    const { name, age, classes, expressionChange, byMethylationChange, byDisease } = FilterTypesEnum;
     if (filter) {
       if (filter === name) {
         this.filters.byName = false;
@@ -92,14 +103,19 @@ export class FilterService {
         this.filters.byAge = false;
       } else if (filter === classes) {
         this.filters.byClasses = [];
+      } else if (filter == byMethylationChange) {
+        this.filters.byMethylationChange = '';
       } else if (filter === expressionChange) {
         this.filters.byExpressionChange = 0;
+      } else if (filter === byDisease) {
+        this.filters.byDisease = '';
       }
     } else {
       this.filters.byName = false;
       this.filters.byAge = false;
       this.filters.byClasses = [];
       this.filters.byExpressionChange = 0;
+      this.filters.byMethylationChange = '';
       this.filters.bySelectionCriteria = [];
     }
   }
@@ -109,9 +125,10 @@ export class FilterService {
     const a = Number(this.filters.byAge); // 0
     const c = this.filters.byClasses.length; // 0
     const e = this.filters.byExpressionChange; // 0
+    const m = this.filters.byMethylationChange.length; // 0
     const s = this.filters.bySelectionCriteria.length; // 0
 
-    return n + a + c + e + s;
+    return n + a + c + e + m + s;
   }
 
   public areMoreThan2FiltersApplied(): Observable<boolean> {
