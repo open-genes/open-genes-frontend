@@ -22,7 +22,7 @@ export abstract class WrapIntoAccordion {
     }
   }
 
-  public toggleAccordion(event: boolean): void {
-    this.isAccordionOpen = event;
+  public toggleAccordion(): void {
+    this.isAccordionOpen = !this.isAccordionOpen;
   }
 }

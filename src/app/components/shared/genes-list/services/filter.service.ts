@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Filter } from './filter.model';
 import { FilterTypesEnum } from './filter-types.enum';
 
@@ -12,13 +12,11 @@ export class FilterService {
     byAge: false,
     byClasses: [],
     byExpressionChange: 0,
-    bySelectionCriteria: [],
     byMethylationChange: '',
     byDisease: '',
+    byDiseaseCategories: '',
+    bySelectionCriteria: '',
   };
-
-  private areMt2FiltersApplied = new BehaviorSubject(false);
-  // TODO: save this object in localStorage
 
   // Filter
   public filterByFuncClusters(id: number): Observable<number[]> {
@@ -52,11 +50,11 @@ export class FilterService {
   }
 
   // TODO: Ask backend to send unique id's for each criteria, type will change to number[]
-  public filterBySelectionCriteria(str: string): Observable<string[]> {
-    if (!this.filters.bySelectionCriteria.includes(str)) {
-      this.filters.bySelectionCriteria.push(str);
+  public filterBySelectionCriteria(name: string): Observable<string> {
+    if (!this.filters.bySelectionCriteria.includes(name)) {
+      this.filters.bySelectionCriteria = name;
     } else {
-      this.filters.bySelectionCriteria = this.filters.bySelectionCriteria.filter((item) => item !== str);
+      this.filters.bySelectionCriteria = '';
     }
 
     return of(this.filters.bySelectionCriteria);
@@ -72,20 +70,30 @@ export class FilterService {
     return of(this.filters.byDisease);
   }
 
+  public filterByDiseaseCategories(key: string): Observable<string> {
+    if (!this.filters.byDiseaseCategories.includes(key)) {
+      this.filters.byDiseaseCategories = key;
+    } else {
+      this.filters.byDiseaseCategories = '';
+    }
+
+    return of(this.filters.byDiseaseCategories);
+  }
+
   // Get
   public getByFuncClusters(): Observable<number[]> {
     return of(this.filters.byClasses);
-  }
-
-  public getByMethylationChange(): Observable<string> {
-    return of(this.filters.byMethylationChange);
   }
 
   public getByExpressionChange(): Observable<number> {
     return of(this.filters.byExpressionChange);
   }
 
-  public getBySelectionCriteria(): Observable<string[]> {
+  public getByMethylationChange(): Observable<string> {
+    return of(this.filters.byMethylationChange);
+  }
+
+  public getBySelectionCriteria(): Observable<string> {
     return of(this.filters.bySelectionCriteria);
   }
 
@@ -93,9 +101,13 @@ export class FilterService {
     return of(this.filters.byDisease);
   }
 
+  public getByDiseaseCategories(): Observable<string> {
+    return of(this.filters.byDiseaseCategories);
+  }
+
   // Clear
   public clearFilters(filter?: FilterTypesEnum): void {
-    const { name, age, classes, expressionChange, byMethylationChange, byDisease } = FilterTypesEnum;
+    const { name, age, classes, expressionChange, methylation, disease, diseaseCategories, criteria } = FilterTypesEnum;
     if (filter) {
       if (filter === name) {
         this.filters.byName = false;
@@ -103,12 +115,16 @@ export class FilterService {
         this.filters.byAge = false;
       } else if (filter === classes) {
         this.filters.byClasses = [];
-      } else if (filter == byMethylationChange) {
-        this.filters.byMethylationChange = '';
       } else if (filter === expressionChange) {
         this.filters.byExpressionChange = 0;
-      } else if (filter === byDisease) {
+      } else if (filter == methylation) {
+        this.filters.byMethylationChange = '';
+      } else if (filter === disease) {
         this.filters.byDisease = '';
+      } else if (filter === diseaseCategories) {
+        this.filters.byDiseaseCategories = '';
+      } else if (filter === criteria) {
+        this.filters.bySelectionCriteria = '';
       }
     } else {
       this.filters.byName = false;
@@ -116,7 +132,9 @@ export class FilterService {
       this.filters.byClasses = [];
       this.filters.byExpressionChange = 0;
       this.filters.byMethylationChange = '';
-      this.filters.bySelectionCriteria = [];
+      this.filters.byDisease = '';
+      this.filters.byDiseaseCategories = '';
+      this.filters.bySelectionCriteria = '';
     }
   }
 
@@ -126,9 +144,11 @@ export class FilterService {
     const c = this.filters.byClasses.length; // 0
     const e = this.filters.byExpressionChange; // 0
     const m = this.filters.byMethylationChange.length; // 0
+    const d = this.filters.byDiseaseCategories.length; // 0
+    const dc = this.filters.bySelectionCriteria.length; // 0
     const s = this.filters.bySelectionCriteria.length; // 0
 
-    return n + a + c + e + m + s;
+    return n + a + c + e + m + d + dc + s;
   }
 
   public areMoreThan2FiltersApplied(): Observable<boolean> {

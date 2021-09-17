@@ -21,6 +21,7 @@
 
 // Flat accordion
 @mixin flat-accordion($class) {
+  $arrow-button-size: $ui-base-height;
 
   .no-#{$class} {
     color: $color-gray;
@@ -38,7 +39,7 @@
     }
 
     &__header {
-      padding-right: 20px;
+      padding-right: $arrow-button-size - 5px;
       position: relative;
     }
 
@@ -48,14 +49,24 @@
     }
 
     &__arrow {
+      height: $arrow-button-size;
+      width: $arrow-button-size;
       font-size: 14px;
       color: $color-base;
-      opacity: .85;
+      line-height: $arrow-button-size + 2;
+      text-align: center;
+      border-radius: 50%;
       position: absolute;
-      top: 0;
+      top: -2px;
       right: 0;
       z-index: 1;
-      transition: opacity .15s linear;
+      background-color: $color-white;
+      box-shadow: 0 0 0 1px rgba($color-black, .15);
+
+      .fa {
+        opacity: .85;
+        transition: opacity .15s linear;
+      }
     }
 
     &:hover {

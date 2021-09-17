@@ -168,6 +168,21 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
       );
   }
 
+  public filterBySelectionCriteria(id: string): void {
+    this.filterService.filterBySelectionCriteria(name);
+    // TODO: DRY
+    if (id) {
+      this.searchedData = this.searchedData.filter((gene) => {
+        for (const [key, value] of Object.entries(gene.diseases)) {
+          return id === key;
+        }
+      });
+    }
+    this.downloadSearch(this.searchedData);
+    this.areMoreThan2FiltersApplied();
+    this.cdRef.markForCheck();
+  }
+
   public filterByMethylationChange(correlation: string): void {
     this.filterService.filterByMethylationChange(correlation);
     if (name) {
@@ -183,14 +198,26 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   public filterByDisease(name: string): void {
-    console.log('filterByDisease');
     this.filterService.filterByDisease(name);
     if (name) {
       this.searchedData = this.searchedData.filter((gene) => {
         for (const [key, value] of Object.entries(gene.diseases)) {
-          console.log(name === value['name']);
           return name === value['name'];
         }
+      });
+    }
+    this.downloadSearch(this.searchedData);
+    this.areMoreThan2FiltersApplied();
+    this.cdRef.markForCheck();
+  }
+
+  public filterByDiseaseCategories(key: string): void {
+    this.filterService.filterByDiseaseCategories(key);
+    if (key) {
+      this.searchedData = this.searchedData.filter((gene) => {
+        Object.keys(gene.diseaseCategories).forEach((categoryId) => {
+          return key === categoryId;
+        });
       });
     }
     this.downloadSearch(this.searchedData);
