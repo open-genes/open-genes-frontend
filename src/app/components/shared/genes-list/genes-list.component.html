@@ -108,26 +108,32 @@
           [isGoTermsMode]="isGoTermsMode"
         ></app-genes-table-header>
       </thead>
-
-      <ng-container
-        *ngFor="let item of searchedData | slice: 0:loadedGenesQuantity"
-        [ngTemplateOutlet]="asTableRowsTmpl"
-        [ngTemplateOutletContext]="{ itemRow: item }"
-      >
-      </ng-container>
+      <tbody>
+        <app-genes-table-row class="table-row" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+                             [isGoTermsMode]="isGoTermsMode"
+                             [goModeCellData]="goModeCellData"
+                             [listSettings]="listSettings"
+                             [item]="rowData"
+                             (expressionChangeId)="filterByExpressionChange($event)"
+                             (funcClusterId)="filterByFuncClusters($event)"
+                             (methylationChange)="filterByMethylationChange($event)">
+        </app-genes-table-row>
+      </tbody>
     </table>
 
     <ng-container *ngIf="!asTableRow || isMobile">
-      <ng-container
-        *ngFor="let item of searchedData | slice: 0:loadedGenesQuantity"
-        [ngTemplateOutlet]="asCardsTmpl"
-        [ngTemplateOutletContext]="{ item: item }"
-      >
-      </ng-container>
+      <app-genes-card class="item card" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+                      [isGoTermsMode]="isGoTermsMode"
+                      [goModeCellData]="goModeCellData"
+                      [listSettings]="listSettings"
+                      [item]="rowData"
+                      (expressionChangeId)="filterByExpressionChange($event)"
+                      (funcClusterId)="filterByFuncClusters($event)"
+                      (methylationChange)="filterByMethylationChange($event)"></app-genes-card>
     </ng-container>
   </section>
-  <!-- / Content views -->
 
+  <!-- / Content views -->
   <div
     class="btn-wrap show-more"
     *ngIf="searchedData?.length > loadedGenesQuantity"
@@ -168,287 +174,6 @@
   </div>
 </section>
 
-<!-- Templates -->
-<ng-template #asTableRowsTmpl let-item="itemRow">
-  <tbody class="item table-row">
-    <tr>
-      <td class="cell cell--name">
-        <div class="title overflow">
-          <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
-            <b>{{ item.symbol }}</b> {{ item.name }}
-          </a>
-        </div>
-      </td>
-
-      <td *ngIf="isGoTermsMode || listSettings.ifShowAge"
-          class="cell cell--age">
-        <div class="overflow">
-          <app-gene-age [gene]="item"></app-gene-age>
-        </div>
-      </td>
-
-      <td *ngIf="isGoTermsMode || listSettings.ifShowDiseases"
-          class="cell">
-        <div class="overflow">
-          <app-associated-diseases
-            [geneDiseases]="item.diseases"
-          ></app-associated-diseases>
-        </div>
-      </td>
-
-      <td *ngIf="isGoTermsMode || listSettings.ifShowDiseaseCategories"
-          class="cell">
-        <div class="overflow">
-          <app-associated-disease-categories
-            [geneDiseaseCategories]="item.diseaseCategories"
-          ></app-associated-disease-categories>
-        </div>
-      </td>
-
-      <ng-container *ngIf="!isGoTermsMode; else GoModeCell">
-        <td *ngIf="listSettings.ifShowExpression"
-            class="cell cell--expression">
-          <div class="overflow">
-            <app-tag
-              (click)="filterByExpressionChange(item.expressionChange)"
-              [isDisabled]="item.expressionChange === 0"
-              [isActive]="
-            filters.byExpressionChange === item.expressionChange &&
-            item.expressionChange !== 0"
-            >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
-            </app-tag>
-          </div>
-        </td>
-
-        <td *ngIf="listSettings.ifShowCriteria"
-            class="cell cell--criteria">
-          <div class="overflow">
-            <app-selection-criteria [geneCriteria]="item.commentCause"></app-selection-criteria>
-          </div>
-        </td>
-
-        <td *ngIf="listSettings.ifShowMethylation"
-            class="cell cell--methylation">
-          <div class="overflow">
-            <app-tag
-              *ngIf="item.methylationCorrelation !== ''"
-              (click)="filterByMethylationChange(item.methylationCorrelation)"
-              [isActive]="
-              filters.byMethylationChange === item.methylationCorrelation"
-            >{{ item.methylationCorrelation }}
-            </app-tag>
-          </div>
-        </td>
-      </ng-container>
-
-      <ng-template #GoModeCell>
-        <td colspan="2" class="cell cell--terms">
-          <div *ngIf="item.terms" class="overflow">
-            <a
-              *ngFor="let term of biologicalProcess | keyvalue"
-              href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-              class="tag"
-              matTooltip="{{ term.value }}"
-            >{{ term.key | zero }}
-            </a>
-            <a
-              *ngFor="let term of cellularComponent | keyvalue"
-              href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-              class="tag"
-              matTooltip="{{ term.value }}"
-            >{{ term.key | zero }}
-            </a>
-            <a
-              *ngFor="let term of molecularActivity | keyvalue"
-              href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-              class="tag"
-              matTooltip="{{ term.value }}"
-            >{{ term.key | zero }}
-            </a>
-          </div>
-        </td>
-      </ng-template>
-
-      <td class="cell cell--actions">
-        <div class="overflow">
-          <app-gene-menu
-            [gene]="item"
-            [isAdded]="isFaved(item.id)"
-            (unFav)="unFavOnEvent($event)"
-            (fav)="favOnEvent($event)"
-          ></app-gene-menu>
-        </div>
-      </td>
-    </tr>
-
-    <tr>
-      <td *ngIf="!isGoTermsMode && listSettings.ifShowClasses"
-          colspan="100%"
-          class="cell cell--functions">
-        <app-tag
-          *ngFor="let item of item.functionalClusters"
-          (click)="filterByFuncClusters(item['id'])"
-          [isActive]="filters.byClasses.includes(item['id'])"
-        >{{ item["name"] }}
-        </app-tag>
-      </td>
-    </tr>
-  </tbody>
-</ng-template>
-
-<ng-template #asCardsTmpl let-item="item">
-  <div class="item card">
-    <div class="card__content">
-      <div class="card__section card__title">
-        <div class="title">
-          <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
-            <b>{{ item.symbol }}</b> {{ item.name }}
-          </a>
-        </div>
-
-        <div class="card__actions">
-          <app-gene-menu
-            [gene]="item"
-            [isAdded]="isFaved(item.id)"
-            (unFav)="unFavOnEvent($event)"
-            (fav)="favOnEvent($event)"
-          ></app-gene-menu>
-        </div>
-      </div>
-
-      <ng-container *ngIf="listSettings.ifShowAge">
-        <div class="card__section card__age-mya">
-        <span class="label">
-          {{ "phylogeny" | translate }}
-        </span>
-          <app-gene-age [gene]="item" show="origin"></app-gene-age>
-        </div>
-
-        <div *ngIf="item.homologueTaxon" class="card__section card__age-homologs">
-        <span class="label">
-          {{ "ncbi_homologs" | translate }}
-        </span>
-          <app-gene-age [gene]="item" show="homologs"></app-gene-age>
-        </div>
-      </ng-container>
-
-      <div *ngIf="listSettings.ifShowDiseases"
-          class="card__section">
-        <app-associated-diseases
-          [geneDiseases]="item.diseases"
-        ></app-associated-diseases>
-      </div>
-
-      <div *ngIf="listSettings.ifShowDiseaseCategories"
-           class="card__section">
-        <app-associated-diseases
-          [geneDiseases]="item.diseaseCategories"
-        ></app-associated-diseases>
-      </div>
-
-      <div *ngIf="listSettings.ifShowCriteria"
-           class="card__section">
-        <app-selection-criteria
-          [geneCriteria]="item.commentCause"
-        ></app-selection-criteria>
-      </div>
-    </div>
-
-    <div *ngIf="isGoTermsMode ||
-    listSettings.ifShowClasses ||
-    listSettings.ifShowExpression ||
-    listSettings.ifShowMethylation"
-         class="card__controls">
-      <ng-container *ngIf="!isGoTermsMode; else GoModeCardActions">
-        <div *ngIf="item.functionalClusters && listSettings.ifShowClasses" class="card__section">
-          <span class="label">
-            {{ "functional_classes" | translate }}
-          </span>
-          <app-tag
-            *ngFor="let cluster of item.functionalClusters"
-            (click)="filterByFuncClusters(cluster['id'])"
-            [isActive]="filters.byClasses.includes(cluster['id'])"
-          >{{ cluster["name"] }}
-          </app-tag>
-        </div>
-
-        <div *ngIf="listSettings.ifShowExpression"
-             class="card__section">
-          <span class="label">
-            {{ "main_page_table_expression" | translate }}
-          </span>
-          <app-tag
-            (click)="filterByExpressionChange(item.expressionChange)"
-            [isDisabled]="item.expressionChange !== 0"
-            [isActive]="
-              filters.byExpressionChange === item.expressionChange &&
-              item.expressionChange !== 0"
-          >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
-          </app-tag>
-        </div>
-      </ng-container>
-
-      <div *ngIf="listSettings.ifShowMethylation"
-           class="card__section">
-                  <span class="label">
-            {{ "main_page_table_methylation" | translate }}
-          </span>
-        <app-tag
-          *ngIf="item.methylationCorrelation !== ''"
-          (click)="filterByMethylationChange(item.methylationCorrelation)"
-          [isActive]="
-              filters.byMethylationChange === item.methylationCorrelation"
-        >{{ item.methylationCorrelation }}
-        </app-tag>
-      </div>
-
-      <ng-template #GoModeCardActions>
-        <div class="card__section" *ngIf="item.terms">
-          <a
-            *ngFor="let term of biologicalProcess | keyvalue"
-            href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-            class="tag"
-            matTooltip="{{ term.value }}"
-          >
-            {{ term.key | zero }}
-          </a>
-          <a
-            *ngFor="let term of cellularComponent | keyvalue"
-            href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-            class="tag"
-            matTooltip="{{ term.value }}"
-          >
-            {{ term.key | zero }}
-          </a>
-          <a
-            *ngFor="let term of molecularActivity | keyvalue"
-            href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-            class="tag"
-            matTooltip="{{ term.value }}"
-          >
-            {{ term.key | zero }}
-          </a>
-        </div>
-      </ng-template>
-    </div>
-  </div>
-</ng-template>
-
-<!-- Snack Bar templates -->
-<!-- TODO: Find a way to pass TemplateRef to SnackBar component -->
-<div class="hidden">
-  <div #templateAddedToFavorites>
-    {{ "favourites_added" | translate }}
-  </div>
-
-  <div #templateRemovedFromFavorites>
-    {{ "favourites_removed" | translate }}
-  </div>
-
-  <div #searchResultsFound>
-    {{ "items_found" | translate }}
-  </div>
-</div>
 
 <ng-template #filtersModalBody>
   <div class="filters-modal__header" mat-dialog-title>

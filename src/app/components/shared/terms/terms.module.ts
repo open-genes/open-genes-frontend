@@ -8,12 +8,7 @@ import { NgCapitalizePipeModule } from 'angular-pipes';
 
 @NgModule({
   declarations: [TermsComponent],
-  imports: [
-    CommonModule,
-    TranslateModule,
-    DirectivesModule,
-    NgCapitalizePipeModule,
-  ],
+  imports: [CommonModule, TranslateModule, DirectivesModule, NgCapitalizePipeModule],
   providers: [
     {
       provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS,

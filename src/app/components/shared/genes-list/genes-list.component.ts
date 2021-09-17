@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
@@ -11,7 +10,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { of, Observable, ReplaySubject } from 'rxjs';
+import { of, ReplaySubject } from 'rxjs';
 import { PageClass } from '../../../pages/page.class';
 import { switchMap, takeLast, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -25,6 +24,7 @@ import { GenesListSettings } from './genes-list-settings.model';
 import { MatDialog } from '@angular/material/dialog';
 import { FileExportService } from '../../../core/services/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { SnackBarComponent } from '../snack-bar/snack-bar.component';
 
 @Component({
   selector: 'app-genes-list',
@@ -66,10 +66,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   @Output()
   listSettingsChanged: EventEmitter<GenesListSettings> = new EventEmitter();
 
-  @ViewChild('templateAddedToFavorites') templateAddedToFavorites: ElementRef;
-  @ViewChild('templateRemovedFromFavorites')
-  templateRemovedFromFavorites: ElementRef;
-  @ViewChild('searchResultsFound') searchResultsFound: ElementRef;
   @ViewChild('filtersModalBody') dialogRef: TemplateRef<any>;
 
   public genesPerPage = 20;
@@ -82,6 +78,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   public isGoTermsMode = false;
   public isGoTermsModeError = false;
+  public goModeCellData: {};
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
@@ -200,13 +197,13 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     result.subscribe((x) => {
       this.searchedData = x;
 
-      this.snackBar.open(
-        `${this.searchResultsFound.nativeElement.textContent} ${this.searchedData ? this.searchedData.length : 0}`,
-        '',
-        {
-          duration: 600,
-        }
-      );
+      this.snackBar.openFromComponent(SnackBarComponent, {
+        data: {
+          title: 'items_found',
+          length: this.searchedData ? this.searchedData.length : 0,
+        },
+        duration: 600,
+      });
     });
   }
 
@@ -243,16 +240,21 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
               this.molecularActivity = this.toMap(item.terms?.molecular_activity);
             }
 
+            this.goModeCellData = {
+              biologicalProcess: this.biologicalProcess,
+              cellularComponent: this.cellularComponent,
+              molecularActivity: this.molecularActivity,
+            };
+
             const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
             this.isGoTermsModeError = !isAnyTermFound;
 
-            this.snackBar.open(
-              `${this.searchResultsFound.nativeElement.textContent} ${this.searchedData?.length}`,
-              '',
-              {
-                duration: 600,
-              }
-            );
+            this.snackBar.openFromComponent(SnackBarComponent, {
+              data: {
+                title: 'items_found',
+                length: this.searchedData?.length,
+              },
+            });
 
             this.cdRef.markForCheck();
           },
@@ -276,39 +278,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   private downloadSearch(data: any) {
     this.downloadJsonLink = this.fileExportService.downloadJson(data);
-  }
-
-  /**
-   * Favorites
-   */
-  public favItem(geneId: number): void {
-    this.favouritesService.addToFavourites(geneId);
-    this.snackBar.open(this.templateAddedToFavorites.nativeElement.textContent, '', {
-      duration: 600,
-    });
-    this.isFaved(geneId);
-    this.cdRef.markForCheck();
-  }
-
-  public unFavItem(geneId: number): void {
-    this.favouritesService.removeFromFavourites(geneId);
-    this.snackBar.open(this.templateRemovedFromFavorites.nativeElement.textContent, '', {
-      duration: 600,
-    });
-    this.isFaved(geneId);
-    this.cdRef.markForCheck();
-  }
-
-  favOnEvent(event: number): void {
-    this.favItem(event);
-  }
-
-  unFavOnEvent(event: number): void {
-    this.unFavItem(event);
-  }
-
-  public isFaved(geneId: number): Observable<boolean> {
-    return of(this.favouritesService.isInFavourites(geneId));
   }
 
   /**
@@ -338,6 +307,8 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
       default:
         break;
     }
+
+    this.listSettings = { ...this.listSettings };
     this.cdRef.markForCheck();
     // this.listSettingsChanged.emit(this.listSettings);
   }
