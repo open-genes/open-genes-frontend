@@ -155,4 +155,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
     this.oneArticleSubscription$.unsubscribe();
   }
+
+  imgErrorHandler(event: any) {
+    event.target.src = this.defaultCover;
+  }
 }

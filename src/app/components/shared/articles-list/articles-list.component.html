@@ -23,9 +23,11 @@
             <div class="article__cover">
               <div
                 class="cover__backdrop"
-              >
-                <img src="{{ article.image.src ? article.image.src : defaultCover }}" alt="">
-              </div>
+                [style.backgroundImage]="
+            article.image.src.length !== 0
+              ? 'url(' + article.image.src + ')'
+              : 'url(' + defaultCover + ')'"
+              ></div>
 
               <div class="article__top-group">
                 <div
@@ -34,6 +36,7 @@
                   class="article__image"
                 >
                   <img
+                    (error)="imgErrorHandler($event)"
                     src="{{ article.image.src2x ? article.image.src2x : defaultCover }}"
                     srcset="{{
                         article.image.src2x ? article.image.src2x : defaultCover + ' 800w,' +
