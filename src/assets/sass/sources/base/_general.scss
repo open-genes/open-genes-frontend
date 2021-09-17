@@ -71,17 +71,6 @@ body {
   font-weight: $font-weight-medium;
   cursor: pointer;
   position: relative;
-
-  small {
-    font-size: 13px;
-    font-weight: normal;
-  }
-
-  @at-root a.link {
-    &:active {
-      color: lighten(mix($color-general, $color-blue, 5%), 3%);
-    }
-  }
 }
 
 @mixin blue-link {

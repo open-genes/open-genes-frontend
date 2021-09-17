@@ -122,7 +122,7 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
 
           this.isAnyContent =
             this.gene?.commentEvolution ||
-            this.gene?.commentFunction ||
+            this.gene?.proteinDescriptionUniProt ||
             this.gene?.commentCause.length !== 0 ||
             this.gene?.commentAging ||
             this.isAnyResearchFilled ||
