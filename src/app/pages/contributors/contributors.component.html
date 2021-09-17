@@ -1,0 +1,25 @@
+<div class="page text-page contributors-page">
+  <div class="page__inner __pb-60">
+    <div class="wrapper text-page__header">
+      <div class="container-fluid">
+        <div class="row no-gutters">
+          <div class="col col-12">
+            <div class="page__title __mt-60">
+              <h1 class="notranslate">{{ 'contributors_page_title' | translate }}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row no-gutters">
+        <article class="col-12 contributors-block">
+          <span *ngFor="let name of names"
+                class="contributor">{{ name }}
+          </span>
+        </article>
+      </div>
+    </div>
+  </div>
+</div>
