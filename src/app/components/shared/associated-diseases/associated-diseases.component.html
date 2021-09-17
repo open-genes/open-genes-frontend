@@ -1,4 +1,4 @@
-<ng-container *ngIf="mappedDiseases && geneDiseasesLength !== 0; else noDisease">
+<ng-container *ngIf="mappedDiseases && listLength !== 0; else noDisease">
   <ng-container *ngIf="!isAccordion; else accordion">
     <ul
       *ngFor="let disease of mappedDiseases"
