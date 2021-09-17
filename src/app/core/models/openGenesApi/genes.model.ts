@@ -10,7 +10,7 @@ interface GeneralGeneInfo {
   symbol: string;
   aliases: string[];
   commentCause: SelectionCriteria[];
-  diseaseCategories: AssociatedDiseaseCategories[];
+  diseaseCategories: AssociatedDiseaseCategories;
   diseases: AssociatedDiseases[];
   expressionChange?: number;
   functionalClusters: string | string[];
