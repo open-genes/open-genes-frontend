@@ -10,20 +10,21 @@ export class ContributorsComponent {
   constructor(public translate: TranslateService) {
   }
 
-  public names = [
-    'Anastasia Egorova',
+  public members = [
     'Mikhail Batin',
     'Konstantin Rafikov',
     'Ekaterina Rafikova',
     'Olga Spiridonova',
+    'Anastasia Egorova',
     'Nikolay Nemirovich-Danchenko',
     'Konstantin Dryomov',
-    'Nikita Minaev',
+    'Sergey Pushkin',
     'Dmitry Glubokov',
     'Yuri Ledovskiy',
     'Anna Parfenenkova',
     'Isoboy Komilzoda',
     'Said Kamolov',
+    'Naim Hakimov',
     'Polina Tzabai',
     'Tatiana Skvortzova',
     'Nadejda Ivanova',
@@ -31,21 +32,6 @@ export class ContributorsComponent {
     'Oksana Antonenko',
     'Anna Kalinina',
     'Olga Brovkina',
-    'Naim Hakimov',
-    'Andrei Kiselev',
     'Anastasiya Poznyak',
-    'Viktoria Polomoshnova',
-    'Svetlana Bozrova',
-    'Alexey Rzheshevskiy',
-    'Leon Pesha',
-    'Sergey Musienko',
-    'Alena Ketova',
-    'Mikhail Dyrma',
-    'Roman Kungurtcev',
-    'Ankitkumar Singh',
-    'Bhanu Chamakuri',
-    'Konstantin Sinkevich',
-    'Anastasia Velikanova',
-    'Natalya Andreeva',
   ];
 }
