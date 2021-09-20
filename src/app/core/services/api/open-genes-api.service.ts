@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Gene, Genes } from '../../models';
 import { environment } from '../../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
+import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/openGenesApi/associated-diseases.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +15,7 @@ export class ApiService {
   constructor(private http: HttpClient, private translate: TranslateService) {}
 
   getGenes(): Observable<Genes[]> {
-    return this.http.get<Genes[]>(
-      `${this.url}/api/gene?lang=${this.translate.currentLang}`
-    );
+    return this.http.get<Genes[]>(`${this.url}/api/gene?lang=${this.translate.currentLang}`);
   }
 
   getLastEditedGene(): Observable<Genes[]> {
@@ -36,12 +35,18 @@ export class ApiService {
   }
 
   getGeneByHGNCsymbol(symbol: string): Observable<Gene[]> {
-    return this.http.get<Gene[]>(
-      `${this.url}/api/gene/${symbol}?lang=${this.translate.currentLang}`
-    );
+    return this.http.get<Gene[]>(`${this.url}/api/gene/${symbol}?lang=${this.translate.currentLang}`);
   }
 
   getGoTermMatchByString(request: string): Observable<Genes[]> {
     return this.http.get<Genes[]>(`${this.url}/api/gene/by-go-term/${request}`);
+  }
+
+  getDiseases(): Observable<AssociatedDiseases[]> {
+    return this.http.get<AssociatedDiseases[]>(`${this.url}/api/disease/`);
+  }
+
+  getDiseaseCategories(): Observable<AssociatedDiseaseCategories[]> {
+    return this.http.get<AssociatedDiseaseCategories[]>(`${this.url}/api/disease-category/`);
   }
 }

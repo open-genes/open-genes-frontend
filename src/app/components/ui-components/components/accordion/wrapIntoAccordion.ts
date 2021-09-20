@@ -1,4 +1,4 @@
-export abstract class Accordion {
+export abstract class WrapIntoAccordion {
   public listLength = 0;
   public isAccordion = false;
   public maxItemsToShow = 1;
@@ -22,7 +22,7 @@ export abstract class Accordion {
     }
   }
 
-  public toggleAccordion(event: boolean): void {
-    this.isAccordionOpen = event;
+  public toggleAccordion(): void {
+    this.isAccordionOpen = !this.isAccordionOpen;
   }
 }

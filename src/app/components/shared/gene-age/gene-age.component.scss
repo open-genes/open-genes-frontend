@@ -30,13 +30,14 @@
     }
   }
 
-  &__type + &__type {
-    margin-top: 1em;
+  &__type + &__type,
+  &__type + &__error,
+  &__error + &__type {
+    margin-top: .8em;
   }
 
   &__error {
     width: 100%;
-    margin-top: 5px;
     color: $color-gray;
   }
 }

@@ -4,31 +4,40 @@
       *ngFor="let research of geneCriteria | keyvalue"
       class="list list--bulletted"
     >
-      <li>{{ research.value }}</li>
+      <li [class.__active]="activeListItem === research.value"
+          (click)="emitOnClick(research.key)">
+        {{ research.value }}
+      </li>
     </ul>
   </ng-container>
 
   <ng-template #accordion>
     <app-accordion
       class="criteria-accordion"
+      [clickable]="false"
       [class.criteria-accordion--open]="isAccordionOpen"
-      (isStateOpen)="toggleAccordion($event)"
+      [isOpen]="isAccordionOpen"
     >
       <div class="criteria-accordion__header" accordion-header>
-        <ul
-          *ngFor="let research of geneCriteria | keyvalue | slice: 0:maxItemsToShow"
-          class="list list--bulletted"
-        >
-          <li>{{ research.value }}</li>
+        <ul class="list list--bulletted">
+          <li *ngFor="let research of geneCriteria | keyvalue | slice: 0:maxItemsToShow"
+              [class.__active]="activeListItem === research.value"
+              (click)="emitOnClick(research.key)">
+            {{ research.value }}
+          </li>
         </ul>
-        <span class="fa far fa-chevron-down criteria-accordion__arrow"></span>
+        <button (click)="toggleAccordion()"
+                class="criteria-accordion__arrow"
+        ><span class="fa far fa-chevron-down"></span>
+        </button>
       </div>
       <div class="criteria-accordion__body" accordion-body>
-        <ul
-          *ngFor="let research of geneCriteria | keyvalue | slice: maxItemsToShow"
-          class="list list--bulletted"
-        >
-          <li>{{ research.value }}</li>
+        <ul class="list list--bulletted">
+          <li *ngFor="let research of geneCriteria | keyvalue | slice: maxItemsToShow"
+              [class.__active]="activeListItem === research.value"
+              (click)="emitOnClick(research.key)">
+            {{ research.value }}
+          </li>
         </ul>
       </div>
     </app-accordion>

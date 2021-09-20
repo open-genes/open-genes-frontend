@@ -16,7 +16,7 @@
   <div *ngIf="showFiltersPanel" class="view-panel">
     <div class="filters-group view-panel__filters">
       <button
-        class="filter name-filter"
+        class="filter"
         (click)="sortBy('name')"
         [class.__active]="filters.byName"
       >
@@ -25,7 +25,7 @@
       </button>
 
       <button
-        class="filter age-filter"
+        class="filter"
         (click)="sortBy('age')"
         [class.__active]="filters.byAge"
       >
@@ -35,7 +35,7 @@
 
       <button
         *ngIf="filters.byClasses.length > 0"
-        class="filter __active functional-classes-filter"
+        class="filter __active"
         (click)="clearFilters(filterTypes.classes)"
       >
         {{ "functional_classes" | translate }}
@@ -44,10 +44,37 @@
 
       <button
         *ngIf="filters.byExpressionChange"
-        class="filter __active expression-change-filter"
+        class="filter __active"
         (click)="clearFilters(filterTypes.expressionChange)"
       >
         {{ "main_page_table_expression" | translate }}
+        <span class="fa fal fa-times"></span>
+      </button>
+
+      <button
+        *ngIf="filters.byDisease"
+        class="filter __active"
+        (click)="clearFilters(filterTypes.disease)"
+      >
+        {{ "gene_list_diseases" | translate }}
+        <span class="fa fal fa-times"></span>
+      </button>
+
+      <button
+        *ngIf="filters.byDiseaseCategories"
+        class="filter __active"
+        (click)="clearFilters(filterTypes.diseaseCategories)"
+      >
+        {{ "gene_list_disease_categories" | translate }}
+        <span class="fa fal fa-times"></span>
+      </button>
+
+      <button
+        *ngIf="filters.bySelectionCriteria"
+        class="filter __active"
+        (click)="clearFilters(filterTypes.criteria)"
+      >
+        {{ "main_page_table_criteria" | translate }}
         <span class="fa fal fa-times"></span>
       </button>
 
@@ -192,6 +219,8 @@
         <div class="overflow">
           <app-associated-diseases
             [geneDiseases]="item.diseases"
+            [activeListItem]="filters.byDisease"
+            (clickEvent)="filterByDisease($event)"
           ></app-associated-diseases>
         </div>
       </td>
@@ -201,6 +230,8 @@
         <div class="overflow">
           <app-associated-disease-categories
             [geneDiseaseCategories]="item.diseaseCategories"
+            [activeListItem]="filters.byDiseaseCategories"
+            (clickEvent)="filterByDiseaseCategories($event)"
           ></app-associated-disease-categories>
         </div>
       </td>
@@ -223,7 +254,11 @@
         <td *ngIf="listSettings.ifShowCriteria"
             class="cell cell--criteria">
           <div class="overflow">
-            <app-selection-criteria [geneCriteria]="item.commentCause"></app-selection-criteria>
+            <app-selection-criteria
+              [geneCriteria]="item.commentCause"
+              [activeListItem]="filters.bySelectionCriteria"
+              (clickEvent)="filterBySelectionCriteria($event)"
+            ></app-selection-criteria>
           </div>
         </td>
 
@@ -336,6 +371,8 @@
           class="card__section">
         <app-associated-diseases
           [geneDiseases]="item.diseases"
+          [activeListItem]="filters.byDisease"
+          (clickEvent)="filterByDisease($event)"
         ></app-associated-diseases>
       </div>
 
@@ -343,6 +380,8 @@
            class="card__section">
         <app-associated-disease-categories
           [geneDiseaseCategories]="item.diseaseCategories"
+          [activeListItem]="filters.byDiseaseCategories"
+          (clickEvent)="filterByDiseaseCategories($event)"
         ></app-associated-disease-categories>
       </div>
 
@@ -350,6 +389,8 @@
            class="card__section">
         <app-selection-criteria
           [geneCriteria]="item.commentCause"
+          [activeListItem]="filters.bySelectionCriteria"
+          (clickEvent)="filterBySelectionCriteria($event)"
         ></app-selection-criteria>
       </div>
     </div>
