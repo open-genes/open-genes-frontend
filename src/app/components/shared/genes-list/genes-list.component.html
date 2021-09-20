@@ -341,9 +341,9 @@
 
       <div *ngIf="listSettings.ifShowDiseaseCategories"
            class="card__section">
-        <app-associated-diseases
-          [geneDiseases]="item.diseaseCategories"
-        ></app-associated-diseases>
+        <app-associated-disease-categories
+          [geneDiseaseCategories]="item.diseaseCategories"
+        ></app-associated-disease-categories>
       </div>
 
       <div *ngIf="listSettings.ifShowCriteria"

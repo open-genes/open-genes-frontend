@@ -12,7 +12,7 @@
     <ng-container *ngFor="let item of gene.expression">
       <div class="expression__row">
         <div class="row__name">{{item['name']}}</div>
-        <div class="row__value"
+        <div class="row__value notranslate"
              [class.row__value--minimum]="chartCalculatePercent(item['exp_rpkm'], max) < 3">
           <div class="value__bar"
                [style.width.%]="chartCalculatePercent(item['exp_rpkm'], max)"
