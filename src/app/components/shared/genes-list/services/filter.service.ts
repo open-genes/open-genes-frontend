@@ -50,9 +50,9 @@ export class FilterService {
   }
 
   // TODO: Ask backend to send unique id's for each criteria, type will change to number[]
-  public filterBySelectionCriteria(name: string): Observable<string> {
-    if (!this.filters.bySelectionCriteria.includes(name)) {
-      this.filters.bySelectionCriteria = name;
+  public filterBySelectionCriteria(id: string): Observable<string> {
+    if (!this.filters.bySelectionCriteria.includes(id)) {
+      this.filters.bySelectionCriteria = id;
     } else {
       this.filters.bySelectionCriteria = '';
     }

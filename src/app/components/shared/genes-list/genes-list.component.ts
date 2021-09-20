@@ -169,12 +169,18 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   public filterBySelectionCriteria(id: string): void {
-    this.filterService.filterBySelectionCriteria(name);
+    this.filterService.filterBySelectionCriteria(id);
     // TODO: DRY
     if (id) {
+      const check = [];
       this.searchedData = this.searchedData.filter((gene) => {
-        for (const [key, value] of Object.entries(gene.diseases)) {
-          return id === key;
+        for (const [key, value] of Object.entries(gene.commentCause)) {
+          if (id === key) {
+            check.push(id);
+          }
+          if (check.length !== 0) {
+            return id === key;
+          }
         }
       });
     }
@@ -186,9 +192,15 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public filterByMethylationChange(correlation: string): void {
     this.filterService.filterByMethylationChange(correlation);
     if (name) {
+      const check = [];
       this.searchedData = this.searchedData.filter((gene) => {
         Object.values(gene.methylationCorrelation).forEach((item) => {
-          return correlation === item;
+          if (correlation === item) {
+            check.push(correlation);
+          }
+          if (check.length !== 0) {
+            return correlation === item;
+          }
         });
       });
     }
@@ -200,9 +212,15 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public filterByDisease(name: string): void {
     this.filterService.filterByDisease(name);
     if (name) {
+      const check = [];
       this.searchedData = this.searchedData.filter((gene) => {
         for (const [key, value] of Object.entries(gene.diseases)) {
-          return name === value['name'];
+          if (name === value['name']) {
+            check.push(name);
+          }
+          if (check.length !== 0) {
+            return name === value['name'];
+          }
         }
       });
     }
