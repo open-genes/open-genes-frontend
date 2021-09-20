@@ -3,7 +3,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, O
 @Component({
   selector: 'app-popover',
   templateUrl: './popover.component.html',
-  styleUrls: ['./popover.component.scss']
+  styleUrls: ['./popover.component.scss'],
 })
 export class PopoverComponent implements AfterViewInit, OnDestroy {
   @Input() width: string;
@@ -11,14 +11,12 @@ export class PopoverComponent implements AfterViewInit, OnDestroy {
   @Input() left: string;
   @Input() right: string;
   @Input() zIndex: number;
-  @Input() arrowPositionLeft: string;
+  @Input() arrowPositionLeft = '20px'; // default
   @Input() arrowPositionRight: string;
 
   @Output() closeEvent: EventEmitter<void> = new EventEmitter();
 
   @ViewChild('popover') popover: ElementRef;
-
-  constructor() { }
 
   ngAfterViewInit() {
     document.addEventListener('click', this.checkIfClickedInside, true);
