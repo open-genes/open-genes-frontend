@@ -72,6 +72,20 @@
           <span class="fa far fa-cog"></span>
           {{ 'header_menu_settings' | translate }}</a>
       </li>
+      <li class="menu__link">
+        <a [routerLink]="'/contributors'"
+           routerLinkActive="current"
+        >
+          <span class="fa far fa-users"></span>
+          {{ 'header_menu_contributors' | translate }}</a>
+      </li>
+      <li class="menu__link hidden">
+        <a [routerLink]="'/diagrams'"
+           routerLinkActive="current"
+        >
+          <span class="fa far fa-chart-network"></span>
+          {{ 'header_menu_diagrams' | translate }}</a>
+      </li>
     </ul>
   </div>
 </div>

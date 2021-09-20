@@ -124,19 +124,18 @@ app-skeleton {
   }
 
   &__image {
-    width: 100%;
-    height: $ui-base-height * 3;
-    padding: $padding-regular;
     background: $color-gray-very-light center / cover no-repeat;
     border-radius: $border-radius-medium $border-radius-medium 0 0;
     margin-bottom: 10px;
-    //overflow: hidden;
-    //
-    //img {
-    //  width: 100%;
-    //  height: auto;
-    //  object-fit: cover;
-    //}
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: auto;
+      min-height: 100%;
+      object-fit: cover;
+      position: relative;
+    }
   }
 
   &__tags {
@@ -147,10 +146,8 @@ app-skeleton {
     display: flex;
     flex: 0 0 100%;
     flex-flow: row nowrap;
-    align-items: center;
+    align-items: flex-start;
     justify-items: flex-start;
-    font-size: $font-size-small;
-    font-weight: $font-weight-medium;
     margin-top: 5px;
 
     .author__avatar,
@@ -165,7 +162,13 @@ app-skeleton {
       min-width: $ui-base-height; // fix for flexbox
       border-radius: 50%;
       background: $color-general-light center / cover no-repeat;
-      margin-right: .5em;
+      margin-right: 10px;
+    }
+
+    .author__name {
+      margin-top: 8px;
+      font-size: $font-size-small;
+      font-weight: $font-weight-medium;
     }
   }
 
@@ -173,6 +176,10 @@ app-skeleton {
     flex: 2 1 50%;
     min-width: 182px;
     padding: $articles-gap-s;
+
+    .#{$a}__image img {
+      height: 78px;
+    }
 
     .#{$a}__text {
       h3 {
@@ -185,7 +192,11 @@ app-skeleton {
     padding: $articles-gap-l;
 
     .article__card {
-      min-height: $ui-base-height * 10;
+      min-height: 300px;
+    }
+
+    .#{$a}__image img {
+      height: 118px;
     }
 
     .#{$a}__text {
@@ -219,7 +230,6 @@ app-skeleton {
     margin-bottom: 15px;
 
     .close-button {
-      color: $color-accent;
       @include close-button(-10px, 10px);
     }
   }
@@ -244,6 +254,9 @@ app-skeleton {
       float: left;
       width: 80%;
       height: auto;
+    }
+    ::ng-deep {
+      @include typography;
     }
   }
 }
