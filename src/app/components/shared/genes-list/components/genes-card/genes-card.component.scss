@@ -53,6 +53,13 @@
   &__section {
     padding: 0 12px;
     margin-bottom: 10px;
+    .label {
+      display: block;
+      width: 100%;
+      font-size: $font-size-small;
+      color: $color-gray-halfing;
+      margin-bottom: 5px;
+    }
 
     &:last-child {
       margin-bottom: 0;
@@ -94,13 +101,7 @@
     padding-top: 12px;
   }
 
-  .label {
-    display: block;
-    width: 100%;
-    font-size: $font-size-small;
-    color: $color-gray-halfing;
-    margin-bottom: 5px;
-  }
+
 
   @include resolution_phablet-and-up {
     flex: 0 0 calc(50% - 5px);

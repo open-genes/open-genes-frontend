@@ -4,6 +4,15 @@
 :host {
   display: table-row;
   width: 100%;
+  background: $color-white;
+
+  &:nth-child(even) {
+    background: $color-general-light;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .item {
@@ -42,7 +51,7 @@
 .cell {
   width: (100% / $columns-quantity);
   position: relative;
-  padding: 8px;
+  padding: 8px 10px;
   vertical-align: top;
   word-break: keep-all;
   hyphens: auto;
