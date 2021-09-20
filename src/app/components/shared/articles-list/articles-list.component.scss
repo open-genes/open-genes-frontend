@@ -222,34 +222,6 @@ app-skeleton {
     float: left;
     width: 100%;
     box-sizing: border-box;
-    ::ng-deep {
-      a,
-      p a {
-        font-weight: $font-weight-medium !important;
-        color: $color-general !important;
-        margin-top: 2ex;
-        &:hover,
-        &:active {
-          color: lighten(mix($color-general, $color-blue, 5%), 3%);
-        }
-      }
-      p{
-        span{
-          font-size: 14px;
-          line-height: 1.5;
-          -webkit-box-orient: vertical;
-          word-break: keep-all;
-          -webkit-hyphens: auto;
-          hyphens: auto;
-          max-height: 63px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-      }
-      p + p {
-        margin-top: .8em;
-      }
-    }
   }
 
   &__header {
@@ -282,6 +254,9 @@ app-skeleton {
       float: left;
       width: 80%;
       height: auto;
+    }
+    ::ng-deep {
+      @include typography;
     }
   }
 }

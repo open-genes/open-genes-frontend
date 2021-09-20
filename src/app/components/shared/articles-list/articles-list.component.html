@@ -150,8 +150,10 @@
         </div>
     </ng-container>
 
-    <article *ngFor="let item of data.description" class="article-modal__body">
+    <div class="article-modal__body">
+      <article *ngFor="let item of data.description">
         <span [innerHTML]="item.content?.text | safe: 'html'"></span>
-    </article>
+      </article>
+    </div>
   </mat-dialog-content>
 </ng-template>
