@@ -211,18 +211,15 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     this.cdRef.markForCheck();
   }
 
-  public filterByDiseaseCategories(key: string): void {
-    this.filterService.filterByDiseaseCategories(key);
-    if (key) {
+  public filterByDiseaseCategories(category: string): void {
+    this.filterService.filterByDiseaseCategories(category);
+    if (category) {
       this.searchedData = this.searchedData.filter((gene) => {
-        Object.keys(gene.diseaseCategories).forEach((categoryId) => {
-          return key === categoryId;
-        });
+        for (const [key, value] of Object.entries(gene.diseaseCategories)) {
+          return category === key;
+        }
       });
     }
-    this.downloadSearch(this.searchedData);
-    this.areMoreThan2FiltersApplied();
-    this.cdRef.markForCheck();
   }
 
   /**
