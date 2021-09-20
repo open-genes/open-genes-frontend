@@ -30,5 +30,5 @@ export class PopoverComponent implements AfterViewInit, OnDestroy {
     if (!this.popover.nativeElement.contains(event.target)) {
       this.closeEvent.emit();
     }
-  }
+  };
 }
