@@ -4,7 +4,7 @@
       *ngFor="let disease of mappedDiseaseCategories | keyvalue"
       class="list list--bulletted"
     >
-      <li>{{ disease.value['icdCategorName'] }}</li>
+      <li>{{ disease.value['icdCategoryName'] }}</li>
     </ul>
   </ng-container>
 
@@ -19,7 +19,7 @@
           *ngFor="let disease of mappedDiseaseCategories | keyvalue | slice: 0:maxItemsToShow"
           class="list list--bulletted"
         >
-          <li>{{ disease.value['icdCategorName'] }}</li>
+          <li>{{ disease.value['icdCategoryName'] }}</li>
         </ul>
         <span class="fa far fa-chevron-down disease-category-accordion__arrow"></span>
       </div>
@@ -28,7 +28,7 @@
           *ngFor="let disease of mappedDiseaseCategories | keyvalue | slice: maxItemsToShow"
           class="list list--bulletted"
         >
-          <li>{{ disease.value['icdCategorName'] }}</li>
+          <li>{{ disease.value['icdCategoryName'] }}</li>
         </ul>
       </div>
     </app-accordion>
