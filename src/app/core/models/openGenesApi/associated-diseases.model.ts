@@ -1,11 +1,12 @@
 export interface AssociatedDiseases {
-  [n: number]: {
-    icd_id: string;
+  [n: string]: {
+    icdId: string;
     name: string;
+    icdName: string;
   };
 }
 export interface AssociatedDiseaseCategories {
   [categoryIcdCode: string]: {
-    icd_category_name: string;
+    icdCategoryName: string;
   };
 }

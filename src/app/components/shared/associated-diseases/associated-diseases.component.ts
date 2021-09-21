@@ -9,7 +9,7 @@ import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap
 })
 export class AssociatedDiseasesComponent extends WrapIntoAccordion implements OnInit {
   @Input() geneDiseases: AssociatedDiseases;
-  @Input() activeListItem: boolean;
+  @Input() activeListItem: string;
   @Output() clickEvent: EventEmitter<string> = new EventEmitter();
 
   public mappedDiseases: string[] = [];

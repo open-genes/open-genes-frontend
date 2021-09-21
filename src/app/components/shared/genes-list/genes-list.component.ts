@@ -215,11 +215,11 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
       const check = [];
       this.searchedData = this.searchedData.filter((gene) => {
         for (const [key, value] of Object.entries(gene.diseases)) {
-          if (name === value['name']) {
+          if (name === String(value['name'])) {
             check.push(name);
           }
           if (check.length !== 0) {
-            return name === value['name'];
+            return name === String(value['name']);
           }
         }
       });
