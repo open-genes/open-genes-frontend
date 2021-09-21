@@ -5,7 +5,7 @@ export const environment = {
   searchApiUrl: 'http://localhost:8080/',
   pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',
   proteinAtlasUrl: 'https://www.proteinatlas.org/',
-  openLongevity80LevelCMS: 'https://openlongevity.tk/',
+  openLongevity80LevelCMS: 'https://openlongevity.com/',
   debugMode: false,
   languages: ['ru', 'en'],
   mockJsonUrl: [

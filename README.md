@@ -13,6 +13,16 @@ npm run start
 
 ---
 
+## Storybook
+
+```
+npm run storybook
+```
+
+[https://localhost:6006/](https://localhost:6006/)
+
+
+---
 ## Build for different environments
 
 Dev. stand test build: `npm run build`
