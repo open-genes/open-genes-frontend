@@ -49,8 +49,9 @@ $skeleton-line-height: ($ui-base-height / 2);
       margin-bottom: ($skeleton-line-height / 1.5);
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .skeleton__line{
+      max-width: 100%;
       &:last-child{
         display: none;
       }
