@@ -10,6 +10,26 @@ $research-tables: (
 );
 
 .table {
+  border: none;
+  border-collapse: separate;
+  border-spacing: 0;
+
+  thead {
+    th:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+    }
+  }
+
+  tr{
+    td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      background-color: $color-white;
+    }
+  }
   th {
     position: relative;
 

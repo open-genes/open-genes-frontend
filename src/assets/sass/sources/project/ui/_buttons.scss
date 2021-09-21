@@ -117,7 +117,7 @@
 @include btn-color('green', $color-green-medium);
 @include btn-color('purple', $color-purple);
 @include btn-color('gray', $color-gray);
-@include btn-color('white', $color-white, $color-orange);
+@include btn-color('white', $color-white, $color-orange-300);
 // TODO: make it possible to construct gradient buttons
 // @include btn-color('orange-gradient', $orange-gradient1, $color-white);
 

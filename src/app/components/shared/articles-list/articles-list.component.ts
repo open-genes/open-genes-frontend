@@ -13,7 +13,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { AsyncSubject, Subject } from 'rxjs';
 import { I80levelResponseArticle } from '../../../core/models/vendorsApi/80level/80level.model';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { EightyLevelService } from '../../../core/services/api/80level-api-service/80level-api.service';
 import { environment } from '../../../../environments/environment';
 import { MockApiService } from '../../../core/services/api/mock-api.service';
@@ -32,7 +32,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public error: number;
   public defaultAvatar = '/assets/images/avatar.png';
   public defaultCover = '/assets/images/default-article-cover.jpg';
-  public isMocked = false;
   public pageIndex = 1;
   public showMoreButtonVisible = false;
   public articlesTotal = 0;
@@ -109,39 +108,17 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   private makeArticlesList(): void {
-    if (this.isMocked) {
-      this.mock
-        .getMockResponse({ page: this.pageIndex })
-        .pipe(takeUntil(this.subscription$))
-        .subscribe(
-          (data) => {
-            this.handleResponse(data);
-          },
-          (error) => (this.error = error) // TODO: add loging
-        );
-    } else {
-      if (!this.showOnlyForOpenGenes) {
-        this.eightyLevelService
-          .getArticles({ page: this.pageIndex })
-          .pipe(takeUntil(this.subscription$))
-          .subscribe(
-            (data) => {
-              this.handleResponse(data);
-            },
-            (error) => (this.error = error)
-          );
-      } else {
-        this.eightyLevelService
-          .getArticles({ category: 'open-genes', page: this.pageIndex })
-          .pipe(takeUntil(this.subscription$))
-          .subscribe(
-            (data) => {
-              this.handleResponse(data);
-            },
-            (error) => (this.error = error)
-          );
-      }
-    }
+    this.eightyLevelService
+      .getArticles(
+        this.showOnlyForOpenGenes ? { category: 'open-genes', page: this.pageIndex } : { page: this.pageIndex }
+      )
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
+        (data) => {
+          this.handleResponse(data);
+        },
+        (error) => (this.error = error)
+      );
   }
 
   public openArticleModal(slug): void {
@@ -150,13 +127,25 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     // Subscribe and get one article data
     this.eightyLevelService
       .getArticle(slug)
-      .pipe(takeUntil(this.oneArticleSubscription$))
+      .pipe(
+        takeUntil(this.oneArticleSubscription$),
+        map((res: any) => {
+          const imageData = res.content.filter((item) => item.type === 'image-widget')[0];
+          const descData = res.content.filter((item) => item.type === 'editor');
+          return {
+            title: res.title,
+            subtitle: res.subtitle,
+            image: imageData.content.image,
+            description: descData,
+          };
+        })
+      )
       .subscribe(
-        (response) => {
+        (modalData) => {
           this.isAnyArticleModalOpen = false;
           this.cdRef.markForCheck();
           this.dialog.open(this.dialogRef, {
-            data: response,
+            data: modalData,
             panelClass: 'article-modal',
             minWidth: '320px',
             maxWidth: '768px', // TODO: make a global object with modal settings
@@ -168,6 +157,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         }
       );
   }
+
   public closeArticleModal(): void {
     this.dialog.closeAll();
     this.isAnyArticleModalOpen = false;
@@ -176,5 +166,9 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription$.unsubscribe();
     this.oneArticleSubscription$.unsubscribe();
+  }
+
+  imgErrorHandler(event: any, placeholderImg: string) {
+    event.target.src = placeholderImg;
   }
 }

@@ -1,56 +1,56 @@
-import { ExtraOptions, Routes } from "@angular/router";
+import { ExtraOptions, Routes } from '@angular/router';
 
 export const APP_ROUTES: Routes = [
   {
-    path: "",
-    loadChildren: () =>
-      import("./pages/home/home.module").then((m) => m.HomeModule),
+    path: '',
+    loadChildren: () => import('./pages/home/home.module').then((m) => m.HomeModule),
   },
   {
-    path: "gene/:id",
-    loadChildren: () =>
-      import("./pages/gene/gene.module").then((m) => m.GeneModule),
+    path: 'gene/:id',
+    loadChildren: () => import('./pages/gene/gene.module').then((m) => m.GeneModule),
   },
   {
-    path: "about",
-    loadChildren: () =>
-      import("./pages/about/about.module").then((m) => m.AboutModule),
+    path: 'about',
+    loadChildren: () => import('./pages/about/about.module').then((m) => m.AboutModule),
   },
   {
-    path: "news",
-    loadChildren: () =>
-      import("./pages/news/news.module").then((m) => m.NewsModule),
+    path: 'news',
+    loadChildren: () => import('./pages/news/news.module').then((m) => m.NewsModule),
   },
   {
-    path: "favourites",
-    loadChildren: () =>
-      import("./pages/favourites/favourites.module").then(
-        (m) => m.FavouritesModule
-      ),
+    path: 'favourites',
+    loadChildren: () => import('./pages/favourites/favourites.module').then((m) => m.FavouritesModule),
   },
   {
-    path: "developers",
-    loadChildren: () =>
-      import("./pages/api-reference/api-reference.module").then(
-        (m) => m.ApiReferenceModule
-      ),
+    path: 'developers',
+    loadChildren: () => import('./pages/api-reference/api-reference.module').then((m) => m.ApiReferenceModule),
   },
   {
-    path: "help",
-    loadChildren: () =>
-      import("./pages/help/help.module").then((m) => m.HelpModule),
+    path: 'settings',
+    loadChildren: () => import('./pages/settings/settings.module').then((m) => m.SettingsModule),
   },
   {
-    path: "404",
-    loadChildren: () =>
-      import("./pages/404/404.module").then((m) => m.Error404Module),
+    path: 'diagrams',
+    loadChildren: () => import('./pages/diagrams/diagrams.module').then((m) => m.DiagramsModule),
   },
   {
-    path: "**",
-    redirectTo: "/404",
+    path: 'help',
+    loadChildren: () => import('./pages/help/help.module').then((m) => m.HelpModule),
+  },
+  {
+    path: 'contributors',
+    loadChildren: () => import('./pages/contributors/contributors.module').then((m) => m.ContributorsModule),
+  },
+  {
+    path: '404',
+    loadChildren: () => import('./pages/404/404.module').then((m) => m.Error404Module),
+  },
+  {
+    path: '**',
+    redirectTo: '/404',
   },
 ];
 
 export const ROUTER_OPTIONS: ExtraOptions = {
-  anchorScrolling: "enabled",
+  anchorScrolling: 'enabled',
 };

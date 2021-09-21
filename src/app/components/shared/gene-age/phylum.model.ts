@@ -1,5 +1,5 @@
 export interface Phyla {
-  [n: number]: Phylum;
+  [n: string]: Phylum;
 }
 
 export interface Phylum {

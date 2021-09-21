@@ -4,4 +4,8 @@ export enum FilterTypesEnum {
   age = 'byAge',
   classes = 'byClasses',
   expressionChange = 'byExpressionChange',
+  methylation = 'byMethylationChange',
+  disease = 'byDisease',
+  diseaseCategories = 'byDiseaseCategories',
+  criteria = 'bySelectionCriteria',
 }

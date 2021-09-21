@@ -1,3 +1,7 @@
 @import '../../styles';
 
 @include flat-accordion('disease-category');
+
+.list.list--bulletted li {
+  @include list-item-as-filter-button;
+}

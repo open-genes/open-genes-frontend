@@ -1,0 +1,40 @@
+<div class="page text-page">
+  <div class="page__inner __pb-60">
+    <div class="text-page__header wrapper">
+      <div class="container-fluid">
+        <div class="row no-gutters">
+          <div class="col col-12">
+            <div class="page__title">
+              <h1>{{ 'settings' | translate }}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container setting-items">
+      <div class="row">
+        <div class="col-12">
+          <div class="setting-items__panel setting-items__panel--emphasized">
+            <app-switch [(ngModel)]="settings.isHeadersDescription"
+                        (changeEvent)="onInterfaceHints()"
+            ></app-switch>
+            <div class="panel__label">
+              <h3>
+                {{ 'settings_educational_content_title' | translate }}
+              </h3>
+              <p>
+                {{ 'settings_educational_content_description' | translate }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div #settingsChanged
+     class="hidden">
+  {{ "settings_settings_changed" | translate }}
+</div>

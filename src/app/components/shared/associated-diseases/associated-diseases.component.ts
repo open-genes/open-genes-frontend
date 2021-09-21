@@ -1,25 +1,27 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AssociatedDiseases } from '../../../core/models/openGenesApi/associated-diseases.model';
+import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrapIntoAccordion';
 
 @Component({
   selector: 'app-associated-diseases',
   templateUrl: './associated-diseases.component.html',
   styleUrls: ['./associated-diseases.component.scss'],
 })
-export class AssociatedDiseasesComponent implements OnInit {
-  @Input() geneDiseases: any;
-  public mappedDiseases: string[] = [];
-  public geneDiseasesLength: number = 0;
-  public isAccordion: boolean = false;
-  public maxItemsToShow: number = 1;
-  public isAccordionOpen: boolean;
+export class AssociatedDiseasesComponent extends WrapIntoAccordion implements OnInit {
+  @Input() geneDiseases: AssociatedDiseases;
+  @Input() activeListItem: string;
+  @Output() clickEvent: EventEmitter<string> = new EventEmitter();
 
-  constructor() {}
+  public mappedDiseases: string[] = [];
+
+  constructor() {
+    super();
+  }
 
   ngOnInit(): void {
     this.mapDiseases();
-    this.setDiseaseListLength(this.geneDiseases);
-    this.setIfPutItemsIntoAccordion(this.geneDiseases);
+    this.setListLength(this.geneDiseases);
+    this.putItemsIntoAccordion(this.geneDiseases);
   }
 
   private mapDiseases(): void {
@@ -28,25 +30,8 @@ export class AssociatedDiseasesComponent implements OnInit {
     }
   }
 
-  private setDiseaseListLength(criteria: AssociatedDiseases): void {
-    if (criteria) {
-      this.geneDiseasesLength = Object.keys(criteria).length;
-    }
-  }
-
-  private setIfPutItemsIntoAccordion(criteria: AssociatedDiseases): void {
-    if (criteria && this.geneDiseasesLength !== 0) {
-      if (this.geneDiseasesLength > this.maxItemsToShow) {
-        // Avoid a case when there is only one item left inside an accordion.
-        // In this case we show the whole list.
-        this.isAccordion = this.geneDiseasesLength - this.maxItemsToShow !== 1;
-      } else {
-        this.isAccordion = false;
-      }
-    }
-  }
-
-  public toggleAccordion(event: boolean): void {
-    this.isAccordionOpen = event;
+  public emitOnClick(diseaseName: any): void {
+    this.clickEvent.emit(diseaseName);
+    console.log('clickEvent');
   }
 }

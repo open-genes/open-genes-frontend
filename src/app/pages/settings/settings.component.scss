@@ -1,0 +1,53 @@
+@import "../styles";
+
+.setting-items {
+  @include resolution_tablet-and-up {
+    padding: 20px 10%;
+  }
+
+  &__panel {
+    position: relative;
+    display: flex;
+    flex: 0 0 100%;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    font-size: $font-size;
+    padding: 15px 10px;
+    background-color: $color-gray-very-light;
+    color: $color-black;
+    border-radius: $border-radius-medium;
+
+    * + .panel__label {
+      margin-left: .8em;
+    }
+
+    .panel__label {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-content: flex-start;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    h3, p {
+      font-size: inherit;
+    }
+
+    h3 {
+      font-weight: $font-weight-medium;
+      margin-bottom: .6em;
+    }
+
+    &--emphasized {
+      background-color: #FFEDCF;
+      color: $color-orange-400;
+    }
+  }
+}
+
+.setting-items__row + .setting-items__row {
+  margin-top: 10px;
+}
