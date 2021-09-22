@@ -1,0 +1,130 @@
+<tr class="item">
+  <td class="cell cell&#45;&#45;name">
+    <div class="title overflow">
+      <a [routerLink]="['/gene', item.symbol]" class="link link&#45;&#45;gray">
+        <b>{{ item.symbol }}</b> {{ item.name }}
+      </a>
+    </div>
+  </td>
+
+  <td *ngIf="isGoTermsMode || listSettings.ifShowAge"
+      class="cell cell&#45;&#45;age">
+    <div class="overflow">
+      <app-gene-age [gene]="item"></app-gene-age>
+    </div>
+  </td>
+
+  <td *ngIf="isGoTermsMode || listSettings.ifShowDiseases"
+      class="cell">
+    <div class="overflow">
+      <app-associated-diseases
+        [geneDiseases]="item.diseases"
+        [activeListItem]="filters.byDisease"
+        (clickEvent)="onDisease($event)"
+      ></app-associated-diseases>
+    </div>
+  </td>
+
+  <td *ngIf="isGoTermsMode || listSettings.ifShowDiseaseCategories"
+      class="cell">
+    <div class="overflow">
+      <app-associated-disease-categories
+        [geneDiseaseCategories]="item.diseaseCategories"
+        [activeListItem]="filters.byDiseaseCategories"
+        (clickEvent)="onDiseaseCategories($event)"
+      ></app-associated-disease-categories>
+    </div>
+  </td>
+
+  <ng-container *ngIf="!isGoTermsMode; else GoModeCell">
+    <td *ngIf="listSettings.ifShowExpression"
+        class="cell cell&#45;&#45;expression">
+      <div class="overflow">
+        <app-tag
+          (click)="onExpressionChange(item.expressionChange)"
+          [isDisabled]="item.expressionChange === 0"
+          [isActive]="
+            filters.byExpressionChange === item.expressionChange &&
+            item.expressionChange !== 0"
+        >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
+        </app-tag>
+      </div>
+    </td>
+
+    <td *ngIf="listSettings.ifShowCriteria"
+        class="cell cell&#45;&#45;criteria">
+      <div class="overflow">
+        <app-selection-criteria
+          [geneCriteria]="item.commentCause"
+          [activeListItem]="filters.bySelectionCriteria"
+          (clickEvent)="onSelectCriteria($event)"
+        ></app-selection-criteria>
+      </div>
+    </td>
+
+    <td *ngIf="listSettings.ifShowMethylation"
+        class="cell cell&#45;&#45;methylation">
+      <div class="overflow">
+        <app-tag
+          *ngIf="item.methylationCorrelation !== ''"
+          (click)="onMethylationChange(item.methylationCorrelation)"
+          [isActive]="
+              filters.byMethylationChange === item.methylationCorrelation"
+        >{{ item.methylationCorrelation }}
+        </app-tag>
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-template #GoModeCell>
+    <td colspan="2" class="cell cell&#45;&#45;terms">
+      <div *ngIf="item.terms" class="overflow">
+        <a
+          *ngFor="let term of goModeCellData.biologicalProcess | keyvalue"
+          href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+          class="tag"
+          matTooltip="{{ term.value }}"
+        >{{ term.key | zero }}
+        </a>
+        <a
+          *ngFor="let term of goModeCellData.cellularComponent | keyvalue"
+          href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+          class="tag"
+          matTooltip="{{ term.value }}"
+        >{{ term.key | zero }}
+        </a>
+        <a
+          *ngFor="let term of goModeCellData.molecularActivity | keyvalue"
+          href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+          class="tag"
+          matTooltip="{{ term.value }}"
+        >{{ term.key | zero }}
+        </a>
+      </div>
+    </td>
+  </ng-template>
+
+  <td class="cell cell&#45;&#45;actions">
+    <div class="overflow">
+      <app-gene-menu
+        [gene]="item"
+        [isAdded]="isFaved(item.id)"
+        (unFav)="unFavItem($event)"
+        (fav)="favItem($event)"
+      ></app-gene-menu>
+    </div>
+  </td>
+</tr>
+
+<tr class="item">
+  <td *ngIf="!isGoTermsMode && listSettings.ifShowClasses"
+      colspan="100%"
+      class="cell cell&#45;&#45;functions">
+    <app-tag
+      *ngFor="let item of item.functionalClusters"
+      (click)="onFuncCluster(item['id'])"
+      [isActive]="filters.byClasses.includes(item['id'])"
+    >{{ item["name"] }}
+    </app-tag>
+  </td>
+</tr>

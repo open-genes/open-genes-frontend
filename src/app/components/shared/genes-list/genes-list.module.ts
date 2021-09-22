@@ -21,9 +21,18 @@ import { MaterialModule } from '../../../modules/vendors/material.module';
 import { GenesTableHeaderComponent } from './components/genes-table-header/genes-table-header.component';
 import { AssociatedDiseasesModule } from '../associated-diseases/associated-diseases.module';
 import { AssociatedDiseaseCategoriesModule } from '../associated-disease-categories/associated-disease-categories.module';
+import { GenesCardComponent } from './components/genes-card/genes-card.component';
+import { GeneTableRowComponent } from './components/gene-table-row/gene-table-row.component';
 
 @NgModule({
-  declarations: [GenesListComponent, SearchComponent, GeneMenuComponent, GenesTableHeaderComponent],
+  declarations: [
+    GenesListComponent,
+    SearchComponent,
+    GeneMenuComponent,
+    GenesTableHeaderComponent,
+    GenesCardComponent,
+    GeneTableRowComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -1,17 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { GenesListSettings } from '../../genes-list-settings.model';
 
 @Component({
   selector: 'app-genes-table-header',
   templateUrl: './genes-table-header.component.html',
-  styleUrls: ['./genes-table-header.component.scss']
+  styleUrls: ['./genes-table-header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GenesTableHeaderComponent implements OnInit {
+export class GenesTableHeaderComponent {
   @Input() settings: GenesListSettings;
   @Input() isGoTermsMode: boolean;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  constructor() {}
 }
