@@ -112,9 +112,9 @@
                     <div class="type__title">
                       {{ 'phylogeny' | translate }}
 
-                      <span class="fa far fa-info-circle hidden"
-                            *ngIf="isHeadersDescriptionIcon"
-                            (click)="onShowHeadersDescription($event)" ></span>
+                      <span class="fa far fa-info-circle"
+                            *ngIf="isUiHintsSettingOn"
+                            (click)="onShowUiHints($event)"></span>
 
                     </div>
                     <div class="type__value">
@@ -346,19 +346,23 @@
   </div>
 </div>
 
-<ng-template #headersDescription>
+<ng-template #UiHints>
   <div class="term">
     <div class="term__header">
       <button mat-icon-button
               class="term__close-button"
-              (click)="onCloseHeadersDescription()"
+              (click)="onCloseUiHints()"
               aria-label="Закрыть">
         <span class="fa fal fa-times"></span>
       </button>
     </div>
     <ng-container>
       <div class="term__description">
-        Статическое описание для элементов интерфейса
+        <article>
+          <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3812327/"
+             class="link"
+             target="_blank">DOI: 10.1016/j.tig.2013.07.001</a>
+        </article>
       </div>
     </ng-container>
   </div>
