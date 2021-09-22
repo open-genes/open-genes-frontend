@@ -123,6 +123,7 @@
   "header_menu_news": "News",
   "header_menu_settings": "Settings",
   "header_menu_diagrams": "Data  graphically",
+  "header_menu_participate": "Participate",
   "help_page_description": "Все, что вы хотели знать об Open Genes",
   "help_page_title": "Help Center",
   "human_protein_atlas": "Human Protein Atlas",
@@ -225,6 +226,23 @@
   "hemo_desc": "Hemoglobin, or haemoglobin is the iron-containing oxygen-transport metalloprotein in the red blood cells (erythrocytes) of almost all vertebrates as well as the tissues of some invertebrates.",
   "bilirubin": "Bilirubin",
   "bili_desc": "",
+
+  "participate_form_name": "First Name",
+  "participate_form_region": {
+    "title": "Region",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "biology": "Biology",
+    "other": "Other"
+  },
+  "participate_form_message": "Transmittal letter",
+  "participate_form_telegram": "Telegram",
+  "participate_form_email": "Email",
+  "participate_form_submit": "Submit",
+  "participate_form_name_error_message": "Enter your name",
+  "participate_form_region_error_message": "Select area",
+  "participate_form_message_error_message": "Enter your message",
+  "participate_form_email_error_message": "Please enter your email address",
 
   "wizard_header": "Usage example",
   "wizard_title": "Find genes associated with immune function deterioration, which expression declines with aging",

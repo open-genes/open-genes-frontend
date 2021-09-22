@@ -1,0 +1,53 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'participate_form_name' | translate }}</mat-label>
+    <input matInput formControlName="name">
+    <mat-error *ngIf="form.controls['name'].invalid && form.controls['name'].touched">
+      {{ 'participate_form_name_error_message' | translate }}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'participate_form_region.title' | translate }}</mat-label>
+    <mat-select formControlName="region">
+      <mat-option value="{{ 'participate_form_region.frontend' | translate }}">
+        {{ 'participate_form_region.frontend' | translate }}
+      </mat-option>
+      <mat-option value="{{ 'participate_form_region.backend' | translate }}">
+        {{ 'participate_form_region.backend' | translate }}
+      </mat-option>
+      <mat-option value="{{ 'participate_form_region.biology' | translate }}">
+        {{ 'participate_form_region.biology' | translate }}
+      </mat-option>
+      <mat-option value="{{ 'participate_form_region.other' | translate }}">
+        {{ 'participate_form_region.other' | translate }}
+      </mat-option>
+
+    </mat-select>
+    <mat-error *ngIf="form.controls['region'].invalid && form.controls['region'].touched">
+      {{ 'participate_form_region_error_message' | translate }}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'participate_form_message' | translate }}</mat-label>
+    <textarea matInput formControlName="message"></textarea>
+    <mat-error *ngIf="form.controls['message'].invalid && form.controls['message'].touched">
+      {{ 'participate_form_message_error_message' | translate }}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'participate_form_telegram' | translate }}</mat-label>
+    <input matInput formControlName="telegram">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'participate_form_email' | translate }}</mat-label>
+    <input matInput formControlName="email">
+    <mat-error *ngIf="form.controls['email'].invalid && form.controls['email'].touched">
+      {{ 'participate_form_email_error_message' | translate }}
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" [disabled]="form.invalid">
+    {{ 'participate_form_submit' | translate }}
+  </button>
+</form>
+
+

@@ -79,6 +79,13 @@
           <span class="fa far fa-users"></span>
           {{ 'header_menu_contributors' | translate }}</a>
       </li>
+      <li class="menu__link">
+        <a [routerLink]="'/participate'"
+           routerLinkActive="current"
+        >
+          <span class="fa far fa-handshake-alt"></span>
+          {{ 'header_menu_participate' | translate }}</a>
+      </li>
       <li class="menu__link hidden">
         <a [routerLink]="'/diagrams'"
            routerLinkActive="current"

@@ -123,6 +123,7 @@
   "header_menu_help": "Справочная информация",
   "header_menu_news": "Новости",
   "header_menu_settings": "Настройки",
+  "header_menu_participate": "Принять участие",
   "settings_educational_content_title": "Образовательные функции Open Genes",
   "settings_educational_content_description": "(включает подсказки для терминов и научно-популярный контент)",
   "settings_settings_changed": "Настройки изменены",
@@ -225,6 +226,23 @@
   "hemo_desc": "Гемоглоби́н — сложный железосодержащий белок животных, обладающих кровообращением, способный обратимо связываться с кислородом, обеспечивая его перенос в ткани. ",
   "bilirubin": "Билирубин",
   "bili_desc": "",
+
+  "participate_form_name": "Имя",
+  "participate_form_region": {
+    "title": "Область",
+    "frontend": "Фронтенд",
+    "backend": "Бэкенд",
+    "biology": "Биология",
+    "other": "Другое"
+  },
+  "participate_form_message": "Сопроводительное письмо",
+  "participate_form_telegram": "Телеграм",
+  "participate_form_email": "Электронная почта",
+  "participate_form_submit": "Отправить",
+  "participate_form_name_error_message": "Введите Имя",
+  "participate_form_region_error_message": "Выберите область",
+  "participate_form_message_error_message": "Введите сообщение",
+  "participate_form_email_error_message": "Введите адрес электронной почты",
 
   "wizard_header": "Пример использования",
   "wizard_title": "Найдите гены, ассоциированные с ухудшением иммунной функции, экспрессия которых повышается с возрастом",
