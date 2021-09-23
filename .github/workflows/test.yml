@@ -11,6 +11,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    container: alexsuch/angular-cli:7.3.8
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -31,12 +32,12 @@ jobs:
     # if: contains( github.ref, 'develop')
     needs: build
     runs-on: ubuntu-latest
-    container: alexsuch/angular-cli:7.3.8
     steps:
       - name: Download artifact
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: test.yml
+          workflow_conclusion: success
           name: project
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
