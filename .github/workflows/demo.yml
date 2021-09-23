@@ -28,7 +28,7 @@ jobs:
           path: dist/
           name: project
 
-  deploy-test:
+  deploy-demo:
     if: contains( github.ref, 'develop')
     needs: build
     runs-on: ubuntu-latest
