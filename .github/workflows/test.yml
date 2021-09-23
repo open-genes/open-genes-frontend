@@ -40,8 +40,13 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: Install dependencies and deploy
-      - run: npm install
-      - run: npm run build-dev
+      run: |
+       npm install
+       npm run build-dev
+      - name: Deploy with rsync
+      run: |
+       echo $DROPLET_ENV | base64 -d > .env
+       rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' . $SSH_USER@$SSH_HOST:$PROJECT_PATH
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
