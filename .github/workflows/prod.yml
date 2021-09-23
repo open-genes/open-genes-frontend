@@ -1,6 +1,6 @@
 #Workflow for test environment
 
-name: test-CI
+name: prod-CI
 
 # Controls when the workflow will run
 on: push
@@ -21,7 +21,7 @@ jobs:
       - name: Build
         run: |
           npm install
-          npm run build-dev
+          npm run build-prod
       - name: Upload project artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -49,5 +49,5 @@ jobs:
         env:
           SSH_USER: ${{ secrets.DROPLET_USER }}
           SSH_HOST: ${{ secrets.DROPLET_HOST }}
-          PROJECT_PATH: ${{ secrets.DROPLET_CMS_TEST_PATH }}
-          DROPLET_ENV: ${{ secrets.DROPLET_CMS_TEST_DOTENV_BASE64 }}
+          PROJECT_PATH: ${{ secrets.DROPLET_CMS_PROD_PATH }}
+          DROPLET_ENV: ${{ secrets.DROPLET_CMS_PROD_DOTENV_BASE64 }}
