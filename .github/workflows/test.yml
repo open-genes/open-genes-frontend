@@ -29,15 +29,13 @@ jobs:
           name: project
 
   deploy-test:
-    # if: contains( github.ref, 'develop')
+    if: contains( github.ref, 'develop')
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifact
-        uses: dawidd6/action-download-artifact@v2
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
         with:
-          workflow: test.yml
-          workflow_conclusion: success
           name: project
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
