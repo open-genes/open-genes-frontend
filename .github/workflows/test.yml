@@ -15,8 +15,12 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Build project
+      - name: Checkout project
         uses: actions/checkout@v2
+      - name: Build
+        run: |
+          npm install
+          npm run build-dev
       - name: Upload project artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -24,7 +28,7 @@ jobs:
           name: project
 
   deploy-test:
-    if: contains( github.ref, 'develop')
+    # if: contains( github.ref, 'develop')
     needs: build
     runs-on: ubuntu-latest
     container: alexsuch/angular-cli:7.3.8
@@ -39,10 +43,6 @@ jobs:
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      - name: Install dependencies and deploy
-        run: |
-         npm install
-         npm run build-dev
       - name: Deploy with rsync
         run: |
          echo $DROPLET_ENV | base64 -d > .env
