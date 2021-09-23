@@ -21,7 +21,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           path: dist/
-          name: frontend
+          name: project
 
   deploy-test:
     if: contains( github.ref, 'develop')
