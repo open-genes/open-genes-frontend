@@ -32,23 +32,24 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     container: alexsuch/angular-cli:7.3.8
-
     steps:
-      - name: Download project artifacts
-        uses: actions/download-artifact@v2
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v2
         with:
+          workflow: test.yml
+          workflow_conclusion: success
           name: project
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          key: ${{ secrets.DROPLET_KEY }}
+          known_hosts: ${{ secrets.DROPLET_HOST }}
       - name: Deploy with rsync
         run: |
-         echo $DROPLET_ENV | base64 -d > .env
-         rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' . $SSH_USER@$SSH_HOST:$PROJECT_PATH
-          env:
-            SSH_USER: ${{ secrets.SSH_USER }}
-            SSH_HOST: ${{ secrets.SSH_HOST }}
-            PROJECT_PATH: ${{ secrets.PROJECT_TEST_PATH }}
-            DROPLET_ENV: ${{ secrets.DROPLET_TEST_ENV }}
+          echo $DROPLET_ENV | base64 -d > .env
+          rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' . $SSH_USER@$SSH_HOST:$PROJECT_PATH
+        env:
+          SSH_USER: ${{ secrets.DROPLET_USER }}
+          SSH_HOST: ${{ secrets.DROPLET_HOST }}
+          PROJECT_PATH: ${{ secrets.DROPLET_CMS_DEMO_PATH }}
+          DROPLET_ENV: ${{ secrets.DROPLET_CMS_DEMO_DOTENV_BASE64 }}
