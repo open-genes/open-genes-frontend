@@ -228,7 +228,7 @@
   "bili_desc": "",
 
   "participate_form_name": "Имя",
-  "participate_form_region": {
+  "participate_form_field": {
     "title": "Область",
     "frontend": "Фронтенд",
     "backend": "Бэкенд",
@@ -240,7 +240,7 @@
   "participate_form_email": "Электронная почта",
   "participate_form_submit": "Отправить",
   "participate_form_name_error_message": "Введите Имя",
-  "participate_form_region_error_message": "Выберите область",
+  "participate_form_field_error_message": "Выберите область",
   "participate_form_message_error_message": "Введите сообщение",
   "participate_form_email_error_message": "Введите адрес электронной почты",
 

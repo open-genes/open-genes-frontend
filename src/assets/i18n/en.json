@@ -227,9 +227,9 @@
   "bilirubin": "Bilirubin",
   "bili_desc": "",
 
-  "participate_form_name": "First Name",
-  "participate_form_region": {
-    "title": "Region",
+  "participate_form_name": "Full Name",
+  "participate_form_field": {
+    "title": "Field",
     "frontend": "Frontend",
     "backend": "Backend",
     "biology": "Biology",
@@ -240,7 +240,7 @@
   "participate_form_email": "Email",
   "participate_form_submit": "Submit",
   "participate_form_name_error_message": "Enter your name",
-  "participate_form_region_error_message": "Select area",
+  "participate_form_field_error_message": "Select area",
   "participate_form_message_error_message": "Enter your message",
   "participate_form_email_error_message": "Please enter your email address",
 

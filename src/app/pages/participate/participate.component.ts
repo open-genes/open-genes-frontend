@@ -1,28 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-participate',
   templateUrl: './participate.component.html',
-  styleUrls: ['./participate.component.scss']
+  styleUrls: ['./participate.component.scss'],
 })
 export class ParticipateComponent implements OnInit {
   form: FormGroup;
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
-    this.form = new FormGroup({
-      "name": new FormControl('', Validators.required),
-      "region": new FormControl('', Validators.required),
-      "message":  new FormControl('', Validators.required),
-      "telegram": new FormControl(''),
-      "email": new FormControl('', [Validators.required, Validators.email])
+    this.form = this.formBuilder.group({
+      name: [''],
+      field: [''],
+      message: [''],
+      telegram: [''],
+      email: ['']
     });
-
   }
 
   submit() {
-    console.log(this.form.value);
+    this.form = this.formBuilder.group({
+      name: [this.form.value.name, Validators.required],
+      field: [this.form.value.field, Validators.required],
+      message: [this.form.value.message, Validators.required],
+      telegram: [this.form.value.telegram],
+      email: [this.form.value.email, [Validators.required, Validators.email]]
+    });
+
+    if (!this.form.invalid) {
+      console.log(this.form.value);
+    }
   }
 }
