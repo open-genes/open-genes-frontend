@@ -36,8 +36,6 @@ jobs:
       - name: Download artifact
         uses: dawidd6/action-download-artifact@v2
         with:
-          workflow: test.yml
-          workflow_conclusion: success
           name: project
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
