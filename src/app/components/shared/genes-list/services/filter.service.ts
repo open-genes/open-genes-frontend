@@ -1,12 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Filter } from './filter.model';
 import { FilterTypesEnum } from './filter-types.enum';
+import { GenesListSettings } from '../genes-list-settings.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilterService {
+  private _listOfFields = new BehaviorSubject<any>('');
+  public currentFields = this._listOfFields.asObservable();
+
+  public listOfFields: GenesListSettings = {
+    // Default:
+    ifShowAge: true,
+    ifShowClasses: true,
+    ifShowExpression: true,
+    ifShowDiseases: true,
+    ifShowDiseaseCategories: false,
+    ifShowCriteria: true,
+    ifShowMethylation: false,
+  };
+
   public filters: Filter = {
     byName: false,
     byAge: false,
@@ -17,6 +32,14 @@ export class FilterService {
     byDiseaseCategories: '',
     bySelectionCriteria: '',
   };
+
+  constructor() {
+    this.updateFields(this.listOfFields);
+  }
+
+  public updateFields(fields) {
+    this._listOfFields.next(fields);
+  }
 
   // Filter
   public filterByFuncClusters(id: number): Observable<number[]> {

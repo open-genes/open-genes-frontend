@@ -2,16 +2,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
   Output,
-  TemplateRef,
-  ViewChild,
 } from '@angular/core';
-import { of, Observable, ReplaySubject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { PageClass } from '../../../pages/page.class';
 import { switchMap, takeLast, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,11 +18,11 @@ import { FavouritesService } from 'src/app/core/services/favourites.service';
 import { FilterService } from './services/filter.service';
 import { FilterTypesEnum } from './services/filter-types.enum';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { GenesListSettings } from './genes-list-settings.model';
 import { MatDialog } from '@angular/material/dialog';
 import { FileExportService } from '../../../core/services/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
+import { FieldsForShowComponent } from './components/fields-for-show/fields-for-show.component';
 
 @Component({
   selector: 'app-genes-list',
@@ -34,18 +31,12 @@ import { SnackBarComponent } from '../snack-bar/snack-bar.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
+  @Input() isMobile: boolean;
+  @Input() showSearchBar: boolean;
+  @Input() showFiltersPanel: boolean;
+  public isGoSearchPerformed: boolean;
   public inputData: Genes[] = [];
   public searchedData: Genes[] = [];
-  public listSettings: GenesListSettings = {
-    // Default:
-    ifShowAge: true,
-    ifShowClasses: true,
-    ifShowExpression: true,
-    ifShowDiseases: true,
-    ifShowDiseaseCategories: false,
-    ifShowCriteria: true,
-    ifShowMethylation: false,
-  };
 
   @Input()
   set dataSource(value: Genes[]) {
@@ -56,18 +47,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     return this.inputData;
   }
 
-  @Input() showSearch = true;
-  @Input() showFiltersPanel = true;
-
-  @Input() isGoSearchPerformed: boolean;
-  @Input() isMobile: boolean;
-
-  @Output() updateGenesList = new EventEmitter();
   @Output() loaded = new EventEmitter<boolean>();
-  @Output()
-  listSettingsChanged: EventEmitter<GenesListSettings> = new EventEmitter();
-
-  @ViewChild('filtersModalBody') dialogRef: TemplateRef<any>;
 
   public genesPerPage = 20;
   public loadedGenesQuantity = this.genesPerPage;
@@ -83,9 +63,10 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
+
   public downloadJsonLink: string | SafeResourceUrl = '#';
 
-  private subscription$ = new ReplaySubject(1);
+  private _subscription$ = new Subject();
 
   constructor(
     private readonly apiService: ApiService,
@@ -107,7 +88,8 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
+    this._subscription$.next();
+    this._subscription$.complete();
   }
 
   /**
@@ -130,7 +112,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
             return this.apiService.getGenesByFunctionalClusters(list);
           }
         }),
-        takeUntil(this.subscription$)
+        takeUntil(this._subscription$)
       )
       .subscribe(
         (genes) => {
@@ -153,7 +135,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
             return this.apiService.getGenesByExpressionChange(expression);
           }
         }),
-        takeUntil(this.subscription$)
+        takeUntil(this._subscription$)
       )
       .subscribe(
         (genes) => {
@@ -275,7 +257,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
       const request = query.toLowerCase();
       this.apiService
         .getGoTermMatchByString(request)
-        .pipe(takeUntil(this.subscription$))
+        .pipe(takeUntil(this._subscription$))
         .subscribe(
           (genes) => {
             this.searchedData = genes; // If nothing found, will return empty array
@@ -327,38 +309,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   private downloadSearch(data: any) {
     this.downloadJsonLink = this.fileExportService.downloadJson(data);
-  }
-
-  /**
-   * List view settings
-   */
-  // TODO: Refactor this method
-  changeGenesListSettings(parameter: string): void {
-    switch (parameter) {
-      case 'gene-age':
-        this.listSettings.ifShowAge = !this.listSettings.ifShowAge;
-        break;
-      case 'classes':
-        this.listSettings.ifShowClasses = !this.listSettings.ifShowClasses;
-        break;
-      case 'expression':
-        this.listSettings.ifShowExpression = !this.listSettings.ifShowExpression;
-        break;
-      case 'diseases':
-        this.listSettings.ifShowDiseases = !this.listSettings.ifShowDiseases;
-        break;
-      case 'disease-categories':
-        this.listSettings.ifShowDiseaseCategories = !this.listSettings.ifShowDiseaseCategories;
-        break;
-      case 'criteria':
-        this.listSettings.ifShowCriteria = !this.listSettings.ifShowCriteria;
-        break;
-      default:
-        break;
-    }
-    this.listSettings = { ...this.listSettings };
-    this.cdRef.markForCheck();
-    // this.listSettingsChanged.emit(this.listSettings);
   }
 
   /**
@@ -417,7 +367,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   private areMoreThan2FiltersApplied() {
     this.filterService
       .areMoreThan2FiltersApplied()
-      .pipe(takeUntil(this.subscription$))
+      .pipe(takeUntil(this._subscription$))
       .pipe(takeLast(1))
       .subscribe((areApplied: boolean) => {
         this.isClearFiltersBtnShown = areApplied;
@@ -432,15 +382,15 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     console.warn(context, error);
   }
 
+  /**
+   * Opening modal for list view settings
+   */
+
   public openFiltersModal(): void {
-    this.dialog.open(this.dialogRef, {
-      data: null,
+    this.dialog.open(FieldsForShowComponent, {
       panelClass: 'filters-modal',
       minWidth: '320px',
       maxWidth: '768px',
     });
-  }
-  public closeFiltersModal(): void {
-    this.dialog.closeAll();
   }
 }

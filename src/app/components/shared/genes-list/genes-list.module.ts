@@ -22,7 +22,8 @@ import { GenesTableHeaderComponent } from './components/genes-table-header/genes
 import { AssociatedDiseasesModule } from '../associated-diseases/associated-diseases.module';
 import { AssociatedDiseaseCategoriesModule } from '../associated-disease-categories/associated-disease-categories.module';
 import { GenesCardComponent } from './components/genes-card/genes-card.component';
-import { GeneTableRowComponent } from './components/gene-table-row/gene-table-row.component';
+import { GenesTableRowComponent } from './components/genes-table-row/genes-table-row.component';
+import { FieldsForShowComponent } from './components/fields-for-show/fields-for-show.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { GeneTableRowComponent } from './components/gene-table-row/gene-table-ro
     GeneMenuComponent,
     GenesTableHeaderComponent,
     GenesCardComponent,
-    GeneTableRowComponent,
+    GenesTableRowComponent,
+    FieldsForShowComponent,
   ],
   imports: [
     CommonModule,
@@ -53,6 +55,6 @@ import { GeneTableRowComponent } from './components/gene-table-row/gene-table-ro
     AssociatedDiseaseCategoriesModule,
   ],
   providers: [WindowService],
-  exports: [GenesListComponent, SearchComponent],
+  exports: [GenesListComponent, SearchComponent, GenesCardComponent, GenesTableRowComponent],
 })
 export class GenesListModule {}

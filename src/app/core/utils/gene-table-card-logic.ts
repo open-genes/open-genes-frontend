@@ -1,16 +1,16 @@
-import { EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
 import { Genes } from '../models';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
 import { FavouritesService } from '../services/favourites.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-export abstract class GeneTableCardLogic {
-  @Input() listSettings: GenesListSettings;
-  @Input() isGoTermsMode: boolean;
+export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
   @Input() item: Genes;
+  @Input() isGoTermsMode: boolean;
   @Input() goModeCellData: {
     biologicalProcess: any;
     cellularComponent: any;
@@ -24,13 +24,46 @@ export abstract class GeneTableCardLogic {
   @Output() diseaseCategories = new EventEmitter<number | string>();
   @Output() selectionCriteria = new EventEmitter<number | string>();
 
+  public listSettings: GenesListSettings;
   public filters = this._filterService.filters;
+
+  protected subscription$ = new Subject();
 
   protected constructor(
     protected _filterService: FilterService,
     protected _favouritesService: FavouritesService,
-    protected _snackBar: MatSnackBar
+    protected _snackBar: MatSnackBar,
+    protected _cdRef: ChangeDetectorRef
   ) {}
+
+  ngOnInit(): void {
+    this.updateCurrentFields();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.next();
+    this.subscription$.complete();
+  }
+
+  /**
+   * Update list view on card or table
+   */
+
+  protected updateCurrentFields() {
+    this._filterService.currentFields
+      .pipe(
+        takeUntil(this.subscription$)
+      )
+      .subscribe((fields) => {
+        this.listSettings = fields;
+        this._cdRef.markForCheck();
+      },
+      (error) => {
+        console.log(error);
+        this._cdRef.markForCheck();
+      }
+    );
+  }
 
   /**
    * get item id and send this to app-genes-list  (for filtering)
