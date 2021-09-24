@@ -1,6 +1,6 @@
 <ng-container *ngIf="showSearchBar">
   <app-search
-    [dataSource]="inputData"
+    [genesList]="inputData"
     (dataSourceChange)="updateGeneListOnTyping($event)"
     (isGoModeTriggered)="toggleGoSearchMode($event)"
     (isGoSearchTriggered)="searchGenesByGoTerm($event)"
@@ -15,8 +15,11 @@
 
   <!-- Filters -->
   <ng-container *ngIf="showFiltersPanel">
+
     <div class="view-panel">
+
       <div class="filters-group view-panel__filters">
+
         <button
           class="filter"
           (click)="sortBy('name')"
@@ -94,31 +97,32 @@
           <span class="fa far fa-plus"></span>
           {{ 'filters_modal_title' | translate }}
         </button>
+
       </div>
 
       <div class="view-panel__buttons">
+
         <a class="btn btn--small btn--purple"
            [href]="downloadJsonLink"
            target="_blank"
-           download="export.json"
-        >
+           download="export.json">
           <span class="fa far fa-download"></span> JSON
         </a>
 
         <button
-          *ngIf="!isMobile"
-          class="toggler __ml-10"
-          (click)="toggleGenesView()"
-          [ngClass]="asTableRow ? 'toggler--def' : 'toggler--alt'"
-          matTooltip="{{ 'gene_list_view' |translate }}"
-        >
+                *ngIf="!isMobile"
+                class="toggler __ml-10"
+                (click)="toggleGenesView()"
+                [ngClass]="asTableRow ? 'toggler--def' : 'toggler--alt'"
+          matTooltip="{{ 'gene_list_view' |translate }}">
           <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
-          <span
-            class="fa far fa-th-large toggler__icon toggler__icon--alt"
-          ></span>
+          <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
         </button>
+
       </div>
+
     </div>
+
   </ng-container>
 
 
@@ -137,9 +141,9 @@
         </thead>
 
         <app-genes-table-row *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+                             [item]="rowData"
                              [isGoTermsMode]="isGoTermsMode"
                              [goModeCellData]="goModeCellData"
-                             [item]="rowData"
                              (expressionChangeId)="filterByExpressionChange($event)"
                              (funcClusterId)="filterByFuncClusters($event)"
                              (methylationChange)="filterByMethylationChange($event)"
@@ -154,9 +158,9 @@
 
     <ng-container *ngIf="!asTableRow || isMobile">
       <app-genes-card class="card" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+                      [item]="rowData"
                       [isGoTermsMode]="isGoTermsMode"
                       [goModeCellData]="goModeCellData"
-                      [item]="rowData"
                       (expressionChangeId)="filterByExpressionChange($event)"
                       (funcClusterId)="filterByFuncClusters($event)"
                       (methylationChange)="filterByMethylationChange($event)"

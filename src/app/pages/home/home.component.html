@@ -89,24 +89,11 @@
               [isMobile]="isMobile"
               [showSearchBar]="true"
               [showFiltersPanel]="true"
-              (loaded)="setIsGenesListLoaded($event)"
-            >
-<!--              <app-genes-card class="card" *ngFor="let rowData of genes | slice: 0:genesPerPage"
-                              [isGoTermsMode]="isGoTermsMode"
-                              [goModeCellData]="goModeCellData"
-                              [listSettings]="listSettings"
-                              [item]="rowData"
-                              (expressionChangeId)="filterByExpressionChange($event)"
-                              (funcClusterId)="filterByFuncClusters($event)"
-                              (methylationChange)="filterByMethylationChange($event)"
-                              (diseaseName)="filterByDisease($event)"
-                              (diseaseCategories)="filterByDiseaseCategories($event)"
-                              (selectionCriteria)="filterBySelectionCriteria($event)">
-
-              </app-genes-card>-->
-
-
+              (loaded)="setIsGenesListLoaded($event)">
             </app-genes-list>
+
+
+
             <!-- When content is loading -->
             <app-spinner *ngIf="!genesListIsLoaded"></app-spinner>
           </div>

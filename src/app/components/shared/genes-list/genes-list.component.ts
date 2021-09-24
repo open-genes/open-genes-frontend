@@ -11,10 +11,8 @@ import {
 import { of, Subject } from 'rxjs';
 import { PageClass } from '../../../pages/page.class';
 import { switchMap, takeLast, takeUntil } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
-import { FavouritesService } from 'src/app/core/services/favourites.service';
 import { FilterService } from './services/filter.service';
 import { FilterTypesEnum } from './services/filter-types.enum';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -34,17 +32,13 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showSearchBar: boolean;
   @Input() showFiltersPanel: boolean;
-  public isGoSearchPerformed: boolean;
   public inputData: Genes[] = [];
   public searchedData: Genes[] = [];
 
   @Input()
   set dataSource(value: Genes[]) {
     this.inputData = value;
-    this.cdRef.markForCheck();
-  }
-  get dataSource(): Genes[] {
-    return this.inputData;
+    this._cdRef.markForCheck();
   }
 
   @Output() loaded = new EventEmitter<boolean>();
@@ -59,6 +53,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   public isGoTermsMode = false;
   public isGoTermsModeError = false;
+  public isGoSearchPerformed: boolean;
   public goModeCellData: any;
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
@@ -70,20 +65,16 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   constructor(
     private readonly apiService: ApiService,
-    private translate: TranslateService,
     private filterService: FilterService,
-    private snackBar: MatSnackBar,
-    private favouritesService: FavouritesService,
-    private readonly cdRef: ChangeDetectorRef,
-    private dialog: MatDialog,
-    private fileExportService: FileExportService
+    private fileExportService: FileExportService,
+    private _cdRef: ChangeDetectorRef,
+    private _snackBar: MatSnackBar,
+    private _dialog: MatDialog
   ) {
     super();
-    this.favouritesService.getItems();
   }
 
   ngOnInit(): void {
-    this.areMoreThan2FiltersApplied();
     this.setInitialState();
   }
 
@@ -99,7 +90,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     this.searchedData = this.inputData;
     this.downloadSearch(this.searchedData);
     this.loaded.emit(true);
-    this.cdRef.markForCheck();
+    this._cdRef.markForCheck();
   }
 
   public filterByFuncClusters(id: number): void {
@@ -119,7 +110,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
           this.searchedData = genes;
           this.downloadSearch(this.searchedData);
           this.areMoreThan2FiltersApplied();
-          this.cdRef.markForCheck();
+          this._cdRef.markForCheck();
         },
         (error) => this.errorLogger(this, error)
       );
@@ -142,7 +133,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
           this.searchedData = genes;
           this.downloadSearch(this.searchedData);
           this.areMoreThan2FiltersApplied();
-          this.cdRef.markForCheck();
+          this._cdRef.markForCheck();
         },
         (error) => this.errorLogger(this, error)
       );
@@ -166,7 +157,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     }
     this.downloadSearch(this.searchedData);
     this.areMoreThan2FiltersApplied();
-    this.cdRef.markForCheck();
+    this._cdRef.markForCheck();
   }
 
   public filterByMethylationChange(correlation: string): void {
@@ -186,7 +177,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     }
     this.downloadSearch(this.searchedData);
     this.areMoreThan2FiltersApplied();
-    this.cdRef.markForCheck();
+    this._cdRef.markForCheck();
   }
 
   public filterByDisease(name: string): void {
@@ -206,7 +197,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     }
     this.downloadSearch(this.searchedData);
     this.areMoreThan2FiltersApplied();
-    this.cdRef.markForCheck();
+    this._cdRef.markForCheck();
   }
 
   public filterByDiseaseCategories(category: string): void {
@@ -228,7 +219,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     result.subscribe((x) => {
       this.searchedData = x;
 
-      this.snackBar.openFromComponent(SnackBarComponent, {
+      this._snackBar.openFromComponent(SnackBarComponent, {
         data: {
           title: 'items_found',
           length: this.searchedData ? this.searchedData.length : 0,
@@ -280,20 +271,20 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
               molecularActivity: this.molecularActivity,
             };
 
-            this.snackBar.openFromComponent(SnackBarComponent, {
+            this._snackBar.openFromComponent(SnackBarComponent, {
               data: {
                 title: 'items_found',
                 length: this.searchedData?.length,
               },
             });
 
-            this.cdRef.markForCheck();
+            this._cdRef.markForCheck();
           },
           (error) => this.errorLogger(this, error)
         );
     } else {
       this.isGoSearchPerformed = false;
-      this.cdRef.markForCheck();
+      this._cdRef.markForCheck();
     }
   }
 
@@ -305,7 +296,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   /**
-   * List donwnload
+   * List for download
    */
   private downloadSearch(data: any) {
     this.downloadJsonLink = this.fileExportService.downloadJson(data);
@@ -342,7 +333,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     }
 
     this.areMoreThan2FiltersApplied();
-    this.cdRef.markForCheck();
+    this._cdRef.markForCheck();
   }
 
   private reverse() {
@@ -367,11 +358,10 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   private areMoreThan2FiltersApplied() {
     this.filterService
       .areMoreThan2FiltersApplied()
-      .pipe(takeUntil(this._subscription$))
-      .pipe(takeLast(1))
+      .pipe(takeLast(1), takeUntil(this._subscription$))
       .subscribe((areApplied: boolean) => {
         this.isClearFiltersBtnShown = areApplied;
-        this.cdRef.markForCheck();
+        this._cdRef.markForCheck();
       });
   }
 
@@ -387,7 +377,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
 
   public openFiltersModal(): void {
-    this.dialog.open(FieldsForShowComponent, {
+    this._dialog.open(FieldsForShowComponent, {
       panelClass: 'filters-modal',
       minWidth: '320px',
       maxWidth: '768px',

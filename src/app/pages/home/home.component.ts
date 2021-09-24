@@ -21,7 +21,6 @@ import { WindowService } from '../../core/services/browser/window.service';
 })
 export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public genes: Genes[];
-  public genesPerPage = 20;
   public lastGenes: Genes[];
   public isAvailable = true;
   public genesListIsLoaded = false;
@@ -73,9 +72,13 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   public getLastEditedGenes(): void {
-    this.apiService.getLastEditedGene().subscribe((genes) => {
-      this.lastGenes = genes;
-    });
+    this.apiService
+      .getLastEditedGene()
+      .pipe(takeUntil(this.subscription$))
+      .subscribe((genes) => {
+        this.lastGenes = genes;
+        this.cdRef.markForCheck();
+      });
   }
 
   public setIsGenesListLoaded(event: boolean): void {
