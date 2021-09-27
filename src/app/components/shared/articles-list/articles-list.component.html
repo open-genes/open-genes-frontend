@@ -118,15 +118,18 @@
   </ng-template>
 </ng-container>
 
-<app-no-content
-  *ngIf="articlesTotal === 0 || translate.currentLang === 'en'"
-  [title]="'news_page_no_articles'">
-  <ng-container icon>
-    <app-icon
-      icon="no-content-language"
-    ></app-icon>
-  </ng-container>
-</app-no-content>
+<div class="col-12">
+  <app-no-content
+    *ngIf="articlesTotal === 0 || translate.currentLang === 'en'"
+    [title]="'news_page_no_articles'">
+    <ng-container icon>
+      <app-icon
+        icon="no-content-language"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
+</div>
+
 
 
 <ng-template #articleModalBody let-data>

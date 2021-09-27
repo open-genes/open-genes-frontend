@@ -41,12 +41,13 @@
   ></app-skeleton>
 </ng-template>
 
-<app-no-content
-  *ngIf="error"
-  [title]="'news_page_no_news'">
-  <ng-container icon>
-    <app-icon
-      icon="no-content-default"
-    ></app-icon>
-  </ng-container>
-</app-no-content>
+<section *ngIf="error">
+  <app-no-content
+    [title]="'news_page_no_news'">
+    <ng-container icon>
+      <app-icon
+        icon="no-content-default"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
+</section>

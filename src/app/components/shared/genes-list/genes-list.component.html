@@ -166,29 +166,32 @@
 </ng-container>
 
 <!-- No content error message -->
-<app-no-content
+<section
   *ngIf="
-    (isGoTermsMode && isGoSearchPerformed && searchedData?.length == 0) ||
-    (!isGoTermsMode && searchedData?.length == 0)"
-  [title]="'nothing_found'">
-  <ng-container icon>
-    <app-icon
-      icon="no-content-default"
-    ></app-icon>
-  </ng-container>
-</app-no-content>
+      (isGoTermsMode && isGoSearchPerformed && searchedData?.length == 0) ||
+      (!isGoTermsMode && searchedData?.length == 0)">
+<app-no-content
+    [title]="'nothing_found'">
+    <ng-container icon>
+      <app-icon
+        icon="no-content-default"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
+</section>
 
 <!-- GO search mode start message -->
-<app-no-content
-  *ngIf="isGoTermsMode && !isGoSearchPerformed"
-  [title]="'go_results_start_typing'">
-  <ng-container icon>
-    <app-icon
-      icon="no-content-default"
-    ></app-icon>
-  </ng-container>
-</app-no-content>
-
+<section *ngIf="isGoTermsMode && !isGoSearchPerformed">
+  <app-no-content
+    *ngIf="isGoTermsMode && !isGoSearchPerformed"
+    [title]="'go_results_start_typing'">
+    <ng-container icon>
+      <app-icon
+        icon="no-content-default"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
+</section>
 
 
 <!-- Templates -->

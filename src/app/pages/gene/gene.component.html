@@ -277,14 +277,16 @@
               </div>
 
               <ng-template #noContent>
-                <app-no-content
-                  [title]="'gene_page_error_no_article_yet'">
-                  <ng-container icon>
-                    <app-icon
-                      icon="no-content-default"
-                    ></app-icon>
-                  </ng-container>
-                </app-no-content>
+                <section class="col-12">
+                  <app-no-content
+                    [title]="'gene_page_error_no_article_yet'">
+                    <ng-container icon>
+                      <app-icon
+                        icon="no-content-default"
+                      ></app-icon>
+                    </ng-container>
+                  </app-no-content>
+                </section>
               </ng-template>
             </section>
           </div>

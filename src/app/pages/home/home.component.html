@@ -99,18 +99,20 @@
 </div>
 
 <ng-template #errorMessage>
-  <app-no-content
-    size="small"
-    [title]="'error_connection'">
-    <ng-container icon>
-      <app-icon
-        icon="no-content-default"
-      ></app-icon>
-    </ng-container>
-    <ng-container description>
-      <p>({{ errorStatus }})</p>
-    </ng-container>
-  </app-no-content>
+  <section class="col-12">
+    <app-no-content
+      size="small"
+      [title]="'error_connection'">
+      <ng-container icon>
+        <app-icon
+          icon="no-content-default"
+        ></app-icon>
+      </ng-container>
+      <ng-container description>
+        <p>({{ errorStatus }})</p>
+      </ng-container>
+    </app-no-content>
+  </section>
 </ng-template>
 
 <ng-template #wizardBanner let-classes>

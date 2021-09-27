@@ -17,20 +17,22 @@
 </div>
 
 <ng-template #noContent>
-  <app-no-content
-    [title]="'favourites_no_data'">
-    <ng-container icon>
-      <app-icon
-        icon="no-content-default"
-      ></app-icon>
-    </ng-container>
-    <ng-container description>
-      <div class="no-content__button">
-        <a mat-flat-button color="primary" href="/">{{ "favourites_go_to_home_page" | translate }}
-        </a>
-      </div>
-    </ng-container>
-  </app-no-content>
+  <section class="container">
+    <app-no-content
+      [title]="'favourites_no_data'">
+      <ng-container icon>
+        <app-icon
+          icon="no-content-default"
+        ></app-icon>
+      </ng-container>
+      <ng-container description>
+        <div class="no-content__button">
+          <a mat-flat-button color="primary" href="/">{{ "favourites_go_to_home_page" | translate }}
+          </a>
+        </div>
+      </ng-container>
+    </app-no-content>
+  </section>
 </ng-template>
 
 
