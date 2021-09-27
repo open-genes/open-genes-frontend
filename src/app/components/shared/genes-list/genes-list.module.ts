@@ -24,6 +24,7 @@ import { AssociatedDiseaseCategoriesModule } from '../associated-disease-categor
 import { GenesCardComponent } from './components/genes-card/genes-card.component';
 import { GenesTableRowComponent } from './components/genes-table-row/genes-table-row.component';
 import { FieldsForShowComponent } from './components/fields-for-show/fields-for-show.component';
+import { FilterPanelComponent } from './components/filter-panel/filter-panel.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { FieldsForShowComponent } from './components/fields-for-show/fields-for-
     GenesCardComponent,
     GenesTableRowComponent,
     FieldsForShowComponent,
+    FilterPanelComponent,
   ],
   imports: [
     CommonModule,

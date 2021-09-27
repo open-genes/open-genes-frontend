@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
 import { Observable, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Filter } from '../../components/shared/genes-list/services/filter.model';
 
 export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
   @Input() item: Genes;
@@ -25,7 +26,7 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
   @Output() selectionCriteria = new EventEmitter<number | string>();
 
   public listSettings: GenesListSettings;
-  public filters = this._filterService.filters;
+  public filters: Filter = this._filterService.filters;
 
   protected subscription$ = new Subject();
 
