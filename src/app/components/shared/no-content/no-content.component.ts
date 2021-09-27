@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class NoContentComponent implements OnInit {
   @Input() title: string;
   @Input() iconUrl: string;
+  @Input() size: 'small' | 'medium' | 'large' = 'medium';
 
   constructor() {}
 

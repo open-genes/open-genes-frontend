@@ -1,0 +1,58 @@
+@import "../../styles";
+
+:root {
+  display: inline-block;
+  width: 100%;
+}
+
+.no-content {
+  width: 100%;
+  padding: 0;
+
+  &__inner {
+    margin: 0 auto;
+    width: 100%;
+    padding: 20px;
+    font-size: 10px;
+    text-align: center;
+    background-color: $color-white;
+    border: 1px solid $color-border-light;
+    border-radius: $border-radius-medium;
+  }
+
+  // TODO: use app-icon component and svg sprites
+  &__icon {
+    display: inline-block;
+    width: 10em;
+    height: 10em;
+  }
+
+  &__title {
+    width: 100%;
+    color: $color-indent;
+    margin-top: 15px;
+
+    .title__center {
+      display: inline-block;
+      max-width: 320px;
+      font-size: 2em;
+      font-weight: $font-weight-medium;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    margin-top: 25px;
+
+    a,
+    button {
+      margin: 0 auto;
+    }
+  }
+
+  &--mini {
+    .no-content__inner {
+      font-size: 7px;
+    }
+  }
+}
