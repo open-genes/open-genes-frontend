@@ -43,6 +43,10 @@
 
 <app-no-content
   *ngIf="error"
-  [title]="'news_page_no_news'"
-  [iconUrl]="'no-content__icon-standard'">
+  [title]="'news_page_no_news'">
+  <ng-container icon>
+    <app-icon
+      icon="no-content-default"
+    ></app-icon>
+  </ng-container>
 </app-no-content>

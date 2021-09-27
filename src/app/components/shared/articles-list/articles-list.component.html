@@ -120,8 +120,12 @@
 
 <app-no-content
   *ngIf="articlesTotal === 0 || translate.currentLang === 'en'"
-  [title]="'news_page_no_articles'"
-  [iconUrl]="'no-content__icon-language'">
+  [title]="'news_page_no_articles'">
+  <ng-container icon>
+    <app-icon
+      icon="no-content-language"
+    ></app-icon>
+  </ng-container>
 </app-no-content>
 
 

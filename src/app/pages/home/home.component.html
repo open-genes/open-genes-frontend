@@ -100,9 +100,16 @@
 
 <ng-template #errorMessage>
   <app-no-content
-    [title]="'error_connection'"
-    [iconUrl]="'no-content__icon-standard'">
-    <p>({{ errorStatus }})</p>
+    size="small"
+    [title]="'error_connection'">
+    <ng-container icon>
+      <app-icon
+        icon="no-content-default"
+      ></app-icon>
+    </ng-container>
+    <ng-container description>
+      <p>({{ errorStatus }})</p>
+    </ng-container>
   </app-no-content>
 </ng-template>
 

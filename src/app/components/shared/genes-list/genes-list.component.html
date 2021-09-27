@@ -170,15 +170,23 @@
   *ngIf="
     (isGoTermsMode && isGoSearchPerformed && searchedData?.length == 0) ||
     (!isGoTermsMode && searchedData?.length == 0)"
-  [title]="'nothing_found'"
-  [iconUrl]="'no-content__icon-standard'">
+  [title]="'nothing_found'">
+  <ng-container icon>
+    <app-icon
+      icon="no-content-default"
+    ></app-icon>
+  </ng-container>
 </app-no-content>
 
 <!-- GO search mode start message -->
 <app-no-content
   *ngIf="isGoTermsMode && !isGoSearchPerformed"
-  [title]="'go_results_start_typing'"
-  [iconUrl]="'no-content__icon-standard'">
+  [title]="'go_results_start_typing'">
+  <ng-container icon>
+    <app-icon
+      icon="no-content-default"
+    ></app-icon>
+  </ng-container>
 </app-no-content>
 
 

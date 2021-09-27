@@ -18,12 +18,18 @@
 
 <ng-template #noContent>
   <app-no-content
-    [title]="'favourites_no_data'"
-    [iconUrl]="'no-content__icon-standard'">
-    <div class="no-content__button">
-      <a mat-flat-button color="primary" href="/">{{ "favourites_go_to_home_page" | translate }}
-      </a>
-    </div>
+    [title]="'favourites_no_data'">
+    <ng-container icon>
+      <app-icon
+        icon="no-content-default"
+      ></app-icon>
+    </ng-container>
+    <ng-container description>
+      <div class="no-content__button">
+        <a mat-flat-button color="primary" href="/">{{ "favourites_go_to_home_page" | translate }}
+        </a>
+      </div>
+    </ng-container>
   </app-no-content>
 </ng-template>
 

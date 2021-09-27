@@ -20,6 +20,7 @@ import { UiComponentsModule } from '../../components/ui-components/ui-components
 import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 import { DirectivesModule } from '../../directives/directives.module';
 import { NoContentModule } from '../../components/shared/no-content/no-content.module';
+import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { NoContentModule } from '../../components/shared/no-content/no-content.m
     SidebarModule,
     DirectivesModule,
     NoContentModule,
+    IconModule,
   ],
 })
 export class GeneModule {}

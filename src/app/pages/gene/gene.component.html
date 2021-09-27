@@ -278,8 +278,12 @@
 
               <ng-template #noContent>
                 <app-no-content
-                  [title]="'gene_page_error_no_article_yet'"
-                  [iconUrl]="'no-content__icon-standard'">
+                  [title]="'gene_page_error_no_article_yet'">
+                  <ng-container icon>
+                    <app-icon
+                      icon="no-content-default"
+                    ></app-icon>
+                  </ng-container>
                 </app-no-content>
               </ng-template>
             </section>

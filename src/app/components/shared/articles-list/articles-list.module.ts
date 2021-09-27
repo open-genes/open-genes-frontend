@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../../../modules/vendors/material.module';
 import { NgTruncatePipeModule } from 'angular-pipes';
 import { NoContentModule } from '../no-content/no-content.module';
+import { IconModule } from '../../ui-components/components/icon/app-icon.module';
 
 @NgModule({
   declarations: [ArticlesListComponent],
@@ -20,6 +21,7 @@ import { NoContentModule } from '../no-content/no-content.module';
     MaterialModule,
     NgTruncatePipeModule,
     NoContentModule,
+    IconModule,
   ],
   exports: [ArticlesListComponent],
 })

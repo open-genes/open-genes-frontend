@@ -29,7 +29,6 @@ import { IconModule } from './components/ui-components/components/icon/app-icon.
 import { GoogleAnalyticsModule } from './modules/vendors/google-analytics.module';
 import { DirectivesModule } from './directives/directives.module';
 import { TermsModule } from './components/shared/terms/terms.module';
-import { NoContentModule } from './components/shared/no-content/no-content.module';
 
 // required for AOT compilation
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
@@ -62,7 +61,6 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     GoogleAnalyticsModule,
     DirectivesModule,
     TermsModule,
-    NoContentModule,
   ],
   providers: [TranslateService, { provide: LOCALE_ID, useValue: 'ru' }],
   exports: [MaterialModule],

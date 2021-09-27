@@ -16,6 +16,7 @@ import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 import { MatIconModule } from '@angular/material/icon';
 import { WizardModule } from '../../components/shared/wizard/wizard.module';
 import { NoContentModule } from '../../components/shared/no-content/no-content.module';
+import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
 
 @NgModule({
   declarations: [HomeComponent, MiniCardsComponent],
@@ -34,6 +35,7 @@ import { NoContentModule } from '../../components/shared/no-content/no-content.m
     MatIconModule,
     WizardModule,
     NoContentModule,
+    IconModule,
   ],
   exports: [PipesModule],
 })
