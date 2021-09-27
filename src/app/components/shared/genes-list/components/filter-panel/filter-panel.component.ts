@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FilterTypesEnum } from '../../services/filter-types.enum';
 import { FilterService } from '../../services/filter.service';
 import { FieldsForShowComponent } from '../fields-for-show/fields-for-show.component';
@@ -19,7 +12,7 @@ import { Filter } from '../../services/filter.model';
   styleUrls: ['./filter-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilterPanelComponent implements OnInit {
+export class FilterPanelComponent {
   @Input() isMobile: boolean;
   @Input() isGoTermsMode: boolean;
   @Input() downloadJsonLink: string | SafeResourceUrl = '#';
@@ -33,9 +26,9 @@ export class FilterPanelComponent implements OnInit {
   public isTableView = true;
   public isClear$ = this._filterService.isClearFiltersBtnShown;
 
-  constructor(private _filterService: FilterService, private _dialog: MatDialog) {}
-
-  ngOnInit(): void {}
+  constructor(
+    private _filterService: FilterService, private _dialog: MatDialog
+  ) {}
 
   /**
    * Send clear filter item

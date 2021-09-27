@@ -9,7 +9,7 @@ import { GenesListSettings } from '../genes-list-settings.model';
 })
 export class FilterService {
   private _listOfFields = new BehaviorSubject<any>('');
-  public currentFields = this._listOfFields.asObservable();
+  public currentFields: Observable<GenesListSettings> = this._listOfFields.asObservable();
 
   public isClearFiltersBtnShown = new BehaviorSubject<boolean>(false);
 
