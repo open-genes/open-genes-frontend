@@ -55,7 +55,9 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     return this.inputData;
   }
 
-  @Input() isFilterPanel = true;
+  @Input() showSearch = true;
+  @Input() showFiltersPanel = true;
+
   @Input() isGoSearchPerformed: boolean;
   @Input() isMobile: boolean;
 
@@ -166,28 +168,76 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
       );
   }
 
+  public filterBySelectionCriteria(id: string): void {
+    this.filterService.filterBySelectionCriteria(id);
+    // TODO: DRY
+    if (id) {
+      const check = [];
+      this.searchedData = this.searchedData.filter((gene) => {
+        for (const [key, value] of Object.entries(gene.commentCause)) {
+          if (id === key) {
+            check.push(id);
+          }
+          if (check.length !== 0) {
+            return id === key;
+          }
+        }
+      });
+    }
+    this.downloadSearch(this.searchedData);
+    this.areMoreThan2FiltersApplied();
+    this.cdRef.markForCheck();
+  }
+
   public filterByMethylationChange(correlation: string): void {
     this.filterService.filterByMethylationChange(correlation);
-    this.filterService
-      .getByExpressionChange()
-      .pipe(takeUntil(this.subscription$))
-      .subscribe(
-        (expression) => {
-          if (expression) {
-            this.apiService.getGenes().subscribe(
-              (genes) => {
-                // TODO: special endpoint
-                this.searchedData = genes;
-                this.downloadSearch(this.searchedData);
-                this.areMoreThan2FiltersApplied();
-                this.cdRef.markForCheck();
-              },
-              (error) => this.errorLogger(this, error)
-            );
+    if (name) {
+      const check = [];
+      this.searchedData = this.searchedData.filter((gene) => {
+        Object.values(gene.methylationCorrelation).forEach((item) => {
+          if (correlation === item) {
+            check.push(correlation);
           }
-        },
-        (error) => this.errorLogger(this, error)
-      );
+          if (check.length !== 0) {
+            return correlation === item;
+          }
+        });
+      });
+    }
+    this.downloadSearch(this.searchedData);
+    this.areMoreThan2FiltersApplied();
+    this.cdRef.markForCheck();
+  }
+
+  public filterByDisease(name: string): void {
+    this.filterService.filterByDisease(name);
+    if (name) {
+      const check = [];
+      this.searchedData = this.searchedData.filter((gene) => {
+        for (const [key, value] of Object.entries(gene.diseases)) {
+          if (name === String(value['name'])) {
+            check.push(name);
+          }
+          if (check.length !== 0) {
+            return name === String(value['name']);
+          }
+        }
+      });
+    }
+    this.downloadSearch(this.searchedData);
+    this.areMoreThan2FiltersApplied();
+    this.cdRef.markForCheck();
+  }
+
+  public filterByDiseaseCategories(category: string): void {
+    this.filterService.filterByDiseaseCategories(category);
+    if (category) {
+      this.searchedData = this.searchedData.filter((gene) => {
+        for (const [key, value] of Object.entries(gene.diseaseCategories)) {
+          return category === key;
+        }
+      });
+    }
   }
 
   /**
@@ -428,7 +478,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public openFiltersModal(): void {
     this.dialog.open(this.dialogRef, {
       data: null,
-      panelClass: 'comment-modal',
+      panelClass: 'filters-modal',
       minWidth: '320px',
       maxWidth: '768px',
     });

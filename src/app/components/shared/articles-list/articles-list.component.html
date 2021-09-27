@@ -34,11 +34,17 @@
                   (click)="openArticleModal(article.slug)"
                   [ngClass]="isAnyArticleModalOpen? '__disabled': ''"
                   class="article__image"
-                  [style.backgroundImage]="
-              article.image.src.length !== 0
-                ? 'url(' + article.image.src2x + ')'
-                : 'url(' + defaultCover + ')'"
-                ></div>
+                >
+                  <img
+                    (error)="imgErrorHandler($event, defaultCover)"
+                    src="{{ article.image.src2x ? article.image.src2x : defaultCover }}"
+                    srcset="{{
+                        article.image.src2x ? article.image.src2x : defaultCover + ' 480w,' +
+                        article.image.src ? article.image.src : defaultCover + ' 800w,'
+                    }}"
+                    sizes="(max-width: 480px) 440px,800px"
+                    alt="">
+                </div>
                 <div class="article__text">
                   <h3 (click)="openArticleModal(article.slug)"
                       [ngClass]="isAnyArticleModalOpen? '__disabled': ''">
@@ -73,13 +79,15 @@
                 : '#'"
                 class="article__author"
               >
-                <div
-                  class="author__avatar"
-                  [style.backgroundImage]="
-              article.author.avatar.length !== 0
-                ? 'url(' + article.author.avatar + ')'
-                : 'url(' + defaultAvatar + ')'"
-                ></div>
+                <div class="author__avatar">
+                  <div class="avatar">
+                    <img src="{{ article.author.avatar
+                                ? article.author.avatar
+                                : defaultAvatar }}"
+                         alt=""
+                         (error)="imgErrorHandler($event, defaultAvatar)">
+                  </div>
+                </div>
                 <div class="author__name">
                   {{ article.author.name }}
                 </div>
@@ -119,30 +127,27 @@
 
 <ng-template #articleModalBody let-data>
   <div class="article-modal__header" mat-dialog-title>
-    {{ data.title }} {{ data?.subtitle }}
-
+    <span>{{ data?.title }}</span>
+    <span>{{ data?.subtitle }}</span>
     <button mat-icon-button
             class="close-button"
             (click)="closeArticleModal()"
             aria-label="Закрыть">
       <span class="fa fal fa-times"></span>
     </button>
-    <ng-container *ngIf="isMocked"> <!-- temporarily disabled -->
-      <!-- TODO: transfer this logic into a modal window class -->
-      <ng-container *ngFor="let item of data.content">
-        <ng-container *ngIf="item?.type === 'image-widget'">
-          <div *ngIf="item?.content?.image?.url?.src.length !== 0"
-               class="article-modal__cover">
-            <img [src]="'url(' + item?.content?.image?.url?.src + ')'"
-                 alt="">
-          </div>
-        </ng-container>
-      </ng-container>
-    </ng-container>
   </div>
-    <mat-dialog-content *ngFor="let item of data.content">
-      <ng-container *ngIf="item?.type === 'editor'">
-        <article class="article-modal__body" [innerHTML]="item.content.text"></article>
-      </ng-container>
-    </mat-dialog-content>
+  <mat-dialog-content>
+    <ng-container *ngIf="data?.image?.url?.src.length !== 0">
+        <div class="article-modal__cover">
+          <img [src]=data.image?.url?.src
+               alt="">
+        </div>
+    </ng-container>
+
+    <div class="article-modal__body">
+      <article *ngFor="let item of data.description">
+        <span [innerHTML]="item.content?.text | safe: 'html'"></span>
+      </article>
+    </div>
+  </mat-dialog-content>
 </ng-template>

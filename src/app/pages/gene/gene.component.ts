@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
@@ -7,7 +7,8 @@ import { takeUntil } from 'rxjs/operators';
 import { PageClass } from '../page.class';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { TermsComponent } from '../../components/shared/terms/terms.component';
+import { SettingsService } from '../../core/services/settings.service';
+import { Settings } from '../../core/models/settings.model';
 
 @Component({
   selector: 'app-gene',
@@ -15,6 +16,8 @@ import { TermsComponent } from '../../components/shared/terms/terms.component';
   styleUrls: ['./gene.component.scss'],
 })
 export class GeneComponent extends PageClass implements OnInit, OnDestroy {
+  @ViewChild('UiHints') UiHints: TemplateRef<any>;
+
   public gene: any;
   public symbol: string;
   public dateInitial = 1562960035; // July 12 2019 - date when the first data was added
@@ -32,15 +35,18 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   public isAnyResearchFilled: boolean;
   public isAnyStrongResearchFilled: boolean;
   public isGeneCandidate = false;
+  public isUiHintsSettingOn: boolean;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
+  private retrievedSettings: Settings;
 
   constructor(
     public translate: TranslateService,
     private activateRoute: ActivatedRoute,
-    private _bottomSheet: MatBottomSheet,
     private router: Router,
+    private _bottomSheet: MatBottomSheet,
+    private settingsService: SettingsService,
     private apiService: ApiService
   ) {
     super();
@@ -59,96 +65,85 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.retrievedSettings = this.settingsService.getSettings();
+    this.isUiHintsSettingOn = this.retrievedSettings.showUiHints;
+
     this.apiService
       .getGeneByHGNCsymbol(this.symbol)
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((response) => {
-        this.gene = response;
+      .subscribe(
+        (response) => {
+          this.gene = response;
 
-        // Map fields
-        this.geneOntologyProcessMap = this.toMap(
-          this.gene.terms.biological_process
-        );
-        this.geneOntologyComponentMap = this.toMap(
-          this.gene.terms.cellular_component
-        );
-        this.geneOntologyActivityMap = this.toMap(
-          this.gene.terms.molecular_activity
-        );
-        this.expressionMaxValue = GeneComponent.chartMaxValue(
-          this.gene.expression
-        );
-        this.commentsReferenceLinksMap = this.toMap(
-          this.gene.commentsReferenceLinks
-        );
+          // Map fields
+          this.geneOntologyProcessMap = this.toMap(this.gene.terms.biological_process);
+          this.geneOntologyComponentMap = this.toMap(this.gene.terms.cellular_component);
+          this.geneOntologyActivityMap = this.toMap(this.gene.terms.molecular_activity);
+          this.expressionMaxValue = GeneComponent.chartMaxValue(this.gene.expression);
+          this.commentsReferenceLinksMap = this.toMap(this.gene.commentsReferenceLinks);
 
-        // Traits to define if content exists
-        const researchesLengths = [];
-        Object.values(this.gene.researches).forEach((value) => {
-          researchesLengths.push(Number(Object.entries(value).length));
-        });
-        this.isAnyResearchFilled = Math.max(...researchesLengths) !== 0;
-
-        const strongResearches = [
-          ...this.gene.researches?.increaseLifespan,
-          ...this.gene.researches?.ageRelatedChangesOfGene,
-          ...this.gene.researches?.interventionToGeneImprovesVitalProcesses,
-          ...this.gene.researches?.geneAssociatedWithProgeriaSyndromes,
-          ...this.gene.researches?.geneAssociatedWithLongevityEffects,
-        ];
-
-        if (strongResearches.length !== 0) {
-          const strongResearchesLengths = [];
-          strongResearches.forEach((value) => {
-            strongResearchesLengths.push(Number(Object.entries(value).length));
+          // Traits to define if content exists
+          const researchesLengths = [];
+          Object.values(this.gene.researches).forEach((value) => {
+            researchesLengths.push(Number(Object.entries(value).length));
           });
-          this.isAnyStrongResearchFilled =
-            Math.max(...strongResearchesLengths) !== 0;
-        } else {
-          this.isAnyStrongResearchFilled = false;
-        }
+          this.isAnyResearchFilled = Math.max(...researchesLengths) !== 0;
 
-        if (this.isAnyStrongResearchFilled) {
-          this.isGeneCandidate = false;
-        } else if (
-          (!!this.gene.researches?.proteinRegulatesOtherGenes &&
-            this.gene.researches.proteinRegulatesOtherGenes !== 0) ||
-          (!!this.gene.researches?.additionalEvidences &&
-            this.gene.researches.additionalEvidences.length !== 0)
-        ) {
-          this.isGeneCandidate = true;
-        }
+          const strongResearches = [
+            ...this.gene.researches?.increaseLifespan,
+            ...this.gene.researches?.ageRelatedChangesOfGene,
+            ...this.gene.researches?.interventionToGeneImprovesVitalProcesses,
+            ...this.gene.researches?.geneAssociatedWithProgeriaSyndromes,
+            ...this.gene.researches?.geneAssociatedWithLongevityEffects,
+          ];
 
-        this.isAnyOrtholog =
-          Object.values(this.gene.orthologs).toString() !== ''; // TODO: backend: instead of {"":""} should be an empty array of objects
-        this.isHpa = this.gene.human_protein_atlas !== '';
+          if (strongResearches.length !== 0) {
+            const strongResearchesLengths = [];
+            strongResearches.forEach((value) => {
+              strongResearchesLengths.push(Number(Object.entries(value).length));
+            });
+            this.isAnyStrongResearchFilled = Math.max(...strongResearchesLengths) !== 0;
+          } else {
+            this.isAnyStrongResearchFilled = false;
+          }
 
-        this.isAnyContent =
-          this.gene?.commentEvolution ||
-          this.gene?.commentFunction ||
-          this.gene?.commentCause.length !== 0 ||
-          this.gene?.commentAging ||
-          this.isAnyResearchFilled ||
-          this.gene?.expression.length !== 0 ||
-          this.isAnyOrtholog ||
-          this.gene?.terms;
+          if (this.isAnyStrongResearchFilled) {
+            this.isGeneCandidate = false;
+          } else if (
+            (!!this.gene.researches?.proteinRegulatesOtherGenes &&
+              this.gene.researches.proteinRegulatesOtherGenes !== 0) ||
+            (!!this.gene.researches?.additionalEvidences && this.gene.researches.additionalEvidences.length !== 0)
+          ) {
+            this.isGeneCandidate = true;
+          }
 
-        this.isAnyGoCategory =
-          this.gene?.terms.biological_process.length >= 1 ||
-          this.gene?.terms.cellular_component.length >= 1 ||
-          this.gene?.terms.molecular_activity.length >= 1;
+          this.isAnyOrtholog = Object.values(this.gene.orthologs).toString() !== ''; // TODO: backend: instead of {"":""} should be an empty array of objects
+          this.isHpa = this.gene.human_protein_atlas !== '';
 
-        this.isNcbiDescription = this.gene?.descriptionNCBI.length !== 0;
+          this.isAnyContent =
+            this.gene?.commentEvolution ||
+            this.gene?.commentFunction ||
+            this.gene?.commentCause.length !== 0 ||
+            this.gene?.commentAging ||
+            this.isAnyResearchFilled ||
+            this.gene?.expression.length !== 0 ||
+            this.isAnyOrtholog ||
+            this.gene?.terms;
 
-        this.isLocationData =
-          this.gene?.band?.length ||
-          this.gene?.locationStart?.length ||
-          this.gene?.locationEnd?.length;
+          this.isAnyGoCategory =
+            this.gene?.terms.biological_process.length >= 1 ||
+            this.gene?.terms.cellular_component.length >= 1 ||
+            this.gene?.terms.molecular_activity.length >= 1;
 
-        // TODO: Set properties which values depend on a selected language
+          this.isNcbiDescription = this.gene?.descriptionNCBI.length !== 0;
+
+          this.isLocationData =
+            this.gene?.band?.length || this.gene?.locationStart?.length || this.gene?.locationEnd?.length;
+
+          // TODO: Set properties which values depend on a selected language
         },
         (error: HttpErrorResponse) => {
-          this.router.navigate(['/404']);
+          void this.router.navigate(['/404']);
         }
       );
   }
@@ -157,17 +152,15 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
     this.routeSubscribe.unsubscribe();
+    this._bottomSheet.dismiss();
   }
 
-  public showTermInfo(ev: MouseEvent, title: string, description: string): void {
-    this._bottomSheet.open(TermsComponent, {
-      data: {
-        term: {
-          title: title,
-          description: description,
-        }
-      }
-    });
+  public onShowUiHints(ev: MouseEvent): void {
+    this._bottomSheet.open(this.UiHints, {});
     ev.preventDefault();
+  }
+
+  public onCloseUiHints(): void {
+    this._bottomSheet.dismiss();
   }
 }

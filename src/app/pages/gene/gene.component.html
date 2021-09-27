@@ -111,6 +111,11 @@
                   <div class="type__inner">
                     <div class="type__title">
                       {{ 'phylogeny' | translate }}
+
+                      <span class="fa far fa-info-circle"
+                            *ngIf="isUiHintsSettingOn"
+                            (click)="onShowUiHints($event)"></span>
+
                     </div>
                     <div class="type__value">
                       {{ gene?.familyOrigin?.phylum || ('gene_page_no_data' | translate) }}
@@ -154,13 +159,10 @@
                 <p *ngIf="isNcbiDescription"
                   [innerHTML]="gene.descriptionNCBI"></p>
 
-<!--                <div style="display: flex; margin-top: 20px; border: 1px solid #ebbdf2">В это тексте содержится два термина:
-                  <span style="color: red; font-weight: bold;"
-                        (click)="showTermInfo($event, 'hemoglobin','hemo_desc')">&nbsp; {{'hemoglobin' | translate}} &nbsp;</span> - c описанием и
-                  <span style="color: red; font-weight: bold;"
-                        (click)="showTermInfo($event, 'bilirubin','')">&nbsp; {{'bilirubin' | translate}} &nbsp;</span> - без описания
-                </div>-->
-
+                <!-- TEST TEXT for Terms-->
+                <!-- <div appTermInfo>-->
+                <!-- {{testText}}-->
+                <!-- </div>-->
 
                 <ul *ngIf="isLocationData"
                     class="list" >
@@ -338,4 +340,25 @@
   </div>
 </div>
 
+<ng-template #UiHints>
+  <div class="term">
+    <div class="term__header">
+      <button mat-icon-button
+              class="term__close-button"
+              (click)="onCloseUiHints()"
+              aria-label="Закрыть">
+        <span class="fa fal fa-times"></span>
+      </button>
+    </div>
+    <ng-container>
+      <div class="term__description">
+        <article>
+          <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3812327/"
+             class="link"
+             target="_blank">DOI: 10.1016/j.tig.2013.07.001</a>
+        </article>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>
 

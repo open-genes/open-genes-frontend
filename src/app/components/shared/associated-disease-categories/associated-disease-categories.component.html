@@ -1,42 +1,51 @@
-<ng-container *ngIf="mappedDiseaseCategories && geneDiseaseCategoriesLength !== 0; else noDisease">
+<ng-container *ngIf="mappedDiseaseCategories && listLength !== 0; else noDisease">
   <ng-container *ngIf="!isAccordion; else accordion">
     <ul
       *ngFor="let disease of mappedDiseaseCategories | keyvalue"
       class="list list--bulletted"
     >
-      <li><b>{{ disease.key }}</b> {{ disease.value['icd_category_name'] }}</li>
+      <li [class.__active]="activeListItem === disease.key"
+          (click)="emitOnClick(disease.key)">
+        {{ disease.value['icdCategoryName'] }}
+      </li>
     </ul>
   </ng-container>
 
   <ng-template #accordion>
     <app-accordion
       class="disease-category-accordion"
+      [clickable]="false"
       [class.disease-category-accordion--open]="isAccordionOpen"
-      (isStateOpen)="toggleAccordion($event)"
+      [isOpen]="isAccordionOpen"
     >
       <div class="disease-category-accordion__header" accordion-header>
-        <ul
-          *ngFor="let disease of mappedDiseaseCategories | keyvalue | slice: 0:maxItemsToShow"
-          class="list list--bulletted"
-        >
-          <li><b>{{ disease.key }}</b> {{ disease.value['icd_category_name'] }}</li>
+        <ul class="list list--bulletted">
+          <li *ngFor="let disease of mappedDiseaseCategories | keyvalue | slice: 0:maxItemsToShow"
+              [class.__active]="activeListItem === disease.key"
+              (click)="emitOnClick(disease.key)">
+            {{ disease.value['icdCategoryName'] }}
+          </li>
         </ul>
-        <span class="fa far fa-chevron-down disease-category-accordion__arrow"></span>
+        <button (click)="toggleAccordion()"
+                class="disease-category-accordion__arrow"
+        ><span class="fa far fa-chevron-down"></span>
+        </button>
       </div>
       <div class="disease-category-accordion__body" accordion-body>
-        <ul
-          *ngFor="let disease of mappedDiseaseCategories | keyvalue | slice: maxItemsToShow"
-          class="list list--bulletted"
-        >
-          <li><b>{{ disease.key }}</b> {{ disease.value['icd_category_name'] }}</li>
+        <ul class="list list--bulletted">
+          <li *ngFor="let disease of mappedDiseaseCategories | keyvalue | slice: maxItemsToShow"
+              [class.__active]="activeListItem == disease.key"
+              (click)="emitOnClick(disease.key)">
+            {{ disease.value['icdCategoryName'] }}
+          </li>
         </ul>
-      </div>
+      </div>s
     </app-accordion>
   </ng-template>
 </ng-container>
 
 <ng-template #noDisease>
   <div class="no-criteria">
-    {{ 'no_disease-categories' | translate }}
+    {{ 'no_disease_categories' | translate }}
   </div>
 </ng-template>

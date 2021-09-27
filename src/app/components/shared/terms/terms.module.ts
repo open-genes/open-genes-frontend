@@ -4,10 +4,16 @@ import { TermsComponent } from './terms.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { MAT_BOTTOM_SHEET_DEFAULT_OPTIONS } from '@angular/material/bottom-sheet';
+import { NgCapitalizePipeModule } from 'angular-pipes';
 
 @NgModule({
   declarations: [TermsComponent],
-  imports: [CommonModule, TranslateModule, DirectivesModule],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    DirectivesModule,
+    NgCapitalizePipeModule,
+  ],
   providers: [
     {
       provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS,

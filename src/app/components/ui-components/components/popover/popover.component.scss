@@ -16,6 +16,7 @@ $popover-size: 8px;
   border: 1px solid $color-borders;
   border-radius: $border-radius-regular;
   box-shadow: $box-shadow;
+  min-width: 200px;
 
   @include resolution_smartphone {
     max-width: $smartphone - 20px;
