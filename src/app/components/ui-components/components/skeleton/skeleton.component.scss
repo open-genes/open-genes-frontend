@@ -11,12 +11,9 @@ $skeleton-line-height: ($ui-base-height / 2);
   padding: inherit;
 
   &__line-group {
-    min-width: 100%;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    max-height: 300px;
-    height: 100%;
+    display: inline-block;
+
     & + & {
       margin-top: $skeleton-line-height;
     }
@@ -25,15 +22,9 @@ $skeleton-line-height: ($ui-base-height / 2);
   &__line {
     position: relative;
     background-color: #f2f2f2;
-    max-width: 300px;
-    width: 100%;
-    height: 300px;
+    height: $skeleton-line-height;
     border-radius: $border-radius-regular;
     overflow: hidden;
-    &:nth-child(2){
-      margin-right: 15px;
-      margin-left: 15px;
-    }
 
     &::after {
       content: ' ';
@@ -45,58 +36,16 @@ $skeleton-line-height: ($ui-base-height / 2);
       height: 100%;
     }
 
+    &--1 {
+      width: 100%
+    }
+
+    &--2 {
+      width: 80%;
+    }
+
     &:not(:last-of-type) {
       margin-bottom: ($skeleton-line-height / 1.5);
     }
-  }
-  @media (max-width: 1024px) {
-    .skeleton__line{
-      max-width: 100%;
-      &:last-child{
-        display: none;
-      }
-      &:nth-child(2){
-        margin-right: 0 !important;
-      }
-    }
-  }
-  @media (max-width: 576px){
-    .skeleton__line{
-      max-width: 100%;
-      &:nth-child(2){
-        display: none;
-      }
-    }
-  }
-}
-
-.loader {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
-  background-color: #fff;
-  text-align: center;
-  padding: $padding-regular;
-
-  &__inner {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    background-color: $color-general-light;
-    border-radius: $border-radius-medium;
-  }
-
-  .fa {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -.5em;
-    margin-left: -.5em;
-    text-align: center;
-    font-size: 30px;
-    color: $color-general;
   }
 }
