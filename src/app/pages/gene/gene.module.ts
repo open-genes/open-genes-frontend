@@ -19,6 +19,8 @@ import { DynamicContentAnchorsDirective } from './directives/anchor-links.direct
 import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
 import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 import { DirectivesModule } from '../../directives/directives.module';
+import { NoContentModule } from '../../components/shared/no-content/no-content.module';
+import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { DirectivesModule } from '../../directives/directives.module';
     NgToArrayPipeModule,
     UiComponentsModule,
     SidebarModule,
-    DirectivesModule
-  ]
+    DirectivesModule,
+    NoContentModule,
+    IconModule,
+  ],
 })
 export class GeneModule {}

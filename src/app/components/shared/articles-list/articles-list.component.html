@@ -119,17 +119,23 @@
 </ng-container>
 
 <section *ngIf="articlesTotal === 0 || translate.currentLang === 'en'"
-         class="col-12 no-content"
-         [class.no-content--mini]="isMiniMode">
-  <div class="no-content__inner">
-    <div class="no-content__icon no-content__icon-language"></div>
-    <div class="no-content__title">
-      <div class="title__center">
-        {{ 'news_page_no_articles' | translate }}
-      </div>
-    </div>
-  </div>
+         class="no-articles"
+         [class.no-articles--mini]="isMiniMode">
+  <app-no-content
+    [size]="isMiniMode ? 'small' : 'medium'"
+    [title]="'news_page_no_articles'">
+    <ng-container icon>
+      <app-icon
+        icon="language"
+        size="custom"
+        customWidth="100%"
+        customHeight="100%"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
 </section>
+
+
 
 <ng-template #articleModalBody let-data>
   <div class="article-modal__header" mat-dialog-title>
