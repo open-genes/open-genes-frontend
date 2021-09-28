@@ -2,6 +2,7 @@ import { AssociatedDiseaseCategories } from '../../../core/models/openGenesApi/a
 
 export interface Node {
   name: string;
+  group?: number;
 }
 
 export interface Link {

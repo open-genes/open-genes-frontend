@@ -1,8 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ApiService } from '../../../../core/services/api/open-genes-api.service';
-import { Gene, Genes } from '../../../../core/models';
-import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DiagramGenes, Link, Node } from '../../models/directed-graph';
 import * as d3 from 'd3';
 
@@ -11,102 +7,32 @@ import * as d3 from 'd3';
   templateUrl: './directed-graph.component.html',
   styleUrls: ['./directed-graph.component.scss'],
 })
-export class DirectedGraphComponent implements OnInit, OnDestroy {
-  private _nodes: Node[];
-  private _links: Link[] = [];
-  private _destroy$ = new Subject();
+export class DirectedGraphComponent implements OnChanges{
+  @Input() graphSelector: string;
+  @Input() nodes: Node[];
+  @Input() links: Link[];
 
-  constructor(private _apiService: ApiService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this._getAllGenes();
-  }
+  ngOnChanges(changes: SimpleChanges): void {
 
-  ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-  }
-
-  private _getAllGenes(): void {
-    this._apiService
-      .getGenes()
-      .pipe(
-        takeUntil(this._destroy$),
-        map((genes: Genes[]) => {
-          return genes.map((gene: Gene) => {
-            const diagramGenes: DiagramGenes = {
-              id: gene.id,
-              name: gene.name,
-              expressionChange: gene.expressionChange,
-              familyOriginId: gene.familyOrigin?.id,
-              originId: gene.origin?.id,
-              homologueTaxon: gene.homologueTaxon,
-              diseaseCategories: gene.diseaseCategories,
-              functionalClusters: gene.functionalClusters,
-            };
-            return diagramGenes;
-          });
-        })
-      )
-      .subscribe((genes) => {
-        this._getNodesAndLinksFromGenes(genes);
-      });
-  }
-
-  private _getNodesAndLinksFromGenes(genes: DiagramGenes[]): void {
-    this._nodes = genes.map((gene) => {
-      const node: Node = {
-        name: gene.name,
-      };
-      return node;
-    });
-
-    genes.forEach((gene) => {
-      const links = genes
-        .filter(
-          (res) =>
-            gene.familyOriginId === res.familyOriginId &&
-            gene.originId === res.originId &&
-            gene.expressionChange === res.expressionChange &&
-            gene.homologueTaxon === res.homologueTaxon &&
-            this._filteringByDiseaseCategories(gene.diseaseCategories, res.diseaseCategories) &&
-            this._filteringByFunctionalClusters(gene.functionalClusters, res.functionalClusters)
-        )
-        .map((res) => {
-          return {
-            source: gene.name,
-            target: res.name,
-          };
-        });
-      this._links.push(...links);
-    });
-
-    this._createForceDirectedGraph(this._nodes, this._links);
-  }
-
-  private _filteringByDiseaseCategories(gene, res): boolean {
-    return Object.keys(gene).some((key) => {
-      return Object.prototype.hasOwnProperty.call(res, key);
-    });
-  }
-
-  private _filteringByFunctionalClusters(gene, res): boolean {
-    return gene.some((cluster) => {
-      return res.some((res) => res.id === cluster.id);
-    });
+    if (!changes['nodes'].firstChange || !changes['links'].firstChange) {
+      this._createForceDirectedGraph(this.nodes, this.links);
+    }
   }
 
   private _createForceDirectedGraph(nodes, links) {
     const colors = d3.scaleOrdinal(d3.schemeCategory10);
 
-    const svg = d3.select('#graphContainer')
+    const svg = d3.select(`#${this.graphSelector}`)
       .attr('width', '1000')
       .attr('height', '600');
 
-    const simulation = d3.forceSimulation(nodes)
+    const simulation = d3
+      .forceSimulation(nodes)
       .force(
         'link',
-        d3.forceLink(links).id((d: any) => d.name)
+        d3.forceLink(links).id((d: any) => d.name),
       )
       .force('charge', d3.forceManyBody().strength(-2))
       .force('center', d3.forceCenter(1000 / 2, 600 / 2));
@@ -131,8 +57,7 @@ export class DirectedGraphComponent implements OnInit, OnDestroy {
       .attr('fill', colors)
       .call(this._drag(simulation));
 
-    node.append('title')
-      .text((d: any) => d.name);
+    node.append('title').text((d: any) => d.name);
 
     simulation.on('tick', () => {
       link
@@ -141,9 +66,7 @@ export class DirectedGraphComponent implements OnInit, OnDestroy {
         .attr('x2', (d: any) => d.target.x)
         .attr('y2', (d: any) => d.target.y);
 
-      node
-        .attr('cx', (d: any) => d.x)
-        .attr('cy', (d: any) => d.y);
+      node.attr('cx', (d: any) => d.x).attr('cy', (d: any) => d.y);
     });
 
     return svg.node();
@@ -167,9 +90,6 @@ export class DirectedGraphComponent implements OnInit, OnDestroy {
       event.subject.fy = null;
     }
 
-    return d3.drag()
-      .on('start', dragStarted)
-      .on('drag', dragged)
-      .on('end', dragEnded);
+    return d3.drag().on('start', dragStarted).on('drag', dragged).on('end', dragEnded);
   }
 }
