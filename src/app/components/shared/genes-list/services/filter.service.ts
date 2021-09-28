@@ -173,19 +173,13 @@ export class FilterService {
     // convert filter values to array of numbers
     const sum = [];
     Object.values(this.filters).forEach((value) => {
-      if (value instanceof Array) {
-        sum.push(value.length);
-      } else if (value.length) {
+      if ((value && value.length) || (typeof value === 'number' && value !== 0)) {
         sum.push(1);
-      } else {
-        sum.push(+value);
       }
     });
 
-    const numberOfAppliedFilters = sum.reduce((a: number, b: number) => a + b);
-
     // when filters change and their sum is more than 2:
-    if (numberOfAppliedFilters >= 2) {
+    if (sum.length >= 2) {
       return this.isClearFiltersBtnShown.next(true);
     }
 
