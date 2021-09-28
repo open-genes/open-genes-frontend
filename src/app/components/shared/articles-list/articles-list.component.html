@@ -113,6 +113,8 @@
     <div class="skeleton">
       <app-skeleton
         [groups]="responsePagePortion"
+        [cardsInARow]="isMiniMode ? 2 : 3"
+        view="card"
       ></app-skeleton>
     </div>
   </ng-template>
