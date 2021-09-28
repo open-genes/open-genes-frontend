@@ -9,7 +9,7 @@ export class SwitchComponent {
   @Input() switch = false;
   @Output() changeEvent = new EventEmitter<boolean>();
 
-  toggle() {
+  public toggle() {
     this.switch = !this.switch;
     this.changeEvent.emit(this.switch);
   }

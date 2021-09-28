@@ -21,6 +21,8 @@ import { MaterialModule } from '../../../modules/vendors/material.module';
 import { GenesTableHeaderComponent } from './components/genes-table-header/genes-table-header.component';
 import { AssociatedDiseasesModule } from '../associated-diseases/associated-diseases.module';
 import { AssociatedDiseaseCategoriesModule } from '../associated-disease-categories/associated-disease-categories.module';
+import { NoContentModule } from '../no-content/no-content.module';
+import { IconModule } from '../../ui-components/components/icon/app-icon.module';
 
 @NgModule({
   declarations: [GenesListComponent, SearchComponent, GeneMenuComponent, GenesTableHeaderComponent],
@@ -42,6 +44,8 @@ import { AssociatedDiseaseCategoriesModule } from '../associated-disease-categor
     MaterialModule,
     AssociatedDiseasesModule,
     AssociatedDiseaseCategoriesModule,
+    NoContentModule,
+    IconModule,
   ],
   providers: [WindowService],
   exports: [GenesListComponent, SearchComponent],
