@@ -1,6 +1,6 @@
 <ng-container *ngIf="translate.currentLang !== 'en'">
   <!-- There is no content in English yet and 80lvl API doesn't have language support -->
-  <ng-container *ngIf="!isLoading; else skeleton">
+  <ng-container *ngIf="!isLoading">
     <ng-container *ngIf="articlesList.length !== 0">
       <ng-container *ngIf="environment.name !== 'prod'">
         <div *ngIf="!isMiniMode && articleTags.length !== 0"
@@ -108,14 +108,6 @@
       <span *ngIf="isLoading" class="fas fa-circle-notch fa-spin"></span>
     </button>
   </div>
-
-  <ng-template #skeleton>
-    <div class="skeleton">
-      <app-skeleton
-        [groups]="responsePagePortion"
-      ></app-skeleton>
-    </div>
-  </ng-template>
 </ng-container>
 
 <section *ngIf="articlesTotal === 0 || translate.currentLang === 'en'"
