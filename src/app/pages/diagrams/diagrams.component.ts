@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy} from '@angular/core';
 import { map, takeUntil } from 'rxjs/operators';
 import { Gene, Genes } from '../../core/models';
 import { DiagramGenes, Link, Node } from './models/directed-graph';
@@ -71,7 +71,7 @@ export class DiagramsComponent implements OnDestroy {
             gene.expressionChange === res.expressionChange &&
             gene.homologueTaxon === res.homologueTaxon &&
             this._filteringByDiseaseCategories(gene.diseaseCategories, res.diseaseCategories) &&
-            this._filteringByFunctionalClusters(gene.functionalClusters, res.functionalClusters),
+            this._filteringByFunctionalClusters(gene.functionalClusters, res.functionalClusters)
         )
         .map((res) => {
           return {

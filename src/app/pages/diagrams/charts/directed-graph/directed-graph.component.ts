@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { DiagramGenes, Link, Node } from '../../models/directed-graph';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Link, Node } from '../../models/directed-graph';
 import * as d3 from 'd3';
 
 @Component({
@@ -7,15 +7,15 @@ import * as d3 from 'd3';
   templateUrl: './directed-graph.component.html',
   styleUrls: ['./directed-graph.component.scss'],
 })
-export class DirectedGraphComponent implements OnChanges{
+export class DirectedGraphComponent implements OnChanges {
   @Input() graphSelector: string;
   @Input() nodes: Node[];
   @Input() links: Link[];
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
-
     if (!changes['nodes'].firstChange || !changes['links'].firstChange) {
       this._createForceDirectedGraph(this.nodes, this.links);
     }
@@ -34,7 +34,7 @@ export class DirectedGraphComponent implements OnChanges{
         'link',
         d3.forceLink(links).id((d: any) => d.name),
       )
-      .force('charge', d3.forceManyBody().strength(-2))
+      .force('charge', d3.forceManyBody().strength(-1))
       .force('center', d3.forceCenter(1000 / 2, 600 / 2));
 
     const link = svg
