@@ -9,4 +9,5 @@ export class NoContentComponent {
   @Input() title: string;
   @Input() iconUrl: string;
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
+  @Input() isPanel = true;
 }

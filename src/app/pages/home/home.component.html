@@ -73,7 +73,7 @@
                 </ng-container>
                 <app-news-list
                   content
-                  class="__pl-5 __p-r-5"
+                  class="__pl-5 __pr-5"
                   [genesList]="genes"
                   [loadTotal]="2"
                   [itemsForPage]="2"
@@ -105,7 +105,10 @@
       [title]="'error_connection'">
       <ng-container icon>
         <app-icon
-          icon="no-content-default"
+          icon="default"
+          size="custom"
+          customWidth="100%"
+          customHeight="100%"
         ></app-icon>
       </ng-container>
       <ng-container description>

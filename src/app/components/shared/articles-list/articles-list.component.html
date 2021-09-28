@@ -118,17 +118,22 @@
   </ng-template>
 </ng-container>
 
-<div class="col-12">
+<section *ngIf="articlesTotal === 0 || translate.currentLang === 'en'"
+         class="no-articles"
+         [class.no-articles--mini]="isMiniMode">
   <app-no-content
-    *ngIf="articlesTotal === 0 || translate.currentLang === 'en'"
+    [size]="isMiniMode ? 'small' : 'medium'"
     [title]="'news_page_no_articles'">
     <ng-container icon>
       <app-icon
-        icon="no-content-language"
+        icon="language"
+        size="custom"
+        customWidth="100%"
+        customHeight="100%"
       ></app-icon>
     </ng-container>
   </app-no-content>
-</div>
+</section>
 
 
 

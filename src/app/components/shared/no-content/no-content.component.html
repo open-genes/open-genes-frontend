@@ -1,20 +1,21 @@
-<section class="no-content"
-         [ngClass]="{
-         'no-content--sm': size === 'small',
-         'no-content--md': size === 'medium',
-         'no-content--lg': size === 'large'
-         }">
-  <div class="no-content__inner">
-    <div class="no-content__icon">
-      <ng-content select="[icon]"></ng-content>
-    </div>
-    <div class="no-content__title">
-      <div class="title__center">
-        {{ title | translate }}
-      </div>
-    </div>
-    <div class="no-content__description">
-      <ng-content select="[description]"></ng-content>
+<div
+  class="no-content"
+  [ngClass]="{
+    'no-content--sm': size === 'small',
+    'no-content--md': size === 'medium',
+    'no-content--lg': size === 'large',
+    'no-content--panel': isPanel
+  }"
+>
+  <div class="no-content__icon">
+    <ng-content select="[icon]"></ng-content>
+  </div>
+  <div class="no-content__title">
+    <div class="title__center">
+      {{ title | translate }}
     </div>
   </div>
-</section>
+  <div class="no-content__description">
+    <ng-content select="[description]"></ng-content>
+  </div>
+</div>

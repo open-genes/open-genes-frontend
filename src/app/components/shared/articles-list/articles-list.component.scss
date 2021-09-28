@@ -14,17 +14,21 @@ $articles-gap-l: 10px;
     display: none; // фикс для момента во время подгрузки
   }
 
-  .no-content:not(.no-content--mini),
+  .no-articles {
+    width: 100%;
+  }
+
+  .no-articles:not(.no-articles--mini),
   .show-more,
   .skeleton {
     padding-right: #{$articles-gap-l};
     padding-left: #{$articles-gap-l};
   }
 
-  .no-content.no-content--mini {
+  .no-articles.no-articles--mini {
     padding-right: #{$articles-gap-s};
     padding-left: #{$articles-gap-s};
-    margin-top: 5px;
+    margin-top: 8px;
   }
 }
 

@@ -1,30 +1,28 @@
 @import "../../styles";
 
-:root {
-  display: inline-block;
+:host {
+  display: block;
   width: 100%;
 }
 
 .no-content {
   width: 100%;
-  padding: 0;
+  padding: 20px;
+  text-align: center;
 
-  &__inner {
-    margin: 0 auto;
-    width: 100%;
-    padding: 20px;
-    font-size: 10px;
-    text-align: center;
-    background-color: $color-white;
-    border: 1px solid $color-border-light;
-    border-radius: $border-radius-medium;
+  &,
+  * {
+    box-sizing: border-box;
   }
 
-  // TODO: use app-icon component and svg sprites
   &__icon {
     display: inline-block;
-    width: 10em;
-    height: 10em;
+    width: 14em;
+    height: 14em;
+
+    ::ng-deep * {
+      height: inherit;
+    }
   }
 
   &__title {
@@ -40,19 +38,36 @@
     }
   }
 
-  &__button {
+  &__description {
     width: 100%;
-    margin-top: 25px;
 
-    a,
-    button {
-      margin: 0 auto;
+    &:not(:empty) {
+      margin-top: 25px;
+    }
+
+    ::ng-deep {
+      a,
+      button {
+        margin: 0 auto;
+      }
     }
   }
 
-  &--mini {
-    .no-content__inner {
-      font-size: 7px;
-    }
+  &--sm {
+    font-size: 7px;
+  }
+
+  &--md {
+    font-size: 10px;
+  }
+
+  &--lg {
+    font-size: 12px;
+  }
+
+  &--panel {
+    border: 1px solid $color-border-light;
+    background-color: $color-white;
+    border-radius: $border-radius-medium;
   }
 }

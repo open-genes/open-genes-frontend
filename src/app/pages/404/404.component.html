@@ -4,10 +4,14 @@
       <div class="row no-gutters">
         <section class="col-12">
           <app-no-content
+            [isPanel]="false"
             [title]="'error_page_404'">
             <ng-container icon>
               <app-icon
-                icon="no-content-404"
+                icon="404"
+                size="custom"
+                customWidth="100%"
+                customHeight="100%"
               ></app-icon>
             </ng-container>
           </app-no-content>
