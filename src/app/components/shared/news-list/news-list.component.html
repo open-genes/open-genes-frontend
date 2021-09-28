@@ -41,7 +41,7 @@
   ></app-skeleton>
 </ng-template>
 
-<section
+<section *ngIf="error"
          class="no-news"
          [class.no-news--mini]="isMiniMode">
   <app-no-content
