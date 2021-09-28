@@ -21,10 +21,10 @@ export const APP_ROUTES: Routes = [
     path: 'favourites',
     loadChildren: () => import('./pages/favourites/favourites.module').then((m) => m.FavouritesModule),
   },
-  {
-    path: 'developers',
-    loadChildren: () => import('./pages/api-reference/api-reference.module').then((m) => m.ApiReferenceModule),
-  },
+  // {
+  //   path: 'developers',
+  //   loadChildren: () => import('./pages/api-reference/api-reference.module').then((m) => m.ApiReferenceModule),
+  // },
   {
     path: 'settings',
     loadChildren: () => import('./pages/settings/settings.module').then((m) => m.SettingsModule),
