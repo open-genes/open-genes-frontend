@@ -73,11 +73,11 @@
                 </ng-container>
                 <app-news-list
                   content
-                  class="__pl-5 __p-r-5"
+                  class="__pl-5 __pr-5"
                   [genesList]="genes"
                   [loadTotal]="2"
                   [itemsForPage]="2"
-                  [isShowMoreButton]="false"
+                  [isMiniMode]="true"
                 ></app-news-list>
               </app-sidebar-item>
             </app-sidebar>
@@ -99,16 +99,22 @@
 </div>
 
 <ng-template #errorMessage>
-  <section class="col-12 no-content">
-    <div class="no-content__inner">
-      <div class="no-content__icon no-content__icon-standard"></div>
-      <div class="no-content__title">
-        <div class="title__center">
-          {{ "error_connection" | translate }} <br>
-          ({{ errorStatus }})
-        </div>
-      </div>
-    </div>
+  <section class="col-12">
+    <app-no-content
+      size="small"
+      [title]="'error_connection'">
+      <ng-container icon>
+        <app-icon
+          icon="default"
+          size="custom"
+          customWidth="100%"
+          customHeight="100%"
+        ></app-icon>
+      </ng-container>
+      <ng-container description>
+        <p>({{ errorStatus }})</p>
+      </ng-container>
+    </app-no-content>
   </section>
 </ng-template>
 

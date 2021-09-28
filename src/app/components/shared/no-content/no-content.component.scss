@@ -1,0 +1,73 @@
+@import "../../styles";
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.no-content {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+
+  &,
+  * {
+    box-sizing: border-box;
+  }
+
+  &__icon {
+    display: inline-block;
+    width: 14em;
+    height: 14em;
+
+    ::ng-deep * {
+      height: inherit;
+    }
+  }
+
+  &__title {
+    width: 100%;
+    color: $color-indent;
+    margin-top: 15px;
+
+    .title__center {
+      display: inline-block;
+      max-width: 320px;
+      font-size: 2em;
+      font-weight: $font-weight-medium;
+    }
+  }
+
+  &__description {
+    width: 100%;
+
+    &:not(:empty) {
+      margin-top: 25px;
+    }
+
+    ::ng-deep {
+      a,
+      button {
+        margin: 0 auto;
+      }
+    }
+  }
+
+  &--sm {
+    font-size: 7px;
+  }
+
+  &--md {
+    font-size: 10px;
+  }
+
+  &--lg {
+    font-size: 12px;
+  }
+
+  &--panel {
+    border: 1px solid $color-border-light;
+    background-color: $color-white;
+    border-radius: $border-radius-medium;
+  }
+}
