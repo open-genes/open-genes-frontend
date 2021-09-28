@@ -26,7 +26,7 @@ export class NewsListComponent implements OnInit, OnDestroy {
   @Input() showDates = false;
   @Input() loadTotal: number;
   @Input() itemsForPage: number;
-  @Input() isShowMoreButton = true;
+  @Input() isMiniMode = false;
 
   @Output()
   newItemsLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();

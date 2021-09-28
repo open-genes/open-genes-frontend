@@ -24,7 +24,7 @@
 </ul>
 
 <div
-  *ngIf="showMoreButtonVisible && isShowMoreButton"
+  *ngIf="showMoreButtonVisible && isMiniMode"
   class="col col-12 __mt-5 btn-wrap show-more">
   <button class="btn show-more__button"
           (click)="showMore()"
@@ -41,8 +41,11 @@
   ></app-skeleton>
 </ng-template>
 
-<section *ngIf="error">
+<section
+         class="no-news"
+         [class.no-news--mini]="isMiniMode">
   <app-no-content
+    [size]="isMiniMode ? 'small' : 'medium'"
     [title]="'news_page_no_news'">
     <ng-container icon>
       <app-icon
