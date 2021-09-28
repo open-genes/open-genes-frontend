@@ -1,6 +1,6 @@
 #Workflow for test environment
 
-name: test-CI
+name: demo-CI
 
 # Controls when the workflow will run
 on: push
@@ -21,14 +21,14 @@ jobs:
       - name: Build
         run: |
           npm install
-          npm run build-dev
+          npm run build-demo
       - name: Upload project artifacts
         uses: actions/upload-artifact@v2
         with:
           path: dist/
           name: project
 
-  deploy-test:
+  deploy-demo:
     if: contains( github.ref, 'develop')
     needs: build
     runs-on: ubuntu-latest
@@ -49,5 +49,5 @@ jobs:
         env:
           SSH_USER: ${{ secrets.DROPLET_USER }}
           SSH_HOST: ${{ secrets.DROPLET_HOST }}
-          PROJECT_PATH: ${{ secrets.DROPLET_CMS_TEST_PATH }}
-          DROPLET_ENV: ${{ secrets.DROPLET_CMS_TEST_DOTENV_BASE64 }}
+          PROJECT_PATH: ${{ secrets.DROPLET_CMS_DEMO_PATH }}
+          DROPLET_ENV: ${{ secrets.DROPLET_CMS_DEMO_DOTENV_BASE64 }}
