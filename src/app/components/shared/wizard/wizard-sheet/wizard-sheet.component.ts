@@ -19,26 +19,27 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 export class WizardSheetComponent extends WindowWidth implements OnInit {
   constructor(
     public windowService: WindowService,
-    private _bottomSheetRef: MatBottomSheetRef,
-    private readonly _cdRef: ChangeDetectorRef
+    private bottomSheetRef: MatBottomSheetRef,
+    private readonly cdRef: ChangeDetectorRef,
   ) {
     super(windowService);
   }
 
   ngOnInit(): void {
     this.initWindowWidth(() => {
-      this._cdRef.markForCheck();
+      this.cdRef.markForCheck();
     });
     this.detectWindowWidth(() => {
-      this._cdRef.markForCheck();
+      this.cdRef.markForCheck();
     });
   }
 
   public close(): void {
-    this._bottomSheetRef.dismiss();
-    this._alwaysHide();
+    this.bottomSheetRef.dismiss();
+    this.alwaysHide();
   }
-  private _alwaysHide(): void {
+
+  public alwaysHide(): void {
     localStorage.setItem('showWizardSheet', JSON.stringify(false));
   }
 }
