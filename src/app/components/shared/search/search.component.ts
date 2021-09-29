@@ -101,7 +101,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   public search(): void {
-    if (this.searchForm.get('searchField').value?.length >= 2) {
+    if (this.searchForm.get('searchField').value?.length >= 0) {
       if (this.isGoSearchMode) {
         this.subscribeToGo();
       } else {
