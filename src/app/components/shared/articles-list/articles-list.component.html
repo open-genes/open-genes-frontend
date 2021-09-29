@@ -110,7 +110,7 @@
   </div>
 </ng-container>
 
-<section *ngIf="articlesTotal === 0 || translate.currentLang === 'en'"
+<section *ngIf="showNoContent || translate.currentLang === 'en'"
          class="no-articles"
          [class.no-articles--mini]="isMiniMode">
   <app-no-content

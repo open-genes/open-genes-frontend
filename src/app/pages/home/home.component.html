@@ -49,7 +49,7 @@
                 ></app-mini-cards>
               </app-sidebar-item>
 
-              <app-sidebar-item *ngIf="genes;else loading">
+              <app-sidebar-item>
                 <ng-container title>
                   {{ "articles_list_title" | translate }}
                   <a href="/news" class="link link--gray __ml-10">
@@ -61,11 +61,10 @@
                   class="__h-100"
                   [isMiniMode]="true"
                   [sliceTo]="2"
+                  (artticlesLoaded)="changeVisibility()"
                 ></app-articles-list>
               </app-sidebar-item>
-              <ng-template #loading>
-                <app-skeleton [groups]="10"></app-skeleton>
-              </ng-template>
+                <app-skeleton *ngIf="showSkeleton" [groups]="10"></app-skeleton>
 
               <app-sidebar-item *ngIf="genes">
                 <ng-container title>

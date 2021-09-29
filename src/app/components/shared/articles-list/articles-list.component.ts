@@ -38,6 +38,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public responsePagePortion: number;
   public articleTags: any[] = [];
   public isAnyArticleModalOpen = false;
+  public showNoContent = false;
 
   private subscription$ = new Subject();
   private oneArticleSubscription$ = new AsyncSubject();
@@ -48,6 +49,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   @Input() sliceTo: number | undefined = undefined;
   @Output()
   newArticlesLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output()
+  artticlesLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @ViewChild('articleModalBody') dialogRef: TemplateRef<any>;
 
@@ -60,7 +63,9 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.makeArticlesList();
+    setTimeout(() => {
+      this.makeArticlesList();
+    },5000)
   }
 
   public showMore(): void {
@@ -100,6 +105,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       } else {
         this.showMoreButtonVisible = false;
       }
+    } else {
+      this.showNoContent = true;
     }
 
     // All content is loaded
@@ -116,8 +123,13 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       .subscribe(
         (data) => {
           this.handleResponse(data);
+          this.artticlesLoaded.emit(true);
         },
-        (error) => (this.error = error)
+        (error) => {
+          this.error = error;
+          this.showNoContent = true;
+          this.artticlesLoaded.emit(true);
+        }
       );
   }
 

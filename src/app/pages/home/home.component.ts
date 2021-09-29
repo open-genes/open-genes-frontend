@@ -32,6 +32,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public genesListIsLoaded = false;
   public errorStatus: string;
   public environment = environment;
+  public showSkeleton = true;
 
   constructor(
     public windowService: WindowService,
@@ -95,5 +96,9 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
 
   private loadWizard() {
     this.wizardService.openOnce();
+  }
+
+  public changeVisibility() {
+    this.showSkeleton = false;
   }
 }
