@@ -27,7 +27,8 @@ export class FilterPanelComponent {
   public isClear$ = this._filterService.isClearFiltersBtnShown;
 
   constructor(
-    private _filterService: FilterService, private _dialog: MatDialog
+    private _filterService: FilterService,
+    private _dialog: MatDialog
   ) {}
 
   /**

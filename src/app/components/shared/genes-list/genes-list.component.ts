@@ -347,5 +347,6 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   private errorLogger(context: any, error: any) {
     console.warn(context, error);
+    this._cdRef.markForCheck();
   }
 }
