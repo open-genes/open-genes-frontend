@@ -1,13 +1,17 @@
 import { AssociatedDiseaseCategories } from '../../../core/models/openGenesApi/associated-diseases.model';
+import { FunctionalClusters } from '../../../core/models';
 
 export interface Node {
+  id?: number;
   name: string;
   group?: number;
 }
 
 export interface Link {
+  id?: number;
   source: string | number;
   target: string | number;
+  value?: number;
 }
 
 export interface DiagramGenes {
@@ -17,6 +21,6 @@ export interface DiagramGenes {
   homologueTaxon: string;
   familyOriginId: number;
   originId: number;
-  functionalClusters: string | string[];
+  functionalClusters: FunctionalClusters[];
   diseaseCategories: AssociatedDiseaseCategories;
 }

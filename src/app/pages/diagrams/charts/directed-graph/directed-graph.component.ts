@@ -9,11 +9,9 @@ import * as d3 from 'd3';
 })
 export class DirectedGraphComponent implements OnChanges {
   @Input() graphSelector: string;
+  @Input() grouped: boolean;
   @Input() nodes: Node[];
   @Input() links: Link[];
-
-  constructor() {
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['nodes'].firstChange || !changes['links'].firstChange) {
@@ -22,7 +20,7 @@ export class DirectedGraphComponent implements OnChanges {
   }
 
   private _createForceDirectedGraph(nodes, links) {
-    const colors = d3.scaleOrdinal(d3.schemeCategory10);
+    const color = d3.scaleOrdinal(d3.schemeCategory10);
 
     const svg = d3.select(`#${this.graphSelector}`)
       .attr('width', '1000')
@@ -32,19 +30,22 @@ export class DirectedGraphComponent implements OnChanges {
       .forceSimulation(nodes)
       .force(
         'link',
-        d3.forceLink(links).id((d: any) => d.name),
+        d3
+          .forceLink(links)
+          .id((d: any) => d.name)
+          .distance(20)
       )
-      .force('charge', d3.forceManyBody().strength(-1))
-      .force('center', d3.forceCenter(1000 / 2, 600 / 2));
+      .force('charge', d3.forceManyBody().distanceMax(100))
+      .force('center', d3.forceCenter(1000 / 2, 500 / 2));
 
     const link = svg
       .append('g')
-      .attr('stroke', '#999')
       .attr('stroke-opacity', 0.6)
       .selectAll('line')
       .data(links)
       .join('line')
-      .attr('stroke-width', (d: any) => Math.sqrt(d.value));
+      .attr('stroke-width', (d: any) => Math.sqrt(d.value))
+      .attr('stroke', (d: any) => (this.grouped ? color(d.group) : 'black'));
 
     const node = svg
       .append('g')
@@ -54,7 +55,7 @@ export class DirectedGraphComponent implements OnChanges {
       .data(nodes)
       .join('circle')
       .attr('r', 5)
-      .attr('fill', colors)
+      .attr('fill', this.grouped ? (d: any) => color(d.group) : color)
       .call(this._drag(simulation));
 
     node.append('title').text((d: any) => d.name);
@@ -85,7 +86,7 @@ export class DirectedGraphComponent implements OnChanges {
     }
 
     function dragEnded(event) {
-      if (!event.active) simulation.alphaTarget(0);
+      if (!event.active) simulation.alphaTarget(0).restart();
       event.subject.fx = null;
       event.subject.fy = null;
     }

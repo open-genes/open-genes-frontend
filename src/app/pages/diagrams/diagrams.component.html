@@ -17,13 +17,15 @@
         <app-directed-graph
           [graphSelector]="'all'"
           [nodes]="nodes"
-          [links]="links"></app-directed-graph>
+          [links]="links"
+          [grouped]="false"></app-directed-graph>
       </div>
       <div>
         <app-directed-graph
           [graphSelector]="'new'"
-          [nodes]="nodes"
-          [links]="links"></app-directed-graph>
+          [nodes]="newNodes"
+          [links]="newLinks"
+          [grouped]="true"></app-directed-graph>
       </div>
     </div>
   </div>
