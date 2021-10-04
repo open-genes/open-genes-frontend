@@ -24,6 +24,8 @@ import { AssociatedDiseaseCategoriesModule } from '../associated-disease-categor
 import { GenesCardComponent } from './components/genes-card/genes-card.component';
 import { GenesTableRowComponent } from './components/genes-table-row/genes-table-row.component';
 import { FieldsForShowComponent } from './components/fields-for-show/fields-for-show.component';
+import { NoContentModule } from '../no-content/no-content.module';
+import { IconModule } from '../../ui-components/components/icon/app-icon.module';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { FieldsForShowComponent } from './components/fields-for-show/fields-for-
     MaterialModule,
     AssociatedDiseasesModule,
     AssociatedDiseaseCategoriesModule,
+    NoContentModule,
+    IconModule,
   ],
   providers: [WindowService],
   exports: [GenesListComponent, SearchComponent, GenesCardComponent, GenesTableRowComponent],

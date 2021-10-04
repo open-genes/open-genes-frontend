@@ -15,11 +15,7 @@ registerLocaleData(localeRu, 'ru');
 registerLocaleData(localeEn, 'en');
 
 // import ngx-translate and the http loader
-import {
-  TranslateLoader,
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
@@ -65,6 +61,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     IconModule,
     GoogleAnalyticsModule,
     DirectivesModule,
+    TermsModule,
     TermsModule,
     SnackBarModule
   ],

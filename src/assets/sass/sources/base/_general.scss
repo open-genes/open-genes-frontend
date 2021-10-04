@@ -71,17 +71,6 @@ body {
   font-weight: $font-weight-medium;
   cursor: pointer;
   position: relative;
-
-  small {
-    font-size: 13px;
-    font-weight: normal;
-  }
-
-  @at-root a.link {
-    &:active {
-      color: lighten(mix($color-general, $color-blue, 5%), 3%);
-    }
-  }
 }
 
 @mixin blue-link {
@@ -254,68 +243,3 @@ table {
   border-collapse: collapse;
 }
 
-.no-content {
-  &[class^="col"] {
-    padding: 0;
-  }
-
-  &__inner {
-    margin: 0 auto;
-    width: 100%;
-    padding: 20px;
-    font-size: 10px;
-    text-align: center;
-    background-color: $color-white;
-    border: 1px solid $color-border-light;
-    border-radius: $border-radius-medium;
-  }
-
-  // TODO: use app-icon component and svg sprites
-  &__icon {
-    display: inline-block;
-    width: 10em;
-    height: 10em;
-    background: transparent center center / cover no-repeat;
-
-    &-standard {
-      background-image: url(../images/no-content-default.svg);
-    }
-
-    &-language {
-      background-image: url(../images/no-content-language.svg);
-    }
-
-    &-404 {
-      background-image: url(../images/no-content-404.svg);
-    }
-  }
-
-  &__title {
-    width: 100%;
-    color: $color-indent;
-    margin-top: 15px;
-
-    .title__center {
-      display: inline-block;
-      max-width: 320px;
-      font-size: 2em;
-      font-weight: $font-weight-medium;
-    }
-  }
-
-  &__button {
-    width: 100%;
-    margin-top: 25px;
-
-    a,
-    button {
-      margin: 0 auto;
-    }
-  }
-
-  &--mini {
-    .no-content__inner {
-      font-size: 7px;
-    }
-  }
-}

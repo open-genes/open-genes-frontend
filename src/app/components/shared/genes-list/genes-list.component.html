@@ -15,11 +15,8 @@
 
   <!-- Filters -->
   <ng-container *ngIf="showFiltersPanel">
-
     <div class="view-panel">
-
       <div class="filters-group view-panel__filters">
-
         <button
           class="filter"
           (click)="sortBy('name')"
@@ -118,17 +115,14 @@
           <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
           <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
         </button>
-
       </div>
-
     </div>
-
   </ng-container>
 
 
   <!-- Content -->
   <section
-    class="view-content"
+    class="view-content notranslate"
     [ngClass]="asTableRow && !isMobile ? 'view-content--as-table' : 'view-content--as-cards'">
 
     <!-- Content views -->
@@ -151,7 +145,6 @@
                              (diseaseCategories)="filterByDiseaseCategories($event)"
                              (selectionCriteria)="filterBySelectionCriteria($event)">
         </app-genes-table-row>
-
       </table>
     </ng-container>
 
@@ -173,44 +166,48 @@
   </section>
 
   <!-- / Content views -->
+
   <div
     class="btn-wrap show-more"
     *ngIf="searchedData?.length > loadedGenesQuantity">
-
     <button (click)="loadMoreGenes()"
             class="btn show-more__button">
       {{ "show_more" | translate }}
     </button>
   </div>
-
 </ng-container>
 
 <!-- No content error message -->
 <section
   *ngIf="
     (isGoTermsMode && isGoSearchPerformed && searchedData?.length == 0) ||
-    (!isGoTermsMode && searchedData?.length == 0)"
-  class="no-content">
-  <div class="no-content__inner">
-    <div class="no-content__icon no-content__icon-standard"></div>
-    <div class="no-content__title">
-      <div class="title__center">
-        {{ "nothing_found" | translate }}
-      </div>
-    </div>
-  </div>
+    (!isGoTermsMode && searchedData?.length == 0)">
+  <app-no-content
+    [title]="'nothing_found'">
+    <ng-container icon>
+      <app-icon
+        icon="default"
+        size="custom"
+        customWidth="100%"
+        customHeight="100%"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
 </section>
 
 <!-- GO search mode start message -->
-<section *ngIf="isGoTermsMode && !isGoSearchPerformed" class="no-content">
-  <div class="no-content__inner">
-    <div class="no-content__icon no-content__icon-standard"></div>
-    <div class="no-content__title">
-      <div class="title__center">
-        {{ "go_results_start_typing" | translate }}
-      </div>
-    </div>
-  </div>
+<section *ngIf="isGoTermsMode && !isGoSearchPerformed">
+  <app-no-content
+    *ngIf="isGoTermsMode && !isGoSearchPerformed"
+    [title]="'go_results_start_typing'">
+    <ng-container icon>
+      <app-icon
+        icon="default"
+        size="custom"
+        customWidth="100%"
+        customHeight="100%"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
 </section>
-
 

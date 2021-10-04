@@ -1,28 +1,34 @@
 import { Injectable } from '@angular/core';
-
-const SETTINGS_KEY = 'showHeadersDescription';
+import { Settings } from '../models/settings.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
-  public settings = {
-    isHeadersDescription: false,
+  private settings: Settings = {
+    showUiHints: false,
   };
 
   constructor() {
-    const settings = this.getSettings();
-
-    if (settings) {
-      this.settings = settings;
+    if (!localStorage.getItem('settings')) {
+      localStorage.setItem('settings', JSON.stringify(this.settings));
+    } else {
+      this.settings = JSON.parse(localStorage.getItem('settings'));
     }
   }
 
-  setSettings() {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(this.settings));
+  setSettings(settingKey: string, value: any) {
+    // TODO: change to enum type
+    // eslint-disable-next-line no-prototype-builtins
+    if (this.settings.hasOwnProperty(settingKey)) {
+      this.settings[settingKey] = value;
+    }
+
+    this.settings = Object.assign({ [settingKey]: value }, this.settings);
+    localStorage.setItem('settings', JSON.stringify(this.settings));
   }
 
   getSettings() {
-    return JSON.parse(localStorage.getItem(SETTINGS_KEY));
+    return JSON.parse(localStorage.getItem('settings'));
   }
 }
