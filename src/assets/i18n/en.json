@@ -229,6 +229,7 @@
   "wizard_2_description": "Filter genes by age-related changes of expression",
   "wizard_3_title": "Download genes list",
   "wizard_3_description": "You can download a list as a JSON file by clicking on a button under the search field",
+  "team-member-card-default-name": "Name",
   "ассоциации_гена_с_долголетием_фенотипом_старения": "Associations of the gene with longevity/phenotype of aging",
   "внутриклеточный_транспорт": "intracellular transport",
   "возрастные_изменения_экспрессии_гена_активности_белка у_не_млекопитающих": "Age-related changes in gene expression/protein activity in non-mammals",

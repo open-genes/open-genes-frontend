@@ -1,0 +1,15 @@
+<div class="team-member-card" (click)="isCompact = !isCompact">
+  <div [class.team-member-card__items]="!isCompact">
+    <div class="team-member-card__avatar">
+      <img [src]="userAvatar" alt="">
+    </div>
+    <div class="team-member-card__body">
+      <div class="team-member-card__name" [ngClass]="userWebSite ? 'text-decoration' : ''">
+        {{ userName ? userName : ("team-member-card-default-name" | translate) }}
+      </div>
+      <div class="team-member-card__work">
+        {{ userWork ? userWork : '' }}
+      </div>
+    </div>
+  </div>
+</div>
