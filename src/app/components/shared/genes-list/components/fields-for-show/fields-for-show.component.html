@@ -1,0 +1,47 @@
+<div class="filters-modal__header" mat-dialog-title>
+  {{ 'filters_modal_title' | translate }}
+  <button mat-icon-button
+          class="close-button"
+          (click)="onClose()"
+          aria-label="Закрыть">
+    <span class="fa fal fa-times"></span>
+  </button>
+</div>
+<div class="filters-modal__body">
+  <mat-checkbox
+    color="primary"
+    (change)="changeGenesListSettings('gene-age')"
+    [checked]="listSettings.ifShowAge"
+  >{{ "gene_list_evolutionary_age" | translate }}
+  </mat-checkbox>
+  <mat-checkbox
+    color="primary"
+    (change)="changeGenesListSettings('classes')"
+    [checked]="listSettings.ifShowClasses"
+  >{{ "functional_classes" | translate }}
+  </mat-checkbox>
+  <mat-checkbox
+    color="primary"
+    [checked]="listSettings.ifShowExpression"
+    (change)="changeGenesListSettings('expression')"
+  >{{ "main_page_table_expression" | translate }}
+  </mat-checkbox>
+  <mat-checkbox
+    color="primary"
+    [checked]="listSettings.ifShowDiseases"
+    (change)="changeGenesListSettings('diseases')">
+    {{ "gene_list_diseases" | translate }}
+  </mat-checkbox>
+  <mat-checkbox
+    color="primary"
+    [checked]="listSettings.ifShowDiseaseCategories"
+    (change)="changeGenesListSettings('disease-categories')">
+    {{ "gene_list_disease_categories" | translate }}
+  </mat-checkbox>
+  <mat-checkbox
+    color="primary"
+    [checked]="listSettings.ifShowCriteria"
+    (change)="changeGenesListSettings('criteria')">
+    {{ "main_page_table_criteria" | translate }}
+  </mat-checkbox>
+</div>

@@ -20,14 +20,13 @@ import { merge, takeLast } from 'rxjs/operators';
 })
 export class SearchComponent implements OnInit, OnDestroy {
   @Inject(Document) public document: Document;
-  @Input() dataSource: Genes[];
+  @Input() genesList: Genes[];
   @Output()
   isGoModeTriggered: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()
   isGoSearchTriggered: EventEmitter<string> = new EventEmitter<string>();
-  @Output() dataSourceChange: EventEmitter<Genes[]> = new EventEmitter<
-    Genes[]
-  >();
+  @Output()
+  dataSourceChange: EventEmitter<Genes[]> = new EventEmitter<Genes[]>();
 
   public isGoSearchMode = false;
   public searchedData: Genes[];
@@ -54,7 +53,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   private filterBySubstring(query): Genes[] {
-    const result = this.dataSource.filter((item) => {
+    const result = this.genesList.filter((item) => {
       const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
       ${item.symbol} ${item.name} ${item.aliases.join(' ')}`;
       return searchedText.toLowerCase().includes(query);
