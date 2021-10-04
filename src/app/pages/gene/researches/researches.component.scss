@@ -10,12 +10,21 @@ $research-tables: (
 );
 
 .table {
-  border: none;
   border-collapse: separate;
   border-spacing: 0;
 
+  a {
+    font-weight: $font-weight-medium;
+    color: $color-general;
+
+    &:hover,
+    &:active {
+      color: lighten(mix($color-general, $color-blue, 5%), 3%);
+    }
+  }
+
   thead {
-    th:first-child {
+    th:first-of-type {
       position: sticky;
       left: 0;
       z-index: 2;
@@ -23,7 +32,7 @@ $research-tables: (
   }
 
   tr{
-    td:first-child {
+    td:first-of-type {
       position: sticky;
       left: 0;
       z-index: 2;
