@@ -67,9 +67,15 @@
                 </a>
 
                 <a mat-list-item
-                   *ngIf="gene.commentFunction"
-                   [routerLink]="['/gene', symbol]" fragment="function">
-                  {{ 'gene_page_title_function' | translate }}
+                   *ngIf="gene.proteinDescriptionOpenGenes?.length !== 0"
+                   [routerLink]="['/gene', symbol]" fragment="description-open-genes">
+                  {{ 'gene_page_title_protein_description_og' | translate }}
+                </a>
+
+                <a mat-list-item
+                   *ngIf="gene.proteinDescriptionUniProt?.length !== 0"
+                   [routerLink]="['/gene', symbol]" fragment="description-uniprot">
+                  {{ 'gene_page_title_protein_description_uniprot' | translate }}
                 </a>
 
                 <a mat-list-item
@@ -112,9 +118,9 @@
                     <div class="type__title">
                       {{ 'phylogeny' | translate }}
 
-                      <span class="fa far fa-info-circle hidden"
-                            *ngIf="isHeadersDescriptionIcon"
-                            (click)="onShowHeadersDescription($event)" ></span>
+                      <span class="fa far fa-info-circle"
+                            *ngIf="isUiHintsSettingOn"
+                            (click)="onShowUiHints($event)"></span>
 
                     </div>
                     <div class="type__value">
@@ -219,7 +225,7 @@
                 </section>
 
                 <section>
-                  <h2 *ngIf="gene.commentEvolution || gene.commentFunction"
+                  <h2 *ngIf="gene.commentEvolution || gene.proteinDescriptionUniProt"
                       class="__mb-15"
                   >{{ 'gene_page_title_summary' | translate }}</h2>
 
@@ -232,11 +238,20 @@
                     </article>
                   </ng-container>
 
-                  <ng-container *ngIf="gene.commentFunction">
-                    <h3>{{ 'gene_page_title_function' | translate }}</h3>
+                  <ng-container *ngIf="gene.proteinDescriptionOpenGenes?.length !== 0">
+                    <h3>{{ 'gene_page_title_protein_description_og' | translate }}</h3>
                     <article
-                      id="function"
-                      [innerHTML]="gene.commentFunction | publicationLinksWrap: 'link'"
+                      id="description-open-genes"
+                      [innerHTML]="gene.proteinDescriptionOpenGenes | publicationLinksWrap: 'link'"
+                    >
+                    </article>
+                  </ng-container>
+
+                  <ng-container *ngIf="gene.proteinDescriptionUniProt?.length !== 0">
+                    <h3>{{ 'gene_page_title_protein_description_uniprot' | translate }}</h3>
+                    <article
+                      id="description-uniprot"
+                      [innerHTML]="gene.proteinDescriptionUniProt"
                     >
                     </article>
                   </ng-container>
@@ -277,15 +292,18 @@
               </div>
 
               <ng-template #noContent>
-                <section class="col-12 no-content">
-                  <div class="no-content__inner">
-                    <div class="no-content__icon no-content__icon-standard"></div>
-                    <div class="no-content__title">
-                      <div class="title__center">
-                        {{ 'gene_page_error_no_article_yet' | translate }}
-                      </div>
-                    </div>
-                  </div>
+                <section class="col-12">
+                  <app-no-content
+                    [title]="'gene_page_error_no_article_yet'">
+                    <ng-container icon>
+                      <app-icon
+                        icon="default"
+                        size="custom"
+                        customWidth="100%"
+                        customHeight="100%"
+                      ></app-icon>
+                    </ng-container>
+                  </app-no-content>
                 </section>
               </ng-template>
             </section>
@@ -346,19 +364,23 @@
   </div>
 </div>
 
-<ng-template #headersDescription>
+<ng-template #UiHints>
   <div class="term">
     <div class="term__header">
       <button mat-icon-button
               class="term__close-button"
-              (click)="onCloseHeadersDescription()"
+              (click)="onCloseUiHints()"
               aria-label="Закрыть">
         <span class="fa fal fa-times"></span>
       </button>
     </div>
     <ng-container>
       <div class="term__description">
-        Статическое описание для элементов интерфейса
+        <article>
+          <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3812327/"
+             class="link"
+             target="_blank">DOI: 10.1016/j.tig.2013.07.001</a>
+        </article>
       </div>
     </ng-container>
   </div>

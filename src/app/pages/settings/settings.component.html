@@ -16,8 +16,8 @@
       <div class="row">
         <div class="col-12">
           <div class="setting-items__panel setting-items__panel--emphasized">
-            <app-switch [(ngModel)]="settings.isHeadersDescription"
-                        (changeEvent)="onInterfaceHints()"
+            <app-switch [switch]="retrievedSettings.showUiHints"
+                        (changeEvent)="toggleInterfaceHints()"
             ></app-switch>
             <div class="panel__label">
               <h3>

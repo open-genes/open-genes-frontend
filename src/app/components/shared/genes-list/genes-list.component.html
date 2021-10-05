@@ -89,28 +89,34 @@
 <section
   *ngIf="
     (isGoTermsMode && isGoSearchPerformed && searchedData?.length == 0) ||
-    (!isGoTermsMode && searchedData?.length == 0)"
-  class="no-content">
-  <div class="no-content__inner">
-    <div class="no-content__icon no-content__icon-standard"></div>
-    <div class="no-content__title">
-      <div class="title__center">
-        {{ "nothing_found" | translate }}
-      </div>
-    </div>
-  </div>
+    (!isGoTermsMode && searchedData?.length == 0)">
+  <app-no-content
+    [title]="'nothing_found'">
+    <ng-container icon>
+      <app-icon
+        icon="default"
+        size="custom"
+        customWidth="100%"
+        customHeight="100%"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
 </section>
 
 <!-- GO search mode start message -->
-<section *ngIf="isGoTermsMode && !isGoSearchPerformed" class="no-content">
-  <div class="no-content__inner">
-    <div class="no-content__icon no-content__icon-standard"></div>
-    <div class="no-content__title">
-      <div class="title__center">
-        {{ "go_results_start_typing" | translate }}
-      </div>
-    </div>
-  </div>
+<section *ngIf="isGoTermsMode && !isGoSearchPerformed">
+  <app-no-content
+    *ngIf="isGoTermsMode && !isGoSearchPerformed"
+    [title]="'go_results_start_typing'">
+    <ng-container icon>
+      <app-icon
+        icon="default"
+        size="custom"
+        customWidth="100%"
+        customHeight="100%"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
 </section>
 
 
