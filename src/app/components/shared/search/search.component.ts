@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Renderer2, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Renderer2, Input, Output, Inject } from '@angular/core';
 import { Genes } from '../../../core/models';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -9,6 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 
 export class SearchComponent {
+  @Inject(Document) public document: Document;
   @Input() genesQuantity: number;
   @Input() searchedData: Genes[];
 
