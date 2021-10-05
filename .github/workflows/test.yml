@@ -4,10 +4,7 @@ name: test-CI
 
 # Controls when the workflow will run
 on:
-  push:
-    # Sequence of patterns matched against refs/tags
-    tags:
-      - test-*
+  pull_request
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
