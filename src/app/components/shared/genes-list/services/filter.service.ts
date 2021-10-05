@@ -10,7 +10,6 @@ import { GenesListSettings } from '../genes-list-settings.model';
 export class FilterService {
   private _listOfFields = new BehaviorSubject<any>('');
   public currentFields = this._listOfFields.asObservable();
-
   public listOfFields: GenesListSettings = {
     // Default:
     ifShowAge: true,
@@ -21,23 +20,7 @@ export class FilterService {
     ifShowCriteria: true,
     ifShowMethylation: false,
   };
-
-  private _listOfFields = new BehaviorSubject<any>('');
-  public currentFields: Observable<GenesListSettings> = this._listOfFields.asObservable();
-
   public isClearFiltersBtnShown = new BehaviorSubject<boolean>(false);
-
-  public listOfFields: GenesListSettings = {
-    // Default:
-    ifShowAge: true,
-    ifShowClasses: true,
-    ifShowExpression: true,
-    ifShowDiseases: true,
-    ifShowDiseaseCategories: false,
-    ifShowCriteria: true,
-    ifShowMethylation: false,
-  };
-
   public filters: Filter = {
     byName: false,
     byAge: false,
