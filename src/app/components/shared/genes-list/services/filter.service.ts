@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { Filter } from './filter.model';
 import { FilterTypesEnum } from './filter-types.enum';
 import { GenesListSettings } from '../genes-list-settings.model';
@@ -9,7 +9,10 @@ import { GenesListSettings } from '../genes-list-settings.model';
 })
 export class FilterService {
   private _listOfFields = new BehaviorSubject<any>('');
-  public currentFields = this._listOfFields.asObservable();
+  public currentFields: Observable<GenesListSettings> = this._listOfFields.asObservable();
+  public isClearFiltersBtnShown = new BehaviorSubject<boolean>(false);
+  public updateSelectedFilter = new Subject<void>();
+
   public listOfFields: GenesListSettings = {
     // Default:
     ifShowAge: true,
@@ -20,7 +23,7 @@ export class FilterService {
     ifShowCriteria: true,
     ifShowMethylation: false,
   };
-  public isClearFiltersBtnShown = new BehaviorSubject<boolean>(false);
+
   public filters: Filter = {
     byName: false,
     byAge: false,
@@ -170,22 +173,14 @@ export class FilterService {
     // convert filter values to array of numbers
     const sum = [];
     Object.values(this.filters).forEach((value) => {
-      if (value instanceof Array) {
-        sum.push(value.length);
-      } else if (value.length) {
+      if ((value && value.length) || (typeof value === 'number' && value !== 0)) {
         sum.push(1);
-      } else {
-        sum.push(+value);
       }
     });
 
-    const numberOfAppliedFilters = sum.reduce((a: number, b: number) => a + b);
+    this.updateSelectedFilter.next();
 
     // when filters change and their sum is more than 2:
-    if (numberOfAppliedFilters >= 2) {
-      return this.isClearFiltersBtnShown.next(true);
-    }
-
-    return this.isClearFiltersBtnShown.next(false);
+    this.isClearFiltersBtnShown.next(sum.length >= 2);
   }
 }

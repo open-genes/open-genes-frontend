@@ -39,6 +39,7 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.updateCurrentFields();
+    this.updateSelectedFilter();
   }
 
   ngOnDestroy(): void {
@@ -61,6 +62,11 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
         this._cdRef.markForCheck();
       }
     );
+  }
+  protected updateSelectedFilter() {
+    this._filterService.updateSelectedFilter.subscribe(() => {
+      this._cdRef.markForCheck();
+    });
   }
 
   /**
