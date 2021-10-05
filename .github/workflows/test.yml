@@ -3,8 +3,7 @@
 name: test-CI
 
 # Controls when the workflow will run
-on:
-  pull_request
+on: push
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -30,6 +29,7 @@ jobs:
           name: project
 
   deploy-test:
+    if: contains( github.ref, 'develop')
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -43,8 +43,7 @@ jobs:
           key: ${{ secrets.DROPLET_KEY }}
           known_hosts: ${{ secrets.DROPLET_HOST }}
       - name: Deploy with rsync
-        run:
-          rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' . $SSH_USER@$SSH_HOST:$PROJECT_PATH
+        run: rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' . $SSH_USER@$SSH_HOST:$PROJECT_PATH
         env:
           SSH_USER: ${{ secrets.DROPLET_USER }}
           SSH_HOST: ${{ secrets.DROPLET_HOST }}
