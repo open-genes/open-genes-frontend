@@ -7,8 +7,8 @@
       <div class="team-member-card__name" [ngClass]="userWebSite ? 'text-decoration' : ''">
         {{ userName ? userName : ("team-member-card-default-name" | translate) }}
       </div>
-      <div class="team-member-card__work">
-        {{ userWork ? userWork : '' }}
+      <div *ngIf="userWork" class="team-member-card__work">
+        {{ userWork }}
       </div>
     </div>
   </div>
