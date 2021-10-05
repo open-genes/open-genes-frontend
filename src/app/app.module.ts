@@ -62,7 +62,6 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     GoogleAnalyticsModule,
     DirectivesModule,
     TermsModule,
-    TermsModule,
     SnackBarModule
   ],
   providers: [TranslateService, { provide: LOCALE_ID, useValue: 'ru' }],

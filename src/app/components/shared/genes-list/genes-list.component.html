@@ -1,3 +1,4 @@
+<!-- Search Bar -->
 <ng-container *ngIf="showSearchBar">
   <app-search
     [genesList]="inputData"
@@ -13,119 +14,25 @@
     (isGoTermsMode && isGoSearchPerformed && !isGoTermsModeError) ||
     (!isGoTermsMode && searchedData?.length !== 0)">
 
-  <!-- Filters -->
+  <!-- Filters Panel -->
   <ng-container *ngIf="showFiltersPanel">
-    <div class="view-panel">
-      <div class="filters-group view-panel__filters">
-        <button
-          class="filter"
-          (click)="sortBy('name')"
-          [class.__active]="filters.byName"
-        >
-          {{ "main_page_table_name" | translate }}
-          <span class="fa far fa-sort-down"></span>
-        </button>
-
-        <button
-          class="filter"
-          (click)="sortBy('age')"
-          [class.__active]="filters.byAge"
-        >
-          {{ "age" | translate }} ({{ "million_years" | translate }})
-          <span class="fa far fa-sort-down"></span>
-        </button>
-
-        <button
-          *ngIf="filters.byClasses.length > 0"
-          class="filter __active"
-          (click)="clearFilters(filterTypes.classes)"
-        >
-          {{ "functional_classes" | translate }}
-          <span class="fa fal fa-times"></span>
-        </button>
-
-        <button
-          *ngIf="filters.byExpressionChange"
-          class="filter __active"
-          (click)="clearFilters(filterTypes.expressionChange)"
-        >
-          {{ "main_page_table_expression" | translate }}
-          <span class="fa fal fa-times"></span>
-        </button>
-
-        <button
-          *ngIf="filters.byDisease"
-          class="filter __active"
-          (click)="clearFilters(filterTypes.disease)"
-        >
-          {{ "gene_list_diseases" | translate }}
-          <span class="fa fal fa-times"></span>
-        </button>
-
-        <button
-          *ngIf="filters.byDiseaseCategories"
-          class="filter __active"
-          (click)="clearFilters(filterTypes.diseaseCategories)"
-        >
-          {{ "gene_list_disease_categories" | translate }}
-          <span class="fa fal fa-times"></span>
-        </button>
-
-        <button
-          *ngIf="filters.bySelectionCriteria"
-          class="filter __active"
-          (click)="clearFilters(filterTypes.criteria)"
-        >
-          {{ "main_page_table_criteria" | translate }}
-          <span class="fa fal fa-times"></span>
-        </button>
-
-        <button
-          class="btn btn--small btn--purple"
-          (click)="clearFilters()"
-          *ngIf="isClearFiltersBtnShown"
-        >
-          <span class="fa far fa-times"></span> {{ "filters_reset" | translate }}
-        </button>
-
-        <button *ngIf="!isGoTermsMode"
-                class="btn btn--small btn--fill btn--purple"
-                (click)="openFiltersModal()">
-          <span class="fa far fa-plus"></span>
-          {{ 'filters_modal_title' | translate }}
-        </button>
-
-      </div>
-
-      <div class="view-panel__buttons">
-
-        <a class="btn btn--small btn--purple"
-           [href]="downloadJsonLink"
-           target="_blank"
-           download="export.json">
-          <span class="fa far fa-download"></span> JSON
-        </a>
-
-        <button
-                *ngIf="!isMobile"
-                class="toggler __ml-10"
-                (click)="toggleGenesView()"
-                [ngClass]="asTableRow ? 'toggler--def' : 'toggler--alt'"
-          matTooltip="{{ 'gene_list_view' |translate }}">
-          <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
-          <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
-        </button>
-      </div>
-    </div>
+    <app-filter-panel
+      [isMobile]="isMobile"
+      [isGoTermsMode]="isGoTermsMode"
+      [downloadJsonLink]="downloadJsonLink"
+      (tableView)="toggleGenesView($event)"
+      (sortItem)="sortBy($event)"
+      (clearFilterItem)="clearFilters($event)"
+    ></app-filter-panel>
   </ng-container>
 
 
   <!-- Content -->
   <section
-    class="view-content notranslate"
+    class="view-content"
     [ngClass]="asTableRow && !isMobile ? 'view-content--as-table' : 'view-content--as-cards'">
 
-    <!-- Content views -->
+    <!-- Table view -->
     <ng-container *ngIf="asTableRow && !isMobile">
       <table>
         <thead>
@@ -134,7 +41,7 @@
         </app-genes-table-header>
         </thead>
 
-        <app-genes-table-row *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+        <app-gene-table-row *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
                              [item]="rowData"
                              [isGoTermsMode]="isGoTermsMode"
                              [goModeCellData]="goModeCellData"
@@ -144,13 +51,14 @@
                              (diseaseName)="filterByDisease($event)"
                              (diseaseCategories)="filterByDiseaseCategories($event)"
                              (selectionCriteria)="filterBySelectionCriteria($event)">
-        </app-genes-table-row>
+        </app-gene-table-row>
+
       </table>
     </ng-container>
 
-
+    <!-- Card view -->
     <ng-container *ngIf="!asTableRow || isMobile">
-      <app-genes-card class="card" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+      <app-gene-card class="card" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
                       [item]="rowData"
                       [isGoTermsMode]="isGoTermsMode"
                       [goModeCellData]="goModeCellData"
@@ -161,12 +69,11 @@
                       (diseaseCategories)="filterByDiseaseCategories($event)"
                       (selectionCriteria)="filterBySelectionCriteria($event)">
 
-      </app-genes-card>
+      </app-gene-card>
     </ng-container>
   </section>
 
-  <!-- / Content views -->
-
+  <!-- Show more Button -->
   <div
     class="btn-wrap show-more"
     *ngIf="searchedData?.length > loadedGenesQuantity">
@@ -175,6 +82,7 @@
       {{ "show_more" | translate }}
     </button>
   </div>
+
 </ng-container>
 
 <!-- No content error message -->
@@ -210,4 +118,5 @@
     </ng-container>
   </app-no-content>
 </section>
+
 
