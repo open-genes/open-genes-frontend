@@ -33,7 +33,6 @@ jobs:
           name: project
 
   deploy-test:
-    if: contains( github.ref, 'develop')
     needs: build
     runs-on: ubuntu-latest
     steps:
