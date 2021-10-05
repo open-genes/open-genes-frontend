@@ -43,10 +43,9 @@ export interface Gene extends GeneralGeneInfo {
     string: string;
   };
   commentEvolution: string;
-  commentFunction: string;
-  commentAging: string;
   commentEvolutionEN: string;
-  commentFunctionEN: string;
+  proteinDescriptionUniProt: string;
+  proteinDescriptionOpenGenes: string;
   commentAgingEN: string;
   researches: Researches;
   expression: Array<any>;

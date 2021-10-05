@@ -3,8 +3,8 @@
   "version": "0.5.0",
   "scripts": {
     "spriteset-general": "svg-sprite --symbol --dest=src/assets/images/icons/sprites src/assets/images/icons/source/general/*.svg --symbol-sprite=general.sprite.svg",
-    "spriteset-landing": "svg-sprite --symbol --dest=src/assets/images/icons/sprites src/assets/images/icons/source/landing/*.svg --symbol-sprite=landing.sprite.svg",
-    "sprites": "npm run spriteset-general & npm run spriteset-landing",
+    "spriteset-no-content": "svg-sprite --symbol --dest=src/assets/images/icons/sprites src/assets/images/icons/source/no-content/*.svg --symbol-sprite=no-content.sprite.svg",
+    "sprites": "npm run spriteset-general & npm run spriteset-no-content",
     "ng": "ng",
     "start": "npm run sprites && ng serve",
     "start-dev": "npm run sprites && ng serve --configuration=develop",

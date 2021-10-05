@@ -32,6 +32,5 @@ export class AssociatedDiseasesComponent extends WrapIntoAccordion implements On
 
   public emitOnClick(diseaseName: any): void {
     this.clickEvent.emit(diseaseName);
-    console.log('clickEvent');
   }
 }

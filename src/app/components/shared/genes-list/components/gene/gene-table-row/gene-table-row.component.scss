@@ -1,0 +1,97 @@
+@import "../../../../../styles";
+
+:host {
+  display: table-row-group;
+  width: 100%;
+  background: $color-white;
+
+  &:nth-child(odd) {
+    background: $color-general-light;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.item {
+  animation: fadeIn .5s linear forwards; // при рендеринге/подгрузке элемент мингнет
+
+  .title {
+    font-size: $font-size-bigger;
+    font-weight: $font-weight-medium;
+    color: $color-gray;
+    line-height: 1;
+
+    .link {
+      vertical-align: middle;
+      margin-right: 5px;
+      text-decoration: underline;
+    }
+
+    .alias {
+      vertical-align: 1px;
+      margin-bottom: 0;
+    }
+  }
+
+  b {
+    color: $color-black;
+    font-weight: bold;
+    margin-right: 3px;
+  }
+
+  .actions__menu {
+    position: absolute;
+    z-index: 1;
+    right: 5px;
+  }
+}
+
+.cell {
+  position: relative;
+  padding: 8px;
+  vertical-align: top;
+  word-break: keep-all;
+  hyphens: auto;
+
+  &--age {
+    .overflow {
+      width: 180px;
+    }
+  }
+
+  &--expression {
+    .overflow {
+      width: 100px;
+    }
+  }
+
+  &--name,
+  &--diseases,
+  &--functions,
+  &--criteria,
+  &--methylation {
+    .overflow {
+      width: 220px;
+    }
+  }
+
+  &--terms {
+    .overflow {
+      max-width: 300px;
+    }
+  }
+
+  &--actions {
+    .cell__menu {
+      top: 0;
+    }
+
+    .overflow {
+      float: right;
+      width: 40px;
+      text-align: right;
+    }
+  }
+}

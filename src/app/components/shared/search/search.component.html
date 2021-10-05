@@ -3,7 +3,7 @@
       [class.search-form--active]="showResult"
 >
   <div class="search-form__quantity">
-      {{ 'main_page_total' | translate: { number: dataSource.length } }}
+      {{ 'main_page_total' | translate: { number: genesList.length } }}
   </div>
 
   <div *ngIf="showResult"

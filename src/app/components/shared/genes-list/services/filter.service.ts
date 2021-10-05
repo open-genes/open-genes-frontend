@@ -1,12 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Filter } from './filter.model';
 import { FilterTypesEnum } from './filter-types.enum';
+import { GenesListSettings } from '../genes-list-settings.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilterService {
+  private _listOfFields = new BehaviorSubject<any>('');
+  public currentFields = this._listOfFields.asObservable();
+  public listOfFields: GenesListSettings = {
+    // Default:
+    ifShowAge: true,
+    ifShowClasses: true,
+    ifShowExpression: true,
+    ifShowDiseases: true,
+    ifShowDiseaseCategories: false,
+    ifShowCriteria: true,
+    ifShowMethylation: false,
+  };
+  public isClearFiltersBtnShown = new BehaviorSubject<boolean>(false);
   public filters: Filter = {
     byName: false,
     byAge: false,
@@ -18,6 +32,14 @@ export class FilterService {
     bySelectionCriteria: '',
   };
 
+  constructor() {
+    this.updateFields(this.listOfFields);
+  }
+
+  public updateFields(fields) {
+    this._listOfFields.next(fields);
+  }
+
   // Filter
   public filterByFuncClusters(id: number): Observable<number[]> {
     if (!this.filters.byClasses.includes(id)) {
@@ -26,6 +48,7 @@ export class FilterService {
       this.filters.byClasses = this.filters.byClasses.filter((item) => item !== id);
     }
 
+    this.areMoreThan2FiltersApplied();
     return of(this.filters.byClasses);
   }
 
@@ -36,6 +59,7 @@ export class FilterService {
       this.filters.byExpressionChange = 0;
     }
 
+    this.areMoreThan2FiltersApplied();
     return of(this.filters.byExpressionChange);
   }
 
@@ -46,6 +70,7 @@ export class FilterService {
       this.filters.byMethylationChange = '';
     }
 
+    this.areMoreThan2FiltersApplied();
     return of(this.filters.byMethylationChange);
   }
 
@@ -57,6 +82,7 @@ export class FilterService {
       this.filters.bySelectionCriteria = '';
     }
 
+    this.areMoreThan2FiltersApplied();
     return of(this.filters.bySelectionCriteria);
   }
 
@@ -67,6 +93,7 @@ export class FilterService {
       this.filters.byDisease = '';
     }
 
+    this.areMoreThan2FiltersApplied();
     return of(this.filters.byDisease);
   }
 
@@ -76,7 +103,7 @@ export class FilterService {
     } else {
       this.filters.byDiseaseCategories = '';
     }
-
+    this.areMoreThan2FiltersApplied();
     return of(this.filters.byDiseaseCategories);
   }
 
@@ -136,27 +163,29 @@ export class FilterService {
       this.filters.byDiseaseCategories = '';
       this.filters.bySelectionCriteria = '';
     }
+    this.areMoreThan2FiltersApplied();
   }
 
-  private howManyFiltersApplied(): number {
-    const n = Number(this.filters.byName); // 0
-    const a = Number(this.filters.byAge); // 0
-    const c = this.filters.byClasses.length; // 0
-    const e = this.filters.byExpressionChange; // 0
-    const m = this.filters.byMethylationChange.length; // 0
-    const d = this.filters.byDiseaseCategories.length; // 0
-    const dc = this.filters.bySelectionCriteria.length; // 0
-    const s = this.filters.bySelectionCriteria.length; // 0
+  public areMoreThan2FiltersApplied() {
+    // convert filter values to array of numbers
+    const sum = [];
+    Object.values(this.filters).forEach((value) => {
+      if (value instanceof Array) {
+        sum.push(value.length);
+      } else if (value.length) {
+        sum.push(1);
+      } else {
+        sum.push(+value);
+      }
+    });
 
-    return n + a + c + e + m + d + dc + s;
-  }
+    const numberOfAppliedFilters = sum.reduce((a: number, b: number) => a + b);
 
-  public areMoreThan2FiltersApplied(): Observable<boolean> {
-    // when if filters change and their sum is more than 2:
-    if (this.howManyFiltersApplied() >= 2) {
-      return of(true);
+    // when filters change and their sum is more than 2:
+    if (numberOfAppliedFilters >= 2) {
+      return this.isClearFiltersBtnShown.next(true);
     }
 
-    return of(false);
+    return this.isClearFiltersBtnShown.next(false);
   }
 }

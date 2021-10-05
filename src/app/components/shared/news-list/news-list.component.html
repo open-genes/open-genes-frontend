@@ -24,7 +24,7 @@
 </ul>
 
 <div
-  *ngIf="showMoreButtonVisible && isShowMoreButton"
+  *ngIf="showMoreButtonVisible && !isMiniMode"
   class="col col-12 __mt-5 btn-wrap show-more">
   <button class="btn show-more__button"
           (click)="showMore()"
@@ -36,19 +36,25 @@
 
 <ng-template #skeleton>
   <app-skeleton
-    *ngIf="isLoading || error"
+    *ngIf="isLoading"
     [groups]="newsList.length !== 0 ? newsList.length : itemsForPage"
   ></app-skeleton>
 </ng-template>
 
 <section *ngIf="error"
-         class="col-12 no-content">
-  <div class="no-content__inner">
-    <div class="no-content__icon no-content__icon-standard"></div>
-    <div class="no-content__title">
-      <div class="title__center">
-        {{ "news_page_no_news" | translate }}
-      </div>
-    </div>
-  </div>
+         class="no-news"
+         [class.__mt-15]="!isMiniMode"
+         [class.no-news--mini]="isMiniMode">
+  <app-no-content
+    [size]="isMiniMode ? 'small' : 'medium'"
+    [title]="'news_page_no_news'">
+    <ng-container icon>
+      <app-icon
+        icon="default"
+        size="custom"
+        customWidth="100%"
+        customHeight="100%"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
 </section>

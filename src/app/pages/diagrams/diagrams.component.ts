@@ -104,6 +104,7 @@ export class DiagramsComponent implements OnDestroy {
     const groupedFuncClustLinks: Link[] = [];
     const groupedFamOriginLinks: Link[] =[];
 
+
     genes.forEach((gene) => {
       const diseaseCatLinks = genes
         .filter(
