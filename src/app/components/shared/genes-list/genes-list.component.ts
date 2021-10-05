@@ -207,18 +207,18 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   /**
    * Update already loaded and then filtered data on typing
    */
-  public updateGeneListOnTyping(event: Genes[]): void {
-    const result = of(event).pipe(takeLast(1));
-    result.subscribe((x) => {
-      this.searchedData = x;
-
-      this._snackBar.openFromComponent(SnackBarComponent, {
-        data: {
-          title: 'items_found',
-          length: this.searchedData ? this.searchedData.length : 0,
-        },
-        duration: 600,
-      });
+  public updateGeneListOnSearch(query: string): void {
+    this.searchedData = this.inputData.filter((item) => {
+      const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
+      ${item.symbol} ${item.name} ${item.aliases.join(' ')}`;
+      return searchedText.toLowerCase().includes(query);
+    });
+    this._snackBar.openFromComponent(SnackBarComponent, {
+      data: {
+        title: 'items_found',
+        length: this.searchedData.length ? this.searchedData.length : 0,
+      },
+      duration: 600,
     });
   }
 
@@ -238,9 +238,8 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   // TODO: this function isn't pure
   public searchGenesByGoTerm(query: string): void {
     if (query) {
-      const request = query.toLowerCase();
       this.apiService
-        .getGoTermMatchByString(request)
+        .getGoTermMatchByString(query)
         .pipe(takeUntil(this._subscription$))
         .subscribe(
           (genes) => {
@@ -267,8 +266,9 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
             this._snackBar.openFromComponent(SnackBarComponent, {
               data: {
                 title: 'items_found',
-                length: this.searchedData?.length,
+                length: this.searchedData ? this.searchedData.length : 0,
               },
+              duration: 600,
             });
 
             this._cdRef.markForCheck();

@@ -1,10 +1,11 @@
 <!-- Search Bar -->
 <ng-container *ngIf="showSearchBar">
   <app-search
-    [genesList]="inputData"
-    (dataSourceChange)="updateGeneListOnTyping($event)"
+    [genesQuantity]="inputData.length"
+    [searchedData]="searchedData"
     (isGoModeTriggered)="toggleGoSearchMode($event)"
-    (isGoSearchTriggered)="searchGenesByGoTerm($event)"
+    (genesListQuery)="updateGeneListOnSearch($event)"
+    (goSearchQuery)="searchGenesByGoTerm($event)"
   ></app-search>
 </ng-container>
 

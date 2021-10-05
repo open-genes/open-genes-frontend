@@ -3,17 +3,17 @@
       [class.search-form--active]="showResult"
 >
   <div class="search-form__quantity">
-      {{ 'main_page_total' | translate: { number: genesList.length } }}
+    {{ 'main_page_total' | translate: { number: genesQuantity } }}
   </div>
 
   <div *ngIf="showResult"
        class="search-backdrop"
-       (click)="cancel($event)"
+       (click)="onCancel($event)"
   ></div>
 
   <div class="search-form__panel">
     <button
-      (click)="cancel($event)"
+      (click)="onCancel($event)"
       class="btn btn--purple btn--icon-only cancel-search-button">
       <span class="fa fal fa-arrow-left"></span>
     </button>
@@ -23,7 +23,7 @@
         mat-icon-button
         class="search-form__submit search-form__submit--active"
         type="submit"
-        (click)="search()"
+        (click)="onSearch()"
       ><span class="fa fal fa-search"></span>
       </button>
 
@@ -44,9 +44,7 @@
         type="text"
         placeholder="{{ (isGoSearchMode ? 'search_field_tap_search' : 'search_field_start_typing') | translate }}"
         class="field search-form__field"
-        (focusin)="search()"
-        (keyup)="isGoSearchMode ? debounce(subscribeToGo, 2000) : subscribeToGenes()"
-        (keydown.enter)="search()"
+        (keydown.enter)="onSearch()"
         #searchQuery
       >
       <mat-menu #searchMenu>
