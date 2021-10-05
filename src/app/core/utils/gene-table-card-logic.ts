@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
-import { Genes } from '../models';
+import { Gene } from '../models';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
 import { FavouritesService } from '../services/favourites.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,7 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Filter } from '../../components/shared/genes-list/services/filter.model';
 
 export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
-  @Input() item: Genes;
+  @Input() item: Gene;
   @Input() isGoTermsMode: boolean;
   @Input() goModeCellData: {
     biologicalProcess: any;
@@ -51,11 +51,8 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
    */
 
   protected updateCurrentFields() {
-    this._filterService.currentFields
-      .pipe(
-        takeUntil(this.subscription$)
-      )
-      .subscribe((fields) => {
+    this._filterService.currentFields.pipe(takeUntil(this.subscription$)).subscribe(
+      (fields) => {
         this.listSettings = fields;
         this._cdRef.markForCheck();
       },

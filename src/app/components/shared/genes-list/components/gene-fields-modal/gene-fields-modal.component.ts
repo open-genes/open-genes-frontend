@@ -6,18 +6,18 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-fields-for-show',
-  templateUrl: './fields-for-show.component.html',
-  styleUrls: ['./fields-for-show.component.scss'],
+  selector: 'app-gene-fields-modal',
+  templateUrl: './gene-fields-modal.component.html',
+  styleUrls: ['./gene-fields-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldsForShowComponent implements OnInit {
+export class GeneFieldsModalComponent implements OnInit {
   public listSettings: GenesListSettings;
 
   private _subscription$ = new Subject();
 
   constructor(
-    private _dialogRef: MatDialogRef<FieldsForShowComponent>,
+    private _dialogRef: MatDialogRef<GeneFieldsModalComponent>,
     private _filterService: FilterService,
     private _cdRef: ChangeDetectorRef
   ) {}
@@ -31,11 +31,8 @@ export class FieldsForShowComponent implements OnInit {
    */
 
   private updateCurrentFields() {
-    this._filterService.currentFields
-      .pipe(
-        takeUntil(this._subscription$)
-      )
-      .subscribe((fields) => {
+    this._filterService.currentFields.pipe(takeUntil(this._subscription$)).subscribe(
+      (fields) => {
         this.listSettings = fields;
         this._cdRef.markForCheck();
       },

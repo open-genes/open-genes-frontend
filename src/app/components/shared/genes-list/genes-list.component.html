@@ -41,7 +41,7 @@
         </app-genes-table-header>
         </thead>
 
-        <app-genes-table-row *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+        <app-gene-table-row *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
                              [item]="rowData"
                              [isGoTermsMode]="isGoTermsMode"
                              [goModeCellData]="goModeCellData"
@@ -51,14 +51,14 @@
                              (diseaseName)="filterByDisease($event)"
                              (diseaseCategories)="filterByDiseaseCategories($event)"
                              (selectionCriteria)="filterBySelectionCriteria($event)">
-        </app-genes-table-row>
+        </app-gene-table-row>
 
       </table>
     </ng-container>
 
     <!-- Card view -->
     <ng-container *ngIf="!asTableRow || isMobile">
-      <app-genes-card class="card" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+      <app-gene-card class="card" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
                       [item]="rowData"
                       [isGoTermsMode]="isGoTermsMode"
                       [goModeCellData]="goModeCellData"
@@ -69,7 +69,7 @@
                       (diseaseCategories)="filterByDiseaseCategories($event)"
                       (selectionCriteria)="filterBySelectionCriteria($event)">
 
-      </app-genes-card>
+      </app-gene-card>
     </ng-container>
   </section>
 

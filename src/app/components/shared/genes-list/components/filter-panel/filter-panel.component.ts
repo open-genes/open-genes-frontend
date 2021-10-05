@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FilterTypesEnum } from '../../services/filter-types.enum';
 import { FilterService } from '../../services/filter.service';
-import { FieldsForShowComponent } from '../fields-for-show/fields-for-show.component';
+import { GeneFieldsModalComponent } from '../gene-fields-modal/gene-fields-modal.component';
 import { MatDialog } from '@angular/material';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { Filter } from '../../services/filter.model';
@@ -26,9 +26,7 @@ export class FilterPanelComponent {
   public isTableView = true;
   public isClear$ = this._filterService.isClearFiltersBtnShown;
 
-  constructor(
-    private _filterService: FilterService, private _dialog: MatDialog
-  ) {}
+  constructor(private _filterService: FilterService, private _dialog: MatDialog) {}
 
   /**
    * Send clear filter item
@@ -56,7 +54,7 @@ export class FilterPanelComponent {
    * Opening modal for list view settings
    */
   public openFiltersModal(): void {
-    this._dialog.open(FieldsForShowComponent, {
+    this._dialog.open(GeneFieldsModalComponent, {
       panelClass: 'filters-modal',
       minWidth: '320px',
       maxWidth: '768px',
