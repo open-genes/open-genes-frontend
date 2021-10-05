@@ -59,11 +59,11 @@
           {{ 'header_menu_news' | translate }}</a>
       </li>
       <li class="menu__link">
-        <a [routerLink]="'/developers'"
-           routerLinkActive="current"
-        >
-          <span class="fa far fa-database"></span>
-          {{ 'header_menu_api' | translate }}</a>
+        <a href="/openapi/docs"
+           target="_blank">
+          <span class="fa far fa-database">
+          </span> {{ 'header_menu_api' | translate }}&nbsp;<span class="fa far fa-external-link"></span>
+        </a>
       </li>
       <li class="menu__link">
         <a [routerLink]="'/settings'"

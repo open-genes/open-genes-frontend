@@ -41,7 +41,7 @@
         </app-genes-table-header>
         </thead>
 
-        <app-genes-table-row *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+        <app-gene-table-row *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
                              [item]="rowData"
                              [isGoTermsMode]="isGoTermsMode"
                              [goModeCellData]="goModeCellData"
@@ -51,14 +51,14 @@
                              (diseaseName)="filterByDisease($event)"
                              (diseaseCategories)="filterByDiseaseCategories($event)"
                              (selectionCriteria)="filterBySelectionCriteria($event)">
-        </app-genes-table-row>
+        </app-gene-table-row>
 
       </table>
     </ng-container>
 
     <!-- Card view -->
     <ng-container *ngIf="!asTableRow || isMobile">
-      <app-genes-card class="card" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+      <app-gene-card class="card" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
                       [item]="rowData"
                       [isGoTermsMode]="isGoTermsMode"
                       [goModeCellData]="goModeCellData"
@@ -69,7 +69,7 @@
                       (diseaseCategories)="filterByDiseaseCategories($event)"
                       (selectionCriteria)="filterBySelectionCriteria($event)">
 
-      </app-genes-card>
+      </app-gene-card>
     </ng-container>
   </section>
 
@@ -89,28 +89,34 @@
 <section
   *ngIf="
     (isGoTermsMode && isGoSearchPerformed && searchedData?.length == 0) ||
-    (!isGoTermsMode && searchedData?.length == 0)"
-  class="no-content">
-  <div class="no-content__inner">
-    <div class="no-content__icon no-content__icon-standard"></div>
-    <div class="no-content__title">
-      <div class="title__center">
-        {{ "nothing_found" | translate }}
-      </div>
-    </div>
-  </div>
+    (!isGoTermsMode && searchedData?.length == 0)">
+  <app-no-content
+    [title]="'nothing_found'">
+    <ng-container icon>
+      <app-icon
+        icon="default"
+        size="custom"
+        customWidth="100%"
+        customHeight="100%"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
 </section>
 
 <!-- GO search mode start message -->
-<section *ngIf="isGoTermsMode && !isGoSearchPerformed" class="no-content">
-  <div class="no-content__inner">
-    <div class="no-content__icon no-content__icon-standard"></div>
-    <div class="no-content__title">
-      <div class="title__center">
-        {{ "go_results_start_typing" | translate }}
-      </div>
-    </div>
-  </div>
+<section *ngIf="isGoTermsMode && !isGoSearchPerformed">
+  <app-no-content
+    *ngIf="isGoTermsMode && !isGoSearchPerformed"
+    [title]="'go_results_start_typing'">
+    <ng-container icon>
+      <app-icon
+        icon="default"
+        size="custom"
+        customWidth="100%"
+        customHeight="100%"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
 </section>
 
 

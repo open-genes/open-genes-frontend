@@ -25,7 +25,7 @@ export class EightyLevelService {
     return this.http.get(this.url + (params ? `?${querySelectors}` : ''));
   }
 
-  public getArticle(id: number): Observable<any> {
+  public getArticle(id: string): Observable<any> {
     return this.http.get(`${this.url}/${id}`);
   }
 }
