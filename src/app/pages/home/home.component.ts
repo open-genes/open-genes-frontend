@@ -98,7 +98,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.wizardService.openOnce();
   }
 
-  public changeVisibility() {
-    this.showSkeleton = false;
+  public changeVisibility(event) {
+    this.showSkeleton = event;
   }
 }

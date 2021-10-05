@@ -63,9 +63,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.makeArticlesList();
-    },5000)
+    this.makeArticlesList();
   }
 
   public showMore(): void {

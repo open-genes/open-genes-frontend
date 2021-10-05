@@ -61,7 +61,7 @@
                   class="__h-100"
                   [isMiniMode]="true"
                   [sliceTo]="2"
-                  (artticlesLoaded)="changeVisibility()"
+                  (artticlesLoaded)="changeVisibility($event)"
                 ></app-articles-list>
               </app-sidebar-item>
                 <app-skeleton *ngIf="showSkeleton" [groups]="10"></app-skeleton>
