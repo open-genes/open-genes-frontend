@@ -3,11 +3,7 @@
 name: test-CI
 
 # Controls when the workflow will run
-on:
-  push:
-    # Sequence of patterns matched against refs/tags
-    tags:
-      - test
+on: push
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -47,11 +43,8 @@ jobs:
           key: ${{ secrets.DROPLET_KEY }}
           known_hosts: ${{ secrets.DROPLET_HOST }}
       - name: Deploy with rsync
-        run: |
-          echo $DROPLET_ENV | base64 -d > .env
-          rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' . $SSH_USER@$SSH_HOST:$PROJECT_PATH
+        run: rsync -zhrl -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' . $SSH_USER@$SSH_HOST:$PROJECT_PATH
         env:
           SSH_USER: ${{ secrets.DROPLET_USER }}
           SSH_HOST: ${{ secrets.DROPLET_HOST }}
-          PROJECT_PATH: ${{ secrets.DROPLET_CMS_TEST_PATH }}
-          DROPLET_ENV: ${{ secrets.DROPLET_CMS_TEST_DOTENV_BASE64 }}
+          PROJECT_PATH: ${{ secrets.DROPLET_FRONTEND_TEST_PATH }}
