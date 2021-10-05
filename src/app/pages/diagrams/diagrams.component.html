@@ -22,9 +22,16 @@
       </div>
       <div>
         <app-directed-graph
-          [graphSelector]="'new'"
+          [graphSelector]="'disease'"
           [nodes]="newNodes"
           [links]="newLinks"
+          [grouped]="true"></app-directed-graph>
+      </div>
+      <div>
+        <app-directed-graph
+          [graphSelector]="'family'"
+          [nodes]="nNodes"
+          [links]="nLinks"
           [grouped]="true"></app-directed-graph>
       </div>
     </div>

@@ -17,6 +17,8 @@ export class DiagramsComponent implements OnDestroy {
   public links: Link[] = [];
   public newNodes: Node[];
   public newLinks: Link[];
+  public nNodes: Node[];
+  public nLinks: Link[];
 
   private unsubscribe$ = new Subject();
 
@@ -100,6 +102,8 @@ export class DiagramsComponent implements OnDestroy {
   private getNewNodesAndLinks(genes: DiagramGenes[]): void {
     const groupedDisCatLinks: Link[] = [];
     const groupedFuncClustLinks: Link[] = [];
+    const groupedFamOriginLinks: Link[] =[];
+
 
     genes.forEach((gene) => {
       const diseaseCatLinks = genes
@@ -141,12 +145,30 @@ export class DiagramsComponent implements OnDestroy {
           groupedFuncClustLinks.push(link);
         }
       });
+
+      const familyOriginLinks = genes
+        .filter((res) => gene.id !== res.id && gene.familyOriginId === res.familyOriginId)
+        .map((res) => {
+          return {
+            id: res.id,
+            source: gene.name,
+            target: res.name,
+            group: 2,
+          };
+        });
+
+      familyOriginLinks.forEach((link: Link) => {
+        if (groupedFamOriginLinks.every((link3) => link3.id !== link.id)) {
+          groupedFamOriginLinks.push(link);
+        }
+      });
     });
 
     const groupedDisCatNodes = genes
       .filter((gene) => groupedDisCatLinks.some(({ id }) => gene.id === id))
       .map((res) => {
         return {
+          id: res.id,
           name: res.name,
           group: 0,
         };
@@ -156,13 +178,31 @@ export class DiagramsComponent implements OnDestroy {
       .filter((gene) => groupedFuncClustLinks.some(({ id }) => gene.id === id))
       .map((res) => {
         return {
+          id: res.id,
           name: res.name,
           group: 1,
         };
       });
 
-    this.newNodes = groupedDisCatNodes.concat(groupedFuncClustNodes);
+    const groupedFamOriginNodes = genes
+      .filter((gene) => groupedFamOriginLinks.some(({ id }) => gene.id === id))
+      .map((res) => {
+        return {
+          id: res.id,
+          name: res.name,
+          group: 2,
+        };
+      });
+
+    this.newNodes = groupedFuncClustNodes
+      .concat(groupedDisCatNodes)
+      .filter((v, i, a) => a.findIndex((t) => t.id === v.id) === i);
     this.newLinks = groupedDisCatLinks.concat(groupedFuncClustLinks);
+
+    this.nNodes = groupedFuncClustNodes
+      .concat(groupedFamOriginNodes)
+      .filter((v, i, a) => a.findIndex((t) => t.id === v.id) === i);
+    this.nLinks = groupedFamOriginLinks.concat(groupedFuncClustLinks);
   }
 
   private groupByDiseaseCategories(category: AssociatedDiseaseCategories, res: AssociatedDiseaseCategories): boolean {
