@@ -14,4 +14,6 @@ export const environment = {
   ],
   termsJsonUrl: ['assets/i18n/terms_en.json', 'assets/i18n/terms_ru.json'],
   gaTrackingCode: 'G-825YYNSJFC',
+  loggerUrl: '${LOGGER_URL}',
+  loggerToken: '${LOGGER_TOKEN}',
 };

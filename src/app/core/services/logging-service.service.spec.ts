@@ -5,23 +5,22 @@ import { LoggingService } from './logging-service.service';
 describe('LogServiceService', () => {
   let service: LoggingService;
   let originalLogFunc: any;
-  let constructorValues: any;
+  let constructorValuesMock: any;
   let constructorValuesSpy: any;
 
   beforeEach(() => {
-    constructorValues = {
+    constructorValuesMock = {
       http: HttpTestingController,
       url: '',
       token: '',
     };
 
-    constructorValuesSpy = jasmine.createSpyObj(constructorValues);
+    constructorValuesSpy = jasmine.createSpyObj(constructorValuesMock);
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
 
       providers: [
-        { provide: String, useValue: '' },
         { provide: LoggingService, useValue: constructorValuesSpy },
         { provide: LoggingService, useClass: LoggingService },
       ],

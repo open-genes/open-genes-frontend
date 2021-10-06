@@ -15,7 +15,13 @@ interface LogMessage {
   providedIn: 'root',
 })
 export class LoggingService {
-  constructor(private http: HttpClient, private url: '', private token: '') {}
+  constructor(private http: HttpClient) {
+    this.url = environment.loggerUrl;
+    this.token = environment.loggerToken;
+  }
+
+  private url: string;
+  private token: string;
 
   public sendMessage(log: LogInput): void {
     const req: LogMessage = {
@@ -25,7 +31,7 @@ export class LoggingService {
       environment: environment.name,
     };
 
-    if (this.url.length !== 0) {
+    if (this.url.length !== 0 && this.token.length !== 0) {
       this.http.post(this.url, req);
     } else {
       switch (log.type) {
