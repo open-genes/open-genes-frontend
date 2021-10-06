@@ -1,7 +1,8 @@
-import { Component, AfterViewChecked, Inject } from '@angular/core';
+import { Component, AfterViewChecked, Inject, Renderer2 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
 import { DOCUMENT } from '@angular/common';
+import { LoggingService } from './core/services/logging-service.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,9 @@ export class AppComponent implements AfterViewChecked {
   private lang: string;
 
   constructor(
+    private renderer: Renderer2,
     private translate: TranslateService,
+    private loggingService: LoggingService,
     @Inject(DOCUMENT) public document: Document
   ) {
     this.translate.addLangs(environment.languages);
@@ -26,12 +29,11 @@ export class AppComponent implements AfterViewChecked {
       this.lang = environment.languages[1];
     }
     this.translate.use(this.lang);
+    // Logging example:
+    // this.loggingService.sendMessage({ message: `Language is ${this.lang}`, type: 'info' });
   }
 
   ngAfterViewChecked(): void {
-    setTimeout(() => {
-      // TODO: find a proper way to wait for the full DOM loading considering all modules
-      this.document.body.classList.remove('body--loading');
-    }, 500);
+    this.renderer.removeClass(document.body, 'body--loading');
   }
 }
