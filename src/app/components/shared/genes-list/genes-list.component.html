@@ -1,8 +1,7 @@
 <!-- Search Bar -->
 <ng-container *ngIf="showSearchBar">
   <app-search
-    [genesQuantity]="inputData.length"
-    [searchedData]="searchedData"
+    [genesList]="inputData"
     (isGoModeTriggered)="toggleGoSearchMode($event)"
     (genesListQuery)="updateGeneListOnSearch($event)"
     (goSearchQuery)="searchGenesByGoTerm($event)"
@@ -89,7 +88,7 @@
 <!-- No content error message -->
 <section
   *ngIf="
-    (isGoTermsMode && isGoSearchPerformed && searchedData?.length == 0) ||
+    (isGoTermsMode && isGoSearchPerformed && !isLoaded && searchedData?.length == 0) ||
     (!isGoTermsMode && searchedData?.length == 0)">
   <app-no-content
     [title]="'nothing_found'">
@@ -105,9 +104,8 @@
 </section>
 
 <!-- GO search mode start message -->
-<section *ngIf="isGoTermsMode && !isGoSearchPerformed">
+<section *ngIf="isGoTermsMode && !isGoSearchPerformed && !isLoaded">
   <app-no-content
-    *ngIf="isGoTermsMode && !isGoSearchPerformed"
     [title]="'go_results_start_typing'">
     <ng-container icon>
       <app-icon
@@ -119,5 +117,10 @@
     </ng-container>
   </app-no-content>
 </section>
+
+<ng-container *ngIf="isGoTermsMode && isLoaded">
+  <app-spinner></app-spinner>
+</ng-container>
+
 
 

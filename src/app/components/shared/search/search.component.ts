@@ -1,17 +1,18 @@
-import { Component, EventEmitter, Renderer2, Input, Output, Inject } from '@angular/core';
+import { Component, EventEmitter, Renderer2, Input, Output, Inject, OnDestroy } from '@angular/core';
 import { Genes } from '../../../core/models';
 import { FormControl, FormGroup } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
-
-export class SearchComponent {
+export class SearchComponent implements OnDestroy {
   @Inject(Document) public document: Document;
-  @Input() genesQuantity: number;
-  @Input() searchedData: Genes[];
+
+  @Input() genesList: Genes[];
 
   @Output()
   isGoModeTriggered: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -20,24 +21,54 @@ export class SearchComponent {
   @Output()
   genesListQuery: EventEmitter<string> = new EventEmitter<string>();
 
+  public searchedData: Genes[];
   public isGoSearchMode = false;
   public searchForm: FormGroup;
   public showResult: boolean;
 
-  constructor(private renderer: Renderer2) {
+  private unsubscribe$ = new Subject();
+
+  constructor(
+    private renderer: Renderer2
+  ) {
     this.searchForm = new FormGroup({
       searchField: new FormControl(''),
     });
   }
 
-  private updateUIonSearch(): void {
-    this.showResult = true;
-    this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
-  public setGoSearchMode(state: boolean): void {
-    this.isGoModeTriggered.emit(state);
-    this.isGoSearchMode = state;
+  public showAutocomplete(): void {
+    if (!this.isGoSearchMode) {
+      this.searchForm.get('searchField').valueChanges
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((query: string) => {
+          if (query?.length >= 2) {
+            this.autocompleteSearch(query.toLowerCase());
+            this.showResult = true;
+            this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
+          } else {
+            this.showResult = false;
+            this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
+          }
+        });
+    }
+  }
+
+  private autocompleteSearch(query: string): void {
+    this.searchedData = this.genesList.filter((gene) => {
+      const searchedText = `${gene.id} ${gene?.ensembl ? gene.ensembl : ''}
+      ${gene.symbol} ${gene.name} ${gene.aliases.join(' ')}`;
+      return searchedText.toLowerCase().includes(query);
+    });
+  }
+
+  public setGoSearchMode(): void {
+    this.isGoSearchMode = !this.isGoSearchMode;
+    this.isGoModeTriggered.emit(this.isGoSearchMode);
     this.searchForm.reset();
   }
 
@@ -48,10 +79,9 @@ export class SearchComponent {
     } else {
       this.genesListQuery.emit(query.toLowerCase());
     }
-    this.updateUIonSearch();
   }
 
-  public onCancel(event): void {
+  public cancelSearch(event): void {
     this.showResult = false;
     this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
     event.stopPropagation();
@@ -73,6 +103,4 @@ export class SearchComponent {
       }
     };
   }*/
-
-
 }

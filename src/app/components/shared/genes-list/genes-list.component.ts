@@ -53,6 +53,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public isGoTermsMode = false;
   public isGoTermsModeError = false;
   public isGoSearchPerformed: boolean;
+  public isLoaded = false;
   public goModeCellData: any;
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
@@ -233,10 +234,15 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   public toggleGoSearchMode(event: boolean): void {
     this.isGoTermsMode = event;
+    this.isGoSearchPerformed = false;
+    if (!this.isGoTermsMode) {
+      this.searchedData = this.inputData;
+    }
   }
 
   // TODO: this function isn't pure
   public searchGenesByGoTerm(query: string): void {
+    this.isLoaded = true;
     if (query) {
       this.apiService
         .getGoTermMatchByString(query)
@@ -246,6 +252,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
             this.searchedData = genes; // If nothing found, will return empty array
             this.downloadSearch(this.searchedData);
             this.isGoSearchPerformed = true;
+            this.isLoaded = false;
 
             // Map data if it's presented:
             for (const item of this.searchedData) {
@@ -277,6 +284,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
         );
     } else {
       this.isGoSearchPerformed = false;
+      this.isLoaded = false;
       this._cdRef.markForCheck();
     }
   }
