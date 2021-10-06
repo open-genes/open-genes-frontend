@@ -53,6 +53,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public isGoTermsMode = false;
   public isGoTermsModeError = false;
   public isGoSearchPerformed: boolean;
+  public isLoaded = false;
   public goModeCellData: any;
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
@@ -207,18 +208,18 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   /**
    * Update already loaded and then filtered data on typing
    */
-  public updateGeneListOnTyping(event: Genes[]): void {
-    const result = of(event).pipe(takeLast(1));
-    result.subscribe((x) => {
-      this.searchedData = x;
-
-      this._snackBar.openFromComponent(SnackBarComponent, {
-        data: {
-          title: 'items_found',
-          length: this.searchedData ? this.searchedData.length : 0,
-        },
-        duration: 600,
-      });
+  public updateGeneListOnSearch(query: string): void {
+    this.searchedData = this.inputData.filter((item) => {
+      const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
+      ${item.symbol} ${item.name} ${item.aliases.join(' ')}`;
+      return searchedText.toLowerCase().includes(query);
+    });
+    this._snackBar.openFromComponent(SnackBarComponent, {
+      data: {
+        title: 'items_found',
+        length: this.searchedData.length ? this.searchedData.length : 0,
+      },
+      duration: 600,
     });
   }
 
@@ -233,20 +234,25 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    */
   public toggleGoSearchMode(event: boolean): void {
     this.isGoTermsMode = event;
+    this.isGoSearchPerformed = false;
+    if (!this.isGoTermsMode) {
+      this.searchedData = this.inputData;
+    }
   }
 
   // TODO: this function isn't pure
   public searchGenesByGoTerm(query: string): void {
+    this.isLoaded = true;
     if (query) {
-      const request = query.toLowerCase();
       this.apiService
-        .getGoTermMatchByString(request)
+        .getGoTermMatchByString(query)
         .pipe(takeUntil(this._subscription$))
         .subscribe(
           (genes) => {
             this.searchedData = genes; // If nothing found, will return empty array
             this.downloadSearch(this.searchedData);
             this.isGoSearchPerformed = true;
+            this.isLoaded = false;
 
             // Map data if it's presented:
             for (const item of this.searchedData) {
@@ -267,8 +273,9 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
             this._snackBar.openFromComponent(SnackBarComponent, {
               data: {
                 title: 'items_found',
-                length: this.searchedData?.length,
+                length: this.searchedData ? this.searchedData.length : 0,
               },
+              duration: 600,
             });
 
             this._cdRef.markForCheck();
@@ -277,6 +284,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
         );
     } else {
       this.isGoSearchPerformed = false;
+      this.isLoaded = false;
       this._cdRef.markForCheck();
     }
   }
