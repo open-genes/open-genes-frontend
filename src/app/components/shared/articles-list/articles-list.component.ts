@@ -122,6 +122,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         (data) => {
           this.handleResponse(data);
           this.artticlesLoaded.emit(true);
+          console.log('event', this.artticlesLoaded);
         },
         (error) => {
           this.error = error;

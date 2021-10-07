@@ -24,9 +24,8 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public lastGenes: Genes[];
   public isAvailable = true;
   public genesListIsLoaded = false;
+  public articlesComponentLoaded = false;
   public errorStatus: string;
-  public environment = environment;
-  public showSkeleton = true;
 
   constructor(
     public windowService: WindowService,
@@ -87,6 +86,11 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.genesListIsLoaded = event;
     this.cdRef.markForCheck();
   }
+  public setIsArticlesComponentLoaded(event: boolean) {
+    console.log('ddd');
+    this.articlesComponentLoaded = event;
+    this.cdRef.markForCheck();
+  }
 
   /**
    * Wizard
@@ -97,9 +101,5 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
 
   private loadWizard() {
     this.wizardService.openOnce();
-  }
-
-  public changeVisibility(event) {
-    this.showSkeleton = event;
   }
 }
