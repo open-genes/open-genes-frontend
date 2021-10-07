@@ -3,17 +3,17 @@
       [class.search-form--active]="showResult"
 >
   <div class="search-form__quantity">
-      {{ 'main_page_total' | translate: { number: genesList.length } }}
+    {{ 'main_page_total' | translate: { number: genesList.length } }}
   </div>
 
   <div *ngIf="showResult"
        class="search-backdrop"
-       (click)="cancel($event)"
+       (click)="cancelSearch($event)"
   ></div>
 
   <div class="search-form__panel">
     <button
-      (click)="cancel($event)"
+      (click)="cancelSearch($event)"
       class="btn btn--purple btn--icon-only cancel-search-button">
       <span class="fa fal fa-arrow-left"></span>
     </button>
@@ -23,7 +23,7 @@
         mat-icon-button
         class="search-form__submit search-form__submit--active"
         type="submit"
-        (click)="search()"
+        (click)="onSearch()"
       ><span class="fa fal fa-search"></span>
       </button>
 
@@ -44,19 +44,18 @@
         type="text"
         placeholder="{{ (isGoSearchMode ? 'search_field_tap_search' : 'search_field_start_typing') | translate }}"
         class="field search-form__field"
-        (focusin)="search()"
-        (keyup)="isGoSearchMode ? debounce(subscribeToGo, 2000) : subscribeToGenes()"
-        (keydown.enter)="search()"
+        (keyup)="showAutocomplete()"
+        (keyup.enter)="onSearch()"
         #searchQuery
       >
       <mat-menu #searchMenu>
         <button mat-menu-item
-                (click)="setGoSearchMode(false)"
+                (click)="setGoSearchMode()"
                 [disabled]="!isGoSearchMode"
         ><span class="fa fal fa-dna __mr-5"></span> {{ 'search_for_functions' | translate }}
         </button>
         <button mat-menu-item
-                (click)="setGoSearchMode(true)"
+                (click)="setGoSearchMode()"
                 [disabled]="isGoSearchMode"
         ><span class="fa fal fa-book __mr-5"></span> {{ 'search_for_go_terms' | translate }}
         </button>
@@ -65,22 +64,22 @@
 
     <div class="search-form__autocomplete-list"
          *ngIf="showResult && !isGoSearchMode">
-      <ng-container *ngFor="let data of searchedData; let i = index">
+      <ng-container *ngFor="let gene of searchedData; let i = index">
         <button
           *ngIf="i < 3"
           class="search-form__autocomplete-item"
           tabindex="0"
-          [routerLink]="['/gene', data.symbol]"
+          [routerLink]="['/gene', gene.symbol]"
         >
           <span class="item__symbol"
                 appHighlight
                 [highlightText]="searchQuery.value"
-                [innerHTML]="data.symbol">
+                [innerHTML]="gene.symbol">
           </span>&nbsp;
           <span class="item__name"
                 appHighlight
                 [highlightText]="searchQuery.value"
-                [innerHTML]="data.name">
+                [innerHTML]="gene.name">
           </span>
         </button>
       </ng-container>
