@@ -126,12 +126,16 @@
 <ng-template #wizardBanner let-classes>
   <app-hint class="{{ classes }}"
             hintType="emphasized">
-    <ng-container title><span class="fa far fa-magic"></span> С чего начать</ng-container>
-    <ng-container description>Узнайте как пользоваться поиском и фильтрами</ng-container>
+    <ng-container title><span class="fa far fa-magic"
+    ></span>&nbsp;{{ 'wizard_where_to_start_title' | translate }}
+    </ng-container>
+    <ng-container description>
+      {{ 'wizard_where_to_start_description' | translate }}
+    </ng-container>
     <ng-container button>
       <button class="btn btn--fill btn--small btn--white"
               (click)="openWizard()">
-        Посмотреть
+        {{ 'wizard_where_to_start_button' | translate }}
       </button></ng-container>
   </app-hint>
 </ng-template>
