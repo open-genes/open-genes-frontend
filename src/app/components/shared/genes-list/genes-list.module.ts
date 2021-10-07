@@ -23,9 +23,22 @@ import { AssociatedDiseasesModule } from '../associated-diseases/associated-dise
 import { AssociatedDiseaseCategoriesModule } from '../associated-disease-categories/associated-disease-categories.module';
 import { NoContentModule } from '../no-content/no-content.module';
 import { IconModule } from '../../ui-components/components/icon/app-icon.module';
+import { GeneCardComponent } from './components/gene/gene-card/gene-card.component';
+import { GeneTableRowComponent } from './components/gene/gene-table-row/gene-table-row.component';
+import { GeneFieldsModalComponent } from './components/gene-fields-modal/gene-fields-modal.component';
+import { FilterPanelComponent } from './components/filter-panel/filter-panel.component';
 
 @NgModule({
-  declarations: [GenesListComponent, SearchComponent, GeneMenuComponent, GenesTableHeaderComponent],
+  declarations: [
+    GenesListComponent,
+    SearchComponent,
+    GeneMenuComponent,
+    GenesTableHeaderComponent,
+    GeneCardComponent,
+    GeneTableRowComponent,
+    GeneFieldsModalComponent,
+    FilterPanelComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -48,6 +61,6 @@ import { IconModule } from '../../ui-components/components/icon/app-icon.module'
     IconModule,
   ],
   providers: [WindowService],
-  exports: [GenesListComponent, SearchComponent],
+  exports: [GenesListComponent, SearchComponent, GeneCardComponent, GeneTableRowComponent],
 })
 export class GenesListModule {}

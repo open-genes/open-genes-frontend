@@ -42,6 +42,7 @@ export class NewsListComponent implements OnInit, OnDestroy {
   private minGeneFunctionsCriteria = 3;
   private subscription$ = new Subject();
   private httpCallsCounter = 0;
+  private genesListLimit = 250;
 
   constructor(
     public translate: TranslateService,
@@ -78,7 +79,9 @@ export class NewsListComponent implements OnInit, OnDestroy {
         gene.functionalClusters.length > this.minGeneFunctionsCriteria
     );
     filteredGenes.forEach((gene: Gene) => {
-      symbolsQuery.push(gene.symbol);
+      if (symbolsQuery.length <= this.genesListLimit) {
+        symbolsQuery.push(gene.symbol);
+      }
     });
 
     // 2. Make a long query string for all genes at once, but ask to return only n news in the response

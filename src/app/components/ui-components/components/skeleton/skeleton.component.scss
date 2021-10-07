@@ -2,6 +2,20 @@
 
 $skeleton-line-height: ($ui-base-height / 2);
 
+@mixin skeleton-animation {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: block;
+  animation: blockTextShine 3s linear infinite forwards;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: linear-gradient(to right, $color-gray-soft 0%, $color-gray-very-light 20%, $color-gray-soft 40%, $color-gray-soft 100%);
+}
+
 :host {
   display: block;
   width: 100%;
@@ -10,42 +24,84 @@ $skeleton-line-height: ($ui-base-height / 2);
 .skeleton {
   padding: inherit;
 
-  &__line-group {
+  * {
+    box-sizing: border-box;
+  }
+
+  &__lines-row {
     width: 100%;
     display: inline-block;
+
+    .skeleton__line {
+      position: relative;
+      background-color: $color-gray-soft;
+      height: $skeleton-line-height;
+      border-radius: $border-radius-regular;
+      overflow: hidden;
+
+      &::after {
+        @include skeleton-animation;
+      }
+
+      &--1 {
+        width: 100%
+      }
+
+      &--2 {
+        width: 80%;
+      }
+
+      &:not(:last-of-type) {
+        margin-bottom: ($skeleton-line-height / 1.5);
+      }
+    }
 
     & + & {
       margin-top: $skeleton-line-height;
     }
   }
 
-  &__line {
-    position: relative;
-    background-color: #f2f2f2;
-    height: $skeleton-line-height;
-    border-radius: $border-radius-regular;
-    overflow: hidden;
-
-    &::after {
-      content: ' ';
-      display: block;
-      animation: blockTextShine 1s linear infinite forwards;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-image: linear-gradient(to right, $color-gray-soft 0%, $color-gray-very-light 20%, $color-gray-soft 40%, $color-gray-soft 100%);
-      height: 100%;
-    }
-
-    &--1 {
-      width: 100%
-    }
-
-    &--2 {
-      width: 80%;
-    }
+  &__cards-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: -5px;
+    margin-left: -5px;
 
     &:not(:last-of-type) {
       margin-bottom: ($skeleton-line-height / 1.5);
+    }
+
+    .skeleton__card {
+      padding: 5px;
+
+      .card__inner {
+        width: 100%;
+        padding-bottom: 100%;
+        background: $color-gray-soft;
+        border-radius: $border-radius-regular;
+        position: relative;
+        overflow: hidden;
+
+        &::after {
+          @include skeleton-animation;
+        }
+      }
+
+      @include resolution_tablet-and-up {
+        flex-wrap: nowrap;
+        flex: 1 1;
+      }
+
+      @include resolution_tablet {
+        flex-wrap: nowrap;
+        flex: 0 0 50%
+      }
+
+      @include resolution_smartphone {
+        flex-wrap: wrap;
+        flex: 0 0 100%;
+      }
     }
   }
 }

@@ -13,7 +13,27 @@
     </div>
 
     <div class="container">
-      <app-directed-graph></app-directed-graph>
+      <div>
+        <app-directed-graph
+          [graphSelector]="'all'"
+          [nodes]="nodes"
+          [links]="links"
+          [grouped]="false"></app-directed-graph>
+      </div>
+      <div>
+        <app-directed-graph
+          [graphSelector]="'disease'"
+          [nodes]="newNodes"
+          [links]="newLinks"
+          [grouped]="true"></app-directed-graph>
+      </div>
+      <div>
+        <app-directed-graph
+          [graphSelector]="'family'"
+          [nodes]="nNodes"
+          [links]="nLinks"
+          [grouped]="true"></app-directed-graph>
+      </div>
     </div>
   </div>
 </div>

@@ -131,7 +131,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       );
   }
 
-  public openArticleModal(slug): void {
+  public openArticleModal(slug: string, environment: any): void {
     this.isAnyArticleModalOpen = true;
 
     // Subscribe and get one article data
@@ -155,7 +155,11 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
           this.isAnyArticleModalOpen = false;
           this.cdRef.markForCheck();
           this.dialog.open(this.dialogRef, {
-            data: modalData,
+            data: {
+              modalData: modalData,
+              slug: slug,
+              environment: environment,
+            },
             panelClass: 'article-modal',
             minWidth: '320px',
             maxWidth: '768px', // TODO: make a global object with modal settings

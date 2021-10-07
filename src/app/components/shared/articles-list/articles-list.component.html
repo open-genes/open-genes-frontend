@@ -2,20 +2,18 @@
   <!-- There is no content in English yet and 80lvl API doesn't have language support -->
   <ng-container *ngIf="!isLoading">
     <ng-container *ngIf="articlesList.length !== 0">
-      <ng-container *ngIf="environment.name !== 'prod'">
-        <div *ngIf="!isMiniMode && articleTags.length !== 0"
-             class="tag-list col-12">
-          <ng-container *ngFor="let tag of articleTags">
-            <a *ngIf="tag.slug !== 'open-genes'"
-               href="{{ environment.openLongevity80LevelCMS }}category/{{ tag.slug }}"
-               target="_blank"
-               class="alias">
-              {{ tag.name }}
-              <span class="fa fal fa-external-link"></span>
-            </a>
-          </ng-container>
-        </div>
-      </ng-container>
+      <div *ngIf="!isMiniMode && articleTags.length !== 0"
+           class="tag-list col-12">
+        <ng-container *ngFor="let tag of articleTags">
+          <a *ngIf="tag.slug !== 'open-genes'"
+             href="{{ environment.openLongevity80LevelCMS }}category/{{ tag.slug }}"
+             target="_blank"
+             class="alias">
+            {{ tag.name }}
+            <span class="fa fal fa-external-link"></span>
+          </a>
+        </ng-container>
+      </div>
 
       <ng-container *ngFor="let article of articlesList | slice: 0:sliceTo">
         <div class="article {{ isMiniMode ? 'article--mini' : 'col-xs-12 col-sm-6 col-lg-6 col-xl-4' }}">
@@ -31,7 +29,7 @@
 
               <div class="article__top-group">
                 <div
-                  (click)="openArticleModal(article.slug)"
+                  (click)="openArticleModal(article.slug, environment)"
                   [ngClass]="isAnyArticleModalOpen? '__disabled': ''"
                   class="article__image"
                 >
@@ -46,7 +44,7 @@
                     alt="">
                 </div>
                 <div class="article__text">
-                  <h3 (click)="openArticleModal(article.slug)"
+                  <h3 (click)="openArticleModal(article.slug, environment)"
                       [ngClass]="isAnyArticleModalOpen? '__disabled': ''">
                     {{ article.title }}
                   </h3>
@@ -57,7 +55,7 @@
                 </div>
               </div>
 
-              <div *ngIf="environment.name !== 'prod' && !isMiniMode"
+              <div *ngIf="!isMiniMode"
                    class="article__tags">
                 <ng-container *ngFor="let tag of article.tags">
                   <a
@@ -74,9 +72,7 @@
             <div *ngIf="!isMiniMode"
                  class="article__footer">
               <a
-                [href]="environment.name !== 'prod'
-                ? environment.openLongevity80LevelCMS + 'author/' + article.author.pseudonym
-                : '#'"
+                [href]="environment.openLongevity80LevelCMS + 'author/' + article.author.pseudonym"
                 class="article__author"
               >
                 <div class="author__avatar">
@@ -131,8 +127,8 @@
 
 <ng-template #articleModalBody let-data>
   <div class="article-modal__header" mat-dialog-title>
-    <span>{{ data?.title }}</span>
-    <span>{{ data?.subtitle }}</span>
+    <span>{{ data?.modalData?.title }}</span>
+    <span>{{ data?.modalData?.subtitle }}</span>
     <button mat-icon-button
             class="close-button"
             (click)="closeArticleModal()"
@@ -141,17 +137,24 @@
     </button>
   </div>
   <mat-dialog-content>
-    <ng-container *ngIf="data?.image?.url?.src.length !== 0">
+    <ng-container *ngIf="data?.modalData?.image?.url?.src.length !== 0">
         <div class="article-modal__cover">
-          <img [src]=data.image?.url?.src
+          <img [src]=data?.modalData?.image?.url?.src
                alt="">
         </div>
     </ng-container>
 
     <div class="article-modal__body">
-      <article *ngFor="let item of data.description">
-        <span [innerHTML]="item.content?.text | safe: 'html'"></span>
+      <article *ngFor="let item of data?.modalData?.description">
+        <span [innerHTML]="item['content']?.text | safe: 'html'"></span>
       </article>
+      <div class="article-modal__button-wrap btn-wrap show-more">
+        <a class="btn show-more__button"
+           href="{{ environment.openLongevity80LevelCMS }}articles/{{ data?.slug }}"
+           target="_blank">
+          {{ "read_more" | translate }} <span class="fa far fa-external-link"></span>
+        </a>
+      </div>
     </div>
   </mat-dialog-content>
 </ng-template>

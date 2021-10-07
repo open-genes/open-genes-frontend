@@ -263,4 +263,8 @@ app-skeleton {
       @include typography;
     }
   }
+
+  &__button-wrap {
+    margin-top: 15px;
+  }
 }

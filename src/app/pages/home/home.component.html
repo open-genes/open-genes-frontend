@@ -89,8 +89,13 @@
               *ngIf="genes"
               [dataSource]="genes"
               [isMobile]="isMobile"
-              (loaded)="setIsGenesListLoaded($event)"
-            ></app-genes-list>
+              [showSearchBar]="true"
+              [showFiltersPanel]="true"
+              (loaded)="setIsGenesListLoaded($event)">
+            </app-genes-list>
+
+
+
             <!-- When content is loading -->
             <app-spinner *ngIf="!genesListIsLoaded"></app-spinner>
           </div>

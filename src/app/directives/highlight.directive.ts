@@ -1,4 +1,4 @@
-import {
+import{
   AfterViewInit,
   Directive,
   ElementRef,
