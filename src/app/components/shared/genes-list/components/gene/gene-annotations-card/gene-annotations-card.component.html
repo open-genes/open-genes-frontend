@@ -60,39 +60,42 @@
   </div>
 </div>
 
-<div class="card__controls">
+<div *ngIf="
+    listSettings.ifShowClasses ||
+    listSettings.ifShowExpression ||
+    listSettings.ifShowMethylation"
+     class="card__controls">
 
-  <div *ngIf="item.functionalClusters && listSettings.ifShowClasses"
-       class="card__section">
-    <span class="label">
-      {{ "functional_classes" | translate }}
-    </span>
+  <div class="card__section" *ngIf="item.terms">
 
-    <app-tag
-      *ngFor="let cluster of item.functionalClusters"
-      (click)="onFuncCluster(cluster['id'])"
-      [isActive]="filters.byClasses.includes(cluster['id'])"
+    <a
+      *ngFor="let term of goModeCellData.biologicalProcess | keyvalue"
+      href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+      class="tag"
+      matTooltip="{{ term.value }}"
     >
-      {{ cluster["name"] }}
-    </app-tag>
+      {{ term.key | zero }}
+    </a>
+
+    <a
+      *ngFor="let term of goModeCellData.cellularComponent | keyvalue"
+      href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+      class="tag"
+      matTooltip="{{ term.value }}"
+    >
+      {{ term.key | zero }}
+    </a>
+
+    <a
+      *ngFor="let term of goModeCellData.molecularActivity | keyvalue"
+      href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+      class="tag"
+      matTooltip="{{ term.value }}"
+    >
+      {{ term.key | zero }}
+    </a>
+
   </div>
-
-  <div *ngIf="listSettings.ifShowExpression"
-       class="card__section">
-    <span class="label">
-      {{ "main_page_table_expression" | translate }}
-    </span>
-
-    <app-tag
-      (click)="onExpressionChange(item.expressionChange)"
-      [isDisabled]="item.expressionChange !== 0"
-      [isActive]="
-              filters.byExpressionChange === item.expressionChange &&
-              item.expressionChange !== 0"
-    >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
-    </app-tag>
-  </div>
-
 
   <div *ngIf="listSettings.ifShowMethylation"
        class="card__section">
@@ -108,5 +111,4 @@
       {{ item.methylationCorrelation }}
     </app-tag>
   </div>
-
 </div>

@@ -11,7 +11,7 @@
 
 <ng-container
   *ngIf="
-    (isGoTermsMode && isGoSearchPerformed && !isGoTermsModeError) ||
+    (isGoTermsMode && isGoSearchPerformed && !isGoTermsModeError &&  !isLoaded) ||
     (!isGoTermsMode && searchedData?.length !== 0)">
 
   <!-- Filters Panel -->
@@ -42,15 +42,15 @@
         </thead>
 
         <app-gene-table-row *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
-                             [item]="rowData"
-                             [isGoTermsMode]="isGoTermsMode"
-                             [goModeCellData]="goModeCellData"
-                             (expressionChangeId)="filterByExpressionChange($event)"
-                             (funcClusterId)="filterByFuncClusters($event)"
-                             (methylationChange)="filterByMethylationChange($event)"
-                             (diseaseName)="filterByDisease($event)"
-                             (diseaseCategories)="filterByDiseaseCategories($event)"
-                             (selectionCriteria)="filterBySelectionCriteria($event)">
+                            [item]="rowData"
+                            [isGoTermsMode]="isGoTermsMode"
+                            [goModeCellData]="goModeCellData"
+                            (expressionChangeId)="filterByExpressionChange($event)"
+                            (funcClusterId)="filterByFuncClusters($event)"
+                            (methylationChange)="filterByMethylationChange($event)"
+                            (diseaseName)="filterByDisease($event)"
+                            (diseaseCategories)="filterByDiseaseCategories($event)"
+                            (selectionCriteria)="filterBySelectionCriteria($event)">
         </app-gene-table-row>
 
       </table>
@@ -58,18 +58,29 @@
 
     <!-- Card view -->
     <ng-container *ngIf="!asTableRow || isMobile">
-      <app-gene-card class="card" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
-                      [item]="rowData"
-                      [isGoTermsMode]="isGoTermsMode"
-                      [goModeCellData]="goModeCellData"
-                      (expressionChangeId)="filterByExpressionChange($event)"
-                      (funcClusterId)="filterByFuncClusters($event)"
-                      (methylationChange)="filterByMethylationChange($event)"
-                      (diseaseName)="filterByDisease($event)"
-                      (diseaseCategories)="filterByDiseaseCategories($event)"
-                      (selectionCriteria)="filterBySelectionCriteria($event)">
+      <ng-container *ngIf="isGoTermsMode; else card">
+        <app-gene-annotations-card class="card" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+                                   [item]="rowData"
+                                   [goModeCellData]="goModeCellData"
+                                   (diseaseName)="filterByDisease($event)"
+                                   (diseaseCategories)="filterByDiseaseCategories($event)"
+                                   (selectionCriteria)="filterBySelectionCriteria($event)"
+                                   (methylationChange)="filterByMethylationChange($event)">
+        </app-gene-annotations-card>
+      </ng-container>
 
-      </app-gene-card>
+      <ng-template #card>
+        <app-gene-card class="card" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+                       [item]="rowData"
+                       (expressionChangeId)="filterByExpressionChange($event)"
+                       (funcClusterId)="filterByFuncClusters($event)"
+                       (methylationChange)="filterByMethylationChange($event)"
+                       (diseaseName)="filterByDisease($event)"
+                       (diseaseCategories)="filterByDiseaseCategories($event)"
+                       (selectionCriteria)="filterBySelectionCriteria($event)">
+        </app-gene-card>
+      </ng-template>
+
     </ng-container>
   </section>
 
