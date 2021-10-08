@@ -22,6 +22,15 @@
       >
         {{ "favourites_clear" | translate }}
       </button>
+      <button
+        (click)="shareGene()"
+        class="__mr-10"
+        color="primary"
+        mat-flat-button
+      >
+        {{ 'favourites_share' | translate }}
+      </button>
+
     </div>
   </div>
 
@@ -44,4 +53,11 @@
       </button>
     </div>
   </div>
+</div>
+
+<div
+  #linkCopy
+  class="hidden"
+>
+  {{ 'link_copied' | translate }}
 </div>

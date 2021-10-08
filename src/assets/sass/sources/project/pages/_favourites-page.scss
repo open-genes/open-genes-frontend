@@ -20,7 +20,11 @@
         vertical-align: middle;
       }
     }
-
+    &__share{
+      position: absolute; // чтобы элемент перестал быть родителем
+      top: 12px;
+      right: 40px;
+    }
     &__actions {
       position: absolute; // чтобы элемент перестал быть родителем
       top: 12px;
