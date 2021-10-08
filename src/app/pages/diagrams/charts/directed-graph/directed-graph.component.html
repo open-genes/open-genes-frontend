@@ -1,11 +1,17 @@
-<div style="text-align:center">
+<div style="text-align:center; font-weight: bold">
   <h1>
-    D3 Force Graph Editor
+    {{graphTitle}}
   </h1>
 </div>
 
-<svg  id='{{graphSelector}}'
-      width="100%"
-      height="100%"
-      class="associations">
-</svg>
+<div [hidden]="isLoading">
+  <svg [id]="graphSelector"
+       width="100%"
+       height="100%"
+       class="associations">
+  </svg>
+</div>
+
+<ng-container *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</ng-container>

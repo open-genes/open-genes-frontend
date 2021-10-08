@@ -8,10 +8,13 @@ import * as d3 from 'd3';
   styleUrls: ['./directed-graph.component.scss'],
 })
 export class DirectedGraphComponent implements OnChanges {
+  @Input() graphTitle: string;
   @Input() graphSelector: string;
   @Input() grouped: boolean;
   @Input() nodes: Node[];
   @Input() links: Link[];
+
+  public isLoading = true;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['nodes'].firstChange || !changes['links'].firstChange) {
@@ -33,10 +36,10 @@ export class DirectedGraphComponent implements OnChanges {
         d3
           .forceLink(links)
           .id((d: any) => d.name)
-          .distance(20)
+          .distance(30)
       )
-      .force('charge', d3.forceManyBody().distanceMax(100))
-      .force('center', d3.forceCenter(1000 / 2, 500 / 2));
+      .force('charge', d3.forceManyBody().distanceMax(80))
+      .force('center', d3.forceCenter(1000 / 2, 600 / 2));
 
     const link = svg
       .append('g')
@@ -69,6 +72,8 @@ export class DirectedGraphComponent implements OnChanges {
 
       node.attr('cx', (d: any) => d.x).attr('cy', (d: any) => d.y);
     });
+
+    this.isLoading = false;
 
     return svg.node();
   }
