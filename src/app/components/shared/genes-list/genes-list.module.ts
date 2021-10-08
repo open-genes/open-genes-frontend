@@ -27,6 +27,7 @@ import { GeneCardComponent } from './components/gene/gene-card/gene-card.compone
 import { GeneTableRowComponent } from './components/gene/gene-table-row/gene-table-row.component';
 import { GeneFieldsModalComponent } from './components/gene-fields-modal/gene-fields-modal.component';
 import { FilterPanelComponent } from './components/filter-panel/filter-panel.component';
+import { GeneAnnotationsTableRowComponent } from './components/gene/gene-annotations-table-row/gene-annotations-table-row.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { FilterPanelComponent } from './components/filter-panel/filter-panel.com
     GeneTableRowComponent,
     GeneFieldsModalComponent,
     FilterPanelComponent,
+    GeneAnnotationsTableRowComponent,
   ],
   imports: [
     CommonModule,

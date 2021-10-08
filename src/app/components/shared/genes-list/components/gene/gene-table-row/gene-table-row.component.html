@@ -7,14 +7,14 @@
     </div>
   </td>
 
-  <td *ngIf="isGoTermsMode || listSettings.ifShowAge"
+  <td *ngIf="listSettings.ifShowAge"
       class="cell cell&#45;&#45;age">
     <div class="overflow">
       <app-gene-age [gene]="item"></app-gene-age>
     </div>
   </td>
 
-  <td *ngIf="isGoTermsMode || listSettings.ifShowDiseases"
+  <td *ngIf="listSettings.ifShowDiseases"
       class="cell">
     <div class="overflow">
       <app-associated-diseases
@@ -25,7 +25,7 @@
     </div>
   </td>
 
-  <td *ngIf="isGoTermsMode || listSettings.ifShowDiseaseCategories"
+  <td *ngIf="listSettings.ifShowDiseaseCategories"
       class="cell">
     <div class="overflow">
       <app-associated-disease-categories
@@ -36,73 +36,43 @@
     </div>
   </td>
 
-  <ng-container *ngIf="!isGoTermsMode; else GoModeCell">
-    <td *ngIf="listSettings.ifShowExpression"
-        class="cell cell&#45;&#45;expression">
-      <div class="overflow">
-        <app-tag
-          (click)="onExpressionChange(item.expressionChange)"
-          [isDisabled]="item.expressionChange === 0"
-          [isActive]="
+  <td *ngIf="listSettings.ifShowExpression"
+      class="cell cell&#45;&#45;expression">
+    <div class="overflow">
+      <app-tag
+        (click)="onExpressionChange(item.expressionChange)"
+        [isDisabled]="item.expressionChange === 0"
+        [isActive]="
             filters.byExpressionChange === item.expressionChange &&
             item.expressionChange !== 0"
-        >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
-        </app-tag>
-      </div>
-    </td>
+      >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
+      </app-tag>
+    </div>
+  </td>
 
-    <td *ngIf="listSettings.ifShowCriteria"
-        class="cell cell&#45;&#45;criteria">
-      <div class="overflow">
-        <app-selection-criteria
-          [geneCriteria]="item.commentCause"
-          [activeListItem]="filters.bySelectionCriteria"
-          (clickEvent)="onSelectCriteria($event)"
-        ></app-selection-criteria>
-      </div>
-    </td>
+  <td *ngIf="listSettings.ifShowCriteria"
+      class="cell cell&#45;&#45;criteria">
+    <div class="overflow">
+      <app-selection-criteria
+        [geneCriteria]="item.commentCause"
+        [activeListItem]="filters.bySelectionCriteria"
+        (clickEvent)="onSelectCriteria($event)"
+      ></app-selection-criteria>
+    </div>
+  </td>
 
-    <td *ngIf="listSettings.ifShowMethylation"
-        class="cell cell&#45;&#45;methylation">
-      <div class="overflow">
-        <app-tag
-          *ngIf="item.methylationCorrelation !== ''"
-          (click)="onMethylationChange(item.methylationCorrelation)"
-          [isActive]="
-              filters.byMethylationChange === item.methylationCorrelation"
-        >{{ item.methylationCorrelation }}
-        </app-tag>
-      </div>
-    </td>
-  </ng-container>
+  <td *ngIf="listSettings.ifShowMethylation"
+      class="cell cell&#45;&#45;methylation">
+    <div class="overflow">
+      <app-tag
+        *ngIf="item.methylationCorrelation !== ''"
+        (click)="onMethylationChange(item.methylationCorrelation)"
+        [isActive]="filters.byMethylationChange === item.methylationCorrelation"
+      >{{ item.methylationCorrelation }}
+      </app-tag>
+    </div>
+  </td>
 
-  <ng-template #GoModeCell>
-    <td colspan="2" class="cell cell&#45;&#45;terms">
-      <div *ngIf="item.terms" class="overflow">
-        <a
-          *ngFor="let term of goModeCellData.biologicalProcess | keyvalue"
-          href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-          class="tag"
-          matTooltip="{{ term.value }}"
-        >{{ term.key | zero }}
-        </a>
-        <a
-          *ngFor="let term of goModeCellData.cellularComponent | keyvalue"
-          href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-          class="tag"
-          matTooltip="{{ term.value }}"
-        >{{ term.key | zero }}
-        </a>
-        <a
-          *ngFor="let term of goModeCellData.molecularActivity | keyvalue"
-          href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
-          class="tag"
-          matTooltip="{{ term.value }}"
-        >{{ term.key | zero }}
-        </a>
-      </div>
-    </td>
-  </ng-template>
 
   <td class="cell cell&#45;&#45;actions">
     <div class="overflow">
@@ -114,10 +84,11 @@
       ></app-gene-menu>
     </div>
   </td>
+
 </tr>
 
 <tr class="item">
-  <td *ngIf="!isGoTermsMode && listSettings.ifShowClasses"
+  <td *ngIf="listSettings.ifShowClasses"
       colspan="100%"
       class="cell cell&#45;&#45;functions">
     <app-tag
