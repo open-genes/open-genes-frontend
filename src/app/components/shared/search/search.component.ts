@@ -1,60 +1,99 @@
-import { Component, EventEmitter, Renderer2, Input, Output, Inject, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2,
+} from '@angular/core';
 import { Genes } from '../../../core/models';
 import { FormControl, FormGroup } from '@angular/forms';
-import { takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { ApiService } from '../../../core/services/api/open-genes-api.service';
+import { ToMap } from '../../../core/utils/to-map';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent implements OnDestroy {
+export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Inject(Document) public document: Document;
 
   @Input() genesList: Genes[];
 
-  @Output()
-  isGoModeTriggered: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output()
-  goSearchQuery: EventEmitter<string> = new EventEmitter<string>();
-  @Output()
-  genesListQuery: EventEmitter<string> = new EventEmitter<string>();
+  @Output() dataFromSearchBar: EventEmitter<any> = new EventEmitter<any>();
 
   public searchedData: Genes[];
   public isGoSearchMode = false;
   public searchForm: FormGroup;
-  public showResult: boolean;
+  public showSearchResult = false;
+  public biologicalProcess: Map<any, any>;
+  public cellularComponent: Map<any, any>;
+  public molecularActivity: Map<any, any>;
 
-  private unsubscribe$ = new Subject();
+  private subscription$ = new Subject();
 
-  constructor(
-    private renderer: Renderer2
-  ) {
+  constructor(private renderer: Renderer2, private apiService: ApiService, private cdRef: ChangeDetectorRef) {
+    super();
     this.searchForm = new FormGroup({
       searchField: new FormControl(''),
     });
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+    this.subscription$.next();
+    this.subscription$.complete();
   }
 
-  public showAutocomplete(): void {
-    if (!this.isGoSearchMode) {
-      this.searchForm.get('searchField').valueChanges
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((query: string) => {
-          if (query?.length >= 2) {
-            this.autocompleteSearch(query.toLowerCase());
-            this.showResult = true;
+  ngOnInit(): void {
+    this.searchForm
+      .get('searchField')
+      .valueChanges.pipe(
+        filter((query: string) => !!query),
+        map((query: string) => query.toLowerCase()),
+        filter((query: string) => {
+          this.showSearchResult = query.length >= 2;
+
+          if (this.showSearchResult) {
             this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
           } else {
-            this.showResult = false;
-            this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
+            this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
           }
-        });
+
+          if (this.showSearchResult) {
+            if (this.isGoSearchMode) {
+              return true;
+            } else {
+              this.autocompleteSearch(query);
+            }
+          }
+
+          return false;
+        }),
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((query: string) => this.apiService.getGoTermMatchByString(query)),
+        takeUntil(this.subscription$)
+      )
+      .subscribe((genes: Genes[]) => {
+        this.searchedData = genes;
+        this.mapTerms();
+        this.cdRef.markForCheck();
+      });
+  }
+
+  private mapTerms(): void {
+    for (const item of this.searchedData) {
+      this.biologicalProcess = this.toMap(item.terms?.biological_process);
+      this.cellularComponent = this.toMap(item.terms?.cellular_component);
+      this.molecularActivity = this.toMap(item.terms?.molecular_activity);
     }
   }
 
@@ -68,39 +107,22 @@ export class SearchComponent implements OnDestroy {
 
   public setGoSearchMode(): void {
     this.isGoSearchMode = !this.isGoSearchMode;
-    this.isGoModeTriggered.emit(this.isGoSearchMode);
-    this.searchForm.reset();
+    this.searchedData = [];
+    this.searchForm.get('searchField').setValue('');
+    this.onSearch();
   }
 
   public onSearch(): void {
     const query: string = this.searchForm.get('searchField').value;
-    if (this.isGoSearchMode) {
-      this.goSearchQuery.emit(query.toLowerCase());
-    } else {
-      this.genesListQuery.emit(query.toLowerCase());
-    }
+    this.dataFromSearchBar.emit({
+      isGoSearchMode: this.isGoSearchMode,
+      searchQuery: query.toLowerCase(),
+    });
   }
 
   public cancelSearch(event): void {
-    this.showResult = false;
+    this.showSearchResult = false;
     this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
     event.stopPropagation();
   }
-
-  /*  public debounce(callback: any, time: number): () => void {
-    let lastTime = 0;
-    return function() {
-      const now = new Date();
-
-      // first run
-      if (lastTime === 0) {
-        callback();
-      }
-
-      if (now.getTime() - lastTime >= time) {
-        callback();
-        lastTime = now.getTime();
-      }
-    };
-  }*/
 }

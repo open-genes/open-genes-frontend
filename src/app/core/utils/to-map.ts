@@ -1,4 +1,4 @@
-export abstract class PageClass {
+export abstract class ToMap {
   /*
    * Method used for mapping complex objects from http response
    */
