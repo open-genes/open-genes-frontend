@@ -2,7 +2,6 @@
 @import "styles/variables";
 @import "components/gene/styles/item";
 @import "styles/table";
-@import "styles/cards";
 
 :host {
   display: block;
@@ -18,7 +17,6 @@
 
   @include item;
   @include table;
-  @include cards;
 
   &--as-table {
     display: block;
@@ -29,11 +27,13 @@
   }
 
   &--as-cards {
+    $card-spacing: 20px;
+
     display: flex;
     flex-flow: row wrap;
     align-items: stretch;
     justify-content: space-between;
-    margin-top: -10px;
+    margin-top: -#{$card-spacing};
   }
 }
 

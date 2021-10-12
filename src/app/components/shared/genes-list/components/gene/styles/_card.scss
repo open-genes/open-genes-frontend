@@ -1,45 +1,27 @@
 @import "../../../../../styles";
 
 @mixin card {
-  .item {
-    animation: fadeIn .5s linear forwards; // при рендеринге/подгрузке элемент мингнет
+  $card-spacing: 20px;
 
-    .title {
-      font-weight: $font-weight-medium;
-      color: $color-gray;
-      line-height: 1;
+  :host {
+    position: relative;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    @include panel(flex, #{10px 0});
+    margin-top: $card-spacing;
 
-      .link {
-        vertical-align: middle;
-        margin-right: 5px;
-        text-decoration: underline;
-      }
-
-      .alias {
-        vertical-align: 1px;
-        margin-bottom: 0;
-      }
+    @include resolution_phablet-and-up {
+      flex: 0 0 calc(50% - #{$card-spacing / 2});
     }
 
-    b {
-      color: $color-black;
-      font-weight: bold;
-      margin-right: 3px;
-    }
-
-    .actions__menu {
-      position: absolute;
-      z-index: 1;
-      right: 5px;
+    @include resolution_phone {
+      flex: 0 0 100%;
     }
   }
 
   .card {
     position: relative;
-    @include panel(flex, #{10px 0});
-    flex-flow: column nowrap;
-    justify-content: space-between;
-    margin-top: 10px;
+    margin-top: $card-spacing;
     font-size: $font-size;
 
     &__content,
@@ -99,15 +81,6 @@
       margin-top: 20px;
       border-top: 1px solid $color-borders;
       padding-top: 12px;
-    }
-
-
-    @include resolution_phablet-and-up {
-      flex: 0 0 calc(50% - 5px);
-    }
-
-    @include resolution_phone {
-      flex: 0 0 100%;
     }
   }
 }
