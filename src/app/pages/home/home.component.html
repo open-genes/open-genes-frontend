@@ -83,19 +83,24 @@
             </app-sidebar>
           </div>
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
+            <app-search
+              [genesList]="genes"
+              (dataFromSearchBar)="setSearchQuery($event)"
+            ></app-search>
+
             <app-genes-list
               *ngIf="genes"
-              [dataSource]="genes"
+              [genesList]="genes"
               [isMobile]="isMobile"
-              [showSearchBar]="true"
+              [dataFromSearchBar]="dataFromSearchBar"
               [showFiltersPanel]="true"
               (loaded)="setIsGenesListLoaded($event)">
             </app-genes-list>
 
-
-
             <!-- When content is loading -->
-            <app-spinner *ngIf="!genesListIsLoaded"></app-spinner>
+            <app-spinner *ngIf="!genesListIsLoaded"
+                         class="__mb-10"
+            ></app-spinner>
           </div>
         </ng-container>
       </div>
@@ -126,12 +131,16 @@
 <ng-template #wizardBanner let-classes>
   <app-hint class="{{ classes }}"
             hintType="emphasized">
-    <ng-container title><span class="fa far fa-magic"></span> С чего начать</ng-container>
-    <ng-container description>Узнайте как пользоваться поиском и фильтрами</ng-container>
+    <ng-container title><span class="fa far fa-magic"
+    ></span>&nbsp;{{ 'wizard_where_to_start_title' | translate }}
+    </ng-container>
+    <ng-container description>
+      {{ 'wizard_where_to_start_description' | translate }}
+    </ng-container>
     <ng-container button>
       <button class="btn btn--fill btn--small btn--white"
               (click)="openWizard()">
-        Посмотреть
+        {{ 'wizard_where_to_start_button' | translate }}
       </button></ng-container>
   </app-hint>
 </ng-template>

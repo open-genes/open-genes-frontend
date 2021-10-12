@@ -1,0 +1,73 @@
+<tr class="item">
+
+  <td class="cell cell&#45;&#45;name">
+    <div class="title overflow">
+      <a [routerLink]="['/gene', item.symbol]" class="link link&#45;&#45;gray">
+        <b>{{ item.symbol }}</b> {{ item.name }}
+      </a>
+    </div>
+  </td>
+
+  <td class="cell cell&#45;&#45;age">
+    <div class="overflow">
+      <app-gene-age [gene]="item"></app-gene-age>
+    </div>
+  </td>
+
+  <td class="cell">
+    <div class="overflow">
+      <app-associated-diseases
+        [geneDiseases]="item.diseases"
+        [activeListItem]="filters.byDisease"
+        (clickEvent)="onDisease($event)"
+      ></app-associated-diseases>
+    </div>
+  </td>
+
+  <td class="cell">
+    <div class="overflow">
+      <app-associated-disease-categories
+        [geneDiseaseCategories]="item.diseaseCategories"
+        [activeListItem]="filters.byDiseaseCategories"
+        (clickEvent)="onDiseaseCategories($event)"
+      ></app-associated-disease-categories>
+    </div>
+  </td>
+
+  <td colspan="2" class="cell cell&#45;&#45;terms">
+    <div *ngIf="item.terms" class="overflow">
+      <a
+        *ngFor="let term of goModeCellData.biologicalProcess | keyvalue"
+        href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+        class="tag"
+        matTooltip="{{ term.value }}"
+      >{{ term.key | zero }}
+      </a>
+      <a
+        *ngFor="let term of goModeCellData.cellularComponent | keyvalue"
+        href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+        class="tag"
+        matTooltip="{{ term.value }}"
+      >{{ term.key | zero }}
+      </a>
+      <a
+        *ngFor="let term of goModeCellData.molecularActivity | keyvalue"
+        href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+        class="tag"
+        matTooltip="{{ term.value }}"
+      >{{ term.key | zero }}
+      </a>
+    </div>
+  </td>
+
+  <td class="cell cell&#45;&#45;actions">
+    <div class="overflow">
+      <app-gene-menu
+        [gene]="item"
+        [isAdded]="isFaved(item.id)"
+        (unFav)="unFavItem($event)"
+        (fav)="favItem($event)"
+      ></app-gene-menu>
+    </div>
+  </td>
+</tr>

@@ -1,12 +1,12 @@
 export interface Term {
   object: {
-    id: number;
-    comment: string;
+    n: number;
+    string;
   };
 }
 
 export interface Terms {
-  biological_process: Term;
-  cellular_component: Term;
-  molecular_activity: Term;
+  biological_process: Term[];
+  cellular_component: Term[];
+  molecular_activity: Term[];
 }

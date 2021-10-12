@@ -25,6 +25,10 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public isAvailable = true;
   public genesListIsLoaded = false;
   public errorStatus: string;
+  public dataFromSearchBar: {
+    isGoSearchMode: boolean;
+    searchQuery: string;
+  };
 
   constructor(
     public windowService: WindowService,
@@ -86,6 +90,9 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.cdRef.markForCheck();
   }
 
+  public setSearchQuery(event): void {
+    this.dataFromSearchBar = event;
+  }
   /**
    * Wizard
    */

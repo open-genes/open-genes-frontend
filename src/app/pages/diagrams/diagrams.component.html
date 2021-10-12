@@ -15,6 +15,7 @@
     <div class="container">
       <div>
         <app-directed-graph
+          [graphTitle]="'filtered by all filters'"
           [graphSelector]="'all'"
           [nodes]="nodes"
           [links]="links"
@@ -22,6 +23,7 @@
       </div>
       <div>
         <app-directed-graph
+          [graphTitle]="'filtered by disease'"
           [graphSelector]="'disease'"
           [nodes]="newNodes"
           [links]="newLinks"
@@ -29,6 +31,7 @@
       </div>
       <div>
         <app-directed-graph
+          [graphTitle]="'filtered by family origin'"
           [graphSelector]="'family'"
           [nodes]="nNodes"
           [links]="nLinks"

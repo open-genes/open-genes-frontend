@@ -40,9 +40,10 @@
 
   &__description {
     width: 100%;
+    font-size: 1.5em;
 
     &:not(:empty) {
-      margin-top: 25px;
+      margin-top: 15px;
     }
 
     ::ng-deep {
