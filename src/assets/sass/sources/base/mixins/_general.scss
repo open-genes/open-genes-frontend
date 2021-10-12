@@ -9,8 +9,8 @@
 @mixin panel($display: 'block', $padding: '10px') {
   display: $display;
   width: 100%;
-  background-color: #fff;
-  border: 1px solid $color-borders;
+  background-color: $color-white;
+  box-shadow: 0 24px 48px 0 rgb(230, 235, 245, .4), 0 1px 4px 0 $color-gray-light;
   border-radius: $border-radius-regular;
   padding: unquote($padding);
   position: relative;
