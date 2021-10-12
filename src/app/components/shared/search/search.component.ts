@@ -15,6 +15,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
+import { ToMap } from '../../../core/utils/to-map';
 
 @Component({
   selector: 'app-search',
@@ -22,7 +23,7 @@ import { ApiService } from '../../../core/services/api/open-genes-api.service';
   styleUrls: ['./search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent implements OnInit, OnDestroy {
+export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Inject(Document) public document: Document;
 
   @Input() genesList: Genes[];
@@ -33,14 +34,14 @@ export class SearchComponent implements OnInit, OnDestroy {
   public isGoSearchMode = false;
   public searchForm: FormGroup;
   public showSearchResult = false;
+  public biologicalProcess: Map<any, any>;
+  public cellularComponent: Map<any, any>;
+  public molecularActivity: Map<any, any>;
 
   private subscription$ = new Subject();
 
-  constructor(
-    private renderer: Renderer2,
-    private apiService: ApiService,
-    private cdRef: ChangeDetectorRef,
-  ) {
+  constructor(private renderer: Renderer2, private apiService: ApiService, private cdRef: ChangeDetectorRef) {
+    super();
     this.searchForm = new FormGroup({
       searchField: new FormControl(''),
     });
@@ -52,8 +53,9 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.searchForm.get('searchField').valueChanges
-      .pipe(
+    this.searchForm
+      .get('searchField')
+      .valueChanges.pipe(
         filter((query: string) => !!query),
         map((query: string) => query.toLowerCase()),
         filter((query: string) => {
@@ -82,8 +84,17 @@ export class SearchComponent implements OnInit, OnDestroy {
       )
       .subscribe((genes: Genes[]) => {
         this.searchedData = genes;
+        this.mapTerms();
         this.cdRef.markForCheck();
       });
+  }
+
+  private mapTerms(): void {
+    for (const item of this.searchedData) {
+      this.biologicalProcess = this.toMap(item.terms?.biological_process);
+      this.cellularComponent = this.toMap(item.terms?.cellular_component);
+      this.molecularActivity = this.toMap(item.terms?.molecular_activity);
+    }
   }
 
   private autocompleteSearch(query: string): void {
@@ -114,21 +125,4 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
     event.stopPropagation();
   }
-
-  /*  public debounce(callback: any, time: number): () => void {
-    let lastTime = 0;
-    return function() {
-      const now = new Date();
-
-      // first run
-      if (lastTime === 0) {
-        callback();
-      }
-
-      if (now.getTime() - lastTime >= time) {
-        callback();
-        lastTime = now.getTime();
-      }
-    };
-  }*/
 }

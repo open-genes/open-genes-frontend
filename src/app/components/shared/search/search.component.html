@@ -64,29 +64,45 @@
 
     <div class="search-form__autocomplete-list"
          *ngIf="showSearchResult">
-
       <ng-container *ngFor="let gene of searchedData; let i = index">
         <button
-          *ngIf="i < 3"
+          *ngIf="i < 5"
           class="search-form__autocomplete-item"
           tabindex="0"
           [routerLink]="['/gene', gene.symbol]">
 
-          <span class="item__symbol"
-                appHighlight
-                [highlightText]="searchQuery.value"
-                [innerHTML]="gene.symbol">
+          <span class="item__symbol">
+            {{ gene.symbol }}
           </span>&nbsp;
 
-          <span class="item__name"
-                appHighlight
-                [highlightText]="searchQuery.value"
-                [innerHTML]="gene.name">
+          <ng-container *ngIf="biologicalProcess.size !== 0">
+            <span *ngFor="let term of biologicalProcess | keyvalue"
+                  class="item__name"
+                  appHighlight
+                  [highlightText]="searchQuery.value"
+                  [innerHTML]="term.value">
           </span>
+          </ng-container>
 
+          <ng-container *ngIf="cellularComponent.size !== 0">
+            <span *ngFor="let term of cellularComponent | keyvalue"
+                  class="item__name"
+                  appHighlight
+                  [highlightText]="searchQuery.value"
+                  [innerHTML]="term.value">
+          </span>
+          </ng-container>
+
+          <ng-container *ngIf="molecularActivity.size !== 0">
+            <span *ngFor="let term of molecularActivity | keyvalue"
+                  class="item__name"
+                  appHighlight
+                  [highlightText]="searchQuery.value"
+                  [innerHTML]="term.value">
+          </span>
+          </ng-container>
         </button>
       </ng-container>
-
     </div>
   </div>
 </form>

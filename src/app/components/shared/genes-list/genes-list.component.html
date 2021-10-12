@@ -96,7 +96,7 @@
 <!-- GO search mode start message -->
 <section *ngIf="isGoTermsMode && !isGoSearchPerformed && !isLoaded">
   <app-no-content
-    [title]="'go_results_start_typing'">
+    [title]="'go_results_start_title'">
     <ng-container icon>
       <app-icon
         icon="default"
@@ -104,6 +104,9 @@
         customWidth="100%"
         customHeight="100%"
       ></app-icon>
+    </ng-container>
+    <ng-container description>
+      <p>{{ 'go_results_start_description' | translate }}</p>
     </ng-container>
   </app-no-content>
 </section>

@@ -9,7 +9,7 @@ import {
   Output,
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { PageClass } from '../../../pages/page.class';
+import { ToMap } from '../../../core/utils/to-map';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
@@ -27,7 +27,7 @@ import { Filter } from './services/filter.model';
   styleUrls: ['./genes-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
+export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
 
