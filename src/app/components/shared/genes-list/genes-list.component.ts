@@ -8,9 +8,9 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { PageClass } from '../../../pages/page.class';
-import { switchMap, takeLast, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
 import { FilterService } from './services/filter.service';
@@ -29,20 +29,26 @@ import { Filter } from './services/filter.model';
 })
 export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
-  @Input() showSearchBar: boolean;
   @Input() showFiltersPanel: boolean;
 
-  public inputData: Genes[] = [];
-  public searchedData: Genes[] = [];
-
-  @Input()
-  set dataSource(value: Genes[]) {
-    this.inputData = value;
-    this._cdRef.markForCheck();
+  @Input() set dataFromSearchBar(value) {
+    if (value) {
+      const { isGoSearchMode, searchQuery } = value;
+      this.isGoTermsMode = isGoSearchMode;
+      this.isGoSearchPerformed = false;
+      if (!isGoSearchMode) {
+        this.updateGeneListOnSearch(searchQuery);
+      } else {
+        this.searchGenesByGoTerm(searchQuery);
+      }
+    }
   }
+
+  @Input() genesList: Genes[];
 
   @Output() loaded = new EventEmitter<boolean>();
 
+  public searchedData: Genes[];
   public genesPerPage = 20;
   public loadedGenesQuantity = this.genesPerPage;
 
@@ -50,9 +56,9 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   public filters: Filter = this.filterService.filters;
   public filterTypes = FilterTypesEnum;
 
-  public isGoTermsMode = false;
-  public isGoTermsModeError = false;
+  public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
+  public isGoTermsModeError = false;
   public isLoaded = false;
   public goModeCellData: any;
   public biologicalProcess: Map<any, any>;
@@ -61,14 +67,14 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
 
   public downloadJsonLink: string | SafeResourceUrl = '#';
 
-  private _subscription$ = new Subject();
+  private subscription$ = new Subject();
 
   constructor(
     private readonly apiService: ApiService,
     private filterService: FilterService,
     private fileExportService: FileExportService,
-    private _cdRef: ChangeDetectorRef,
-    private _snackBar: MatSnackBar
+    private cdRef: ChangeDetectorRef,
+    private snackBar: MatSnackBar,
   ) {
     super();
   }
@@ -78,18 +84,18 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._subscription$.next();
-    this._subscription$.complete();
+    this.subscription$.next();
+    this.subscription$.complete();
   }
 
   /**
    * HTTP
    */
   setInitialState(): void {
-    this.searchedData = this.inputData;
+    this.searchedData = [...this.genesList];
     this.downloadSearch(this.searchedData);
     this.loaded.emit(true);
-    this._cdRef.markForCheck();
+    this.cdRef.markForCheck();
   }
 
   public filterByFuncClusters(id: number): void {
@@ -102,13 +108,13 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
             return this.apiService.getGenesByFunctionalClusters(list);
           }
         }),
-        takeUntil(this._subscription$)
+        takeUntil(this.subscription$),
       )
       .subscribe(
         (genes) => {
           this.searchedData = genes;
           this.downloadSearch(this.searchedData);
-          this._cdRef.markForCheck();
+          this.cdRef.markForCheck();
         },
         (error) => this.errorLogger(this, error)
       );
@@ -124,13 +130,13 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
             return this.apiService.getGenesByExpressionChange(expression);
           }
         }),
-        takeUntil(this._subscription$)
+        takeUntil(this.subscription$),
       )
       .subscribe(
         (genes) => {
           this.searchedData = genes;
           this.downloadSearch(this.searchedData);
-          this._cdRef.markForCheck();
+          this.cdRef.markForCheck();
         },
         (error) => this.errorLogger(this, error)
       );
@@ -153,7 +159,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
       });
     }
     this.downloadSearch(this.searchedData);
-    this._cdRef.markForCheck();
+    this.cdRef.markForCheck();
   }
 
   public filterByMethylationChange(correlation: string): void {
@@ -172,7 +178,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
       });
     }
     this.downloadSearch(this.searchedData);
-    this._cdRef.markForCheck();
+    this.cdRef.markForCheck();
   }
 
   public filterByDisease(name: string): void {
@@ -191,7 +197,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
       });
     }
     this.downloadSearch(this.searchedData);
-    this._cdRef.markForCheck();
+    this.cdRef.markForCheck();
   }
 
   public filterByDiseaseCategories(category: string): void {
@@ -209,12 +215,12 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
    * Update already loaded and then filtered data on typing
    */
   public updateGeneListOnSearch(query: string): void {
-    this.searchedData = this.inputData.filter((item) => {
+    this.searchedData = this.genesList.filter((item) => {
       const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
       ${item.symbol} ${item.name} ${item.aliases.join(' ')}`;
       return searchedText.toLowerCase().includes(query);
     });
-    this._snackBar.openFromComponent(SnackBarComponent, {
+    this.snackBar.openFromComponent(SnackBarComponent, {
       data: {
         title: 'items_found',
         length: this.searchedData.length ? this.searchedData.length : 0,
@@ -229,24 +235,13 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Search genes by GO term string match
-   */
-  public toggleGoSearchMode(event: boolean): void {
-    this.isGoTermsMode = event;
-    this.isGoSearchPerformed = false;
-    if (!this.isGoTermsMode) {
-      this.searchedData = this.inputData;
-    }
-  }
-
   // TODO: this function isn't pure
   public searchGenesByGoTerm(query: string): void {
     this.isLoaded = true;
     if (query) {
       this.apiService
         .getGoTermMatchByString(query)
-        .pipe(takeUntil(this._subscription$))
+        .pipe(takeUntil(this.subscription$))
         .subscribe(
           (genes) => {
             this.searchedData = genes; // If nothing found, will return empty array
@@ -270,7 +265,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
               molecularActivity: this.molecularActivity,
             };
 
-            this._snackBar.openFromComponent(SnackBarComponent, {
+            this.snackBar.openFromComponent(SnackBarComponent, {
               data: {
                 title: 'items_found',
                 length: this.searchedData ? this.searchedData.length : 0,
@@ -278,14 +273,14 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
               duration: 600,
             });
 
-            this._cdRef.markForCheck();
+            this.cdRef.markForCheck();
           },
-          (error) => this.errorLogger(this, error)
+          (error) => this.errorLogger(this, error),
         );
     } else {
       this.isGoSearchPerformed = false;
       this.isLoaded = false;
-      this._cdRef.markForCheck();
+      this.cdRef.markForCheck();
     }
   }
 
@@ -331,7 +326,7 @@ export class GenesListComponent extends PageClass implements OnInit, OnDestroy {
       }
       this.filters.byAge = !this.filters.byAge;
     }
-    this._cdRef.markForCheck();
+    this.cdRef.markForCheck();
   }
 
   private reverse() {
