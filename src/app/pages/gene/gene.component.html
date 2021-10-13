@@ -67,9 +67,15 @@
                 </a>
 
                 <a mat-list-item
-                   *ngIf="gene.commentFunction"
-                   [routerLink]="['/gene', symbol]" fragment="function">
-                  {{ 'gene_page_title_function' | translate }}
+                   *ngIf="gene.proteinDescriptionOpenGenes?.length !== 0"
+                   [routerLink]="['/gene', symbol]" fragment="description-open-genes">
+                  {{ 'gene_page_title_protein_description_og' | translate }}
+                </a>
+
+                <a mat-list-item
+                   *ngIf="gene.proteinDescriptionUniProt?.length !== 0"
+                   [routerLink]="['/gene', symbol]" fragment="description-uniprot">
+                  {{ 'gene_page_title_protein_description_uniprot' | translate }}
                 </a>
 
                 <a mat-list-item
@@ -219,7 +225,7 @@
                 </section>
 
                 <section>
-                  <h2 *ngIf="gene.commentEvolution || gene.commentFunction"
+                  <h2 *ngIf="gene.commentEvolution || gene.proteinDescriptionUniProt"
                       class="__mb-15"
                   >{{ 'gene_page_title_summary' | translate }}</h2>
 
@@ -232,11 +238,20 @@
                     </article>
                   </ng-container>
 
-                  <ng-container *ngIf="gene.commentFunction">
-                    <h3>{{ 'gene_page_title_function' | translate }}</h3>
+                  <ng-container *ngIf="gene.proteinDescriptionOpenGenes?.length !== 0">
+                    <h3>{{ 'gene_page_title_protein_description_og' | translate }}</h3>
                     <article
-                      id="function"
-                      [innerHTML]="gene.commentFunction | publicationLinksWrap: 'link'"
+                      id="description-open-genes"
+                      [innerHTML]="gene.proteinDescriptionOpenGenes | publicationLinksWrap: 'link'"
+                    >
+                    </article>
+                  </ng-container>
+
+                  <ng-container *ngIf="gene.proteinDescriptionUniProt?.length !== 0">
+                    <h3>{{ 'gene_page_title_protein_description_uniprot' | translate }}</h3>
+                    <article
+                      id="description-uniprot"
+                      [innerHTML]="gene.proteinDescriptionUniProt"
                     >
                     </article>
                   </ng-container>

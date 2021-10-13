@@ -1,0 +1,114 @@
+<div class="item card__content">
+  <div class="card__section card__title">
+    <div class="title">
+      <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
+        <b>{{ item.symbol }}</b> {{ item.name }}
+      </a>
+    </div>
+
+    <div class="card__actions">
+      <app-gene-menu
+        [gene]="item"
+        [isAdded]="isFaved(item.id)"
+        (unFav)="unFavItem($event)"
+        (fav)="favItem($event)"
+      ></app-gene-menu>
+    </div>
+  </div>
+
+  <ng-container *ngIf="listSettings.ifShowAge">
+    <div class="card__section card__age-mya">
+        <span class="label">
+          {{ "phylogeny" | translate }}
+        </span>
+      <app-gene-age [gene]="item" show="origin"></app-gene-age>
+    </div>
+
+    <div *ngIf="item.homologueTaxon" class="card__section card__age-homologs">
+        <span class="label">
+          {{ "ncbi_homologs" | translate }}
+        </span>
+      <app-gene-age [gene]="item" show="homologs"></app-gene-age>
+    </div>
+  </ng-container>
+
+  <div *ngIf="listSettings.ifShowDiseases"
+       class="card__section">
+    <app-associated-diseases
+      [geneDiseases]="item.diseases"
+      [activeListItem]="filters.byDisease"
+      (clickEvent)="onDisease($event)"
+    ></app-associated-diseases>
+  </div>
+
+  <div *ngIf="listSettings.ifShowDiseaseCategories"
+       class="card__section">
+    <app-associated-disease-categories
+      [geneDiseaseCategories]="item.diseaseCategories"
+      [activeListItem]="filters.byDiseaseCategories"
+      (clickEvent)="onDiseaseCategories($event)"
+    ></app-associated-disease-categories>
+  </div>
+
+  <div *ngIf="listSettings.ifShowCriteria"
+       class="card__section">
+    <app-selection-criteria
+      [geneCriteria]="item.commentCause"
+      [activeListItem]="filters.bySelectionCriteria"
+      (clickEvent)="onSelectCriteria($event)"
+    ></app-selection-criteria>
+  </div>
+</div>
+
+<div *ngIf="
+    listSettings.ifShowClasses ||
+    listSettings.ifShowExpression ||
+    listSettings.ifShowMethylation"
+     class="card__controls">
+
+  <div class="card__section" *ngIf="item.terms">
+
+    <a
+      *ngFor="let term of goModeCellData.biologicalProcess | keyvalue"
+      href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+      class="tag"
+      matTooltip="{{ term.value }}"
+    >
+      {{ term.key | zero }}
+    </a>
+
+    <a
+      *ngFor="let term of goModeCellData.cellularComponent | keyvalue"
+      href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+      class="tag"
+      matTooltip="{{ term.value }}"
+    >
+      {{ term.key | zero }}
+    </a>
+
+    <a
+      *ngFor="let term of goModeCellData.molecularActivity | keyvalue"
+      href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+      class="tag"
+      matTooltip="{{ term.value }}"
+    >
+      {{ term.key | zero }}
+    </a>
+
+  </div>
+
+  <div *ngIf="listSettings.ifShowMethylation"
+       class="card__section">
+    <span class="label">
+      {{ "main_page_table_methylation" | translate }}
+    </span>
+
+    <app-tag
+      *ngIf="item.methylationCorrelation !== ''"
+      (click)="onMethylationChange(item.methylationCorrelation)"
+      [isActive]="filters.byMethylationChange === item.methylationCorrelation"
+    >
+      {{ item.methylationCorrelation }}
+    </app-tag>
+  </div>
+</div>

@@ -5,8 +5,7 @@
     <span *ngIf="isTouchDevice"
           class="wizard__drag-button"></span>
 
-    <button *ngIf="!isTouchDevice"
-            mat-icon-button
+    <button mat-icon-button
             class="wizard__close-button"
             (click)="close()"
             aria-label="Закрыть">

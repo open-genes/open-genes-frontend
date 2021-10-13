@@ -2,7 +2,7 @@ export const environment = {
   name: 'dev',
   production: false,
   apiUrl: 'https://test.open-genes.com',
-  searchApiUrl: 'http://localhost:8080/',
+  searchApiUrl: 'https://publications-search-api-2yf55.ondigitalocean.app/',
   pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',
   proteinAtlasUrl: 'https://www.proteinatlas.org/',
   openLongevity80LevelCMS: 'https://openlongevity.com/',

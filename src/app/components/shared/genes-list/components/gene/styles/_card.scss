@@ -1,11 +1,27 @@
-// В виде карточек
-@mixin cards {
-  .card {
+@import "../../../../../styles";
+
+@mixin card {
+  $card-spacing: 20px;
+
+  :host {
     position: relative;
-    @include panel(flex, #{10px 0});
     flex-flow: column nowrap;
     justify-content: space-between;
-    margin-top: 10px;
+    @include panel(flex, #{10px 0});
+    margin-top: $card-spacing;
+
+    @include resolution_phablet-and-up {
+      flex: 0 0 calc(50% - #{$card-spacing / 2});
+    }
+
+    @include resolution_phone {
+      flex: 0 0 100%;
+    }
+  }
+
+  .card {
+    position: relative;
+    margin-top: $card-spacing;
     font-size: $font-size;
 
     &__content,
@@ -18,6 +34,14 @@
     &__section {
       padding: 0 12px;
       margin-bottom: 10px;
+
+      .label {
+        display: block;
+        width: 100%;
+        font-size: $font-size-small;
+        color: $color-gray-halfing;
+        margin-bottom: 5px;
+      }
 
       &:last-child {
         margin-bottom: 0;
@@ -58,22 +82,5 @@
       border-top: 1px solid $color-borders;
       padding-top: 12px;
     }
-
-    .label {
-      display: block;
-      width: 100%;
-      font-size: $font-size-small;
-      color: $color-gray-halfing;
-      margin-bottom: 5px;
-    }
-
-    @include resolution_phablet-and-up {
-      flex: 0 0 calc(50% - 5px);
-    }
-
-    @include resolution_phone {
-      flex: 0 0 100%;
-    }
   }
 }
-

@@ -10,32 +10,37 @@
       </div>
     </div>
       <app-favourites-list
-        *ngIf="favouriteGenes && favouriteGenes?.length !== 0; else noContent"
+        *ngIf="favouriteGenes && favouriteGenes?.length !== 0; else loader"
         [favouriteGenes]="favouriteGenes"
       ></app-favourites-list>
   </div>
 </div>
 
-<ng-template #noContent>
-  <section class="container">
-    <app-no-content
-      [title]="'favourites_no_data'">
-      <ng-container icon>
-        <app-icon
-          icon="default"
-          size="custom"
-          customWidth="100%"
-          customHeight="100%"
-        ></app-icon>
-      </ng-container>
-      <ng-container description>
-        <div class="no-content__button">
-          <a mat-flat-button color="primary" href="/">{{ "favourites_go_to_home_page" | translate }}
-          </a>
-        </div>
-      </ng-container>
-    </app-no-content>
-  </section>
+<ng-template #loader>
+  <div class="container">
+    <app-spinner *ngIf="!favouriteGenes;else noContent"></app-spinner>
+  </div>
+  <ng-template #noContent>
+    <section class="container">
+      <app-no-content
+        [title]="'favourites_no_data'">
+        <ng-container icon>
+          <app-icon
+            icon="default"
+            size="custom"
+            customWidth="100%"
+            customHeight="100%"
+          ></app-icon>
+        </ng-container>
+        <ng-container description>
+          <div class="no-content__button">
+            <a mat-flat-button color="primary" href="/">{{ "favourites_go_to_home_page" | translate }}
+            </a>
+          </div>
+        </ng-container>
+      </app-no-content>
+    </section>
+  </ng-template>
 </ng-template>
 
 

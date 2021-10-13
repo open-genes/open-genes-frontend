@@ -4,7 +4,7 @@ import { Subject, Subscription } from 'rxjs';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
-import { PageClass } from '../page.class';
+import { ToMap } from '../../core/utils/to-map';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { SettingsService } from '../../core/services/settings.service';
@@ -15,7 +15,7 @@ import { Settings } from '../../core/models/settings.model';
   templateUrl: './gene.component.html',
   styleUrls: ['./gene.component.scss'],
 })
-export class GeneComponent extends PageClass implements OnInit, OnDestroy {
+export class GeneComponent extends ToMap implements OnInit, OnDestroy {
   @ViewChild('UiHints') UiHints: TemplateRef<any>;
 
   public gene: any;
@@ -122,7 +122,7 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
 
           this.isAnyContent =
             this.gene?.commentEvolution ||
-            this.gene?.commentFunction ||
+            this.gene?.proteinDescriptionUniProt ||
             this.gene?.commentCause.length !== 0 ||
             this.gene?.commentAging ||
             this.isAnyResearchFilled ||

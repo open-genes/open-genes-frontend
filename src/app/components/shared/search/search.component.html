@@ -1,19 +1,19 @@
 <form [formGroup]="searchForm"
       class="search-form"
-      [class.search-form--active]="showResult"
->
+      [class.search-form--active]="showSearchResult">
+
   <div class="search-form__quantity">
-      {{ 'main_page_total' | translate: { number: dataSource.length } }}
+    <span *ngIf="genesList?.length">{{ 'main_page_total' | translate: { number: genesList?.length } }}</span>
   </div>
 
-  <div *ngIf="showResult"
+  <div *ngIf="showSearchResult"
        class="search-backdrop"
-       (click)="cancel($event)"
+       (click)="cancelSearch($event)"
   ></div>
 
   <div class="search-form__panel">
     <button
-      (click)="cancel($event)"
+      (click)="cancelSearch($event)"
       class="btn btn--purple btn--icon-only cancel-search-button">
       <span class="fa fal fa-arrow-left"></span>
     </button>
@@ -23,15 +23,14 @@
         mat-icon-button
         class="search-form__submit search-form__submit--active"
         type="submit"
-        (click)="search()"
-      ><span class="fa fal fa-search"></span>
+        (click)="onSearch()">
+        <span class="fa fal fa-search"></span>
       </button>
 
       <button
         [matMenuTriggerFor]="searchMenu"
         class="search-form__switch"
-        [matTooltip]="(isGoSearchMode ? 'search_for_go_terms' : 'search_for_functions') | translate"
-      >
+        [matTooltip]="(isGoSearchMode ? 'search_for_go_terms' : 'search_for_functions') | translate">
         <span
           [ngClass]="isGoSearchMode ? 'fa-book' : 'fa-dna'"
           class="fa far"></span>
@@ -44,44 +43,64 @@
         type="text"
         placeholder="{{ (isGoSearchMode ? 'search_field_tap_search' : 'search_field_start_typing') | translate }}"
         class="field search-form__field"
-        (focusin)="search()"
-        (keyup)="isGoSearchMode ? debounce(subscribeToGo, 2000) : subscribeToGenes()"
-        (keydown.enter)="search()"
+        (keyup.enter)="onSearch()"
         #searchQuery
       >
+
       <mat-menu #searchMenu>
         <button mat-menu-item
-                (click)="setGoSearchMode(false)"
-                [disabled]="!isGoSearchMode"
-        ><span class="fa fal fa-dna __mr-5"></span> {{ 'search_for_functions' | translate }}
+                (click)="setGoSearchMode()"
+                [disabled]="!isGoSearchMode">
+          <span class="fa fal fa-dna __mr-5"></span> {{ 'search_for_functions' | translate }}
         </button>
         <button mat-menu-item
-                (click)="setGoSearchMode(true)"
-                [disabled]="isGoSearchMode"
-        ><span class="fa fal fa-book __mr-5"></span> {{ 'search_for_go_terms' | translate }}
+                (click)="setGoSearchMode()"
+                [disabled]="isGoSearchMode">
+          <span class="fa fal fa-book __mr-5"></span> {{ 'search_for_go_terms' | translate }}
         </button>
       </mat-menu>
+
     </div>
 
     <div class="search-form__autocomplete-list"
-         *ngIf="showResult && !isGoSearchMode">
-      <ng-container *ngFor="let data of searchedData; let i = index">
+         *ngIf="showSearchResult">
+      <ng-container *ngFor="let gene of searchedData; let i = index">
         <button
-          *ngIf="i < 3"
+          *ngIf="i < 5"
           class="search-form__autocomplete-item"
           tabindex="0"
-          [routerLink]="['/gene', data.symbol]"
-        >
-          <span class="item__symbol"
-                appHighlight
-                [highlightText]="searchQuery.value"
-                [innerHTML]="data.symbol">
+          [routerLink]="['/gene', gene.symbol]">
+
+          <span class="item__symbol">
+            {{ gene.symbol }}
           </span>&nbsp;
-          <span class="item__name"
-                appHighlight
-                [highlightText]="searchQuery.value"
-                [innerHTML]="data.name">
+
+          <ng-container *ngIf="biologicalProcess.size !== 0">
+            <span *ngFor="let term of biologicalProcess | keyvalue"
+                  class="item__name"
+                  appHighlight
+                  [highlightText]="searchQuery.value"
+                  [innerHTML]="term.value">
           </span>
+          </ng-container>
+
+          <ng-container *ngIf="cellularComponent.size !== 0">
+            <span *ngFor="let term of cellularComponent | keyvalue"
+                  class="item__name"
+                  appHighlight
+                  [highlightText]="searchQuery.value"
+                  [innerHTML]="term.value">
+          </span>
+          </ng-container>
+
+          <ng-container *ngIf="molecularActivity.size !== 0">
+            <span *ngFor="let term of molecularActivity | keyvalue"
+                  class="item__name"
+                  appHighlight
+                  [highlightText]="searchQuery.value"
+                  [innerHTML]="term.value">
+          </span>
+          </ng-container>
         </button>
       </ng-container>
     </div>
