@@ -16,6 +16,8 @@ import { debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil }
 import { Subject } from 'rxjs';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { ToMap } from '../../../core/utils/to-map';
+import { SettingsService } from '../../../core/services/settings.service';
+import { SettingsEnum } from '../../../core/models/settings.model';
 
 @Component({
   selector: 'app-search',
@@ -31,16 +33,22 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Output() dataFromSearchBar: EventEmitter<any> = new EventEmitter<any>();
 
   public searchedData: Genes[];
-  public isGoSearchMode = false;
   public searchForm: FormGroup;
+  public isGoSearchMode = false;
   public showSearchResult = false;
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
 
   private subscription$ = new Subject();
+  private settingsKey = SettingsEnum;
 
-  constructor(private renderer: Renderer2, private apiService: ApiService, private cdRef: ChangeDetectorRef) {
+  constructor(
+    private renderer: Renderer2,
+    private apiService: ApiService,
+    private settingsService: SettingsService,
+    private cdRef: ChangeDetectorRef
+  ) {
     super();
     this.searchForm = new FormGroup({
       searchField: new FormControl(''),
@@ -107,6 +115,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
 
   public setGoSearchMode(): void {
     this.isGoSearchMode = !this.isGoSearchMode;
+    this.settingsService.setSettings(this.settingsKey.isGoSearchMode, this.isGoSearchMode);
     this.searchedData = [];
     this.searchForm.get('searchField').setValue('');
     this.onSearch();

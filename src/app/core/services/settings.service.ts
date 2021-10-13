@@ -7,6 +7,8 @@ import { Settings } from '../models/settings.model';
 export class SettingsService {
   private settings: Settings = {
     showUiHints: false,
+    isGoSearchMode: false,
+    isTableView: true,
   };
 
   constructor() {
