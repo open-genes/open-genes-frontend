@@ -4,15 +4,24 @@
       {{ "favourites_page_total" | translate }} {{ favourites.length }}
     </div>
     <div class="col d-flex flex-row-reverse">
+      <button
+        (click)="shareGene()"
+        color="primary"
+        mat-icon-button
+        matTooltip="{{ 'favourites_share' | translate }}"
+      >
+        <span class="fa far fa-share-alt"></span>
+      </button>
       <a
         mat-flat-button
         color="primary"
+        class="__mr-5"
         [href]="downloadLink"
         (click)="downloadFavs()"
         target="_blank"
         download="export.json"
       >
-        {{ "download" | translate }}
+        <span class="fa far fa-download"></span> {{ "download" | translate }}
       </a>
       <button
         mat-flat-button
@@ -22,15 +31,6 @@
       >
         {{ "favourites_clear" | translate }}
       </button>
-      <button
-        (click)="shareGene()"
-        class="__mr-10"
-        color="primary"
-        mat-flat-button
-      >
-        {{ 'favourites_share' | translate }}
-      </button>
-
     </div>
   </div>
 
