@@ -16,18 +16,18 @@ export class FavouritesComponent implements OnInit, OnDestroy {
   public favouriteGenes: Genes[];
   public genes: Genes[];
   public error: number;
+  public isSharedList = false;
 
   private favouriteGenesIds: number[] = [];
   private subscription$ = new Subject();
 
   constructor(
     public translate: TranslateService,
-    private readonly _cdRef: ChangeDetectorRef,
-    private readonly _apiService: ApiService,
-    private _favouritesService: FavouritesService,
+    private readonly cdRef: ChangeDetectorRef,
+    private readonly apiService: ApiService,
+    private favouritesService: FavouritesService,
     private route: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.getData();
@@ -38,15 +38,15 @@ export class FavouritesComponent implements OnInit, OnDestroy {
   }
 
   private getData(): void {
-    this._favouritesService
+    this.favouritesService
       .getItems()
       .pipe(
         switchMap((idList) => {
           if (idList) {
             this.favouriteGenesIds = idList;
-            this._cdRef.markForCheck();
+            this.cdRef.markForCheck();
 
-            return this._apiService.getGenes();
+            return this.apiService.getGenes();
           }
 
           return EMPTY;
@@ -60,10 +60,11 @@ export class FavouritesComponent implements OnInit, OnDestroy {
           const queryParamsIdSplit = queryParamsId?.split(',');
           if (queryParamsId) {
             this.favouriteGenes = genes.filter((gene) => queryParamsIdSplit.includes(gene.id.toString()));
+            this.isSharedList = true;
           } else {
             this.favouriteGenes = genes.filter((gene) => this.favouriteGenesIds.includes(gene.id));
           }
-          this._cdRef.markForCheck();
+          this.cdRef.markForCheck();
         },
         (err) => {
           this.error = err;

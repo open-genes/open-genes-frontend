@@ -12,6 +12,7 @@
       <app-favourites-list
         *ngIf="favouriteGenes && favouriteGenes?.length !== 0; else loader"
         [favouriteGenes]="favouriteGenes"
+        [isSharedList]="isSharedList"
       ></app-favourites-list>
   </div>
 </div>
