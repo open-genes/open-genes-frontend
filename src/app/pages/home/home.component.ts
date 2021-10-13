@@ -86,7 +86,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.genesListIsLoaded = event;
     this.cdRef.markForCheck();
   }
-  public setIsArticlesComponentLoaded(event: boolean) {
+  public toggleArticlesComponentVisibility(event: boolean) {
     console.log('ddd');
     this.articlesComponentLoaded = event;
     this.cdRef.markForCheck();

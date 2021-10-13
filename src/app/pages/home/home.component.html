@@ -61,7 +61,7 @@
                   class="__h-100"
                   [isMiniMode]="true"
                   [sliceTo]="2"
-                  (artticlesLoaded)="setIsArticlesComponentLoaded($event)"
+                  (artticlesLoaded)="toggleArticlesComponentVisibility($event)"
                 ></app-articles-list>
               </app-sidebar-item>
 
@@ -71,7 +71,7 @@
                             view="card"
               ></app-skeleton>
 
-              <app-sidebar-item *ngIf="genes">
+              <app-sidebar-item [class.hidden]="!articlesComponentLoaded">
                 <ng-container title>
                   {{ "news_list_title" | translate }}
                   <a href="/news" class="link link--gray __ml-10">

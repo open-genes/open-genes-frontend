@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-8">
-          <section *ngIf="genes" id="articles" class="row no-gutters">
+          <section *ngIf="genes; else skeleton" id="articles" class="row no-gutters">
             <h1 class="col col-12">
               {{ "news_page_articles_title" | translate }}
             </h1>
@@ -41,19 +41,28 @@
               class="__mt-10"
             ></app-articles-list>
           </section>
-
+          <ng-template #skeleton>
+            <app-skeleton
+              [groups]="3"
+              view="card"
+              [cardsInARow]="3"
+            ></app-skeleton>
+          </ng-template>
           <section id="pubmed" class="row no-gutters __mt-40">
             <h1 class="col col-12">
               {{ "news_page_pubmed_title" | translate }}
             </h1>
             <div class="col col-12 news-page__news">
               <app-news-list
-                *ngIf="genes"
+                *ngIf="genes; else loader"
                 [genesList]="genes"
                 [loadTotal]="80"
                 [itemsForPage]="10"
                 [showDates]="true"
               ></app-news-list>
+              <ng-template #loader>
+                <app-skeleton [groups]="6"></app-skeleton>
+              </ng-template>
             </div>
           </section>
         </div>
