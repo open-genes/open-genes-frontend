@@ -5,6 +5,8 @@ import { GeneFieldsModalComponent } from '../gene-fields-modal/gene-fields-modal
 import { MatDialog } from '@angular/material';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { Filter } from '../../services/filter.model';
+import { SettingsService } from '../../../../../core/services/settings.service';
+import { SettingsEnum } from '../../../../../core/models/settings.model';
 
 @Component({
   selector: 'app-filter-panel',
@@ -22,11 +24,16 @@ export class FilterPanelComponent {
   @Output() clearFilterItem: EventEmitter<any> = new EventEmitter();
 
   public filterTypes = FilterTypesEnum;
-  public filters: Filter = this._filterService.filters;
+  public filters: Filter = this.filterService.filters;
   public isTableView = true;
-  public isClear$ = this._filterService.isClearFiltersBtnShown;
+  public isClear$ = this.filterService.isClearFiltersBtnShown;
+  private settingsKey = SettingsEnum;
 
-  constructor(private _filterService: FilterService, private _dialog: MatDialog) {}
+  constructor(
+    private filterService: FilterService,
+    private settingsService: SettingsService,
+    private dialog: MatDialog
+  ) {}
 
   /**
    * Send clear filter item
@@ -47,6 +54,7 @@ export class FilterPanelComponent {
    */
   public toggleGenesView() {
     this.isTableView = !this.isTableView;
+    this.settingsService.setSettings(this.settingsKey.isTableView, this.isTableView);
     this.tableView.emit(this.isTableView);
   }
 
@@ -54,7 +62,7 @@ export class FilterPanelComponent {
    * Opening modal for list view settings
    */
   public openFiltersModal(): void {
-    this._dialog.open(GeneFieldsModalComponent, {
+    this.dialog.open(GeneFieldsModalComponent, {
       panelClass: 'filters-modal',
       minWidth: '320px',
       maxWidth: '768px',

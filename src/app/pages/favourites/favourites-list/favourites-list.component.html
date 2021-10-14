@@ -1,24 +1,32 @@
 <div class="container favourites-page__favourites">
-  <div class="row no-gutters __mb-20 align-items-center">
-    <div class="col page__subtitle __mb-0">
+  <div class="row no-gutters favourites__top-panel">
+    <div class="col top-panel__title">
       {{ "favourites_page_total" | translate }} {{ favourites.length }}
     </div>
-    <div class="col d-flex flex-row-reverse">
+    <div class="col top-panel__buttons">
+      <button
+        mat-icon-button
+        class="buttons__button"
+        color="primary"
+        (click)="shareGene()"
+        matTooltip="{{ 'favourites_share' | translate }}">
+        <span class="fa far fa-share-alt"></span>
+      </button>
       <a
         mat-flat-button
         color="primary"
+        class="buttons__button"
         [href]="downloadLink"
         (click)="downloadFavs()"
         target="_blank"
-        download="export.json"
-      >
+        download="export.json">
         {{ "download" | translate }}
       </a>
       <button
         mat-flat-button
-        color="secondary"
+        class="buttons__button buttons__button--delete"
+        color="primary"
         (click)="clearFavs()"
-        class="__mr-10"
       >
         {{ "favourites_clear" | translate }}
       </button>
@@ -35,13 +43,20 @@
           <span class="link link--gray">{{ gene.name | capitalize }}</span>
         </a>
       </div>
-      <button
-        class="faved-gene__actions"
-        mat-icon-button
-        (click)="unFavItem(gene.id, i)"
-      >
-        <span class="fa far fa-trash"></span>
-      </button>
+      <div *ngIf="!isSharedList"
+           class="faved-gene__actions">
+        <button mat-icon-button
+                (click)="unFavItem(gene.id, i)">
+          <span class="fa far fa-trash"></span>
+        </button>
+      </div>
     </div>
   </div>
+</div>
+
+<div
+  #linkCopy
+  class="hidden"
+>
+  {{ 'link_copied' | translate }}
 </div>

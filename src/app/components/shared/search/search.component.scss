@@ -213,9 +213,13 @@ $mobile-container-vertical-padding: 5px;
       }
     }
 
-    &:hover,
+    &:focus,
+    &:hover {
+      background-color: rgba($color-hover, .5);
+    }
+
     &:active {
-      background-color: rgba($color-hover, .3);
+      background-color: rgba($color-hover, .75);
     }
   }
 
