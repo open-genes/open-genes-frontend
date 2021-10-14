@@ -58,6 +58,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription$.next();
     this.subscription$.complete();
+    this.cancelSearch();
   }
 
   ngOnInit(): void {
@@ -106,11 +107,12 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   private autocompleteSearch(query: string): void {
-    this.searchedData = this.genesList.filter((gene) => {
-      const searchedText = `${gene.id} ${gene?.ensembl ? gene.ensembl : ''}
-      ${gene.symbol} ${gene.name} ${gene.aliases.join(' ')}`;
-      return searchedText.toLowerCase().includes(query);
-    });
+    if (query.length !== 0) {
+      this.searchedData = this.genesList.filter((gene) => {
+        const searchedText = [gene.symbol, gene.id, gene?.ensembl, gene.name, ...gene.aliases].join(' ').toLowerCase();
+        return searchedText.includes(query);
+      });
+    }
   }
 
   public setGoSearchMode(): void {
@@ -129,9 +131,9 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     });
   }
 
-  public cancelSearch(event): void {
+  public cancelSearch(event?): void {
     this.showSearchResult = false;
     this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
-    event.stopPropagation();
+    event?.stopPropagation();
   }
 }

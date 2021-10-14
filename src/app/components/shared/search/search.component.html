@@ -71,11 +71,19 @@
           tabindex="0"
           [routerLink]="['/gene', gene.symbol]">
 
-          <span class="item__symbol">
-            {{ gene.symbol }}
+          <span class="item__symbol"
+                appHighlight
+                [highlightText]="searchQuery.value"
+                [innerHTML]="gene.symbol">
+          </span>&nbsp;
+          <span *ngIf="!gene?.terms"
+                class="item__name"
+                appHighlight
+                [highlightText]="searchQuery.value"
+                [innerHTML]="gene.name">
           </span>&nbsp;
 
-          <ng-container *ngIf="biologicalProcess.size !== 0">
+          <ng-container *ngIf="biologicalProcess?.size !== 0">
             <span *ngFor="let term of biologicalProcess | keyvalue"
                   class="item__name"
                   appHighlight
@@ -84,7 +92,7 @@
           </span>
           </ng-container>
 
-          <ng-container *ngIf="cellularComponent.size !== 0">
+          <ng-container *ngIf="cellularComponent?.size !== 0">
             <span *ngFor="let term of cellularComponent | keyvalue"
                   class="item__name"
                   appHighlight
@@ -93,7 +101,7 @@
           </span>
           </ng-container>
 
-          <ng-container *ngIf="molecularActivity.size !== 0">
+          <ng-container *ngIf="molecularActivity?.size !== 0">
             <span *ngFor="let term of molecularActivity | keyvalue"
                   class="item__name"
                   appHighlight
