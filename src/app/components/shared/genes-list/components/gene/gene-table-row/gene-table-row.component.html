@@ -88,13 +88,13 @@
 </tr>
 
 <tr class="item">
-  <td *ngIf="listSettings.ifShowClasses"
+  <td *ngIf="listSettings.ifShowFuncClusters"
       colspan="100%"
       class="cell cell&#45;&#45;functions">
     <app-tag
       *ngFor="let item of item.functionalClusters"
       (click)="onFuncCluster(item['id'])"
-      [isActive]="filters.byClasses.includes(item['id'])"
+      [isActive]="filters.byFunctionalClusters.includes(item['id'])"
     >{{ item["name"] }}
     </app-tag>
   </td>

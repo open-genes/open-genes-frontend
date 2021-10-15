@@ -4,8 +4,8 @@
 
     <button
       class="filter"
-      (click)="sortBy(filterTypes.name)"
-      [class.__active]="filters.byName"
+      (click)="sortBy(sortEnum.name)"
+      [class.__active]="sort.byName"
     >
       {{ "main_page_table_name" | translate }}
       <span class="fa far fa-sort-down"></span>
@@ -13,17 +13,17 @@
 
     <button
       class="filter"
-      (click)="sortBy(filterTypes.age)"
-      [class.__active]="filters.byAge"
+      (click)="sortBy(sortEnum.age)"
+      [class.__active]="sort.byAge"
     >
       {{ "age" | translate }} ({{ "million_years" | translate }})
       <span class="fa far fa-sort-down"></span>
     </button>
 
     <button
-      *ngIf="filters.byClasses.length > 0"
+      *ngIf="filters.byFunctionalClusters.length > 0"
       class="filter __active"
-      (click)="clearFilters(filterTypes.classes)"
+      (click)="clearFilters(filterTypes.funcClusters)"
     >
       {{ "functional_classes" | translate }}
       <span class="fa fal fa-times"></span>
@@ -32,7 +32,7 @@
     <button
       *ngIf="filters.byExpressionChange"
       class="filter __active"
-      (click)="clearFilters(filterTypes.expressionChange)"
+      (click)="clearFilters(filterTypes.expressChange)"
     >
       {{ "main_page_table_expression" | translate }}
       <span class="fa fal fa-times"></span>
@@ -50,7 +50,7 @@
     <button
       *ngIf="filters.byDiseaseCategories"
       class="filter __active"
-      (click)="clearFilters(filterTypes.diseaseCategories)"
+      (click)="clearFilters(filterTypes.disCategories)"
     >
       {{ "gene_list_disease_categories" | translate }}
       <span class="fa fal fa-times"></span>
@@ -59,7 +59,7 @@
     <button
       *ngIf="filters.bySelectionCriteria"
       class="filter __active"
-      (click)="clearFilters(filterTypes.criteria)"
+      (click)="clearFilters(filterTypes.selectCriteria)"
     >
       {{ "main_page_table_criteria" | translate }}
       <span class="fa fal fa-times"></span>

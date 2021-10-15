@@ -14,12 +14,12 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
 import { FilterService } from './services/filter.service';
-import { FilterTypesEnum } from './services/filter-types.enum';
+import { FilterTypesEnum, SortEnum } from './services/filter-types.enum';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileExportService } from '../../../core/services/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
-import { Filter } from './services/filter.model';
+import { Filter, Sort } from './services/filter.model';
 
 @Component({
   selector: 'app-genes-list',
@@ -53,8 +53,11 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   public loadedGenesQuantity = this.genesPerPage;
 
   public asTableRow = true;
-  public filters: Filter = this.filterService.filters;
   public filterTypes = FilterTypesEnum;
+  public filters: Filter = this.filterService.filters;
+  public sortEnum = SortEnum;
+  public sort: Sort = this.filterService.sort;
+
 
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
@@ -301,8 +304,8 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   /**
    * Filter reset
    */
-  public clearFilters(filter?: FilterTypesEnum): void {
-    this.filterService.clearFilters(filter ? filter : null);
+  public clearFilters(filterName?: string): void {
+    this.filterService.clearFilters(filterName ? filterName : null);
     this.setInitialState();
   }
 
@@ -311,20 +314,20 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
    */
   public sortBy(evt: string): void {
     // TODO: use enum types here
-    if (evt === this.filterTypes.name) {
-      if (this.filters.byName) {
+    if (evt === this.sortEnum.name) {
+      if (this.sort.byName) {
         this.reverse();
       } else {
         this.sortByName();
       }
-      this.filters.byName = !this.filters.byName;
+      this.sort.byName = !this.sort.byName;
     } else {
-      if (this.filters.byAge) {
+      if (this.sort.byAge) {
         this.reverse();
       } else {
         this.sortByAge();
       }
-      this.filters.byAge = !this.filters.byAge;
+      this.sort.byAge = !this.sort.byAge;
     }
     this.cdRef.markForCheck();
   }

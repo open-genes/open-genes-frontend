@@ -62,7 +62,7 @@
 
 <div class="card__controls">
 
-  <div *ngIf="item.functionalClusters && listSettings.ifShowClasses"
+  <div *ngIf="item.functionalClusters && listSettings.ifShowFuncClusters"
        class="card__section">
     <span class="label">
       {{ "functional_classes" | translate }}
@@ -71,7 +71,7 @@
     <app-tag
       *ngFor="let cluster of item.functionalClusters"
       (click)="onFuncCluster(cluster['id'])"
-      [isActive]="filters.byClasses.includes(cluster['id'])"
+      [isActive]="filters.byFunctionalClusters.includes(cluster['id'])"
     >
       {{ cluster["name"] }}
     </app-tag>

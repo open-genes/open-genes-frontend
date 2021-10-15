@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { Filter } from './filter.model';
+import { Filter, Sort } from './filter.model';
 import { FilterTypesEnum } from './filter-types.enum';
 import { GenesListSettings } from '../genes-list-settings.model';
+import { Genes } from '../../../../core/models';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
+import { environment } from '../../../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilterService {
+  private url = environment.apiUrl;
   private _listOfFields = new BehaviorSubject<any>('');
   public currentFields: Observable<GenesListSettings> = this._listOfFields.asObservable();
   public isClearFiltersBtnShown = new BehaviorSubject<boolean>(false);
@@ -16,7 +22,7 @@ export class FilterService {
   public listOfFields: GenesListSettings = {
     // Default:
     ifShowAge: true,
-    ifShowClasses: true,
+    ifShowFuncClusters: true,
     ifShowExpression: true,
     ifShowDiseases: true,
     ifShowDiseaseCategories: false,
@@ -25,17 +31,24 @@ export class FilterService {
   };
 
   public filters: Filter = {
-    byName: false,
-    byAge: false,
-    byClasses: [],
+    byFunctionalClusters: [],
     byExpressionChange: 0,
     byMethylationChange: '',
     byDisease: '',
     byDiseaseCategories: '',
     bySelectionCriteria: '',
+    page: 1,
   };
 
-  constructor() {
+  public sort: Sort = {
+    byName: false,
+    byAge: false,
+  };
+
+  constructor(
+    private http: HttpClient,
+    private translate: TranslateService,
+  ) {
     this.updateFields(this.listOfFields);
   }
 
@@ -45,14 +58,15 @@ export class FilterService {
 
   // Filter
   public filterByFuncClusters(id: number): Observable<number[]> {
-    if (!this.filters.byClasses.includes(id)) {
-      this.filters.byClasses.push(id);
+    if (!this.filters.byFunctionalClusters.includes(id)) {
+      this.filters.byFunctionalClusters.push(id);
     } else {
-      this.filters.byClasses = this.filters.byClasses.filter((item) => item !== id);
+      this.filters.byFunctionalClusters = this.filters.byFunctionalClusters.filter((item) => item !== id);
     }
 
     this.areMoreThan2FiltersApplied();
-    return of(this.filters.byClasses);
+    this.getFilteredGenes(this.filters).subscribe();
+    return of(this.filters.byFunctionalClusters);
   }
 
   public filterByExpressionChange(expression: number): Observable<number> {
@@ -63,6 +77,7 @@ export class FilterService {
     }
 
     this.areMoreThan2FiltersApplied();
+    this.getFilteredGenes(this.filters).subscribe();
     return of(this.filters.byExpressionChange);
   }
 
@@ -74,6 +89,7 @@ export class FilterService {
     }
 
     this.areMoreThan2FiltersApplied();
+    this.getFilteredGenes(this.filters).subscribe();
     return of(this.filters.byMethylationChange);
   }
 
@@ -86,6 +102,7 @@ export class FilterService {
     }
 
     this.areMoreThan2FiltersApplied();
+    this.getFilteredGenes(this.filters).subscribe();
     return of(this.filters.bySelectionCriteria);
   }
 
@@ -97,6 +114,7 @@ export class FilterService {
     }
 
     this.areMoreThan2FiltersApplied();
+    this.getFilteredGenes(this.filters).subscribe();
     return of(this.filters.byDisease);
   }
 
@@ -107,12 +125,13 @@ export class FilterService {
       this.filters.byDiseaseCategories = '';
     }
     this.areMoreThan2FiltersApplied();
+    this.getFilteredGenes(this.filters).subscribe();
     return of(this.filters.byDiseaseCategories);
   }
 
   // Get
   public getByFuncClusters(): Observable<number[]> {
-    return of(this.filters.byClasses);
+    return of(this.filters.byFunctionalClusters);
   }
 
   public getByExpressionChange(): Observable<number> {
@@ -136,30 +155,26 @@ export class FilterService {
   }
 
   // Clear
-  public clearFilters(filter?: FilterTypesEnum): void {
-    const { name, age, classes, expressionChange, methylation, disease, diseaseCategories, criteria } = FilterTypesEnum;
-    if (filter) {
-      if (filter === name) {
-        this.filters.byName = false;
-      } else if (filter === age) {
-        this.filters.byAge = false;
-      } else if (filter === classes) {
-        this.filters.byClasses = [];
-      } else if (filter === expressionChange) {
+  public clearFilters(filterName?: string): void {
+    const { funcClusters, expressChange, methylChange, disease, disCategories, selectCriteria } = FilterTypesEnum;
+    if (filterName) {
+      if (filterName === funcClusters) {
+        this.filters.byFunctionalClusters = [];
+      } else if (filterName === expressChange) {
         this.filters.byExpressionChange = 0;
-      } else if (filter == methylation) {
+      } else if (filterName == methylChange) {
         this.filters.byMethylationChange = '';
-      } else if (filter === disease) {
+      } else if (filterName === disease) {
         this.filters.byDisease = '';
-      } else if (filter === diseaseCategories) {
+      } else if (filterName === disCategories) {
         this.filters.byDiseaseCategories = '';
-      } else if (filter === criteria) {
+      } else if (filterName === selectCriteria) {
         this.filters.bySelectionCriteria = '';
       }
     } else {
-      this.filters.byName = false;
-      this.filters.byAge = false;
-      this.filters.byClasses = [];
+      this.sort.byName = false;
+      this.sort.byAge = false;
+      this.filters.byFunctionalClusters = [];
       this.filters.byExpressionChange = 0;
       this.filters.byMethylationChange = '';
       this.filters.byDisease = '';
@@ -167,6 +182,7 @@ export class FilterService {
       this.filters.bySelectionCriteria = '';
     }
     this.areMoreThan2FiltersApplied();
+    this.getFilteredGenes(this.filters).subscribe();
   }
 
   public areMoreThan2FiltersApplied() {
@@ -182,5 +198,25 @@ export class FilterService {
 
     // when filters change and their sum is more than 2:
     this.isClearFiltersBtnShown.next(sum.length >= 2);
+  }
+
+  getFilteredGenes(filterParams: Filter): Observable<Genes[]> {
+    let params = new HttpParams().set('lang', this.translate.currentLang);
+    Object.entries(filterParams).forEach(([key, value]) => {
+      if (value) {
+        if (value instanceof Array) {
+          if (value.length) {
+            const str = value.join();
+            params = params.set(`${key}`, `${str}`);
+          }
+        } else {
+          params = params.set(`${key}`, `${value}`);
+        }
+      }
+    });
+    console.log(filterParams)
+    return this.http.get<Genes[]>(`${this.url}/api/gene`, {
+      params,
+    });
   }
 }
