@@ -13,30 +13,42 @@
     </div>
 
     <div class="container">
-      <div>
-        <app-directed-graph
-          [graphTitle]="'filtered by all filters'"
-          [graphSelector]="'all'"
-          [nodes]="nodes"
-          [links]="links"
-          [grouped]="false"></app-directed-graph>
-      </div>
-      <div>
-        <app-directed-graph
-          [graphTitle]="'filtered by disease'"
-          [graphSelector]="'disease'"
-          [nodes]="newNodes"
-          [links]="newLinks"
-          [grouped]="true"></app-directed-graph>
-      </div>
-      <div>
-        <app-directed-graph
-          [graphTitle]="'filtered by family origin'"
-          [graphSelector]="'family'"
-          [nodes]="nNodes"
-          [links]="nLinks"
-          [grouped]="true"></app-directed-graph>
-      </div>
+      <mat-tab-group
+        class="__w-content diagrams-container">
+        <mat-tab label='filtered by all filters'>
+          <ng-template matTabContent>
+            <app-directed-graph
+              class="diagrams-container__diagram"
+              [graphTitle]="'filtered by all filters'"
+              [graphSelector]="'all'"
+              [nodes]="nodes"
+              [links]="links"
+              [grouped]="false"></app-directed-graph>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label='filtered by disease'>
+          <ng-template matTabContent>
+            <app-directed-graph
+              class="diagrams-container__diagram"
+              [graphTitle]="'filtered by disease'"
+              [graphSelector]="'disease'"
+              [nodes]="newNodes"
+              [links]="newLinks"
+              [grouped]="true"></app-directed-graph>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label='filtered by family origin'>
+          <ng-template matTabContent>
+            <app-directed-graph
+              class="diagrams-container__diagram"
+              [graphTitle]="'filtered by family origin'"
+              [graphSelector]="'family'"
+              [nodes]="nNodes"
+              [links]="nLinks"
+              [grouped]="true"></app-directed-graph>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </div>

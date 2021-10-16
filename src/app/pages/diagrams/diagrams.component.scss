@@ -1,0 +1,7 @@
+.diagrams-container {
+  margin-top: 10px;
+
+  ::ng-deep .diagrams-container__diagram {
+    margin: 30px 0;
+  }
+}
