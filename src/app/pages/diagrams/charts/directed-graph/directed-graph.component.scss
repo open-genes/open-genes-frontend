@@ -1,8 +1,19 @@
 @import "../../../styles";
 
+:host {
+  display: block;
+  width: 100%;
+}
+
 .directed-graph__title {
   width: 100%;
-  font-size: $font-size-big;
+  font-size: 16px;
+  color: $color-black;
+  font-weight: $font-weight-medium;
   text-align: center;
   margin-bottom: $ui-base-height;
+}
+
+.directed-graph__body {
+  overflow: auto;
 }

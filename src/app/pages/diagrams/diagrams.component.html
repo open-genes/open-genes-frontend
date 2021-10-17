@@ -14,34 +14,24 @@
 
     <div class="container">
       <mat-tab-group
-        class="__w-content diagrams-container">
-        <mat-tab label='filtered by all filters'>
+        class="__w-content diagrams-container"
+        (selectedTabChange)="onTabClick()">
+        <mat-tab label="{{ 'diagrams_title_1_short' | translate }}">
           <ng-template matTabContent>
             <app-directed-graph
               class="diagrams-container__diagram"
-              [graphTitle]="'filtered by all filters'"
-              [graphSelector]="'all'"
-              [nodes]="nodes"
-              [links]="links"
-              [grouped]="false"></app-directed-graph>
-          </ng-template>
-        </mat-tab>
-        <mat-tab label='filtered by disease'>
-          <ng-template matTabContent>
-            <app-directed-graph
-              class="diagrams-container__diagram"
-              [graphTitle]="'filtered by disease'"
+              [graphTitle]="'diagrams_title_1'"
               [graphSelector]="'disease'"
               [nodes]="newNodes"
               [links]="newLinks"
               [grouped]="true"></app-directed-graph>
           </ng-template>
         </mat-tab>
-        <mat-tab label='filtered by family origin'>
+        <mat-tab label="{{ 'diagrams_title_2_short' | translate }}">
           <ng-template matTabContent>
             <app-directed-graph
               class="diagrams-container__diagram"
-              [graphTitle]="'filtered by family origin'"
+              [graphTitle]="'diagrams_title_2'"
               [graphSelector]="'family'"
               [nodes]="nNodes"
               [links]="nLinks"

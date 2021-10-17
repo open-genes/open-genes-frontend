@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { map, takeUntil } from 'rxjs/operators';
 import { DiagramGenes, Link, Node } from './models/directed-graph';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
@@ -7,6 +7,7 @@ import { FunctionalClusters, Gene, Genes } from '../../core/models';
 import { AssociatedDiseaseCategories } from '../../core/models/openGenesApi/associated-diseases.model';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-diagrams',
   templateUrl: './diagrams.component.html',
   styleUrls: ['./diagrams.component.scss'],
@@ -22,7 +23,7 @@ export class DiagramsComponent implements OnDestroy {
 
   private unsubscribe$ = new Subject();
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private readonly cdRef: ChangeDetectorRef) {
     this.getAllGenes();
   }
 
@@ -50,12 +51,20 @@ export class DiagramsComponent implements OnDestroy {
             return diagramGenes;
           });
         }),
-        takeUntil(this.unsubscribe$),
+        takeUntil(this.unsubscribe$)
       )
       .subscribe((genes) => {
         this.getNodesAndLinksFromGenes(genes);
         this.getNewNodesAndLinks(genes);
+        this.cdRef.markForCheck();
       });
+  }
+
+  onTabClick() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+    this.getAllGenes();
+    this.cdRef.markForCheck();
   }
 
   private getNodesAndLinksFromGenes(genes: DiagramGenes[]): void {
@@ -75,7 +84,7 @@ export class DiagramsComponent implements OnDestroy {
             gene.expressionChange === res.expressionChange &&
             gene.homologueTaxon === res.homologueTaxon &&
             this.filteringByDiseaseCategories(gene.diseaseCategories, res.diseaseCategories) &&
-            this.filteringByFunctionalClusters(gene.functionalClusters, res.functionalClusters),
+            this.filteringByFunctionalClusters(gene.functionalClusters, res.functionalClusters)
         )
         .map((res) => {
           return {
@@ -102,14 +111,12 @@ export class DiagramsComponent implements OnDestroy {
   private getNewNodesAndLinks(genes: DiagramGenes[]): void {
     const groupedDisCatLinks: Link[] = [];
     const groupedFuncClustLinks: Link[] = [];
-    const groupedFamOriginLinks: Link[] =[];
-
+    const groupedFamOriginLinks: Link[] = [];
 
     genes.forEach((gene) => {
       const diseaseCatLinks = genes
         .filter(
-          (res) => gene.id !== res.id &&
-            this.groupByDiseaseCategories(gene.diseaseCategories, res.diseaseCategories),
+          (res) => gene.id !== res.id && this.groupByDiseaseCategories(gene.diseaseCategories, res.diseaseCategories)
         )
         .map((res) => {
           return {
@@ -128,13 +135,12 @@ export class DiagramsComponent implements OnDestroy {
 
       const funcClusterLinks = genes
         .filter(
-          (res) => gene.id !== res.id &&
-            this.groupByFunctionalClusters(gene.functionalClusters, res.functionalClusters),
+          (res) => gene.id !== res.id && this.groupByFunctionalClusters(gene.functionalClusters, res.functionalClusters)
         )
         .map((res) => {
           return {
             id: res.id,
-            source: gene.name,
+            source: res.name,
             target: res.name,
             group: 1,
           };
@@ -174,6 +180,7 @@ export class DiagramsComponent implements OnDestroy {
         };
       });
 
+    // TODO: rename Functional clusters to Age-related processes
     const groupedFuncClustNodes = genes
       .filter((gene) => groupedFuncClustLinks.some(({ id }) => gene.id === id))
       .map((res) => {
@@ -209,12 +216,10 @@ export class DiagramsComponent implements OnDestroy {
     const geneKeys = Object.keys(category);
     const resKeys = Object.keys(res);
 
-    return geneKeys.length === resKeys.length &&
-      geneKeys.every((key) => resKeys.includes(key));
+    return geneKeys.length === resKeys.length && geneKeys.every((key) => resKeys.includes(key));
   }
 
   private groupByFunctionalClusters(clusters: FunctionalClusters[], res: FunctionalClusters[]): boolean {
-    return clusters.length === res.length &&
-      clusters.every((cluster) => res.some((res) => res.id === cluster.id));
+    return clusters.length === res.length && clusters.every((cluster) => res.some((res) => res.id === cluster.id));
   }
 }

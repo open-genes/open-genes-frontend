@@ -1,14 +1,13 @@
 <h2 class="directed-graph__title">
-  {{graphTitle}}
+  {{ graphTitle | translate }}
 </h2>
 
 <div [hidden]="isLoading">
   <svg [id]="graphSelector"
        width="100%"
-       height="auto"
        viewBox="0 0 960 500"
        preserveAspectRatio="xMidYMid meet"
-       class="associations">
+       class="directed-graph__body">
   </svg>
 </div>
 
