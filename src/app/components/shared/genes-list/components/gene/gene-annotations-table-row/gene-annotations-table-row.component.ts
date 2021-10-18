@@ -15,8 +15,8 @@ export class GeneAnnotationsTableRowComponent extends GeneTableCardLogic {
     protected _filterService: FilterService,
     protected _favouritesService: FavouritesService,
     protected _snackBar: MatSnackBar,
-    protected _cdRef: ChangeDetectorRef
+    protected cdRef: ChangeDetectorRef
   ) {
-    super(_filterService, _favouritesService, _snackBar, _cdRef);
+    super(_filterService, _favouritesService, _snackBar, cdRef);
   }
 }

@@ -14,18 +14,18 @@ export class SnackBarComponent extends WindowWidth implements OnInit {
     @Inject(MAT_SNACK_BAR_DATA)
     public message,
     private _windowService: WindowService,
-    private _cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef
   ) {
     super(_windowService);
   }
 
   ngOnInit(): void {
     this.initWindowWidth(() => {
-      this._cdRef.markForCheck();
+      this.cdRef.markForCheck();
     });
 
     this.detectWindowWidth(() => {
-      this._cdRef.markForCheck();
+      this.cdRef.markForCheck();
     });
   }
 }
