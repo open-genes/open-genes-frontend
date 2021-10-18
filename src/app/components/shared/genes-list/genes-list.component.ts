@@ -30,16 +30,15 @@ import { Filter } from './services/filter.model';
 export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
+  @Input() isGoTermsMode: boolean;
 
-  @Input() set dataFromSearchBar(value) {
+  @Input() set searchQuery(value: string) {
     if (value) {
-      const { isGoSearchMode, searchQuery } = value;
-      this.isGoTermsMode = isGoSearchMode;
       this.isGoSearchPerformed = false;
-      if (!isGoSearchMode) {
-        this.updateGeneListOnSearch(searchQuery);
+      if (!this.isGoTermsMode) {
+        this.updateGeneListOnSearch(value);
       } else {
-        this.searchGenesByGoTerm(searchQuery);
+        this.searchGenesByGoTerm(value);
       }
     }
   }
@@ -56,7 +55,6 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   public filters: Filter = this.filterService.filters;
   public filterTypes = FilterTypesEnum;
 
-  public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
   public isGoTermsModeError = false;
   public isLoaded = false;
