@@ -17,7 +17,6 @@ import { Subject } from 'rxjs';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { ToMap } from '../../../core/utils/to-map';
 import { SettingsService } from '../../../core/services/settings.service';
-import { SettingsEnum } from '../../../core/models/settings.model';
 
 @Component({
   selector: 'app-search',

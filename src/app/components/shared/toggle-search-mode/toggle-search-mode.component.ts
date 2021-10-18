@@ -7,7 +7,7 @@ import { SettingsService } from '../../../core/services/settings.service';
   templateUrl: './toggle-search-mode.component.html',
   styleUrls: ['./toggle-search-mode.component.scss']
 })
-export class ToggleSearchModeComponent {
+export class ToggleSearchModeComponent implements OnInit {
   public isGoTermsMode = false;
   private settingsKey = SettingsEnum;
 
@@ -17,10 +17,14 @@ export class ToggleSearchModeComponent {
     private settingsService: SettingsService,
   ) {}
 
+  ngOnInit(): void {
+    this.setMode.emit(this.isGoTermsMode);
+    this.settingsService.setSettings(this.settingsKey.isGoSearchMode, this.isGoTermsMode);
+  }
+
   public setGoSearchMode(): void {
     this.isGoTermsMode = !this.isGoTermsMode;
     this.setMode.emit(this.isGoTermsMode);
     this.settingsService.setSettings(this.settingsKey.isGoSearchMode, this.isGoTermsMode);
   }
-
 }

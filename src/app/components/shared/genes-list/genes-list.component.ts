@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
@@ -27,22 +28,11 @@ import { Filter } from './services/filter.model';
   styleUrls: ['./genes-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
+export class GenesListComponent extends ToMap implements OnInit, OnChanges, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
   @Input() isGoTermsMode: boolean;
-
-  @Input() set searchQuery(value: string) {
-    if (value) {
-      this.isGoSearchPerformed = false;
-      if (!this.isGoTermsMode) {
-        this.updateGeneListOnSearch(value);
-      } else {
-        this.searchGenesByGoTerm(value);
-      }
-    }
-  }
-
+  @Input() searchQuery: string;
   @Input() genesList: Genes[];
 
   @Output() loaded = new EventEmitter<boolean>();
@@ -75,6 +65,15 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
   ) {
     super();
+  }
+
+  ngOnChanges(): void {
+    this.isGoSearchPerformed = false;
+    if (!this.isGoTermsMode) {
+      this.updateGeneListOnSearch(this.searchQuery);
+    } else {
+      this.searchGenesByGoTerm(this.searchQuery);
+    }
   }
 
   ngOnInit(): void {
