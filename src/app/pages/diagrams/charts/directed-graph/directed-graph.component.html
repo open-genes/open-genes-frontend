@@ -1,11 +1,17 @@
-<div style="text-align:center">
-  <h1>
-    D3 Force Graph Editor
-  </h1>
+<h2 class="directed-graph__title">
+  {{ graphTitle | translate }}
+</h2>
+
+<div [class.hidden]="isLoading"
+     class="directed-graph__overflow">
+  <svg [id]="graphSelector"
+       width="100%"
+       viewBox="0 0 960 500"
+       preserveAspectRatio="xMidYMid meet"
+       class="directed-graph__body">
+  </svg>
 </div>
 
-<svg  id="graphContainer"
-      width="100%"
-      height="100%"
-      class="associations">
-</svg>
+<ng-container *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</ng-container>

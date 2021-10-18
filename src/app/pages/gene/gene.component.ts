@@ -4,18 +4,19 @@ import { Subject, Subscription } from 'rxjs';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
-import { PageClass } from '../page.class';
+import { ToMap } from '../../core/utils/to-map';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { SettingsService } from '../../core/services/settings.service';
+import { Settings } from '../../core/models/settings.model';
 
 @Component({
   selector: 'app-gene',
   templateUrl: './gene.component.html',
   styleUrls: ['./gene.component.scss'],
 })
-export class GeneComponent extends PageClass implements OnInit, OnDestroy {
-  @ViewChild('headersDescription') headersDescription: TemplateRef<any>;
+export class GeneComponent extends ToMap implements OnInit, OnDestroy {
+  @ViewChild('UiHints') UiHints: TemplateRef<any>;
 
   public gene: any;
   public symbol: string;
@@ -34,18 +35,19 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   public isAnyResearchFilled: boolean;
   public isAnyStrongResearchFilled: boolean;
   public isGeneCandidate = false;
-  public isHeadersDescriptionIcon: boolean;
+  public isUiHintsSettingOn: boolean;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
+  private retrievedSettings: Settings;
 
   constructor(
     public translate: TranslateService,
     private activateRoute: ActivatedRoute,
     private router: Router,
     private _bottomSheet: MatBottomSheet,
-    private _settingsService: SettingsService,
-    private apiService: ApiService,
+    private settingsService: SettingsService,
+    private apiService: ApiService
   ) {
     super();
     this.routeSubscribe = activateRoute.params.subscribe((params) => {
@@ -63,30 +65,22 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.isHeadersDescriptionIcon = this._settingsService.settings.isHeadersDescription;
+    this.retrievedSettings = this.settingsService.getSettings();
+    this.isUiHintsSettingOn = this.retrievedSettings.showUiHints;
 
     this.apiService
       .getGeneByHGNCsymbol(this.symbol)
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((response) => {
+      .subscribe(
+        (response) => {
           this.gene = response;
 
           // Map fields
-          this.geneOntologyProcessMap = this.toMap(
-            this.gene.terms.biological_process,
-          );
-          this.geneOntologyComponentMap = this.toMap(
-            this.gene.terms.cellular_component,
-          );
-          this.geneOntologyActivityMap = this.toMap(
-            this.gene.terms.molecular_activity,
-          );
-          this.expressionMaxValue = GeneComponent.chartMaxValue(
-            this.gene.expression,
-          );
-          this.commentsReferenceLinksMap = this.toMap(
-            this.gene.commentsReferenceLinks,
-          );
+          this.geneOntologyProcessMap = this.toMap(this.gene.terms.biological_process);
+          this.geneOntologyComponentMap = this.toMap(this.gene.terms.cellular_component);
+          this.geneOntologyActivityMap = this.toMap(this.gene.terms.molecular_activity);
+          this.expressionMaxValue = GeneComponent.chartMaxValue(this.gene.expression);
+          this.commentsReferenceLinksMap = this.toMap(this.gene.commentsReferenceLinks);
 
           // Traits to define if content exists
           const researchesLengths = [];
@@ -108,8 +102,7 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
             strongResearches.forEach((value) => {
               strongResearchesLengths.push(Number(Object.entries(value).length));
             });
-            this.isAnyStrongResearchFilled =
-              Math.max(...strongResearchesLengths) !== 0;
+            this.isAnyStrongResearchFilled = Math.max(...strongResearchesLengths) !== 0;
           } else {
             this.isAnyStrongResearchFilled = false;
           }
@@ -119,19 +112,17 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
           } else if (
             (!!this.gene.researches?.proteinRegulatesOtherGenes &&
               this.gene.researches.proteinRegulatesOtherGenes !== 0) ||
-            (!!this.gene.researches?.additionalEvidences &&
-              this.gene.researches.additionalEvidences.length !== 0)
+            (!!this.gene.researches?.additionalEvidences && this.gene.researches.additionalEvidences.length !== 0)
           ) {
             this.isGeneCandidate = true;
           }
 
-          this.isAnyOrtholog =
-            Object.values(this.gene.orthologs).toString() !== ''; // TODO: backend: instead of {"":""} should be an empty array of objects
+          this.isAnyOrtholog = Object.values(this.gene.orthologs).toString() !== ''; // TODO: backend: instead of {"":""} should be an empty array of objects
           this.isHpa = this.gene.human_protein_atlas !== '';
 
           this.isAnyContent =
             this.gene?.commentEvolution ||
-            this.gene?.commentFunction ||
+            this.gene?.proteinDescriptionUniProt ||
             this.gene?.commentCause.length !== 0 ||
             this.gene?.commentAging ||
             this.isAnyResearchFilled ||
@@ -147,15 +138,13 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
           this.isNcbiDescription = this.gene?.descriptionNCBI.length !== 0;
 
           this.isLocationData =
-            this.gene?.band?.length ||
-            this.gene?.locationStart?.length ||
-            this.gene?.locationEnd?.length;
+            this.gene?.band?.length || this.gene?.locationStart?.length || this.gene?.locationEnd?.length;
 
           // TODO: Set properties which values depend on a selected language
         },
         (error: HttpErrorResponse) => {
-          this.router.navigate(['/404']);
-        },
+          void this.router.navigate(['/404']);
+        }
       );
   }
 
@@ -163,14 +152,15 @@ export class GeneComponent extends PageClass implements OnInit, OnDestroy {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
     this.routeSubscribe.unsubscribe();
+    this._bottomSheet.dismiss();
   }
 
-  public onShowHeadersDescription(ev: MouseEvent): void {
-    this._bottomSheet.open(this.headersDescription, {});
+  public onShowUiHints(ev: MouseEvent): void {
+    this._bottomSheet.open(this.UiHints, {});
     ev.preventDefault();
   }
 
-  public onCloseHeadersDescription(): void {
+  public onCloseUiHints(): void {
     this._bottomSheet.dismiss();
   }
 }

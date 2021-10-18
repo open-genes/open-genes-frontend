@@ -21,9 +21,28 @@ import { MaterialModule } from '../../../modules/vendors/material.module';
 import { GenesTableHeaderComponent } from './components/genes-table-header/genes-table-header.component';
 import { AssociatedDiseasesModule } from '../associated-diseases/associated-diseases.module';
 import { AssociatedDiseaseCategoriesModule } from '../associated-disease-categories/associated-disease-categories.module';
+import { NoContentModule } from '../no-content/no-content.module';
+import { IconModule } from '../../ui-components/components/icon/app-icon.module';
+import { GeneCardComponent } from './components/gene/gene-card/gene-card.component';
+import { GeneTableRowComponent } from './components/gene/gene-table-row/gene-table-row.component';
+import { GeneFieldsModalComponent } from './components/gene-fields-modal/gene-fields-modal.component';
+import { FilterPanelComponent } from './components/filter-panel/filter-panel.component';
+import { GeneAnnotationsCardComponent } from './components/gene/gene-annotations-card/gene-annotations-card.component';
+import { GeneAnnotationsTableRowComponent } from './components/gene/gene-annotations-table-row/gene-annotations-table-row.component';
 
 @NgModule({
-  declarations: [GenesListComponent, SearchComponent, GeneMenuComponent, GenesTableHeaderComponent],
+  declarations: [
+    GenesListComponent,
+    SearchComponent,
+    GeneMenuComponent,
+    GenesTableHeaderComponent,
+    GeneCardComponent,
+    GeneTableRowComponent,
+    GeneFieldsModalComponent,
+    FilterPanelComponent,
+    GeneAnnotationsCardComponent,
+    GeneAnnotationsTableRowComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -42,8 +61,10 @@ import { AssociatedDiseaseCategoriesModule } from '../associated-disease-categor
     MaterialModule,
     AssociatedDiseasesModule,
     AssociatedDiseaseCategoriesModule,
+    NoContentModule,
+    IconModule,
   ],
   providers: [WindowService],
-  exports: [GenesListComponent, SearchComponent],
+  exports: [GenesListComponent, SearchComponent, GeneCardComponent, GeneTableRowComponent],
 })
 export class GenesListModule {}

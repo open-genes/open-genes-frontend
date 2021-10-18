@@ -45,7 +45,53 @@ interface I80levelSidebarBlock {
     max: number;
     image: string;
   };
-  items: I80levelResponseArticle[];
+  items: I80levelOneArticle[];
+}
+
+// TODO: describe
+interface IArticleMeta {
+  'article-article:modified_time': {
+    content: string;
+    name: string;
+    type: string;
+    // ...
+  };
+}
+
+interface IArticleContent {
+  content: {
+    isQuote: boolean;
+    text: string;
+  };
+  id: number;
+  type: string;
+}
+
+interface I80levelOneArticle {
+  agings: IArticleTag[];
+  aside: {
+    author: any;
+    date: string;
+    share: number;
+    tags: IArticleTag[];
+  };
+  comments: any;
+  content: IArticleContent[];
+  description: string;
+  diseases: IArticleTag[];
+  genes: IArticleTag[];
+  id: number;
+  image: string;
+  meta: IArticleMeta;
+  promo: {
+    footer: []; // TODO: describe
+    header: [];
+    section: [];
+    sidebar: [];
+  };
+  subtitle: string;
+  title: string;
+  vendors: [];
 }
 
 export interface I80levelArticleQueryParams {

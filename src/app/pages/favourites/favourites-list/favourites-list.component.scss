@@ -1,0 +1,42 @@
+@import "../../styles";
+
+.favourites__top-panel {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+
+  .top-panel__title,
+  .top-panel__buttons {
+    margin-bottom: 8px;
+  }
+
+  .top-panel__title {
+    min-width: 200px;
+    font-size: 16px;
+    color: $color-black;
+    font-weight: $font-weight-medium;
+  }
+
+  .top-panel__buttons {
+    display: flex;
+    flex-direction: row-reverse;
+
+    .buttons__button {
+      &[mat-flat-button] {
+        min-width: 120px;
+
+        @include resolution_smartphone {
+          flex: 1 1;
+        }
+      }
+
+      &--delete {
+        opacity: .5;
+      }
+    }
+
+    .buttons__button + .buttons__button {
+      margin-right: 10px;
+    }
+  }
+}

@@ -13,7 +13,7 @@ interface GeneralGeneInfo {
   diseaseCategories: AssociatedDiseaseCategories;
   diseases: AssociatedDiseases[];
   expressionChange?: number;
-  functionalClusters: string | string[];
+  functionalClusters: FunctionalClusters[];
   terms?: Terms;
   name: string;
   familyOrigin: Origin;
@@ -43,10 +43,9 @@ export interface Gene extends GeneralGeneInfo {
     string: string;
   };
   commentEvolution: string;
-  commentFunction: string;
-  commentAging: string;
   commentEvolutionEN: string;
-  commentFunctionEN: string;
+  proteinDescriptionUniProt: string;
+  proteinDescriptionOpenGenes: string;
   commentAgingEN: string;
   researches: Researches;
   expression: Array<any>;
@@ -56,4 +55,9 @@ export interface Gene extends GeneralGeneInfo {
   commentsReferenceLinks: { [n: number]: string };
   rating: number; // TODO: delete this field
   human_protein_atlas: HumanProteinAtlas | ''; // TODO: ask backend to change field name to camelCase, return null or empty object if no fields
+}
+
+export interface FunctionalClusters {
+  id: number;
+  name: string;
 }

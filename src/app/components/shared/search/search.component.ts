@@ -1,144 +1,139 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
-  OnDestroy,
-  Renderer2,
-  Input,
-  Output,
   Inject,
+  Input,
+  OnDestroy,
   OnInit,
+  Output,
+  Renderer2,
 } from '@angular/core';
 import { Genes } from '../../../core/models';
 import { FormControl, FormGroup } from '@angular/forms';
-import { of, Subject } from 'rxjs';
-import { merge, takeLast } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { ApiService } from '../../../core/services/api/open-genes-api.service';
+import { ToMap } from '../../../core/utils/to-map';
+import { SettingsService } from '../../../core/services/settings.service';
+import { SettingsEnum } from '../../../core/models/settings.model';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent implements OnInit, OnDestroy {
+export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Inject(Document) public document: Document;
-  @Input() dataSource: Genes[];
-  @Output()
-  isGoModeTriggered: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output()
-  isGoSearchTriggered: EventEmitter<string> = new EventEmitter<string>();
-  @Output() dataSourceChange: EventEmitter<Genes[]> = new EventEmitter<
-    Genes[]
-  >();
 
-  public isGoSearchMode = false;
+  @Input() genesList: Genes[];
+
+  @Output() dataFromSearchBar: EventEmitter<any> = new EventEmitter<any>();
+
   public searchedData: Genes[];
   public searchForm: FormGroup;
-  public showResult: boolean;
-  private subscription$ = new Subject();
+  public isGoSearchMode = false;
+  public showSearchResult = false;
+  public biologicalProcess: Map<any, any>;
+  public cellularComponent: Map<any, any>;
+  public molecularActivity: Map<any, any>;
 
-  constructor(private renderer: Renderer2) {
+  private subscription$ = new Subject();
+  private settingsKey = SettingsEnum;
+
+  constructor(
+    private renderer: Renderer2,
+    private apiService: ApiService,
+    private settingsService: SettingsService,
+    private cdRef: ChangeDetectorRef
+  ) {
+    super();
     this.searchForm = new FormGroup({
       searchField: new FormControl(''),
     });
   }
 
+  ngOnDestroy(): void {
+    this.subscription$.next();
+    this.subscription$.complete();
+    this.cancelSearch();
+  }
+
   ngOnInit(): void {
-    this.search();
-  }
+    this.searchForm
+      .get('searchField')
+      .valueChanges.pipe(
+        filter((query: string) => !!query),
+        map((query: string) => query.toLowerCase()),
+        filter((query: string) => {
+          this.showSearchResult = query.length >= 2;
 
-  private updateUIonSearch(): void {
-    this.showResult = true;
-    this.renderer.addClass(
-      document.body,
-      'body--search-on-main-page-is-active'
-    );
-  }
+          if (this.showSearchResult) {
+            this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
+          } else {
+            this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
+          }
 
-  private filterBySubstring(query): Genes[] {
-    const result = this.dataSource.filter((item) => {
-      const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
-      ${item.symbol} ${item.name} ${item.aliases.join(' ')}`;
-      return searchedText.toLowerCase().includes(query);
-    });
+          if (this.showSearchResult) {
+            if (this.isGoSearchMode) {
+              return true;
+            } else {
+              this.autocompleteSearch(query);
+            }
+          }
 
-    return result;
-  }
-
-  public triggerGenesSearch(query): void {
-    this.updateUIonSearch();
-    this.searchedData = this.filterBySubstring(
-      query ? query.toLowerCase() : ''
-    );
-    this.dataSourceChange.emit(this.searchedData);
-  }
-
-  public debounce(callback: any, time: number): () => void {
-    let lastTime = 0;
-    return function () {
-      const now = new Date();
-
-      // first run
-      if (lastTime === 0) {
-        callback();
-      }
-
-      if (now.getTime() - lastTime >= time) {
-        callback();
-        lastTime = now.getTime();
-      }
-    };
-  }
-
-  public triggerGoSearch(query): void {
-    this.updateUIonSearch();
-    this.isGoSearchTriggered.emit(query ? query.toLowerCase() : '');
-    this.dataSourceChange.emit(this.searchedData);
-  }
-
-  public setGoSearchMode(state: boolean): void {
-    this.isGoModeTriggered.emit(state);
-    this.searchForm.reset();
-    this.isGoSearchMode = state;
-  }
-
-  public search(): void {
-    if (this.searchForm.get('searchField').value?.length >= 2) {
-      if (this.isGoSearchMode) {
-        this.subscribeToGo();
-      } else {
-        this.subscribeToGenes();
-      }
-    }
-  }
-
-  public subscribeToGo(): void {
-    of(this.searchForm.get('searchField').value)
-      .pipe(merge())
-      .pipe(takeLast(1))
-      .subscribe((value) => {
-        this.triggerGoSearch(value);
+          return false;
+        }),
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((query: string) => this.apiService.getGoTermMatchByString(query)),
+        takeUntil(this.subscription$)
+      )
+      .subscribe((genes: Genes[]) => {
+        this.searchedData = genes;
+        this.mapTerms();
+        this.cdRef.markForCheck();
       });
   }
 
-  public subscribeToGenes(): void {
-    this.searchForm.get('searchField').valueChanges.subscribe((value) => {
-      this.triggerGenesSearch(value);
+  private mapTerms(): void {
+    for (const item of this.searchedData) {
+      this.biologicalProcess = this.toMap(item.terms?.biological_process);
+      this.cellularComponent = this.toMap(item.terms?.cellular_component);
+      this.molecularActivity = this.toMap(item.terms?.molecular_activity);
+    }
+  }
+
+  private autocompleteSearch(query: string): void {
+    if (query.length !== 0) {
+      this.searchedData = this.genesList.filter((gene) => {
+        const searchedText = [gene.symbol, gene.id, gene?.ensembl, gene.name, ...gene.aliases].join(' ').toLowerCase();
+        return searchedText.includes(query);
+      });
+    }
+  }
+
+  public setGoSearchMode(): void {
+    this.isGoSearchMode = !this.isGoSearchMode;
+    this.settingsService.setSettings(this.settingsKey.isGoSearchMode, this.isGoSearchMode);
+    this.searchedData = [];
+    this.searchForm.get('searchField').setValue('');
+    this.onSearch();
+  }
+
+  public onSearch(): void {
+    const query: string = this.searchForm.get('searchField').value;
+    this.dataFromSearchBar.emit({
+      isGoSearchMode: this.isGoSearchMode,
+      searchQuery: query.toLowerCase(),
     });
   }
 
-  public cancel(event): void {
-    this.showResult = false;
-    this.renderer.removeClass(
-      document.body,
-      'body--search-on-main-page-is-active'
-    );
-    event.stopPropagation();
-  }
-
-  ngOnDestroy(): void {
-    this.renderer.removeClass(
-      document.body,
-      'body--search-on-main-page-is-active'
-    );
-    this.subscription$.unsubscribe();
+  public cancelSearch(event?): void {
+    this.showSearchResult = false;
+    this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
+    event?.stopPropagation();
   }
 }

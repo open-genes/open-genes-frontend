@@ -1,0 +1,101 @@
+<tr class="item">
+  <td class="cell cell&#45;&#45;name">
+    <div class="title overflow">
+      <a [routerLink]="['/gene', item.symbol]" class="link link&#45;&#45;gray">
+        <b>{{ item.symbol }}</b> {{ item.name }}
+      </a>
+    </div>
+  </td>
+
+  <td *ngIf="listSettings.ifShowAge"
+      class="cell cell&#45;&#45;age">
+    <div class="overflow">
+      <app-gene-age [gene]="item"></app-gene-age>
+    </div>
+  </td>
+
+  <td *ngIf="listSettings.ifShowDiseases"
+      class="cell">
+    <div class="overflow">
+      <app-associated-diseases
+        [geneDiseases]="item.diseases"
+        [activeListItem]="filters.byDisease"
+        (clickEvent)="onDisease($event)"
+      ></app-associated-diseases>
+    </div>
+  </td>
+
+  <td *ngIf="listSettings.ifShowDiseaseCategories"
+      class="cell">
+    <div class="overflow">
+      <app-associated-disease-categories
+        [geneDiseaseCategories]="item.diseaseCategories"
+        [activeListItem]="filters.byDiseaseCategories"
+        (clickEvent)="onDiseaseCategories($event)"
+      ></app-associated-disease-categories>
+    </div>
+  </td>
+
+  <td *ngIf="listSettings.ifShowExpression"
+      class="cell cell&#45;&#45;expression">
+    <div class="overflow">
+      <app-tag
+        (click)="onExpressionChange(item.expressionChange)"
+        [isDisabled]="item.expressionChange === 0"
+        [isActive]="
+            filters.byExpressionChange === item.expressionChange &&
+            item.expressionChange !== 0"
+      >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
+      </app-tag>
+    </div>
+  </td>
+
+  <td *ngIf="listSettings.ifShowCriteria"
+      class="cell cell&#45;&#45;criteria">
+    <div class="overflow">
+      <app-selection-criteria
+        [geneCriteria]="item.commentCause"
+        [activeListItem]="filters.bySelectionCriteria"
+        (clickEvent)="onSelectCriteria($event)"
+      ></app-selection-criteria>
+    </div>
+  </td>
+
+  <td *ngIf="listSettings.ifShowMethylation"
+      class="cell cell&#45;&#45;methylation">
+    <div class="overflow">
+      <app-tag
+        *ngIf="item.methylationCorrelation !== ''"
+        (click)="onMethylationChange(item.methylationCorrelation)"
+        [isActive]="filters.byMethylationChange === item.methylationCorrelation"
+      >{{ item.methylationCorrelation }}
+      </app-tag>
+    </div>
+  </td>
+
+
+  <td class="cell cell&#45;&#45;actions">
+    <div class="overflow">
+      <app-gene-menu
+        [gene]="item"
+        [isAdded]="isFaved(item.id)"
+        (unFav)="unFavItem($event)"
+        (fav)="favItem($event)"
+      ></app-gene-menu>
+    </div>
+  </td>
+
+</tr>
+
+<tr class="item">
+  <td *ngIf="listSettings.ifShowClasses"
+      colspan="100%"
+      class="cell cell&#45;&#45;functions">
+    <app-tag
+      *ngFor="let item of item.functionalClusters"
+      (click)="onFuncCluster(item['id'])"
+      [isActive]="filters.byClasses.includes(item['id'])"
+    >{{ item["name"] }}
+    </app-tag>
+  </td>
+</tr>
