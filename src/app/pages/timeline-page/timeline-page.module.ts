@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
-import { TimelimePageComponent } from './timelime-page.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { PipesModule } from '../../modules/pipes/pipes.module';
 import { LocalizedDatePipe } from '../../modules/pipes/general/i18n-date.pipe';
 import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
+import { TimelinePageComponent } from './timeline-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: TimelimePageComponent
+    component: TimelinePageComponent
   }
 ]
 
 @NgModule({
   declarations: [
-    TimelimePageComponent
+    TimelinePageComponent
   ],
   imports: [
     CommonModule,
@@ -28,6 +28,6 @@ const routes: Routes = [
   ]
 })
 
-export class TimelimePageModule {
+export class TimelinePageModule {
 
 }

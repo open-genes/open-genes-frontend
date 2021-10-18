@@ -1,0 +1,30 @@
+<div class="container">
+  <div *ngIf="groups?.length;else loader">
+    <div class="timeline" *ngFor="let gene of groups">
+      <div class="timeline__month">
+        <div class="timeline__month__line"></div>
+        <div class="timeline__month__number">{{ gene.time | slice:0:6}}</div>
+        <div class="timeline__month__line"></div>
+      </div>
+      <div class="timeline__card" *ngFor="let g of gene.genes | slice: 0:counter">
+        <div class="timeline__card__item">
+          {{ g.symbol }}
+        </div>
+        <div class="timeline__card__item link link--gray"  [routerLink]="['/gene/', g.id]">
+          {{ g.name }}
+        </div>
+      </div>
+      <div class="timeline__year">
+        <div class="timeline__year__line"></div>
+        <div class="timeline__year__number">{{ gene.time | slice:7:gene.time?.length }}</div>
+        <div class="timeline__year__line"></div>
+      </div>
+    </div>
+    <div class="show-more">
+      <button (click)="showMore()" class="show-more__button">Показать ещё</button>
+    </div>
+  </div>
+  <ng-template #loader>
+    <app-spinner class="timeline__loader"></app-spinner>
+  </ng-template>
+</div>

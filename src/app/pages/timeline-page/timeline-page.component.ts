@@ -6,11 +6,11 @@ import { Genes } from '../../core/models';
 import { LocalizedDatePipe } from '../../modules/pipes/general/i18n-date.pipe';
 
 @Component({
-  selector: 'app-timelime-page',
-  templateUrl: './timelime-page.component.html',
-  styleUrls: ['./timelime-page.component.scss'],
+  selector: 'app-timeline-page',
+  templateUrl: './timeline-page.component.html',
+  styleUrls: ['./timeline-page.component.scss'],
 })
-export class TimelimePageComponent implements OnInit, OnDestroy {
+export class TimelinePageComponent implements OnInit, OnDestroy {
   public subscription$ = new Subject();
   public genes: Genes[];
   public groups: {
@@ -27,11 +27,6 @@ export class TimelimePageComponent implements OnInit, OnDestroy {
     this.getGenes();
   }
 
-  randomDate() {
-    return Math.random();
-  }
-
-
   public getGenes() {
     this.apiService
       .getGenes()
@@ -41,13 +36,6 @@ export class TimelimePageComponent implements OnInit, OnDestroy {
       .subscribe(
         (genes) => {
           genes.forEach((gene) => {
-            //start Для примера
-            // @ts-ignore
-            genes[10].timestamp = 23452352353;
-            // @ts-ignore
-            genes[12].timestamp = 322342342343;
-            //end
-
             const time = this.localizedDatePipe?.transform(gene.timestamp);
             const group = this.groups.find(g => g.time === time);
             if (group) {

@@ -42,8 +42,8 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/contributors/contributors.module').then((m) => m.ContributorsModule),
   },
   {
-    path: 'timelime',
-    loadChildren: () => import('./pages/timelime-page/timelime-page.module').then((m) => m.TimelimePageModule),
+    path: 'timeline',
+    loadChildren: () => import('./pages/timeline-page/timeline-page.module').then((m) => m.TimelinePageModule),
   },
   {
     path: '404',

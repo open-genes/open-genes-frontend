@@ -1,4 +1,4 @@
-.timelime{
+.timeline{
   &__month{
     margin-top: 25px;
     display: flex;
@@ -63,4 +63,7 @@
 }
 .show-more{
   margin: 20px 0;
+}
+.timeline__loader{
+  margin-top: 25px;
 }
