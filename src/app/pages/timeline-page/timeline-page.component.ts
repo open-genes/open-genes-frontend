@@ -47,7 +47,6 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
               });
             }
           });
-          console.log(this.groups);
         },
         (err) => {
           console.log(err);

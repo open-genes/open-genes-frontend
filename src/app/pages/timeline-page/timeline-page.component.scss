@@ -1,69 +1,67 @@
+@import "../styles";
+
 .timeline{
-  &__month{
+  &__separator {
     margin-top: 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    &__line{
+
+    .separator__line{
       flex: 1;
       height: 1px;
-      background: #C4C4C4;
+      background: $color-borders;
     }
-    &__number{
+
+    .separator__number{
       flex: -1;
       padding: 0 8px;
-      color: #8B8B8B;
+      color: $color-gray-halfing;
       font-style: normal;
     }
-  }
-  &__year{
-    margin-top: 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    &__line{
-      flex: 1;
-      height: 1px;
-      background: #C4C4C4;
-    }
-    &__number{
-      flex: -1;
-      padding: 0 8px;
-      color: #8B8B8B;
-      font-weight: normal;
-    }
-  }
-  &__card{
-    margin-top: 30px;
-    border: 1px solid #DADBE2;
-    border-radius: 4px;
-    padding: 15px 0 15px 10px;
-    display: flex;
-    height: 100%;
-    &__item{
-     &:first-child{
-       font-size: 12px;
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       border: 1px solid #DADBE2;
-       border-radius: 4px;
-       padding-left: 5px;
-       padding-right: 5px;
-     }
-      &:last-child{
-        padding-left: 8px;
-        &:first-letter{
-          text-transform: uppercase;
-        }
+
+    &--year {
+      .separator__line {
+        background: $color-general-dark;
       }
 
+      .separator__number {
+        color: $color-general;
+      }
+    }
+  }
+
+  &__card {
+    @include panel(flex, '15px 10px');
+    margin-top: 10px;
+
+    .card__item {
+     &:first-child{
+       display: flex;
+       justify-content: flex-start;
+       align-items: flex-start;
+
+       .tag {
+         white-space: nowrap;
+         margin-top: 2px;
+       }
+     }
+
+      &:last-child{
+        padding-left: 8px;
+      }
     }
   }
 }
+
 .show-more{
   margin: 20px 0;
 }
+
 .timeline__loader{
   margin-top: 25px;
+}
+
+.timeline__separator--year + .timeline__separator--month {
+  margin-top: 10px;
 }

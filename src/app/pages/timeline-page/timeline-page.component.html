@@ -1,25 +1,30 @@
-<div class="container">
+<div class="container timeline">
   <div *ngIf="groups?.length;else loader">
-    <div class="timeline" *ngFor="let gene of groups">
-      <div class="timeline__month">
-        <div class="timeline__month__line"></div>
-        <div class="timeline__month__number">{{ gene.time | slice:0:6}}</div>
-        <div class="timeline__month__line"></div>
+    <ng-container *ngFor="let group of groups">
+      <div class="timeline__separator timeline__separator--month">
+        <div class="separator__line"></div>
+        <div class="separator__number">{{ group.time | slice:0:6}}</div>
+        <div class="separator__line"></div>
       </div>
-      <div class="timeline__card" *ngFor="let g of gene.genes | slice: 0:counter">
-        <div class="timeline__card__item">
-          {{ g.symbol }}
+
+      <ng-container *ngIf="group.genes.length !== 0">
+        <div class="timeline__card" *ngFor="let gene of group.genes | slice: 0:counter">
+          <div class="card__item">
+            <div class="tag">{{ gene.symbol }}</div>
+          </div>
+          <div class="card__item link link--gray"  [routerLink]="['/gene/', gene.id]">
+            {{ gene.name }}
+          </div>
         </div>
-        <div class="timeline__card__item link link--gray"  [routerLink]="['/gene/', g.id]">
-          {{ g.name }}
-        </div>
+      </ng-container>
+
+      <div class="timeline__separator timeline__separator--year">
+        <div class="separator__line"></div>
+        <div class="separator__number">{{ group.time | slice:7:group.time?.length }}</div>
+        <div class="separator__line"></div>
       </div>
-      <div class="timeline__year">
-        <div class="timeline__year__line"></div>
-        <div class="timeline__year__number">{{ gene.time | slice:7:gene.time?.length }}</div>
-        <div class="timeline__year__line"></div>
-      </div>
-    </div>
+    </ng-container>
+
     <div class="show-more">
       <button (click)="showMore()" class="show-more__button">Показать ещё</button>
     </div>
