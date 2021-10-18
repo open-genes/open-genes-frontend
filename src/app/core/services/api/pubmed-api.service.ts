@@ -22,6 +22,6 @@ export class PubmedApiService {
   public getArticleByDoi(doi: number | string): Observable<any> {
     const doid = '10.1038/ncb1866'
     const params = new HttpParams().set('doi', `${doid}`);
-    return this.http.get(`${this.url}articleData`, { params });
+    return this.http.get(`${this.url}publication/getInfoByDOI`, { params });
   }
 }
