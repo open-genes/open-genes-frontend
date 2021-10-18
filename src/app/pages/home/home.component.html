@@ -86,8 +86,13 @@
             </app-sidebar>
           </div>
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
+            <app-toggle-search-mode
+            (setMode)="setSearchMode($event)"
+            ></app-toggle-search-mode>
+
             <app-search
               [genesList]="genes"
+              [isGoMode]="isGoTermsMode"
               (dataFromSearchBar)="setSearchQuery($event)"
             ></app-search>
 
@@ -95,7 +100,8 @@
               *ngIf="genes"
               [genesList]="genes"
               [isMobile]="isMobile"
-              [dataFromSearchBar]="dataFromSearchBar"
+              [isGoTermsMode]="isGoTermsMode"
+              [searchQuery]="searchQuery"
               [showFiltersPanel]="true"
               (loaded)="setIsGenesListLoaded($event)">
             </app-genes-list>
