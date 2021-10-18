@@ -17,7 +17,7 @@ export class DirectedGraphComponent implements OnChanges {
   public isLoading = true;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['nodes'].firstChange || !changes['links'].firstChange) {
+    if (!changes['nodes']?.firstChange || !changes['links']?.firstChange) {
       this._createForceDirectedGraph(this.nodes, this.links);
     }
   }
