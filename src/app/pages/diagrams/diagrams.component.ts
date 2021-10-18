@@ -140,7 +140,7 @@ export class DiagramsComponent implements OnDestroy {
         .map((res) => {
           return {
             id: res.id,
-            source: res.name,
+            source: gene.name,
             target: res.name,
             group: 1,
           };
