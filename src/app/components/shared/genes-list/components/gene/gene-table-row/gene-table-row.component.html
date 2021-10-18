@@ -33,7 +33,7 @@
       <app-associated-disease-categories
         [geneDiseaseCategories]="item.diseaseCategories"
         [activeListItem]="filters.byDiseaseCategories"
-        (clickEvent)="onApplyFilter(filterTypes.disCategories, $event)"
+        (clickEvent)="onApplyFilter(filterTypes.disease_categories, $event)"
       ></app-associated-disease-categories>
     </div>
   </td>
@@ -42,10 +42,10 @@
       class="cell cell&#45;&#45;expression">
     <div class="overflow">
       <app-tag
-        (click)="onApplyFilter(filterTypes.expressChange, item.expressionChange)"
+        (click)="onApplyFilter(filterTypes.expression_change, item.expressionChange)"
         [isDisabled]="item.expressionChange === 0"
         [isActive]="
-            filters.byExpressionChange === item.expressionChange &&
+            filters.byExpressionChange.includes(item.expressionChange) &&
             item.expressionChange !== 0"
       >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
       </app-tag>
@@ -58,7 +58,7 @@
       <app-selection-criteria
         [geneCriteria]="item.commentCause"
         [activeListItem]="filters.bySelectionCriteria"
-        (clickEvent)="onApplyFilter(filterTypes.selectCriteria, $event)"
+        (clickEvent)="onApplyFilter(filterTypes.selection_criteria, $event)"
       ></app-selection-criteria>
     </div>
   </td>
@@ -68,7 +68,7 @@
     <div class="overflow">
       <app-tag
         *ngIf="item.methylationCorrelation !== ''"
-        (click)="onApplyFilter(filterTypes.methylChange, item.methylationCorrelation)"
+        (click)="onApplyFilter(filterTypes.methylation_change, item.methylationCorrelation)"
         [isActive]="filters.byMethylationChange === item.methylationCorrelation"
       >{{ item.methylationCorrelation }}
       </app-tag>
@@ -95,7 +95,7 @@
       class="cell cell&#45;&#45;functions">
     <app-tag
       *ngFor="let item of item.functionalClusters"
-      (click)="onApplyFilter(filterTypes.funcClusters, item['id'])"
+      (click)="onApplyFilter(filterTypes.functional_clusters, item['id'])"
       [isActive]="filters.byFunctionalClusters.includes(item['id'])"
     >{{ item["name"] }}
     </app-tag>

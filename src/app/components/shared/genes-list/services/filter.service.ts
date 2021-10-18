@@ -42,7 +42,7 @@ export class FilterService {
     byDiseaseCategories: [],
     bySelectionCriteria: [],
     byMethylationChange: '',
-    byExpressionChange: 0,
+    byExpressionChange: [],
     page: 1,
     pagesTotal: 20,
   };
@@ -61,44 +61,49 @@ export class FilterService {
 
   // Filter
   public onApplyFilter(filterType: string, filterValue: number | string): void {
-    if (this.filters[filterType] instanceof Array) {
-      if (!this.filters[filterType].includes(filterValue)) {
-        this.filters[filterType].push(filterValue);
+    if (filterValue) {
+      if (this.filters[filterType] instanceof Array) {
+        if (!this.filters[filterType].includes(filterValue)) {
+          this.filters[filterType].push(filterValue);
+        } else {
+          this.filters[filterType] = this.filters[filterType].filter((item) => item !== filterValue);
+        }
       } else {
-        this.filters[filterType] = this.filters[filterType].filter((item) => item !== filterValue);
+        if (this.filters[filterType] !== filterValue) {
+          this.filters[filterType] = filterValue;
+        } else {
+          this.filters[filterType] = '';
+        }
       }
     } else {
-      if (this.filters[filterType] !== filterValue) {
-        this.filters[filterType] = filterValue;
-      } else {
-        this.filters[filterType] = '';
-      }
+      return;
     }
+
     this.areMoreThan2FiltersApplied();
   }
 
   // Clear
   public clearFilters(filterName?: string): void {
-    const { funcClusters, expressChange, methylChange, disease, disCategories, selectCriteria } = FilterTypesEnum;
+    const { disease, disease_categories, functional_clusters, selection_criteria, expression_change, methylation_change } = FilterTypesEnum;
     if (filterName) {
-      if (filterName === funcClusters) {
+      if (filterName === functional_clusters) {
         this.filters.byFunctionalClusters = [];
-      } else if (filterName === expressChange) {
-        this.filters.byExpressionChange = 0;
-      } else if (filterName == methylChange) {
+      } else if (filterName === expression_change) {
+        this.filters.byExpressionChange = [];
+      } else if (filterName == methylation_change) {
         this.filters.byMethylationChange = '';
       } else if (filterName === disease) {
         this.filters.byDisease = [];
-      } else if (filterName === disCategories) {
+      } else if (filterName === disease_categories) {
         this.filters.byDiseaseCategories = [];
-      } else if (filterName === selectCriteria) {
+      } else if (filterName === selection_criteria) {
         this.filters.bySelectionCriteria = [];
       }
     } else {
       this.sort.byName = false;
       this.sort.byAge = false;
       this.filters.byFunctionalClusters = [];
-      this.filters.byExpressionChange = 0;
+      this.filters.byExpressionChange = [];
       this.filters.byMethylationChange = '';
       this.filters.byDisease = [];
       this.filters.byDiseaseCategories = [];
@@ -107,23 +112,24 @@ export class FilterService {
     this.areMoreThan2FiltersApplied();
   }
 
-  public areMoreThan2FiltersApplied() {
-    // convert filter values to array of numbers
+  public areMoreThan2FiltersApplied(): void {
     const sum = [];
     Object.values(this.filters).forEach((value) => {
       if ((value && value.length) || (typeof value === 'number' && value !== 0)) {
         sum.push(1);
       }
     });
+    this.isClearFiltersBtnShown.next(sum.length >= 4);
 
     this._filterChanges.next(this.filters);
-
-    // when filters change and their sum is more than 2:
-    this.isClearFiltersBtnShown.next(sum.length >= 4);
   }
 
   getFilteredGenes(filterParams: Filter): Observable<Genes[]> {
     let params = new HttpParams().set('lang', this.translate.currentLang);
+    const arrayObjects = []
+    for (const [enumKey, enumValue] of Object.entries(FilterTypesEnum)) {
+      arrayObjects.push({ id: enumValue, name: enumKey });
+    };
     Object.entries(filterParams).forEach(([key, value]) => {
       if (value) {
         if (value instanceof Array) {

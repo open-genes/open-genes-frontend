@@ -52,16 +52,17 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   public genesPerPage = 20;
   public loadedGenesQuantity = this.genesPerPage;
 
-  public asTableRow = true;
   public filterTypes = FilterTypesEnum;
   public filteredGenes: Genes[];
   public sortEnum = SortEnum;
   public sort: Sort = this.filterService.sort;
 
+  public asTableRow = true;
+  public isLoaded = false;
+
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
   public isGoTermsModeError = false;
-  public isLoaded = false;
   public goModeCellData: any;
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
@@ -83,6 +84,17 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.setInitialState();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.next();
+    this.subscription$.complete();
+  }
+
+  /**
+   * Get genes list
+   */
+  setInitialState(): void {
     this.filterService.filterResult
       .pipe(
         takeUntil(this.subscription$),
@@ -100,22 +112,21 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
           this.cdRef.markForCheck();
         }
       );
-  }
-
-  ngOnDestroy(): void {
-    this.subscription$.next();
-    this.subscription$.complete();
-  }
-
-  /**
-   * HTTP
-   */
-  setInitialState(): void {
     this.searchedData = [...this.genesList];
     this.downloadSearch(this.searchedData);
     this.loaded.emit(true);
-    this.cdRef.markForCheck();
   }
+
+  /**
+   * Load next 20 genes
+   */
+  public loadMoreGenes(): void {
+    if (this.searchedData?.length >= this.loadedGenesQuantity) {
+      this.loadedGenesQuantity += this.genesPerPage;
+    }
+    this.filterService.filters.page++;
+  }
+
   /**
    * Update already loaded and then filtered data on typing
    */
@@ -125,6 +136,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
       ${item.symbol} ${item.name} ${item.aliases.join(' ')}`;
       return searchedText.toLowerCase().includes(query);
     });
+
     this.snackBar.openFromComponent(SnackBarComponent, {
       data: {
         title: 'items_found',
@@ -132,13 +144,6 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
       },
       duration: 600,
     });
-  }
-
-  public loadMoreGenes(): void {
-    if (this.searchedData?.length >= this.loadedGenesQuantity) {
-      this.loadedGenesQuantity += this.genesPerPage;
-    }
-    this.filterService.filters.page++;
   }
 
   // TODO: this function isn't pure
@@ -191,14 +196,14 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   /**
-   * View
+   * Change view
    */
   public toggleGenesView(evt: boolean) {
     this.asTableRow = evt;
   }
 
   /**
-   * List for download
+   * Set genes list for download (JSON or CSV file)
    */
   private downloadSearch(data: any) {
     this.downloadJsonLink = this.fileExportService.downloadJson(data);
@@ -213,7 +218,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   /**
-   * Sorting
+   * Sorting genes list
    */
   public sortBy(evt: string): void {
     // TODO: use enum types here

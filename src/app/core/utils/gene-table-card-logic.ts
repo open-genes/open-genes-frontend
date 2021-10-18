@@ -35,19 +35,16 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.updateCurrentFields();
-    this.filterService.filterResult.subscribe(res => console.log(res));
   }
 
   ngOnDestroy(): void {
     this.subscription$.next();
     this.subscription$.complete();
-
   }
 
   /**
    * Update list view on card or table
    */
-
   protected updateCurrentFields() {
     this.filterService.currentFields
       .pipe(
