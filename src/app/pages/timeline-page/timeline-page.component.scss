@@ -1,19 +1,19 @@
 @import "../styles";
 
-.timeline{
+.timeline {
   &__separator {
     margin-top: 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    .separator__line{
+    .separator__line {
       flex: 1;
       height: 1px;
       background: $color-borders;
     }
 
-    .separator__number{
+    .separator__number {
       flex: -1;
       padding: 0 8px;
       color: $color-gray-halfing;
@@ -32,33 +32,33 @@
   }
 
   &__card {
-    @include panel(flex, '15px 10px');
+    @include panel(flex, "15px 10px");
     margin-top: 10px;
 
     .card__item {
-     &:first-child{
-       display: flex;
-       justify-content: flex-start;
-       align-items: flex-start;
+      &:first-child {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
 
-       .tag {
-         white-space: nowrap;
-         margin-top: 2px;
-       }
-     }
+        .tag {
+          white-space: nowrap;
+          margin-top: 2px;
+        }
+      }
 
-      &:last-child{
+      &:last-child {
         padding-left: 8px;
       }
     }
   }
 }
 
-.show-more{
+.show-more {
   margin: 20px 0;
 }
 
-.timeline__loader{
+.timeline__loader {
   margin-top: 25px;
 }
 

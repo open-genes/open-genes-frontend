@@ -9,25 +9,13 @@ import { TimelinePageComponent } from './timeline-page.component';
 const routes: Routes = [
   {
     path: '',
-    component: TimelinePageComponent
-  }
-]
+    component: TimelinePageComponent,
+  },
+];
 
 @NgModule({
-  declarations: [
-    TimelinePageComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    PipesModule,
-    UiComponentsModule
-  ],
-  providers: [
-    LocalizedDatePipe,
-  ]
+  declarations: [TimelinePageComponent],
+  imports: [CommonModule, RouterModule.forChild(routes), PipesModule, UiComponentsModule],
+  providers: [LocalizedDatePipe],
 })
-
-export class TimelinePageModule {
-
-}
+export class TimelinePageModule {}

@@ -19,9 +19,7 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
   }[] = [];
   counter = 20;
 
-  constructor(private apiService: ApiService,
-              private localizedDatePipe: LocalizedDatePipe) {
-  }
+  constructor(private apiService: ApiService, private localizedDatePipe: LocalizedDatePipe) {}
 
   ngOnInit(): void {
     this.getGenes();
@@ -30,14 +28,12 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
   public getGenes() {
     this.apiService
       .getGenes()
-      .pipe(
-        takeUntil(this.subscription$),
-      )
+      .pipe(takeUntil(this.subscription$))
       .subscribe(
         (genes) => {
           genes.forEach((gene) => {
             const time = this.localizedDatePipe?.transform(gene.timestamp);
-            const group = this.groups.find(g => g.time === time);
+            const group = this.groups.find((g) => g.time === time);
             if (group) {
               group.genes.push(gene);
             } else {
@@ -50,7 +46,7 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
         },
         (err) => {
           console.log(err);
-        },
+        }
       );
   }
 
