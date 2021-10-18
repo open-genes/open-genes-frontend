@@ -22,11 +22,11 @@
 
     &--year {
       .separator__line {
-        background: $color-general-dark;
+        background: $color-general;
       }
 
       .separator__number {
-        color: $color-general;
+        color: $color-general-dark;
       }
     }
   }
@@ -38,17 +38,11 @@
     .card__item {
       &:first-child {
         display: flex;
+        flex: 0 2 auto;
+        flex-flow: row wrap;
         justify-content: flex-start;
         align-items: flex-start;
-
-        .tag {
-          white-space: nowrap;
-          margin-top: 2px;
-        }
-      }
-
-      &:last-child {
-        padding-left: 8px;
+        white-space: nowrap;
       }
     }
   }

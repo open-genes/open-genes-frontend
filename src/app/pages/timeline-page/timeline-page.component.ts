@@ -13,11 +13,12 @@ import { LocalizedDatePipe } from '../../modules/pipes/general/i18n-date.pipe';
 export class TimelinePageComponent implements OnInit, OnDestroy {
   public subscription$ = new Subject();
   public genes: Genes[];
+  public showMoreButtonVisible = true;
   public groups: {
     time: string;
     genes: Genes[];
   }[] = [];
-  counter = 20;
+  public counter = 20;
 
   constructor(private apiService: ApiService, private localizedDatePipe: LocalizedDatePipe) {}
 
@@ -56,5 +57,17 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
 
   showMore() {
     this.counter += 20;
+
+    if (this.groups) {
+      const genesQuantity = this.groups.reduce((previous, current) => {
+        const total = previous + current.genes.length;
+        console.log(this.counter, total);
+        return Math.floor(total);
+      }, 0);
+
+      if (genesQuantity >= Number(this.counter)) {
+        this.showMoreButtonVisible = false;
+      }
+    }
   }
 }

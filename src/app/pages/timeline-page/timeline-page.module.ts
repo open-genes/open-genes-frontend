@@ -5,6 +5,7 @@ import { PipesModule } from '../../modules/pipes/pipes.module';
 import { LocalizedDatePipe } from '../../modules/pipes/general/i18n-date.pipe';
 import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
 import { TimelinePageComponent } from './timeline-page.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -15,7 +16,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [TimelinePageComponent],
-  imports: [CommonModule, RouterModule.forChild(routes), PipesModule, UiComponentsModule],
+  imports: [CommonModule, RouterModule.forChild(routes), PipesModule, UiComponentsModule, TranslateModule],
   providers: [LocalizedDatePipe],
 })
 export class TimelinePageModule {}
