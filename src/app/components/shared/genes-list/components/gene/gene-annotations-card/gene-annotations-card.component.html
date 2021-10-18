@@ -37,7 +37,7 @@
     <app-associated-diseases
       [geneDiseases]="item.diseases"
       [activeListItem]="filters.byDisease"
-      (clickEvent)="onDisease($event)"
+      (clickEvent)="onApplyFilter(filterTypes.disease, $event)"
     ></app-associated-diseases>
   </div>
 
@@ -46,7 +46,7 @@
     <app-associated-disease-categories
       [geneDiseaseCategories]="item.diseaseCategories"
       [activeListItem]="filters.byDiseaseCategories"
-      (clickEvent)="onDiseaseCategories($event)"
+      (clickEvent)="onApplyFilter(filterTypes.disCategories, $event)"
     ></app-associated-disease-categories>
   </div>
 
@@ -55,7 +55,7 @@
     <app-selection-criteria
       [geneCriteria]="item.commentCause"
       [activeListItem]="filters.bySelectionCriteria"
-      (clickEvent)="onSelectCriteria($event)"
+      (clickEvent)="onApplyFilter(filterTypes.selectCriteria, $event)"
     ></app-selection-criteria>
   </div>
 </div>
@@ -105,7 +105,7 @@
 
     <app-tag
       *ngIf="item.methylationCorrelation !== ''"
-      (click)="onMethylationChange(item.methylationCorrelation)"
+      (click)="onApplyFilter(filterTypes.methylChange, item.methylationCorrelation)"
       [isActive]="filters.byMethylationChange === item.methylationCorrelation"
     >
       {{ item.methylationCorrelation }}

@@ -19,7 +19,7 @@
       <app-associated-diseases
         [geneDiseases]="item.diseases"
         [activeListItem]="filters.byDisease"
-        (clickEvent)="onDisease($event)"
+        (clickEvent)="onApplyFilter(filterTypes.disease, $event)"
       ></app-associated-diseases>
     </div>
   </td>
@@ -29,7 +29,7 @@
       <app-associated-disease-categories
         [geneDiseaseCategories]="item.diseaseCategories"
         [activeListItem]="filters.byDiseaseCategories"
-        (clickEvent)="onDiseaseCategories($event)"
+        (clickEvent)="onApplyFilter(filterTypes.disCategories, $event)"
       ></app-associated-disease-categories>
     </div>
   </td>

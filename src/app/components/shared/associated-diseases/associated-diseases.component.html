@@ -1,12 +1,13 @@
 <ng-container *ngIf="mappedDiseases && listLength !== 0; else noDisease">
+
   <ng-container *ngIf="!isAccordion; else accordion">
     <ul
-      *ngFor="let disease of mappedDiseases"
-      class="list list--bulletted"
-    >
-      <li [class.__active]="activeListItem === disease"
-          (click)="emitOnClick(disease)">
-        {{ disease }}
+      *ngFor="let disease of mappedDiseases | keyvalue"
+      class="list list--bulletted">
+
+      <li [class.__active]="activeListItem.includes(disease.key)"
+          (click)="emitOnClick(disease.key)">
+        {{ disease.value['name'] }}
       </li>
     </ul>
   </ng-container>
@@ -16,32 +17,36 @@
       class="diseases-accordion"
       [clickable]="false"
       [class.diseases-accordion--open]="isAccordionOpen"
-      [isOpen]="isAccordionOpen"
-    >
+      [isOpen]="isAccordionOpen">
+
       <div class="diseases-accordion__header" accordion-header>
         <ul class="list list--bulletted">
-          <li *ngFor="let disease of mappedDiseases | slice: 0:maxItemsToShow"
-              [class.__active]="activeListItem === disease"
+          <li *ngFor="let disease of mappedDiseases | keyvalue | slice: 0:maxItemsToShow"
+              [class.__active]="activeListItem.includes(disease.key)"
               (click)="emitOnClick(disease)">
-            {{ disease }}
+            {{ disease.value['name'] }}
           </li>
         </ul>
+
         <button (click)="toggleAccordion()"
                 class="diseases-accordion__arrow">
           <span class="fa far fa-chevron-down"></span>
         </button>
       </div>
+
       <div class="diseases-accordion__body" accordion-body>
         <ul class="list list--bulletted">
-          <li *ngFor="let disease of mappedDiseases | slice: maxItemsToShow"
-              [class.__active]="activeListItem === disease"
+          <li *ngFor="let disease of mappedDiseases | keyvalue | slice: maxItemsToShow"
+              [class.__active]="activeListItem.includes(disease.key)"
               (click)="emitOnClick(disease)">
-            {{ disease }}
+            {{ disease.value['name'] }}
           </li>
         </ul>
       </div>
+
     </app-accordion>
   </ng-template>
+
 </ng-container>
 
 <ng-template #noDisease>
@@ -49,3 +54,8 @@
     {{ 'no_diseases' | translate }}
   </div>
 </ng-template>
+
+
+
+
+

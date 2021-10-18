@@ -54,10 +54,9 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
 
   public asTableRow = true;
   public filterTypes = FilterTypesEnum;
-  public filters: Filter = this.filterService.filters;
+  public filteredGenes: Genes[];
   public sortEnum = SortEnum;
   public sort: Sort = this.filterService.sort;
-
 
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
@@ -77,13 +76,30 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
     private filterService: FilterService,
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.setInitialState();
+    this.filterService.filterResult
+      .pipe(
+        takeUntil(this.subscription$),
+        switchMap((filters: Filter) => {
+          return this.filterService.getFilteredGenes(filters);
+        })
+      )
+      .subscribe(
+        (filteredData) => {
+          this.filteredGenes = filteredData;
+          this.cdRef.markForCheck();
+        },
+        (error) => {
+          console.log(error);
+          this.cdRef.markForCheck();
+        }
+      );
   }
 
   ngOnDestroy(): void {
@@ -100,120 +116,6 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
     this.loaded.emit(true);
     this.cdRef.markForCheck();
   }
-
-  public filterByFuncClusters(id: number): void {
-    this.filterService.filterByFuncClusters(id);
-    this.filterService
-      .getByFuncClusters()
-      .pipe(
-        switchMap((list) => {
-          if (list.length !== 0) {
-            return this.apiService.getGenesByFunctionalClusters(list);
-          }
-        }),
-        takeUntil(this.subscription$),
-      )
-      .subscribe(
-        (genes) => {
-          this.searchedData = genes;
-          this.downloadSearch(this.searchedData);
-          this.cdRef.markForCheck();
-        },
-        (error) => this.errorLogger(this, error)
-      );
-  }
-
-  public filterByExpressionChange(id: number): void {
-    this.filterService.filterByExpressionChange(id);
-    this.filterService
-      .getByExpressionChange()
-      .pipe(
-        switchMap((expression) => {
-          if (expression) {
-            return this.apiService.getGenesByExpressionChange(expression);
-          }
-        }),
-        takeUntil(this.subscription$),
-      )
-      .subscribe(
-        (genes) => {
-          this.searchedData = genes;
-          this.downloadSearch(this.searchedData);
-          this.cdRef.markForCheck();
-        },
-        (error) => this.errorLogger(this, error)
-      );
-  }
-
-  public filterBySelectionCriteria(id: string): void {
-    this.filterService.filterBySelectionCriteria(id);
-    // TODO: DRY
-    if (id) {
-      const check = [];
-      this.searchedData = this.searchedData.filter((gene) => {
-        for (const [key, value] of Object.entries(gene.commentCause)) {
-          if (id === key) {
-            check.push(id);
-          }
-          if (check.length !== 0) {
-            return id === key;
-          }
-        }
-      });
-    }
-    this.downloadSearch(this.searchedData);
-    this.cdRef.markForCheck();
-  }
-
-  public filterByMethylationChange(correlation: string): void {
-    this.filterService.filterByMethylationChange(correlation);
-    if (name) {
-      const check = [];
-      this.searchedData = this.searchedData.filter((gene) => {
-        Object.values(gene.methylationCorrelation).forEach((item) => {
-          if (correlation === item) {
-            check.push(correlation);
-          }
-          if (check.length !== 0) {
-            return correlation === item;
-          }
-        });
-      });
-    }
-    this.downloadSearch(this.searchedData);
-    this.cdRef.markForCheck();
-  }
-
-  public filterByDisease(name: string): void {
-    this.filterService.filterByDisease(name);
-    if (name) {
-      const check = [];
-      this.searchedData = this.searchedData.filter((gene) => {
-        for (const [key, value] of Object.entries(gene.diseases)) {
-          if (name === String(value['name'])) {
-            check.push(name);
-          }
-          if (check.length !== 0) {
-            return name === String(value['name']);
-          }
-        }
-      });
-    }
-    this.downloadSearch(this.searchedData);
-    this.cdRef.markForCheck();
-  }
-
-  public filterByDiseaseCategories(category: string): void {
-    this.filterService.filterByDiseaseCategories(category);
-    if (category) {
-      this.searchedData = this.searchedData.filter((gene) => {
-        for (const [key, value] of Object.entries(gene.diseaseCategories)) {
-          return category === key;
-        }
-      });
-    }
-  }
-
   /**
    * Update already loaded and then filtered data on typing
    */
@@ -236,6 +138,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
     if (this.searchedData?.length >= this.loadedGenesQuantity) {
       this.loadedGenesQuantity += this.genesPerPage;
     }
+    this.filterService.filters.page++;
   }
 
   // TODO: this function isn't pure
@@ -278,7 +181,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
 
             this.cdRef.markForCheck();
           },
-          (error) => this.errorLogger(this, error),
+          (error) => this.errorLogger(this, error)
         );
     } else {
       this.isGoSearchPerformed = false;
