@@ -1,0 +1,61 @@
+@import "../styles";
+
+.timeline {
+  &__separator {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .separator__line {
+      flex: 1;
+      height: 1px;
+      background: $color-borders;
+    }
+
+    .separator__number {
+      flex: -1;
+      padding: 0 8px;
+      color: $color-gray-halfing;
+      font-style: normal;
+    }
+
+    &--year {
+      .separator__line {
+        background: $color-general;
+      }
+
+      .separator__number {
+        color: $color-general-dark;
+      }
+    }
+  }
+
+  &__card {
+    @include panel(flex, "15px 10px");
+    margin-top: 10px;
+
+    .card__item {
+      &:first-child {
+        display: flex;
+        flex: 0 2 auto;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+.show-more {
+  margin: 20px 0;
+}
+
+.timeline__loader {
+  margin-top: 25px;
+}
+
+.timeline__separator--year + .timeline__separator--month {
+  margin-top: 10px;
+}
