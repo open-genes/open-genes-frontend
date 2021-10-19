@@ -1,0 +1,25 @@
+@import "../styles";
+
+.download-page {
+  &__variants {
+    .variant {
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      align-content: flex-start;
+      margin-top: 20px;
+
+      p {
+        color: $color-gray;
+        margin-top: 1em;
+      }
+
+      .btn {
+        margin-top: 10px;
+        min-width: 120px;
+      }
+    }
+  }
+}
