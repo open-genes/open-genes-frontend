@@ -1,0 +1,52 @@
+<div class="page text-page download-page">
+  <div class="page__inner __pb-60">
+    <div class="text-page__header wrapper">
+      <div class="container-fluid">
+        <div class="row no-gutters">
+          <div class="col col-12">
+            <div class="page__title">
+              <h1>{{ "download_page_title" | translate }}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container download-page__variants">
+      <div class="row">
+        <section class="col-xs-12 col-md-4 variant">
+          <h3>{{ "download_page_variant_1_title" | translate }}</h3>
+          <p>
+            {{ "download_page_variant_1_description" | translate }}
+          </p>
+          <a href="/open_genes_sql_dump.zip"
+             target="_blank"
+             class="btn btn--fill btn--big btn--purple"
+            ><span class="fa far fa-download"></span>&nbsp;{{ "download_page_variant_button_download" | translate }}</a
+          >
+        </section>
+        <section class="col-xs-12 col-md-4 variant">
+          <h3>{{ "download_page_variant_2_title" | translate }}</h3>
+          <p>
+            {{ "download_page_variant_2_description" | translate }}
+          </p>
+          <a href="/openapi/docs"
+             target="_blank"
+             class="btn btn--big btn--purple"
+            >{{ "download_page_variant_button_go" | translate }}&nbsp;<span class="fa far fa-external-link"></span
+          ></a>
+        </section>
+        <section class="col-xs-12 col-md-4 variant">
+          <h3>{{ "download_page_variant_3_title" | translate }}</h3>
+          <p>
+            {{ "download_page_variant_3_description" | translate }}
+          </p>
+          <a routerLink="/favourites"
+             class="btn btn--big btn--purple"
+            >{{ "download_page_variant_button_go" | translate }}
+          </a>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
