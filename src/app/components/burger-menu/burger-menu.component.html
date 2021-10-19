@@ -66,6 +66,13 @@
         </a>
       </li>
       <li class="menu__link">
+        <a [routerLink]="'/download'"
+           routerLinkActive="current">
+          <span class="fa far fa-download">
+          </span> {{ 'header_menu_download' | translate }}
+        </a>
+      </li>
+      <li class="menu__link">
         <a [routerLink]="'/settings'"
            routerLinkActive="current"
         >

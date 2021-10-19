@@ -105,8 +105,8 @@
 
     // It's made in order to not affect styled links.
     // Links in the text received from endpoint don't have classes
-    & > a,
-    & > p a {
+    & > a:not(.btn),
+    & > p a:not(.btn) {
       font-weight: $font-weight-medium;
       color: $color-general;
 
