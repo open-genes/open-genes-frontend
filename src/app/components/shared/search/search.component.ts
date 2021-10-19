@@ -32,7 +32,9 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
 
   @Output() dataFromSearchBar: EventEmitter<any> = new EventEmitter<any>();
 
-  public searchedData: Genes[];
+  public searchedData: Genes[] = [];
+  public foundGenes: string[];
+  public notFoundGenes: string[] = [];
   public searchForm: FormGroup;
   public isGoSearchMode = false;
   public showSearchResult = false;
@@ -62,9 +64,8 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.searchForm
-      .get('searchField')
-      .valueChanges.pipe(
+    this.searchForm.get('searchField').valueChanges
+      .pipe(
         filter((query: string) => !!query),
         map((query: string) => query.toLowerCase()),
         filter((query: string) => {
@@ -107,12 +108,26 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   private autocompleteSearch(query: string): void {
-    if (query.length !== 0) {
-      this.searchedData = this.genesList.filter((gene) => {
-        const searchedText = [gene.symbol, gene.id, gene?.ensembl, gene.name, ...gene.aliases].join(' ').toLowerCase();
-        return searchedText.includes(query);
+    this.searchedData = [];
+    this.notFoundGenes = [];
+    const arrayOfWords = query
+      .toLowerCase()
+      .split(',')
+      .map((res) => res.trim())
+      .filter((res) => res);
+
+    const uniqWords = [...new Set(arrayOfWords)];
+
+    if (uniqWords.length !== 0) {
+      this.foundGenes = uniqWords.filter((symbol) => {
+        const foundGene = this.genesList.find((gene) => symbol === gene.symbol.toLowerCase());
+
+        foundGene ? this.searchedData.push(foundGene) : this.notFoundGenes.push(symbol);
+
+        return !!foundGene;
       });
     }
+    console.log(this.foundGenes);
   }
 
   public setGoSearchMode(): void {

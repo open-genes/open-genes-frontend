@@ -187,6 +187,19 @@ $mobile-container-vertical-padding: 5px;
     }
   }
 
+  &__genes-info {
+    display: flex;
+    justify-content: center;
+
+    .genes-info__found {
+      margin-right: 20px;
+    }
+
+    .genes-info__not-found {
+
+    }
+  }
+
   &__autocomplete-item {
     display: block;
     width: 100%;

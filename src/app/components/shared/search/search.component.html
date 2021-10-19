@@ -64,6 +64,22 @@
 
     <div class="search-form__autocomplete-list"
          *ngIf="showSearchResult">
+
+      <div class="search-form__genes-info">
+        <div class="genes-info__found" *ngIf="foundGenes.length">
+          Найдено: {{foundGenes.length}}
+          (<ng-container *ngFor="let geneName of foundGenes; let last = last">
+            {{geneName}} <span *ngIf="foundGenes.length > 1 && !last">, </span>
+          </ng-container>)
+        </div>
+        <div class="genes-info__not-found" *ngIf="notFoundGenes.length">
+          Не найдено: {{notFoundGenes.length}}
+          (<ng-container *ngFor="let geneName of notFoundGenes;  let last = last">
+            {{geneName}} <span *ngIf="notFoundGenes.length > 1 && !last">, </span>
+          </ng-container>)
+        </div>
+      </div>
+
       <ng-container *ngFor="let gene of searchedData; let i = index">
         <button
           *ngIf="i < 5"
