@@ -1,13 +1,11 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Researches } from '../../../core/models/openGenesApi/researches.model';
 import { MatDialog } from '@angular/material/dialog';
+import { PubmedApiService } from '../../../core/services/api/pubmed-api.service';
+import { Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
+import { ArticleInfo } from '../../../core/models/openGenesApi/article-info';
 
 @Component({
   selector: 'app-researches',
@@ -25,26 +23,29 @@ export class ResearchesComponent implements OnInit {
   public isGeneAssociatedWithLongevityEffects: boolean;
   public isAdditionalEvidences: boolean;
 
-  @ViewChild('commentModalBody') dialogRef: TemplateRef<any>;
+  private subscription$ = new Subject();
 
-  constructor(public translate: TranslateService, private dialog: MatDialog) {}
+  @ViewChild('commentModalBody') dialogRef: TemplateRef<any>;
+  @ViewChild('articleInfoModal') articleRef: TemplateRef<any>;
+
+  constructor(
+    private pubmedApiService: PubmedApiService,
+    public translate: TranslateService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
-    this.isIncreaseLifespan =
-      this.researches?.increaseLifespan &&
-      this.researches?.increaseLifespan.length !== 0;
+    this.isIncreaseLifespan = this.researches?.increaseLifespan && this.researches?.increaseLifespan.length !== 0;
 
     this.isAgeRelatedChanges =
-      this.researches?.ageRelatedChangesOfGene &&
-      this.researches?.ageRelatedChangesOfGene.length !== 0;
+      this.researches?.ageRelatedChangesOfGene && this.researches?.ageRelatedChangesOfGene.length !== 0;
 
     this.isInterventionAffectsAgingProcess =
       this.researches?.interventionToGeneImprovesVitalProcesses &&
       this.researches?.interventionToGeneImprovesVitalProcesses.length !== 0;
 
     this.isProteinRegulatesOtherGenes =
-      this.researches?.proteinRegulatesOtherGenes &&
-      this.researches?.proteinRegulatesOtherGenes.length !== 0;
+      this.researches?.proteinRegulatesOtherGenes && this.researches?.proteinRegulatesOtherGenes.length !== 0;
 
     this.isGeneAssociatedWithProgeriaSyndromes =
       this.researches?.geneAssociatedWithProgeriaSyndromes &&
@@ -55,8 +56,7 @@ export class ResearchesComponent implements OnInit {
       this.researches?.geneAssociatedWithLongevityEffects.length !== 0;
 
     this.isAdditionalEvidences =
-      this.researches?.additionalEvidences &&
-      this.researches?.additionalEvidences.length !== 0;
+      this.researches?.additionalEvidences && this.researches?.additionalEvidences.length !== 0;
   }
 
   public openCommentModal(data): void {
@@ -66,6 +66,36 @@ export class ResearchesComponent implements OnInit {
       minWidth: '320px',
       maxWidth: '768px',
     });
+  }
+
+  public openArticleInfoModal(doi): void {
+    this.pubmedApiService.getArticleByDoi(doi)
+      .pipe(
+        map((res) => {
+          const articleInfo: ArticleInfo = {
+            title: res.bibliographic_data.artifact_title,
+            publisher: res.bibliographic_data.publisher,
+            publicationYear: res.bibliographic_data.publication_year,
+            citation: res.sort_count.citation.total,
+          }
+          return articleInfo;
+        }),
+        takeUntil(this.subscription$)
+      )
+      .subscribe((res) => {
+        this.dialog.open(this.articleRef, {
+          data: res,
+          panelClass: 'comment-modal',
+          minWidth: '320px',
+          maxWidth: '768px',
+        });
+      });
+  }
+  public closeArticleInfoModal(): void {
+    this.subscription$.next();
+    this.subscription$.complete();
+    this.dialog.closeAll();
+
   }
   public closeCommentModal(): void {
     this.dialog.closeAll();

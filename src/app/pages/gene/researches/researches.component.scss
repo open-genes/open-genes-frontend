@@ -78,7 +78,7 @@ $research-tables: (
   }
 }
 
-.comment-modal {
+.comment-modal, .article-info-modal {
   &__header,
   &__cover
   &__body {
@@ -107,5 +107,12 @@ $research-tables: (
 
   &__body {
     line-height: $font-line-height;
+  }
+}
+
+.article-info-modal {
+  &__body {
+    display: flex;
+    flex-direction: column;
   }
 }
