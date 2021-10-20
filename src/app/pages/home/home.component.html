@@ -92,7 +92,7 @@
 
             <app-search
               [genesList]="genes"
-              [isGoMode]="dataFromSearchBar.isGoTermsMode"
+              [isGoMode]="isGoTermsMode"
               (dataFromSearchBar)="setSearchQuery($event)"
             ></app-search>
 
@@ -100,7 +100,8 @@
               *ngIf="genes"
               [genesList]="genes"
               [isMobile]="isMobile"
-              [dataFromSearchBar]="dataFromSearchBar"
+              [isGoMode]="isGoTermsMode"
+              [searchQuery]="searchQuery"
               [showFiltersPanel]="true"
               (loaded)="setIsGenesListLoaded($event)">
             </app-genes-list>
