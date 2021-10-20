@@ -54,17 +54,17 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchForm = new FormGroup({
       searchField: new FormControl(''),
     });
+    this.setInitialSettings();
+  }
+
+  ngOnInit(): void {
+    this.subsToSearchFieldChanges();
   }
 
   ngOnDestroy(): void {
     this.subscription$.next();
     this.subscription$.complete();
     this.cancelSearch();
-  }
-
-  ngOnInit(): void {
-    this.setInitialSettings();
-    this.subsToSearchFieldChanges();
   }
 
   private setInitialSettings(): void {

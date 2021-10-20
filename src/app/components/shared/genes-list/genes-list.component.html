@@ -98,7 +98,7 @@
 <!-- No content error message -->
 <section
   *ngIf="
-    (isGoTermsMode && isGoSearchPerformed && !isLoaded && searchedData?.length == 0) ||
+    (isGoTermsMode && isGoSearchPerformed && !isLoading && searchedData?.length == 0) ||
     (!isGoTermsMode && searchedData?.length == 0)">
   <app-no-content
     [title]="'nothing_found'">
@@ -114,7 +114,7 @@
 </section>
 
 <!-- GO search mode start message -->
-<section *ngIf="isGoTermsMode && !isGoSearchPerformed && !isLoaded">
+<section *ngIf="isGoTermsMode && !isGoSearchPerformed && !isLoading">
   <app-no-content
     [title]="'go_results_start_title'">
     <ng-container icon>
@@ -131,7 +131,7 @@
   </app-no-content>
 </section>
 
-<ng-container *ngIf="isGoTermsMode && isLoaded">
+<ng-container *ngIf="isGoTermsMode && isLoading">
   <app-spinner></app-spinner>
 </ng-container>
 
