@@ -89,7 +89,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   public setSearchQuery(event): void {
-    debugger;
     this.searchQuery = event;
   }
 
