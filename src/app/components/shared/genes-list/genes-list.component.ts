@@ -20,6 +20,8 @@ import { FileExportService } from '../../../core/services/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
 import { Filter } from './services/filter.model';
+import { SettingsService } from '../../../core/services/settings.service';
+import { Settings } from '../../../core/models/settings.model';
 
 @Component({
   selector: 'app-genes-list',
@@ -52,7 +54,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   public genesPerPage = 20;
   public loadedGenesQuantity = this.genesPerPage;
 
-  public asTableRow = true;
+  public isTableView: boolean;
   public filters: Filter = this.filterService.filters;
   public filterTypes = FilterTypesEnum;
 
@@ -68,9 +70,11 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   public downloadJsonLink: string | SafeResourceUrl = '#';
 
   private subscription$ = new Subject();
+  private retrievedSettings: Settings;
 
   constructor(
     private readonly apiService: ApiService,
+    private settingsService: SettingsService,
     private filterService: FilterService,
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
@@ -81,6 +85,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.setInitialState();
+    this.setInitialSettings();
   }
 
   ngOnDestroy(): void {
@@ -91,11 +96,17 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   /**
    * HTTP
    */
-  setInitialState(): void {
+  private setInitialState(): void {
     this.searchedData = [...this.genesList];
     this.downloadSearch(this.searchedData);
     this.loaded.emit(true);
     this.cdRef.markForCheck();
+  }
+
+  private setInitialSettings(): void {
+    this.retrievedSettings = this.settingsService.getSettings();
+    this.isTableView = this.retrievedSettings.isTableView;
+    this.isGoTermsMode = this.retrievedSettings.isGoSearchMode;
   }
 
   public filterByFuncClusters(id: number): void {
@@ -288,7 +299,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
    * View
    */
   public toggleGenesView(evt: boolean) {
-    this.asTableRow = evt;
+    this.isTableView = evt;
   }
 
   /**
