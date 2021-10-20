@@ -32,22 +32,21 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   @Input() showFiltersPanel: boolean;
 
   @Input() set isGoMode(value: boolean) {
-    debugger;
     this.isGoTermsMode = value;
     this.isGoSearchPerformed = false;
-    this.cdRef.markForCheck();
+    if (!this.isGoTermsMode) {
+      this.updateGeneListOnSearch('');
+    } else {
+      this.searchGenesByGoTerm('');
+    }
   }
 
   @Input() set searchQuery(query: string) {
-    debugger
     if (!this.isGoTermsMode) {
-      this.cdRef.markForCheck();
       this.updateGeneListOnSearch(query !== undefined && query !== '' ? query : '');
     } else {
-      this.cdRef.markForCheck();
       this.searchGenesByGoTerm(query !== undefined && query !== '' ? query : '');
     }
-    this.cdRef.markForCheck();
   }
 
   @Input() genesList: Genes[];
