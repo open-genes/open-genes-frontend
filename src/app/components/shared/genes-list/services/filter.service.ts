@@ -22,6 +22,7 @@ export class FilterService {
     ifShowDiseaseCategories: false,
     ifShowCriteria: true,
     ifShowMethylation: false,
+    ifShowAgingMechanisms: false,
   };
 
   public filters: Filter = {
