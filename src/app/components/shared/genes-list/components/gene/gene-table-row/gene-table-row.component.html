@@ -21,7 +21,7 @@
     <div class="overflow">
       <app-associated-diseases
         [geneDiseases]="item.diseases"
-        [activeListItem]="filters.byDisease"
+        [activeListItem]="filters.byDiseases"
         (clickEvent)="onApplyFilter(filterTypes.disease, $event)"
       ></app-associated-diseases>
     </div>
@@ -96,7 +96,7 @@
     <app-tag
       *ngFor="let item of item.functionalClusters"
       (click)="onApplyFilter(filterTypes.functional_clusters, item['id'])"
-      [isActive]="filters.byFunctionalClusters.includes(item['id'])"
+      [isActive]="filters.byAgeRelatedProcess.includes(item['id'])"
     >{{ item["name"] }}
     </app-tag>
   </td>

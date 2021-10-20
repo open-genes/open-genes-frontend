@@ -21,7 +21,7 @@
     </button>
 
     <button
-      *ngIf="filters.byFunctionalClusters.length"
+      *ngIf="filters.byAgeRelatedProcess.length"
       class="filter __active"
       (click)="clearFilters(filterTypes.functional_clusters)"
     >
@@ -39,7 +39,7 @@
     </button>
 
     <button
-      *ngIf="filters.byDisease.length"
+      *ngIf="filters.byDiseases.length"
       class="filter __active"
       (click)="clearFilters(filterTypes.disease)"
     >

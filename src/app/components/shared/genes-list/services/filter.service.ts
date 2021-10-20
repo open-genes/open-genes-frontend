@@ -12,7 +12,7 @@ import { environment } from '../../../../../environments/environment';
   providedIn: 'root',
 })
 export class FilterService {
-  private url = environment.apiUrl;
+  private url = environment.testApiUrl;
   private _listOfFields = new BehaviorSubject<any>('');
   private _filterChanges = new BehaviorSubject<any>([]);
 
@@ -37,14 +37,13 @@ export class FilterService {
   };
 
   public filters: Filter = {
-    byFunctionalClusters: [],
-    byDisease: [],
+    byAgeRelatedProcess: [],
+    byDiseases: [],
     byDiseaseCategories: [],
     bySelectionCriteria: [],
     byMethylationChange: '',
     byExpressionChange: [],
     page: 1,
-    pagesTotal: 20,
   };
 
   constructor(
@@ -87,13 +86,13 @@ export class FilterService {
     const { disease, disease_categories, functional_clusters, selection_criteria, expression_change, methylation_change } = FilterTypesEnum;
     if (filterName) {
       if (filterName === functional_clusters) {
-        this.filters.byFunctionalClusters = [];
+        this.filters.byAgeRelatedProcess = [];
       } else if (filterName === expression_change) {
         this.filters.byExpressionChange = [];
       } else if (filterName == methylation_change) {
         this.filters.byMethylationChange = '';
       } else if (filterName === disease) {
-        this.filters.byDisease = [];
+        this.filters.byDiseases = [];
       } else if (filterName === disease_categories) {
         this.filters.byDiseaseCategories = [];
       } else if (filterName === selection_criteria) {
@@ -102,10 +101,10 @@ export class FilterService {
     } else {
       this.sort.byName = false;
       this.sort.byAge = false;
-      this.filters.byFunctionalClusters = [];
+      this.filters.byAgeRelatedProcess = [];
       this.filters.byExpressionChange = [];
       this.filters.byMethylationChange = '';
-      this.filters.byDisease = [];
+      this.filters.byDiseases = [];
       this.filters.byDiseaseCategories = [];
       this.filters.bySelectionCriteria = [];
     }
@@ -143,6 +142,6 @@ export class FilterService {
       }
     });
 
-    return this.http.get<Genes[]>(`${this.url}/api/gene`, { params });
+    return this.http.get<Genes[]>(`${this.url}/api/gene/search`, { params });
   }
 }

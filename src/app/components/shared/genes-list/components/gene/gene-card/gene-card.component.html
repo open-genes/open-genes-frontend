@@ -36,7 +36,7 @@
        class="card__section">
     <app-associated-diseases
       [geneDiseases]="item.diseases"
-      [activeListItem]="filters.byDisease"
+      [activeListItem]="filters.byDiseases"
       (clickEvent)="onApplyFilter(filterTypes.disease, $event)"
     ></app-associated-diseases>
   </div>
@@ -71,7 +71,7 @@
     <app-tag
       *ngFor="let cluster of item.functionalClusters"
       (click)="onApplyFilter(filterTypes.functional_clusters, cluster['id'])"
-      [isActive]="filters.byFunctionalClusters.includes(cluster['id'])"
+      [isActive]="filters.byAgeRelatedProcess.includes(cluster['id'])"
     >
       {{ cluster["name"] }}
     </app-tag>
