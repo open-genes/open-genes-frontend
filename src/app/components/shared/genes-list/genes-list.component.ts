@@ -4,7 +4,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
   Output,
@@ -33,18 +32,18 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   @Input() showFiltersPanel: boolean;
 
   @Input() set dataFromSearchBar(value) {
-    debugger;
     if (value) {
-      const { isGoSearchMode, searchQuery } = value;
-      this.isGoTermsMode = isGoSearchMode;
+      const { isGoTermsMode, searchQuery } = value;
+      this.isGoTermsMode = isGoTermsMode;
       this.isGoSearchPerformed = false;
-      if (!isGoSearchMode) {
+      if (!isGoTermsMode) {
         this.updateGeneListOnSearch(searchQuery);
       } else {
         this.searchGenesByGoTerm(searchQuery);
       }
     }
   }
+
   @Input() genesList: Genes[];
 
   @Output() loaded = new EventEmitter<boolean>();
