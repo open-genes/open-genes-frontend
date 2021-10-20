@@ -25,10 +25,10 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public isAvailable = true;
   public genesListIsLoaded = false;
   public errorStatus: string;
-  public dataFromSearchBar: {
-    isGoTermsMode: boolean;
-    searchQuery: string;
-  } = {};
+  public dataFromSearchBar = {
+    isGoTermsMode: false,
+    searchQuery: '',
+  }
 
   constructor(
     public windowService: WindowService,
@@ -91,13 +91,14 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   public setSearchQuery(event): void {
-
     this.dataFromSearchBar.searchQuery = event;
+    this.dataFromSearchBar = { ...this.dataFromSearchBar};
+
   }
 
   public setSearchMode(event): void {
-    debugger;
     this.dataFromSearchBar.isGoTermsMode = event;
+    this.dataFromSearchBar = { ...this.dataFromSearchBar };
   }
 
   /**
