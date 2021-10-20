@@ -28,11 +28,23 @@ import { Filter } from './services/filter.model';
   styleUrls: ['./genes-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GenesListComponent extends ToMap implements OnInit, OnChanges, OnDestroy {
+export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
-  @Input() isGoTermsMode: boolean;
-  @Input() searchQuery: string;
+
+  @Input() set dataFromSearchBar(value) {
+    debugger;
+    if (value) {
+      const { isGoSearchMode, searchQuery } = value;
+      this.isGoTermsMode = isGoSearchMode;
+      this.isGoSearchPerformed = false;
+      if (!isGoSearchMode) {
+        this.updateGeneListOnSearch(searchQuery);
+      } else {
+        this.searchGenesByGoTerm(searchQuery);
+      }
+    }
+  }
   @Input() genesList: Genes[];
 
   @Output() loaded = new EventEmitter<boolean>();
@@ -44,7 +56,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnChanges, OnDe
   public asTableRow = true;
   public filters: Filter = this.filterService.filters;
   public filterTypes = FilterTypesEnum;
-
+  public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
   public isGoTermsModeError = false;
   public isLoaded = false;
@@ -65,15 +77,6 @@ export class GenesListComponent extends ToMap implements OnInit, OnChanges, OnDe
     private snackBar: MatSnackBar,
   ) {
     super();
-  }
-
-  ngOnChanges(): void {
-    this.isGoSearchPerformed = false;
-    if (!this.isGoTermsMode) {
-      this.updateGeneListOnSearch(this.searchQuery);
-    } else {
-      this.searchGenesByGoTerm(this.searchQuery);
-    }
   }
 
   ngOnInit(): void {
