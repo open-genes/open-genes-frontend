@@ -88,6 +88,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
     if (!this.isGoTermsMode) {
       this.setInitialState();
     }
+    this.loaded.emit(true);
   }
 
   ngOnDestroy(): void {
