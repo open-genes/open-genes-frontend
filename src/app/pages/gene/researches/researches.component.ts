@@ -23,6 +23,9 @@ export class ResearchesComponent implements OnInit {
   public isGeneAssociatedWithLongevityEffects: boolean;
   public isAdditionalEvidences: boolean;
 
+  public articleInfo: ArticleInfo;
+  public isLoading = false;
+
   private subscription$ = new Subject();
 
   @ViewChild('commentModalBody') dialogRef: TemplateRef<any>;
@@ -69,7 +72,9 @@ export class ResearchesComponent implements OnInit {
   }
 
   public openArticleInfoModal(doi): void {
-    this.pubmedApiService.getArticleByDoi(doi)
+    this.isLoading = true
+    this.pubmedApiService
+      .getArticleByDoi(doi)
       .pipe(
         map((res) => {
           const articleInfo: ArticleInfo = {
@@ -77,25 +82,32 @@ export class ResearchesComponent implements OnInit {
             publisher: res.bibliographic_data.publisher,
             publicationYear: res.bibliographic_data.publication_year,
             citation: res.sort_count.citation.total,
-          }
+          };
           return articleInfo;
         }),
         takeUntil(this.subscription$)
       )
-      .subscribe((res) => {
-        this.dialog.open(this.articleRef, {
-          data: res,
-          panelClass: 'comment-modal',
-          minWidth: '320px',
-          maxWidth: '768px',
-        });
-      });
+      .subscribe(
+        (res) => {
+          this.articleInfo = res;
+          this.isLoading = false;
+        },
+        (error) => {
+          console.log(error);
+          this.isLoading = false;
+        }
+      );
+
+    this.dialog.open(this.articleRef, {
+      panelClass: 'comment-modal',
+      minWidth: '320px',
+      maxWidth: '768px',
+    });
   }
   public closeArticleInfoModal(): void {
     this.subscription$.next();
     this.subscription$.complete();
     this.dialog.closeAll();
-
   }
   public closeCommentModal(): void {
     this.dialog.closeAll();

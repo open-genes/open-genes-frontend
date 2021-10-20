@@ -92,18 +92,16 @@
           </button>
         </td>
         <td class="__cell-width-medium">
-
           <ng-container
             [ngTemplateOutlet]="links"
             [ngTemplateOutletContext]="{ item: item }">
           </ng-container>
 
-          <button *ngIf="item?.comment.length !== 0; else dash"
+          <button *ngIf="item?.doi; else dash"
                   class="btn btn--small btn--purple btn--flat"
-                  (click)="openCommentModal(item.comment)">
+                  (click)="openArticleInfoModal(item.doi)">
             {{ "researches_comment_button" | translate }}
           </button>
-
         </td>
       </tr>
     </table>
@@ -212,13 +210,12 @@
           </button>
         </td>
         <td class="__cell-width-medium">
-
           <ng-container
             [ngTemplateOutlet]="links"
             [ngTemplateOutletContext]="{ item: item }">
           </ng-container>
 
-          <button *ngIf="item?.comment.length !== 0; else dash"
+          <button *ngIf="item?.doi; else dash"
                   class="btn btn--small btn--purple btn--flat"
                   (click)="openArticleInfoModal(item.doi)">
             {{ "researches_comment_button" | translate }}
@@ -304,18 +301,16 @@
           </button>
         </td>
         <td class="__cell-width-medium">
-
           <ng-container
             [ngTemplateOutlet]="links"
             [ngTemplateOutletContext]="{ item: item }">
           </ng-container>
 
-          <button *ngIf="item?.comment.length !== 0; else dash"
+          <button *ngIf="item?.doi; else dash"
                   class="btn btn--small btn--purple btn--flat"
                   (click)="openArticleInfoModal(item.doi)">
             {{ "researches_comment_button" | translate }}
           </button>
-
         </td>
       </tr>
     </table>
@@ -372,7 +367,7 @@
             [ngTemplateOutletContext]="{ item: item }">
           </ng-container>
 
-          <button *ngIf="item?.comment.length !== 0; else dash"
+          <button *ngIf="item?.doi; else dash"
                   class="btn btn--small btn--purple btn--flat"
                   (click)="openArticleInfoModal(item.doi)">
             {{ "researches_comment_button" | translate }}
@@ -416,7 +411,7 @@
             [ngTemplateOutletContext]="{ item: item }">
           </ng-container>
 
-          <button *ngIf="item?.comment.length !== 0; else dash"
+          <button *ngIf="item?.doi; else dash"
                   class="btn btn--small btn--purple btn--flat"
                   (click)="openArticleInfoModal(item.doi)">
             {{ "researches_comment_button" | translate }}
@@ -501,7 +496,7 @@
             [ngTemplateOutletContext]="{ item: item }">
           </ng-container>
 
-          <button *ngIf="item?.comment.length !== 0; else dash"
+          <button *ngIf="item?.doi; else dash"
                   class="btn btn--small btn--purple btn--flat"
                   (click)="openArticleInfoModal(item.doi)">
             {{ "researches_comment_button" | translate }}
@@ -582,7 +577,7 @@
   </mat-dialog-content>
 </ng-template>
 
-<ng-template #articleInfoModal let-data>
+<ng-template #articleInfoModal>
   <div class="article-info-modal__header" mat-dialog-title>
     {{ "researches_article_info" | translate }}
 
@@ -594,15 +589,20 @@
     </button>
   </div>
   <mat-dialog-content>
-    <div class="article-info-modal__body">
-      <span>{{ data?.title }}</span>
-      <span>{{ data?.publisher }}</span>
-      <span>{{ data?.publicationYear }}</span>
-      <span>{{ data?.citation }}</span>
+    <div *ngIf="articleInfo && !isLoading" class="article-info-modal__body">
+      <span>{{ articleInfo?.title }}</span>
+      <span>{{ articleInfo?.publisher }}</span>
+      <span>{{ articleInfo?.publicationYear }}</span>
+      <span>{{ articleInfo?.citation }}</span>
     </div>
+    <ng-container *ngIf="isLoading">
+      <app-spinner></app-spinner>
+    </ng-container>
   </mat-dialog-content>
 </ng-template>
 
 <ng-template #dash>
   <span class="table__dash"></span>
 </ng-template>
+
+
