@@ -1,14 +1,14 @@
 <tr class="item">
-  <td class="cell cell&#45;&#45;name">
+  <td class="cell cell--name">
     <div class="title overflow">
-      <a [routerLink]="['/gene', item.symbol]" class="link link&#45;&#45;gray">
+      <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
         <b>{{ item.symbol }}</b> {{ item.name }}
       </a>
     </div>
   </td>
 
   <td *ngIf="listSettings.ifShowAge"
-      class="cell cell&#45;&#45;age">
+      class="cell cell--age">
     <div class="overflow">
       <app-gene-age [gene]="item"></app-gene-age>
     </div>
@@ -36,8 +36,21 @@
     </div>
   </td>
 
+  <ng-container *ngIf="listSettings.ifShowAgingMechanisms">
+    <td class="cell cell--mechanisms">
+      <div class="overflow">
+        <ul *ngIf="item?.agingMechanisms && item?.agingMechanisms.length !== 0"
+            class="list list--bulletted">
+          <li *ngFor="let mechanism of item?.agingMechanisms">
+            {{ mechanism.name }}
+          </li>
+        </ul>
+      </div>
+    </td>
+  </ng-container>
+
   <td *ngIf="listSettings.ifShowExpression"
-      class="cell cell&#45;&#45;expression">
+      class="cell cell--expression">
     <div class="overflow">
       <app-tag
         (click)="onExpressionChange(item.expressionChange)"
@@ -51,7 +64,7 @@
   </td>
 
   <td *ngIf="listSettings.ifShowCriteria"
-      class="cell cell&#45;&#45;criteria">
+      class="cell cell--criteria">
     <div class="overflow">
       <app-selection-criteria
         [geneCriteria]="item.commentCause"
@@ -62,7 +75,7 @@
   </td>
 
   <td *ngIf="listSettings.ifShowMethylation"
-      class="cell cell&#45;&#45;methylation">
+      class="cell cell--methylation">
     <div class="overflow">
       <app-tag
         *ngIf="item.methylationCorrelation !== ''"
@@ -74,7 +87,7 @@
   </td>
 
 
-  <td class="cell cell&#45;&#45;actions">
+  <td class="cell cell--actions">
     <div class="overflow">
       <app-gene-menu
         [gene]="item"
@@ -90,7 +103,7 @@
 <tr class="item">
   <td *ngIf="listSettings.ifShowClasses"
       colspan="100%"
-      class="cell cell&#45;&#45;functions">
+      class="cell cell--functions">
     <app-tag
       *ngFor="let item of item.functionalClusters"
       (click)="onFuncCluster(item['id'])"

@@ -87,6 +87,7 @@
   "gene_candidate": "Candidate gene",
   "gene_intervention_result": "Result",
   "gene_intervention_type": "Method",
+  "gene_list_aging_mechanisms": "Aging Mechanisms",
   "gene_list_diseases": "Associated diseases (eDGAR)",
   "gene_list_disease_categories": "Associated disease categories (ICD-10)",
   "gene_list_evolutionary_age": "Evolutionary age",

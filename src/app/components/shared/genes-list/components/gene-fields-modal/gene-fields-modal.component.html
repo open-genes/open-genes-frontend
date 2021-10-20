@@ -44,4 +44,10 @@
     (change)="changeGenesListSettings('criteria')">
     {{ "main_page_table_criteria" | translate }}
   </mat-checkbox>
+  <mat-checkbox
+    color="primary"
+    (change)="changeGenesListSettings('mechanisms')"
+    [checked]="listSettings.ifShowAgingMechanisms"
+  >{{ "gene_list_aging_mechanisms" | translate }}
+  </mat-checkbox>
 </div>

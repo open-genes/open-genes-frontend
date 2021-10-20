@@ -6,4 +6,5 @@ export interface GenesListSettings {
   ifShowExpression: boolean;
   ifShowCriteria: boolean;
   ifShowMethylation: boolean;
+  ifShowAgingMechanisms: boolean;
 }

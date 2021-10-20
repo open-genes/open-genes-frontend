@@ -8,6 +8,10 @@ import { AssociatedDiseases, AssociatedDiseaseCategories } from './associated-di
 interface GeneralGeneInfo {
   id: number;
   symbol: string;
+  agingMechanisms: {
+    id: number;
+    name: string;
+  }[];
   aliases: string[];
   commentCause: SelectionCriteria[];
   diseaseCategories: AssociatedDiseaseCategories;

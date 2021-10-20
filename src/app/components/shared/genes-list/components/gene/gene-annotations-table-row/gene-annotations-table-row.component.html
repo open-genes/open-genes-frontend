@@ -1,14 +1,14 @@
 <tr class="item">
 
-  <td class="cell cell&#45;&#45;name">
+  <td class="cell cell--name">
     <div class="title overflow">
-      <a [routerLink]="['/gene', item.symbol]" class="link link&#45;&#45;gray">
+      <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
         <b>{{ item.symbol }}</b> {{ item.name }}
       </a>
     </div>
   </td>
 
-  <td class="cell cell&#45;&#45;age">
+  <td class="cell cell--age">
     <div class="overflow">
       <app-gene-age [gene]="item"></app-gene-age>
     </div>
@@ -34,7 +34,7 @@
     </div>
   </td>
 
-  <td colspan="2" class="cell cell&#45;&#45;terms">
+  <td colspan="2" class="cell cell--terms">
     <div *ngIf="item.terms" class="overflow">
       <a
         *ngFor="let term of goModeCellData.biologicalProcess | keyvalue"
@@ -60,7 +60,7 @@
     </div>
   </td>
 
-  <td class="cell cell&#45;&#45;actions">
+  <td class="cell cell--actions">
     <div class="overflow">
       <app-gene-menu
         [gene]="item"
