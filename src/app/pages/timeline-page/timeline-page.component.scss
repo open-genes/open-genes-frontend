@@ -7,7 +7,10 @@
     justify-content: space-between;
     align-items: center;
 
-    .separator__line {
+    &::before,
+    &::after {
+      content: ' ';
+      display: inline-flex;
       flex: 1;
       height: 1px;
       background: $color-borders;
@@ -21,7 +24,8 @@
     }
 
     &--year {
-      .separator__line {
+      &::before,
+      &::after {
         background: $color-general;
       }
 

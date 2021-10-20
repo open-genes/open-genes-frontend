@@ -61,7 +61,6 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
     if (this.groups) {
       const genesQuantity = this.groups.reduce((previous, current) => {
         const total = previous + current.genes.length;
-        console.log(this.counter, total);
         return Math.floor(total);
       }, 0);
 
