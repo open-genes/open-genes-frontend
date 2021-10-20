@@ -30,7 +30,8 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Input() genesList: Genes[];
   @Input() set isGoMode(value: boolean) {
     this.isGoTermsMode = value;
-    this.setGoSearchMode();
+    this.searchedData = [];
+    this.searchForm.get('searchField').setValue('');
   }
 
   @Output() dataFromSearchBar: EventEmitter<string> = new EventEmitter<string>();
@@ -65,8 +66,8 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.searchForm
-      .get('searchField')
-      .valueChanges.pipe(
+      .get('searchField').valueChanges
+      .pipe(
         filter((query: string) => !!query),
         map((query: string) => query.toLowerCase()),
         filter((query: string) => {
@@ -115,12 +116,6 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
         return searchedText.includes(query);
       });
     }
-  }
-
-  public setGoSearchMode(): void {
-    this.searchedData = [];
-    this.searchForm.get('searchField').setValue('');
-    this.onSearch();
   }
 
   public onSearch(): void {
