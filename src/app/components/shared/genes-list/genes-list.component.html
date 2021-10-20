@@ -20,10 +20,10 @@
   <section
     *ngIf="searchedData?.length !== 0"
     class="view-content"
-    [ngClass]="asTableRow && !isMobile ? 'view-content--as-table' : 'view-content--as-cards'">
+    [ngClass]="isTableView && !isMobile ? 'view-content--as-table' : 'view-content--as-cards'">
 
     <!-- Table view -->
-    <ng-container *ngIf="asTableRow && !isMobile">
+    <ng-container *ngIf="isTableView && !isMobile">
       <table>
         <thead>
         <app-genes-table-header
@@ -56,7 +56,7 @@
     </ng-container>
 
     <!-- Card view -->
-    <ng-container *ngIf="!asTableRow || isMobile">
+    <ng-container *ngIf="!isTableView || isMobile">
       <ng-container *ngIf="isGoTermsMode; else card">
         <app-gene-annotations-card class="card" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
                                    [item]="rowData"
