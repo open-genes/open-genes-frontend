@@ -61,7 +61,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
   public isGoTermsModeError = false;
-  public isLoaded = false;
+  public isLoading = false;
   public goModeCellData: any;
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
@@ -78,14 +78,16 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
     private filterService: FilterService,
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {
     super();
+    this.setInitialSettings();
   }
 
   ngOnInit(): void {
-    this.setInitialState();
-    this.setInitialSettings();
+    if (!this.isGoTermsMode) {
+      this.setInitialState();
+    }
   }
 
   ngOnDestroy(): void {
@@ -248,7 +250,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
 
   // TODO: this function isn't pure
   public searchGenesByGoTerm(query: string): void {
-    this.isLoaded = true;
+    this.isLoading = true;
     if (query) {
       this.apiService
         .getGoTermMatchByString(query)
@@ -258,7 +260,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
             this.searchedData = genes; // If nothing found, will return empty array
             this.downloadSearch(this.searchedData);
             this.isGoSearchPerformed = true;
-            this.isLoaded = false;
+            this.isLoading = false;
 
             // Map data if it's presented:
             for (const item of this.searchedData) {
@@ -286,11 +288,11 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
 
             this.cdRef.markForCheck();
           },
-          (error) => this.errorLogger(this, error),
+          (error) => this.errorLogger(this, error)
         );
     } else {
       this.isGoSearchPerformed = false;
-      this.isLoaded = false;
+      this.isLoading = false;
       this.cdRef.markForCheck();
     }
   }
