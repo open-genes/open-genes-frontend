@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-shadow
 export enum FilterTypesEnum {
-  disease = 'byDisease',
+  disease = 'byDiseases',
   disease_categories = 'byDiseaseCategories',
   functional_clusters = 'byAgeRelatedProcess',
   selection_criteria = 'bySelectionCriteria',

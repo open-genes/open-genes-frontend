@@ -23,7 +23,7 @@
         <ul class="list list--bulletted">
           <li *ngFor="let disease of mappedDiseases | keyvalue | slice: 0:maxItemsToShow"
               [class.__active]="activeListItem.includes(disease.key)"
-              (click)="emitOnClick(disease)">
+              (click)="emitOnClick(disease.key)">
             {{ disease.value['name'] }}
           </li>
         </ul>
@@ -38,7 +38,7 @@
         <ul class="list list--bulletted">
           <li *ngFor="let disease of mappedDiseases | keyvalue | slice: maxItemsToShow"
               [class.__active]="activeListItem.includes(disease.key)"
-              (click)="emitOnClick(disease)">
+              (click)="emitOnClick(disease.key)">
             {{ disease.value['name'] }}
           </li>
         </ul>
