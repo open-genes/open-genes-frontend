@@ -59,8 +59,8 @@
                 </div>
               </ng-container>
             </ng-container>
-            <div *ngIf="this.genesGroupedByDateChanged?.length > this.loadedGenesQuantity" class="show-more">
-              <button (click)="showMore()" class="show-more__button">
+            <div *ngIf="this.genesGroupedByDateChanged?.length > this.loadedGenesQuantity" class="btn-wrap show-more">
+              <button (click)="showMore()" class="btn show-more__button">
                 {{ "show_more" | translate }}
               </button>
             </div>
