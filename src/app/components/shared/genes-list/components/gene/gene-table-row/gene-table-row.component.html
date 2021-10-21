@@ -45,7 +45,7 @@
         (click)="onApplyFilter(filterTypes.expression_change, item.expressionChange)"
         [isDisabled]="item.expressionChange === 0"
         [isActive]="
-            filters.byExpressionChange.includes(item.expressionChange) &&
+            filters.byExpressionChange === item.expressionChange &&
             item.expressionChange !== 0"
       >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
       </app-tag>

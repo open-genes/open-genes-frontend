@@ -6,7 +6,7 @@ export const environment = {
   name: 'default',
   production: false,
   apiUrl: 'https://open-genes.com',
-  testApiUrl: 'https://test.open-genes.com/openapi',
+  testApiUrl: 'https://test.open-genes.com',
   searchApiUrl: 'https://publications-search-api-2yf55.ondigitalocean.app/',
   pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',
   proteinAtlasUrl: 'https://www.proteinatlas.org/',

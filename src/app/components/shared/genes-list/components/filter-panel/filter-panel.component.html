@@ -30,7 +30,7 @@
     </button>
 
     <button
-      *ngIf="filters.byExpressionChange.length"
+      *ngIf="filters.byExpressionChange !== 0"
       class="filter __active"
       (click)="clearFilters(filterTypes.expression_change)"
     >

@@ -42,8 +42,9 @@ export class FilterService {
     byDiseaseCategories: [],
     bySelectionCriteria: [],
     byMethylationChange: '',
-    byExpressionChange: [],
+    byExpressionChange: 0,
     page: 1,
+    pageSize: 20,
   };
 
   constructor(
@@ -67,6 +68,12 @@ export class FilterService {
         } else {
           this.filters[filterType] = this.filters[filterType].filter((item) => item !== filterValue);
         }
+      } else if (typeof this.filters[filterType] === 'number') {
+        if (this.filters[filterType] !== filterValue) {
+          this.filters[filterType] = filterValue;
+        } else {
+          this.filters[filterType] = 0;
+        }
       } else {
         if (this.filters[filterType] !== filterValue) {
           this.filters[filterType] = filterValue;
@@ -81,6 +88,11 @@ export class FilterService {
     this.areMoreThan2FiltersApplied();
   }
 
+  onLoadMoreGenes(): void {
+    this.filters.page++;
+    this.areMoreThan2FiltersApplied();
+  }
+
   // Clear
   public clearFilters(filterName?: string): void {
     const { disease, disease_categories, functional_clusters, selection_criteria, expression_change, methylation_change } = FilterTypesEnum;
@@ -88,7 +100,7 @@ export class FilterService {
       if (filterName === functional_clusters) {
         this.filters.byAgeRelatedProcess = [];
       } else if (filterName === expression_change) {
-        this.filters.byExpressionChange = [];
+        this.filters.byExpressionChange = 0;
       } else if (filterName == methylation_change) {
         this.filters.byMethylationChange = '';
       } else if (filterName === disease) {
@@ -102,7 +114,7 @@ export class FilterService {
       this.sort.byName = false;
       this.sort.byAge = false;
       this.filters.byAgeRelatedProcess = [];
-      this.filters.byExpressionChange = [];
+      this.filters.byExpressionChange = 0;
       this.filters.byMethylationChange = '';
       this.filters.byDiseases = [];
       this.filters.byDiseaseCategories = [];

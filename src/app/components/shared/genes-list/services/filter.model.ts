@@ -7,7 +7,7 @@ export interface Filter {
   byAgeRelatedProcess: number[]; // by functional classes
   bySelectionCriteria: string[]; // see selection criteria
   byMethylationChange: string; // by the gene's methylation change with age
-  byExpressionChange: number[]; // by gene's age related expression change variant
+  byExpressionChange: number; // by gene's age related expression change variant
   page?: number;
   pageSize?: number;
 }
