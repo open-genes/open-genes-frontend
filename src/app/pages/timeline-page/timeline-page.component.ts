@@ -5,6 +5,18 @@ import { Subject } from 'rxjs';
 import { Genes } from '../../core/models';
 import { LocalizedDatePipe } from '../../modules/pipes/general/i18n-date.pipe';
 
+interface GenesArrayByDate {
+  genes: Genes[];
+}
+
+interface GenesArrayByDateChanged extends GenesArrayByDate {
+  groupDateChanged: string;
+}
+
+interface GenesArrayByDateCreated extends GenesArrayByDate {
+  groupDateCreated: string;
+}
+
 @Component({
   selector: 'app-timeline-page',
   templateUrl: './timeline-page.component.html',
@@ -12,10 +24,8 @@ import { LocalizedDatePipe } from '../../modules/pipes/general/i18n-date.pipe';
 })
 export class TimelinePageComponent implements OnInit, OnDestroy {
   public genes: Genes[];
-  public genesGroupedByDate: {
-    time: string;
-    genes: Genes[];
-  }[] = [];
+  public genesGroupedByDateChanged: GenesArrayByDateChanged[] = [];
+  public genesGroupedByDateCreated: GenesArrayByDateCreated[] = [];
   public showMoreButtonVisible = true;
   public groupOfGenesPerPage = 4;
   public loadedGenesQuantity = this.groupOfGenesPerPage;
@@ -23,8 +33,7 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
 
   private subscription$ = new Subject();
 
-  constructor(private apiService: ApiService, private localizedDatePipe: LocalizedDatePipe) {
-  }
+  constructor(private apiService: ApiService, private localizedDatePipe: LocalizedDatePipe) {}
 
   ngOnInit(): void {
     this.getGenes();
@@ -36,7 +45,8 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.subscription$))
       .subscribe(
         (genes) => {
-          let timestamp = 1562960035; // July 12 2019 - date when the first data was added
+          let timestampChanged,
+            timestampCreated = 1562960035; // July 12 2019 - date when the first data was added
           genes.forEach((gene) => {
             // TODO: Fix this crutch for a union type error
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -48,15 +58,28 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
             } else {
               this.dateChanged = Number(gene.timestamp);
             }
-            timestamp = !isNaN(this.dateChanged) && this.dateChanged !== 0 ? this.dateChanged : timestamp;
+            timestampCreated = !isNaN(this.dateChanged) && this.dateChanged !== 0 ? this.dateChanged : timestampCreated;
+            timestampChanged = !isNaN(this.dateChanged) && this.dateChanged !== 0 ? this.dateChanged : timestampChanged;
 
-            const time = this.localizedDatePipe?.transform(timestamp * 1000);
-            const group = this.genesGroupedByDate.find((g) => g.time === time);
-            if (group) {
-              group.genes.push(gene);
+            const changed = this.localizedDatePipe?.transform(timestampChanged * 1000);
+            const groupByDateChanged = this.genesGroupedByDateChanged.find((g) => g.groupDateChanged === changed);
+            if (groupByDateChanged) {
+              groupByDateChanged.genes.push(gene);
             } else {
-              this.genesGroupedByDate.push({
-                time,
+              this.genesGroupedByDateChanged.push({
+                groupDateChanged: changed,
+                genes: [gene],
+              });
+            }
+
+            // TODO: DRY
+            const created = this.localizedDatePipe?.transform(timestampChanged * 1000);
+            const groupByDateCreated = this.genesGroupedByDateCreated.find((g) => g.groupDateCreated === created);
+            if (groupByDateCreated) {
+              groupByDateCreated.genes.push(gene);
+            } else {
+              this.genesGroupedByDateCreated.push({
+                groupDateCreated: created,
                 genes: [gene],
               });
             }
@@ -64,7 +87,7 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
         },
         (err) => {
           console.log(err);
-        },
+        }
       );
   }
 
@@ -73,7 +96,7 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
   }
 
   public showMore() {
-    if (this.genesGroupedByDate?.length >= this.loadedGenesQuantity) {
+    if (this.genesGroupedByDateChanged?.length >= this.loadedGenesQuantity) {
       this.loadedGenesQuantity += this.groupOfGenesPerPage;
     }
   }
