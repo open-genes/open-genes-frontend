@@ -19,6 +19,7 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
     genes: Genes[];
   }[] = [];
   public counter = 20;
+  private dateChanged: number | any;
 
   constructor(private apiService: ApiService, private localizedDatePipe: LocalizedDatePipe) {}
 
@@ -32,8 +33,21 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.subscription$))
       .subscribe(
         (genes) => {
+          let timestamp = 1562960035; // July 12 2019 - date when the first data was added
           genes.forEach((gene) => {
-            const time = this.localizedDatePipe?.transform(gene.timestamp);
+            // TODO: Fix this crutch for a union type error
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            if (Object.values(gene.timestamp).length > 1) {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              this.dateChanged = Number(gene.timestamp?.changed);
+            } else {
+              this.dateChanged = Number(gene.timestamp);
+            }
+            timestamp = !isNaN(this.dateChanged) && this.dateChanged !== 0 ? this.dateChanged : timestamp;
+
+            const time = this.localizedDatePipe?.transform(timestamp);
             const group = this.groups.find((g) => g.time === time);
             if (group) {
               group.genes.push(gene);
