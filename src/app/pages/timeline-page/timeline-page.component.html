@@ -30,7 +30,7 @@
             </div>
           </ng-container>
 
-          <div class="timeline__separator timeline__separator--year" *ngIf="last">
+          <div class="timeline__separator timeline__separator--year" *ngIf="!last">
             <div class="separator__number">{{ group.time | slice: 7:group.time?.length }}</div>
           </div>
         </ng-container>
