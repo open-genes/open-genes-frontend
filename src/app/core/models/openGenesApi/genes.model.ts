@@ -24,7 +24,7 @@ interface GeneralGeneInfo {
   origin: Origin;
   ncbiId: number;
   uniprot: string;
-  timestamp: string;
+  timestamp: number;
   homologueTaxon: string;
   methylationCorrelation: 'positive' | 'negative' | '';
 }

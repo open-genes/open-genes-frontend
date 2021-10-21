@@ -12,14 +12,14 @@
       </div>
     </div>
     <div class="container-fluid timeline">
-      <div *ngIf="groups?.length; else loader">
-        <ng-container *ngFor="let group of groups; let last = last">
+      <div *ngIf="genesGroupedByDate?.length; else loader">
+        <ng-container *ngFor="let group of genesGroupedByDate | slice: 0 : loadedGenesQuantity; let last = last">
           <div class="timeline__separator timeline__separator--month">
-            <div class="separator__number">{{ group.time | slice: 0:6 }}</div>
+            <div class="separator__number">{{ group.time | slice: 0:7 }}</div>
           </div>
 
           <ng-container *ngIf="group.genes.length !== 0">
-            <div class="timeline__card" *ngFor="let gene of group.genes | slice: 0:counter">
+            <div class="timeline__card" *ngFor="let gene of group.genes">
               <div class="card__item">
                 <div class="alias alias--approval">{{ 'timeline_page_added' | translate }}</div>
                 <div class="alias">{{ gene.symbol }}</div>
@@ -30,12 +30,12 @@
             </div>
           </ng-container>
 
-          <div class="timeline__separator timeline__separator--year" *ngIf="!last">
+          <div class="timeline__separator timeline__separator--year" *ngIf="last">
             <div class="separator__number">{{ group.time | slice: 7:group.time?.length }}</div>
           </div>
         </ng-container>
 
-        <div *ngIf="showMoreButtonVisible"
+        <div *ngIf="this.genesGroupedByDate?.length > this.loadedGenesQuantity"
              class="show-more">
           <button (click)="showMore()"
                   class="show-more__button">

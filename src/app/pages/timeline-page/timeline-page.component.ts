@@ -11,34 +11,37 @@ import { LocalizedDatePipe } from '../../modules/pipes/general/i18n-date.pipe';
   styleUrls: ['./timeline-page.component.scss'],
 })
 export class TimelinePageComponent implements OnInit, OnDestroy {
-  public subscription$ = new Subject();
   public genes: Genes[];
-  public showMoreButtonVisible = true;
-  public groups: {
+  public genesGroupedByDate: {
     time: string;
     genes: Genes[];
   }[] = [];
-  public counter = 20;
+  public showMoreButtonVisible = true;
+  public groupOfGenesPerPage = 4;
+  public loadedGenesQuantity = this.groupOfGenesPerPage;
 
-  constructor(private apiService: ApiService, private localizedDatePipe: LocalizedDatePipe) {}
+  private subscription$ = new Subject();
+
+  constructor(private apiService: ApiService, private localizedDatePipe: LocalizedDatePipe) {
+  }
 
   ngOnInit(): void {
     this.getGenes();
   }
 
-  public getGenes() {
+  private getGenes() {
     this.apiService
       .getGenes()
       .pipe(takeUntil(this.subscription$))
       .subscribe(
         (genes) => {
           genes.forEach((gene) => {
-            const time = this.localizedDatePipe?.transform(gene.timestamp);
-            const group = this.groups.find((g) => g.time === time);
+            const time = this.localizedDatePipe?.transform(gene.timestamp * 1000);
+            const group = this.genesGroupedByDate.find((g) => g.time === time);
             if (group) {
               group.genes.push(gene);
             } else {
-              this.groups.push({
+              this.genesGroupedByDate.push({
                 time,
                 genes: [gene],
               });
@@ -47,7 +50,7 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
         },
         (err) => {
           console.log(err);
-        }
+        },
       );
   }
 
@@ -55,18 +58,9 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
-  showMore() {
-    this.counter += 20;
-
-    if (this.groups) {
-      const genesQuantity = this.groups.reduce((previous, current) => {
-        const total = previous + current.genes.length;
-        return Math.floor(total);
-      }, 0);
-
-      if (genesQuantity >= Number(this.counter)) {
-        this.showMoreButtonVisible = false;
-      }
+  public showMore() {
+    if (this.genesGroupedByDate?.length >= this.loadedGenesQuantity) {
+      this.loadedGenesQuantity += this.groupOfGenesPerPage;
     }
   }
 }
