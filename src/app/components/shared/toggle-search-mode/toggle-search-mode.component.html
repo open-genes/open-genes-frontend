@@ -1,0 +1,28 @@
+<div class="toggle-content">
+  <div class="toggle-content__button"
+       [class.toggle-content__button--active]='!isGoTermsMode'
+      (click)="setGoSearchMode()">
+    <button mat-menu-item>
+      {{ 'search_for_genes' | translate }}
+    </button>
+  </div>
+
+  <div class="toggle-content__button"
+       [class.toggle-content__button--active]="isGoTermsMode"
+       (click)="setGoSearchMode()">
+    <button mat-menu-item>
+      {{ 'search_for_go_terms' | translate }}
+    </button>
+  </div>
+</div>
+
+<div class="description">
+  <div class="description-content"
+    [class.hidden]="isGoTermsMode">
+    <span>{{ 'search_for_genes_desc' | translate }}</span>
+  </div>
+  <div class="description-content"
+    [class.hidden]="!isGoTermsMode">
+    <span>  {{ 'search_for_go_terms_desc'  | translate }}</span>
+  </div>
+</div>

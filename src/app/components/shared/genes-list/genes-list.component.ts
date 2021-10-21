@@ -31,16 +31,21 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
 
-  @Input() set dataFromSearchBar(value) {
-    if (value) {
-      const { isGoSearchMode, searchQuery } = value;
-      this.isGoTermsMode = isGoSearchMode;
-      this.isGoSearchPerformed = false;
-      if (!isGoSearchMode) {
-        this.updateGeneListOnSearch(searchQuery);
-      } else {
-        this.searchGenesByGoTerm(searchQuery);
-      }
+  @Input() set isGoMode(value: boolean) {
+    this.isGoTermsMode = value;
+    this.isGoSearchPerformed = false;
+    if (!this.isGoTermsMode) {
+      this.updateGeneListOnSearch('');
+    } else {
+      this.searchGenesByGoTerm('');
+    }
+  }
+
+  @Input() set searchQuery(query: string) {
+    if (!this.isGoTermsMode) {
+      this.updateGeneListOnSearch(query !== undefined && query !== '' ? query : '');
+    } else {
+      this.searchGenesByGoTerm(query !== undefined && query !== '' ? query : '');
     }
   }
 
@@ -55,7 +60,6 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   public asTableRow = true;
   public filters: Filter = this.filterService.filters;
   public filterTypes = FilterTypesEnum;
-
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
   public isGoTermsModeError = false;
@@ -116,7 +120,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
           this.downloadSearch(this.searchedData);
           this.cdRef.markForCheck();
         },
-        (error) => this.errorLogger(this, error)
+        (error) => this.errorLogger(this, error),
       );
   }
 
@@ -138,7 +142,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
           this.downloadSearch(this.searchedData);
           this.cdRef.markForCheck();
         },
-        (error) => this.errorLogger(this, error)
+        (error) => this.errorLogger(this, error),
       );
   }
 

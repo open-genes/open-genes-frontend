@@ -19,7 +19,7 @@ export class GeneFieldsModalComponent implements OnInit {
   constructor(
     private _dialogRef: MatDialogRef<GeneFieldsModalComponent>,
     private _filterService: FilterService,
-    private _cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +34,7 @@ export class GeneFieldsModalComponent implements OnInit {
     this._filterService.currentFields.pipe(takeUntil(this._subscription$)).subscribe(
       (fields) => {
         this.listSettings = fields;
-        this._cdRef.markForCheck();
+        this.cdRef.markForCheck();
       },
       (error) => {
         console.log(error);

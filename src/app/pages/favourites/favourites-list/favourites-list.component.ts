@@ -29,7 +29,7 @@ export class FavouritesListComponent {
   @ViewChild('linkCopy') linkCopied: ElementRef;
 
   constructor(
-    private readonly _cdRef: ChangeDetectorRef,
+    private readonly cdRef: ChangeDetectorRef,
     private favouritesService: FavouritesService,
     private fileExportService: FileExportService,
     protected _snackBar: MatSnackBar
@@ -38,18 +38,18 @@ export class FavouritesListComponent {
   public unFavItem(geneId: number, index: number): void {
     this.favourites.splice(index, 1);
     this.favouritesService.removeFromFavourites(geneId);
-    this._cdRef.markForCheck();
+    this.cdRef.markForCheck();
   }
 
   public clearFavs(): void {
     this.favourites.splice(0, this.favourites.length);
     this.favouritesService.clearFavourites();
-    this._cdRef.markForCheck();
+    this.cdRef.markForCheck();
   }
 
   public downloadFavs(): void {
     this.downloadLink = this.fileExportService.downloadJson(this.favourites);
-    this._cdRef.markForCheck();
+    this.cdRef.markForCheck();
   }
 
   shareGene() {

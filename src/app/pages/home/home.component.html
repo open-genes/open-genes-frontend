@@ -42,6 +42,9 @@
               <app-sidebar-item *ngIf="lastGenes">
                 <ng-container title>
                   {{ "main_page_last" | translate }}
+                  <a class="link link--gray hidden" href="/timeline">
+                    {{ "show_more_short" | translate }}
+                  </a>
                 </ng-container>
                 <app-mini-cards
                   content
@@ -83,8 +86,13 @@
             </app-sidebar>
           </div>
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
+            <app-toggle-search-mode
+            (setMode)="setSearchMode($event)"
+            ></app-toggle-search-mode>
+
             <app-search
               [genesList]="genes"
+              [isGoMode]="isGoTermsMode"
               (dataFromSearchBar)="setSearchQuery($event)"
             ></app-search>
 
@@ -92,7 +100,8 @@
               *ngIf="genes"
               [genesList]="genes"
               [isMobile]="isMobile"
-              [dataFromSearchBar]="dataFromSearchBar"
+              [isGoMode]="isGoTermsMode"
+              [searchQuery]="searchQuery"
               [showFiltersPanel]="true"
               (loaded)="setIsGenesListLoaded($event)">
             </app-genes-list>
