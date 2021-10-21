@@ -5,44 +5,68 @@
         <div class="row no-gutters">
           <div class="col col-12">
             <div class="page__title">
-              <h1 class="notranslate">{{ "timeline_page" | translate }}</h1>
+              <h1>{{ "timeline_page" | translate }}</h1>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="container-fluid timeline">
-      <div *ngIf="genesGroupedByDate?.length; else loader">
-        <ng-container *ngFor="let group of genesGroupedByDate | slice: 0 : loadedGenesQuantity; let last = last">
-          <div class="timeline__separator timeline__separator--month">
-            <div class="separator__number">{{ group.time | slice: 0:7 }}</div>
-          </div>
+      <mat-tab-group *ngIf="genesGroupedByDateChanged?.length || genesGroupedByDateCreated?.length; else loader">
+        <mat-tab *ngIf="genesGroupedByDateChanged?.length" label="{{ 'timeline_page_by_date_changed' | translate }}">
+          <div class="timeline__tab">
+            <ng-container *ngFor="let group of genesGroupedByDateChanged | slice: 0:loadedGenesQuantity">
+              <div class="timeline__separator timeline__separator--month">
+                <div class="separator__number">{{ group.groupDateChanged }}</div>
+              </div>
 
-          <ng-container *ngIf="group.genes.length !== 0">
-            <div class="timeline__card" *ngFor="let gene of group.genes">
-              <div class="card__item">
-                <div class="alias alias--approval">{{ 'timeline_page_added' | translate }}</div>
-                <div class="alias">{{ gene.symbol }}</div>
-              </div>
-              <div class="card__item link link--gray" [routerLink]="['/gene/', gene.id]">
-                {{ gene.name }}
-              </div>
+              <ng-container *ngIf="group.genes.length !== 0">
+                <div class="timeline__card" *ngFor="let gene of group.genes">
+                  <div class="card__item">
+                    <div class="alias alias--warning">{{ "timeline_page_changed" | translate }}</div>
+                    <div class="alias notranslate">{{ gene.symbol }}</div>
+                  </div>
+                  <div class="card__item link link--gray" [routerLink]="['/gene/', gene.id]">
+                    {{ gene.name }}
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+            <div *ngIf="this.genesGroupedByDateChanged?.length > this.loadedGenesQuantity" class="show-more">
+              <button (click)="showMore()" class="show-more__button">
+                {{ "show_more" | translate }}
+              </button>
             </div>
-          </ng-container>
-
-          <div class="timeline__separator timeline__separator--year" *ngIf="!last">
-            <div class="separator__number">{{ group.time | slice: 7:group.time?.length }}</div>
           </div>
-        </ng-container>
+        </mat-tab>
 
-        <div *ngIf="this.genesGroupedByDate?.length > this.loadedGenesQuantity"
-             class="show-more">
-          <button (click)="showMore()"
-                  class="show-more__button">
-            {{ "show_more" | translate }}
-          </button>
-        </div>
-      </div>
+        <mat-tab *ngIf="genesGroupedByDateCreated?.length" label="{{ 'timeline_page_by_date_created' | translate }}">
+          <div class="timeline__tab">
+            <ng-container *ngFor="let group of genesGroupedByDateCreated | slice: 0:loadedGenesQuantity">
+              <div class="timeline__separator timeline__separator--month">
+                <div class="separator__number">{{ group.groupDateCreated }}</div>
+              </div>
+
+              <ng-container *ngIf="group.genes.length !== 0">
+                <div class="timeline__card" *ngFor="let gene of group.genes">
+                  <div class="card__item">
+                    <div class="alias alias--approval">{{ "timeline_page_added" | translate }}</div>
+                    <div class="alias notranslate">{{ gene.symbol }}</div>
+                  </div>
+                  <div class="card__item link link--gray" [routerLink]="['/gene/', gene.id]">
+                    {{ gene.name }}
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+            <div *ngIf="this.genesGroupedByDateChanged?.length > this.loadedGenesQuantity" class="show-more">
+              <button (click)="showMore()" class="show-more__button">
+                {{ "show_more" | translate }}
+              </button>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
       <ng-template #loader>
         <app-spinner class="timeline__loader"></app-spinner>
       </ng-template>
