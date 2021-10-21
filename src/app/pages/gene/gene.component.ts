@@ -20,7 +20,7 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
 
   public gene: any;
   public symbol: string;
-  public dateInitial = 1562960035; // July 12 2019 - date when the first data was added
+  public timestamp = 1562960035; // July 12 2019 - date when the first data was added
   public geneOntologyProcessMap: Map<string, string>;
   public geneOntologyComponentMap: Map<string, string>;
   public geneOntologyActivityMap: Map<string, string>;
@@ -40,6 +40,8 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
   private retrievedSettings: Settings;
+  private dateChanged: number | any;
+
 
   constructor(
     public translate: TranslateService,
@@ -139,6 +141,18 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
 
           this.isLocationData =
             this.gene?.band?.length || this.gene?.locationStart?.length || this.gene?.locationEnd?.length;
+
+          // TODO: Fix this crutch for a union type error
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          if (Object.values(gene.timestamp).length > 1) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.dateChanged = Number(this.gene.timestamp?.changed);
+          } else {
+            this.dateChanged = Number(this.gene.timestamp);
+          }
+          this.timestamp = !isNaN(this.dateChanged) && this.dateChanged !== 0 ? this.dateChanged : this.timestamp;
 
           // TODO: Set properties which values depend on a selected language
         },

@@ -19,6 +19,7 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
   public showMoreButtonVisible = true;
   public groupOfGenesPerPage = 4;
   public loadedGenesQuantity = this.groupOfGenesPerPage;
+  private dateChanged: number | any;
 
   private subscription$ = new Subject();
 
@@ -35,8 +36,21 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.subscription$))
       .subscribe(
         (genes) => {
+          let timestamp = 1562960035; // July 12 2019 - date when the first data was added
           genes.forEach((gene) => {
-            const time = this.localizedDatePipe?.transform(gene.timestamp * 1000);
+            // TODO: Fix this crutch for a union type error
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            if (Object.values(gene.timestamp).length > 1) {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              this.dateChanged = Number(gene.timestamp?.changed);
+            } else {
+              this.dateChanged = Number(gene.timestamp);
+            }
+            timestamp = !isNaN(this.dateChanged) && this.dateChanged !== 0 ? this.dateChanged : timestamp;
+
+            const time = this.localizedDatePipe?.transform(timestamp * 1000);
             const group = this.genesGroupedByDate.find((g) => g.time === time);
             if (group) {
               group.genes.push(gene);
