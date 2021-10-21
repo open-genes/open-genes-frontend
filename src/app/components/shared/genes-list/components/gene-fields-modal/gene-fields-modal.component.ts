@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { GenesListSettings } from '../../genes-list-settings.model';
 import { FilterService } from '../../services/filter.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Genes } from '../../../../../core/models';
 
 @Component({
   selector: 'app-gene-fields-modal',
@@ -13,12 +14,11 @@ import { Subject } from 'rxjs';
 })
 export class GeneFieldsModalComponent implements OnInit {
   public listSettings: GenesListSettings;
-
-  private _subscription$ = new Subject();
+  private subscription$ = new Subject();
 
   constructor(
-    private _dialogRef: MatDialogRef<GeneFieldsModalComponent>,
-    private _filterService: FilterService,
+    private dialogRef: MatDialogRef<GeneFieldsModalComponent>,
+    private filterService: FilterService,
     private cdRef: ChangeDetectorRef
   ) {}
 
@@ -31,7 +31,7 @@ export class GeneFieldsModalComponent implements OnInit {
    */
 
   private updateCurrentFields() {
-    this._filterService.currentFields.pipe(takeUntil(this._subscription$)).subscribe(
+    this.filterService.currentFields.pipe(takeUntil(this.subscription$)).subscribe(
       (fields) => {
         this.listSettings = fields;
         this.cdRef.markForCheck();
@@ -66,13 +66,16 @@ export class GeneFieldsModalComponent implements OnInit {
       case 'criteria':
         this.listSettings.ifShowCriteria = !this.listSettings.ifShowCriteria;
         break;
+      case 'mechanisms':
+        this.listSettings.ifShowAgingMechanisms = !this.listSettings.ifShowAgingMechanisms;
+        break;
       default:
         break;
     }
-    this._filterService.updateFields(this.listSettings);
+    this.filterService.updateFields(this.listSettings);
   }
 
   public onClose(): void {
-    this._dialogRef.close();
+    this.dialogRef.close();
   }
 }

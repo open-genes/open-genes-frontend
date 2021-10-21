@@ -18,12 +18,7 @@
             </div>
 
             <div class="title__updated">
-              <ng-container *ngIf="gene.timestamp !== 0">
-                {{gene.timestamp | unixTimeFormatter | localizedDate:'d MMMM yyyy'}}
-              </ng-container>
-              <ng-container *ngIf="gene.timestamp === 0">
-                {{dateInitial | unixTimeFormatter | localizedDate:'d MMMM yyyy'}}
-              </ng-container>
+              {{ timestamp | unixTimeFormatter | localizedDate:'d MMMM yyyy'}}
             </div>
 
           </div>

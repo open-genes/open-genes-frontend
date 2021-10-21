@@ -24,6 +24,15 @@
               [nodes]="newNodes"
               [links]="newLinks"
               [grouped]="true"></app-directed-graph>
+
+            <ul class="list">
+              <li>
+                <span class="legend legend--genes"></span> {{ 'diagrams_legend_1' | translate }}
+              </li>
+              <li>
+                <span class="legend legend--diseases"></span> {{ 'diagrams_legend_2' | translate }}
+              </li>
+            </ul>
           </ng-template>
         </mat-tab>
         <mat-tab label="{{ 'diagrams_title_2_short' | translate }}">
@@ -35,6 +44,15 @@
               [nodes]="nNodes"
               [links]="nLinks"
               [grouped]="true"></app-directed-graph>
+
+            <ul class="list">
+              <li>
+                <span class="legend legend--genes"></span> {{ 'diagrams_legend_3' | translate }}
+              </li>
+              <li>
+                <span class="legend legend--processes"></span> {{ 'diagrams_legend_1' | translate }}
+              </li>
+            </ul>
           </ng-template>
         </mat-tab>
       </mat-tab-group>

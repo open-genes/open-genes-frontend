@@ -20,6 +20,8 @@ import { FileExportService } from '../../../core/services/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
 import { Filter } from './services/filter.model';
+import { SettingsService } from '../../../core/services/settings.service';
+import { Settings } from '../../../core/models/settings.model';
 
 @Component({
   selector: 'app-genes-list',
@@ -52,14 +54,14 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   public genesPerPage = 20;
   public loadedGenesQuantity = this.genesPerPage;
 
-  public asTableRow = true;
+  public isTableView: boolean;
   public filters: Filter = this.filterService.filters;
   public filterTypes = FilterTypesEnum;
 
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
   public isGoTermsModeError = false;
-  public isLoaded = false;
+  public isLoading = false;
   public goModeCellData: any;
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
@@ -68,19 +70,25 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   public downloadJsonLink: string | SafeResourceUrl = '#';
 
   private subscription$ = new Subject();
+  private retrievedSettings: Settings;
 
   constructor(
     private readonly apiService: ApiService,
+    private settingsService: SettingsService,
     private filterService: FilterService,
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {
     super();
+    this.setInitialSettings();
   }
 
   ngOnInit(): void {
-    this.setInitialState();
+    if (!this.isGoTermsMode) {
+      this.setInitialState();
+    }
+    this.loaded.emit(true);
   }
 
   ngOnDestroy(): void {
@@ -91,11 +99,17 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   /**
    * HTTP
    */
-  setInitialState(): void {
+  private setInitialState(): void {
     this.searchedData = [...this.genesList];
     this.downloadSearch(this.searchedData);
     this.loaded.emit(true);
     this.cdRef.markForCheck();
+  }
+
+  private setInitialSettings(): void {
+    this.retrievedSettings = this.settingsService.getSettings();
+    this.isTableView = this.retrievedSettings.isTableView;
+    this.isGoTermsMode = this.retrievedSettings.isGoSearchMode;
   }
 
   public filterByFuncClusters(id: number): void {
@@ -237,7 +251,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
 
   // TODO: this function isn't pure
   public searchGenesByGoTerm(query: string): void {
-    this.isLoaded = true;
+    this.isLoading = true;
     if (query) {
       this.apiService
         .getGoTermMatchByString(query)
@@ -247,7 +261,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
             this.searchedData = genes; // If nothing found, will return empty array
             this.downloadSearch(this.searchedData);
             this.isGoSearchPerformed = true;
-            this.isLoaded = false;
+            this.isLoading = false;
 
             // Map data if it's presented:
             for (const item of this.searchedData) {
@@ -275,11 +289,11 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
 
             this.cdRef.markForCheck();
           },
-          (error) => this.errorLogger(this, error),
+          (error) => this.errorLogger(this, error)
         );
     } else {
       this.isGoSearchPerformed = false;
-      this.isLoaded = false;
+      this.isLoading = false;
       this.cdRef.markForCheck();
     }
   }
@@ -288,7 +302,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
    * View
    */
   public toggleGenesView(evt: boolean) {
-    this.asTableRow = evt;
+    this.isTableView = evt;
   }
 
   /**

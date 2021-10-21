@@ -17,7 +17,7 @@ import { Subject } from 'rxjs';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { ToMap } from '../../../core/utils/to-map';
 import { SettingsService } from '../../../core/services/settings.service';
-import { SettingsEnum } from '../../../core/models/settings.model';
+import { Settings, SettingsEnum } from '../../../core/models/settings.model';
 
 @Component({
   selector: 'app-search',
@@ -34,7 +34,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
 
   public searchedData: Genes[];
   public searchForm: FormGroup;
-  public isGoSearchMode = false;
+  public isGoSearchMode: boolean;
   public showSearchResult = false;
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
@@ -42,6 +42,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
 
   private subscription$ = new Subject();
   private settingsKey = SettingsEnum;
+  private retrievedSettings: Settings;
 
   constructor(
     private renderer: Renderer2,
@@ -53,6 +54,11 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchForm = new FormGroup({
       searchField: new FormControl(''),
     });
+    this.setInitialSettings();
+  }
+
+  ngOnInit(): void {
+    this.subsToSearchFieldChanges();
   }
 
   ngOnDestroy(): void {
@@ -61,7 +67,12 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.cancelSearch();
   }
 
-  ngOnInit(): void {
+  private setInitialSettings(): void {
+    this.retrievedSettings = this.settingsService.getSettings();
+    this.isGoSearchMode = this.retrievedSettings.isGoSearchMode;
+  }
+
+  private subsToSearchFieldChanges(): void {
     this.searchForm
       .get('searchField')
       .valueChanges.pipe(
