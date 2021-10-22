@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Filter, Sort } from './filter.model';
 import { FilterTypesEnum } from './filter-types.enum';
 import { GenesListSettings } from '../genes-list-settings.model';
-import { Genes } from '../../../../core/models';
+import { FilteredGenes } from '../../../../core/models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../../../environments/environment';
@@ -41,10 +41,10 @@ export class FilterService {
     byDiseases: [],
     byDiseaseCategories: [],
     bySelectionCriteria: [],
-    byMethylationChange: '',
     byExpressionChange: 0,
+    byMethylationChange: '',
     page: 1,
-    pageSize: 20,
+    pagesize: 20,
   };
 
   constructor(
@@ -88,37 +88,44 @@ export class FilterService {
     this.areMoreThan2FiltersApplied();
   }
 
-  onLoadMoreGenes(): void {
-    this.filters.page++;
+  onLoadMoreGenes(pagesTotal: number): void {
+    if (this.filters.page <= pagesTotal) {
+      this.filters.page++;
+    }
     this.areMoreThan2FiltersApplied();
   }
 
   // Clear
   public clearFilters(filterName?: string): void {
     const { disease, disease_categories, functional_clusters, selection_criteria, expression_change, methylation_change } = FilterTypesEnum;
-    if (filterName) {
-      if (filterName === functional_clusters) {
+    switch (filterName) {
+      case functional_clusters:
         this.filters.byAgeRelatedProcess = [];
-      } else if (filterName === expression_change) {
-        this.filters.byExpressionChange = 0;
-      } else if (filterName == methylation_change) {
-        this.filters.byMethylationChange = '';
-      } else if (filterName === disease) {
+        break;
+      case disease:
         this.filters.byDiseases = [];
-      } else if (filterName === disease_categories) {
+        break;
+      case disease_categories:
         this.filters.byDiseaseCategories = [];
-      } else if (filterName === selection_criteria) {
+        break;
+      case selection_criteria:
         this.filters.bySelectionCriteria = [];
-      }
-    } else {
-      this.sort.byName = false;
-      this.sort.byAge = false;
-      this.filters.byAgeRelatedProcess = [];
-      this.filters.byExpressionChange = 0;
-      this.filters.byMethylationChange = '';
-      this.filters.byDiseases = [];
-      this.filters.byDiseaseCategories = [];
-      this.filters.bySelectionCriteria = [];
+        break;
+      case expression_change:
+        this.filters.byExpressionChange = 0;
+        break;
+      case methylation_change:
+        this.filters.byMethylationChange = '';
+        break;
+      default:
+        this.sort.byName = false;
+        this.sort.byAge = false;
+        this.filters.byAgeRelatedProcess = [];
+        this.filters.byDiseases = [];
+        this.filters.byDiseaseCategories = [];
+        this.filters.bySelectionCriteria = [];
+        this.filters.byExpressionChange = 0;
+        this.filters.byMethylationChange = '';
     }
     this.areMoreThan2FiltersApplied();
   }
@@ -135,12 +142,9 @@ export class FilterService {
     this._filterChanges.next(this.filters);
   }
 
-  getFilteredGenes(filterParams: Filter): Observable<Genes[]> {
+  getFilteredGenes(filterParams: Filter): Observable<FilteredGenes> {
     let params = new HttpParams().set('lang', this.translate.currentLang);
-    const arrayObjects = []
-    for (const [enumKey, enumValue] of Object.entries(FilterTypesEnum)) {
-      arrayObjects.push({ id: enumValue, name: enumKey });
-    };
+
     Object.entries(filterParams).forEach(([key, value]) => {
       if (value) {
         if (value instanceof Array) {
@@ -154,6 +158,6 @@ export class FilterService {
       }
     });
 
-    return this.http.get<Genes[]>(`${this.url}/api/gene/search`, { params });
+    return this.http.get<FilteredGenes>(`${this.url}/api/gene/search`, { params });
   }
 }

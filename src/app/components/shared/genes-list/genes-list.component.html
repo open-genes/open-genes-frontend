@@ -1,7 +1,7 @@
 <ng-container
   *ngIf="
     (isGoTermsMode && isGoSearchPerformed && !isGoTermsModeError) ||
-    (!isGoTermsMode && searchedData?.length !== 0)">
+    (!isGoTermsMode && searchedData?.length)">
 
   <!-- Filters Panel -->
   <ng-container *ngIf="showFiltersPanel">
@@ -18,7 +18,7 @@
 
   <!-- Content -->
   <section
-    *ngIf="searchedData?.length !== 0"
+    *ngIf="searchedData?.length"
     class="view-content"
     [ngClass]="asTableRow && !isMobile ? 'view-content--as-table' : 'view-content--as-cards'">
 
@@ -32,14 +32,14 @@
         </thead>
 
         <ng-container *ngIf="isGoTermsMode; else table">
-          <app-gene-annotations-table-row *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+          <app-gene-annotations-table-row *ngFor="let rowData of searchedData"
                                           [item]="rowData"
                                           [goModeCellData]="goModeCellData">
           </app-gene-annotations-table-row>
         </ng-container>
 
         <ng-template #table>
-          <app-gene-table-row *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+          <app-gene-table-row *ngFor="let rowData of searchedData"
                               [item]="rowData">
           </app-gene-table-row>
         </ng-template>
@@ -50,14 +50,14 @@
     <!-- Card view -->
     <ng-container *ngIf="!asTableRow || isMobile">
       <ng-container *ngIf="isGoTermsMode; else card">
-        <app-gene-annotations-card class="card" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+        <app-gene-annotations-card class="card" *ngFor="let rowData of searchedData"
                                    [item]="rowData"
                                    [goModeCellData]="goModeCellData">
         </app-gene-annotations-card>
       </ng-container>
 
       <ng-template #card>
-        <app-gene-card class="card" *ngFor="let rowData of searchedData | slice: 0:loadedGenesQuantity"
+        <app-gene-card class="card" *ngFor="let rowData of searchedData"
                        [item]="rowData">
         </app-gene-card>
       </ng-template>
@@ -68,7 +68,7 @@
   <!-- Show more Button -->
   <div
     class="btn-wrap show-more"
-    *ngIf="searchedData?.length > loadedGenesQuantity">
+    *ngIf="currentPage <= pagesTotal">
     <button (click)="loadMoreGenes()"
             class="btn show-more__button">
       {{ "show_more" | translate }}
@@ -80,8 +80,8 @@
 <!-- No content error message -->
 <section
   *ngIf="
-    (isGoTermsMode && isGoSearchPerformed && !isLoaded && searchedData?.length == 0) ||
-    (!isGoTermsMode && searchedData?.length == 0)">
+    (isGoTermsMode && isGoSearchPerformed && !isLoading && searchedData?.length == 0) ||
+    (!isGoTermsMode && searchedData?.length == 0 )">
   <app-no-content
     [title]="'nothing_found'">
     <ng-container icon>
@@ -96,7 +96,7 @@
 </section>
 
 <!-- GO search mode start message -->
-<section *ngIf="isGoTermsMode && !isGoSearchPerformed && !isLoaded">
+<section *ngIf="isGoTermsMode && !isGoSearchPerformed && !isLoading">
   <app-no-content
     [title]="'go_results_start_title'">
     <ng-container icon>
@@ -113,7 +113,7 @@
   </app-no-content>
 </section>
 
-<ng-container *ngIf="isGoTermsMode && isLoaded">
+<ng-container *ngIf="isGoTermsMode && isLoading">
   <app-spinner></app-spinner>
 </ng-container>
 

@@ -12,7 +12,7 @@ import { Subject } from 'rxjs';
 import { ToMap } from '../../../core/utils/to-map';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
-import { Genes } from '../../../core/models';
+import { FilteredGenes, Genes } from '../../../core/models';
 import { FilterService } from './services/filter.service';
 import { FilterTypesEnum, SortEnum } from './services/filter-types.enum';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -49,16 +49,12 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   @Output() loaded = new EventEmitter<boolean>();
 
   public searchedData: Genes[];
-  public genesPerPage = 20;
-  public loadedGenesQuantity = this.genesPerPage;
-
   public filterTypes = FilterTypesEnum;
-  public filteredGenes: Genes[];
   public sortEnum = SortEnum;
   public sort: Sort = this.filterService.sort;
 
   public asTableRow = true;
-  public isLoaded = false;
+  public isLoading = false;
 
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
@@ -69,7 +65,8 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   public molecularActivity: Map<any, any>;
 
   public downloadJsonLink: string | SafeResourceUrl = '#';
-
+  public currentPage = this.filterService.filters.page;
+  public pagesTotal: number;
   private subscription$ = new Subject();
 
   constructor(
@@ -95,6 +92,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
    * Get genes list
    */
   setInitialState(): void {
+    debugger;
     this.filterService.filterResult
       .pipe(
         takeUntil(this.subscription$),
@@ -104,16 +102,20 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
       )
       .subscribe(
         (filteredData) => {
-          this.filteredGenes = filteredData;
+          this.searchedData.push(...filteredData.items);
+          this.downloadSearch(this.searchedData);
+          this.pagesTotal = filteredData.options.pagination.pagesTotal;
+          this.loaded.emit(true);
+
           this.cdRef.markForCheck();
         },
         (error) => {
           console.log(error);
+          this.loaded.emit(true);
+
           this.cdRef.markForCheck();
         }
       );
-    this.searchedData = [...this.genesList];
-    this.downloadSearch(this.searchedData);
     this.loaded.emit(true);
   }
 
@@ -121,10 +123,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
    * Load next 20 genes
    */
   public loadMoreGenes(): void {
-    if (this.searchedData?.length >= this.loadedGenesQuantity) {
-      this.loadedGenesQuantity += this.genesPerPage;
-    }
-    this.filterService.filters.page++;
+    this.filterService.onLoadMoreGenes(this.pagesTotal);
   }
 
   /**
@@ -148,7 +147,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
 
   // TODO: this function isn't pure
   public searchGenesByGoTerm(query: string): void {
-    this.isLoaded = true;
+    this.isLoading = true;
     if (query) {
       this.apiService
         .getGoTermMatchByString(query)
@@ -158,7 +157,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
             this.searchedData = genes; // If nothing found, will return empty array
             this.downloadSearch(this.searchedData);
             this.isGoSearchPerformed = true;
-            this.isLoaded = false;
+            this.isLoading = false;
 
             // Map data if it's presented:
             for (const item of this.searchedData) {
@@ -190,7 +189,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
         );
     } else {
       this.isGoSearchPerformed = false;
-      this.isLoaded = false;
+      this.isLoading = false;
       this.cdRef.markForCheck();
     }
   }
@@ -214,7 +213,6 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
    */
   public clearFilters(filterName?: string): void {
     this.filterService.clearFilters(filterName ? filterName : null);
-    this.setInitialState();
   }
 
   /**

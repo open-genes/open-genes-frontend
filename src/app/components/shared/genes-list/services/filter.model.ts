@@ -9,7 +9,7 @@ export interface Filter {
   byMethylationChange: string; // by the gene's methylation change with age
   byExpressionChange: number; // by gene's age related expression change variant
   page?: number;
-  pageSize?: number;
+  pagesize?: number;
 }
 
 export interface Sort {

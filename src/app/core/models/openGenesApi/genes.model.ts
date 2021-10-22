@@ -61,3 +61,15 @@ export interface FunctionalClusters {
   id: number;
   name: string;
 }
+
+export interface FilteredGenes {
+  items: Genes[];
+  options: {
+    objTotal: number;
+    pagination: {
+      page: number;
+      pageSize: number;
+      pagesTotal: number;
+    };
+  };
+}
