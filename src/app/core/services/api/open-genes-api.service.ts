@@ -5,6 +5,7 @@ import { Gene, Genes } from '../../models';
 import { environment } from '../../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/openGenesApi/associated-diseases.model';
+import { GenesWLifespanResearches } from '../../models/openGenesApi/genes-with-increase-lifespan-researches.model';
 
 @Injectable({
   providedIn: 'root',
@@ -48,5 +49,9 @@ export class ApiService {
 
   getDiseaseCategories(): Observable<AssociatedDiseaseCategories[]> {
     return this.http.get<AssociatedDiseaseCategories[]>(`${this.url}/api/disease-category/`);
+  }
+
+  getGenesWLifespanResearches(): Observable<GenesWLifespanResearches[]> {
+    return this.http.get<GenesWLifespanResearches[]>(`${this.url}/api/increase-lifespan/`);
   }
 }

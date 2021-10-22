@@ -86,6 +86,18 @@
             </app-sidebar>
           </div>
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
+            <app-hint class="__mb-15">
+              <ng-container title><span class="fa far fa-search"
+              ></span>&nbsp;{{ 'search_by_researches' | translate }}
+              </ng-container>
+              <ng-container button>
+                <button routerLink="/by-researches"
+                        class="btn btn--fill btn--small btn--purple">
+                  {{ 'search_by_researches_hint_go' | translate }}
+                </button>
+              </ng-container>
+            </app-hint>
+
             <app-search
               [genesList]="genes"
               (dataFromSearchBar)="setSearchQuery($event)"

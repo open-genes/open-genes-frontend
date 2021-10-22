@@ -79,6 +79,7 @@
         display: flex;
         border-radius: $border-radius-medium;
         padding: 12px 10px 10px;
+        transition: background .25s linear;
 
         .fa {
           margin: 2px 8px 0 0;
@@ -91,17 +92,26 @@
 
         &:hover {
           color: rgba($color-general, 0.85);
-          background-color: rgba($color-general, 0.08);
+          background: rgba($color-general, 0.08);
         }
 
         &:active {
           color: rgba($color-general, 0.75);
-          background-color: rgba($color-general, 0.15);
+          background: rgba($color-general, 0.15);
         }
 
         &.current {
           color: $color-general;
-          background-color: rgba($color-general, 0.15);
+          background: rgba($color-general, 0.15);
+        }
+      }
+
+      &--emphasized {
+        a {
+          &:not(:hover, :active, .current) {
+            color: $color-white;
+            background: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, #FFC769 100%);
+          }
         }
       }
     }

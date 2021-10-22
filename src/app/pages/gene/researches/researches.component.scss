@@ -1,14 +1,5 @@
 @import "../../styles";
 
-$research-tables: (
-  age-related-change: #c8e5fd, // Возрастные изменения экспрессии гена или активности белка
-  gene-intervention-to-vital-processes: #c1e2aa, // Влияние модуляции активности гена на возрастной процесс
-  protein-to-gene: #fbea95, // Участие продукта гена в регуляции генов, связанных со старением
-  gene-to-progeria: #ffd8a9, // Ассоциация гена с ускоренным старением у человека
-  gene-to-longevity-effect: #f5c3c2, // Геномные, транскриптомные и протеомные ассоциации с продолжительностью жизни/возрастным фенотипом
-  gene-to-additional-evidence: #cacaca // Другие подтверждения ассоциации гена со старением
-);
-
 .table {
   border-collapse: separate;
   border-spacing: 0;
@@ -23,19 +14,21 @@ $research-tables: (
     }
   }
 
+  @mixin sticky {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+  }
+
   thead {
     th:first-of-type {
-      position: sticky;
-      left: 0;
-      z-index: 2;
+      @include sticky;
     }
   }
 
   tr{
     td:first-of-type {
-      position: sticky;
-      left: 0;
-      z-index: 2;
+      @include sticky;
       background-color: $color-white;
     }
   }
@@ -78,34 +71,4 @@ $research-tables: (
   }
 }
 
-.comment-modal {
-  &__header,
-  &__cover
-  &__body {
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  &__header {
-    position: relative;
-    padding-right: 40px;
-    margin-bottom: 15px;
-
-    .close-button {
-      @include close-button(-10px);
-    }
-  }
-
-  &__cover {
-    margin-bottom: 10px;
-
-    img {
-      width: 100%;
-      height: auto;
-    }
-  }
-
-  &__body {
-    line-height: $font-line-height;
-  }
-}
+@include modal-window('comment');

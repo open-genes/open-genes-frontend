@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-go-search',
+  selector: 'app-contributors-page',
   templateUrl: './contributors.component.html',
   styleUrls: ['./contributors.component.scss'],
 })

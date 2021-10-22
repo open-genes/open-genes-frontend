@@ -232,6 +232,8 @@
   "researches_regulation_type": "Regulation type",
   "researches_result": "Result",
   "researches_sex": "Sex",
+  "search_by_researches": "Search by research categories",
+  "search_by_researches_hint_go": "Try it",
   "search_field_start_typing": "HGNC, name or Ensembl",
   "search_field_tap_search": "By annotations, e.g.: \"cytokine\"",
   "search_for_functions": "By gene's name or description",

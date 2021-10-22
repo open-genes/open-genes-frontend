@@ -1,0 +1,34 @@
+<tr class="item">
+  <td class="cell cell--name">
+    <div class="title overflow">
+      <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
+        <b>{{ item.symbol }}</b> {{ item.name }}
+      </a>
+    </div>
+  </td>
+
+  <td class="cell cell--actions">
+    <div class="overflow">
+      <app-gene-menu
+        [gene]="item"
+        [isAdded]="isFaved(item.id)"
+        (unFav)="unFavItem($event)"
+        (fav)="favItem($event)"
+      ></app-gene-menu>
+    </div>
+  </td>
+
+</tr>
+
+<tr class="item">
+  <td *ngIf="listSettings.ifShowClasses"
+      colspan="100%"
+      class="cell cell--functions">
+    <app-tag
+      *ngFor="let item of item.functionalClusters"
+      (click)="onFuncCluster(item['id'])"
+      [isActive]="filters.byClasses.includes(item['id'])"
+    >{{ item["name"] }}
+    </app-tag>
+  </td>
+</tr>

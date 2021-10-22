@@ -116,3 +116,40 @@
   }
 }
 
+// Modal window
+@mixin modal-window($class) {
+  .#{$class}-modal {
+    &__header,
+    &__cover,
+    &__body {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    &__header {
+      position: relative;
+      padding-right: 40px;
+      margin-bottom: 15px;
+
+      .close-button {
+        @include close-button(-10px);
+      }
+    }
+
+    &__cover {
+      margin-bottom: 10px;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    &__body {
+      line-height: $font-line-height;
+    }
+  }
+}
+
+
+

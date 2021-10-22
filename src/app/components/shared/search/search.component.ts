@@ -29,6 +29,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Inject(Document) public document: Document;
 
   @Input() genesList: Genes[];
+  @Input() showTitle = true;
 
   @Output() dataFromSearchBar: EventEmitter<any> = new EventEmitter<any>();
 
