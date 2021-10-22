@@ -17,6 +17,7 @@ import { Subject } from 'rxjs';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { ToMap } from '../../../core/utils/to-map';
 import { SettingsService } from '../../../core/services/settings.service';
+import { SearchMode, SearchModeEnum } from '../../../core/models/settings.model';
 
 @Component({
   selector: 'app-search',
@@ -28,24 +29,43 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Inject(Document) public document: Document;
 
   @Input() genesList: Genes[];
-  @Input() set isGoMode(value: boolean) {
-    this.isGoTermsMode = value;
-    this.searchedData = [];
-    this.searchForm.get('searchField').setValue('');
+
+  @Input() set setSearchMode(value: SearchMode) {
+    if (value) {
+      this.searchMode = value;
+      this.searchedData = [];
+      this.searchForm.get('searchField').setValue('');
+    }
   }
 
-  @Output() dataFromSearchBar: EventEmitter<string> = new EventEmitter<string>();
+  @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
 
   public searchedData: Genes[];
   public searchForm: FormGroup;
-  public isGoTermsMode: boolean;
+  public searchMode: SearchMode;
   public showSearchResult = false;
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
 
-  private subscription$ = new Subject();
 
+  private searchModeEnum = SearchModeEnum;
+  public inputData = [
+    {
+      searchMode: SearchModeEnum.searchByGenes,
+      placeholder: 'search_field_start_typing',
+    },
+    {
+      searchMode: SearchModeEnum.searchByGoTerms,
+      placeholder: 'search_field_tap_search',
+    },
+    {
+      searchMode: SearchModeEnum.searchByGenesList,
+      placeholder: 'search_field_tap_search',
+    },
+  ];
+
+  private subscription$ = new Subject();
   constructor(
     private renderer: Renderer2,
     private apiService: ApiService,
@@ -58,15 +78,13 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.subscription$.next();
-    this.subscription$.complete();
-    this.cancelSearch();
+  ngOnInit(): void {
+    this.subsToSearchFieldChanges();
+    this.onSearch();
   }
 
-  ngOnInit(): void {
-    this.searchForm
-      .get('searchField').valueChanges
+  private subsToSearchFieldChanges(): void {
+    this.searchForm.get('searchField').valueChanges
       .pipe(
         filter((query: string) => !!query),
         map((query: string) => query.toLowerCase()),
@@ -80,10 +98,14 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
           }
 
           if (this.showSearchResult) {
-            if (this.isGoTermsMode) {
+            if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
               return true;
-            } else {
-              this.autocompleteSearch(query);
+            }
+            if (this.searchMode === this.searchModeEnum.searchByGenes) {
+              this.searchByGenes(query);
+            }
+            if (this.searchMode === this.searchModeEnum.searchByGenesList) {
+              this.searchByGenesList(query);
             }
           }
 
@@ -92,7 +114,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
         debounceTime(500),
         distinctUntilChanged(),
         switchMap((query: string) => this.apiService.getGoTermMatchByString(query)),
-        takeUntil(this.subscription$)
+        takeUntil(this.subscription$),
       )
       .subscribe((genes: Genes[]) => {
         this.searchedData = genes;
@@ -109,7 +131,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     }
   }
 
-  private autocompleteSearch(query: string): void {
+  private searchByGenes(query: string): void {
     if (query.length !== 0) {
       this.searchedData = this.genesList.filter((gene) => {
         const searchedText = [gene.symbol, gene.id, gene?.ensembl, gene.name, ...gene.aliases].join(' ').toLowerCase();
@@ -118,14 +140,25 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     }
   }
 
+  private searchByGenesList(query: string): void {
+    if (query.length !== 0) {
+    }
+  }
+
   public onSearch(): void {
     const query: string = this.searchForm.get('searchField').value;
-    this.dataFromSearchBar.emit(query.toLowerCase());
+    this.searchQuery.emit(query.toLowerCase());
   }
 
   public cancelSearch(event?): void {
     this.showSearchResult = false;
     this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
     event?.stopPropagation();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.next();
+    this.subscription$.complete();
+    this.cancelSearch();
   }
 }

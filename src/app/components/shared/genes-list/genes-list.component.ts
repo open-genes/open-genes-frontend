@@ -20,6 +20,8 @@ import { FileExportService } from '../../../core/services/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
 import { Filter } from './services/filter.model';
+import { SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
+import { SettingsService } from '../../../core/services/settings.service';
 
 @Component({
   selector: 'app-genes-list',
@@ -31,13 +33,16 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
 
-  @Input() set isGoMode(value: boolean) {
-    this.isGoTermsMode = value;
-    this.isGoSearchPerformed = false;
-    if (!this.isGoTermsMode) {
-      this.updateGeneListOnSearch('');
-    } else {
-      this.searchGenesByGoTerm('');
+  @Input() set setSearchMode(value: SearchMode) {
+    if (value) {
+      this.isGoTermsMode = value === this.searchModeEnum.searchByGoTerms;
+      this.isSearchByGenesList = value === this.searchModeEnum.searchByGenesList;
+      this.isGoSearchPerformed = false;
+      if (!this.isGoTermsMode) {
+        this.updateGeneListOnSearch('');
+      } else {
+        this.searchGenesByGoTerm('');
+      }
     }
   }
 
@@ -57,13 +62,16 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   public genesPerPage = 20;
   public loadedGenesQuantity = this.genesPerPage;
 
-  public asTableRow = true;
   public filters: Filter = this.filterService.filters;
   public filterTypes = FilterTypesEnum;
+
+  public isTableView: boolean;
+  public isSearchByGenesList: boolean;
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
   public isGoTermsModeError = false;
-  public isLoaded = false;
+  public isLoading = false;
+
   public goModeCellData: any;
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
@@ -71,25 +79,29 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
 
   public downloadJsonLink: string | SafeResourceUrl = '#';
 
+  private retrievedSettings: Settings;
+  private searchModeEnum = SearchModeEnum;
   private subscription$ = new Subject();
 
   constructor(
     private readonly apiService: ApiService,
     private filterService: FilterService,
+    private settingsService: SettingsService,
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.setInitSettings();
     this.setInitialState();
   }
 
-  ngOnDestroy(): void {
-    this.subscription$.next();
-    this.subscription$.complete();
+  private setInitSettings(): void {
+    this.retrievedSettings = this.settingsService.getSettings();
+    this.isTableView = this.retrievedSettings.isTableView;
   }
 
   /**
@@ -241,7 +253,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
 
   // TODO: this function isn't pure
   public searchGenesByGoTerm(query: string): void {
-    this.isLoaded = true;
+    this.isLoading = true;
     if (query) {
       this.apiService
         .getGoTermMatchByString(query)
@@ -251,7 +263,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
             this.searchedData = genes; // If nothing found, will return empty array
             this.downloadSearch(this.searchedData);
             this.isGoSearchPerformed = true;
-            this.isLoaded = false;
+            this.isLoading = false;
 
             // Map data if it's presented:
             for (const item of this.searchedData) {
@@ -283,7 +295,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
         );
     } else {
       this.isGoSearchPerformed = false;
-      this.isLoaded = false;
+      this.isLoading = false;
       this.cdRef.markForCheck();
     }
   }
@@ -291,8 +303,8 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   /**
    * View
    */
-  public toggleGenesView(evt: boolean) {
-    this.asTableRow = evt;
+  public toggleGenesView(event: boolean) {
+    this.isTableView = event;
   }
 
   /**
@@ -354,5 +366,10 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
    */
   private errorLogger(context: any, error: any) {
     console.warn(context, error);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.next();
+    this.subscription$.complete();
   }
 }

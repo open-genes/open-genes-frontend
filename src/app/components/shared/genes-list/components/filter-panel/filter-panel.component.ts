@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FilterTypesEnum } from '../../services/filter-types.enum';
 import { FilterService } from '../../services/filter.service';
 import { GeneFieldsModalComponent } from '../gene-fields-modal/gene-fields-modal.component';
@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { Filter } from '../../services/filter.model';
 import { SettingsService } from '../../../../../core/services/settings.service';
-import { SettingsEnum } from '../../../../../core/models/settings.model';
+import { Settings, SettingsEnum } from '../../../../../core/models/settings.model';
 
 @Component({
   selector: 'app-filter-panel',
@@ -14,7 +14,7 @@ import { SettingsEnum } from '../../../../../core/models/settings.model';
   styleUrls: ['./filter-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilterPanelComponent {
+export class FilterPanelComponent implements OnInit {
   @Input() isMobile: boolean;
   @Input() isGoTermsMode: boolean;
   @Input() downloadJsonLink: string | SafeResourceUrl = '#';
@@ -25,15 +25,26 @@ export class FilterPanelComponent {
 
   public filterTypes = FilterTypesEnum;
   public filters: Filter = this.filterService.filters;
-  public isTableView = true;
+  public isTableView: boolean;
   public isClear$ = this.filterService.isClearFiltersBtnShown;
+
   private settingsKey = SettingsEnum;
+  private retrievedSettings: Settings;
 
   constructor(
     private filterService: FilterService,
     private settingsService: SettingsService,
     private dialog: MatDialog
   ) {}
+
+  ngOnInit(): void {
+    this.setInitSettings();
+  }
+
+  private setInitSettings(): void {
+    this.retrievedSettings = this.settingsService.getSettings();
+    this.isTableView = this.retrievedSettings.isTableView;
+  }
 
   /**
    * Send clear filter item

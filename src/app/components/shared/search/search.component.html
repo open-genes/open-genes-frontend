@@ -23,13 +23,16 @@
       </button>
 
       <!-- TODO: Use matNativeControl -->
-      <input
-        formControlName="searchField"
-        type="text"
-        placeholder="{{ (isGoTermsMode ? 'search_field_tap_search' : 'search_field_start_typing') | translate }}"
-        class="field search-form__field"
-        (keyup.enter)="onSearch()"
-        #searchQuery>
+      <ng-container *ngFor="let item of inputData">
+        <input
+          *ngIf="searchMode === item.searchMode"
+          formControlName="searchField"
+          type="text"
+          placeholder="{{ item.placeholder | translate }}"
+          class="field search-form__field"
+          (keyup.enter)="onSearch()">
+      </ng-container>
+
     </div>
 
     <div class="search-form__autocomplete-list"
@@ -43,13 +46,13 @@
 
           <span class="item__symbol"
                 appHighlight
-                [highlightText]="searchQuery.value"
+                [highlightText]="searchForm.get('searchField').value"
                 [innerHTML]="gene.symbol">
           </span>&nbsp;
           <span *ngIf="!gene?.terms"
                 class="item__name"
                 appHighlight
-                [highlightText]="searchQuery.value"
+                [highlightText]="searchForm.get('searchField').value"
                 [innerHTML]="gene.name">
           </span>&nbsp;
 
@@ -57,7 +60,7 @@
             <span *ngFor="let term of biologicalProcess | keyvalue"
                   class="item__name"
                   appHighlight
-                  [highlightText]="searchQuery.value"
+                  [highlightText]="searchForm.get('searchField').value"
                   [innerHTML]="term.value">
           </span>
           </ng-container>
@@ -66,7 +69,7 @@
             <span *ngFor="let term of cellularComponent | keyvalue"
                   class="item__name"
                   appHighlight
-                  [highlightText]="searchQuery.value"
+                  [highlightText]="searchForm.get('searchField').value"
                   [innerHTML]="term.value">
           </span>
           </ng-container>
@@ -75,7 +78,7 @@
             <span *ngFor="let term of molecularActivity | keyvalue"
                   class="item__name"
                   appHighlight
-                  [highlightText]="searchQuery.value"
+                  [highlightText]="searchForm.get('searchField').value"
                   [innerHTML]="term.value">
           </span>
           </ng-container>

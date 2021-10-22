@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Genes } from '../../core/models';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
@@ -12,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { WizardService } from '../../components/shared/wizard/wizard-service.service';
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
+import { SearchMode } from '../../core/models/settings.model';
 
 @Component({
   selector: 'app-home',
@@ -25,15 +20,19 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public isAvailable = true;
   public genesListIsLoaded = false;
   public errorStatus: string;
-  public isGoTermsMode: boolean;
+  public searchMode: SearchMode;
   public searchQuery: string;
+  public searchData: {
+    searchMode: SearchMode;
+    searchQuery: string;
+  };
 
   constructor(
     public windowService: WindowService,
     private filterService: FilterService,
     private wizardService: WizardService,
     private readonly apiService: ApiService,
-    private readonly cdRef: ChangeDetectorRef,
+    private readonly cdRef: ChangeDetectorRef
   ) {
     super(windowService);
   }
@@ -88,12 +87,12 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.cdRef.markForCheck();
   }
 
-  public setSearchQuery(event): void {
-    this.searchQuery = event;
+  public setSearchQuery(query: string): void {
+    this.searchQuery = query;
   }
 
-  public setSearchMode(event): void {
-    this.isGoTermsMode = event;
+  public setSearchMode(searchMode: SearchMode): void {
+    this.searchMode = searchMode;
   }
 
   /**

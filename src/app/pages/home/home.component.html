@@ -89,15 +89,16 @@
 
             <app-search
               [genesList]="genes"
-              [isGoMode]="isGoTermsMode"
-              (dataFromSearchBar)="setSearchQuery($event)"
+              [setSearchMode]="searchMode"
+              (searchQuery)="setSearchQuery($event)"
             ></app-search>
 
             <app-genes-list
               *ngIf="genes"
               [genesList]="genes"
               [isMobile]="isMobile"
-              [isGoMode]="isGoTermsMode"
+              [search] = 'searchData'
+              [setSearchMode]="searchMode"
               [searchQuery]="searchQuery"
               [showFiltersPanel]="true"
               (loaded)="setIsGenesListLoaded($event)">
