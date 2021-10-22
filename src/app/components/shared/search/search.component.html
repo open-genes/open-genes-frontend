@@ -2,7 +2,8 @@
       class="search-form"
       [class.search-form--active]="showSearchResult">
 
-  <div class="search-form__quantity">
+  <div *ngIf="showTitle"
+       class="search-form__quantity">
     <span *ngIf="genesList?.length">{{ 'main_page_total' | translate: { number: genesList?.length } }}</span>
   </div>
 

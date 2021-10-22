@@ -59,6 +59,7 @@ export class ResearchesComponent implements OnInit {
       this.researches?.additionalEvidences.length !== 0;
   }
 
+  // TODO: DRY
   public openCommentModal(data): void {
     this.dialog.open(this.dialogRef, {
       data: data,
