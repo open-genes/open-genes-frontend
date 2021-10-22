@@ -38,6 +38,13 @@
           <span class="fa far fa-question-circle"></span>
           {{ 'header_menu_help' | translate }}</a>
       </li>
+      <li class="menu__link menu__link--emphasized">
+        <a [routerLink]="'/by-researches'"
+           routerLinkActive="current"
+        >
+          <span class="fa far fa-search"></span>
+          {{ 'search_by_researches' | translate }}</a>
+      </li>
       <li class="menu__link">
         <a [routerLink]="'/favourites'"
            routerLinkActive="current"

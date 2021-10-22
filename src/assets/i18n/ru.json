@@ -235,6 +235,7 @@
   "researches_result": "Результат",
   "researches_sex": "Пол",
   "search_by_researches": "Поиск по категориям исследований",
+  "search_by_researches_hint_go": "Попробовать",
   "search_field_start_typing": "HGNC, название или Ensembl",
   "search_field_tap_search": "По аннотациям, пр.: \"cytokine\"",
   "search_for_functions": "По имени или описанию гена",

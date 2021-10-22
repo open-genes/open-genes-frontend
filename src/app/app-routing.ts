@@ -50,7 +50,7 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/download/download.module').then((m) => m.DownloadModule),
   },
   {
-    path: 'lifespan',
+    path: 'by-researches',
     loadChildren: () => import('./pages/increase-lifespan/increase-lifespan.module').then((m) => m.IncreaseLifespanModule),
   },
   {
