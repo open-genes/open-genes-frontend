@@ -37,6 +37,9 @@
   }
 
   &--dummy {
+  // TODO: remove this crutch solution and refactor base blocks styles
+  min-height: calc(80vh - #{$header-height});
+
     .page__inner {
       vertical-align: middle;
     }
