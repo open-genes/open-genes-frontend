@@ -219,6 +219,8 @@
   "search_for_go_terms": "Search by Gene Ontology annotations",
   "search_for_genes_desc": "Search through genes associated with aging",
   "search_for_go_terms_desc": "Search genes by Gene Ontology annotations descriptions",
+  "search_for_genes_by_list": "Search by genes list",
+  "search_for_genes_by_list_desc": "Search by genes list",
   "settings": "Settings",
   "settings_educational_content_title": "Open Genes educational features",
   "settings_educational_content_description": "(turns on hints for terms and educational content)",

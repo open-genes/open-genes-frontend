@@ -36,3 +36,12 @@
   }
   padding: 15px 0;
 }
+
+.genes-info {
+  display: flex;
+  justify-content: center;
+
+  .genes-info__found {
+    margin-right: 20px;
+  }
+}

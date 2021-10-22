@@ -24,17 +24,21 @@
 
 </div>
 
-<div class="search-form__genes-info">
+<div class="genes-info">
   <div class="genes-info__found" *ngIf="notFoundAndFoundGenes?.foundGenes.length">
     Найдено: {{notFoundAndFoundGenes?.foundGenes.length}}
-    (<ng-container *ngFor="let geneName of notFoundAndFoundGenes?.foundGenes; let last = last">
-    {{geneName}} <span *ngIf="notFoundAndFoundGenes?.foundGenes.length > 1 && !last">, </span>
-  </ng-container>)
+    (
+    <ng-container *ngFor="let geneName of notFoundAndFoundGenes?.foundGenes; let last = last">
+      {{geneName}} <span *ngIf="notFoundAndFoundGenes?.foundGenes.length > 1 && !last">, </span>
+    </ng-container>
+    )
   </div>
   <div class="genes-info__not-found" *ngIf="notFoundAndFoundGenes?.notFoundGenes.length">
     Не найдено: {{notFoundAndFoundGenes?.notFoundGenes.length}}
-    (<ng-container *ngFor="let geneName of notFoundAndFoundGenes?.notFoundGenes;  let last = last">
-    {{geneName}} <span *ngIf="notFoundAndFoundGenes?.notFoundGenes.length > 1 && !last">, </span>
-  </ng-container>)
+    (
+    <ng-container *ngFor="let geneName of notFoundAndFoundGenes?.notFoundGenes;  let last = last">
+      {{geneName}} <span *ngIf="notFoundAndFoundGenes?.notFoundGenes.length > 1 && !last">, </span>
+    </ng-container>
+    )
   </div>
 </div>

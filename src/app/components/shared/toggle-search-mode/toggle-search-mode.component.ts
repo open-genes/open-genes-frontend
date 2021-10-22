@@ -22,8 +22,8 @@ export class ToggleSearchModeComponent implements OnInit {
     },
     {
       searchMode: SearchModeEnum.searchByGenesList,
-      toggleTitle: 'Поиск генов по списку генов',
-      description: 'Поиск генов по списку генов',
+      toggleTitle: 'search_for_genes_by_list',
+      description: 'search_for_genes_by_list_desc',
     },
   ]
 

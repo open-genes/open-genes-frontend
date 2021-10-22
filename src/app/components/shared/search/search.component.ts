@@ -65,7 +65,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     },
     {
       searchMode: SearchModeEnum.searchByGenesList,
-      placeholder: 'search_field_tap_search',
+      placeholder: 'search_field_by_comma',
     },
   ];
 
@@ -102,7 +102,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
             this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
           }
 
-          if (this.showSearchResult) {
+          if (query.length >= 1) {
             if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
               return true;
             }
@@ -137,39 +137,44 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   private searchByGenes(query: string): void {
-    if (query.length !== 0) {
-      this.searchedData = this.genesList.filter((gene) => {
-        const searchedText = [gene.symbol, gene.id, gene?.ensembl, gene.name, ...gene.aliases].join(' ').toLowerCase();
-        return searchedText.includes(query);
-      });
-    }
+    this.searchedData = this.genesList.filter((gene) => {
+      const searchedText = [gene.symbol, gene.id, gene?.ensembl, gene.name, ...gene.aliases].join(' ').toLowerCase();
+      return searchedText.includes(query);
+    });
   }
 
   private searchByGenesList(query: string): void {
-    this.searchedData = [];
-    this.notFoundGenes = [];
-    const arrayOfWords = query
-      .toLowerCase()
-      .split(',')
-      .map((res) => res.trim())
-      .filter((res) => res);
+    if (query.length >= 2) {
+      this.searchedData = [];
+      this.notFoundGenes = [];
+      const arrayOfWords = query
+        .toLowerCase()
+        .split(',')
+        .map((res) => res.trim())
+        .filter((res) => res);
 
-    const uniqWords = [...new Set(arrayOfWords)];
+      const uniqWords = [...new Set(arrayOfWords)];
 
-    if (uniqWords.length !== 0) {
-      this.foundGenes = uniqWords.filter((symbol) => {
-        const foundGene = this.genesList.find((gene) => symbol === gene.symbol.toLowerCase());
+      if (uniqWords.length !== 0) {
+        this.foundGenes = uniqWords.filter((symbol) => {
+          const foundGene = this.genesList.find((gene) => symbol === gene.symbol.toLowerCase());
 
-        foundGene ? this.searchedData.push(foundGene) : this.notFoundGenes.push(symbol);
+          foundGene ? this.searchedData.push(foundGene) : this.notFoundGenes.push(symbol);
 
-        return !!foundGene;
+          return !!foundGene;
+        });
+      }
+
+      this.notFoundAndFoundGenes.emit({
+        foundGenes: this.foundGenes,
+        notFoundGenes: this.notFoundGenes,
+      });
+    } else {
+      this.notFoundAndFoundGenes.emit({
+        foundGenes: [],
+        notFoundGenes: [],
       });
     }
-
-    this.notFoundAndFoundGenes.emit({
-      foundGenes: this.foundGenes,
-      notFoundGenes: this.notFoundGenes,
-    });
   }
 
   public onSearch(): void {
