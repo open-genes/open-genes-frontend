@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SearchMode, SearchModeEnum, Settings, SettingsEnum } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
 
@@ -29,6 +29,8 @@ export class ToggleSearchModeComponent implements OnInit {
 
   private retrievedSettings: Settings;
   private settingsKey = SettingsEnum;
+
+  @Input() notFoundAndFoundGenes;
 
   @Output() setMode: EventEmitter<SearchMode> = new EventEmitter<SearchMode>();
 

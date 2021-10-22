@@ -27,6 +27,8 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     searchQuery: string;
   };
 
+  public notFoundAndFoundGenes: any;
+
   constructor(
     public windowService: WindowService,
     private filterService: FilterService,
@@ -93,6 +95,10 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
 
   public setSearchMode(searchMode: SearchMode): void {
     this.searchMode = searchMode;
+  }
+
+  public setNotFoundAndFoundGenes(event: any): void {
+    this.notFoundAndFoundGenes = event;
   }
 
   /**

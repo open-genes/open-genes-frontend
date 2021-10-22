@@ -39,6 +39,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
+  @Output() notFoundAndFoundGenes: EventEmitter<any> = new EventEmitter<any>();
 
   public foundGenes: string[];
   public notFoundGenes: string[] = [];
@@ -145,7 +146,6 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   private searchByGenesList(query: string): void {
-    debugger;
     this.searchedData = [];
     this.notFoundGenes = [];
     const arrayOfWords = query
@@ -165,7 +165,11 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
         return !!foundGene;
       });
     }
-    console.log(this.foundGenes);
+
+    this.notFoundAndFoundGenes.emit({
+      foundGenes: this.foundGenes,
+      notFoundGenes: this.notFoundGenes,
+    });
   }
 
   public onSearch(): void {
