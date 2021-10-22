@@ -40,6 +40,9 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
 
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
 
+  public foundGenes: string[];
+  public notFoundGenes: string[] = [];
+
   public searchedData: Genes[];
   public searchForm: FormGroup;
   public searchMode: SearchMode;
@@ -66,11 +69,12 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   ];
 
   private subscription$ = new Subject();
+
   constructor(
     private renderer: Renderer2,
     private apiService: ApiService,
     private settingsService: SettingsService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
   ) {
     super();
     this.searchForm = new FormGroup({
@@ -141,8 +145,27 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   private searchByGenesList(query: string): void {
-    if (query.length !== 0) {
+    debugger;
+    this.searchedData = [];
+    this.notFoundGenes = [];
+    const arrayOfWords = query
+      .toLowerCase()
+      .split(',')
+      .map((res) => res.trim())
+      .filter((res) => res);
+
+    const uniqWords = [...new Set(arrayOfWords)];
+
+    if (uniqWords.length !== 0) {
+      this.foundGenes = uniqWords.filter((symbol) => {
+        const foundGene = this.genesList.find((gene) => symbol === gene.symbol.toLowerCase());
+
+        foundGene ? this.searchedData.push(foundGene) : this.notFoundGenes.push(symbol);
+
+        return !!foundGene;
+      });
     }
+    console.log(this.foundGenes);
   }
 
   public onSearch(): void {
