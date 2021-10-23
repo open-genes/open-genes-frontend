@@ -12,7 +12,7 @@ import { Subject } from 'rxjs';
 import { ToMap } from '../../../core/utils/to-map';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
-import { FilteredGenes, Genes } from '../../../core/models';
+import { Genes } from '../../../core/models';
 import { FilterService } from './services/filter.service';
 import { FilterTypesEnum, SortEnum } from './services/filter-types.enum';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -30,6 +30,7 @@ import { Filter, Sort } from './services/filter.model';
 export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
+  @Input() genesList: Genes[];
 
   @Input() set dataFromSearchBar(value) {
     if (value) {
@@ -44,11 +45,9 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
     }
   }
 
-  @Input() genesList: Genes[];
-
   @Output() loaded = new EventEmitter<boolean>();
 
-  public searchedData: Genes[];
+  public searchedData: Genes[] = [];
   public filterTypes = FilterTypesEnum;
   public sortEnum = SortEnum;
   public sort: Sort = this.filterService.sort;
@@ -65,8 +64,9 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   public molecularActivity: Map<any, any>;
 
   public downloadJsonLink: string | SafeResourceUrl = '#';
-  public currentPage = this.filterService.filters.page;
-  public pagesTotal: number;
+  public currentPage: number;
+  public pageOptions: any;
+
   private subscription$ = new Subject();
 
   constructor(
@@ -92,7 +92,6 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
    * Get genes list
    */
   setInitialState(): void {
-    debugger;
     this.filterService.filterResult
       .pipe(
         takeUntil(this.subscription$),
@@ -102,17 +101,19 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
       )
       .subscribe(
         (filteredData) => {
-          this.searchedData.push(...filteredData.items);
+          this.currentPage = this.filterService.filters.page
+          if (this.currentPage == 1) {
+            this.searchedData = [];
+            this.searchedData.push(...filteredData.items);
+          } else {
+            this.searchedData.push(...filteredData.items);
+          }
           this.downloadSearch(this.searchedData);
-          this.pagesTotal = filteredData.options.pagination.pagesTotal;
-          this.loaded.emit(true);
-
+          this.pageOptions = filteredData.options.pagination;
           this.cdRef.markForCheck();
         },
         (error) => {
           console.log(error);
-          this.loaded.emit(true);
-
           this.cdRef.markForCheck();
         }
       );
@@ -123,7 +124,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
    * Load next 20 genes
    */
   public loadMoreGenes(): void {
-    this.filterService.onLoadMoreGenes(this.pagesTotal);
+    this.filterService.onLoadMoreGenes(this.pageOptions.pagesTotal);
   }
 
   /**

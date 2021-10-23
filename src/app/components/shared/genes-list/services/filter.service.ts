@@ -44,7 +44,7 @@ export class FilterService {
     byExpressionChange: 0,
     byMethylationChange: '',
     page: 1,
-    pagesize: 20,
+    pageSize: 20,
   };
 
   constructor(
@@ -81,6 +81,7 @@ export class FilterService {
           this.filters[filterType] = '';
         }
       }
+      this.filters.page = 1;
     } else {
       return;
     }
@@ -127,6 +128,7 @@ export class FilterService {
         this.filters.byExpressionChange = 0;
         this.filters.byMethylationChange = '';
     }
+    this.filters.page = 1;
     this.areMoreThan2FiltersApplied();
   }
 

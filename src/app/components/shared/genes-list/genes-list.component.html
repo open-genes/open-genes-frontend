@@ -68,7 +68,7 @@
   <!-- Show more Button -->
   <div
     class="btn-wrap show-more"
-    *ngIf="currentPage <= pagesTotal">
+    *ngIf="currentPage <= pageOptions.pagesTotal && searchedData.length >= pageOptions.pageSize">
     <button (click)="loadMoreGenes()"
             class="btn show-more__button">
       {{ "show_more" | translate }}
@@ -81,7 +81,7 @@
 <section
   *ngIf="
     (isGoTermsMode && isGoSearchPerformed && !isLoading && searchedData?.length == 0) ||
-    (!isGoTermsMode && searchedData?.length == 0 )">
+    (!isGoTermsMode && searchedData?.length == 0 && !loaded )">
   <app-no-content
     [title]="'nothing_found'">
     <ng-container icon>
