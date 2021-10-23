@@ -57,21 +57,21 @@ export class HorvathClockComponent extends WindowWidth implements OnInit, OnDest
         genes.forEach((gene) => {
           this.curatedGeneSymbolsArray.push(gene.symbol);
         });
-      });
 
-    this.apiService
-      .getGenesInHorvathClock()
-      .pipe(takeUntil(this.subscription$))
-      .subscribe(
-        (genes) => {
-          this.genes = genes;
-          this.cdRef.markForCheck();
-        },
-        (err) => {
-          this.isAvailable = false;
-          this.errorStatus = err.statusText;
-        }
-      );
+        this.apiService
+          .getGenesInHorvathClock()
+          .pipe(takeUntil(this.subscription$))
+          .subscribe(
+            (genes) => {
+              this.genes = genes;
+              this.cdRef.markForCheck();
+            },
+            (err) => {
+              this.isAvailable = false;
+              this.errorStatus = err.statusText;
+            }
+          );
+      });
   }
 
   public setIsGenesListLoaded(event: boolean): void {

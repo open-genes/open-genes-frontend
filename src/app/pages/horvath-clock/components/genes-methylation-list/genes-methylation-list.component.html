@@ -2,18 +2,22 @@
   <!-- Content -->
   <section *ngIf="searchedData?.length !== 0"
            class="view-content __w-content-fluid __mt-40">
-    <div *ngFor="let gene of searchedData"
-         class="__mt-10 panel">
-      <div class="title">
+    <div *ngFor="let gene of searchedData | slice: 0:loadedGenesQuantity"
+         class="__mt-5 panel row no-gutters">
+      <div class="title col-8">
         <ng-container *ngIf="compareWith.includes(gene.symbol)">
-          <a [routerLink]="['/gene', gene.symbol]" class="link link--gray"
+          <a [routerLink]="['/gene', gene.symbol]" class="link link--underline"
           ><b>{{gene.symbol}}</b> {{gene.name }}</a>
         </ng-container>
         <ng-container *ngIf="!compareWith.includes(gene.symbol)">
           <b>{{gene.symbol}}</b> {{gene.name }}
         </ng-container>
       </div>
-      <span>{{ gene.methylationCorrelation }}</span>
+      <div class="col __text-right">
+        <app-tag>
+          {{ gene.methylationCorrelation }}
+        </app-tag>
+      </div>
     </div>
   </section>
 
