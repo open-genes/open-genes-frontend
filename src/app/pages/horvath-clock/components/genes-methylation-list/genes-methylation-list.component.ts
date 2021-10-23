@@ -5,31 +5,29 @@ import {
   Input,
   OnInit,
   Output,
-  TemplateRef,
-  ViewChild,
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Settings } from '../../../../core/models/settings.model';
 import { SettingsService } from '../../../../core/services/settings.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack-bar.component';
-import { GenesWLifespanResearches } from '../../../../core/models/openGenesApi/genes-with-increase-lifespan-researches.model';
-import { MatDialog } from '@angular/material/dialog';
+import { GenesInHorvathClock } from '../../../../core/models/openGenesApi/genes-in-horvath-clock.model';
 
 @Component({
-  selector: 'app-genes-research-list',
-  templateUrl: './genes-research-list.component.html',
-  styleUrls: ['./genes-research-list.component.scss'],
+  selector: 'app-genes-methylation-list',
+  templateUrl: './genes-methylation-list.component.html',
+  styleUrls: ['./genes-methylation-list.component.scss'],
 })
-export class GenesResearchListComponent implements OnInit {
-  @Input() genesList: GenesWLifespanResearches[];
+export class GenesMethylationListComponent implements OnInit {
+  @Input() genesList: GenesInHorvathClock[];
+  @Input() compareWith: string[] = [];
   @Input() set searchQuery(query: string) {
     this.updateGeneListOnSearch(query !== undefined && query !== '' ? query : '');
   }
 
   @Output() loaded = new EventEmitter<boolean>();
 
-  public searchedData: GenesWLifespanResearches[];
+  public searchedData: GenesInHorvathClock[];
   public genesPerPage = 20;
   public loadedGenesQuantity = this.genesPerPage;
   public isLoading = false;
@@ -37,13 +35,10 @@ export class GenesResearchListComponent implements OnInit {
   private subscription$ = new Subject();
   private retrievedSettings: Settings;
 
-  @ViewChild('commentModalBody') dialogRef: TemplateRef<any>;
-
   constructor(
     private settingsService: SettingsService,
     private cdRef: ChangeDetectorRef,
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private snackBar: MatSnackBar
   ) {
     this.setInitialSettings();
   }
@@ -71,6 +66,7 @@ export class GenesResearchListComponent implements OnInit {
     this.retrievedSettings = this.settingsService.getSettings();
   }
 
+  // TODO: Implement this method in a common abstract class
   public updateGeneListOnSearch(query: string): void {
     this.searchedData = this.genesList.filter((item) => {
       // TODO: DRY
@@ -91,19 +87,6 @@ export class GenesResearchListComponent implements OnInit {
     if (this.searchedData?.length >= this.loadedGenesQuantity) {
       this.loadedGenesQuantity += this.genesPerPage;
     }
-  }
-
-  // TODO: DRY
-  public openCommentModal(data): void {
-    this.dialog.open(this.dialogRef, {
-      data: data,
-      panelClass: 'comment-modal',
-      minWidth: '320px',
-      maxWidth: '768px',
-    });
-  }
-  public closeCommentModal(): void {
-    this.dialog.closeAll();
   }
 
   /**

@@ -1,0 +1,41 @@
+<ng-container *ngIf="searchedData?.length !== 0">
+  <!-- Content -->
+  <section *ngIf="searchedData?.length !== 0"
+           class="view-content __w-content-fluid __mt-40">
+    <div *ngFor="let gene of searchedData"
+         class="__mt-10 panel">
+      <div class="title">
+        <ng-container *ngIf="compareWith.includes(gene.symbol)">
+          <a [routerLink]="['/gene', gene.symbol]" class="link link--gray"
+          ><b>{{gene.symbol}}</b> {{gene.name }}</a>
+        </ng-container>
+        <ng-container *ngIf="!compareWith.includes(gene.symbol)">
+          <b>{{gene.symbol}}</b> {{gene.name }}
+        </ng-container>
+      </div>
+      <span>{{ gene.methylationCorrelation }}</span>
+    </div>
+  </section>
+
+  <!-- Show more Button -->
+  <div class="btn-wrap show-more" *ngIf="searchedData?.length > loadedGenesQuantity">
+    <button (click)="loadMoreGenes()" class="btn show-more__button">
+      {{ "show_more" | translate }}
+    </button>
+  </div>
+</ng-container>
+
+<!-- No content error message -->
+<section *ngIf="!isLoading && searchedData?.length == 0">
+  <app-no-content [title]="'nothing_found'">
+    <ng-container icon>
+      <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+    </ng-container>
+  </app-no-content>
+</section>
+
+<ng-container *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</ng-container>
+
+

@@ -4,6 +4,7 @@ import { Terms } from './gene-ontology.model';
 import { HumanProteinAtlas } from './human-protein-atlas.model';
 import { SelectionCriteria } from './selection-criteria.model';
 import { AssociatedDiseases, AssociatedDiseaseCategories } from './associated-diseases.model';
+import { MethylationCorrelation } from './methylation-correlation.model';
 
 interface TimestampObject {
   changed: string;
@@ -31,7 +32,7 @@ interface GeneralGeneInfo {
   uniprot: string;
   timestamp?: TimestampObject | string; // TODO: separate models for different API versions
   homologueTaxon: string;
-  methylationCorrelation: 'positive' | 'negative' | '';
+  methylationCorrelation: MethylationCorrelation;
 }
 
 export interface Genes extends GeneralGeneInfo {
