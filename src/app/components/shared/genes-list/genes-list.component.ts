@@ -47,10 +47,12 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   @Input() set searchQuery(query: string) {
-    if (!this.isGoTermsMode) {
-      this.updateGeneListOnSearch(query !== undefined && query !== '' ? query : '');
-    } else {
+    if (this.isGoTermsMode) {
       this.searchGenesByGoTerm(query !== undefined && query !== '' ? query : '');
+    } else if (this.isSearchByGenesList) {
+      this.searchByGenesList(query !== undefined && query !== '' ? query : '');
+    } else {
+      this.updateGeneListOnSearch(query !== undefined && query !== '' ? query : '');
     }
   }
 
@@ -124,7 +126,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
             return this.apiService.getGenesByFunctionalClusters(list);
           }
         }),
-        takeUntil(this.subscription$),
+        takeUntil(this.subscription$)
       )
       .subscribe(
         (genes) => {
@@ -132,7 +134,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
           this.downloadSearch(this.searchedData);
           this.cdRef.markForCheck();
         },
-        (error) => this.errorLogger(this, error),
+        (error) => this.errorLogger(this, error)
       );
   }
 
@@ -146,7 +148,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
             return this.apiService.getGenesByExpressionChange(expression);
           }
         }),
-        takeUntil(this.subscription$),
+        takeUntil(this.subscription$)
       )
       .subscribe(
         (genes) => {
@@ -154,7 +156,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
           this.downloadSearch(this.searchedData);
           this.cdRef.markForCheck();
         },
-        (error) => this.errorLogger(this, error),
+        (error) => this.errorLogger(this, error)
       );
   }
 
@@ -291,12 +293,36 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
 
             this.cdRef.markForCheck();
           },
-          (error) => this.errorLogger(this, error),
+          (error) => this.errorLogger(this, error)
         );
     } else {
       this.isGoSearchPerformed = false;
       this.isLoading = false;
       this.cdRef.markForCheck();
+    }
+  }
+
+  private searchByGenesList(query: string): void {
+    if (query) {
+      this.searchedData = [];
+      const arrayOfWords = query
+        .toLowerCase()
+        .split(',')
+        .map((res) => res.trim())
+        .filter((res) => res);
+
+      const uniqWords = [...new Set(arrayOfWords)];
+
+      if (uniqWords.length !== 0) {
+        uniqWords.forEach((symbol) => {
+          const foundGene = this.genesList.find((gene) => symbol === gene.symbol.toLowerCase());
+          if (foundGene) {
+            this.searchedData.push(foundGene);
+          }
+        });
+      }
+    } else {
+      this.searchedData = [...this.genesList];
     }
   }
 

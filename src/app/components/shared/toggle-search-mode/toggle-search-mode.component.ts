@@ -30,7 +30,7 @@ export class ToggleSearchModeComponent implements OnInit {
   private retrievedSettings: Settings;
   private settingsKey = SettingsEnum;
 
-  @Input() notFoundAndFoundGenes;
+  @Input() notFoundAndFoundGenes: any;
 
   @Output() setMode: EventEmitter<SearchMode> = new EventEmitter<SearchMode>();
 

@@ -24,7 +24,7 @@
 
 </div>
 
-<div class="genes-info">
+<div class="genes-info" *ngIf="searchMode === 'searchByGenesList'">
   <div class="genes-info__found" *ngIf="notFoundAndFoundGenes?.foundGenes.length">
     Найдено: {{notFoundAndFoundGenes?.foundGenes.length}}
     (
