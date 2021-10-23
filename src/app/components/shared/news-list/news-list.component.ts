@@ -39,7 +39,7 @@ export class NewsListComponent implements OnInit, OnDestroy {
   public newsTotal: number;
   public responsePagePortion: number;
 
-  private minGeneFunctionsCriteria = 3;
+  private minGeneFunctionsCriteria = 4;
   private subscription$ = new Subject();
   private httpCallsCounter = 0;
   private genesListLimit = 250;
