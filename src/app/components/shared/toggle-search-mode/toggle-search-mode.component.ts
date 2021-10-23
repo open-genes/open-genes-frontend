@@ -25,7 +25,7 @@ export class ToggleSearchModeComponent implements OnInit {
       toggleTitle: 'search_for_genes_by_list',
       description: 'search_for_genes_by_list_desc',
     },
-  ]
+  ];
 
   private retrievedSettings: Settings;
   private settingsKey = SettingsEnum;
@@ -41,8 +41,15 @@ export class ToggleSearchModeComponent implements OnInit {
   }
 
   private setInitSettings(): void {
+    this.searchMode = 'searchByGenes';
     this.retrievedSettings = this.settingsService.getSettings();
-    this.searchMode = this.retrievedSettings.searchMode;
+    if (
+      (this.retrievedSettings.searchMode && this.retrievedSettings.searchMode == SearchModeEnum.searchByGenes) ||
+      this.retrievedSettings.searchMode == SearchModeEnum.searchByGoTerms ||
+      this.retrievedSettings.searchMode == SearchModeEnum.searchByGenesList
+    ) {
+      this.searchMode = this.retrievedSettings.searchMode;
+    }
     this.setMode.emit(this.searchMode);
   }
 
@@ -51,5 +58,4 @@ export class ToggleSearchModeComponent implements OnInit {
     this.setMode.emit(this.searchMode);
     this.settingsService.setSettings(this.settingsKey.searchMode, this.searchMode);
   }
-
 }
