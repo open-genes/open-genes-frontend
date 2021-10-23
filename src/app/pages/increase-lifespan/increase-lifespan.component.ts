@@ -9,7 +9,7 @@ import { GenesWLifespanResearches } from '../../core/models/openGenesApi/genes-w
 import { SearchMode } from '../../core/models/settings.model';
 
 @Component({
-  selector: 'app-lifespan',
+  selector: 'app-lifespan-research-page',
   templateUrl: './increase-lifespan.component.html',
   styleUrls: ['./increase-lifespan.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
