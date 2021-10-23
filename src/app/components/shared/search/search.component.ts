@@ -42,9 +42,9 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
   @Output() notFoundAndFoundGenes: EventEmitter<any> = new EventEmitter<any>();
 
+  public value: string;
   public foundGenes: string[];
   public notFoundGenes: string[] = [];
-
   public searchedData: Genes[];
   public searchForm: FormGroup;
   public searchMode: SearchMode;
@@ -88,6 +88,12 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.onSearch();
   }
 
+  ngOnDestroy(): void {
+    this.subscription$.next();
+    this.subscription$.complete();
+    this.cancelSearch();
+  }
+
   private subsToSearchFieldChanges(): void {
     this.searchForm
       .get('searchField')
@@ -103,7 +109,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
             this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
           }
 
-          if (query.length >= 1) {
+          if (query.length !== 0) {
             if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
               return true;
             }
@@ -138,7 +144,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   private searchByGenes(query: string): void {
-    this.searchedData = this.genesList.filter((gene) => {
+    this.searchedData = this.genesList?.filter((gene) => {
       // Fields always acquired in response
       const searchedText = [
         gene.id,
@@ -188,8 +194,8 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public onSearch(): void {
-    const query: string = this.searchForm.get('searchField').value;
-    this.searchQuery.emit(query.toLowerCase());
+    this.value = this.searchForm.get('searchField').value;
+    this.searchQuery.emit(this.value.toLowerCase());
   }
 
   public cancelSearch(event?): void {
@@ -198,9 +204,11 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     event?.stopPropagation();
   }
 
-  ngOnDestroy(): void {
-    this.subscription$.next();
-    this.subscription$.complete();
-    this.cancelSearch();
+  public clearSearch(): void {
+    this.searchForm.get('searchField').setValue('');
+    const query: string = this.searchForm.get('searchField').value;
+    this.searchQuery.emit(query.toLowerCase());
+    this.cdRef.markForCheck();
+    this.cdRef.detectChanges();
   }
 }

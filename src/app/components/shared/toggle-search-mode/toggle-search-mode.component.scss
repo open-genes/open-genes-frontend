@@ -14,7 +14,7 @@
   width: 100%;
   display: flex;
 
-  .toggle-content__button {
+  &__button {
     position: relative;
     display: flex;
     align-items: flex-start;
@@ -26,7 +26,6 @@
     transition: background-color .15s ease-in;
     border: 1px solid $tabs-border-color;
     border-radius: $border-radius-regular;
-    margin: 0 5px 5px 0;
 
     button {
       width: 100%;
@@ -51,10 +50,18 @@
 
   @include resolution_tablet-and-up {
     flex-flow: row wrap;
+
+    &__button {
+      margin: 0 5px 5px 0;
+    }
   }
 
   @include resolution_smartphone {
     flex-flow: column;
+
+    &__button {
+      margin: 0 0 5px 0;
+    }
   }
 }
 

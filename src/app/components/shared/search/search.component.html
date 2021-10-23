@@ -13,8 +13,20 @@
   </div>
 
   <div class="search-form__panel">
+    <button
+      (click)="cancelSearch($event)"
+      class="btn btn--purple btn--icon-only cancel-search-button">
+      <span class="fa fal fa-arrow-left"></span>
+    </button>
 
     <div class="search-form__wrapper">
+      <button *ngIf="value"
+              mat-icon-button
+              class="clear-search-button"
+              (click)="clearSearch()">
+        <span class="fa fal fa-times"></span>
+      </button>
+
       <button
         mat-icon-button
         class="search-form__submit search-form__submit--active"
@@ -31,14 +43,14 @@
           type="text"
           placeholder="{{ item.placeholder | translate }}"
           class="field search-form__field"
-          (keyup.enter)="onSearch()">
+          (keyup.enter)="onSearch()"
+          [(ngModel)]="value"
+        >
       </ng-container>
-
     </div>
 
-    <div class="search-form__autocomplete-list"
-         *ngIf="showSearchResult">
-
+    <div *ngIf="showSearchResult"
+         class="search-form__autocomplete-list">
       <ng-container *ngFor="let gene of searchedData; let i = index">
         <button
           *ngIf="i < 5"
