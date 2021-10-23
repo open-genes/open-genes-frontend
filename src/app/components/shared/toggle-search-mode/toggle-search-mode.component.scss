@@ -1,0 +1,47 @@
+@import "../../styles";
+
+:host {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.toggle-content {
+  display: flex;
+  border-bottom: 1px solid $color-gray-light;
+
+  .toggle-content__button {
+    padding: 15px 30px;
+    cursor: pointer;
+    button {
+      color: $color-gray;
+      font-weight: bold;
+    }
+  }
+
+  .toggle-content__button--active {
+    border-bottom: 2px solid $color-general;
+  }
+}
+
+.description {
+  display: flex;
+  .description-content {
+    span {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 16px;
+    }
+  }
+  padding: 15px 0;
+}
+
+.genes-info {
+  display: flex;
+  justify-content: center;
+
+  .genes-info__found {
+    margin-right: 20px;
+  }
+}

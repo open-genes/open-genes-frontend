@@ -1,0 +1,44 @@
+<div class="toggle-content">
+
+  <ng-container *ngFor="let item of toggleData">
+    <div
+      class="toggle-content__button"
+      [class.toggle-content__button--active]="searchMode === item.searchMode"
+      (click)="setSearchMode(item.searchMode)">
+      <button mat-menu-item>
+        {{ item.toggleTitle | translate }}
+      </button>
+    </div>
+  </ng-container>
+
+</div>
+
+<div class="description">
+
+  <ng-container *ngFor="let item of toggleData">
+    <div class="description-content"
+         [class.hidden]="searchMode !== item.searchMode">
+      <span>{{ item.description | translate }}</span>
+    </div>
+  </ng-container>
+
+</div>
+
+<div class="genes-info" *ngIf="searchMode === 'searchByGenesList'">
+  <div class="genes-info__found" *ngIf="notFoundAndFoundGenes?.foundGenes.length">
+    Найдено: {{notFoundAndFoundGenes?.foundGenes.length}}
+    (
+    <ng-container *ngFor="let geneName of notFoundAndFoundGenes?.foundGenes; let last = last">
+      {{geneName}} <span *ngIf="notFoundAndFoundGenes?.foundGenes.length > 1 && !last">, </span>
+    </ng-container>
+    )
+  </div>
+  <div class="genes-info__not-found" *ngIf="notFoundAndFoundGenes?.notFoundGenes.length">
+    Не найдено: {{notFoundAndFoundGenes?.notFoundGenes.length}}
+    (
+    <ng-container *ngFor="let geneName of notFoundAndFoundGenes?.notFoundGenes;  let last = last">
+      {{geneName}} <span *ngIf="notFoundAndFoundGenes?.notFoundGenes.length > 1 && !last">, </span>
+    </ng-container>
+    )
+  </div>
+</div>

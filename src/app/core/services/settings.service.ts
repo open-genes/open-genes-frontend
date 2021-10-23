@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Settings } from '../models/settings.model';
+import { SearchModeEnum, Settings } from '../models/settings.model';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +7,7 @@ import { Settings } from '../models/settings.model';
 export class SettingsService {
   private settings: Settings = {
     showUiHints: false,
-    isGoSearchMode: false,
+    searchMode: SearchModeEnum.searchByGenes,
     isTableView: true,
   };
 
