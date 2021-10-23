@@ -23,14 +23,11 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./genes-research-list.component.scss'],
 })
 export class GenesResearchListComponent implements OnInit {
-  @Input() set dataFromSearchBar(value) {
-    if (value) {
-      const { searchQuery } = value;
-      this.updateGeneListOnSearch(searchQuery);
-    }
+  @Input() genesList: GenesWLifespanResearches[];
+  @Input() set searchQuery(query: string) {
+    this.updateGeneListOnSearch(query !== undefined && query !== '' ? query : '');
   }
 
-  @Input() genesList: GenesWLifespanResearches[];
   @Output() loaded = new EventEmitter<boolean>();
 
   public searchedData: GenesWLifespanResearches[];
@@ -78,6 +75,7 @@ export class GenesResearchListComponent implements OnInit {
 
   public updateGeneListOnSearch(query: string): void {
     this.searchedData = this.genesList.filter((item) => {
+      // TODO: DRY
       const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
       ${item.symbol} ${item.name}`;
       return searchedText.toLowerCase().includes(query);

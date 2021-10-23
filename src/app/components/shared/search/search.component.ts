@@ -53,7 +53,6 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
 
-
   private searchModeEnum = SearchModeEnum;
   public inputData = [
     {
@@ -76,7 +75,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private apiService: ApiService,
     private settingsService: SettingsService,
-    private cdRef: ChangeDetectorRef,
+    private cdRef: ChangeDetectorRef
   ) {
     super();
     this.searchForm = new FormGroup({
@@ -90,8 +89,9 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   private subsToSearchFieldChanges(): void {
-    this.searchForm.get('searchField').valueChanges
-      .pipe(
+    this.searchForm
+      .get('searchField')
+      .valueChanges.pipe(
         filter((query: string) => !!query),
         map((query: string) => query.toLowerCase()),
         filter((query: string) => {
@@ -120,7 +120,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
         debounceTime(500),
         distinctUntilChanged(),
         switchMap((query: string) => this.apiService.getGoTermMatchByString(query)),
-        takeUntil(this.subscription$),
+        takeUntil(this.subscription$)
       )
       .subscribe((genes: Genes[]) => {
         this.searchedData = genes;
@@ -139,7 +139,16 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
 
   private searchByGenes(query: string): void {
     this.searchedData = this.genesList.filter((gene) => {
-      const searchedText = [gene.symbol, gene.id, gene?.ensembl, gene.name, ...gene.aliases].join(' ').toLowerCase();
+      // Fields always acquired in response
+      const searchedText = [
+        gene.id,
+        gene?.ensembl ? gene.ensembl : '',
+        gene.symbol,
+        gene.name,
+        gene?.aliases ? gene.aliases : '',
+      ]
+        .join(' ')
+        .toLowerCase();
       return searchedText.includes(query);
     });
   }

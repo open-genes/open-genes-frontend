@@ -22,11 +22,10 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public errorStatus: string;
   public searchMode: SearchMode;
   public searchQuery: string;
-  public searchData: {
+  public searchData: { // TODO: Will we use it anywhere?
     searchMode: SearchMode;
     searchQuery: string;
   };
-
   public notFoundAndFoundGenes: any;
 
   constructor(
