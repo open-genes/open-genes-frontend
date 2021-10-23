@@ -16,14 +16,16 @@
             <ng-container *ngIf="isAvailable; else errorMessage">
               <div class="col-12">
                 <app-search [genesList]="genes"
-                            (dataFromSearchBar)="setSearchQuery($event)"
-                            [showTitle]="false"
+                            [setSearchMode]="searchMode"
+                            (searchQuery)="setSearchQuery($event)"
+                            (notFoundAndFoundGenes)="setNotFoundAndFoundGenes($event)"
+                            [showTitle]="false">
                 ></app-search>
 
                 <app-genes-research-list
                   *ngIf="genes"
                   [genesList]="genes"
-                  [dataFromSearchBar]="dataFromSearchBar"
+                  [searchQuery]="searchQuery"
                   (loaded)="setIsGenesListLoaded($event)"
                 >
                 </app-genes-research-list>

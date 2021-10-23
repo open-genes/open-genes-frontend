@@ -17,7 +17,7 @@ import { Subject } from 'rxjs';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { ToMap } from '../../../core/utils/to-map';
 import { SettingsService } from '../../../core/services/settings.service';
-import { Settings, SettingsEnum } from '../../../core/models/settings.model';
+import { SearchMode, SearchModeEnum } from '../../../core/models/settings.model';
 
 @Component({
   selector: 'app-search',
@@ -31,19 +31,45 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Input() genesList: Genes[];
   @Input() showTitle = true;
 
-  @Output() dataFromSearchBar: EventEmitter<any> = new EventEmitter<any>();
+  @Input() set setSearchMode(value: SearchMode) {
+    if (value) {
+      this.searchMode = value;
+      this.searchedData = [];
+      this.searchForm.get('searchField').setValue('');
+    }
+  }
+
+  @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
+  @Output() notFoundAndFoundGenes: EventEmitter<any> = new EventEmitter<any>();
+
+  public foundGenes: string[];
+  public notFoundGenes: string[] = [];
 
   public searchedData: Genes[];
   public searchForm: FormGroup;
-  public isGoSearchMode: boolean;
+  public searchMode: SearchMode;
   public showSearchResult = false;
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
 
+  private searchModeEnum = SearchModeEnum;
+  public inputData = [
+    {
+      searchMode: SearchModeEnum.searchByGenes,
+      placeholder: 'search_field_start_typing',
+    },
+    {
+      searchMode: SearchModeEnum.searchByGoTerms,
+      placeholder: 'search_field_tap_search',
+    },
+    {
+      searchMode: SearchModeEnum.searchByGenesList,
+      placeholder: 'search_field_by_comma',
+    },
+  ];
+
   private subscription$ = new Subject();
-  private settingsKey = SettingsEnum;
-  private retrievedSettings: Settings;
 
   constructor(
     private renderer: Renderer2,
@@ -55,22 +81,11 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchForm = new FormGroup({
       searchField: new FormControl(''),
     });
-    this.setInitialSettings();
   }
 
   ngOnInit(): void {
     this.subsToSearchFieldChanges();
-  }
-
-  ngOnDestroy(): void {
-    this.subscription$.next();
-    this.subscription$.complete();
-    this.cancelSearch();
-  }
-
-  private setInitialSettings(): void {
-    this.retrievedSettings = this.settingsService.getSettings();
-    this.isGoSearchMode = this.retrievedSettings.isGoSearchMode;
+    this.onSearch();
   }
 
   private subsToSearchFieldChanges(): void {
@@ -88,11 +103,15 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
             this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
           }
 
-          if (this.showSearchResult) {
-            if (this.isGoSearchMode) {
+          if (query.length >= 1) {
+            if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
               return true;
-            } else {
-              this.autocompleteSearch(query);
+            }
+            if (this.searchMode === this.searchModeEnum.searchByGenes) {
+              this.searchByGenes(query);
+            }
+            if (this.searchMode === this.searchModeEnum.searchByGenesList) {
+              this.searchByGenesList(query);
             }
           }
 
@@ -118,34 +137,70 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     }
   }
 
-  private autocompleteSearch(query: string): void {
-    if (query.length !== 0) {
-      this.searchedData = this.genesList.filter((gene) => {
-        const searchedText = [gene.symbol, gene.id, gene?.ensembl, gene.name, ...gene.aliases].join(' ').toLowerCase();
-        return searchedText.includes(query);
+  private searchByGenes(query: string): void {
+    this.searchedData = this.genesList.filter((gene) => {
+      // Fields always acquired in response
+      const searchedText = [
+        gene.id,
+        gene?.ensembl ? gene.ensembl : '',
+        gene.symbol,
+        gene.name,
+        gene?.aliases ? gene.aliases : '',
+      ]
+        .join(' ')
+        .toLowerCase();
+      return searchedText.includes(query);
+    });
+  }
+
+  private searchByGenesList(query: string): void {
+    if (query.length >= 2) {
+      this.searchedData = [];
+      this.notFoundGenes = [];
+      const arrayOfWords = query
+        .toLowerCase()
+        .split(',')
+        .map((res) => res.trim())
+        .filter((res) => res);
+
+      const uniqWords = [...new Set(arrayOfWords)];
+
+      if (uniqWords.length !== 0) {
+        this.foundGenes = uniqWords.filter((symbol) => {
+          const foundGene = this.genesList.find((gene) => symbol === gene.symbol.toLowerCase());
+
+          foundGene ? this.searchedData.push(foundGene) : this.notFoundGenes.push(symbol);
+
+          return !!foundGene;
+        });
+      }
+
+      this.notFoundAndFoundGenes.emit({
+        foundGenes: this.foundGenes,
+        notFoundGenes: this.notFoundGenes,
+      });
+    } else {
+      this.notFoundAndFoundGenes.emit({
+        foundGenes: [],
+        notFoundGenes: [],
       });
     }
   }
 
-  public setGoSearchMode(): void {
-    this.isGoSearchMode = !this.isGoSearchMode;
-    this.settingsService.setSettings(this.settingsKey.isGoSearchMode, this.isGoSearchMode);
-    this.searchedData = [];
-    this.searchForm.get('searchField').setValue('');
-    this.onSearch();
-  }
-
   public onSearch(): void {
     const query: string = this.searchForm.get('searchField').value;
-    this.dataFromSearchBar.emit({
-      isGoSearchMode: this.isGoSearchMode,
-      searchQuery: query.toLowerCase(),
-    });
+    this.searchQuery.emit(query.toLowerCase());
   }
 
   public cancelSearch(event?): void {
     this.showSearchResult = false;
     this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
     event?.stopPropagation();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.next();
+    this.subscription$.complete();
+    this.cancelSearch();
   }
 }

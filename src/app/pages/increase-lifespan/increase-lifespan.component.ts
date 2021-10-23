@@ -6,6 +6,7 @@ import { WizardService } from '../../components/shared/wizard/wizard-service.ser
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 import { GenesWLifespanResearches } from '../../core/models/openGenesApi/genes-with-increase-lifespan-researches.model';
+import { SearchMode } from '../../core/models/settings.model';
 
 @Component({
   selector: 'app-lifespan',
@@ -19,9 +20,9 @@ export class IncreaseLifespanComponent extends WindowWidth implements OnInit, On
   public isAvailable = true;
   public genesListIsLoaded = false;
   public errorStatus: string;
-  public dataFromSearchBar: {
-    searchQuery: string;
-  };
+  public searchMode: SearchMode = 'searchByGenes';
+  public searchQuery: string;
+  public notFoundAndFoundGenes: any;
 
   constructor(
     public windowService: WindowService,
@@ -70,7 +71,11 @@ export class IncreaseLifespanComponent extends WindowWidth implements OnInit, On
     this.cdRef.detectChanges();
   }
 
-  public setSearchQuery(event): void {
-    this.dataFromSearchBar = event;
+  public setSearchQuery(query: string): void {
+    this.searchQuery = query;
+  }
+
+  public setNotFoundAndFoundGenes(event: any): void {
+    this.notFoundAndFoundGenes = event;
   }
 }

@@ -145,7 +145,7 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
           // TODO: Fix this crutch for a union type error
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          if (Object.values(gene.timestamp).length > 1) {
+          if (Object.values(this.gene.timestamp).length > 1) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             this.dateChanged = Number(this.gene.timestamp?.changed);

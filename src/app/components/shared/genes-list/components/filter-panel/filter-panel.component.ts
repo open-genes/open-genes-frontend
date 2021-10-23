@@ -14,7 +14,7 @@ import { Settings, SettingsEnum } from '../../../../../core/models/settings.mode
   styleUrls: ['./filter-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilterPanelComponent implements OnInit{
+export class FilterPanelComponent implements OnInit {
   @Input() isMobile: boolean;
   @Input() isGoTermsMode: boolean;
   @Input() downloadJsonLink: string | SafeResourceUrl = '#';
@@ -27,8 +27,9 @@ export class FilterPanelComponent implements OnInit{
   public filters: Filter = this.filterService.filters;
   public isTableView: boolean;
   public isClear$ = this.filterService.isClearFiltersBtnShown;
-  private retrievedSettings: Settings;
+
   private settingsKey = SettingsEnum;
+  private retrievedSettings: Settings;
 
   constructor(
     private filterService: FilterService,
@@ -37,10 +38,10 @@ export class FilterPanelComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.setInitialSettings();
+    this.setInitSettings();
   }
 
-  private setInitialSettings(): void {
+  private setInitSettings(): void {
     this.retrievedSettings = this.settingsService.getSettings();
     this.isTableView = this.retrievedSettings.isTableView;
   }
