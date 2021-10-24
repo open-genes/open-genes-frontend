@@ -1,7 +1,6 @@
 @import "../styles";
 
 :host {
-  width: 100%;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -17,7 +16,10 @@
   }
 
   .footer__link {
+    display: inline-block;
+    white-space: nowrap;
     color: $color-white;
+    margin: 4px 1em 0 0;
   }
 
   .footer__button {
