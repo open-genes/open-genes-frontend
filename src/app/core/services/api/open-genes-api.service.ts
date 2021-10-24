@@ -54,11 +54,11 @@ export class ApiService {
 
   getGenesWLifespanResearches(): Observable<GenesWLifespanResearches[]> {
     return this.http.get<GenesWLifespanResearches[]>(
-      `${this.url}/api/increase-lifespan?lang=${this.translate.currentLang}\``
+      `${this.url}/api/increase-lifespan?lang=${this.translate.currentLang}`
     );
   }
 
   getGenesInHorvathClock(): Observable<GenesInHorvathClock[]> {
-    return this.http.get<GenesInHorvathClock[]>(`${this.url}/api/methylation?lang=${this.translate.currentLang}\``);
+    return this.http.get<GenesInHorvathClock[]>(`${this.url}/api/methylation?lang=${this.translate.currentLang}`);
   }
 }
