@@ -1,17 +1,11 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Settings } from '../../../../core/models/settings.model';
 import { SettingsService } from '../../../../core/services/settings.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack-bar.component';
 import { GenesInHorvathClock } from '../../../../core/models/openGenesApi/genes-in-horvath-clock.model';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-genes-methylation-list',
@@ -28,6 +22,7 @@ export class GenesMethylationListComponent implements OnInit {
   @Output() loaded = new EventEmitter<boolean>();
 
   public searchedData: GenesInHorvathClock[];
+  public sortedData: GenesInHorvathClock[];
   public genesPerPage = 20;
   public loadedGenesQuantity = this.genesPerPage;
   public isLoading = false;
@@ -41,6 +36,30 @@ export class GenesMethylationListComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
     this.setInitialSettings();
+  }
+
+  sortData(sort: Sort) {
+    const data = this.searchedData.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'name':
+          return this.compare(a.name, b.name, isAsc);
+        case 'correlation':
+          return this.compare(a.methylationCorrelation, b.methylationCorrelation, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+  private compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
   ngOnInit(): void {
@@ -58,6 +77,7 @@ export class GenesMethylationListComponent implements OnInit {
    */
   private setInitialState(): void {
     this.searchedData = [...this.genesList];
+    this.sortedData = this.searchedData.slice();
     this.loaded.emit(true);
     this.cdRef.markForCheck();
   }

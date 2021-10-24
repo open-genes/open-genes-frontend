@@ -1,33 +1,51 @@
 <ng-container *ngIf="searchedData?.length !== 0">
   <!-- Content -->
   <div *ngIf="searchedData?.length !== 0"
-           class="view-content __w-content-fluid __mt-40">
-    <div class="row no-gutters">
-      <div *ngFor="let gene of searchedData | slice: 0:loadedGenesQuantity"
-           class="col-12 methylated-gene">
-        <div class="methylated-gene__title">
-          <ng-container *ngIf="compareWith.includes(gene.symbol)">
-            <a [routerLink]="['/gene', gene.symbol]">
-              <span class="tag">{{gene.symbol}}</span>
-              <span class="link link--gray">{{gene.name }}</span>
-            </a>
-          </ng-container>
-          <ng-container *ngIf="!compareWith.includes(gene.symbol)">
-            <span class="tag">{{gene.symbol}}</span> {{gene.name }}
-          </ng-container>
-        </div>
+       class="__w-content-fluid __mt-10"
+       matSort (matSortChange)="sortData($event)">
+    <div class="filters-group __mb-10">
+      <button
+        class="filter"
+        mat-sort-header="symbol">
+        {{ "horvath_clock_page_symbol" | translate }}
+      </button>
 
-        <div class="methylated-gene__actions">
-          <app-tag>
+      <button
+        class="filter"
+        mat-sort-header="correlation">
+        {{ "horvath_clock_page_correlation" | translate }}
+      </button>
+    </div>
+      <div *ngFor="let gene of sortedData | slice: 0:loadedGenesQuantity"
+           class="col-12 methylated-gene"
+           [ngClass]="compareWith.includes(gene.symbol) ? '' : 'methylated-gene--disabled'"
+      >
+        <div class="row no-gutters">
+          <div class="col-xs-12 col-md-9 methylated-gene__title">
+            <ng-container *ngIf="compareWith.includes(gene.symbol)">
+              <a [routerLink]="['/gene', gene.symbol]">
+                <span class="tag">{{gene.symbol}}</span> <span class="link link--gray">{{gene.name | trim }}</span>
+              </a>
+            </ng-container>
+            <ng-container *ngIf="!compareWith.includes(gene.symbol)">
+              <span class="tag">{{gene.symbol}}</span> {{gene.name | trim }}
+            </ng-container>
+          </div>
+
+          <div class="col-xs-12 col-md-3 methylated-gene__values">
+          <span class="alias" [ngClass]="{
+          'alias--warning': gene.methylationCorrelation === ('horvath_clock_correlation_negative' | translate),
+          'alias--approval': gene.methylationCorrelation === ('horvath_clock_correlation_positive' | translate)
+           }">
             {{ gene.methylationCorrelation }}
-          </app-tag>
+          </span>
+          </div>
         </div>
-      </div>
     </div>
   </div>
 
   <!-- Show more Button -->
-  <div class="btn-wrap show-more" *ngIf="searchedData?.length > loadedGenesQuantity">
+  <div class="btn-wrap show-more __mt-15" *ngIf="searchedData?.length > loadedGenesQuantity">
     <button (click)="loadMoreGenes()" class="btn show-more__button">
       {{ "show_more" | translate }}
     </button>

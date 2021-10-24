@@ -1,4 +1,42 @@
 @import "../../../styles";
 
+.filters-group {
+  .filter {
+    padding-right: 8px;
+    max-width: 100%;
+
+    ::ng-deep .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
+      opacity: 0.54 !important;
+      transform: translateY(0px) !important;
+    }
+  }
+}
+
 @include simple-gene-list-item(methylated-gene);
+
+.methylated-gene {
+  &__values {
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+
+    .alias {
+      margin: 0;
+    }
+
+    @include resolution_tablet-and-up {
+      justify-content: flex-end;
+    }
+
+    @include resolution_smartphone {
+      justify-content: flex-start;
+    }
+  }
+
+  &--disabled {
+    opacity: .5;
+  }
+}
 

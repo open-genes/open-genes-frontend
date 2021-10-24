@@ -35,6 +35,8 @@ export class HorvathClockComponent extends WindowWidth implements OnInit, OnDest
     super(windowService);
   }
 
+  // Please be kind to me. I did it only because we had very little time until a presentation day
+
   ngOnInit(): void {
     this.getGenes();
     this.initWindowWidth(() => {

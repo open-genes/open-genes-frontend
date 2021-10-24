@@ -31,8 +31,8 @@
   </div>
   <div class="genes-info__not-found" *ngIf="notFoundAndFoundGenes?.notFoundGenes.length">
     {{ 'items_not_found' | translate }} {{ notFoundAndFoundGenes?.notFoundGenes.length }}
-    (&#32;<ng-container *ngFor="let geneName of notFoundAndFoundGenes?.notFoundGenes;  let last = last">
+    (<ng-container *ngFor="let geneName of notFoundAndFoundGenes?.notFoundGenes;  let last = last">
       {{geneName}}<ng-container *ngIf="notFoundAndFoundGenes?.notFoundGenes.length > 1 && !last">,&nbsp;</ng-container>
-    </ng-container>&#32;)
+    </ng-container>)
   </div>
 </div>
