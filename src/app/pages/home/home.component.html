@@ -116,7 +116,7 @@
               [isMobile]="isMobile"
               [setSearchMode]="searchMode"
               [searchQuery]="searchQuery"
-              [showFiltersPanel]="true"
+              [showFiltersPanel]="searchMode !== 'searchByGoTerms'"
               (loaded)="setIsGenesListLoaded($event)">
             </app-genes-list>
 
