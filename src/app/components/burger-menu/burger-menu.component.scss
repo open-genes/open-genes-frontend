@@ -80,7 +80,7 @@
     .panel__link {
       display: block;
       width: 100%;
-      font-size: $font-size-bigger;
+      font-size: $font-size;
       font-weight: $font-weight-medium;
       margin: 2px 0;
 
@@ -89,7 +89,7 @@
         display: flex;
         border-radius: $border-radius-medium;
         padding: 12px 10px 10px;
-        transition: background .25s linear;
+        transition: background, color .15s ease-out;
 
         .fa {
           margin: 2px 8px 0 0;
@@ -119,8 +119,8 @@
       &--emphasized {
         a {
           &:not(:hover, :active, .current) {
-            color: $color-white;
-            background: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, #FFC769 100%);
+            color: $color-orange-400;
+            background-color: $color-orange-100;
           }
         }
       }

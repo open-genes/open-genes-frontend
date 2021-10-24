@@ -27,6 +27,7 @@
     border: 1px solid $tabs-border-color;
     border-radius: $border-radius-regular;
 
+    a,
     button {
       width: 100%;
       padding: 10px;
@@ -72,7 +73,7 @@
 }
 
 .description {
-  padding-top: 5px;
+  padding-top: 10px;
 
   .description-content {
     h2 {

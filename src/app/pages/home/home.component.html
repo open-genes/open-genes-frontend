@@ -91,19 +91,8 @@
               (setMode)="setSearchMode($event)"
             ></app-toggle-search-mode>
 
-            <app-hint class="__mt-20 __mb-15">
-              <ng-container title>
-                {{ 'search_by_researches' | translate }}
-              </ng-container>
-              <ng-container button>
-                <button routerLink="/by-researches"
-                        class="btn btn--fill btn--small btn--purple">
-                  {{ 'search_by_researches_hint_go' | translate }}
-                </button>
-              </ng-container>
-            </app-hint>
-
             <app-search
+              class="__mt-30"
               [genesList]="genes"
               [setSearchMode]="searchMode"
               (searchQuery)="setSearchQuery($event)"

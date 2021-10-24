@@ -42,8 +42,15 @@
         <a [routerLink]="'/by-researches'"
            routerLinkActive="current"
         >
-          <span class="fa far fa-search"></span>
+          <span class="fa far fa-plus"></span>
           {{ 'search_by_researches' | translate }}</a>
+      </li>
+      <li class="panel__link panel__link--emphasized">
+        <a [routerLink]="'/horvath-clock'"
+           routerLinkActive="current"
+        >
+          <span class="fa far fa-plus"></span>
+          {{ 'search_genes_in_horvath_clock' | translate }}</a>
       </li>
       <li class="panel__link">
         <a [routerLink]="'/favourites'"

@@ -4,11 +4,23 @@
       class="toggle-content__button"
       [class.toggle-content__button--active]="searchMode === item.searchMode"
       (click)="setSearchMode(item.searchMode)">
-      <button mat-menu-item>
+      <button>
         {{ item.toggleTitle | translate }}
       </button>
     </div>
   </ng-container>
+  <div class="toggle-content__button">
+    <a routerLink="/by-researches">
+      {{ 'search_by_researches' | translate }}
+      <span class="fa far fa-external-link"></span>
+    </a>
+  </div>
+  <div class="toggle-content__button">
+    <a routerLink="/horvath-clock">
+      {{ 'search_genes_in_horvath_clock' | translate }}
+      <span class="fa far fa-external-link"></span>
+    </a>
+  </div>
 </div>
 
 <div class="description">
