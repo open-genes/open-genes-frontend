@@ -165,6 +165,7 @@
   "link_geneage": "Gene association with aging",
   "link_hpa": "This gene on Human Protein Atlas",
   "link_uniprot": "This gene on UniProt",
+  "main_page_download_results": "Feed",
   "main_page_header_button": "More",
   "main_page_header_description": "Structured data on human genes associated with aging:\nfunctions, evolution, the influence of gene activity on lifespan, age-related changes in gene expression, associations of allelic variants of genes with longevity, and age-related phenotype.",
   "main_page_hint_table_settings": "The gene list is now customizable. You can remove and add columns in the data table, just tap on \"Filters\" button.",
