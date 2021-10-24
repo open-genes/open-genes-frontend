@@ -41,6 +41,7 @@
     }
   }
 
+  // TODO: use simple-gene-list-item mixin
   &__card {
     @include panel(flex, "15px 10px");
     margin-top: 10px;

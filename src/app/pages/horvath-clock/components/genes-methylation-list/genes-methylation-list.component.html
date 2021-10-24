@@ -1,25 +1,30 @@
 <ng-container *ngIf="searchedData?.length !== 0">
   <!-- Content -->
-  <section *ngIf="searchedData?.length !== 0"
+  <div *ngIf="searchedData?.length !== 0"
            class="view-content __w-content-fluid __mt-40">
-    <div *ngFor="let gene of searchedData | slice: 0:loadedGenesQuantity"
-         class="__mt-5 panel row no-gutters">
-      <div class="title col-8">
-        <ng-container *ngIf="compareWith.includes(gene.symbol)">
-          <a [routerLink]="['/gene', gene.symbol]" class="link link--underline"
-          ><b>{{gene.symbol}}</b> {{gene.name }}</a>
-        </ng-container>
-        <ng-container *ngIf="!compareWith.includes(gene.symbol)">
-          <b>{{gene.symbol}}</b> {{gene.name }}
-        </ng-container>
-      </div>
-      <div class="col __text-right">
-        <app-tag>
-          {{ gene.methylationCorrelation }}
-        </app-tag>
+    <div class="row no-gutters">
+      <div *ngFor="let gene of searchedData | slice: 0:loadedGenesQuantity"
+           class="col-12 methylated-gene">
+        <div class="methylated-gene__title">
+          <ng-container *ngIf="compareWith.includes(gene.symbol)">
+            <a [routerLink]="['/gene', gene.symbol]">
+              <span class="tag">{{gene.symbol}}</span>
+              <span class="link link--gray">{{gene.name }}</span>
+            </a>
+          </ng-container>
+          <ng-container *ngIf="!compareWith.includes(gene.symbol)">
+            <span class="tag">{{gene.symbol}}</span> {{gene.name }}
+          </ng-container>
+        </div>
+
+        <div class="methylated-gene__actions">
+          <app-tag>
+            {{ gene.methylationCorrelation }}
+          </app-tag>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- Show more Button -->
   <div class="btn-wrap show-more" *ngIf="searchedData?.length > loadedGenesQuantity">
