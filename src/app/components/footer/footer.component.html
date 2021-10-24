@@ -1,15 +1,21 @@
 <div class="container-fluid">
   <div class="row no-gutters align-items-center">
-    <div class="col-9 align-items-center">
-      <a href="/developers" class="link footer__link" target="_blank"
-        ><span class="fa far fa-database"></span>&nbsp;API</a
+    <div class="col-10 align-items-center">
+      <a href="/api/docs" class="link footer__link" target="_blank"
+        ><span class="fa far fa-database"></span>&nbsp;{{ "header_menu_api" | translate }}</a
       >
 
       <a
         href="https://twitter.com/OpenGenes"
         class="link footer__link"
         target="_blank"
-        ><span class="fab fa-twitter"></span>&nbsp;@OpenGenes</a
+      ><span class="fab fa-twitter"></span>&nbsp;@OpenGenes</a
+      >
+
+      <a href="https://github.com/orgs/open-genes/projects/5"
+         class="link footer__link"
+         target="_blank"
+      ><span class="fa fab fa-github"></span>&nbsp;{{ "header_menu_request_feature" | translate }}</a
       >
     </div>
 
@@ -17,7 +23,8 @@
       <app-language></app-language>
     </div>
   </div>
-  <div class="row no-gutters">
+
+  <div class="row no-gutters __mt-10">
     <div class="col-12">
       <app-icon
         class="footer__logo"

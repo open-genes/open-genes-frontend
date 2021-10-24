@@ -54,6 +54,10 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/increase-lifespan/increase-lifespan.module').then((m) => m.IncreaseLifespanModule),
   },
   {
+    path: 'horvath-clock',
+    loadChildren: () => import('./pages/horvath-clock/horvath-clock.module').then((m) => m.HorvathClockModule),
+  },
+  {
     path: '404',
     loadChildren: () => import('./pages/404/404.module').then((m) => m.Error404Module),
   },

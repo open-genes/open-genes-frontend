@@ -5,24 +5,25 @@ import { takeUntil } from 'rxjs/operators';
 import { WizardService } from '../../components/shared/wizard/wizard-service.service';
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
-import { GenesWLifespanResearches } from '../../core/models/openGenesApi/genes-with-increase-lifespan-researches.model';
 import { SearchMode } from '../../core/models/settings.model';
+import { GenesInHorvathClock } from '../../core/models/openGenesApi/genes-in-horvath-clock.model';
 
 @Component({
-  selector: 'app-lifespan-research-page',
-  templateUrl: './increase-lifespan.component.html',
-  styleUrls: ['./increase-lifespan.component.scss'],
+  selector: 'app-horvath-clock-page',
+  templateUrl: './horvath-clock.component.html',
+  styleUrls: ['./horvath-clock.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IncreaseLifespanComponent extends WindowWidth implements OnInit, OnDestroy {
-  public genes: GenesWLifespanResearches[];
-  public lastGenes: GenesWLifespanResearches[];
+export class HorvathClockComponent extends WindowWidth implements OnInit, OnDestroy {
+  public genes: GenesInHorvathClock[];
+  public lastGenes: GenesInHorvathClock[];
   public isAvailable = true;
   public genesListIsLoaded = false;
   public errorStatus: string;
   public searchMode: SearchMode = 'searchByGenes';
   public searchQuery: string;
   public notFoundAndFoundGenes: any;
+  public curatedGeneSymbolsArray: string[] = [];
 
   constructor(
     public windowService: WindowService,
@@ -33,6 +34,8 @@ export class IncreaseLifespanComponent extends WindowWidth implements OnInit, On
   ) {
     super(windowService);
   }
+
+  // Please be kind to me. I did it only because we had very little time until a presentation day
 
   ngOnInit(): void {
     this.getGenes();
@@ -50,18 +53,27 @@ export class IncreaseLifespanComponent extends WindowWidth implements OnInit, On
 
   public getGenes(): void {
     this.apiService
-      .getGenesWLifespanResearches()
+      .getGenes()
       .pipe(takeUntil(this.subscription$))
-      .subscribe(
-        (genes) => {
-          this.genes = genes;
-          this.cdRef.markForCheck();
-        },
-        (err) => {
-          this.isAvailable = false;
-          this.errorStatus = err.statusText;
-        }
-      );
+      .subscribe((genes) => {
+        genes.forEach((gene) => {
+          this.curatedGeneSymbolsArray.push(gene.symbol);
+        });
+
+        this.apiService
+          .getGenesInHorvathClock()
+          .pipe(takeUntil(this.subscription$))
+          .subscribe(
+            (genes) => {
+              this.genes = genes;
+              this.cdRef.markForCheck();
+            },
+            (err) => {
+              this.isAvailable = false;
+              this.errorStatus = err.statusText;
+            }
+          );
+      });
   }
 
   public setIsGenesListLoaded(event: boolean): void {

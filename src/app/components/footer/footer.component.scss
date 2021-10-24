@@ -1,12 +1,11 @@
 @import "../styles";
 
 :host {
-  width: 100%;
   position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 100px;
+  min-height: 100px;
   padding: 5px 0;
   background-color: $color-black;
   color: #fff;
@@ -17,7 +16,10 @@
   }
 
   .footer__link {
+    display: inline-block;
+    white-space: nowrap;
     color: $color-white;
+    margin: 4px 1em 0 0;
   }
 
   .footer__button {

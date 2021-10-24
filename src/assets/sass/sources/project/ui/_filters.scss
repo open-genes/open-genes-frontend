@@ -21,7 +21,6 @@ $element-base-color: $color-general;
   position: relative;
   line-height: 26px;
   font-size: 12px;
-  color: #fff;
   @include text-overflow;
   transition: background-color .15s ease-in;
   cursor: pointer;
@@ -29,6 +28,10 @@ $element-base-color: $color-general;
   border-radius: 15px;
   background-color: lighten($element-base-color, 10%);
   user-select: none;
+
+  &, * {
+    color: $color-white;
+  }
 
   .fa {
     height: 26px;

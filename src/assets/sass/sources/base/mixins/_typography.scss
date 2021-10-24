@@ -10,6 +10,11 @@
         .alias {
           vertical-align: top;
         }
+
+        .callout {
+          display: block;
+          float: left;
+        }
       }
 
       li + li {

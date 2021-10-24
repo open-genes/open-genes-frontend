@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/openGenesApi/associated-diseases.model';
 import { GenesWLifespanResearches } from '../../models/openGenesApi/genes-with-increase-lifespan-researches.model';
+import { GenesInHorvathClock } from '../../models/openGenesApi/genes-in-horvath-clock.model';
 
 @Injectable({
   providedIn: 'root',
@@ -52,6 +53,12 @@ export class ApiService {
   }
 
   getGenesWLifespanResearches(): Observable<GenesWLifespanResearches[]> {
-    return this.http.get<GenesWLifespanResearches[]>(`${this.url}/api/increase-lifespan/`);
+    return this.http.get<GenesWLifespanResearches[]>(
+      `${this.url}/api/increase-lifespan?lang=${this.translate.currentLang}`
+    );
+  }
+
+  getGenesInHorvathClock(): Observable<GenesInHorvathClock[]> {
+    return this.http.get<GenesInHorvathClock[]>(`${this.url}/api/methylation?lang=${this.translate.currentLang}`);
   }
 }

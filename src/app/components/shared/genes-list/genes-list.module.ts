@@ -29,6 +29,7 @@ import { GeneFieldsModalComponent } from './components/gene-fields-modal/gene-fi
 import { FilterPanelComponent } from './components/filter-panel/filter-panel.component';
 import { GeneAnnotationsCardComponent } from './components/gene/gene-annotations-card/gene-annotations-card.component';
 import { GeneAnnotationsTableRowComponent } from './components/gene/gene-annotations-table-row/gene-annotations-table-row.component';
+import { GenesAnnotationsTableHeaderComponent } from './components/genes-annotations-table-header/genes-annotations-table-header.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { GeneAnnotationsTableRowComponent } from './components/gene/gene-annotat
     SearchComponent,
     GeneMenuComponent,
     GenesTableHeaderComponent,
+    GenesAnnotationsTableHeaderComponent,
     GeneCardComponent,
     GeneTableRowComponent,
     GeneFieldsModalComponent,

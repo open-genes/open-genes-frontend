@@ -67,6 +67,7 @@ body {
   }
 }
 
+// TODO: Transfer to mixins folder
 @mixin base-link {
   font-weight: $font-weight-medium;
   cursor: pointer;

@@ -4,11 +4,23 @@
       class="toggle-content__button"
       [class.toggle-content__button--active]="searchMode === item.searchMode"
       (click)="setSearchMode(item.searchMode)">
-      <button mat-menu-item>
+      <button>
         {{ item.toggleTitle | translate }}
       </button>
     </div>
   </ng-container>
+  <div class="toggle-content__button">
+    <a routerLink="/by-researches">
+      {{ 'search_by_researches' | translate }}
+      <span class="fa far fa-external-link"></span>
+    </a>
+  </div>
+  <div class="toggle-content__button">
+    <a routerLink="/horvath-clock">
+      {{ 'search_genes_in_horvath_clock' | translate }}
+      <span class="fa far fa-external-link"></span>
+    </a>
+  </div>
 </div>
 
 <div class="description">
@@ -31,8 +43,8 @@
   </div>
   <div class="genes-info__not-found" *ngIf="notFoundAndFoundGenes?.notFoundGenes.length">
     {{ 'items_not_found' | translate }} {{ notFoundAndFoundGenes?.notFoundGenes.length }}
-    (&#32;<ng-container *ngFor="let geneName of notFoundAndFoundGenes?.notFoundGenes;  let last = last">
+    (<ng-container *ngFor="let geneName of notFoundAndFoundGenes?.notFoundGenes;  let last = last">
       {{geneName}}<ng-container *ngIf="notFoundAndFoundGenes?.notFoundGenes.length > 1 && !last">,&nbsp;</ng-container>
-    </ng-container>&#32;)
+    </ng-container>)
   </div>
 </div>

@@ -1,0 +1,67 @@
+@import "../../../../styles";
+
+@mixin table-header {
+  :host {
+    display: table-row;
+    width: 100%;
+  }
+
+  .table-header__cell {
+    width: (100% / $columns-quantity); // Фикс для пустой таблицы
+    color: $color-black;
+    font-size: 12px;
+    font-weight: $font-weight-medium;
+    text-align: left;
+    padding: 8px 10px 10px 10px;
+    border-bottom: 2px solid $color-borders;
+    position: relative;
+
+    .overflow {
+      width: 100%;
+      @include overflow-lines(12px, 1.3, 3, 0);
+    }
+
+    .fa {
+      display: inline;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+
+    // Setting width to columns
+    &--age {
+      .overflow {
+        width: 180px;
+      }
+    }
+
+    &--expression {
+      .overflow {
+        width: 100px;
+      }
+    }
+
+    // TODO: make a SASS map for both table header and table rows
+    &--name,
+    &--diseases,
+    &--functions,
+    &--criteria,
+    &--methylation {
+      .overflow {
+        width: 220px;
+      }
+    }
+
+    &--terms {
+      .overflow {
+        max-width: 500px;
+      }
+    }
+
+    &--actions {
+      .overflow {
+        width: 40px;
+        text-align: right;
+      }
+    }
+  }
+}
