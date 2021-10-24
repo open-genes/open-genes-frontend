@@ -26,9 +26,8 @@
     <ng-container *ngIf="isTableView && !isMobile">
       <table>
         <thead>
-        <app-genes-table-header
-          [isGoTermsMode]="isGoTermsMode">
-        </app-genes-table-header>
+          <app-genes-table-header *ngIf="!isGoTermsMode"></app-genes-table-header>
+          <app-genes-annotations-table-header *ngIf="isGoTermsMode"></app-genes-annotations-table-header>
         </thead>
 
         <ng-container *ngIf="isGoTermsMode; else table">

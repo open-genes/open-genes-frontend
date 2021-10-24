@@ -16,14 +16,14 @@ export class ToggleSearchModeComponent implements OnInit {
       description: 'search_for_genes_desc',
     },
     {
-      searchMode: SearchModeEnum.searchByGoTerms,
-      toggleTitle: 'search_for_go_terms',
-      description: 'search_for_go_terms_desc',
-    },
-    {
       searchMode: SearchModeEnum.searchByGenesList,
       toggleTitle: 'search_for_genes_by_list',
       description: 'search_for_genes_by_list_desc',
+    },
+    {
+      searchMode: SearchModeEnum.searchByGoTerms,
+      toggleTitle: 'search_for_go_terms',
+      description: 'search_for_go_terms_desc',
     },
   ];
 
