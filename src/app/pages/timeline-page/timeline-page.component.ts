@@ -47,6 +47,16 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
         (genes) => {
           let timestampChanged,
             timestampCreated = 1562960035; // July 12 2019 - date when the first data was added
+
+          genes.sort((a, b) => {
+            if (!a.timestamp || !b.timestamp) {
+              return 0;
+            }
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            return Number(b.timestamp.changed) - Number(a.timestamp.changed);
+          });
+
           genes.forEach((gene) => {
             // TODO: Fix this crutch for a union type error
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -73,7 +83,7 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
             }
 
             // TODO: DRY
-            const created = this.localizedDatePipe?.transform(timestampChanged * 1000);
+            const created = this.localizedDatePipe?.transform(timestampCreated * 1000);
             const groupByDateCreated = this.genesGroupedByDateCreated.find((g) => g.groupDateCreated === created);
             if (groupByDateCreated) {
               groupByDateCreated.genes.push(gene);
