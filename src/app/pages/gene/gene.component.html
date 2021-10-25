@@ -110,46 +110,87 @@
               <div class="age__types">
                 <div class="age__type age__phylogeny">
                   <div class="type__inner">
-                    <div class="type__title">
-                      {{ 'phylogeny' | translate }}
+                    <div class="type__title col-5">
+                      {{ 'phylogeny' | translate }}:
 
                       <span class="fa far fa-info-circle"
                             *ngIf="isUiHintsSettingOn"
                             (click)="onShowUiHints($event)"></span>
-
                     </div>
+
                     <div class="type__value">
                       {{ gene?.familyOrigin?.phylum || ('gene_page_no_data' | translate) }}
                     </div>
+
                     <div class="type__value">
                       {{ gene?.familyOrigin?.age }}
                       <small *ngIf="gene?.familyOrigin?.age">{{ 'million_years' | translate }}</small>
                     </div>
+
                   </div>
+
                   <div class="type__inner">
-                    <div class="type__title">
-                      {{ 'ncbi_homologs' | translate }}
+                    <div class="type__title  col-5">
+                      {{ 'gene_page_researches_processes' | translate }}
                     </div>
+
+                    <div class="type__value">
+                      <div class="cluster" *ngIf="gene.functionalClusters.length else noData">
+                        <span
+                          class="cluster__value"
+                          *ngFor="let cluster of gene.functionalClusters">{{cluster.name}}</span>
+                      </div>
+
+                      <ng-template #noData>
+                        {{'gene_page_no_data' | translate}}
+                      </ng-template>
+                    </div>
+                  </div>
+
+                  <div class="type__inner">
+                    <div class="type__title  col-5">
+                      {{ 'gene_page_title_criteria' | translate }}:
+                    </div>
+
+                    <div class="type__value">
+                      <div class="cause" *ngIf="gene.commentCause else noData">
+                        <span
+                          class="cause__value"
+                          *ngFor="let cause of gene.commentCause | keyvalue">{{cause.value}}</span>
+                      </div>
+
+                      <ng-template #noData>
+                        {{'gene_page_no_data' | translate}}
+                      </ng-template>
+                    </div>
+                  </div>
+
+                  <div class="type__inner">
+                    <div class="type__title  col-5">
+                      {{ 'gene_page_researches_age_related_changes_human' | translate }}:
+                    </div>
+
                     <div class="type__value">
                       {{ gene.homologueTaxon || ('gene_page_no_data' | translate) }}
                     </div>
                   </div>
-                </div>
 
-                <div
-                  *ngIf="isAnyOrtholog"
-                  class="age__type age__orthologs"> <!-- TODO: отображается пустое, приходит {"":""} -->
-                  <div class="type__inner">
-                    <div class="type__title">
-                      {{ "gene_page_title_orthologs" | translate }}
+                  <div
+                    *ngIf="isAnyOrtholog"
+                    class="age__type age__orthologs"> <!-- TODO: отображается пустое, приходит {"":""} -->
+                    <div class="type__inner">
+                      <div class="type__title col-5">
+                        {{ "gene_page_title_orthologs" | translate }}
+                      </div>
+
+                      <ul class="list">
+                        <li *ngFor="let item of gene.orthologs | keyvalue">
+                          {{ item.key }} <span class="alias">{{ item.value }}</span>
+                        </li>
+                      </ul>
                     </div>
-
-                    <ul class="list">
-                      <li *ngFor="let item of gene.orthologs | keyvalue">
-                        {{ item.key }} <span class="alias">{{ item.value }}</span>
-                      </li>
-                    </ul>
                   </div>
+
                 </div>
               </div>
             </section>
@@ -158,7 +199,7 @@
               <h3>{{ 'gene_page_title_description' | translate }}</h3>
               <article>
                 <p *ngIf="isNcbiDescription"
-                  [innerHTML]="gene.descriptionNCBI"></p>
+                   [innerHTML]="gene.descriptionNCBI"></p>
 
                 <!-- TEST TEXT for Terms-->
                 <!-- <div appTermInfo>-->
@@ -275,7 +316,7 @@
                 </section>
 
                 <section class="wrapper" id="human-protein-atlas"
-                *ngIf="isHpa">
+                         *ngIf="isHpa">
                   <h3 class="notranslate __mb-20">
                     {{'human_protein_atlas' | translate}}
                   </h3>

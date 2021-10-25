@@ -5,8 +5,6 @@ import { Gene, Genes } from '../../models';
 import { environment } from '../../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/openGenesApi/associated-diseases.model';
-import { GenesWLifespanResearches } from '../../models/openGenesApi/genes-with-increase-lifespan-researches.model';
-import { GenesInHorvathClock } from '../../models/openGenesApi/genes-in-horvath-clock.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,8 +34,8 @@ export class ApiService {
     );
   }
 
-  getGeneByHGNCsymbol(symbol: string): Observable<Gene[]> {
-    return this.http.get<Gene[]>(`${this.url}/api/gene/${symbol}?lang=${this.translate.currentLang}`);
+  getGeneByHGNCsymbol(symbol: string): Observable<Gene> {
+    return this.http.get<Gene>(`${this.url}/api/gene/${symbol}?lang=${this.translate.currentLang}`);
   }
 
   getGoTermMatchByString(request: string): Observable<Genes[]> {
@@ -50,15 +48,5 @@ export class ApiService {
 
   getDiseaseCategories(): Observable<AssociatedDiseaseCategories[]> {
     return this.http.get<AssociatedDiseaseCategories[]>(`${this.url}/api/disease-category/`);
-  }
-
-  getGenesWLifespanResearches(): Observable<GenesWLifespanResearches[]> {
-    return this.http.get<GenesWLifespanResearches[]>(
-      `${this.url}/api/increase-lifespan?lang=${this.translate.currentLang}`
-    );
-  }
-
-  getGenesInHorvathClock(): Observable<GenesInHorvathClock[]> {
-    return this.http.get<GenesInHorvathClock[]>(`${this.url}/api/methylation?lang=${this.translate.currentLang}`);
   }
 }
