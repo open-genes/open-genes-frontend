@@ -41,15 +41,15 @@ export class GenesMethylationListComponent implements OnInit {
   sortData(sort: Sort) {
     const data = this.searchedData.slice();
     if (!sort.active || sort.direction === '') {
-      this.sortedData = data;
+      this.searchedData = data;
       return;
     }
 
-    this.sortedData = data.sort((a, b) => {
+    this.searchedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case 'name':
-          return this.compare(a.name, b.name, isAsc);
+        case 'symbol':
+          return this.compare(a.symbol, b.symbol, isAsc);
         case 'correlation':
           return this.compare(a.methylationCorrelation, b.methylationCorrelation, isAsc);
         default:

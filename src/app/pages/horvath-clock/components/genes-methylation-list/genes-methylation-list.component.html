@@ -16,7 +16,7 @@
         {{ "horvath_clock_page_correlation" | translate }}
       </button>
     </div>
-      <div *ngFor="let gene of sortedData | slice: 0:loadedGenesQuantity"
+      <div *ngFor="let gene of searchedData | slice: 0:loadedGenesQuantity"
            class="col-12 methylated-gene"
            [ngClass]="compareWith.includes(gene.symbol) ? '' : 'methylated-gene--disabled'"
       >
