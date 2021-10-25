@@ -49,8 +49,10 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
             timestampCreated = 1562960035; // July 12 2019 - date when the first data was added
 
           genes.sort((a, b) => {
-            if (!a.timestamp || !b.timestamp) {
-              return 0;
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            if (!a.timestamp.changed || !b.timestamp.changed) {
+              return Number(b.timestamp) - Number(a.timestamp);
             }
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
