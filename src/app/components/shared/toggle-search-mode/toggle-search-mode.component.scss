@@ -1,0 +1,95 @@
+@import "../../styles";
+
+:host {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.toggle-content {
+  $tabs-background-color: $color-white;
+  $tabs-border-color: $color-borders;
+
+  position: relative;
+  width: 100%;
+  display: flex;
+
+  &__button {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    align-content: stretch;
+    font-size: $font-size;
+    color: $color-gray;
+    background-color: $tabs-background-color;
+    transition: background-color .15s ease-in;
+    border: 1px solid $tabs-border-color;
+    border-radius: $border-radius-regular;
+
+    a,
+    button {
+      width: 100%;
+      padding: 10px;
+      text-align: left;
+      color: inherit;
+      font-weight: $font-weight-medium;
+    }
+
+    &:hover {
+      background: rgba($color-general, 0.08);
+    }
+
+    &--active {
+      &,
+      &:hover {
+        color: $color-general;
+        background: rgba($color-general, 0.15);
+      }
+    }
+  }
+
+  @include resolution_tablet-and-up {
+    flex-flow: row wrap;
+
+    &__button {
+      margin: 0 5px 5px 0;
+    }
+  }
+
+  @include resolution_smartphone {
+    flex-flow: column;
+
+    &__button {
+      margin: 0 0 5px 0;
+    }
+  }
+}
+
+.description,
+.genes-info {
+  display: block;
+  width: 100%;
+}
+
+.description {
+  padding-top: 10px;
+
+  .description-content {
+    h2 {
+      font-size: calc(0.2vw + #{$font-size-bigger});
+      font-weight: $font-weight-medium;
+    }
+  }
+}
+
+.genes-info {
+  font-size: $font-size;
+  color: $color-gray;
+  margin-top: .3em;
+
+  .genes-info__found {
+    display: inline-block;
+    margin-right: 20px;
+  }
+}

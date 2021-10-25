@@ -2,14 +2,15 @@
       class="search-form"
       [class.search-form--active]="showSearchResult">
 
-  <div class="search-form__quantity">
+  <div *ngIf="showTitle"
+       class="search-form__quantity">
     <span *ngIf="genesList?.length">{{ 'main_page_total' | translate: { number: genesList?.length } }}</span>
   </div>
 
   <div *ngIf="showSearchResult"
        class="search-backdrop"
-       (click)="cancelSearch($event)"
-  ></div>
+       (click)="cancelSearch($event)">
+  </div>
 
   <div class="search-form__panel">
     <button
@@ -19,6 +20,13 @@
     </button>
 
     <div class="search-form__wrapper">
+      <button *ngIf="value"
+              mat-icon-button
+              class="clear-search-button"
+              (click)="clearSearch()">
+        <span class="fa fal fa-times"></span>
+      </button>
+
       <button
         mat-icon-button
         class="search-form__submit search-form__submit--active"
@@ -27,43 +35,22 @@
         <span class="fa fal fa-search"></span>
       </button>
 
-      <button
-        [matMenuTriggerFor]="searchMenu"
-        class="search-form__switch"
-        [matTooltip]="(isGoSearchMode ? 'search_for_go_terms' : 'search_for_functions') | translate">
-        <span
-          [ngClass]="isGoSearchMode ? 'fa-book' : 'fa-dna'"
-          class="fa far"></span>
-        <span class="fa far fa-sort-down"></span>
-      </button>
-
       <!-- TODO: Use matNativeControl -->
-      <input
-        formControlName="searchField"
-        type="text"
-        placeholder="{{ (isGoSearchMode ? 'search_field_tap_search' : 'search_field_start_typing') | translate }}"
-        class="field search-form__field"
-        (keyup.enter)="onSearch()"
-        #searchQuery
-      >
-
-      <mat-menu #searchMenu>
-        <button mat-menu-item
-                (click)="setGoSearchMode()"
-                [disabled]="!isGoSearchMode">
-          <span class="fa fal fa-dna __mr-5"></span> {{ 'search_for_functions' | translate }}
-        </button>
-        <button mat-menu-item
-                (click)="setGoSearchMode()"
-                [disabled]="isGoSearchMode">
-          <span class="fa fal fa-book __mr-5"></span> {{ 'search_for_go_terms' | translate }}
-        </button>
-      </mat-menu>
-
+      <ng-container *ngFor="let item of inputData">
+        <input
+          *ngIf="searchMode === item.searchMode"
+          formControlName="searchField"
+          type="text"
+          placeholder="{{ item.placeholder | translate }}"
+          class="field search-form__field"
+          (keyup.enter)="onSearch()"
+          [(ngModel)]="value"
+        >
+      </ng-container>
     </div>
 
-    <div class="search-form__autocomplete-list"
-         *ngIf="showSearchResult">
+    <div *ngIf="showSearchResult"
+         class="search-form__autocomplete-list">
       <ng-container *ngFor="let gene of searchedData; let i = index">
         <button
           *ngIf="i < 5"
@@ -71,33 +58,41 @@
           tabindex="0"
           [routerLink]="['/gene', gene.symbol]">
 
-          <span class="item__symbol">
-            {{ gene.symbol }}
+          <span class="item__symbol"
+                appHighlight
+                [highlightText]="searchForm.get('searchField').value"
+                [innerHTML]="gene.symbol">
+          </span>&nbsp;
+          <span *ngIf="!gene?.terms"
+                class="item__name"
+                appHighlight
+                [highlightText]="searchForm.get('searchField').value"
+                [innerHTML]="gene.name">
           </span>&nbsp;
 
-          <ng-container *ngIf="biologicalProcess.size !== 0">
+          <ng-container *ngIf="biologicalProcess?.size !== 0">
             <span *ngFor="let term of biologicalProcess | keyvalue"
                   class="item__name"
                   appHighlight
-                  [highlightText]="searchQuery.value"
+                  [highlightText]="searchForm.get('searchField').value"
                   [innerHTML]="term.value">
           </span>
           </ng-container>
 
-          <ng-container *ngIf="cellularComponent.size !== 0">
+          <ng-container *ngIf="cellularComponent?.size !== 0">
             <span *ngFor="let term of cellularComponent | keyvalue"
                   class="item__name"
                   appHighlight
-                  [highlightText]="searchQuery.value"
+                  [highlightText]="searchForm.get('searchField').value"
                   [innerHTML]="term.value">
           </span>
           </ng-container>
 
-          <ng-container *ngIf="molecularActivity.size !== 0">
+          <ng-container *ngIf="molecularActivity?.size !== 0">
             <span *ngFor="let term of molecularActivity | keyvalue"
                   class="item__name"
                   appHighlight
-                  [highlightText]="searchQuery.value"
+                  [highlightText]="searchForm.get('searchField').value"
                   [innerHTML]="term.value">
           </span>
           </ng-container>

@@ -1,11 +1,9 @@
 @import "src/app/components/styles";
 
 .page.contributors-page {
-  color: $color-white;
-  background: linear-gradient(90deg, #91cefd, #9bb5fa 20%, #a4a4f7 40%, #c2adf5 60%, #d9b5f3 80%, #ebbdf2);
-
   .text-page__header {
-    background-color: transparent;
+    color: $color-white;
+    background: linear-gradient(90deg, #91cefd, #9bb5fa 20%, #a4a4f7 40%, #c2adf5 60%, #d9b5f3 80%, #ebbdf2);
   }
 
   .page__inner .page__title h1 {
@@ -18,6 +16,6 @@
 }
 .contributor {
   display: inline-block;
-  margin: calc(1em + 0.3vw);
-  font-weight: $font-weight-medium;
+  margin: calc(.5em + 1vw);
+  font-size: $font-size-huge;
 }

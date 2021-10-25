@@ -1,0 +1,56 @@
+<div class="page main-page">
+  <div class="page__inner __pb-60">
+    <div class="page favourites-page">
+      <div class="page__inner __pb-60">
+        <div class="text-page__header wrapper">
+          <div class="container">
+            <div class="col-12">
+              <div class="page__title">
+                <h1>{{ "search_by_researches" | translate }}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <ng-container *ngIf="isAvailable; else errorMessage">
+              <div class="col-12">
+                <app-search [genesList]="genes"
+                            [setSearchMode]="searchMode"
+                            (searchQuery)="setSearchQuery($event)"
+                            (notFoundAndFoundGenes)="setNotFoundAndFoundGenes($event)"
+                            [showTitle]="false">
+                ></app-search>
+
+                <app-genes-research-list
+                  *ngIf="genes"
+                  [genesList]="genes"
+                  [searchQuery]="searchQuery"
+                  (loaded)="setIsGenesListLoaded($event)"
+                >
+                </app-genes-research-list>
+
+                <!-- When content is loading -->
+                <app-spinner *ngIf="!genesListIsLoaded" class="__mt-10 __mb-10"></app-spinner>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #errorMessage>
+      <section class="col-12">
+        <app-no-content size="small" [title]="'error_connection'">
+          <ng-container icon>
+            <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+          </ng-container>
+          <ng-container description>
+            <p>({{ errorStatus }})</p>
+          </ng-container>
+        </app-no-content>
+      </section>
+    </ng-template>
+  </div>
+</div>
+

@@ -116,3 +116,89 @@
   }
 }
 
+// Modal window
+@mixin modal-window($class) {
+  .#{$class}-modal {
+    &__header,
+    &__cover,
+    &__body {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    &__header {
+      position: relative;
+      padding-right: 40px;
+      margin-bottom: 15px;
+
+      .close-button {
+        @include close-button(-10px);
+      }
+    }
+
+    &__cover {
+      margin-bottom: 10px;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    &__body {
+      line-height: $font-line-height;
+    }
+  }
+}
+
+// Simple gene list item
+@mixin simple-gene-list-item($class) {
+  .#{$class} {
+    display: block;
+    width: 100%;
+    background-color: $color-white;
+    box-shadow: $shadow-for-panel;
+    border-radius: $border-radius-regular;
+    padding: 10px 15px;
+    position: relative;
+    font-size: $font-size;
+
+    &__title {
+      margin: 10px 0;
+      padding-right: 30px;
+      font-size: $font-size-big;
+
+      .tag {
+        margin: 0 8px 0 0;
+      }
+
+      .tag, .link {
+        vertical-align: middle;
+      }
+    }
+
+    &__share{
+      position: absolute; // чтобы элемент перестал быть родителем
+      top: 12px;
+      right: 40px;
+    }
+
+    &__actions {
+      position: absolute; // чтобы элемент перестал быть родителем
+      top: 12px;
+      right: 12px;
+      z-index: 1;
+
+      .fa {
+        color: $color-base;
+      }
+    }
+  }
+
+  .#{$class} + .#{$class} {
+    margin-top: 15px;
+  }
+}
+
+
+

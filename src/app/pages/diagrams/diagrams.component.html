@@ -13,30 +13,49 @@
     </div>
 
     <div class="container">
-      <div>
-        <app-directed-graph
-          [graphTitle]="'filtered by all filters'"
-          [graphSelector]="'all'"
-          [nodes]="nodes"
-          [links]="links"
-          [grouped]="false"></app-directed-graph>
-      </div>
-      <div>
-        <app-directed-graph
-          [graphTitle]="'filtered by disease'"
-          [graphSelector]="'disease'"
-          [nodes]="newNodes"
-          [links]="newLinks"
-          [grouped]="true"></app-directed-graph>
-      </div>
-      <div>
-        <app-directed-graph
-          [graphTitle]="'filtered by family origin'"
-          [graphSelector]="'family'"
-          [nodes]="nNodes"
-          [links]="nLinks"
-          [grouped]="true"></app-directed-graph>
-      </div>
+      <mat-tab-group class="diagrams-container __w-content-fluid"
+        (selectedTabChange)="onTabClick()">
+        <mat-tab label="{{ 'diagrams_title_1_short' | translate }}">
+          <ng-template matTabContent>
+            <app-directed-graph
+              class="diagrams-container__diagram"
+              [graphTitle]="'diagrams_title_1'"
+              [graphSelector]="'disease'"
+              [nodes]="newNodes"
+              [links]="newLinks"
+              [grouped]="true"></app-directed-graph>
+
+            <ul class="list">
+              <li>
+                <span class="legend legend--genes"></span> {{ 'diagrams_legend_1' | translate }}
+              </li>
+              <li>
+                <span class="legend legend--diseases"></span> {{ 'diagrams_legend_2' | translate }}
+              </li>
+            </ul>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="{{ 'diagrams_title_2_short' | translate }}">
+          <ng-template matTabContent>
+            <app-directed-graph
+              class="diagrams-container__diagram"
+              [graphTitle]="'diagrams_title_2'"
+              [graphSelector]="'family'"
+              [nodes]="nNodes"
+              [links]="nLinks"
+              [grouped]="true"></app-directed-graph>
+
+            <ul class="list">
+              <li>
+                <span class="legend legend--genes"></span> {{ 'diagrams_legend_3' | translate }}
+              </li>
+              <li>
+                <span class="legend legend--processes"></span> {{ 'diagrams_legend_1' | translate }}
+              </li>
+            </ul>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </div>

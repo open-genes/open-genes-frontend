@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Genes } from '../../core/models';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
@@ -12,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { WizardService } from '../../components/shared/wizard/wizard-service.service';
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
+import { SearchMode } from '../../core/models/settings.model';
 
 @Component({
   selector: 'app-home',
@@ -25,17 +20,20 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public isAvailable = true;
   public genesListIsLoaded = false;
   public errorStatus: string;
-  public dataFromSearchBar: {
-    isGoSearchMode: boolean;
+  public searchMode: SearchMode;
+  public searchQuery: string;
+  public searchData: { // TODO: Will we use it anywhere?
+    searchMode: SearchMode;
     searchQuery: string;
   };
+  public notFoundAndFoundGenes: any;
 
   constructor(
     public windowService: WindowService,
     private filterService: FilterService,
     private wizardService: WizardService,
     private readonly apiService: ApiService,
-    private readonly cdRef: ChangeDetectorRef,
+    private readonly cdRef: ChangeDetectorRef
   ) {
     super(windowService);
   }
@@ -71,7 +69,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
         (err) => {
           this.isAvailable = false;
           this.errorStatus = err.statusText;
-        }
+        },
       );
   }
 
@@ -90,9 +88,18 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.cdRef.markForCheck();
   }
 
-  public setSearchQuery(event): void {
-    this.dataFromSearchBar = event;
+  public setSearchQuery(query: string): void {
+    this.searchQuery = query;
   }
+
+  public setSearchMode(searchMode: SearchMode): void {
+    this.searchMode = searchMode;
+  }
+
+  public setNotFoundAndFoundGenes(event: any): void {
+    this.notFoundAndFoundGenes = event;
+  }
+
   /**
    * Wizard
    */

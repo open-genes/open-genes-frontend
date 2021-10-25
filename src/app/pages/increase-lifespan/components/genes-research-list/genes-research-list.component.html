@@ -1,0 +1,186 @@
+<ng-container *ngIf="searchedData?.length !== 0">
+  <!-- Content -->
+  <section *ngIf="searchedData?.length !== 0" class="view-content __w-content-fluid __mt-40">
+    <h4>{{ "gene_page_researches_lifespan" | translate }}</h4>
+    <div class="table-section __mt-20">
+      <table class="table">
+        <thead>
+        <th class="__cell-width-medium">
+          {{ "researches_method" | translate }}
+        </th>
+        <th class="__cell-width-medium">
+          {{ "researches_result" | translate }}
+        </th>
+        <th>{{ "researches_object" | translate }}</th>
+        <th>{{ "researches_line" | translate }}</th>
+        <th>{{ "researches_age" | translate }}<sup>*</sup></th>
+        <th>{{ "researches_genotype" | translate }}</th>
+        <th>
+          {{ "researches_change" | translate }}&nbsp;<span
+          class="fa fal fa-mars"
+        ></span
+        ><sup>**</sup>
+        </th>
+        <th>
+          {{ "researches_change" | translate }}&nbsp;<span
+          class="fa fal fa-venus"
+        ></span
+        ><sup>**</sup>
+        </th>
+        <th>
+          {{ "researches_change" | translate }}&nbsp;<span
+          class="fa fal fa-venus"
+        ></span
+        >&nbsp;<span class="fa fal fa-mars"></span><sup>**</sup>
+        </th>
+        <th>
+          {{ "researches_comment" | translate }}
+        </th>
+        <th>{{ "researches_reference" | translate }}</th>
+        </thead>
+        <ng-container *ngFor="let gene of searchedData | slice: 0: loadedGenesQuantity">
+          <ng-container *ngIf="gene.researches?.increaseLifespan.length !== 0">
+            <tr>
+              <td class="title"
+                  colspan="3">
+                <div class="title__inner">
+                  <a [routerLink]="['/gene', gene.symbol]" class="link link--gray"
+                  ><b>{{gene.symbol}}</b> {{gene.name | trim }}</a>
+                </div>
+              </td>
+            </tr>
+
+            <tr *ngFor="let item of gene?.researches.increaseLifespan">
+              <td>
+                <ng-container *ngIf="item.interventionType; else dash">
+                  {{ item.interventionType }}
+                </ng-container>
+              </td>
+              <td>
+                <ng-container *ngIf="item.interventionResult; else dash">
+                  {{ item.interventionResult }}
+                </ng-container>
+              </td>
+              <td class="__nowrap">
+                <ng-container *ngIf="item.modelOrganism ; else dash">
+                  {{ item.modelOrganism }}
+                </ng-container>
+              </td>
+              <td class="__nowrap">
+                <ng-container *ngIf="item.organismLine ; else dash">
+                  {{ item.organismLine }}
+                </ng-container>
+              </td>
+              <td class="__nowrap">
+                <ng-container *ngIf="item.age ; else dash">
+                  {{ item.age }}
+                </ng-container>
+              </td>
+              <td class="__nowrap">
+                <ng-container *ngIf="item.genotype ; else dash">
+                  {{ item.genotype }}
+                </ng-container>
+              </td>
+              <td class="__nowrap">
+                <ng-container *ngIf="item.valueForMale ; else dash">
+                  {{ item.valueForMale }}
+                </ng-container>
+              </td>
+              <td class="__nowrap">
+                <ng-container *ngIf="item.valueForFemale ; else dash">
+                  {{ item.valueForFemale }}
+                </ng-container>
+              </td>
+              <td class="__nowrap">
+                <ng-container *ngIf="item.valueForAll ; else dash">
+                  {{ item.valueForAll }}
+                </ng-container>
+              </td>
+              <td>
+                <button *ngIf="item?.comment.length !== 0; else dash"
+                        class="btn btn--small btn--purple btn--flat"
+                        (click)="openCommentModal(item.comment)"
+                >
+                  {{ "researches_comment_button" | translate }}
+                </button>
+              </td>
+              <td class="__cell-width-medium">
+                <ng-container
+                  [ngTemplateOutlet]="links"
+                  [ngTemplateOutletContext]="{ item: item }"
+                ></ng-container>
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </table>
+    </div>
+  </section>
+  <legend class="reference __mb-15">
+    <p><sup>*</sup>{{ "gene_page_researches_lifespan_hint1" | translate }}</p>
+    <p>
+      <sup>**</sup>{{ "gene_page_researches_lifespan_hint2" | translate }}
+    </p>
+  </legend>
+
+  <!-- Show more Button -->
+  <div class="btn-wrap show-more" *ngIf="searchedData?.length > loadedGenesQuantity">
+    <button (click)="loadMoreGenes()" class="btn show-more__button">
+      {{ "show_more" | translate }}
+    </button>
+  </div>
+</ng-container>
+
+<!-- No content error message -->
+<section *ngIf="!isLoading && searchedData?.length == 0">
+  <app-no-content [title]="'nothing_found'">
+    <ng-container icon>
+      <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+    </ng-container>
+  </app-no-content>
+</section>
+
+<ng-container *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</ng-container>
+
+<!-- DRY -->
+<ng-template #links let-item="item">
+  <a
+    *ngIf="item?.doi !== ''"
+    href="https://doi.org/{{ item?.doi }}"
+    class="link"
+    target="_blank"
+  >{{ item?.doi }}</a
+  ><br />
+
+  <a
+    *ngIf="item?.pmid !== ''"
+    href="https://pubmed.ncbi.nlm.nih.gov/17170002/{{ item?.pmid }}"
+    class="link"
+    target="_blank"
+  >{{ item?.pmid }}</a
+  ><br />
+</ng-template>
+
+<ng-template #commentModalBody let-data>
+  <div class="comment-modal__header" mat-dialog-title>
+    {{ "researches_comment" | translate }}
+
+    <button mat-icon-button
+            class="close-button"
+            (click)="closeCommentModal()"
+            aria-label="Закрыть">
+      <span class="fa fal fa-times"></span>
+    </button>
+  </div>
+  <mat-dialog-content>
+    <article class="comment-modal__body">
+      {{ data }}
+    </article>
+  </mat-dialog-content>
+</ng-template>
+
+<ng-template #dash>
+  <span class="table__dash"></span>
+</ng-template>

@@ -19,8 +19,13 @@
     padding: 3px 2px;
   }
 
+  &--approval {
+    background-color: lighten($color-green-light, 20%);
+    color: $color-green-dark;
+  }
+
   &--warning {
-    background-color: $color-orange-200;
+    background-color: $color-orange-100;
     color: $color-orange-400;
   }
 

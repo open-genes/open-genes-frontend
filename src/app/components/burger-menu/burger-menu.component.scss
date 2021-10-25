@@ -39,7 +39,7 @@
 
 .menu__panel {
   height: 100%;
-  padding: 0 0 30px 0;
+  padding: #{$header-height + 15px} 0;
   position: absolute;
   top: 0;
   right: 0;
@@ -55,28 +55,41 @@
     width: 260px;
   }
 
-  .panel__header {
+  .panel__header,
+  .panel__footer {
+    position: absolute;
+    left: 0;
+    z-index: 0;
     width: 100%;
     height: $header-height;
-    background-color: $color-general-light;
-    margin-bottom: 15px;
   }
 
-  .menu__links {
-    width: 100%;
-    padding: 0 15px 0 10px;
+  .panel__header {
+    display: block;
+    top: 0;
+    background-color: $color-general-light;
+  }
 
-    .menu__link {
+  .panel__links {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    padding: 0 15px 0 10px;
+    overflow: auto;
+
+    .panel__link {
       display: block;
       width: 100%;
-      font-size: $font-size-bigger;
+      font-size: $font-size;
       font-weight: $font-weight-medium;
+      margin: 2px 0;
 
       a {
         position: relative;
         display: flex;
         border-radius: $border-radius-medium;
         padding: 12px 10px 10px;
+        transition: background, color .15s ease-out;
 
         .fa {
           margin: 2px 8px 0 0;
@@ -89,23 +102,48 @@
 
         &:hover {
           color: rgba($color-general, 0.85);
-          background-color: rgba($color-general, 0.08);
+          background: rgba($color-general, 0.08);
         }
 
         &:active {
           color: rgba($color-general, 0.75);
-          background-color: rgba($color-general, 0.15);
+          background: rgba($color-general, 0.15);
         }
 
         &.current {
           color: $color-general;
-          background-color: rgba($color-general, 0.15);
+          background: rgba($color-general, 0.15);
+        }
+      }
+
+      &--emphasized {
+        a {
+          &:not(:hover, :active, .current) {
+            color: $color-orange-400;
+            background-color: $color-orange-100;
+          }
         }
       }
     }
 
     .menu__link + .menu__link {
       margin-top: 4px;
+    }
+  }
+
+  .panel__footer {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+    background-color: $color-black;
+    font-size: $font-size-bigger;
+    font-weight: $font-weight-medium;
+    color: $color-white;
+
+    .fa {
+      margin-right: .3em;
     }
   }
 }

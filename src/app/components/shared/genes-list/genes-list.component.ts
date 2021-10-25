@@ -20,6 +20,8 @@ import { FileExportService } from '../../../core/services/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
 import { Filter, Sort } from './services/filter.model';
+import { SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
+import { SettingsService } from '../../../core/services/settings.service';
 
 @Component({
   selector: 'app-genes-list',
@@ -30,20 +32,31 @@ import { Filter, Sort } from './services/filter.model';
 export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
-  @Input() genesList: Genes[];
 
-  @Input() set dataFromSearchBar(value) {
+  @Input() set setSearchMode(value: SearchMode) {
     if (value) {
-      const { isGoSearchMode, searchQuery } = value;
-      this.isGoTermsMode = isGoSearchMode;
+      this.isGoTermsMode = value === this.searchModeEnum.searchByGoTerms;
+      this.isSearchByGenesList = value === this.searchModeEnum.searchByGenesList;
       this.isGoSearchPerformed = false;
-      if (!isGoSearchMode) {
-        this.updateGeneListOnSearch(searchQuery);
+      if (!this.isGoTermsMode) {
+        this.updateGeneListOnSearch('');
       } else {
-        this.searchGenesByGoTerm(searchQuery);
+        this.searchGenesByGoTerm('');
       }
     }
   }
+
+  @Input() set searchQuery(query: string) {
+    if (this.isGoTermsMode) {
+      this.searchGenesByGoTerm(query !== undefined && query !== '' ? query : '');
+    } else if (this.isSearchByGenesList) {
+      this.searchByGenesList(query !== undefined && query !== '' ? query : '');
+    } else {
+      this.updateGeneListOnSearch(query !== undefined && query !== '' ? query : '');
+    }
+  }
+
+  @Input() genesList: Genes[];
 
   @Output() loaded = new EventEmitter<boolean>();
 
@@ -52,12 +65,15 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   public sortEnum = SortEnum;
   public sort: Sort = this.filterService.sort;
 
-  public asTableRow = true;
   public isLoading = false;
 
+  public isTableView: boolean;
+  public isSearchByGenesList: boolean;
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
   public isGoTermsModeError = false;
+
+
   public goModeCellData: any;
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
@@ -67,11 +83,14 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   public currentPage: number;
   public pageOptions: any;
 
+  private retrievedSettings: Settings;
+  private searchModeEnum = SearchModeEnum;
   private subscription$ = new Subject();
 
   constructor(
     private readonly apiService: ApiService,
     private filterService: FilterService,
+    private settingsService: SettingsService,
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar
@@ -80,12 +99,13 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.setInitSettings();
     this.setInitialState();
   }
 
-  ngOnDestroy(): void {
-    this.subscription$.next();
-    this.subscription$.complete();
+  private setInitSettings(): void {
+    this.retrievedSettings = this.settingsService.getSettings();
+    this.isTableView = this.retrievedSettings.isTableView;
   }
 
   /**
@@ -195,11 +215,35 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
     }
   }
 
+  private searchByGenesList(query: string): void {
+    if (query) {
+      this.searchedData = [];
+      const arrayOfWords = query
+        .toLowerCase()
+        .split(',')
+        .map((res) => res.trim())
+        .filter((res) => res);
+
+      const uniqWords = [...new Set(arrayOfWords)];
+
+      if (uniqWords.length !== 0) {
+        uniqWords.forEach((symbol) => {
+          const foundGene = this.genesList.find((gene) => symbol === gene.symbol.toLowerCase());
+          if (foundGene) {
+            this.searchedData.push(foundGene);
+          }
+        });
+      }
+    } else {
+      this.searchedData = [...this.genesList];
+    }
+  }
+
   /**
    * Change view
    */
-  public toggleGenesView(evt: boolean) {
-    this.asTableRow = evt;
+  public toggleGenesView(event: boolean) {
+    this.isTableView = event;
   }
 
   /**
@@ -260,5 +304,10 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
    */
   private errorLogger(context: any, error: any) {
     console.warn(context, error);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.next();
+    this.subscription$.complete();
   }
 }

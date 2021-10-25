@@ -18,7 +18,7 @@
   border-radius: $border-radius-regular;
   background-color: $color-general-light;
   font-size: $font-size;
-  color: $color-black;
+  color: $color-gray-500;
 
   &__text {
     display: flex;
@@ -50,7 +50,6 @@
   &__title {
     font-size: 1em;
     font-weight: $font-weight-medium;
-    margin-bottom: 1ex;
   }
 
   &__description {
@@ -62,6 +61,10 @@
       span {
         vertical-align: middle;
       }
+    }
+
+    &:not(:empty) {
+      margin-top: 1ex;
     }
   }
 

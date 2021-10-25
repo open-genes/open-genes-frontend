@@ -20,15 +20,14 @@
   <section
     *ngIf="searchedData?.length"
     class="view-content"
-    [ngClass]="asTableRow && !isMobile ? 'view-content--as-table' : 'view-content--as-cards'">
+    [ngClass]="isTableView && !isMobile ? 'view-content--as-table' : 'view-content--as-cards'">
 
     <!-- Table view -->
-    <ng-container *ngIf="asTableRow && !isMobile">
+    <ng-container *ngIf="isTableView && !isMobile">
       <table>
         <thead>
-        <app-genes-table-header
-          [isGoTermsMode]="isGoTermsMode">
-        </app-genes-table-header>
+          <app-genes-table-header *ngIf="!isGoTermsMode"></app-genes-table-header>
+          <app-genes-annotations-table-header *ngIf="isGoTermsMode"></app-genes-annotations-table-header>
         </thead>
 
         <ng-container *ngIf="isGoTermsMode; else table">
@@ -48,7 +47,7 @@
     </ng-container>
 
     <!-- Card view -->
-    <ng-container *ngIf="!asTableRow || isMobile">
+    <ng-container *ngIf="!isTableView || isMobile">
       <ng-container *ngIf="isGoTermsMode; else card">
         <app-gene-annotations-card class="card" *ngFor="let rowData of searchedData"
                                    [item]="rowData"
@@ -81,7 +80,7 @@
 <section
   *ngIf="
     (isGoTermsMode && isGoSearchPerformed && !isLoading && searchedData?.length == 0) ||
-    (!isGoTermsMode && searchedData?.length == 0 && !loaded )">
+    (!isGoTermsMode && searchedData?.length == 0)">
   <app-no-content
     [title]="'nothing_found'">
     <ng-container icon>

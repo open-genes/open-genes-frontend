@@ -32,8 +32,25 @@
     </div>
   </ng-container>
 
+  <ng-container *ngIf="item?.agingMechanisms && item?.agingMechanisms.length !== 0">
+    <div *ngIf="listSettings.ifShowAgingMechanisms"
+         class="card__section">
+      <span class="label">
+      {{ "gene_list_aging_mechanisms" | translate }}
+    </span>
+      <ul class="list list--bulletted">
+        <li *ngFor="let mechanism of item?.agingMechanisms">
+          {{ mechanism.name }}
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+
   <div *ngIf="listSettings.ifShowDiseases"
        class="card__section">
+    <span class="label">
+      {{ "gene_list_diseases" | translate }}
+    </span>
     <app-associated-diseases
       [geneDiseases]="item.diseases"
       [activeListItem]="filters.byDiseases"
@@ -43,6 +60,9 @@
 
   <div *ngIf="listSettings.ifShowDiseaseCategories"
        class="card__section">
+    <span class="label">
+      {{ "gene_list_disease_categories" | translate }}
+    </span>
     <app-associated-disease-categories
       [geneDiseaseCategories]="item.diseaseCategories"
       [activeListItem]="filters.byDiseaseCategories"
@@ -52,6 +72,9 @@
 
   <div *ngIf="listSettings.ifShowCriteria"
        class="card__section">
+    <span class="label">
+      {{ "main_page_table_criteria" | translate }}
+    </span>
     <app-selection-criteria
       [geneCriteria]="item.commentCause"
       [activeListItem]="filters.bySelectionCriteria"

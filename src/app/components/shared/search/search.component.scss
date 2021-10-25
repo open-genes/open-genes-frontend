@@ -67,7 +67,7 @@ $mobile-container-vertical-padding: 5px;
     width: 100%;
     height: $search-input-height;
     line-height: $search-input-height;
-    padding: 0 $search-input-height 0 #{$search-switch-width + 10px};
+    padding: 0 $search-input-height 0 10px;
     resize: none;
     font-size: $font-size + 1;
     font-weight: $font-weight-medium;
@@ -75,8 +75,8 @@ $mobile-container-vertical-padding: 5px;
     background-color: $color-white;
     border-radius: $input-border-radius;
     border: 1px solid $color-borders;
-    border-left: 0;
     transition: border .15s linear;
+    box-shadow: $shadow-for-panel;
 
     &::-ms-clear {
       display: none !important; // скрываем иконку очистки поля на IE/Edge
@@ -107,6 +107,46 @@ $mobile-container-vertical-padding: 5px;
       @include placeholder-color {
         color: transparent;
       }
+    }
+  }
+
+  .clear-search-button {
+    display: block;
+    width: $search-input-height;
+    height: $search-input-height;
+    color: $color-gray;
+    line-height: normal;
+    font-size: $search-input-height / 2;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    right: $search-input-height;
+
+    .fa {
+      position: relative;
+      top: -1px; // fix for mat-icon-button
+      font-weight: $font-weight-medium;
+    }
+  }
+
+  &__cancel {
+    display: block;
+    width: $search-input-height;
+    height: $search-input-height;
+    color: $color-gray;
+    line-height: normal;
+    font-size: $search-input-height / 2;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    right: $search-input-height + 10px;
+
+    .fa {
+      position: relative;
+      top: -1px; // fix for mat-icon-button
+      font-weight: $font-weight-medium;
     }
   }
 
@@ -213,9 +253,13 @@ $mobile-container-vertical-padding: 5px;
       }
     }
 
-    &:hover,
+    &:focus,
+    &:hover {
+      background-color: rgba($color-hover, .5);
+    }
+
     &:active {
-      background-color: rgba($color-hover, .3);
+      background-color: rgba($color-hover, .75);
     }
   }
 

@@ -4,10 +4,20 @@ import { Terms } from './gene-ontology.model';
 import { HumanProteinAtlas } from './human-protein-atlas.model';
 import { SelectionCriteria } from './selection-criteria.model';
 import { AssociatedDiseases, AssociatedDiseaseCategories } from './associated-diseases.model';
+import { MethylationCorrelation } from './methylation-correlation.model';
+
+interface TimestampObject {
+  changed: string;
+  created: string;
+}
 
 interface GeneralGeneInfo {
   id: number;
   symbol: string;
+  agingMechanisms: {
+    id: number;
+    name: string;
+  }[];
   aliases: string[];
   commentCause?: SelectionCriteria;
   diseaseCategories?: AssociatedDiseaseCategories;
@@ -20,9 +30,9 @@ interface GeneralGeneInfo {
   origin?: Origin;
   ncbiId: number;
   uniprot: string;
-  timestamp: string;
+  timestamp?: TimestampObject | string; // TODO: separate models for different API versions
   homologueTaxon: string;
-  methylationCorrelation: 'positive' | 'negative' | '';
+  methylationCorrelation: MethylationCorrelation;
 }
 
 export interface Genes extends GeneralGeneInfo {

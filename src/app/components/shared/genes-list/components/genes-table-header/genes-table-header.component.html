@@ -4,67 +4,56 @@
   </div>
 </td>
 
-<td *ngIf="isGoTermsMode || listSettings.ifShowAge"
+<td *ngIf="listSettings.ifShowAge"
     class="table-header__cell table-header__cell--age">
-  <div class="overflow">
-    {{ "phylogeny" | translate }},
-  </div>
+  <div class="overflow">{{ "phylogeny" | translate }},</div>
   <div class="overflow">
     {{ "ncbi_homologs" | translate }}
   </div>
 </td>
 
-<td *ngIf="isGoTermsMode || listSettings.ifShowDiseases"
+<td *ngIf="listSettings.ifShowDiseases"
     class="table-header__cell table-header__cell--diseases">
   <div class="overflow">
     {{ "gene_list_diseases" | translate }}
   </div>
 </td>
 
-<td *ngIf="isGoTermsMode || listSettings.ifShowDiseaseCategories"
+<td *ngIf="listSettings.ifShowDiseaseCategories"
     class="table-header__cell table-header__cell--diseases">
   <div class="overflow">
     {{ "gene_list_disease_categories" | translate }}
   </div>
 </td>
 
-<ng-container *ngIf="!isGoTermsMode; else GoModeHeader">
+<td *ngIf="listSettings.ifShowAgingMechanisms"
+    class="table-header__cell table-header__cell--mechanisms">
+  <div class="overflow">
+    {{ "gene_list_aging_mechanisms" | translate }}
+  </div>
+</td>
 
-  <td *ngIf="listSettings.ifShowExpression"
-      class="table-header__cell table-header__cell--expression">
-    <div class="overflow">
-      {{ "main_page_table_expression" | translate }}
-    </div>
-  </td>
+<td *ngIf="listSettings.ifShowExpression"
+    class="table-header__cell table-header__cell--expression">
+  <div class="overflow">
+    {{ "main_page_table_expression" | translate }}
+  </div>
+</td>
 
-  <td *ngIf="listSettings.ifShowCriteria"
-      class="table-header__cell table-header__cell--criteria">
-    <div class="overflow">
-      {{ "main_page_table_criteria" | translate }}
-    </div>
-  </td>
+<td *ngIf="listSettings.ifShowCriteria"
+    class="table-header__cell table-header__cell--criteria">
+  <div class="overflow">
+    {{ "main_page_table_criteria" | translate }}
+  </div>
+</td>
 
-  <td *ngIf="listSettings.ifShowMethylation"
-      class="table-header__cell table-header__cell--methylation">
-    <div class="overflow">
-      {{ "main_page_table_methylation" | translate }}
-    </div>
-  </td>
-
-</ng-container>
+<td *ngIf="listSettings.ifShowMethylation"
+    class="table-header__cell table-header__cell--methylation">
+  <div class="overflow">
+    {{ "main_page_table_methylation" | translate }}
+  </div>
+</td>
 
 <td class="table-header__cell table-header__cell--actions">
   <div class="overflow"></div>
 </td>
-
-<ng-template #GoModeHeader>
-  <td class="table-header__cell table-header__cell--terms"
-      colspan="2">
-    <div class="overflow">
-      {{ "go_terms" | translate }}
-    </div>
-  </td>
-</ng-template>
-
-
-

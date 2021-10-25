@@ -37,6 +37,9 @@
   }
 
   &--dummy {
+  // TODO: remove this crutch solution and refactor base blocks styles
+  min-height: calc(80vh - #{$header-height});
+
     .page__inner {
       vertical-align: middle;
     }
@@ -60,4 +63,3 @@
 @import "pages/text-page";
 @import "pages/gene-page";
 @import "pages/news-page";
-@import "pages/favourites-page";

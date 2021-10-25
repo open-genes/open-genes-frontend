@@ -13,7 +13,7 @@
             <div class="header__button">
               <a mat-flat-button color="secondary" routerLink="/about">{{
                 "main_page_header_button" | translate
-              }}</a>
+                }}</a>
             </div>
           </div>
         </div>
@@ -42,6 +42,9 @@
               <app-sidebar-item *ngIf="lastGenes">
                 <ng-container title>
                   {{ "main_page_last" | translate }}
+                  <a class="link link--gray" href="/timeline">
+                    {{ "show_more_short" | translate }}
+                  </a>
                 </ng-container>
                 <app-mini-cards
                   content
@@ -83,17 +86,26 @@
             </app-sidebar>
           </div>
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
+            <app-toggle-search-mode
+              [notFoundAndFoundGenes]="notFoundAndFoundGenes"
+              (setMode)="setSearchMode($event)"
+            ></app-toggle-search-mode>
+
             <app-search
+              class="__mt-30"
               [genesList]="genes"
-              (dataFromSearchBar)="setSearchQuery($event)"
+              [setSearchMode]="searchMode"
+              (searchQuery)="setSearchQuery($event)"
+              (notFoundAndFoundGenes)="setNotFoundAndFoundGenes($event)"
             ></app-search>
 
             <app-genes-list
               *ngIf="genes"
               [genesList]="genes"
               [isMobile]="isMobile"
-              [dataFromSearchBar]="dataFromSearchBar"
-              [showFiltersPanel]="true"
+              [setSearchMode]="searchMode"
+              [searchQuery]="searchQuery"
+              [showFiltersPanel]="searchMode !== 'searchByGoTerms'"
               (loaded)="setIsGenesListLoaded($event)">
             </app-genes-list>
 
@@ -141,7 +153,8 @@
       <button class="btn btn--fill btn--small btn--white"
               (click)="openWizard()">
         {{ 'wizard_where_to_start_button' | translate }}
-      </button></ng-container>
+      </button>
+    </ng-container>
   </app-hint>
 </ng-template>
 
