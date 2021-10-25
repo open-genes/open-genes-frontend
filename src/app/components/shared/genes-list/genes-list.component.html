@@ -67,7 +67,7 @@
   <!-- Show more Button -->
   <div
     class="btn-wrap show-more"
-    *ngIf="currentPage <= pageOptions.pagesTotal && searchedData.length >= pageOptions.pageSize">
+    *ngIf="searchedData.length >= pageOptions?.pageSize">
     <button (click)="loadMoreGenes()"
             class="btn show-more__button">
       {{ "show_more" | translate }}
