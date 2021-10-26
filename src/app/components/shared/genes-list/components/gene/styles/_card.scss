@@ -1,8 +1,15 @@
 @import "../../../../../styles";
 
 @mixin card {
+  $color-icon: #FDB338;
   $card-spacing: 20px;
+  .add-favorites {
+    padding: 0 10px 0 0;
 
+    i {
+      color: $color-icon;
+    }
+  }
   :host {
     position: relative;
     flex-flow: column nowrap;
@@ -51,6 +58,7 @@
     &__title {
       padding-right: 30px;
       margin-bottom: 10px;
+      display: flex;
 
       .title {
         font-size: $font-size-huge;
