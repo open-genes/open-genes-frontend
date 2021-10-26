@@ -1,6 +1,14 @@
 @import "../../../../../styles";
 
 @mixin table-row {
+  $color-icon: #FDB338;
+  .add-favorites {
+    padding: 0 10px 0 0;
+
+    i {
+      color: $color-icon;
+    }
+  }
   :host {
     display: table-row-group;
     width: 100%;
