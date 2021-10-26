@@ -17,6 +17,17 @@
               </ng-container>
             </div>
 
+            <div class="add-favorites">
+              <ng-container>
+                <i
+                  [ngClass]="favouritesService.isInFavourites(gene.id) ? 'fas fa-star' : 'far fa-star'"
+                  (click)="addOrRemove(gene.id)"
+                  class="icon-color"
+                  aria-hidden="true"
+                ></i>
+              </ng-container>
+            </div>
+
             <div class="title__updated">
               {{ timestamp | unixTimeFormatter | localizedDate:'d MMMM yyyy'}}
             </div>

@@ -9,6 +9,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { SettingsService } from '../../core/services/settings.service';
 import { Settings } from '../../core/models/settings.model';
+import { FavouritesService } from '../../core/services/favourites.service';
+import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-gene',
@@ -49,7 +52,9 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
     private router: Router,
     private _bottomSheet: MatBottomSheet,
     private settingsService: SettingsService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    public favouritesService: FavouritesService,
+    private _snackBar: MatSnackBar,
   ) {
     super();
     this.routeSubscribe = activateRoute.params.subscribe((params) => {
@@ -177,4 +182,27 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
   public onCloseUiHints(): void {
     this._bottomSheet.dismiss();
   }
+
+  addOrRemove(id: any) {
+    if (!this.favouritesService.isInFavourites(id)) {
+      this.favouritesService.addToFavourites(id);
+      this._snackBar.openFromComponent(SnackBarComponent, {
+        data: {
+          title: 'favourites_added',
+          length: '',
+        },
+        duration: 600,
+      });
+    } else {
+      this.favouritesService.removeFromFavourites(id);
+      this._snackBar.openFromComponent(SnackBarComponent, {
+        data: {
+          title: 'favourites_removed',
+          length: '',
+        },
+        duration: 600,
+      });
+    }
+  }
+
 }
