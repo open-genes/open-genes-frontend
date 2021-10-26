@@ -18,14 +18,14 @@
             </div>
 
             <div class="add-favorites">
-              <ng-container>
+              <button mat-icon-button>
                 <i
                   [ngClass]="favouritesService.isInFavourites(gene.id) ? 'fas fa-star' : 'far fa-star'"
                   (click)="addOrRemove(gene.id)"
                   class="icon-color"
                   aria-hidden="true"
                 ></i>
-              </ng-container>
+              </button>
             </div>
 
             <div class="title__updated">
