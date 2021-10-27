@@ -2,6 +2,7 @@
   // &__inner { }
 
   $header-title-height: 30px;
+  $favorites-icon: #FDB338;
 
   &__header {
     padding: 15px 0 10px 0;
@@ -19,6 +20,20 @@
         min-height: $header-title-height;
         width: auto;
         float: left; // floats are more simple there
+      }
+
+      .add-favorites {
+        display: block;
+        min-height: $header-title-height;
+        width: auto;
+        float: left;
+        margin: -6px 0 0 0;
+
+        i {
+          font-size: 20px;
+          color: $favorites-icon;
+          cursor: pointer;
+        }
       }
 
       .title__caption {
