@@ -118,26 +118,16 @@
         <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-8">
           <div class="page-wrapper">
             <section class="wrapper gene-page__age">
-              <div class="age__types">
+              <div class="gene-page__new">
                 <div class="age__type age__phylogeny">
                   <div class="type__inner">
                     <div class="type__title col-5">
                       {{ 'phylogeny' | translate }}:
-
-                      <span class="fa far fa-info-circle"
-                            *ngIf="isUiHintsSettingOn"
-                            (click)="onShowUiHints($event)"></span>
                     </div>
 
                     <div class="type__value">
-                      {{ gene?.familyOrigin?.phylum || ('gene_page_no_data' | translate) }}
+                      <app-gene-age [gene]="gene" show="origin"></app-gene-age>
                     </div>
-
-                    <div class="type__value">
-                      {{ gene?.familyOrigin?.age }}
-                      <small *ngIf="gene?.familyOrigin?.age">{{ 'million_years' | translate }}</small>
-                    </div>
-
                   </div>
 
                   <div class="type__inner">
@@ -185,26 +175,58 @@
                       {{ getExpressionLocaleKey(gene.expressionChange) | translate }}
                     </div>
                   </div>
-
-                  <div
-                    *ngIf="isAnyOrtholog"
-                    class="age__type age__orthologs"> <!-- TODO: отображается пустое, приходит {"":""} -->
-                    <div class="type__inner">
-                      <div class="type__title col-5">
-                        {{ "gene_page_title_orthologs" | translate }}:
-                      </div>
-
-                      <ul class="list">
-                        <li *ngFor="let item of gene.orthologs | keyvalue">
-                          {{ item.key }} <span class="alias">{{ item.value }}</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-
                 </div>
               </div>
             </section>
+
+            <section class="wrapper gene-page__age">
+              <div class="age__types">
+                <div class="age__type age__phylogeny">
+                  <div class="type__inner">
+                    <div class="type__title">
+                      {{ 'phylogeny' | translate }}
+
+                      <span class="fa far fa-info-circle"
+                            *ngIf="isUiHintsSettingOn"
+                            (click)="onShowUiHints($event)"></span>
+
+                    </div>
+                    <div class="type__value">
+                      {{ gene?.familyOrigin?.phylum || ('gene_page_no_data' | translate) }}
+                    </div>
+                    <div class="type__value">
+                      {{ gene?.familyOrigin?.age }}
+                      <small *ngIf="gene?.familyOrigin?.age">{{ 'million_years' | translate }}</small>
+                    </div>
+                  </div>
+                  <div class="type__inner">
+                    <div class="type__title">
+                      {{ 'ncbi_homologs' | translate }}
+                    </div>
+                    <div class="type__value">
+                      {{ gene.homologueTaxon || ('gene_page_no_data' | translate) }}
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  *ngIf="isAnyOrtholog"
+                  class="age__type age__orthologs"> <!-- TODO: отображается пустое, приходит {"":""} -->
+                  <div class="type__inner">
+                    <div class="type__title">
+                      {{ "gene_page_title_orthologs" | translate }}
+                    </div>
+
+                    <ul class="list">
+                      <li *ngFor="let item of gene.orthologs | keyvalue">
+                        {{ item.key }} <span class="alias">{{ item.value }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </section>
+
 
             <section *ngIf="isNcbiDescription || isLocationData">
               <h3>{{ 'gene_page_title_description' | translate }}</h3>
