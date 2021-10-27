@@ -3,6 +3,7 @@
 $search-input-height: 40px;
 $search-switch-width: 50px;
 $mobile-container-vertical-padding: 5px;
+$input-border-radius: 5px;
 
 :host {
   display: block;
@@ -58,8 +59,6 @@ $mobile-container-vertical-padding: 5px;
     justify-content: flex-start;
   }
 
-  $input-border-radius: 5px;
-
   // Field
   &__field {
     appearance: none;
@@ -67,7 +66,7 @@ $mobile-container-vertical-padding: 5px;
     width: 100%;
     height: $search-input-height;
     line-height: $search-input-height;
-    padding: 0 $search-input-height 0 10px;
+    padding: 0 #{$search-input-height * 2} 0 10px;
     resize: none;
     font-size: $font-size + 1;
     font-weight: $font-weight-medium;
@@ -167,37 +166,6 @@ $mobile-container-vertical-padding: 5px;
       position: relative;
       top: -1px; // fix for mat-icon-button
       font-weight: $font-weight-medium;
-    }
-  }
-
-  &__switch {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    display: block;
-    width: $search-switch-width;
-    height: $search-input-height;
-    background: linear-gradient($color-general, $color-base);
-    font-size: $font-size-small;
-    color: $color-white;
-    padding: 0;
-    text-align: center;
-    @include text-overflow;
-    border-radius: #{$input-border-radius} 0 0 #{$input-border-radius};
-
-    .fa {
-      display: inline-block;
-      vertical-align: middle;
-      height: 16px;
-      line-height: 1;
-      font-size: 16px;
-      position: relative;
-
-      &.fa-sort-down {
-        top: -2px; // fix
-        margin-left: 5px;
-      }
     }
   }
 

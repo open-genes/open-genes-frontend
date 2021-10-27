@@ -92,4 +92,8 @@
     display: inline-block;
     margin-right: 20px;
   }
+
+  .genes-info__found + .genes-info__found {
+    margin-top: .5em;
+  }
 }
