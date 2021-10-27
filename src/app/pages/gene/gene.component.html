@@ -4,6 +4,16 @@
       <div class="container-fluid">
         <div class="row no-gutters">
           <div class="col col-12 header__title">
+            <div class="add-favorites">
+              <button mat-icon-button>
+                <i
+                  [ngClass]="favouritesService.isInFavourites(gene.id) ? 'fas fa-star' : 'far fa-star'"
+                  (click)="addOrRemove(gene.id)"
+                  class="icon-color"
+                  aria-hidden="true"
+                ></i>
+              </button>
+            </div>
             <div class="title__caption">
               <div class="caption__inner">
                 {{gene.symbol}}
@@ -15,17 +25,6 @@
                 *ngFor="let item of gene.aliases">
                 <span class="alias">{{item}}</span>
               </ng-container>
-            </div>
-
-            <div class="add-favorites">
-              <button mat-icon-button>
-                <i
-                  [ngClass]="favouritesService.isInFavourites(gene.id) ? 'fas fa-star' : 'far fa-star'"
-                  (click)="addOrRemove(gene.id)"
-                  class="icon-color"
-                  aria-hidden="true"
-                ></i>
-              </button>
             </div>
 
             <div class="title__updated">

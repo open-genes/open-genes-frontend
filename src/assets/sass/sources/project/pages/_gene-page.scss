@@ -4,6 +4,23 @@
   $header-title-height: 30px;
   $favorites-icon: #FDB338;
 
+  .add-favorites {
+    display: block;
+    min-height: $header-title-height;
+    width: auto;
+    float: left;
+    margin: -6px 0 0 0;
+    @include resolution_smartphone {
+      margin: -10px 0 0 0;
+    }
+
+    i {
+      font-size: 20px;
+      color: $favorites-icon;
+      cursor: pointer;
+    }
+  }
+
   &__header {
     padding: 15px 0 10px 0;
     border-bottom: 1px solid $color-borders;
@@ -20,20 +37,6 @@
         min-height: $header-title-height;
         width: auto;
         float: left; // floats are more simple there
-      }
-
-      .add-favorites {
-        display: block;
-        min-height: $header-title-height;
-        width: auto;
-        float: left;
-        margin: -6px 0 0 0;
-
-        i {
-          font-size: 20px;
-          color: $favorites-icon;
-          cursor: pointer;
-        }
       }
 
       .title__caption {
@@ -242,6 +245,7 @@
           &:nth-child(even) {
             .mat-list-item-content {
               background-color: lighten($color-hover, 5%);
+
               &:hover,
               &:active {
                 background-color: lighten($color-hover, 3%);
