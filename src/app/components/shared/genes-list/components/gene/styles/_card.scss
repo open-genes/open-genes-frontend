@@ -4,10 +4,12 @@
   $color-icon: #FDB338;
   $card-spacing: 20px;
   .add-favorites {
-    padding: 0 10px 0 0;
+    margin: -8px 0 0 -10px;
 
     i {
       color: $color-icon;
+      cursor: pointer;
+      font-size: 20px;
     }
   }
   :host {

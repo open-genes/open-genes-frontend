@@ -3,10 +3,12 @@
 @mixin table-row {
   $color-icon: #FDB338;
   .add-favorites {
-    padding: 0 10px 0 0;
+    margin: -8px 0 0 -8px;
 
     i {
       color: $color-icon;
+      font-size: 20px;
+      cursor: pointer;
     }
   }
   :host {
@@ -50,6 +52,7 @@
     &--methylation {
       .overflow {
         width: 220px;
+        display: flex;
       }
     }
 
