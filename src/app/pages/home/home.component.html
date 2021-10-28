@@ -11,9 +11,9 @@
               {{ "main_page_header_description" | translate }}
             </div>
             <div class="header__button">
-              <a mat-flat-button color="secondary" routerLink="/about">{{
-                "main_page_header_button" | translate
-                }}</a>
+              <a mat-flat-button color="secondary" routerLink="/about">
+                {{"main_page_header_button" | translate}}
+              </a>
             </div>
           </div>
         </div>
@@ -93,26 +93,22 @@
 
             <app-search
               class="__mt-30"
-              [genesList]="genes"
+              [showTitle]="true"
+              [genesLength]="genes?.length"
+              [genesList]="searchedGenes"
               [setSearchMode]="searchMode"
+              (confirmedQuery)="updateGenesList($event)"
               (searchQuery)="setSearchQuery($event)"
-              (notFoundAndFoundGenes)="setNotFoundAndFoundGenes($event)"
             ></app-search>
 
             <app-genes-list
               *ngIf="genes"
-              [genesList]="genes"
+              [genesList]="confirmedGenesList"
               [isMobile]="isMobile"
               [setSearchMode]="searchMode"
-              [searchQuery]="searchQuery"
-              [showFiltersPanel]="searchMode !== 'searchByGoTerms'"
-              (loaded)="setIsGenesListLoaded($event)">
+              [showFiltersPanel]="searchMode !== searchModeEnum.searchByGoTerms">
             </app-genes-list>
 
-            <!-- When content is loading -->
-            <app-spinner *ngIf="!genesListIsLoaded"
-                         class="__mb-10"
-            ></app-spinner>
           </div>
         </ng-container>
       </div>
@@ -143,18 +139,21 @@
 <ng-template #wizardBanner let-classes>
   <app-hint class="{{ classes }}"
             hintType="emphasized">
-    <ng-container title><span class="fa far fa-magic"
-    ></span>&nbsp;{{ 'wizard_where_to_start_title' | translate }}
+    <ng-container title>
+      <span class="fa far fa-magic"></span>&nbsp;{{ 'wizard_where_to_start_title' | translate }}
     </ng-container>
+
     <ng-container description>
       {{ 'wizard_where_to_start_description' | translate }}
     </ng-container>
+
     <ng-container button>
       <button class="btn btn--fill btn--small btn--white"
               (click)="openWizard()">
         {{ 'wizard_where_to_start_button' | translate }}
       </button>
     </ng-container>
+
   </app-hint>
 </ng-template>
 

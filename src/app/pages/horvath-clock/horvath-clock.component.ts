@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
-import { takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { WizardService } from '../../components/shared/wizard/wizard-service.service';
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
@@ -17,12 +17,12 @@ import { GenesInHorvathClock } from '../../core/models/openGenesApi/genes-in-hor
 export class HorvathClockComponent extends WindowWidth implements OnInit, OnDestroy {
   public genes: GenesInHorvathClock[];
   public lastGenes: GenesInHorvathClock[];
+  public searchedGenes: GenesInHorvathClock[];
+  public confirmedGenesList: GenesInHorvathClock[];
   public isAvailable = true;
   public genesListIsLoaded = false;
   public errorStatus: string;
   public searchMode: SearchMode = 'searchByGenes';
-  public searchQuery: string;
-  public notFoundAndFoundGenes: any;
   public curatedGeneSymbolsArray: string[] = [];
 
   constructor(
@@ -30,7 +30,7 @@ export class HorvathClockComponent extends WindowWidth implements OnInit, OnDest
     private filterService: FilterService,
     private wizardService: WizardService,
     private readonly apiService: ApiService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
   ) {
     super(windowService);
   }
@@ -52,28 +52,28 @@ export class HorvathClockComponent extends WindowWidth implements OnInit, OnDest
   }
 
   public getGenes(): void {
-    this.apiService
-      .getGenes()
-      .pipe(takeUntil(this.subscription$))
-      .subscribe((genes) => {
-        genes.forEach((gene) => {
-          this.curatedGeneSymbolsArray.push(gene.symbol);
-        });
-
-        this.apiService
-          .getGenesInHorvathClock()
-          .pipe(takeUntil(this.subscription$))
-          .subscribe(
-            (genes) => {
-              this.genes = genes;
-              this.cdRef.markForCheck();
-            },
-            (err) => {
-              this.isAvailable = false;
-              this.errorStatus = err.statusText;
-            }
-          );
-      });
+    this.apiService.getGenes()
+      .pipe(
+        takeUntil(this.subscription$),
+        switchMap((genes) => {
+          genes.forEach((gene) => {
+            this.curatedGeneSymbolsArray.push(gene.symbol);
+          });
+          return this.apiService.getGenesInHorvathClock();
+        })
+      )
+      .subscribe(
+        (genes) => {
+          this.genes = genes;
+          this.confirmedGenesList = genes;
+          this.cdRef.markForCheck();
+        },
+        (err) => {
+          this.isAvailable = false;
+          this.errorStatus = err.statusText;
+          this.cdRef.markForCheck()
+        }
+      );
   }
 
   public setIsGenesListLoaded(event: boolean): void {
@@ -84,10 +84,28 @@ export class HorvathClockComponent extends WindowWidth implements OnInit, OnDest
   }
 
   public setSearchQuery(query: string): void {
-    this.searchQuery = query;
+    this.searchByGenes(query);
   }
 
-  public setNotFoundAndFoundGenes(event: any): void {
-    this.notFoundAndFoundGenes = event;
+  public updateGenesList(event): void {
+    if (this.searchedGenes.length) {
+      this.confirmedGenesList = [...this.searchedGenes];
+    } else {
+      this.confirmedGenesList = this.genes;
+    }
+  }
+
+  private searchByGenes(query: string): void {
+    if (query) {
+      this.searchedGenes = this.genes?.filter((gene) => {
+        // Fields always acquired in response
+        const searchedText = [gene.id, gene?.ensembl ? gene.ensembl : '', gene.symbol, gene.name]
+          .join(' ')
+          .toLowerCase();
+        return searchedText.includes(query);
+      });
+    } else {
+      this.searchedGenes = [];
+    }
   }
 }

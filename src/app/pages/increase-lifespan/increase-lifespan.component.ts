@@ -17,12 +17,12 @@ import { SearchMode } from '../../core/models/settings.model';
 export class IncreaseLifespanComponent extends WindowWidth implements OnInit, OnDestroy {
   public genes: GenesWLifespanResearches[];
   public lastGenes: GenesWLifespanResearches[];
+  public searchedGenes: GenesWLifespanResearches[];
+  public confirmedGenesList: GenesWLifespanResearches[];
   public isAvailable = true;
   public genesListIsLoaded = false;
   public errorStatus: string;
   public searchMode: SearchMode = 'searchByGenes';
-  public searchQuery: string;
-  public notFoundAndFoundGenes: any;
 
   constructor(
     public windowService: WindowService,
@@ -55,11 +55,13 @@ export class IncreaseLifespanComponent extends WindowWidth implements OnInit, On
       .subscribe(
         (genes) => {
           this.genes = genes;
+          this.confirmedGenesList = genes;
           this.cdRef.markForCheck();
         },
         (err) => {
           this.isAvailable = false;
           this.errorStatus = err.statusText;
+          this.cdRef.markForCheck()
         }
       );
   }
@@ -72,10 +74,29 @@ export class IncreaseLifespanComponent extends WindowWidth implements OnInit, On
   }
 
   public setSearchQuery(query: string): void {
-    this.searchQuery = query;
+    this.searchByGenes(query);
   }
 
-  public setNotFoundAndFoundGenes(event: any): void {
-    this.notFoundAndFoundGenes = event;
+  public updateGenesList(event): void {
+    if (this.searchedGenes.length) {
+      this.confirmedGenesList = [...this.searchedGenes];
+    } else {
+      this.confirmedGenesList = this.genes;
+    }
   }
+
+  private searchByGenes(query: string): void {
+    if (query) {
+      this.searchedGenes = this.genes?.filter((gene) => {
+        // Fields always acquired in response
+        const searchedText = [gene.id, gene?.ensembl ? gene.ensembl : '', gene.symbol, gene.name]
+          .join(' ')
+          .toLowerCase();
+        return searchedText.includes(query);
+      });
+    } else {
+      this.searchedGenes = [];
+    }
+  }
+
 }

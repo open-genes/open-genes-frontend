@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
-import { Gene } from '../models';
+import { Genes } from '../models';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
 import { FavouritesService } from '../services/favourites.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,13 +11,8 @@ import { Filter } from '../../components/shared/genes-list/services/filter.model
 import { FilterTypesEnum } from '../../components/shared/genes-list/services/filter-types.enum';
 
 export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
-  @Input() item: Gene;
+  @Input() item: Genes;
   @Input() isGoTermsMode: boolean;
-  @Input() goModeCellData: {
-    biologicalProcess: any;
-    cellularComponent: any;
-    molecularActivity: any;
-  };
 
   public listSettings: GenesListSettings;
   public filters: Filter = this.filterService.filters;
@@ -29,7 +24,7 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
     protected filterService: FilterService,
     protected favouritesService: FavouritesService,
     protected snackBar: MatSnackBar,
-    protected cdRef: ChangeDetectorRef,
+    protected cdRef: ChangeDetectorRef
   ) {
   }
 

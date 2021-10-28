@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   TemplateRef,
@@ -21,10 +22,12 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './genes-research-list.component.html',
   styleUrls: ['./genes-research-list.component.scss'],
 })
-export class GenesResearchListComponent implements OnInit {
-  @Input() genesList: GenesWLifespanResearches[];
-  @Input() set searchQuery(query: string) {
-    this.updateGeneListOnSearch(query !== undefined && query !== '' ? query : '');
+export class GenesResearchListComponent implements OnInit, OnDestroy {
+  @Input() set genesList(genes: GenesWLifespanResearches[]) {
+    if (genes) {
+      this.searchedData = genes;
+      this.openSnackBar();
+    }
   }
 
   @Output() loaded = new EventEmitter<boolean>();
@@ -62,7 +65,6 @@ export class GenesResearchListComponent implements OnInit {
    * HTTP
    */
   private setInitialState(): void {
-    this.searchedData = [...this.genesList];
     this.loaded.emit(true);
     this.cdRef.markForCheck();
   }
@@ -71,17 +73,11 @@ export class GenesResearchListComponent implements OnInit {
     this.retrievedSettings = this.settingsService.getSettings();
   }
 
-  public updateGeneListOnSearch(query: string): void {
-    this.searchedData = this.genesList.filter((item) => {
-      // TODO: DRY
-      const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
-      ${item.symbol} ${item.name}`;
-      return searchedText.toLowerCase().includes(query);
-    });
+  private openSnackBar(): void {
     this.snackBar.openFromComponent(SnackBarComponent, {
       data: {
         title: 'items_found',
-        length: this.searchedData.length ? this.searchedData.length : 0,
+        length: this.searchedData ? this.searchedData.length : 0,
       },
       duration: 600,
     });
@@ -102,6 +98,7 @@ export class GenesResearchListComponent implements OnInit {
       maxWidth: '768px',
     });
   }
+
   public closeCommentModal(): void {
     this.dialog.closeAll();
   }

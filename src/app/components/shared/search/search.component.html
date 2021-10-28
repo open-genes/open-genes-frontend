@@ -4,7 +4,7 @@
 
   <div *ngIf="showTitle"
        class="search-form__quantity">
-    <span *ngIf="genesList?.length">{{ 'main_page_total' | translate: { number: genesList?.length } }}</span>
+    <span *ngIf="genesLength">{{ 'main_page_total' | translate: { number: genesLength } }}</span>
   </div>
 
   <div *ngIf="showSearchResult"
@@ -20,7 +20,7 @@
     </button>
 
     <div class="search-form__wrapper">
-      <button *ngIf="value"
+      <button *ngIf="searchForm.get('searchField').value"
               mat-icon-button
               class="clear-search-button"
               (click)="clearSearch()">
@@ -44,7 +44,6 @@
           placeholder="{{ item.placeholder | translate }}"
           class="field search-form__field"
           (keyup.enter)="onSearch()"
-          [(ngModel)]="value"
         >
       </ng-container>
     </div>
@@ -63,6 +62,7 @@
                 [highlightText]="searchForm.get('searchField').value"
                 [innerHTML]="gene.symbol">
           </span>&nbsp;
+
           <span *ngIf="!gene?.terms"
                 class="item__name"
                 appHighlight
@@ -70,32 +70,15 @@
                 [innerHTML]="gene.name">
           </span>&nbsp;
 
-          <ng-container *ngIf="biologicalProcess?.size !== 0">
-            <span *ngFor="let term of biologicalProcess | keyvalue"
+          <ng-container *ngFor="let term of gene?.terms | keyvalue">
+            <span *ngFor="let item of term?.value | keyvalue"
                   class="item__name"
                   appHighlight
                   [highlightText]="searchForm.get('searchField').value"
-                  [innerHTML]="term.value">
-          </span>
+                  [innerHTML]="item.value">
+            </span>
           </ng-container>
 
-          <ng-container *ngIf="cellularComponent?.size !== 0">
-            <span *ngFor="let term of cellularComponent | keyvalue"
-                  class="item__name"
-                  appHighlight
-                  [highlightText]="searchForm.get('searchField').value"
-                  [innerHTML]="term.value">
-          </span>
-          </ng-container>
-
-          <ng-container *ngIf="molecularActivity?.size !== 0">
-            <span *ngFor="let term of molecularActivity | keyvalue"
-                  class="item__name"
-                  appHighlight
-                  [highlightText]="searchForm.get('searchField').value"
-                  [innerHTML]="term.value">
-          </span>
-          </ng-container>
         </button>
       </ng-container>
     </div>

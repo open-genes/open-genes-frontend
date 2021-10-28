@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { Genes } from '../../../core/models';
 import { FormControl, FormGroup } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { ToMap } from '../../../core/utils/to-map';
@@ -27,9 +27,14 @@ import { SearchMode, SearchModeEnum } from '../../../core/models/settings.model'
 })
 export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Inject(Document) public document: Document;
+  @Input() genesLength: number;
+  @Input() showTitle: boolean;
 
-  @Input() genesList: Genes[];
-  @Input() showTitle = true;
+  @Input() set genesList(genes: any) {
+    if (genes) {
+      this.searchedData = genes;
+    }
+  }
 
   @Input() set setSearchMode(value: SearchMode) {
     if (value) {
@@ -37,21 +42,16 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
       this.searchedData = [];
       this.searchForm.get('searchField').setValue('');
     }
+    debugger;
   }
 
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
-  @Output() notFoundAndFoundGenes: EventEmitter<any> = new EventEmitter<any>();
+  @Output() confirmedQuery: EventEmitter<any> = new EventEmitter<any>();
 
-  public value: string;
-  public foundGenes: string[];
-  public notFoundGenes: string[] = [];
   public searchedData: Genes[];
   public searchForm: FormGroup;
   public searchMode: SearchMode;
   public showSearchResult = false;
-  public biologicalProcess: Map<any, any>;
-  public cellularComponent: Map<any, any>;
-  public molecularActivity: Map<any, any>;
 
   private searchModeEnum = SearchModeEnum;
   public inputData = [
@@ -85,7 +85,6 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subsToSearchFieldChanges();
-    this.onSearch();
   }
 
   ngOnDestroy(): void {
@@ -98,10 +97,9 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchForm
       .get('searchField')
       .valueChanges.pipe(
-        filter((query: string) => !!query),
-        map((query: string) => query.toLowerCase()),
+        map((query: string) => query?.toLowerCase()),
         filter((query: string) => {
-          this.showSearchResult = query.length >= 2;
+          this.showSearchResult = query?.length >= 2;
 
           if (this.showSearchResult) {
             this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
@@ -109,106 +107,45 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
             this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
           }
 
-          if (query.length !== 0) {
-            if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
-              return true;
-            }
-            if (this.searchMode === this.searchModeEnum.searchByGenes) {
-              this.searchByGenes(query);
-            }
-            if (this.searchMode === this.searchModeEnum.searchByGenesList) {
-              this.searchByGenesList(query);
-            }
+          if (this.searchMode === this.searchModeEnum.searchByGoTerms && this.showSearchResult) {
+            return true;
+          }
+
+          if (this.searchMode === this.searchModeEnum.searchByGenes) {
+            this.searchQuery.emit(query);
+          }
+
+          if (this.searchMode === this.searchModeEnum.searchByGenesList) {
+            this.searchQuery.emit(query);
           }
 
           return false;
         }),
         debounceTime(500),
         distinctUntilChanged(),
-        switchMap((query: string) => this.apiService.getGoTermMatchByString(query)),
         takeUntil(this.subscription$)
       )
-      .subscribe((genes: Genes[]) => {
-        this.searchedData = genes;
-        this.mapTerms();
+      .subscribe((query: string) => {
+        this.searchQuery.emit(query);
         this.cdRef.markForCheck();
       });
   }
 
-  private mapTerms(): void {
-    for (const item of this.searchedData) {
-      this.biologicalProcess = this.toMap(item.terms?.biological_process);
-      this.cellularComponent = this.toMap(item.terms?.cellular_component);
-      this.molecularActivity = this.toMap(item.terms?.molecular_activity);
-    }
-  }
-
-  private searchByGenes(query: string): void {
-    this.searchedData = this.genesList?.filter((gene) => {
-      // Fields always acquired in response
-      const searchedText = [
-        gene.id,
-        gene?.ensembl ? gene.ensembl : '',
-        gene.symbol,
-        gene.name,
-        gene?.aliases ? gene.aliases : '',
-      ]
-        .join(' ')
-        .toLowerCase();
-      return searchedText.includes(query);
-    });
-  }
-
-  private searchByGenesList(query: string): void {
-    if (query.length >= 2) {
-      this.searchedData = [];
-      this.notFoundGenes = [];
-      const arrayOfWords = query
-        .toLowerCase()
-        .split(',')
-        .map((res) => res.trim())
-        .filter((res) => res);
-
-      const uniqWords = [...new Set(arrayOfWords)];
-
-      if (uniqWords.length !== 0) {
-        this.foundGenes = uniqWords.filter((symbol) => {
-          const foundGene = this.genesList.find((gene) => symbol === gene.symbol.toLowerCase());
-
-          foundGene ? this.searchedData.push(foundGene) : this.notFoundGenes.push(symbol);
-
-          return !!foundGene;
-        });
-      }
-
-      this.notFoundAndFoundGenes.emit({
-        foundGenes: this.foundGenes,
-        notFoundGenes: this.notFoundGenes,
-      });
-    } else {
-      this.notFoundAndFoundGenes.emit({
-        foundGenes: [],
-        notFoundGenes: [],
-      });
-    }
-  }
-
   public onSearch(): void {
-    this.value = this.searchForm.get('searchField').value;
-    this.searchQuery.emit(this.value.toLowerCase());
-  }
-
-  public cancelSearch(event?): void {
-    this.showSearchResult = false;
-    this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
-    event?.stopPropagation();
+    this.confirmedQuery.emit();
   }
 
   public clearSearch(): void {
     this.searchForm.get('searchField').setValue('');
     const query: string = this.searchForm.get('searchField').value;
     this.searchQuery.emit(query.toLowerCase());
-    this.cdRef.markForCheck();
-    this.cdRef.detectChanges();
+    this.confirmedQuery.emit(query.toLowerCase());
+    this.cancelSearch();
+  }
+
+  public cancelSearch(event?): void {
+    this.showSearchResult = false;
+    this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
+    event?.stopPropagation();
   }
 }

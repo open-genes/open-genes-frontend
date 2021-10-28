@@ -1,8 +1,9 @@
 import { takeUntil } from 'rxjs/operators';
 import { WindowService } from '../services/browser/window.service';
 import { Subject } from 'rxjs';
+import { ToMap } from './to-map';
 
-export abstract class WindowWidth {
+export abstract class WindowWidth extends ToMap {
   public subscription$ = new Subject();
   public isMobile: boolean;
   public isTouchDevice = false;
@@ -10,7 +11,9 @@ export abstract class WindowWidth {
     desktop: 1199.98,
   };
 
-  constructor(public windowService: WindowService) {
+  protected constructor(public windowService: WindowService) {
+    super();
+
     if ('ontouchstart' in document.documentElement) {
       this.isTouchDevice = true;
     }
@@ -27,11 +30,9 @@ export abstract class WindowWidth {
   }
 
   protected detectWindowWidth(callback: any): void {
-    this.windowService.windowWidth$
-      .pipe(takeUntil(this.subscription$))
-      .subscribe((width) => {
-        this.isMobile = width <= this.breakpoints.desktop;
-        callback();
-      });
+    this.windowService.windowWidth$.pipe(takeUntil(this.subscription$)).subscribe((width) => {
+      this.isMobile = width <= this.breakpoints.desktop;
+      callback();
+    });
   }
 }

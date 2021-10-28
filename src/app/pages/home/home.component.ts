@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { WizardService } from '../../components/shared/wizard/wizard-service.service';
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
-import { SearchMode } from '../../core/models/settings.model';
+import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
 
 @Component({
   selector: 'app-home',
@@ -16,16 +16,14 @@ import { SearchMode } from '../../core/models/settings.model';
 })
 export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public genes: Genes[];
+  public searchedGenes: Genes[];
+  public confirmedGenesList: Genes[];
   public lastGenes: Genes[];
   public isAvailable = true;
   public genesListIsLoaded = false;
   public errorStatus: string;
   public searchMode: SearchMode;
-  public searchQuery: string;
-  public searchData: { // TODO: Will we use it anywhere?
-    searchMode: SearchMode;
-    searchQuery: string;
-  };
+  public searchModeEnum = SearchModeEnum;
   public notFoundAndFoundGenes: any;
 
   constructor(
@@ -51,10 +49,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     });
 
     this.loadWizard();
-  }
-
-  ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
   }
 
   public getGenes(): void {
@@ -83,22 +77,114 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       });
   }
 
-  public setIsGenesListLoaded(event: boolean): void {
-    this.genesListIsLoaded = event;
-    this.cdRef.markForCheck();
+  public setSearchQuery(query: string): void {
+    if (this.searchMode === this.searchModeEnum.searchByGenes) {
+      this.searchByGenes(query);
+    }
+    if (this.searchMode === this.searchModeEnum.searchByGenesList) {
+      this.searchByGenesList(query);
+    }
+    if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
+      this.searchGenesByGoTerm(query);
+    }
   }
 
-  public setSearchQuery(query: string): void {
-    this.searchQuery = query;
+  public updateGenesList(event): void {
+    this.confirmedGenesList = [...this.searchedGenes];
   }
 
   public setSearchMode(searchMode: SearchMode): void {
     this.searchMode = searchMode;
   }
 
-  public setNotFoundAndFoundGenes(event: any): void {
-    this.notFoundAndFoundGenes = event;
+  private searchByGenes(query: string): void {
+    if (query) {
+      this.searchedGenes = this.genes?.filter((gene) => {
+        // Fields always acquired in response
+        const searchedText = [
+          gene.id,
+          gene?.ensembl ? gene.ensembl : '',
+          gene.symbol,
+          gene.name,
+          gene?.aliases ? gene.aliases : '',
+        ]
+          .join(' ')
+          .toLowerCase();
+        return searchedText.includes(query);
+      });
+    } else {
+      this.searchedGenes = [];
+    }
   }
+
+  private searchByGenesList(query: string): void {
+    if (query) {
+      this.searchedGenes = [];
+      const notFoundGenes = [];
+      let foundGenes = [];
+      const arrayOfWords = query
+        .split(',')
+        .map((res) => res.trim())
+        .filter((res) => res);
+
+      const uniqWords = [...new Set(arrayOfWords)];
+
+      if (uniqWords.length !== 0) {
+        foundGenes = uniqWords.filter((symbol) => {
+          const foundGene = this.genes.find((gene) => symbol === gene.symbol.toLowerCase());
+
+          foundGene ? this.searchedGenes.push(foundGene) : notFoundGenes.push(symbol);
+
+          return !!foundGene;
+        });
+      }
+
+      this.notFoundAndFoundGenes = {
+        foundGenes: foundGenes,
+        notFoundGenes: notFoundGenes,
+      };
+    } else {
+      this.notFoundAndFoundGenes = {
+        foundGenes: [],
+        notFoundGenes: [],
+      };
+      this.searchedGenes = [];
+    }
+  }
+
+  private searchGenesByGoTerm(query: string): void {
+    if (query) {
+      this.apiService
+        .getGoTermMatchByString(query)
+        .pipe(takeUntil(this.subscription$))
+        .subscribe(
+          (genes) => {
+            this.searchedGenes = genes; // If nothing found, will return empty array
+            this.mapTerms();
+            this.cdRef.markForCheck();
+          },
+          (error) => {
+            console.log(error);
+            this.cdRef.markForCheck();
+          }
+        );
+    } else {
+      this.searchedGenes = [];
+    }
+  }
+
+  private mapTerms(): void {
+    this.searchedGenes.forEach((gene) => {
+      if (gene.terms) {
+        Object.keys(gene.terms).forEach((key) => [
+          gene.terms[key].map((term) => {
+            return (gene.terms[key] = this.toMap(term));
+          }),
+        ]);
+      }
+    });
+  }
+
 
   /**
    * Wizard
@@ -109,5 +195,9 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
 
   private loadWizard() {
     this.wizardService.openOnce();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
   }
 }

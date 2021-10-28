@@ -24,7 +24,7 @@
           <li *ngFor="let disease of mappedDiseases | keyvalue | slice: 0:maxItemsToShow"
               [class.__active]="activeListItem.includes(disease.key)"
               (click)="emitOnClick(disease.key)">
-            {{ disease.value['name'] }}
+            {{ disease?.value['name'] }}
           </li>
         </ul>
 
