@@ -1,37 +1,26 @@
-// also exported from '@storybook/angular' if you can deal with breaking changes in 6.1
-import { Story, Meta } from '@storybook/angular/types-6-0';
+import { CommonModule } from '@angular/common';
+import { moduleMetadata, Story } from '@storybook/angular';
 import { IconComponent } from './app-icon.component';
-import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { IconService } from './services/app-icon.service';
 
 export default {
   title: 'Example/Icon',
   component: IconComponent,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
   decorators: [
     moduleMetadata({
       declarations: [IconComponent],
-      providers: [IconService],
-    })
+      imports: [CommonModule],
+      providers: [IconService]
+    }),
   ],
-} as Meta;
-
-const Template: Story<IconComponent> = (args: IconComponent) => ({
-  props: args,
-});
-
-export const Primary = Template.bind({});
-Primary.args = {
-  primary: true,
-  label: 'Icon',
-  template: `<app-icon
-        class="footer__logo"
-        staticSrc="/assets/images/logo.svg"
-        size="custom"
-        customWidth="60px"
-        customHeight="42px"
-      ></app-icon>`
 };
-
+const Template: Story<IconComponent> = () => ({
+  component: IconComponent,
+  template: `<app-icon 
+                staticSrc="https://www.svgrepo.com/show/173011/dna-strand.svg"
+                customHeight="100px"
+                customWidth="100px"
+                size="lg"
+                ></app-icon>`,
+});
+export const Base = Template.bind({});

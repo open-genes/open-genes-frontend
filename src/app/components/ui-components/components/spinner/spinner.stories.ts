@@ -1,23 +1,20 @@
-// also exported from '@storybook/angular' if you can deal with breaking changes in 6.1
-import { Story, Meta } from '@storybook/angular/types-6-0';
+import { CommonModule } from '@angular/common';
+import { moduleMetadata, Story } from '@storybook/angular';
 import { SpinnerComponent } from './spinner.component';
 
 export default {
-  title: 'Example/skeleton',
+  title: 'Example/Spinner',
   component: SpinnerComponent,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
-} as Meta;
-
-const Template: Story<SpinnerComponent> = (args: SpinnerComponent) => ({
-  props: args,
-});
-
-export const Primary = Template.bind({});
-Primary.args = {
-  primary: true,
-  label: 'spinner',
-  template: '<app-spinner></app-spinner>',
+  decorators: [
+    moduleMetadata({
+      declarations: [SpinnerComponent],
+      imports: [CommonModule],
+    }),
+  ],
 };
 
+const Template: Story<SpinnerComponent> = () => ({
+  component: SpinnerComponent,
+  template: `<app-spinner></app-spinner>`,
+});
+export const Base = Template.bind({});

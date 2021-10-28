@@ -1,23 +1,28 @@
-// also exported from '@storybook/angular' if you can deal with breaking changes in 6.1
-import { Story, Meta } from '@storybook/angular/types-6-0';
+import { CommonModule } from '@angular/common';
+import { moduleMetadata, Story } from '@storybook/angular';
 import { HintComponent } from './hint.component';
 
 export default {
   title: 'Example/Hint',
   component: HintComponent,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
-} as Meta;
-
-const Template: Story<HintComponent> = (args: HintComponent) => ({
-  props: args,
-});
-
-export const Primary = Template.bind({});
-Primary.args = {
-  primary: true,
-  label: 'Hint',
-  template: '<app-popover></app-popover>',
+  decorators: [
+    moduleMetadata({
+      declarations: [HintComponent],
+      imports: [CommonModule],
+    }),
+  ],
 };
 
+const Template: Story<HintComponent> = () => ({
+  component: HintComponent,
+  template: `<app-hint
+              hintType="emphasized">
+    <ng-container title><span class="fa far fa-magic"></span> С чего начать</ng-container>
+    <ng-container description>Узнайте как пользоваться поиском и фильтрами</ng-container>
+    <ng-container button>
+      <button class="btn btn--fill btn--small btn--white">
+        Посмотреть
+      </button></ng-container>
+  </app-hint>`,
+});
+export const Base = Template.bind({});
