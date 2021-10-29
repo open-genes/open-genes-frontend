@@ -123,7 +123,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public openArticleModal(slug: string): void {
-    debugger;
     this.isAnyArticleModalOpen = true;
 
     // Subscribe and get one article data

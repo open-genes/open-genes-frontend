@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-common-modal',
   templateUrl: './common-modal.component.html',
-  styleUrls: ['./common-modal.component.scss']
+  styleUrls: ['./common-modal.component.scss'],
 })
-export class CommonModalComponent implements OnInit {
+export class CommonModalComponent {
 
-  constructor() { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<CommonModalComponent>,
+  ) { }
 
-  ngOnInit(): void {
+  public closeCommentModal(): void {
+    this.dialogRef.close();
   }
-
 }

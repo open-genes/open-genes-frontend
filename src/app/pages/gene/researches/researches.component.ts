@@ -8,6 +8,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { Researches } from '../../../core/models/openGenesApi/researches.model';
 import { MatDialog } from '@angular/material/dialog';
+import { CommonModalComponent } from '../../../components/ui-components/components/modals/common-modal/common-modal.component';
 
 @Component({
   selector: 'app-researches',
@@ -61,7 +62,7 @@ export class ResearchesComponent implements OnInit {
 
   // TODO: DRY
   public openCommentModal(data): void {
-    this.dialog.open(this.dialogRef, {
+    this.dialog.open(CommonModalComponent, {
       data: data,
       panelClass: 'comment-modal',
       minWidth: '320px',
