@@ -6,13 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import localeRu from '@angular/common/locales/ru';
+import localeZh from '@angular/common/locales/zh';
 
 registerLocaleData(localeRu, 'ru');
 registerLocaleData(localeEn, 'en');
+registerLocaleData(localeZh, 'zh');
 
 import { AppComponent } from './app.component';
-registerLocaleData(localeRu, 'ru');
-registerLocaleData(localeEn, 'en');
 
 // import ngx-translate and the http loader
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
