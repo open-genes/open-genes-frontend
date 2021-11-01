@@ -7,7 +7,7 @@ export const environment = {
   proteinAtlasUrl: 'https://www.proteinatlas.org/',
   openLongevity80LevelCMS: 'https://openlongevity.com/',
   debugMode: false,
-  languages: ['ru', 'en'],
+  languages: ['ru', 'en', 'zh'],
   mockJsonUrl: [
     'assets/data/articles-page-1.mock.json',
     'assets/data/articles-page-2.mock.json',

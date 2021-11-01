@@ -11,27 +11,30 @@ export class LanguageComponent {
   @Input() theme: 'light' | 'dark' = 'dark';
 
   public languages = environment.languages;
-  public currentIndex = environment.languages.indexOf(
-    this.translate.currentLang
-  );
+  public currentIndex = environment.languages.indexOf(this.translate.currentLang);
   public nextIndex = (this.currentIndex + 1) % environment.languages.length;
 
   constructor(public translate: TranslateService) {}
 
   changeLanguage(language) {
-    const currentIndex = environment.languages.indexOf(
-      this.translate.currentLang
-    );
+    const currentIndex = environment.languages.indexOf(this.translate.currentLang);
     const nextIndex = (currentIndex + 1) % environment.languages.length;
     const nextLang = environment.languages[nextIndex];
-    const languageSelector = (l: string) => {
-      if (l === 'ru') {
+
+    const languageSelector = (lang: string) => {
+      if (lang === 'ru') {
         return environment.languages[0];
-      } else if (l === 'en') {
-        return environment.languages[1];
-      } else {
-        return nextLang;
       }
+
+      if (lang === 'en') {
+        return environment.languages[1];
+      }
+
+      if (lang === 'zh') {
+        return environment.languages[2];
+      }
+
+      return nextLang;
     };
 
     const languageSet = languageSelector(language);
