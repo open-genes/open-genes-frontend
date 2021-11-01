@@ -12,12 +12,20 @@ import { GenesInHorvathClock } from '../../models/openGenesApi/genes-in-horvath-
   providedIn: 'root',
 })
 export class ApiService {
+  private currentLang: string;
   private url = environment.apiUrl;
 
-  constructor(private http: HttpClient, private translate: TranslateService) {}
+  constructor(private http: HttpClient, private translate: TranslateService) {
+    this.currentLang = this.translate.currentLang;
+
+    // API doesn't have Chinese language
+    if (this.translate.currentLang === 'zh') {
+      this.currentLang = 'en';
+    }
+  }
 
   getGenes(): Observable<Genes[]> {
-    return this.http.get<Genes[]>(`${this.url}/api/gene?lang=${this.translate.currentLang}`);
+    return this.http.get<Genes[]>(`${this.url}/api/gene?lang=${this.currentLang}`);
   }
 
   getLastEditedGene(): Observable<Genes[]> {
@@ -26,18 +34,18 @@ export class ApiService {
 
   getGenesByFunctionalClusters(list: number[]): Observable<Genes[]> {
     return this.http.get<Genes[]>(
-      `${this.url}/api/gene/by-functional-cluster/${list}?lang=${this.translate.currentLang}`
+      `${this.url}/api/gene/by-functional-cluster/${list}?lang=${this.currentLang}`
     );
   }
 
   getGenesByExpressionChange(expression: number): Observable<Genes[]> {
     return this.http.get<Genes[]>(
-      `${this.url}/api/gene/by-expression-change/${expression}?lang=${this.translate.currentLang}`
+      `${this.url}/api/gene/by-expression-change/${expression}?lang=${this.currentLang}`
     );
   }
 
   getGeneByHGNCsymbol(symbol: string): Observable<Gene[]> {
-    return this.http.get<Gene[]>(`${this.url}/api/gene/${symbol}?lang=${this.translate.currentLang}`);
+    return this.http.get<Gene[]>(`${this.url}/api/gene/${symbol}?lang=${this.currentLang}`);
   }
 
   getGoTermMatchByString(request: string): Observable<Genes[]> {
@@ -54,11 +62,11 @@ export class ApiService {
 
   getGenesWLifespanResearches(): Observable<GenesWLifespanResearches[]> {
     return this.http.get<GenesWLifespanResearches[]>(
-      `${this.url}/api/increase-lifespan?lang=${this.translate.currentLang}`
+      `${this.url}/api/increase-lifespan?lang=${this.currentLang}`
     );
   }
 
   getGenesInHorvathClock(): Observable<GenesInHorvathClock[]> {
-    return this.http.get<GenesInHorvathClock[]>(`${this.url}/api/methylation?lang=${this.translate.currentLang}`);
+    return this.http.get<GenesInHorvathClock[]>(`${this.url}/api/methylation?lang=${this.currentLang}`);
   }
 }

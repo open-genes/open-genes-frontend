@@ -32,17 +32,10 @@ import { TermsModule } from './components/shared/terms/terms.module';
 import { SnackBarModule } from './components/shared/snack-bar/snack-bar.module';
 
 // required for AOT compilation
-const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
-  new TranslateHttpLoader(http);
+const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new TranslateHttpLoader(http);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    LanguageComponent,
-    BurgerMenuComponent,
-  ],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, LanguageComponent, BurgerMenuComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(APP_ROUTES, ROUTER_OPTIONS),
@@ -62,9 +55,9 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     GoogleAnalyticsModule,
     DirectivesModule,
     TermsModule,
-    SnackBarModule
+    SnackBarModule,
   ],
-  providers: [TranslateService, { provide: LOCALE_ID, useValue: 'ru' }],
+  providers: [TranslateService, { provide: LOCALE_ID, useValue: 'en' }],
   exports: [MaterialModule],
   bootstrap: [AppComponent],
 })
