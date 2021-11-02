@@ -42,7 +42,7 @@ export class DiagramsComponent implements OnDestroy {
               id: gene.id,
               name: gene.name,
               expressionChange: gene.expressionChange,
-              familyOriginId: gene.familyOrigin?.id,
+              familyOrigin: gene.familyOrigin,
               originId: gene.origin?.id,
               homologueTaxon: gene.homologueTaxon,
               diseaseCategories: gene.diseaseCategories,
@@ -79,7 +79,7 @@ export class DiagramsComponent implements OnDestroy {
       const links = genes
         .filter(
           (res) =>
-            gene.familyOriginId === res.familyOriginId &&
+            gene.familyOrigin?.id === res.familyOrigin?.id &&
             gene.originId === res.originId &&
             gene.expressionChange === res.expressionChange &&
             gene.homologueTaxon === res.homologueTaxon &&
@@ -124,7 +124,8 @@ export class DiagramsComponent implements OnDestroy {
             source: gene.name,
             target: res.name,
             group: 0,
-          };
+            data: gene.diseaseCategories
+          } as Link;
         });
 
       diseaseCatLinks.forEach((link: Link) => {
@@ -132,7 +133,6 @@ export class DiagramsComponent implements OnDestroy {
           groupedDisCatLinks.push(link);
         }
       });
-
       const funcClusterLinks = genes
         .filter(
           (res) => gene.id !== res.id && this.groupByFunctionalClusters(gene.functionalClusters, res.functionalClusters)
@@ -143,7 +143,8 @@ export class DiagramsComponent implements OnDestroy {
             source: gene.name,
             target: res.name,
             group: 1,
-          };
+            data: gene.functionalClusters
+          } as Link;
         });
 
       funcClusterLinks.forEach((link: Link) => {
@@ -153,14 +154,15 @@ export class DiagramsComponent implements OnDestroy {
       });
 
       const familyOriginLinks = genes
-        .filter((res) => gene.id !== res.id && gene.familyOriginId === res.familyOriginId)
+        .filter((res) => gene.id !== res.id && gene.familyOrigin?.id && gene.familyOrigin?.id === res.familyOrigin?.id)
         .map((res) => {
           return {
             id: res.id,
             source: gene.name,
             target: res.name,
             group: 2,
-          };
+            data: [{ name: gene.familyOrigin?.phylum }],
+          } as Link;
         });
 
       familyOriginLinks.forEach((link: Link) => {
@@ -216,10 +218,14 @@ export class DiagramsComponent implements OnDestroy {
     const geneKeys = Object.keys(category);
     const resKeys = Object.keys(res);
 
-    return geneKeys.length === resKeys.length && geneKeys.every((key) => resKeys.includes(key));
+    return geneKeys.length && geneKeys.length === resKeys.length && geneKeys.every((key) => resKeys.includes(key));
   }
 
   private groupByFunctionalClusters(clusters: FunctionalClusters[], res: FunctionalClusters[]): boolean {
-    return clusters.length === res.length && clusters.every((cluster) => res.some((res) => res.id === cluster.id));
+    return (
+      clusters.length &&
+      clusters.length === res.length &&
+      clusters.every((cluster) => res.some((res) => res.id === cluster.id))
+    );
   }
 }
