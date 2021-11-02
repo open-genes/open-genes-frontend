@@ -1,0 +1,15 @@
+<div class="comment-modal__header" mat-dialog-title>
+  {{ "researches_comment" | translate }}
+
+  <button mat-icon-button
+          class="close-button"
+          (click)="closeCommentModal()"
+          aria-label="Закрыть">
+    <span class="fa fal fa-times"></span>
+  </button>
+</div>
+<mat-dialog-content>
+  <article class="comment-modal__body">
+    {{ data }}
+  </article>
+</mat-dialog-content>

@@ -11,6 +11,9 @@ import { GeneAgeComponent } from '../shared/gene-age/gene-age.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PopoverComponent } from './components/popover/popover.component';
 import { HintComponent } from './components/hint/hint.component';
+import { CommonModalComponent } from './components/modals/common-modal/common-modal.component';
+import { ArticlesListModalComponent } from './components/modals/articles-list-modal/articles-list-modal.component';
+import { MaterialModule } from '../../modules/vendors/material.module';
 
 const modules = [
   AccordionComponent,
@@ -21,11 +24,12 @@ const modules = [
   GeneAgeComponent,
   PopoverComponent,
   HintComponent,
+  CommonModalComponent,
 ];
 
 @NgModule({
-  declarations: [...modules],
+  declarations: [...modules, ArticlesListModalComponent],
   exports: [...modules],
-  imports: [CommonModule, IconModule, PipesModule, TranslateModule],
+  imports: [CommonModule, IconModule, PipesModule, TranslateModule, MaterialModule]
 })
 export class UiComponentsModule {}

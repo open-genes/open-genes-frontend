@@ -29,7 +29,7 @@
 
               <div class="article__top-group">
                 <div
-                  (click)="openArticleModal(article.slug, environment)"
+                  (click)="openArticleModal(article.slug)"
                   [ngClass]="isAnyArticleModalOpen? '__disabled': ''"
                   class="article__image"
                 >
@@ -44,7 +44,7 @@
                     alt="">
                 </div>
                 <div class="article__text">
-                  <h3 (click)="openArticleModal(article.slug, environment)"
+                  <h3 (click)="openArticleModal(article.slug)"
                       [ngClass]="isAnyArticleModalOpen? '__disabled': ''">
                     {{ article.title }}
                   </h3>
@@ -132,39 +132,3 @@
     </ng-container>
   </app-no-content>
 </section>
-
-
-
-<ng-template #articleModalBody let-data>
-  <div class="article-modal__header" mat-dialog-title>
-    <span>{{ data?.modalData?.title }}</span>
-    <span>{{ data?.modalData?.subtitle }}</span>
-    <button mat-icon-button
-            class="close-button"
-            (click)="closeArticleModal()"
-            aria-label="Закрыть">
-      <span class="fa fal fa-times"></span>
-    </button>
-  </div>
-  <mat-dialog-content>
-    <ng-container *ngIf="data?.modalData?.image?.url?.src.length !== 0">
-        <div class="article-modal__cover">
-          <img [src]=data?.modalData?.image?.url?.src
-               alt="">
-        </div>
-    </ng-container>
-
-    <div class="article-modal__body">
-      <article *ngFor="let item of data?.modalData?.description">
-        <span [innerHTML]="item['content']?.text | safe: 'html'"></span>
-      </article>
-      <div class="article-modal__button-wrap btn-wrap show-more">
-        <a class="btn show-more__button"
-           href="{{ environment.openLongevity80LevelCMS }}articles/{{ data?.slug }}"
-           target="_blank">
-          {{ "read_more" | translate }} <span class="fa far fa-external-link"></span>
-        </a>
-      </div>
-    </div>
-  </mat-dialog-content>
-</ng-template>
