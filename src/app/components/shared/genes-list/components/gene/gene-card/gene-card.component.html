@@ -1,21 +1,21 @@
 <div class="item card__content">
   <div class="card__section card__title">
-    <div class="add-favorites">
+    <div class="add-to-favorites">
       <button *ngIf="!(this.isAdded | async)"
               (click)="favItem(item['id'])"
               mat-icon-button>
-        <i
-          class="far fa-star"
+        <span
+          class="icon far fa-star"
           aria-hidden="true"
-        ></i>
+        ></span>
       </button>
       <button *ngIf="this.isAdded | async"
               (click)="unFavItem(item['id'])"
               mat-icon-button>
-        <i
-          class="fas fa-star"
+        <span
+          class="icon fas fa-star"
           aria-hidden="true"
-        ></i>
+        ></span>
       </button>
     </div>
     <div class="title">

@@ -4,14 +4,14 @@
       <div class="container-fluid">
         <div class="row no-gutters">
           <div class="col col-12 header__title">
-            <div class="add-favorites">
+            <div class="add-to-favorites">
               <button mat-icon-button>
-                <i
-                  [ngClass]="favouritesService.isInFavourites(gene.id) ? 'fas fa-star' : 'far fa-star'"
-                  (click)="addOrRemove(gene.id)"
-                  class="icon-color"
+                <span
+                  [ngClass]="isInFavourites ? 'fas fa-star' : 'far fa-star'"
+                  (click)="toggleFavourites(gene.id)"
+                  class="icon"
                   aria-hidden="true"
-                ></i>
+                ></span>
               </button>
             </div>
             <div class="title__caption">

@@ -2,22 +2,34 @@
   // &__inner { }
 
   $header-title-height: 30px;
-  $favorites-icon: #FDB338;
 
-  .add-favorites {
+  // TODO: DRY
+  // Use em units
+  .add-to-favorites {
     display: block;
     min-height: $header-title-height;
     width: auto;
     float: left;
-    margin: -6px 0 0 0;
-    @include resolution_smartphone {
-      margin: -10px 0 0 0;
+    margin-left: -10px;
+
+    .icon {
+      color: $color-yellow;
     }
 
-    i {
-      font-size: 20px;
-      color: $favorites-icon;
-      cursor: pointer;
+    @include resolution_tablet-and-up {
+      margin-top: -7px;
+
+      .icon {
+        font-size: 22px;
+      }
+    }
+
+    @include resolution_smartphone {
+      margin-top: -11px;
+
+      .icon {
+        font-size: 20px;
+      }
     }
   }
 
