@@ -1,0 +1,31 @@
+<div class="article-modal__header" mat-dialog-title>
+  <span>{{ data?.modalData?.title }}</span>
+  <span>{{ data?.modalData?.subtitle }}</span>
+  <button mat-icon-button
+          class="close-button"
+          (click)="closeArticleModal()"
+          aria-label="Закрыть">
+    <span class="fa fal fa-times"></span>
+  </button>
+</div>
+<mat-dialog-content>
+  <ng-container *ngIf="data?.modalData?.image?.url?.src.length !== 0">
+    <div class="article-modal__cover">
+      <img [src]=data?.modalData?.image?.url?.src
+           alt="">
+    </div>
+  </ng-container>
+
+  <div class="article-modal__body">
+    <article *ngFor="let item of data?.modalData?.description">
+      <span [innerHTML]="item['content']?.text | safe: 'html'"></span>
+    </article>
+    <div class="article-modal__button-wrap btn-wrap show-more">
+      <a class="btn show-more__button"
+         href="{{ url }}articles/{{ data?.modalData?.slug }}"
+         target="_blank">
+        {{ "read_more" | translate }} <span class="fa far fa-external-link"></span>
+      </a>
+    </div>
+  </div>
+</mat-dialog-content>

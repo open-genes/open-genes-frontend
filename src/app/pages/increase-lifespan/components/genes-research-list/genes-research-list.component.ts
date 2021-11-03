@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack-bar.component';
 import { GenesWLifespanResearches } from '../../../../core/models/openGenesApi/genes-with-increase-lifespan-researches.model';
 import { MatDialog } from '@angular/material/dialog';
+import { CommonModalComponent } from '../../../../components/ui-components/components/modals/common-modal/common-modal.component';
 
 @Component({
   selector: 'app-genes-research-list',
@@ -94,9 +95,9 @@ export class GenesResearchListComponent implements OnInit {
   }
 
   // TODO: DRY
-  public openCommentModal(data): void {
-    this.dialog.open(this.dialogRef, {
-      data: data,
+  public openCommentModal(data, template = null): void {
+    this.dialog.open(CommonModalComponent, {
+      data: { data: data, template: template },
       panelClass: 'comment-modal',
       minWidth: '320px',
       maxWidth: '768px',

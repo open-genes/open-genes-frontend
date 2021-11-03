@@ -19,7 +19,7 @@ interface GeneralGeneInfo {
     name: string;
   }[];
   aliases: string[];
-  commentCause: SelectionCriteria[];
+  commentCause: SelectionCriteria;
   diseaseCategories: AssociatedDiseaseCategories;
   diseases: AssociatedDiseases[];
   expressionChange?: number;

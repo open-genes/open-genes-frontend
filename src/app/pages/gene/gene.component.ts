@@ -39,6 +39,7 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
   public isAnyStrongResearchFilled: boolean;
   public isGeneCandidate = false;
   public isUiHintsSettingOn: boolean;
+  private isInFavourites: boolean;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
@@ -53,8 +54,8 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
     private _bottomSheet: MatBottomSheet,
     private settingsService: SettingsService,
     private apiService: ApiService,
-    public favouritesService: FavouritesService,
-    private _snackBar: MatSnackBar,
+    private favouritesService: FavouritesService,
+    private _snackBar: MatSnackBar
   ) {
     super();
     this.routeSubscribe = activateRoute.params.subscribe((params) => {
@@ -147,6 +148,8 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
           this.isLocationData =
             this.gene?.band?.length || this.gene?.locationStart?.length || this.gene?.locationEnd?.length;
 
+          this.isInFavourites = this.favouritesService.isInFavourites(this.gene.id);
+
           // TODO: Fix this crutch for a union type error
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
@@ -167,6 +170,20 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
       );
   }
 
+  /**
+   * Filters translations
+   */
+  public getExpressionLocaleKey(expression: number): string {
+    const expressionTranslations = new Map([
+      [0, 'expression_change_no_data'],
+      [1, 'expression_change_decreased'],
+      [2, 'expression_change_increased'],
+      [3, 'expression_change_mixed'],
+    ]);
+
+    return expressionTranslations.get(expression);
+  }
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
@@ -183,8 +200,9 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
     this._bottomSheet.dismiss();
   }
 
-  addOrRemove(id: any) {
+  toggleFavourites(id: any) {
     if (!this.favouritesService.isInFavourites(id)) {
+      this.isInFavourites = true;
       this.favouritesService.addToFavourites(id);
       this._snackBar.openFromComponent(SnackBarComponent, {
         data: {
@@ -194,6 +212,7 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
         duration: 600,
       });
     } else {
+      this.isInFavourites = false;
       this.favouritesService.removeFromFavourites(id);
       this._snackBar.openFromComponent(SnackBarComponent, {
         data: {
@@ -204,5 +223,4 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
       });
     }
   }
-
 }

@@ -1,5 +1,23 @@
 <div class="item card__content">
   <div class="card__section card__title">
+    <div class="add-to-favorites">
+      <button *ngIf="!(this.isAdded | async)"
+              (click)="favItem(item['id'])"
+              mat-icon-button>
+        <span
+          class="icon far fa-star"
+          aria-hidden="true"
+        ></span>
+      </button>
+      <button *ngIf="this.isAdded | async"
+              (click)="unFavItem(item['id'])"
+              mat-icon-button>
+        <span
+          class="icon fas fa-star"
+          aria-hidden="true"
+        ></span>
+      </button>
+    </div>
     <div class="title">
       <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
         <b>{{ item.symbol }}</b> {{ item.name }}

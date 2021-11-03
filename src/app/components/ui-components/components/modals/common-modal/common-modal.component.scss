@@ -1,0 +1,10 @@
+@import "../../../../styles";
+@include modal-window('comment');
+
+:host {
+  .comment-modal__body {
+    ::ng-deep {
+      @include typography;
+    }
+  }
+}

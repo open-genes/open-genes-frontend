@@ -2,7 +2,36 @@
   // &__inner { }
 
   $header-title-height: 30px;
-  $favorites-icon: #FDB338;
+
+  // TODO: DRY
+  // Use em units
+  .add-to-favorites {
+    display: block;
+    min-height: $header-title-height;
+    width: auto;
+    float: left;
+    margin-left: -10px;
+
+    .icon {
+      color: $color-yellow;
+    }
+
+    @include resolution_tablet-and-up {
+      margin-top: -7px;
+
+      .icon {
+        font-size: 22px;
+      }
+    }
+
+    @include resolution_smartphone {
+      margin-top: -11px;
+
+      .icon {
+        font-size: 20px;
+      }
+    }
+  }
 
   &__header {
     padding: 15px 0 10px 0;
@@ -20,20 +49,6 @@
         min-height: $header-title-height;
         width: auto;
         float: left; // floats are more simple there
-      }
-
-      .add-favorites {
-        display: block;
-        min-height: $header-title-height;
-        width: auto;
-        float: left;
-        margin: -6px 0 0 0;
-
-        i {
-          font-size: 20px;
-          color: $favorites-icon;
-          cursor: pointer;
-        }
       }
 
       .title__caption {
@@ -242,6 +257,7 @@
           &:nth-child(even) {
             .mat-list-item-content {
               background-color: lighten($color-hover, 5%);
+
               &:hover,
               &:active {
                 background-color: lighten($color-hover, 3%);
@@ -345,6 +361,65 @@
     border-top: 1px solid $color-borders;
     padding: 15px 0 20px 0;
     margin-top: 30px;
+  }
+}
+
+.gene-page__annotation {
+  width: 100%;
+  display: flex;
+  background: $color-gray-very-light;
+  border-radius: 5px;
+  padding: 9px 16px;
+
+  .age__type {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .type__inner {
+      width: 100%;
+      display: flex;
+      margin: 5px;
+    }
+
+    .type__title {
+      font-size: $font-size-bigger;
+      color: $color-gray;
+      padding: 0;
+
+      span:hover {
+        cursor: pointer;
+        color: $color-base;
+      }
+    }
+
+    .type__value {
+      font-size: $font-size-bigger;
+      color: $color-black;
+
+      small {
+        font-size: $font-size-big;
+      }
+
+      .cluster, .cause {
+        display: flex;
+        flex-wrap: wrap;
+
+        .cluster__value {
+          font-size: $font-size-very-small;
+          margin: 0 5px 5px 0px;
+          color: $color-clikable-500;
+          background: $color-clikable-100;
+          border-radius: 3px;
+          padding: 5px;
+        }
+      }
+
+      .cause {
+        display: flex;
+        flex-direction: column;
+      }
+    }
   }
 }
 

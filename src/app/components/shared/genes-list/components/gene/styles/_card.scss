@@ -2,12 +2,20 @@
 
 @mixin card {
   $card-spacing: 20px;
+  .add-to-favorites {
+    margin: -8px 0 0 -10px;
 
+    .icon {
+      font-size: 18px;
+      color: $color-yellow;
+      margin-bottom: 5px;
+    }
+  }
   :host {
     position: relative;
     flex-flow: column nowrap;
     justify-content: space-between;
-    @include panel(flex, #{10px 0});
+    @include panel(flex, #{12px 0});
     margin-top: $card-spacing;
 
     @include resolution_phablet-and-up {
@@ -51,6 +59,7 @@
     &__title {
       padding-right: 30px;
       margin-bottom: 10px;
+      display: flex;
 
       .title {
         font-size: $font-size-huge;

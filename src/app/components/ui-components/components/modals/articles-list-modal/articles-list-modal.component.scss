@@ -1,0 +1,52 @@
+@import "../../../../styles";
+
+.article-modal {
+  &__header,
+  &__cover,
+  &__body {
+    display: block;
+    float: left;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &__header {
+    position: relative;
+    padding-right: 40px;
+    margin-bottom: 15px;
+
+    .close-button {
+      @include close-button(-10px, 10px);
+    }
+  }
+
+  &__cover {
+    background-color: $color-borders;
+    min-height: 120px;
+    max-height: 230px;
+    overflow: hidden;
+    margin-bottom: 20px;
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
+
+  &__body {
+    img {
+      display: block;
+      float: left;
+      width: 80%;
+      height: auto;
+    }
+    ::ng-deep {
+      @include typography;
+    }
+  }
+
+  &__button-wrap {
+    margin-top: 15px;
+  }
+}

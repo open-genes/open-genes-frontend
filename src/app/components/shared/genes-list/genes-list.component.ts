@@ -8,7 +8,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { ToMap } from '../../../core/utils/to-map';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
@@ -22,6 +22,7 @@ import { SnackBarComponent } from '../snack-bar/snack-bar.component';
 import { Filter } from './services/filter.model';
 import { SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
+import { FavouritesService } from '../../../core/services/favourites.service';
 
 @Component({
   selector: 'app-genes-list',
@@ -91,8 +92,10 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
-    private snackBar: MatSnackBar
-  ) {
+    private snackBar: MatSnackBar,
+    private _favouritesService: FavouritesService,
+    private _snackBar: MatSnackBar,
+    ) {
     super();
   }
 
@@ -397,5 +400,33 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription$.next();
     this.subscription$.complete();
+  }
+
+  public isFaved(geneId: number): Observable<boolean> {
+    return of(this._favouritesService.isInFavourites(geneId));
+  }
+
+  public favItem(geneId: number): void {
+    this._favouritesService.addToFavourites(geneId);
+    this._snackBar.openFromComponent(SnackBarComponent, {
+      data: {
+        title: 'favourites_added',
+        length: '',
+      },
+      duration: 600,
+    });
+    this.isFaved(geneId);
+  }
+
+  public unFavItem(geneId: number): void {
+    this._favouritesService.removeFromFavourites(geneId);
+    this._snackBar.openFromComponent(SnackBarComponent, {
+      data: {
+        title: 'favourites_removed',
+        length: '',
+      },
+      duration: 600,
+    });
+    this.isFaved(geneId);
   }
 }

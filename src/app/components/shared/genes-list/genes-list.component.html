@@ -35,7 +35,11 @@
                                           [item]="rowData"
                                           [goModeCellData]="goModeCellData"
                                           (diseaseName)="filterByDisease($event)"
-                                          (diseaseCategories)="filterByDiseaseCategories($event)">
+                                          (diseaseCategories)="filterByDiseaseCategories($event)"
+                                          [isAdded]="isFaved(rowData.id)"
+                                          (unFav)="unFavItem($event)"
+                                          (fav)="favItem($event)"
+          >
           </app-gene-annotations-table-row>
         </ng-container>
 
@@ -47,7 +51,11 @@
                               (methylationChange)="filterByMethylationChange($event)"
                               (diseaseName)="filterByDisease($event)"
                               (diseaseCategories)="filterByDiseaseCategories($event)"
-                              (selectionCriteria)="filterBySelectionCriteria($event)">
+                              (selectionCriteria)="filterBySelectionCriteria($event)"
+                              [isAdded]="isFaved(rowData.id)"
+                              (unFav)="unFavItem($event)"
+                              (fav)="favItem($event)"
+          >
           </app-gene-table-row>
         </ng-template>
 
@@ -63,7 +71,11 @@
                                    (diseaseName)="filterByDisease($event)"
                                    (diseaseCategories)="filterByDiseaseCategories($event)"
                                    (selectionCriteria)="filterBySelectionCriteria($event)"
-                                   (methylationChange)="filterByMethylationChange($event)">
+                                   (methylationChange)="filterByMethylationChange($event)"
+                                   [isAdded]="isFaved(rowData.id)"
+                                   (unFav)="unFavItem($event)"
+                                   (fav)="favItem($event)"
+        >
         </app-gene-annotations-card>
       </ng-container>
 
@@ -75,7 +87,11 @@
                        (methylationChange)="filterByMethylationChange($event)"
                        (diseaseName)="filterByDisease($event)"
                        (diseaseCategories)="filterByDiseaseCategories($event)"
-                       (selectionCriteria)="filterBySelectionCriteria($event)">
+                       (selectionCriteria)="filterBySelectionCriteria($event)"
+                       [isAdded]="isFaved(rowData.id)"
+                       (unFav)="unFavItem($event)"
+                       (fav)="favItem($event)"
+        >
         </app-gene-card>
       </ng-template>
 

@@ -4,6 +4,16 @@
       <div class="container-fluid">
         <div class="row no-gutters">
           <div class="col col-12 header__title">
+            <div class="add-to-favorites">
+              <button mat-icon-button>
+                <span
+                  [ngClass]="isInFavourites ? 'fas fa-star' : 'far fa-star'"
+                  (click)="toggleFavourites(gene.id)"
+                  class="icon"
+                  aria-hidden="true"
+                ></span>
+              </button>
+            </div>
             <div class="title__caption">
               <div class="caption__inner">
                 {{gene.symbol}}
@@ -15,17 +25,6 @@
                 *ngFor="let item of gene.aliases">
                 <span class="alias">{{item}}</span>
               </ng-container>
-            </div>
-
-            <div class="add-favorites">
-              <button mat-icon-button>
-                <i
-                  [ngClass]="favouritesService.isInFavourites(gene.id) ? 'fas fa-star' : 'far fa-star'"
-                  (click)="addOrRemove(gene.id)"
-                  class="icon-color"
-                  aria-hidden="true"
-                ></i>
-              </button>
             </div>
 
             <div class="title__updated">
@@ -118,6 +117,68 @@
         <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-8">
           <div class="page-wrapper">
             <section class="wrapper gene-page__age">
+              <div class="gene-page__annotation">
+                <div class="age__type age__phylogeny">
+                  <div class="type__inner">
+                    <div class="type__title col-5">
+                      {{ 'phylogeny' | translate }}:
+                    </div>
+
+                    <div class="type__value">
+                      <app-gene-age [gene]="gene" show="origin"></app-gene-age>
+                    </div>
+                  </div>
+
+                  <div class="type__inner">
+                    <div class="type__title  col-5">
+                      {{ 'gene_page_researches_processes' | translate }}:
+                    </div>
+
+                    <div class="type__value">
+                      <div class="cluster" *ngIf="gene.functionalClusters.length else noData">
+                        <span
+                          class="cluster__value"
+                          *ngFor="let cluster of gene.functionalClusters">{{cluster.name}}</span>
+                      </div>
+
+                      <ng-template #noData>
+                        {{'gene_page_no_data' | translate}}
+                      </ng-template>
+                    </div>
+                  </div>
+
+                  <div class="type__inner">
+                    <div class="type__title  col-5">
+                      {{ 'gene_page_title_criteria' | translate }}:
+                    </div>
+
+                    <div class="type__value">
+                      <div class="cause" *ngIf="gene.commentCause else noData">
+                        <span
+                          class="cause__value"
+                          *ngFor="let cause of gene.commentCause | keyvalue">{{cause.value}}</span>
+                      </div>
+
+                      <ng-template #noData>
+                        {{'gene_page_no_data' | translate}}
+                      </ng-template>
+                    </div>
+                  </div>
+
+                  <div class="type__inner">
+                    <div class="type__title  col-5">
+                      {{ 'gene_page_researches_age_related_changes_human' | translate }}:
+                    </div>
+
+                    <div class="type__value">
+                      {{ getExpressionLocaleKey(gene.expressionChange) | translate }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="wrapper gene-page__age">
               <div class="age__types">
                 <div class="age__type age__phylogeny">
                   <div class="type__inner">
@@ -165,11 +226,12 @@
               </div>
             </section>
 
+
             <section *ngIf="isNcbiDescription || isLocationData">
               <h3>{{ 'gene_page_title_description' | translate }}</h3>
               <article>
                 <p *ngIf="isNcbiDescription"
-                  [innerHTML]="gene.descriptionNCBI"></p>
+                   [innerHTML]="gene.descriptionNCBI"></p>
 
                 <!-- TEST TEXT for Terms-->
                 <!-- <div appTermInfo>-->
@@ -286,7 +348,7 @@
                 </section>
 
                 <section class="wrapper" id="human-protein-atlas"
-                *ngIf="isHpa">
+                         *ngIf="isHpa">
                   <h3 class="notranslate __mb-20">
                     {{'human_protein_atlas' | translate}}
                   </h3>

@@ -6,13 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import localeRu from '@angular/common/locales/ru';
+import localeZh from '@angular/common/locales/zh';
 
 registerLocaleData(localeRu, 'ru');
 registerLocaleData(localeEn, 'en');
+registerLocaleData(localeZh, 'zh');
 
 import { AppComponent } from './app.component';
-registerLocaleData(localeRu, 'ru');
-registerLocaleData(localeEn, 'en');
 
 // import ngx-translate and the http loader
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -32,17 +32,10 @@ import { TermsModule } from './components/shared/terms/terms.module';
 import { SnackBarModule } from './components/shared/snack-bar/snack-bar.module';
 
 // required for AOT compilation
-const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
-  new TranslateHttpLoader(http);
+const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new TranslateHttpLoader(http);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    LanguageComponent,
-    BurgerMenuComponent,
-  ],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, LanguageComponent, BurgerMenuComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(APP_ROUTES, ROUTER_OPTIONS),
@@ -62,9 +55,9 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     GoogleAnalyticsModule,
     DirectivesModule,
     TermsModule,
-    SnackBarModule
+    SnackBarModule,
   ],
-  providers: [TranslateService, { provide: LOCALE_ID, useValue: 'ru' }],
+  providers: [TranslateService, { provide: LOCALE_ID, useValue: 'en' }],
   exports: [MaterialModule],
   bootstrap: [AppComponent],
 })

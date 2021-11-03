@@ -18,6 +18,7 @@ import { EightyLevelService } from '../../../core/services/api/80level-api-servi
 import { environment } from '../../../../environments/environment';
 import { MockApiService } from '../../../core/services/api/mock-api.service';
 import { MatDialog } from '@angular/material/dialog';
+import { ArticlesListModalComponent } from '../../ui-components/components/modals/articles-list-modal/articles-list-modal.component';
 
 @Component({
   selector: 'app-articles-list',
@@ -121,7 +122,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       );
   }
 
-  public openArticleModal(slug: string, environment: any): void {
+  public openArticleModal(slug: string): void {
     this.isAnyArticleModalOpen = true;
 
     // Subscribe and get one article data
@@ -137,6 +138,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
             subtitle: res.subtitle,
             image: imageData.content.image,
             description: descData,
+            slug: slug
           };
         })
       )
@@ -144,11 +146,9 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         (modalData) => {
           this.isAnyArticleModalOpen = false;
           this.cdRef.markForCheck();
-          this.dialog.open(this.dialogRef, {
+          this.dialog.open(ArticlesListModalComponent, {
             data: {
-              modalData: modalData,
-              slug: slug,
-              environment: environment,
+              modalData: modalData
             },
             panelClass: 'article-modal',
             minWidth: '320px',
@@ -157,14 +157,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         },
         () => {
           console.warn(`Can't get an article by id ${slug}`);
-          this.closeArticleModal();
         }
       );
-  }
-
-  public closeArticleModal(): void {
-    this.dialog.closeAll();
-    this.isAnyArticleModalOpen = false;
   }
 
   ngOnDestroy() {
