@@ -39,7 +39,7 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
   public isAnyStrongResearchFilled: boolean;
   public isGeneCandidate = false;
   public isUiHintsSettingOn: boolean;
-  private isInFavourites: boolean;
+  public isInFavourites: boolean;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
