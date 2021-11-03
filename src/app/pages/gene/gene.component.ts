@@ -218,5 +218,4 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
       });
     }
   }
-
 }

@@ -9,7 +9,15 @@
   </button>
 </div>
 <mat-dialog-content>
-  <article class="comment-modal__body">
-    {{ data }}
-  </article>
+  <div class="comment-modal__body">
+    <article>
+      <ng-container *ngIf="!data.template">
+        {{ data.data }}
+      </ng-container>
+      <ng-container
+        [ngTemplateOutlet]="data.template"
+        [ngTemplateOutletContext]="{ item: data.data }"
+      ></ng-container>
+    </article>
+  </div>
 </mat-dialog-content>

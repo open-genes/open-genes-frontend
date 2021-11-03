@@ -61,9 +61,9 @@ export class ResearchesComponent implements OnInit {
   }
 
   // TODO: DRY
-  public openCommentModal(data): void {
+  public openCommentModal(data, template = null): void {
     this.dialog.open(CommonModalComponent, {
-      data: data,
+      data: { data: data, template: template },
       panelClass: 'comment-modal',
       minWidth: '320px',
       maxWidth: '768px',
