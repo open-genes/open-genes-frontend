@@ -23,43 +23,66 @@ export class DirectedGraphComponent implements OnChanges {
   }
 
   private _createForceDirectedGraph(nodes, links) {
+    const graphContainer = '#main-container';
     const color = d3.scaleOrdinal(d3.schemeCategory10);
-
-    const svg = d3.select(`#${this.graphSelector}`)
-      .attr('width', '1000')
-      .attr('height', '600');
 
     const simulation = d3
       .forceSimulation(nodes)
-      .force(
-        'link',
-        d3
-          .forceLink(links)
-          .id((d: any) => d.name)
-          .distance(30)
-      )
+      .force('link', d3.forceLink(links).id((d: any) => d.name))
       .force('charge', d3.forceManyBody().distanceMax(80))
-      .force('center', d3.forceCenter(1000 / 2, 600 / 2));
+      .force('center', d3.forceCenter(1000 / 2, 500 / 2));
+
+    const tooltip = d3
+      .select(graphContainer)
+      .append('div')
+      .attr('class', 'tooltip')
+      .style('position', 'absolute')
+      .style('padding', '10px')
+      .style('z-index', '10')
+      .style('background-color', 'rgba(0, 0, 0, 0.85)')
+      .style('color', 'white')
+      .style('border-radius', '5px')
+      .style('visibility', 'hidden');
+
+    const svg = d3
+      .select(`#${this.graphSelector}`)
+      .attr('width', '1000')
+      .attr('height', '600')
+      .on('click', (d: any) => this.handleClick(d, tooltip));
 
     const link = svg
       .append('g')
-      .attr('stroke-opacity', 0.6)
+      .attr('stroke-opacity', 1)
       .selectAll('line')
       .data(links)
       .join('line')
-      .attr('stroke-width', (d: any) => Math.sqrt(d.value))
-      .attr('stroke', (d: any) => (this.grouped ? color(d.group) : 'black'));
+      .attr('stroke', (d: any) => (this.grouped ? color(d.group) : 'black'))
+      .on('mouseover', function() {
+        d3.select(this).style('stroke-width', 4).style('cursor', 'pointer');
+      })
+      .on('mouseout', function() {
+        d3.select(this).style('stroke-width', 1);
+      })
+      .on('click', (d: any) => this.handleClick(d, tooltip));
 
     const node = svg
       .append('g')
       .attr('stroke', '#fff')
       .attr('stroke-width', 1.5)
+      .attr('cursor', 'pointer')
       .selectAll('circle')
       .data(nodes)
       .join('circle')
       .attr('r', 5)
       .attr('fill', this.grouped ? (d: any) => color(d.group) : color)
-      .call(this._drag(simulation));
+      .call(this._drag(simulation))
+      .on('mouseover', function () {
+        d3.select(this).style('r', 8).style('cursor', 'pointer');
+      })
+      .on('mouseout', function () {
+        d3.select(this).style('r', 5);
+      })
+      .on('click', (d: any) => this.handleClick(d, tooltip));
 
     node.append('title').text((d: any) => d.name);
 
@@ -96,6 +119,51 @@ export class DirectedGraphComponent implements OnChanges {
       event.subject.fy = null;
     }
 
-    return d3.drag().on('start', dragStarted).on('drag', dragged).on('end', dragEnded);
+    return d3.drag()
+      .on('start', dragStarted)
+      .on('drag', dragged)
+      .on('end', dragEnded);
+  }
+
+  private handleClick(d, tooltip) {
+    if (d.path[0].nodeName === 'svg') {
+      return tooltip.style('visibility', 'hidden');
+    }
+
+    if (d.currentTarget.nodeName === 'circle') {
+      return tooltip
+        .style('top', d.offsetY + 22 + 'px')
+        .style('left', d.offsetX - 100 + 'px')
+        .style('visibility', 'visible')
+        .text(`${d.currentTarget?.textContent}`);
+    }
+
+    if (d.currentTarget.nodeName === 'line') {
+      const linkData = d.currentTarget.__data__.data;
+
+      if (linkData instanceof Array) {
+        const list = linkData.map((data) => {
+          return `<li><span>&#8226;</span> ${data.name}</li><br>`;
+        });
+        const htmlContent = '<ul>' + `${list.join('')}` + '</ul>';
+        return tooltip
+          .style('top', d.offsetY + 22 + 'px')
+          .style('left', d.offsetX - 100 + 'px')
+          .style('visibility', 'visible')
+          .html(htmlContent);
+      }
+
+      if (linkData instanceof Object) {
+        const list = Object.keys(linkData).map((key) => {
+          return `<li><span>&#8226;</span> ${linkData[key].icdCategoryName}</li><br>`;
+        });
+        const htmlContent = '<ul>' + `${list.join('')}` + '</ul>';
+        return tooltip
+          .style('top', d.offsetY + 22 + 'px')
+          .style('left', d.offsetX - 100 + 'px')
+          .style('visibility', 'visible')
+          .html(htmlContent);
+      }
+    }
   }
 }
