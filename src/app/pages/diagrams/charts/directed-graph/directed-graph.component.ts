@@ -23,6 +23,7 @@ export class DirectedGraphComponent implements OnChanges {
   }
 
   private _createForceDirectedGraph(nodes, links) {
+    const graphContainer = '#main-container';
     const color = d3.scaleOrdinal(d3.schemeCategory10);
 
     const simulation = d3
@@ -32,13 +33,13 @@ export class DirectedGraphComponent implements OnChanges {
       .force('center', d3.forceCenter(1000 / 2, 500 / 2));
 
     const tooltip = d3
-      .select('#mainContainer')
+      .select(graphContainer)
       .append('div')
       .attr('class', 'tooltip')
       .style('position', 'absolute')
       .style('padding', '10px')
       .style('z-index', '10')
-      .style('background-color', 'rgba(11, 47, 82, 0.8)')
+      .style('background-color', 'rgba(0, 0, 0, 0.85)')
       .style('color', 'white')
       .style('border-radius', '5px')
       .style('visibility', 'hidden');
