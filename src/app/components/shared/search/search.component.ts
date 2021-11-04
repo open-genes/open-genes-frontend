@@ -52,6 +52,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
+  public patternSearch = /-/g;
 
   private searchModeEnum = SearchModeEnum;
   public inputData = [
@@ -109,15 +110,16 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
             this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
           }
 
+          const queryPeplace = query.replace(this.patternSearch, '');
           if (query.length !== 0) {
             if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
               return true;
             }
             if (this.searchMode === this.searchModeEnum.searchByGenes) {
-              this.searchByGenes(query);
+              this.searchByGenes(queryPeplace);
             }
             if (this.searchMode === this.searchModeEnum.searchByGenesList) {
-              this.searchByGenesList(query);
+              this.searchByGenesList(queryPeplace);
             }
           }
 
