@@ -8,8 +8,8 @@ import { GenesListSettings } from '../genes-list-settings.model';
   providedIn: 'root',
 })
 export class FilterService {
-  private _listOfFields = new BehaviorSubject<any>('');
-  public currentFields: Observable<GenesListSettings> = this._listOfFields.asObservable();
+  private listOfFields$ = new BehaviorSubject<any>('');
+  public currentFields: Observable<GenesListSettings> = this.listOfFields$.asObservable();
   public isClearFiltersBtnShown = new BehaviorSubject<boolean>(false);
   public updateSelectedFilter = new Subject<void>();
 
@@ -41,7 +41,7 @@ export class FilterService {
   }
 
   public updateFields(fields) {
-    this._listOfFields.next(fields);
+    this.listOfFields$.next(fields);
   }
 
   // Filter

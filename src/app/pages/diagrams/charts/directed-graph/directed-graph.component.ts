@@ -18,11 +18,11 @@ export class DirectedGraphComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['nodes']?.firstChange || !changes['links']?.firstChange) {
-      this._createForceDirectedGraph(this.nodes, this.links);
+      this.createForceDirectedGraph(this.nodes, this.links);
     }
   }
 
-  private _createForceDirectedGraph(nodes, links) {
+  private createForceDirectedGraph(nodes, links) {
     const graphContainer = '#main-container';
     const color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -75,7 +75,7 @@ export class DirectedGraphComponent implements OnChanges {
       .join('circle')
       .attr('r', 5)
       .attr('fill', this.grouped ? (d: any) => color(d.group) : color)
-      .call(this._drag(simulation))
+      .call(this.drag(simulation))
       .on('mouseover', function () {
         d3.select(this).style('r', 8).style('cursor', 'pointer');
       })
@@ -101,7 +101,7 @@ export class DirectedGraphComponent implements OnChanges {
     return svg.node();
   }
 
-  private _drag(simulation) {
+  private drag(simulation) {
     function dragStarted(event) {
       if (!event.active) simulation.alphaTarget(0.3).restart();
       event.subject.fx = event.subject.x;
