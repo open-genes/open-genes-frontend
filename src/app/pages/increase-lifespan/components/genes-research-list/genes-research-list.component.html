@@ -65,7 +65,7 @@
                   {{ item.modelOrganism }}
                 </ng-container>
               </td>
-              <td class="__nowrap">
+              <td>
                 <ng-container *ngIf="item.organismLine ; else dash">
                   {{ item.organismLine }}
                 </ng-container>
@@ -96,8 +96,7 @@
                 </ng-container>
               </td>
               <td>
-                <button *ngIf="item?.comment.length !== 0; else dash"
-                        class="btn btn--small btn--purple btn--flat"
+                <button class="btn btn--small btn--purple btn--flat"
                         (click)="openCommentModal(item, links)"
                 >
                   {{ "researches_comment_button" | translate }}
