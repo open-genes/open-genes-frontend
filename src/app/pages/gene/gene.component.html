@@ -183,7 +183,7 @@
                 <div class="age__type age__phylogeny">
                   <div class="type__inner">
                     <div class="type__title">
-                      {{ 'phylogeny' | translate }}
+                      {{ 'origin' | translate }}
 
                       <span class="fa far fa-info-circle"
                             *ngIf="isUiHintsSettingOn"
@@ -191,11 +191,11 @@
 
                     </div>
                     <div class="type__value">
-                      {{ gene?.familyOrigin?.phylum || ('gene_page_no_data' | translate) }}
+                      {{ gene?.origin?.phylum || ('gene_page_no_data' | translate) }}
                     </div>
                     <div class="type__value">
-                      {{ gene?.familyOrigin?.age }}
-                      <small *ngIf="gene?.familyOrigin?.age">{{ 'million_years' | translate }}</small>
+                      {{ gene?.origin?.age }}
+                      <small *ngIf="gene?.origin?.age">{{ 'million_years' | translate }}</small>
                     </div>
                   </div>
                   <div class="type__inner">
