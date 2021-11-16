@@ -6,7 +6,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';

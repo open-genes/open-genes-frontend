@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { Filter, Sort } from './filter.model';
 import { FilterTypesEnum } from './filter-types.enum';
 import { GenesListSettings } from '../genes-list-settings.model';
@@ -13,14 +13,14 @@ import { environment } from '../../../../../environments/environment';
 })
 export class FilterService {
   private url = environment.testApiUrl;
-  private _listOfFields = new BehaviorSubject<any>('');
-  private _filterChanges = new BehaviorSubject<any>([]);
+  private listOfFields$ = new BehaviorSubject<any>('');
+  private filterChanges$ = new BehaviorSubject<any>([]);
 
-  public currentFields: Observable<GenesListSettings> = this._listOfFields.asObservable();
-  public filterResult: Observable<Filter> = this._filterChanges.asObservable();
+  public currentFields: Observable<GenesListSettings> = this.listOfFields$.asObservable();
+  public filterResult: Observable<Filter> = this.filterChanges$.asObservable();
   public isClearFiltersBtnShown = new BehaviorSubject<boolean>(false);
 
-  public listOfFields: GenesListSettings = {
+  public genesListSettings: GenesListSettings = {
     // Default:
     ifShowAge: true,
     ifShowFuncClusters: true,
@@ -48,12 +48,9 @@ export class FilterService {
     pageSize: 20,
   };
 
-  constructor(
-    private http: HttpClient,
-    private translate: TranslateService,
-  ) {
-    this.updateFields(this.listOfFields);
-    this._filterChanges.next(this.filters);
+  constructor(private http: HttpClient, private translate: TranslateService) {
+    this.updateFields(this.genesListSettings);
+    this.filterChanges$.next(this.filters);
   }
 
   public updateFields(fields) {
@@ -99,7 +96,14 @@ export class FilterService {
 
   // Clear
   public clearFilters(filterName?: string): void {
-    const { disease, disease_categories, functional_clusters, selection_criteria, expression_change, methylation_change } = FilterTypesEnum;
+    const {
+      disease,
+      disease_categories,
+      functional_clusters,
+      selection_criteria,
+      expression_change,
+      methylation_change,
+    } = FilterTypesEnum;
     switch (filterName) {
       case functional_clusters:
         this.filters.byAgeRelatedProcess = [];
@@ -142,7 +146,7 @@ export class FilterService {
     });
     this.isClearFiltersBtnShown.next(sum.length >= 4);
 
-    this._filterChanges.next(this.filters);
+    this.filterChanges$.next(this.filters);
   }
 
   getFilteredGenes(filterParams: Filter): Observable<FilteredGenes> {
