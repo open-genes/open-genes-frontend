@@ -1,0 +1,23 @@
+<div class="comment-modal__header" mat-dialog-title>
+  {{ "researches_comment" | translate }}
+
+  <button mat-icon-button
+          class="close-button"
+          (click)="closeCommentModal()"
+          aria-label="Закрыть">
+    <span class="fa fal fa-times"></span>
+  </button>
+</div>
+<mat-dialog-content>
+  <div class="comment-modal__body">
+    <article>
+      <ng-container *ngIf="!data.template">
+        {{ data.data }}
+      </ng-container>
+      <ng-container
+        [ngTemplateOutlet]="data.template"
+        [ngTemplateOutletContext]="{ item: data.data }"
+      ></ng-container>
+    </article>
+  </div>
+</mat-dialog-content>

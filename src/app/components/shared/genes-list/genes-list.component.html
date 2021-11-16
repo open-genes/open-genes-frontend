@@ -49,7 +49,6 @@
     <ng-container *ngIf="!isTableView || isMobile">
       <ng-container *ngIf="isGoTermsMode; else card">
         <app-gene-annotations-card class="card" *ngFor="let rowData of searchedData"
-                                   [item]="rowData">
         </app-gene-annotations-card>
       </ng-container>
 

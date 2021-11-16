@@ -69,26 +69,32 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
    * add and delete from favourites
    */
   public favItem(geneId: number): void {
-    this.favouritesService.addToFavourites(geneId);
-    this.snackBar.openFromComponent(SnackBarComponent, {
-      data: {
-        title: 'favourites_added',
-        length: '',
-      },
-      duration: 600,
-    });
+    if (!this.isFaved(geneId)) {
+      this.favouritesService.addToFavourites(geneId);
+      this.snackBar.openFromComponent(SnackBarComponent, {
+        data: {
+          title: 'favourites_added',
+          length: '',
+        },
+        duration: 600,
+      });
+    }
+
     this.isFaved(geneId);
   }
 
   public unFavItem(geneId: number): void {
-    this.favouritesService.removeFromFavourites(geneId);
-    this.snackBar.openFromComponent(SnackBarComponent, {
-      data: {
-        title: 'favourites_removed',
-        length: '',
-      },
-      duration: 600,
-    });
+    if (this.isFaved(geneId)) {
+      this.favouritesService.removeFromFavourites(geneId);
+      this.snackBar.openFromComponent(SnackBarComponent, {
+        data: {
+          title: 'favourites_removed',
+          length: '',
+        },
+        duration: 600,
+      });
+    }
+
     this.isFaved(geneId);
   }
 

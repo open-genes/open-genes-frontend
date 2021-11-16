@@ -36,7 +36,6 @@
         <th>
           {{ "researches_comment" | translate }}
         </th>
-        <th>{{ "researches_reference" | translate }}</th>
         </thead>
         <ng-container *ngFor="let gene of searchedData | slice: 0: loadedGenesQuantity">
           <ng-container *ngIf="gene.researches?.increaseLifespan.length !== 0">
@@ -66,7 +65,7 @@
                   {{ item.modelOrganism }}
                 </ng-container>
               </td>
-              <td class="__nowrap">
+              <td>
                 <ng-container *ngIf="item.organismLine ; else dash">
                   {{ item.organismLine }}
                 </ng-container>
@@ -97,18 +96,11 @@
                 </ng-container>
               </td>
               <td>
-                <button *ngIf="item?.comment.length !== 0; else dash"
-                        class="btn btn--small btn--purple btn--flat"
-                        (click)="openCommentModal(item.comment)"
+                <button class="btn btn--small btn--purple btn--flat"
+                        (click)="openCommentModal(item, links)"
                 >
                   {{ "researches_comment_button" | translate }}
                 </button>
-              </td>
-              <td class="__cell-width-medium">
-                <ng-container
-                  [ngTemplateOutlet]="links"
-                  [ngTemplateOutletContext]="{ item: item }"
-                ></ng-container>
               </td>
             </tr>
           </ng-container>
@@ -146,40 +138,26 @@
 
 <!-- DRY -->
 <ng-template #links let-item="item">
-  <a
-    *ngIf="item?.doi !== ''"
-    href="https://doi.org/{{ item?.doi }}"
-    class="link"
-    target="_blank"
-  >{{ item?.doi }}</a
-  ><br />
+  <p>{{ item.comment }}</p>
 
-  <a
-    *ngIf="item?.pmid !== ''"
-    href="https://pubmed.ncbi.nlm.nih.gov/17170002/{{ item?.pmid }}"
-    class="link"
-    target="_blank"
-  >{{ item?.pmid }}</a
-  ><br />
+  <p>
+    <a
+      *ngIf="item?.doi !== ''"
+      href="https://doi.org/{{ item?.doi }}"
+      class="link"
+      target="_blank"
+    >{{ item?.doi }}</a
+    ><br>
+
+    <a
+      *ngIf="item?.pmid !== ''"
+      href="https://pubmed.ncbi.nlm.nih.gov/17170002/{{ item?.pmid }}"
+      class="link"
+      target="_blank"
+    >{{ item?.pmid }}</a>
+  </p>
 </ng-template>
 
-<ng-template #commentModalBody let-data>
-  <div class="comment-modal__header" mat-dialog-title>
-    {{ "researches_comment" | translate }}
-
-    <button mat-icon-button
-            class="close-button"
-            (click)="closeCommentModal()"
-            aria-label="Закрыть">
-      <span class="fa fal fa-times"></span>
-    </button>
-  </div>
-  <mat-dialog-content>
-    <article class="comment-modal__body">
-      {{ data }}
-    </article>
-  </mat-dialog-content>
-</ng-template>
 
 <ng-template #dash>
   <span class="table__dash"></span>

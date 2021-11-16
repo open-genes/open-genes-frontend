@@ -19,6 +19,7 @@ import { SnackBarComponent } from '../snack-bar/snack-bar.component';
 import { Filter, Sort } from './services/filter.model';
 import { SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
+import { FavouritesService } from '../../../core/services/favourites.service';
 
 @Component({
   selector: 'app-genes-list',
@@ -81,11 +82,13 @@ export class GenesListComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private favouritesService: FavouritesService
   ) {
   }
 
   ngOnInit(): void {
+    this.favouritesService.getItems();
     this.setInitSettings();
     this.setInitialState();
   }
@@ -236,5 +239,33 @@ export class GenesListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription$.next();
     this.subscription$.complete();
+  }
+
+  public isFaved(geneId: number): Observable<boolean> {
+    return of(this.favouritesService.isInFavourites(geneId));
+  }
+
+  public favItem(geneId: number): void {
+    this.favouritesService.addToFavourites(geneId);
+    this.snackBar.openFromComponent(SnackBarComponent, {
+      data: {
+        title: 'favourites_added',
+        length: '',
+      },
+      duration: 600,
+    });
+    this.isFaved(geneId);
+  }
+
+  public unFavItem(geneId: number): void {
+    this.favouritesService.removeFromFavourites(geneId);
+    this.snackBar.openFromComponent(SnackBarComponent, {
+      data: {
+        title: 'favourites_removed',
+        length: '',
+      },
+      duration: 600,
+    });
+    this.isFaved(geneId);
   }
 }

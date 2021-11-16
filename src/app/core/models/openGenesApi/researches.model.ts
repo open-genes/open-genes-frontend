@@ -1,4 +1,10 @@
-export interface increaseLifespan {
+export interface Research {
+  doi: string;
+  pmid: string;
+  comment: string;
+}
+
+export interface increaseLifespan extends Research {
   interventionType: string;
   interventionResult: string;
   modelOrganism: string; // TODO: backend: rename to 'object'
@@ -8,12 +14,9 @@ export interface increaseLifespan {
   valueForMale: string;
   valueForFemale: string;
   valueForAll: string;
-  doi: string;
-  pmid: string;
-  comment: string;
 }
 
-export interface AgeRelatedChanges {
+export interface AgeRelatedChanges extends Research {
   changeType: string;
   sample: string;
   modelOrganism: string; // TODO: backend: rename to 'object'
@@ -24,12 +27,9 @@ export interface AgeRelatedChanges {
   valueForFemale: string;
   valueForAll: string;
   measurementType: string;
-  doi: string;
-  pmid: string;
-  comment: string;
 }
 
-export interface InterventionAffectsAgingProcess {
+export interface InterventionAffectsAgingProcess extends Research {
   geneIntervention: string;
   interventionResult: string; // TODO: misleading name, rename
   vitalProcess: string;
@@ -38,17 +38,11 @@ export interface InterventionAffectsAgingProcess {
   genotype: string;
   age: string;
   sex: string;
-  doi: string;
-  pmid: string;
-  comment: string;
 }
 
-export interface ProteinRegulatesGenes {
+export interface ProteinRegulatesGenes extends Research {
   proteinActivity: string;
   regulationType: string;
-  doi: string;
-  pmid: string;
-  comment: string;
   regulatedGene: {
     id: number;
     symbol: string;
@@ -57,31 +51,21 @@ export interface ProteinRegulatesGenes {
   };
 }
 
-export interface ProgeriaSyndromes {
+export interface ProgeriaSyndromes extends Research {
   progeriaSyndrome: string;
-  doi: string;
-  pmid: string;
-  comment: string;
 }
 
-export interface LongevityEffects {
+export interface LongevityEffects extends Research {
   allelicPolymorphism: string;
   allelicVariant: string;
   changeType: string; // TODO: backend: rename to 'charsOfTranscriptomeOrProteome'
-  comment: string;
   dataType: string;
   longevityEffect: string; // TODO: backend: rename to 'phenotype'
   modelOrganism: string;
-  doi: string;
-  pmid: string;
   sex: string;
 }
 
-export interface AdditionalEvidences {
-  doi: string;
-  pmid: string;
-  comment: string;
-}
+export interface AdditionalEvidences extends Research {}
 
 // TODO: backend: misleading names of researches
 export interface Researches {

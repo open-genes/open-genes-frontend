@@ -68,7 +68,6 @@ export class IncreaseLifespanComponent extends WindowWidth implements OnInit, On
 
   public setIsGenesListLoaded(event: boolean): void {
     this.genesListIsLoaded = event;
-    console.log(this.genesListIsLoaded);
     this.cdRef.markForCheck();
     this.cdRef.detectChanges();
   }

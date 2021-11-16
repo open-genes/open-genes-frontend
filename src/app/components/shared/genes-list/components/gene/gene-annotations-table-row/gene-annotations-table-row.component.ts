@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { GeneTableCardLogic } from '../../../../../../core/utils/gene-table-card-logic';
 import { FilterService } from '../../../services/filter.service';
 import { FavouritesService } from '../../../../../../core/services/favourites.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-gene-annotations-table-row',
@@ -11,6 +12,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GeneAnnotationsTableRowComponent extends GeneTableCardLogic {
+  @Input() isAdded: Observable<boolean>;
+  @Output() unFav: EventEmitter<number> = new EventEmitter();
+  @Output() fav: EventEmitter<number> = new EventEmitter();
+
   constructor(
     protected _filterService: FilterService,
     protected _favouritesService: FavouritesService,
@@ -18,5 +23,13 @@ export class GeneAnnotationsTableRowComponent extends GeneTableCardLogic {
     protected cdRef: ChangeDetectorRef
   ) {
     super(_filterService, _favouritesService, _snackBar, cdRef);
+  }
+
+  unFavItem(id: number): void {
+    this.unFav.emit(id);
+  }
+
+  favItem(id: number): void {
+    this.fav.emit(id);
   }
 }

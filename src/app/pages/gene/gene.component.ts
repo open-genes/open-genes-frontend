@@ -9,6 +9,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { SettingsService } from '../../core/services/settings.service';
 import { Settings } from '../../core/models/settings.model';
+import { FavouritesService } from '../../core/services/favourites.service';
+import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-gene',
@@ -36,6 +39,7 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
   public isAnyStrongResearchFilled: boolean;
   public isGeneCandidate = false;
   public isUiHintsSettingOn: boolean;
+  public isInFavourites: boolean;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
@@ -47,9 +51,11 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
     public translate: TranslateService,
     private activateRoute: ActivatedRoute,
     private router: Router,
-    private _bottomSheet: MatBottomSheet,
+    private bottomSheet: MatBottomSheet,
     private settingsService: SettingsService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private favouritesService: FavouritesService,
+    private snackBar: MatSnackBar
   ) {
     super();
     this.routeSubscribe = activateRoute.params.subscribe((params) => {
@@ -142,6 +148,8 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
           this.isLocationData =
             this.gene?.band?.length || this.gene?.locationStart?.length || this.gene?.locationEnd?.length;
 
+          this.isInFavourites = this.favouritesService.isInFavourites(this.gene.id);
+
           // TODO: Fix this crutch for a union type error
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
@@ -162,19 +170,57 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
       );
   }
 
+  /**
+   * Filters translations
+   */
+  public getExpressionLocaleKey(expression: number): string {
+    const expressionTranslations = new Map([
+      [0, 'expression_change_no_data'],
+      [1, 'expression_change_decreased'],
+      [2, 'expression_change_increased'],
+      [3, 'expression_change_mixed'],
+    ]);
+
+    return expressionTranslations.get(expression);
+  }
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
     this.routeSubscribe.unsubscribe();
-    this._bottomSheet.dismiss();
+    this.bottomSheet.dismiss();
   }
 
   public onShowUiHints(ev: MouseEvent): void {
-    this._bottomSheet.open(this.UiHints, {});
+    this.bottomSheet.open(this.UiHints, {});
     ev.preventDefault();
   }
 
   public onCloseUiHints(): void {
-    this._bottomSheet.dismiss();
+    this.bottomSheet.dismiss();
+  }
+
+  toggleFavourites(id: any) {
+    if (!this.favouritesService.isInFavourites(id)) {
+      this.isInFavourites = true;
+      this.favouritesService.addToFavourites(id);
+      this.snackBar.openFromComponent(SnackBarComponent, {
+        data: {
+          title: 'favourites_added',
+          length: '',
+        },
+        duration: 600,
+      });
+    } else {
+      this.isInFavourites = false;
+      this.favouritesService.removeFromFavourites(id);
+      this.snackBar.openFromComponent(SnackBarComponent, {
+        data: {
+          title: 'favourites_removed',
+          length: '',
+        },
+        duration: 600,
+      });
+    }
   }
 }

@@ -34,7 +34,6 @@
       <th>
         {{ "researches_comment" | translate }}
       </th>
-      <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
       <tr *ngFor="let item of researches.increaseLifespan">
@@ -84,18 +83,11 @@
           </ng-container>
         </td>
         <td>
-          <button *ngIf="item?.comment.length !== 0; else dash"
-                  class="btn btn--small btn--purple btn--flat"
-                  (click)="openCommentModal(item.comment)"
+          <button class="btn btn--small btn--purple btn--flat"
+                  (click)="openCommentModal(item, links)"
           >
             {{ "researches_comment_button" | translate }}
           </button>
-        </td>
-        <td class="__cell-width-medium">
-          <ng-container
-            [ngTemplateOutlet]="links"
-            [ngTemplateOutletContext]="{ item: item }"
-          ></ng-container>
         </td>
       </tr>
     </table>
@@ -141,7 +133,6 @@
       <th>
         {{ "researches_comment" | translate }}
       </th>
-      <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
       <tr *ngFor="let item of researches.ageRelatedChangesOfGene">
@@ -196,18 +187,11 @@
           </ng-container>
         </td>
         <td>
-          <button *ngIf="item?.comment.length !== 0; else dash"
-                  class="btn btn--small btn--purple btn--flat"
-                  (click)="openCommentModal(item.comment)"
+          <button class="btn btn--small btn--purple btn--flat"
+                  (click)="openCommentModal(item, links)"
           >
             {{ "researches_comment_button" | translate }}
           </button>
-        </td>
-        <td class="__cell-width-medium">
-          <ng-container
-            [ngTemplateOutlet]="links"
-            [ngTemplateOutletContext]="{ item: item }"
-          ></ng-container>
         </td>
       </tr>
     </table>
@@ -234,7 +218,6 @@
       <th>
         {{ "researches_comment" | translate }}
       </th>
-      <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
       <tr
@@ -281,18 +264,11 @@
           </ng-container>
         </td>
         <td>
-          <button *ngIf="item?.comment.length !== 0; else dash"
-                  class="btn btn--small btn--purple btn--flat"
-                  (click)="openCommentModal(item.comment)"
+          <button class="btn btn--small btn--purple btn--flat"
+                  (click)="openCommentModal(item, links)"
           >
             {{ "researches_comment_button" | translate }}
           </button>
-        </td>
-        <td class="__cell-width-medium">
-          <ng-container
-            [ngTemplateOutlet]="links"
-            [ngTemplateOutletContext]="{ item: item }"
-          ></ng-container>
         </td>
       </tr>
     </table>
@@ -315,7 +291,6 @@
       <th>
         {{ "researches_comment" | translate }}
       </th>
-      <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
       <tr *ngFor="let item of researches.proteinRegulatesOtherGenes">
@@ -335,18 +310,11 @@
           </ng-container>
         </td>
         <td>
-          <button *ngIf="item?.comment.length !== 0; else dash"
-                  class="btn btn--small btn--purple btn--flat"
-                  (click)="openCommentModal(item.comment)"
+          <button class="btn btn--small btn--purple btn--flat"
+                  (click)="openCommentModal(item, links)"
           >
             {{ "researches_comment_button" | translate }}
           </button>
-        </td>
-        <td class="__cell-width-medium">
-          <ng-container
-            [ngTemplateOutlet]="links"
-            [ngTemplateOutletContext]="{ item: item }"
-          ></ng-container>
         </td>
       </tr>
     </table>
@@ -362,7 +330,6 @@
       <th>
         {{ "researches_comment" | translate }}
       </th>
-      <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
       <tr *ngFor="let item of researches.geneAssociatedWithProgeriaSyndromes">
@@ -372,18 +339,11 @@
           </ng-container>
         </td>
         <td>
-          <button *ngIf="item?.comment.length !== 0; else dash"
-                  class="btn btn--small btn--purple btn--flat"
-                  (click)="openCommentModal(item.comment)"
+          <button class="btn btn--small btn--purple btn--flat"
+                  (click)="openCommentModal(item, links)"
           >
             {{ "researches_comment_button" | translate }}
           </button>
-        </td>
-        <td class="__cell-width-medium">
-          <ng-container
-            [ngTemplateOutlet]="links"
-            [ngTemplateOutletContext]="{ item: item }"
-          ></ng-container>
         </td>
       </tr>
     </table>
@@ -411,7 +371,6 @@
       <th>
         {{ "researches_comment" | translate }}
       </th>
-      <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
       <tr *ngFor="let item of researches.geneAssociatedWithLongevityEffects">
@@ -443,6 +402,7 @@
         <td class="__nowrap">
           <ng-container *ngIf="item.modelOrganism ; else dash">
             {{ item.modelOrganism }}
+            {{ item.modelOrganism }}
           </ng-container>
         </td>
         <td>
@@ -451,18 +411,11 @@
           </ng-container>
         </td>
         <td>
-          <button *ngIf="item?.comment.length !== 0; else dash"
-                  class="btn btn--small btn--purple btn--flat"
-                  (click)="openCommentModal(item.comment)"
+          <button class="btn btn--small btn--purple btn--flat"
+                  (click)="openCommentModal(item, links)"
           >
             {{ "researches_comment_button" | translate }}
           </button>
-        </td>
-        <td class="__cell-width-medium">
-          <ng-container
-            [ngTemplateOutlet]="links"
-            [ngTemplateOutletContext]="{ item: item }"
-          ></ng-container>
         </td>
       </tr>
     </table>
@@ -477,18 +430,11 @@
       <th>
         {{ "researches_comment" | translate }}
       </th>
-      <th>{{ "researches_reference" | translate }}</th>
       </thead>
 
       <tr *ngFor="let item of researches.additionalEvidences">
         <td>
           {{ item.comment }}
-        </td>
-        <td class="__cell-width-medium">
-          <ng-container
-            [ngTemplateOutlet]="links"
-            [ngTemplateOutletContext]="{ item: item }"
-          ></ng-container>
         </td>
       </tr>
     </table>
@@ -497,39 +443,24 @@
 
 <!-- DRY -->
 <ng-template #links let-item="item">
-  <a
-    *ngIf="item?.doi !== ''"
-    href="https://doi.org/{{ item?.doi }}"
-    class="link"
-    target="_blank"
-  >{{ item?.doi }}</a
-  ><br />
+  <p>{{ item.comment }}</p>
 
-  <a
-    *ngIf="item?.pmid !== ''"
-    href="https://pubmed.ncbi.nlm.nih.gov/17170002/{{ item?.pmid }}"
-    class="link"
-    target="_blank"
-  >{{ item?.pmid }}</a
-  ><br />
-</ng-template>
+  <p>
+    <a
+      *ngIf="item?.doi !== ''"
+      href="https://doi.org/{{ item?.doi }}"
+      class="link"
+      target="_blank"
+    >{{ item?.doi }}</a
+    ><br>
 
-<ng-template #commentModalBody let-data>
-  <div class="comment-modal__header" mat-dialog-title>
-    {{ "researches_comment" | translate }}
-
-    <button mat-icon-button
-            class="close-button"
-            (click)="closeCommentModal()"
-            aria-label="Закрыть">
-      <span class="fa fal fa-times"></span>
-    </button>
-  </div>
-  <mat-dialog-content>
-    <article class="comment-modal__body">
-      {{ data }}
-    </article>
-  </mat-dialog-content>
+    <a
+      *ngIf="item?.pmid !== ''"
+      href="https://pubmed.ncbi.nlm.nih.gov/17170002/{{ item?.pmid }}"
+      class="link"
+      target="_blank"
+    >{{ item?.pmid }}</a>
+  </p>
 </ng-template>
 
 <ng-template #dash>
