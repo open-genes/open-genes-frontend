@@ -34,7 +34,7 @@
         >&nbsp;<span class="fa fal fa-mars"></span><sup>**</sup>
         </th>
         <th>
-          {{ "researches_comment" | translate }}
+          {{ 'researches_comment' | translate }}
         </th>
         </thead>
         <ng-container *ngFor="let gene of searchedData | slice: 0: loadedGenesQuantity">
@@ -97,7 +97,7 @@
               </td>
               <td>
                 <button class="btn btn--small btn--purple btn--flat"
-                        (click)="openCommentModal(item, links)"
+                        (click)="openCommentModal('researches_comment', item, links)"
                 >
                   {{ "researches_comment_button" | translate }}
                 </button>

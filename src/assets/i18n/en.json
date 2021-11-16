@@ -60,6 +60,7 @@
   "download_page_variant_3_title": "Favourites",
   "download_page_variant_button_download": "Download",
   "download_page_variant_button_go": "Open",
+  "error_cant_get_article": "Can't get an article",
   "error_connection": "Some connection issues occurred",
   "error_page_404": "This page doesn't exist or something went wrong.",
   "error_page_soon": "This section will be updated soon.",

@@ -11,6 +11,12 @@ export interface I80levelResponseAllArticles {
   sidebar: I80levelSidebarBlock[];
 }
 
+interface IArticleImage {
+  original: string;
+  src: string;
+  src2x: string;
+}
+
 export interface I80levelResponseArticle {
   id: number;
   slug: string;
@@ -19,14 +25,11 @@ export interface I80levelResponseArticle {
     name: string;
     pseudonym: string;
     position: null;
-    avatar: string;
+    avatar: IArticleImage;
   };
   date?: string; // Date format: 'Jun 24, 2021'
   description: string;
-  image: {
-    original: string;
-    src: string;
-    src2x: string;
+  image: IArticleImage & {
     blur: string;
   };
   tags: IArticleTag[];
