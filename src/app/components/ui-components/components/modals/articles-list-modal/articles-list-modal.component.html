@@ -9,12 +9,11 @@
   </button>
 </div>
 <mat-dialog-content>
-  <ng-container *ngIf="data?.modalData?.image?.url?.src.length !== 0">
-    <div class="article-modal__cover">
-      <img [src]=data?.modalData?.image?.url?.src
-           alt="">
-    </div>
-  </ng-container>
+  <div class="article-modal__cover">
+    <img [src]=data?.modalData?.image?.url?.src
+         (error)="imgErrorHandler($event, defaultCover)"
+         alt="">
+  </div>
 
   <div class="article-modal__body">
     <article *ngFor="let item of data?.modalData?.description">

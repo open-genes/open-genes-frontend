@@ -60,6 +60,7 @@
   "download_page_variant_3_title": "收藏夹",
   "download_page_variant_button_download": "下载",
   "download_page_variant_button_go": "打开",
+  "error_cant_get_article": "无法获取文章",
   "error_connection": "发生了一些连接问题",
   "error_page_404": "该页面不存在左右",
   "error_page_soon": "本节即将更新。",
