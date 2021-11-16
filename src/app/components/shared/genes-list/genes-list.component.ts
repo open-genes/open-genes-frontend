@@ -113,7 +113,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (filteredData) => {
-          debugger;
+          // debugger;
           this.currentPage = this.filterService.filters.page;
           if (this.currentPage == 1) {
             this.searchedData = [];
