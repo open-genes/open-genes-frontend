@@ -117,8 +117,8 @@ $color-clikable-100: #F2E9FE;
 $shadow-for-panel: 0 24px 48px 0 rgb(230, 235, 245, .4), 0 1px 4px 0 $color-gray-light;
 
 // PATHS
-$path-images: '../images';
-$path-fonts: '../fonts';
+$path-images: '/assets/images';
+$path-fonts: '/assets/fonts';
 
 // Fonts
 $path-font-roboto-thin: $path-fonts + '/roboto/thin.woff2';
