@@ -185,7 +185,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
 
   public filterByMethylationChange(correlation: string): void {
     this.filterService.filterByMethylationChange(correlation);
-    if (name) {
+    if (correlation) {
       const check = [];
       this.searchedData = this.searchedData.filter((gene) => {
         Object.values(gene.methylationCorrelation).forEach((item) => {
