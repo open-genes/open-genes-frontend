@@ -50,7 +50,7 @@ export interface Gene extends GeneralGeneInfo {
   accCds: string;
   references: string;
   orthologs: {
-    string: string;
+    [n: string]: string;
   };
   commentEvolution: string;
   commentEvolutionEN: string;
