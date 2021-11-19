@@ -29,6 +29,8 @@ import { GoogleAnalyticsModule } from './modules/vendors/google-analytics.module
 import { DirectivesModule } from './directives/directives.module';
 import { TermsModule } from './components/shared/terms/terms.module';
 import { SnackBarModule } from './components/shared/snack-bar/snack-bar.module';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { CustomMatPaginatorIntl } from './core/services/custom-mat-paginator-int';
 
 // required for AOT compilation
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new TranslateHttpLoader(http);
@@ -55,7 +57,11 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new Transla
     TermsModule,
     SnackBarModule,
   ],
-  providers: [TranslateService, { provide: LOCALE_ID, useValue: 'en' }],
+  providers: [
+    TranslateService,
+    { provide: LOCALE_ID, useValue: 'en' },
+    { provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl },
+  ],
   exports: [MaterialModule],
   bootstrap: [AppComponent],
 })
