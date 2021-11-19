@@ -15,7 +15,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    container: alexsuch/angular-cli:7.3.8
+    container: alexsuch/angular-cli:12.2.10
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:

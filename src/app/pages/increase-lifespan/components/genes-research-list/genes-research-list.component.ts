@@ -86,9 +86,9 @@ export class GenesResearchListComponent implements OnInit, OnDestroy {
   }
 
   // TODO: DRY
-  public openCommentModal(data, template = null): void {
+  public openCommentModal(title, body, template = null): void {
     this.dialog.open(CommonModalComponent, {
-      data: { data: data, template: template },
+      data: { title: title, body: body, template: template },
       panelClass: 'comment-modal',
       minWidth: '320px',
       maxWidth: '768px',

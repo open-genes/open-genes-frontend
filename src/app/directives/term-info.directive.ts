@@ -21,52 +21,52 @@ interface Terms {
   selector: '[appTermInfo]',
 })
 export class TermInfoDirective implements AfterViewInit, OnDestroy {
-  private _terms: Terms;
-  private _unsubscribe$ = new Subject();
-  private _content: string;
+  private terms: Terms;
+  private unsubscribe$ = new Subject();
+  private content: string;
 
   constructor(
-    private _http: HttpClient,
-    private _elementRef: ElementRef,
-    private _translateService: TranslateService,
-    private _bottomSheet: MatBottomSheet
+    private http: HttpClient,
+    private elementRef: ElementRef,
+    private translateService: TranslateService,
+    private bottomSheet: MatBottomSheet
   ) {}
 
   ngAfterViewInit(): void {
-    this._content = this._elementRef.nativeElement.innerText;
+    this.content = this.elementRef.nativeElement.innerText;
     this.getTermsByLang();
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe$.next();
-    this._unsubscribe$.complete();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   getTermsByLang(): void {
-    const lang = this._translateService.currentLang;
-    this._http
+    const lang = this.translateService.currentLang;
+    this.http
       .get(environment.termsJsonUrl[lang === 'en' ? 0 : 1])
-      .pipe(takeUntil(this._unsubscribe$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((terms: Terms) => {
-        this._terms = terms;
+        this.terms = terms;
 
         this.findTermAndReplaceIt();
       });
   }
 
   findTermAndReplaceIt(): void {
-    if (!this._terms) {
+    if (!this.terms) {
       return;
     }
 
-    Object.keys(this._terms).forEach((term) => {
-      this._content = this._content.replace(
+    Object.keys(this.terms).forEach((term) => {
+      this.content = this.content.replace(
         term,
         `<span class="link link--term">${term}</span>`
       );
     });
 
-    this._elementRef.nativeElement.innerHTML = this._content;
+    this.elementRef.nativeElement.innerHTML = this.content;
   }
 
   @HostListener('click', ['$event'])
@@ -76,11 +76,11 @@ export class TermInfoDirective implements AfterViewInit, OnDestroy {
     }
 
     const term = evt.target.textContent;
-    this._bottomSheet.open(TermsComponent, {
+    this.bottomSheet.open(TermsComponent, {
       data: {
         term: {
           title: term,
-          description: this._terms[term],
+          description: this.terms[term],
         },
       },
     });

@@ -51,11 +51,11 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
     public translate: TranslateService,
     private activateRoute: ActivatedRoute,
     private router: Router,
-    private _bottomSheet: MatBottomSheet,
+    private bottomSheet: MatBottomSheet,
     private settingsService: SettingsService,
     private apiService: ApiService,
     private favouritesService: FavouritesService,
-    private _snackBar: MatSnackBar
+    private snackBar: MatSnackBar
   ) {
     super();
     this.routeSubscribe = activateRoute.params.subscribe((params) => {
@@ -188,23 +188,23 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
     this.routeSubscribe.unsubscribe();
-    this._bottomSheet.dismiss();
+    this.bottomSheet.dismiss();
   }
 
   public onShowUiHints(ev: MouseEvent): void {
-    this._bottomSheet.open(this.UiHints, {});
+    this.bottomSheet.open(this.UiHints, {});
     ev.preventDefault();
   }
 
   public onCloseUiHints(): void {
-    this._bottomSheet.dismiss();
+    this.bottomSheet.dismiss();
   }
 
   toggleFavourites(id: any) {
     if (!this.favouritesService.isInFavourites(id)) {
       this.isInFavourites = true;
       this.favouritesService.addToFavourites(id);
-      this._snackBar.openFromComponent(SnackBarComponent, {
+      this.snackBar.openFromComponent(SnackBarComponent, {
         data: {
           title: 'favourites_added',
           length: '',
@@ -214,7 +214,7 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
     } else {
       this.isInFavourites = false;
       this.favouritesService.removeFromFavourites(id);
-      this._snackBar.openFromComponent(SnackBarComponent, {
+      this.snackBar.openFromComponent(SnackBarComponent, {
         data: {
           title: 'favourites_removed',
           length: '',

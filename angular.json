@@ -22,25 +22,33 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
               {
-                "input": "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+                "input": "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+                "inject": true
               },
               {
                 "input": "src/resources/sass/vendors.scss",
-                "bundleName": "vendors"
+                "bundleName": "vendors",
+                "inject": true
               },
               {
                 "input": "src/assets/sass/style.scss",
-                "bundleName": "style"
+                "bundleName": "style",
+                "inject": true
               }
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -53,7 +61,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -80,8 +87,6 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": true,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -108,8 +113,6 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": true,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -127,7 +130,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -136,7 +140,7 @@
             "port": 3000,
             "ssl": true,
             "sslKey": "ssl/localhost.key",
-            "sslCert": "ssl/localhost.crt"
+            "sslCert": "ssl/localhost.cert"
           },
           "configurations": {
             "production": {
@@ -169,15 +173,18 @@
             ],
             "styles": [
               {
-                "input": "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+                "input": "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+                "inject": true
               },
               {
                 "input": "src/resources/sass/vendors.scss",
-                "bundleName": "vendors"
+                "bundleName": "vendors",
+                "inject": true
               },
               {
                 "input": "src/assets/sass/style.scss",
-                "bundleName": "style"
+                "bundleName": "style",
+                "inject": true
               }
             ],
             "scripts": []

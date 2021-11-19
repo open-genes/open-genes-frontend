@@ -24,7 +24,6 @@ import { LanguageComponent } from './components/language/language.component';
 import { BurgerMenuComponent } from './components/burger-menu/burger-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/vendors/material.module';
-import { MatBadgeModule } from '@angular/material/badge';
 import { IconModule } from './components/ui-components/components/icon/app-icon.module';
 import { GoogleAnalyticsModule } from './modules/vendors/google-analytics.module';
 import { DirectivesModule } from './directives/directives.module';
@@ -52,7 +51,6 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new Transla
     }),
     BrowserAnimationsModule,
     MaterialModule,
-    MatBadgeModule,
     IconModule,
     GoogleAnalyticsModule,
     DirectivesModule,

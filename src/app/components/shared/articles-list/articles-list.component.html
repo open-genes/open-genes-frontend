@@ -77,8 +77,8 @@
               >
                 <div class="author__avatar">
                   <div class="avatar">
-                    <img src="{{ article.author.avatar
-                                ? article.author.avatar
+                    <img src="{{ article.author.avatar.src
+                                ? article.author.avatar.src
                                 : defaultAvatar }}"
                          alt=""
                          (error)="imgErrorHandler($event, defaultAvatar)">
@@ -132,3 +132,19 @@
     </ng-container>
   </app-no-content>
 </section>
+
+<ng-template #cantGetArticle>
+  <app-no-content
+    size="medium"
+    [title]="'error_cant_get_article'"
+    [isPanel]="false">
+    <ng-container icon>
+      <app-icon
+        icon="language"
+        size="custom"
+        customWidth="100%"
+        customHeight="100%"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
+</ng-template>

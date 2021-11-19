@@ -19,6 +19,7 @@ import { environment } from '../../../../environments/environment';
 import { MockApiService } from '../../../core/services/api/mock-api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ArticlesListModalComponent } from '../../ui-components/components/modals/articles-list-modal/articles-list-modal.component';
+import { CommonModalComponent } from '../../ui-components/components/modals/common-modal/common-modal.component';
 
 @Component({
   selector: 'app-articles-list',
@@ -51,6 +52,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   newArticlesLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @ViewChild('articleModalBody') dialogRef: TemplateRef<any>;
+  @ViewChild('cantGetArticle') cantGetArticleRef: TemplateRef<any>;
 
   constructor(
     public translate: TranslateService,
@@ -136,19 +138,18 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
           return {
             title: res.title,
             subtitle: res.subtitle,
-            image: imageData.content.image,
+            image: imageData?.content.image,
             description: descData,
-            slug: slug
+            slug: slug,
           };
         })
       )
       .subscribe(
         (modalData) => {
-          this.isAnyArticleModalOpen = false;
           this.cdRef.markForCheck();
           this.dialog.open(ArticlesListModalComponent, {
             data: {
-              modalData: modalData
+              modalData: modalData,
             },
             panelClass: 'article-modal',
             minWidth: '320px',
@@ -156,9 +157,16 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
           });
         },
         () => {
-          console.warn(`Can't get an article by id ${slug}`);
+          console.error(`Can't get an article by slug ${slug}`);
+          this.dialog.open(CommonModalComponent, {
+            data: { title: '', body: null, template: this.cantGetArticleRef },
+            panelClass: 'article-modal',
+            minWidth: '320px',
+            maxWidth: '768px',
+          });
         }
       );
+    this.isAnyArticleModalOpen = false;
   }
 
   ngOnDestroy() {
@@ -166,6 +174,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.oneArticleSubscription$.unsubscribe();
   }
 
+  // TODO: make util class
   imgErrorHandler(event: any, placeholderImg: string) {
     event.target.src = placeholderImg;
   }
