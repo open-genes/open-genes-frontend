@@ -307,5 +307,10 @@
   "участие_гена_в_связанных_со_старением_процессах_механизмах": "Gene involvement in aging-related processes or mechanisms",
   "цитоскелет": "cytoskeleton",
   "эмбриональное_развитие": "embryonic development",
-  "эпигенетические_изменения": "epigenetic changes"
+  "эпигенетические_изменения": "epigenetic changes",
+
+  "items_per_page": "Items per page",
+  "next_page": "Next page",
+  "prev_page": "Previous page",
+  "of_label": "of"
 }
