@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { FilterTypesEnum } from '../../services/filter-types.enum';
 import { FilterService } from '../../services/filter.service';
 import { GeneFieldsModalComponent } from '../gene-fields-modal/gene-fields-modal.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { Filter } from '../../services/filter.model';
 import { SettingsService } from '../../../../../core/services/settings.service';
