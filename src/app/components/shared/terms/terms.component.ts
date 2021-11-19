@@ -21,7 +21,7 @@ export class TermsComponent extends WindowWidth implements OnInit {
       term: Term;
     },
     private _windowService: WindowService,
-    private _bottomSheetRef: MatBottomSheetRef,
+    private bottomSheetRef: MatBottomSheetRef,
     private readonly cdRef: ChangeDetectorRef
   ) {
     super(_windowService);
@@ -29,7 +29,6 @@ export class TermsComponent extends WindowWidth implements OnInit {
   public term = this.data.term;
 
   ngOnInit(): void {
-
     this.initWindowWidth(() => {
       this.cdRef.markForCheck();
     });
@@ -40,6 +39,6 @@ export class TermsComponent extends WindowWidth implements OnInit {
   }
 
   onClose(): void {
-    this._bottomSheetRef.dismiss();
+    this.bottomSheetRef.dismiss();
   }
 }

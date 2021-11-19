@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Directive, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
 import { Gene } from '../models';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
@@ -9,6 +9,7 @@ import { Observable, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Filter } from '../../components/shared/genes-list/services/filter.model';
 
+@Directive()
 export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
   @Input() item: Gene;
   @Input() isGoTermsMode: boolean;
@@ -99,26 +100,32 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
    * add and delete from favourites
    */
   public favItem(geneId: number): void {
-    this._favouritesService.addToFavourites(geneId);
-    this._snackBar.openFromComponent(SnackBarComponent, {
-      data: {
-        title: 'favourites_added',
-        length: '',
-      },
-      duration: 600,
-    });
+    if (!this.isFaved(geneId)) {
+      this._favouritesService.addToFavourites(geneId);
+      this._snackBar.openFromComponent(SnackBarComponent, {
+        data: {
+          title: 'favourites_added',
+          length: '',
+        },
+        duration: 600,
+      });
+    }
+
     this.isFaved(geneId);
   }
 
   public unFavItem(geneId: number): void {
-    this._favouritesService.removeFromFavourites(geneId);
-    this._snackBar.openFromComponent(SnackBarComponent, {
-      data: {
-        title: 'favourites_removed',
-        length: '',
-      },
-      duration: 600,
-    });
+    if (this.isFaved(geneId)) {
+      this._favouritesService.removeFromFavourites(geneId);
+      this._snackBar.openFromComponent(SnackBarComponent, {
+        data: {
+          title: 'favourites_removed',
+          length: '',
+        },
+        duration: 600,
+      });
+    }
+
     this.isFaved(geneId);
   }
 

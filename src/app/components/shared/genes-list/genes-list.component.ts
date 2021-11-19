@@ -93,13 +93,13 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
-    private _favouritesService: FavouritesService,
-    private _snackBar: MatSnackBar,
-    ) {
+    private favouritesService: FavouritesService
+  ) {
     super();
   }
 
   ngOnInit(): void {
+    this.favouritesService.getItems();
     this.setInitSettings();
     this.setInitialState();
   }
@@ -185,7 +185,7 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
 
   public filterByMethylationChange(correlation: string): void {
     this.filterService.filterByMethylationChange(correlation);
-    if (name) {
+    if (correlation) {
       const check = [];
       this.searchedData = this.searchedData.filter((gene) => {
         Object.values(gene.methylationCorrelation).forEach((item) => {
@@ -403,12 +403,12 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public isFaved(geneId: number): Observable<boolean> {
-    return of(this._favouritesService.isInFavourites(geneId));
+    return of(this.favouritesService.isInFavourites(geneId));
   }
 
   public favItem(geneId: number): void {
-    this._favouritesService.addToFavourites(geneId);
-    this._snackBar.openFromComponent(SnackBarComponent, {
+    this.favouritesService.addToFavourites(geneId);
+    this.snackBar.openFromComponent(SnackBarComponent, {
       data: {
         title: 'favourites_added',
         length: '',
@@ -419,8 +419,8 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public unFavItem(geneId: number): void {
-    this._favouritesService.removeFromFavourites(geneId);
-    this._snackBar.openFromComponent(SnackBarComponent, {
+    this.favouritesService.removeFromFavourites(geneId);
+    this.snackBar.openFromComponent(SnackBarComponent, {
       data: {
         title: 'favourites_removed',
         length: '',

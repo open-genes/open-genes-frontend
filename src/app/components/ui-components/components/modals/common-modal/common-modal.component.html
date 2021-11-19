@@ -1,5 +1,5 @@
 <div class="comment-modal__header" mat-dialog-title>
-  {{ "researches_comment" | translate }}
+  {{ data.title | translate }}
 
   <button mat-icon-button
           class="close-button"
@@ -12,11 +12,11 @@
   <div class="comment-modal__body">
     <article>
       <ng-container *ngIf="!data.template">
-        {{ data.data }}
+        {{ data.body }}
       </ng-container>
       <ng-container
         [ngTemplateOutlet]="data.template"
-        [ngTemplateOutletContext]="{ item: data.data }"
+        [ngTemplateOutletContext]="{ item: data.body }"
       ></ng-container>
     </article>
   </div>
