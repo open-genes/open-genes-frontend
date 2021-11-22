@@ -42,7 +42,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
   @Output() notFoundAndFoundGenes: EventEmitter<any> = new EventEmitter<any>();
 
-  public value: string;
+  public clearFieldButton: boolean;
   public foundGenes: string[];
   public notFoundGenes: string[] = [];
   public searchedData: Genes[];
@@ -99,37 +99,39 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchForm
       .get('searchField')
       .valueChanges.pipe(
-      filter((query: string) => !!query),
-      map((query: string) => query.toLowerCase().replace(/-/g, '')),
-      filter((query: string) => {
-        this.highlightText = query;
-        this.showSearchResult = query.length >= 2;
+        filter((query: string) => {
+          return this.clearFieldButton = !!query;
+        }),
+        map((query: string) => query.toLowerCase().replace(/-/g, '')),
+        filter((query: string) => {
+          this.highlightText = query;
+          this.showSearchResult = query.length >= 2;
 
-        if (this.showSearchResult) {
-          this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
-        } else {
-          this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
-        }
+          if (this.showSearchResult) {
+            this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
+          } else {
+            this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
+          }
 
-        if (query.length !== 0) {
-          if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
-            return true;
+          if (query.length !== 0) {
+            if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
+              return true;
+            }
+            if (this.searchMode === this.searchModeEnum.searchByGenes) {
+              this.searchByGenes(query);
+            }
+            if (this.searchMode === this.searchModeEnum.searchByGenesList) {
+              this.searchByGenesList(query);
+            }
           }
-          if (this.searchMode === this.searchModeEnum.searchByGenes) {
-            this.searchByGenes(query);
-          }
-          if (this.searchMode === this.searchModeEnum.searchByGenesList) {
-            this.searchByGenesList(query);
-          }
-        }
 
-        return false;
-      }),
-      debounceTime(500),
-      distinctUntilChanged(),
-      switchMap((query: string) => this.apiService.getGoTermMatchByString(query)),
-      takeUntil(this.subscription$)
-    )
+          return false;
+        }),
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((query: string) => this.apiService.getGoTermMatchByString(query)),
+        takeUntil(this.subscription$)
+      )
       .subscribe((genes: Genes[]) => {
         this.searchedData = genes;
         this.mapTerms();
@@ -196,8 +198,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public onSearch(): void {
-    this.value = this.searchForm.get('searchField').value;
-    this.searchQuery.emit(this.value.toLowerCase());
+    this.searchQuery.emit(this.highlightText);
   }
 
   public cancelSearch(event?): void {
@@ -209,7 +210,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   public clearSearch(): void {
     this.searchForm.get('searchField').setValue('');
     const query: string = this.searchForm.get('searchField').value;
-    this.searchQuery.emit(query.toLowerCase());
+    this.searchQuery.emit(query);
     this.cdRef.markForCheck();
     this.cdRef.detectChanges();
   }

@@ -20,7 +20,7 @@
     </button>
 
     <div class="search-form__wrapper">
-      <button *ngIf="value"
+      <button *ngIf="clearFieldButton"
               mat-icon-button
               class="clear-search-button"
               (click)="clearSearch()">
@@ -44,12 +44,11 @@
           placeholder="{{ item.placeholder | translate }}"
           class="field search-form__field"
           (keyup.enter)="onSearch()"
-          [(ngModel)]="value"
         >
       </ng-container>
     </div>
 
-    <div *ngIf="showSearchResult"
+    <div *ngIf="showSearchResult && clearFieldButton"
          class="search-form__autocomplete-list">
       <ng-container *ngFor="let gene of searchedData; let i = index">
         <button
