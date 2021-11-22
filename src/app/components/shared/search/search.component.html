@@ -60,13 +60,13 @@
 
           <span class="item__symbol"
                 appHighlight
-                [highlightText]="searchForm.get('searchField').value"
+                [highlightText]="highlightText"
                 [innerHTML]="gene.symbol">
           </span>&nbsp;
           <span *ngIf="!gene?.terms"
                 class="item__name"
                 appHighlight
-                [highlightText]="searchForm.get('searchField').value"
+                [highlightText]="highlightText"
                 [innerHTML]="gene.name">
           </span>&nbsp;
 
@@ -74,7 +74,7 @@
             <span *ngFor="let term of biologicalProcess | keyvalue"
                   class="item__name"
                   appHighlight
-                  [highlightText]="searchForm.get('searchField').value"
+                  [highlightText]="highlightText"
                   [innerHTML]="term.value">
           </span>
           </ng-container>
@@ -83,7 +83,7 @@
             <span *ngFor="let term of cellularComponent | keyvalue"
                   class="item__name"
                   appHighlight
-                  [highlightText]="searchForm.get('searchField').value"
+                  [highlightText]="highlightText"
                   [innerHTML]="term.value">
           </span>
           </ng-container>
@@ -92,7 +92,7 @@
             <span *ngFor="let term of molecularActivity | keyvalue"
                   class="item__name"
                   appHighlight
-                  [highlightText]="searchForm.get('searchField').value"
+                  [highlightText]="highlightText"
                   [innerHTML]="term.value">
           </span>
           </ng-container>

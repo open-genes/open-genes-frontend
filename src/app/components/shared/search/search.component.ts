@@ -52,6 +52,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
+  public highlightText: string;
 
   private searchModeEnum = SearchModeEnum;
   public inputData = [
@@ -98,36 +99,37 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchForm
       .get('searchField')
       .valueChanges.pipe(
-        filter((query: string) => !!query),
-        map((query: string) => query.toLowerCase()),
-        filter((query: string) => {
-          this.showSearchResult = query.length >= 2;
+      filter((query: string) => !!query),
+      map((query: string) => query.toLowerCase().replace(/-/g, '')),
+      filter((query: string) => {
+        this.highlightText = query;
+        this.showSearchResult = query.length >= 2;
 
-          if (this.showSearchResult) {
-            this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
-          } else {
-            this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
+        if (this.showSearchResult) {
+          this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
+        } else {
+          this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
+        }
+
+        if (query.length !== 0) {
+          if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
+            return true;
           }
-
-          if (query.length !== 0) {
-            if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
-              return true;
-            }
-            if (this.searchMode === this.searchModeEnum.searchByGenes) {
-              this.searchByGenes(query);
-            }
-            if (this.searchMode === this.searchModeEnum.searchByGenesList) {
-              this.searchByGenesList(query);
-            }
+          if (this.searchMode === this.searchModeEnum.searchByGenes) {
+            this.searchByGenes(query);
           }
+          if (this.searchMode === this.searchModeEnum.searchByGenesList) {
+            this.searchByGenesList(query);
+          }
+        }
 
-          return false;
-        }),
-        debounceTime(500),
-        distinctUntilChanged(),
-        switchMap((query: string) => this.apiService.getGoTermMatchByString(query)),
-        takeUntil(this.subscription$)
-      )
+        return false;
+      }),
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap((query: string) => this.apiService.getGoTermMatchByString(query)),
+      takeUntil(this.subscription$)
+    )
       .subscribe((genes: Genes[]) => {
         this.searchedData = genes;
         this.mapTerms();
