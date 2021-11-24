@@ -42,7 +42,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
   @Output() notFoundAndFoundGenes: EventEmitter<any> = new EventEmitter<any>();
 
-  public value: string;
+  public clearFieldButton: boolean;
   public foundGenes: string[];
   public notFoundGenes: string[] = [];
   public searchedData: Genes[];
@@ -52,6 +52,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   public biologicalProcess: Map<any, any>;
   public cellularComponent: Map<any, any>;
   public molecularActivity: Map<any, any>;
+  public highlightText: string;
 
   private searchModeEnum = SearchModeEnum;
   public inputData = [
@@ -98,9 +99,12 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchForm
       .get('searchField')
       .valueChanges.pipe(
-        filter((query: string) => !!query),
-        map((query: string) => query.toLowerCase()),
         filter((query: string) => {
+          return this.clearFieldButton = !!query;
+        }),
+        map((query: string) => query.toLowerCase().replace(/-/g, '')),
+        filter((query: string) => {
+          this.highlightText = query;
           this.showSearchResult = query.length >= 2;
 
           if (this.showSearchResult) {
@@ -194,8 +198,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public onSearch(): void {
-    this.value = this.searchForm.get('searchField').value;
-    this.searchQuery.emit(this.value.toLowerCase());
+    this.searchQuery.emit(this.highlightText);
   }
 
   public cancelSearch(event?): void {
@@ -207,7 +210,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   public clearSearch(): void {
     this.searchForm.get('searchField').setValue('');
     const query: string = this.searchForm.get('searchField').value;
-    this.searchQuery.emit(query.toLowerCase());
+    this.searchQuery.emit(query);
     this.cdRef.markForCheck();
     this.cdRef.detectChanges();
   }
