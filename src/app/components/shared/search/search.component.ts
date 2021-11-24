@@ -141,7 +141,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public onSearch(): void {
-    this.searchQuery.emit(this.highlightText);
+    this.confirmedQuery.emit(this.highlightText);
   }
 
   public cancelSearch(event?): void {
@@ -156,11 +156,5 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchQuery.emit(query);
     this.confirmedQuery.emit(query.toLowerCase());
     this.cancelSearch();
-  }
-
-  public cancelSearch(event?): void {
-    this.showSearchResult = false;
-    this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
-    event?.stopPropagation();
   }
 }

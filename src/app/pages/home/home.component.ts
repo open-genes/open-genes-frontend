@@ -90,10 +90,12 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   public updateGenesList(event): void {
+    console.log('hi');
     this.confirmedGenesList = [...this.searchedGenes];
   }
 
   public setSearchMode(searchMode: SearchMode): void {
+    console.log('hi Mark');
     this.searchMode = searchMode;
   }
 
