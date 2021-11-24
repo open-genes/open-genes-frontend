@@ -46,6 +46,7 @@ app-skeleton {
 
 .article {
   display: inline-flex;
+  cursor: pointer;
 
   &__card,
   &__cover {

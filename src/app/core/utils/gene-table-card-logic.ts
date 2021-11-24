@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Directive, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
 import { Genes } from '../models';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
@@ -10,6 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Filter } from '../../components/shared/genes-list/services/filter.model';
 import { FilterTypesEnum } from '../../components/shared/genes-list/services/filter-types.enum';
 
+@Directive()
 export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
   @Input() item: Genes;
   @Input() isGoTermsMode: boolean;

@@ -48,10 +48,14 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
   @Output() confirmedQuery: EventEmitter<any> = new EventEmitter<any>();
 
+  public clearFieldButton: boolean;
+  public foundGenes: string[];
+  public notFoundGenes: string[] = [];
   public searchedData: Genes[];
   public searchForm: FormGroup;
   public searchMode: SearchMode;
   public showSearchResult = false;
+  public highlightText: string;
 
   private searchModeEnum = SearchModeEnum;
   public inputData = [
@@ -99,6 +103,11 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
       .valueChanges.pipe(
         map((query: string) => query?.toLowerCase()),
         filter((query: string) => {
+          return this.clearFieldButton = !!query;
+        }),
+        map((query: string) => query.toLowerCase().replace(/-/g, '')),
+        filter((query: string) => {
+          this.highlightText = query;
           this.showSearchResult = query?.length >= 2;
 
           if (this.showSearchResult) {
@@ -132,13 +141,19 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public onSearch(): void {
-    this.confirmedQuery.emit();
+    this.searchQuery.emit(this.highlightText);
+  }
+
+  public cancelSearch(event?): void {
+    this.showSearchResult = false;
+    this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
+    event?.stopPropagation();
   }
 
   public clearSearch(): void {
     this.searchForm.get('searchField').setValue('');
     const query: string = this.searchForm.get('searchField').value;
-    this.searchQuery.emit(query.toLowerCase());
+    this.searchQuery.emit(query);
     this.confirmedQuery.emit(query.toLowerCase());
     this.cancelSearch();
   }

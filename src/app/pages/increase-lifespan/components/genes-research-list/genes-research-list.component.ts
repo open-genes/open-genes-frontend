@@ -5,9 +5,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output,
-  TemplateRef,
-  ViewChild,
+  Output
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Settings } from '../../../../core/models/settings.model';
@@ -17,6 +15,7 @@ import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack
 import { GenesWLifespanResearches } from '../../../../core/models/openGenesApi/genes-with-increase-lifespan-researches.model';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModalComponent } from '../../../../components/ui-components/components/modals/common-modal/common-modal.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-genes-research-list',
@@ -34,14 +33,12 @@ export class GenesResearchListComponent implements OnInit, OnDestroy {
   @Output() loaded = new EventEmitter<boolean>();
 
   public searchedData: GenesWLifespanResearches[];
+  public pageSizeOptions: number[] = [5, 10, 20];
   public genesPerPage = 20;
-  public loadedGenesQuantity = this.genesPerPage;
   public isLoading = false;
 
   private subscription$ = new Subject();
   private retrievedSettings: Settings;
-
-  @ViewChild('commentModalBody') dialogRef: TemplateRef<any>;
 
   constructor(
     private settingsService: SettingsService,
@@ -84,16 +81,10 @@ export class GenesResearchListComponent implements OnInit, OnDestroy {
     });
   }
 
-  public loadMoreGenes(): void {
-    if (this.searchedData?.length >= this.loadedGenesQuantity) {
-      this.loadedGenesQuantity += this.genesPerPage;
-    }
-  }
-
   // TODO: DRY
-  public openCommentModal(data, template = null): void {
+  public openCommentModal(title, body, template = null): void {
     this.dialog.open(CommonModalComponent, {
-      data: { data: data, template: template },
+      data: { title: title, body: body, template: template },
       panelClass: 'comment-modal',
       minWidth: '320px',
       maxWidth: '768px',
@@ -102,6 +93,13 @@ export class GenesResearchListComponent implements OnInit, OnDestroy {
 
   public closeCommentModal(): void {
     this.dialog.closeAll();
+  }
+
+  public pageEventHandler(event: PageEvent): void {
+    const start = event.pageIndex * event.pageSize;
+    const end = start + event.pageSize;
+    this.searchedData = this.genesList.slice(start, end);
+    console.log(event)
   }
 
   /**

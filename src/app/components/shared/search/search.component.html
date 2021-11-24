@@ -20,7 +20,7 @@
     </button>
 
     <div class="search-form__wrapper">
-      <button *ngIf="searchForm.get('searchField').value"
+      <button *ngIf="clearFieldButton"
               mat-icon-button
               class="clear-search-button"
               (click)="clearSearch()">
@@ -48,7 +48,7 @@
       </ng-container>
     </div>
 
-    <div *ngIf="showSearchResult"
+    <div *ngIf="showSearchResult && clearFieldButton"
          class="search-form__autocomplete-list">
       <ng-container *ngFor="let gene of searchedData; let i = index">
         <button
@@ -59,14 +59,14 @@
 
           <span class="item__symbol"
                 appHighlight
-                [highlightText]="searchForm.get('searchField').value"
+                [highlightText]="highlightText"
                 [innerHTML]="gene.symbol">
           </span>&nbsp;
 
           <span *ngIf="!gene?.terms"
                 class="item__name"
                 appHighlight
-                [highlightText]="searchForm.get('searchField').value"
+                [highlightText]="highlightText"
                 [innerHTML]="gene.name">
           </span>&nbsp;
 
@@ -74,7 +74,7 @@
             <span *ngFor="let item of term?.value | keyvalue"
                   class="item__name"
                   appHighlight
-                  [highlightText]="searchForm.get('searchField').value"
+                  [highlightText]="highlightText"
                   [innerHTML]="item.value">
             </span>
           </ng-container>

@@ -24,12 +24,13 @@ import { LanguageComponent } from './components/language/language.component';
 import { BurgerMenuComponent } from './components/burger-menu/burger-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/vendors/material.module';
-import { MatBadgeModule } from '@angular/material/badge';
 import { IconModule } from './components/ui-components/components/icon/app-icon.module';
 import { GoogleAnalyticsModule } from './modules/vendors/google-analytics.module';
 import { DirectivesModule } from './directives/directives.module';
 import { TermsModule } from './components/shared/terms/terms.module';
 import { SnackBarModule } from './components/shared/snack-bar/snack-bar.module';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { CustomMatPaginatorIntl } from './core/services/custom-mat-paginator-int';
 
 // required for AOT compilation
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new TranslateHttpLoader(http);
@@ -50,14 +51,17 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new Transla
     }),
     BrowserAnimationsModule,
     MaterialModule,
-    MatBadgeModule,
     IconModule,
     GoogleAnalyticsModule,
     DirectivesModule,
     TermsModule,
     SnackBarModule,
   ],
-  providers: [TranslateService, { provide: LOCALE_ID, useValue: 'en' }],
+  providers: [
+    TranslateService,
+    { provide: LOCALE_ID, useValue: 'en' },
+    { provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl },
+  ],
   exports: [MaterialModule],
   bootstrap: [AppComponent],
 })

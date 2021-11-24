@@ -3,6 +3,7 @@
 @mixin card {
   $card-spacing: 20px;
   .add-to-favorites {
+    display: inline-block;
     margin: -8px 0 0 -10px;
 
     .icon {
