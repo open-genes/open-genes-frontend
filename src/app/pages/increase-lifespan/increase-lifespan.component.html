@@ -15,19 +15,17 @@
           <div class="row">
             <ng-container *ngIf="isAvailable; else errorMessage">
               <div class="col-12">
-                <app-search [genesList]="genes"
+                <app-search [showTitle]="false"
+                            [genesList]="searchedGenes"
                             [setSearchMode]="searchMode"
-                            (searchQuery)="setSearchQuery($event)"
-                            (notFoundAndFoundGenes)="setNotFoundAndFoundGenes($event)"
-                            [showTitle]="false">
-                ></app-search>
+                            (confirmedQuery)="updateGenesList($event)"
+                            (searchQuery)="setSearchQuery($event)">
+                </app-search>
 
                 <app-genes-research-list
                   *ngIf="genes"
-                  [genesList]="genes"
-                  [searchQuery]="searchQuery"
-                  (loaded)="setIsGenesListLoaded($event)"
-                >
+                  [genesList]="confirmedGenesList"
+                  (loaded)="setIsGenesListLoaded($event)">
                 </app-genes-research-list>
 
                 <!-- When content is loading -->

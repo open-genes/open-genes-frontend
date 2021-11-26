@@ -37,7 +37,7 @@
           {{ 'researches_comment' | translate }}
         </th>
         </thead>
-        <ng-container *ngFor="let gene of searchedData | slice: 0: loadedGenesQuantity">
+        <ng-container *ngFor="let gene of searchedData | slice: 0: genesPerPage">
           <ng-container *ngIf="gene.researches?.increaseLifespan.length !== 0">
             <tr>
               <td class="title"
@@ -115,11 +115,13 @@
     </p>
   </legend>
 
-  <!-- Show more Button -->
-  <div class="btn-wrap show-more" *ngIf="searchedData?.length > loadedGenesQuantity">
-    <button (click)="loadMoreGenes()" class="btn show-more__button">
-      {{ "show_more" | translate }}
-    </button>
+  <div class="paginator">
+    <mat-paginator [length]="genesList.length"
+                   [pageSize]="genesPerPage"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="pageEventHandler($event)"
+                   aria-label="Select page">
+    </mat-paginator>
   </div>
 </ng-container>
 

@@ -13,11 +13,13 @@ import { Sort } from '@angular/material/sort';
   styleUrls: ['./genes-methylation-list.component.scss'],
 })
 export class GenesMethylationListComponent implements OnInit {
-  @Input() genesList: GenesInHorvathClock[];
-  @Input() compareWith: string[] = [];
-  @Input() set searchQuery(query: string) {
-    this.updateGeneListOnSearch(query !== undefined && query !== '' ? query : '');
+  @Input() set genesList(genes: GenesInHorvathClock[]) {
+    if (genes) {
+      this.searchedData = genes;
+      this.openSnackBar();
+    }
   }
+  @Input() compareWith: string[] = [];
 
   @Output() loaded = new EventEmitter<boolean>();
 
@@ -76,7 +78,6 @@ export class GenesMethylationListComponent implements OnInit {
    * HTTP
    */
   private setInitialState(): void {
-    this.searchedData = [...this.genesList];
     this.sortedData = this.searchedData.slice();
     this.loaded.emit(true);
     this.cdRef.markForCheck();
@@ -86,18 +87,11 @@ export class GenesMethylationListComponent implements OnInit {
     this.retrievedSettings = this.settingsService.getSettings();
   }
 
-  // TODO: Implement this method in a common abstract class
-  public updateGeneListOnSearch(query: string): void {
-    this.searchedData = this.genesList.filter((item) => {
-      // TODO: DRY
-      const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
-      ${item.symbol} ${item.name}`;
-      return searchedText.toLowerCase().includes(query);
-    });
+  private openSnackBar(): void {
     this.snackBar.openFromComponent(SnackBarComponent, {
       data: {
         title: 'items_found',
-        length: this.searchedData.length ? this.searchedData.length : 0,
+        length: this.searchedData ? this.searchedData.length : 0,
       },
       duration: 600,
     });

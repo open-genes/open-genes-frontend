@@ -1,6 +1,6 @@
 export interface GenesListSettings {
   ifShowAge: boolean;
-  ifShowClasses: boolean;
+  ifShowFuncClusters: boolean;
   ifShowDiseases: boolean;
   ifShowDiseaseCategories: boolean;
   ifShowExpression: boolean;

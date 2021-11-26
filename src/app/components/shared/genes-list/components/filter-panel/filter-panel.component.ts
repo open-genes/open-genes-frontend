@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FilterTypesEnum } from '../../services/filter-types.enum';
+import { FilterTypesEnum, SortEnum } from '../../services/filter-types.enum';
 import { FilterService } from '../../services/filter.service';
 import { GeneFieldsModalComponent } from '../gene-fields-modal/gene-fields-modal.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { Filter } from '../../services/filter.model';
+import { Filter, Sort } from '../../services/filter.model';
 import { SettingsService } from '../../../../../core/services/settings.service';
 import { Settings, SettingsEnum } from '../../../../../core/models/settings.model';
 
@@ -25,6 +25,9 @@ export class FilterPanelComponent implements OnInit {
 
   public filterTypes = FilterTypesEnum;
   public filters: Filter = this.filterService.filters;
+  public sortEnum = SortEnum;
+  public sort: Sort = this.filterService.sort;
+
   public isTableView: boolean;
   public isClear$ = this.filterService.isClearFiltersBtnShown;
 
@@ -49,8 +52,8 @@ export class FilterPanelComponent implements OnInit {
   /**
    * Send clear filter item
    */
-  public clearFilters(item?: any) {
-    this.clearFilterItem.emit(item);
+  public clearFilters(filterName?: string) {
+    this.clearFilterItem.emit(filterName);
   }
 
   /**

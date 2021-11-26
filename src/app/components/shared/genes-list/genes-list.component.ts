@@ -2,24 +2,21 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   Input,
   OnDestroy,
   OnInit,
-  Output,
 } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { ToMap } from '../../../core/utils/to-map';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
 import { FilterService } from './services/filter.service';
-import { FilterTypesEnum } from './services/filter-types.enum';
+import { FilterTypesEnum, SortEnum } from './services/filter-types.enum';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileExportService } from '../../../core/services/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
-import { Filter } from './services/filter.model';
+import { Filter, Sort } from './services/filter.model';
 import { SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { FavouritesService } from '../../../core/services/favourites.service';
@@ -30,57 +27,50 @@ import { FavouritesService } from '../../../core/services/favourites.service';
   styleUrls: ['./genes-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
+export class GenesListComponent implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
 
-  @Input() set setSearchMode(value: SearchMode) {
-    if (value) {
-      this.isGoTermsMode = value === this.searchModeEnum.searchByGoTerms;
-      this.isSearchByGenesList = value === this.searchModeEnum.searchByGenesList;
+  @Input() set setSearchMode(searchMode: SearchMode) {
+    if (searchMode) {
       this.isGoSearchPerformed = false;
+      this.isGoTermsMode = searchMode === this.searchModeEnum.searchByGoTerms;
       if (!this.isGoTermsMode) {
-        this.updateGeneListOnSearch('');
-      } else {
-        this.searchGenesByGoTerm('');
+        this.clearFilters();
       }
     }
   }
 
-  @Input() set searchQuery(query: string) {
+  @Input() set genesList(genes: Genes[]) {
     if (this.isGoTermsMode) {
-      this.searchGenesByGoTerm(query !== undefined && query !== '' ? query : '');
-    } else if (this.isSearchByGenesList) {
-      this.searchByGenesList(query !== undefined && query !== '' ? query : '');
+      this.searchedData = genes;
+      this.isGoSearchPerformed = true;
     } else {
-      this.updateGeneListOnSearch(query !== undefined && query !== '' ? query : '');
+      if (genes && genes.length) {
+        this.searchedData = genes;
+        this.openSnackBar();
+      } else {
+        this.clearFilters();
+      }
     }
+    this.downloadSearch(this.searchedData);
   }
 
-  @Input() genesList: Genes[];
-
-  @Output() loaded = new EventEmitter<boolean>();
-
-  public searchedData: Genes[];
-  public genesPerPage = 20;
-  public loadedGenesQuantity = this.genesPerPage;
-
-  public filters: Filter = this.filterService.filters;
+  public searchedData: Genes[] = [];
   public filterTypes = FilterTypesEnum;
+  public sortEnum = SortEnum;
+  public sort: Sort = this.filterService.sort;
+
+  public isLoading = false;
 
   public isTableView: boolean;
-  public isSearchByGenesList: boolean;
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
   public isGoTermsModeError = false;
-  public isLoading = false;
-
-  public goModeCellData: any;
-  public biologicalProcess: Map<any, any>;
-  public cellularComponent: Map<any, any>;
-  public molecularActivity: Map<any, any>;
 
   public downloadJsonLink: string | SafeResourceUrl = '#';
+  public currentPage: number;
+  public pageOptions: any;
 
   private retrievedSettings: Settings;
   private searchModeEnum = SearchModeEnum;
@@ -95,7 +85,6 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private favouritesService: FavouritesService
   ) {
-    super();
   }
 
   ngOnInit(): void {
@@ -110,234 +99,85 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   /**
-   * HTTP
+   * Get genes list
    */
   setInitialState(): void {
-    this.searchedData = [...this.genesList];
-    this.downloadSearch(this.searchedData);
-    this.loaded.emit(true);
-    this.cdRef.markForCheck();
-  }
-
-  public filterByFuncClusters(id: number): void {
-    this.filterService.filterByFuncClusters(id);
-    this.filterService
-      .getByFuncClusters()
+    this.filterService.filterResult
       .pipe(
-        switchMap((list) => {
-          if (list.length !== 0) {
-            return this.apiService.getGenesByFunctionalClusters(list);
-          }
-        }),
-        takeUntil(this.subscription$)
+        takeUntil(this.subscription$),
+        switchMap((filters: Filter) => {
+          this.searchedData = [];
+          this.isLoading = true;
+          return this.filterService.getFilteredGenes(filters);
+        })
       )
       .subscribe(
-        (genes) => {
-          this.searchedData = genes;
+        (filteredData) => {
+          // debugger;
+          this.currentPage = this.filterService.filters.page;
+          if (this.currentPage == 1) {
+            this.searchedData = [];
+            this.searchedData.push(...filteredData.items);
+          } else {
+            this.searchedData.push(...filteredData.items);
+          }
+          this.openSnackBar();
           this.downloadSearch(this.searchedData);
+          this.pageOptions = filteredData.options.pagination;
+          this.isLoading = false;
           this.cdRef.markForCheck();
         },
-        (error) => this.errorLogger(this, error)
-      );
-  }
-
-  public filterByExpressionChange(id: number): void {
-    this.filterService.filterByExpressionChange(id);
-    this.filterService
-      .getByExpressionChange()
-      .pipe(
-        switchMap((expression) => {
-          if (expression) {
-            return this.apiService.getGenesByExpressionChange(expression);
-          }
-        }),
-        takeUntil(this.subscription$)
-      )
-      .subscribe(
-        (genes) => {
-          this.searchedData = genes;
-          this.downloadSearch(this.searchedData);
+        (error) => {
+          console.log(error);
+          this.isLoading = false;
           this.cdRef.markForCheck();
-        },
-        (error) => this.errorLogger(this, error)
+        }
       );
-  }
 
-  public filterBySelectionCriteria(id: string): void {
-    this.filterService.filterBySelectionCriteria(id);
-    // TODO: DRY
-    if (id) {
-      const check = [];
-      this.searchedData = this.searchedData.filter((gene) => {
-        for (const [key, value] of Object.entries(gene.commentCause)) {
-          if (id === key) {
-            check.push(id);
-          }
-          if (check.length !== 0) {
-            return id === key;
-          }
-        }
-      });
-    }
-    this.downloadSearch(this.searchedData);
-    this.cdRef.markForCheck();
-  }
-
-  public filterByMethylationChange(correlation: string): void {
-    this.filterService.filterByMethylationChange(correlation);
-    if (name) {
-      const check = [];
-      this.searchedData = this.searchedData.filter((gene) => {
-        Object.values(gene.methylationCorrelation).forEach((item) => {
-          if (correlation === item) {
-            check.push(correlation);
-          }
-          if (check.length !== 0) {
-            return correlation === item;
-          }
-        });
-      });
-    }
-    this.downloadSearch(this.searchedData);
-    this.cdRef.markForCheck();
-  }
-
-  public filterByDisease(name: string): void {
-    this.filterService.filterByDisease(name);
-    if (name) {
-      const check = [];
-      this.searchedData = this.searchedData.filter((gene) => {
-        for (const [key, value] of Object.entries(gene.diseases)) {
-          if (name === String(value['name'])) {
-            check.push(name);
-          }
-          if (check.length !== 0) {
-            return name === String(value['name']);
-          }
-        }
-      });
-    }
-    this.downloadSearch(this.searchedData);
-    this.cdRef.markForCheck();
-  }
-
-  public filterByDiseaseCategories(category: string): void {
-    this.filterService.filterByDiseaseCategories(category);
-    if (category) {
-      this.searchedData = this.searchedData.filter((gene) => {
-        for (const [key, value] of Object.entries(gene.diseaseCategories)) {
-          return category === key;
-        }
-      });
-    }
   }
 
   /**
-   * Update already loaded and then filtered data on typing
+   * Load next 20 genes
    */
-  public updateGeneListOnSearch(query: string): void {
-    this.searchedData = this.genesList.filter((item) => {
-      const searchedText = `${item.id} ${item?.ensembl ? item.ensembl : ''}
-      ${item.symbol} ${item.name} ${item.aliases.join(' ')}`;
-      return searchedText.toLowerCase().includes(query);
-    });
+  public loadMoreGenes(): void {
+    this.filterService.onLoadMoreGenes(this.pageOptions.pagesTotal);
+  }
+
+
+/*  // TODO: this function isn't pure
+  public searchGenesByGoTerm(query: string): void {
+    this.isLoading = true;
+            this.isGoSearchPerformed = true;
+
+
+
+            const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
+            this.isGoTermsModeError = !isAnyTermFound;
+
+          },
+        );
+    }
+  }*/
+
+  private openSnackBar(): void {
     this.snackBar.openFromComponent(SnackBarComponent, {
       data: {
         title: 'items_found',
-        length: this.searchedData.length ? this.searchedData.length : 0,
+        length: this.searchedData ? this.searchedData.length : 0,
       },
       duration: 600,
     });
   }
 
-  public loadMoreGenes(): void {
-    if (this.searchedData?.length >= this.loadedGenesQuantity) {
-      this.loadedGenesQuantity += this.genesPerPage;
-    }
-  }
-
-  // TODO: this function isn't pure
-  public searchGenesByGoTerm(query: string): void {
-    this.isLoading = true;
-    if (query) {
-      this.apiService
-        .getGoTermMatchByString(query)
-        .pipe(takeUntil(this.subscription$))
-        .subscribe(
-          (genes) => {
-            this.searchedData = genes; // If nothing found, will return empty array
-            this.downloadSearch(this.searchedData);
-            this.isGoSearchPerformed = true;
-            this.isLoading = false;
-
-            // Map data if it's presented:
-            for (const item of this.searchedData) {
-              this.biologicalProcess = this.toMap(item.terms?.biological_process);
-              this.cellularComponent = this.toMap(item.terms?.cellular_component);
-              this.molecularActivity = this.toMap(item.terms?.molecular_activity);
-            }
-
-            const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
-            this.isGoTermsModeError = !isAnyTermFound;
-
-            this.goModeCellData = {
-              biologicalProcess: this.biologicalProcess,
-              cellularComponent: this.cellularComponent,
-              molecularActivity: this.molecularActivity,
-            };
-
-            this.snackBar.openFromComponent(SnackBarComponent, {
-              data: {
-                title: 'items_found',
-                length: this.searchedData ? this.searchedData.length : 0,
-              },
-              duration: 600,
-            });
-
-            this.cdRef.markForCheck();
-          },
-          (error) => this.errorLogger(this, error)
-        );
-    } else {
-      this.isGoSearchPerformed = false;
-      this.isLoading = false;
-      this.cdRef.markForCheck();
-    }
-  }
-
-  private searchByGenesList(query: string): void {
-    if (query) {
-      this.searchedData = [];
-      const arrayOfWords = query
-        .toLowerCase()
-        .split(',')
-        .map((res) => res.trim())
-        .filter((res) => res);
-
-      const uniqWords = [...new Set(arrayOfWords)];
-
-      if (uniqWords.length !== 0) {
-        uniqWords.forEach((symbol) => {
-          const foundGene = this.genesList.find((gene) => symbol === gene.symbol.toLowerCase());
-          if (foundGene) {
-            this.searchedData.push(foundGene);
-          }
-        });
-      }
-    } else {
-      this.searchedData = [...this.genesList];
-    }
-  }
-
   /**
-   * View
+   * Change view
    */
   public toggleGenesView(event: boolean) {
     this.isTableView = event;
   }
 
   /**
-   * List for download
+   * Set genes list for download (JSON or CSV file)
    */
   private downloadSearch(data: any) {
     this.downloadJsonLink = this.fileExportService.downloadJson(data);
@@ -346,30 +186,29 @@ export class GenesListComponent extends ToMap implements OnInit, OnDestroy {
   /**
    * Filter reset
    */
-  public clearFilters(filter?: FilterTypesEnum): void {
-    this.filterService.clearFilters(filter ? filter : null);
-    this.setInitialState();
+  public clearFilters(filterName?: string): void {
+    this.filterService.clearFilters(filterName ? filterName : null);
   }
 
   /**
-   * Sorting
+   * Sorting genes list
    */
   public sortBy(evt: string): void {
     // TODO: use enum types here
-    if (evt === this.filterTypes.name) {
-      if (this.filters.byName) {
+    if (evt === this.sortEnum.name) {
+      if (this.sort.byName) {
         this.reverse();
       } else {
         this.sortByName();
       }
-      this.filters.byName = !this.filters.byName;
+      this.sort.byName = !this.sort.byName;
     } else {
-      if (this.filters.byAge) {
+      if (this.sort.byAge) {
         this.reverse();
       } else {
         this.sortByAge();
       }
-      this.filters.byAge = !this.filters.byAge;
+      this.sort.byAge = !this.sort.byAge;
     }
     this.cdRef.markForCheck();
   }

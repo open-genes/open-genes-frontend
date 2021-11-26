@@ -71,8 +71,8 @@
     </span>
     <app-associated-diseases
       [geneDiseases]="item.diseases"
-      [activeListItem]="filters.byDisease"
-      (clickEvent)="onDisease($event)"
+      [activeListItem]="filters.byDiseases"
+      (clickEvent)="onApplyFilter(filterTypes.disease, $event)"
     ></app-associated-diseases>
   </div>
 
@@ -84,7 +84,7 @@
     <app-associated-disease-categories
       [geneDiseaseCategories]="item.diseaseCategories"
       [activeListItem]="filters.byDiseaseCategories"
-      (clickEvent)="onDiseaseCategories($event)"
+      (clickEvent)="onApplyFilter(filterTypes.disease_categories, $event)"
     ></app-associated-disease-categories>
   </div>
 
@@ -96,14 +96,14 @@
     <app-selection-criteria
       [geneCriteria]="item.commentCause"
       [activeListItem]="filters.bySelectionCriteria"
-      (clickEvent)="onSelectCriteria($event)"
+      (clickEvent)="onApplyFilter(filterTypes.selection_criteria, $event)"
     ></app-selection-criteria>
   </div>
 </div>
 
 <div class="card__controls">
 
-  <div *ngIf="item.functionalClusters && listSettings.ifShowClasses"
+  <div *ngIf="item.functionalClusters && listSettings.ifShowFuncClusters"
        class="card__section">
     <span class="label">
       {{ "functional_classes" | translate }}
@@ -111,8 +111,8 @@
 
     <app-tag
       *ngFor="let cluster of item.functionalClusters"
-      (click)="onFuncCluster(cluster['id'])"
-      [isActive]="filters.byClasses.includes(cluster['id'])"
+      (click)="onApplyFilter(filterTypes.functional_clusters, cluster['id'])"
+      [isActive]="filters.byAgeRelatedProcess.includes(cluster['id'])"
     >
       {{ cluster["name"] }}
     </app-tag>
@@ -125,8 +125,8 @@
     </span>
 
     <app-tag
-      (click)="onExpressionChange(item.expressionChange)"
-      [isDisabled]="item.expressionChange !== 0"
+      (click)="onApplyFilter(filterTypes.expression_change, item.expressionChange)"
+      [isDisabled]="item.expressionChange === 0"
       [isActive]="
               filters.byExpressionChange === item.expressionChange &&
               item.expressionChange !== 0"
@@ -143,7 +143,7 @@
 
     <app-tag
       *ngIf="item.methylationCorrelation !== ''"
-      (click)="onMethylationChange(item.methylationCorrelation)"
+      (click)="onApplyFilter(filterTypes.methylation_change, item.methylationCorrelation)"
       [isActive]="filters.byMethylationChange === item.methylationCorrelation"
     >
       {{ item.methylationCorrelation }}

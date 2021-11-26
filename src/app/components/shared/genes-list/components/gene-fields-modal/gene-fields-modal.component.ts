@@ -51,7 +51,7 @@ export class GeneFieldsModalComponent implements OnInit {
         this.listSettings.ifShowAge = !this.listSettings.ifShowAge;
         break;
       case 'classes':
-        this.listSettings.ifShowClasses = !this.listSettings.ifShowClasses;
+        this.listSettings.ifShowFuncClusters = !this.listSettings.ifShowFuncClusters;
         break;
       case 'expression':
         this.listSettings.ifShowExpression = !this.listSettings.ifShowExpression;

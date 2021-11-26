@@ -6,6 +6,7 @@ export const environment = {
   name: 'default',
   production: false,
   apiUrl: 'https://open-genes.com',
+  testApiUrl: 'https://test.open-genes.com',
   searchApiUrl: 'https://publications-search-api-2yf55.ondigitalocean.app/',
   pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',
   proteinAtlasUrl: 'https://www.proteinatlas.org/',
@@ -24,4 +25,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

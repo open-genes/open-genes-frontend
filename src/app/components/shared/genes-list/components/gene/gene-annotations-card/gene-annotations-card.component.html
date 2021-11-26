@@ -39,21 +39,21 @@
   <div class="card__section" *ngIf="item.terms">
     <ul class="list">
       <li
-        *ngFor="let term of goModeCellData.biologicalProcess | keyvalue"
+        *ngFor="let term of item.terms?.biological_process | keyvalue"
       ><span class="callout">
             <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
                class="alias"
             >{{ term.key | zero }}</a></span> {{ term.value }}
       </li>
       <li
-        *ngFor="let term of goModeCellData.cellularComponent | keyvalue"
+        *ngFor="let term of item.terms?.cellular_component | keyvalue"
       ><span class="callout">
             <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
                class="alias"
             >{{ term.key | zero }}</a></span> {{ term.value }}
       </li>
       <li
-        *ngFor="let term of goModeCellData.molecularActivity | keyvalue"
+        *ngFor="let term of item.terms?.molecular_activity | keyvalue"
       ><span class="callout">
             <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
                class="alias"

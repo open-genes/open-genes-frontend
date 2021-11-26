@@ -19,15 +19,15 @@ interface GeneralGeneInfo {
     name: string;
   }[];
   aliases: string[];
-  commentCause: SelectionCriteria;
-  diseaseCategories: AssociatedDiseaseCategories;
-  diseases: AssociatedDiseases[];
+  commentCause?: SelectionCriteria;
+  diseaseCategories?: AssociatedDiseaseCategories;
+  diseases?: AssociatedDiseases;
   expressionChange?: number;
   functionalClusters: FunctionalClusters[];
   terms?: Terms;
   name: string;
-  familyOrigin: Origin;
-  origin: Origin;
+  familyOrigin?: Origin;
+  origin?: Origin;
   ncbiId: number;
   uniprot: string;
   timestamp?: TimestampObject | string; // TODO: separate models for different API versions
@@ -70,4 +70,16 @@ export interface Gene extends GeneralGeneInfo {
 export interface FunctionalClusters {
   id: number;
   name: string;
+}
+
+export interface FilteredGenes {
+  items: Genes[];
+  options: {
+    objTotal: number;
+    pagination: {
+      page: number;
+      pageSize: number;
+      pagesTotal: number;
+    };
+  };
 }

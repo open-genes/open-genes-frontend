@@ -37,8 +37,8 @@
     <div class="overflow">
       <app-associated-diseases
         [geneDiseases]="item.diseases"
-        [activeListItem]="filters.byDisease"
-        (clickEvent)="onDisease($event)"
+        [activeListItem]="filters.byDiseases"
+        (clickEvent)="onApplyFilter(filterTypes.disease, $event)"
       ></app-associated-diseases>
     </div>
   </td>
@@ -49,7 +49,7 @@
       <app-associated-disease-categories
         [geneDiseaseCategories]="item.diseaseCategories"
         [activeListItem]="filters.byDiseaseCategories"
-        (clickEvent)="onDiseaseCategories($event)"
+        (clickEvent)="onApplyFilter(filterTypes.disease_categories, $event)"
       ></app-associated-disease-categories>
     </div>
   </td>
@@ -71,7 +71,7 @@
       class="cell cell--expression">
     <div class="overflow">
       <app-tag
-        (click)="onExpressionChange(item.expressionChange)"
+        (click)="onApplyFilter(filterTypes.expression_change, item.expressionChange)"
         [isDisabled]="item.expressionChange === 0"
         [isActive]="
             filters.byExpressionChange === item.expressionChange &&
@@ -87,7 +87,7 @@
       <app-selection-criteria
         [geneCriteria]="item.commentCause"
         [activeListItem]="filters.bySelectionCriteria"
-        (clickEvent)="onSelectCriteria($event)"
+        (clickEvent)="onApplyFilter(filterTypes.selection_criteria, $event)"
       ></app-selection-criteria>
     </div>
   </td>
@@ -97,7 +97,7 @@
     <div class="overflow">
       <app-tag
         *ngIf="item.methylationCorrelation !== ''"
-        (click)="onMethylationChange(item.methylationCorrelation)"
+        (click)="onApplyFilter(filterTypes.methylation_change, item.methylationCorrelation)"
         [isActive]="filters.byMethylationChange === item.methylationCorrelation"
       >{{ item.methylationCorrelation }}
       </app-tag>
@@ -119,13 +119,13 @@
 </tr>
 
 <tr class="item">
-  <td *ngIf="listSettings.ifShowClasses"
+  <td *ngIf="listSettings.ifShowFuncClusters"
       colspan="100%"
       class="cell cell--functions">
     <app-tag
       *ngFor="let item of item.functionalClusters"
-      (click)="onFuncCluster(item['id'])"
-      [isActive]="filters.byClasses.includes(item['id'])"
+      (click)="onApplyFilter(filterTypes.functional_clusters, item['id'])"
+      [isActive]="filters.byAgeRelatedProcess.includes(item['id'])"
     >{{ item["name"] }}
     </app-tag>
   </td>

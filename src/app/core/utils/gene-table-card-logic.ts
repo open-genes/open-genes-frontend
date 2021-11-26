@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Directive, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
-import { Gene } from '../models';
+import { Genes } from '../models';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
 import { FavouritesService } from '../services/favourites.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,38 +8,29 @@ import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.c
 import { Observable, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Filter } from '../../components/shared/genes-list/services/filter.model';
+import { FilterTypesEnum } from '../../components/shared/genes-list/services/filter-types.enum';
 
+@Directive()
 export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
-  @Input() item: Gene;
+  @Input() item: Genes;
   @Input() isGoTermsMode: boolean;
-  @Input() goModeCellData: {
-    biologicalProcess: any;
-    cellularComponent: any;
-    molecularActivity: any;
-  };
-
-  @Output() expressionChangeId = new EventEmitter<number | string>();
-  @Output() funcClusterId = new EventEmitter<number | string>();
-  @Output() methylationChange = new EventEmitter<number | string>();
-  @Output() diseaseName = new EventEmitter<number | string>();
-  @Output() diseaseCategories = new EventEmitter<number | string>();
-  @Output() selectionCriteria = new EventEmitter<number | string>();
 
   public listSettings: GenesListSettings;
-  public filters: Filter = this._filterService.filters;
+  public filters: Filter = this.filterService.filters;
+  public filterTypes = FilterTypesEnum;
 
   protected subscription$ = new Subject();
 
   protected constructor(
-    protected _filterService: FilterService,
-    protected _favouritesService: FavouritesService,
-    protected _snackBar: MatSnackBar,
+    protected filterService: FilterService,
+    protected favouritesService: FavouritesService,
+    protected snackBar: MatSnackBar,
     protected cdRef: ChangeDetectorRef
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.updateCurrentFields();
-    this.updateSelectedFilter();
   }
 
   ngOnDestroy(): void {
@@ -50,49 +41,29 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
   /**
    * Update list view on card or table
    */
-
   protected updateCurrentFields() {
-    this._filterService.currentFields.pipe(takeUntil(this.subscription$)).subscribe(
+    this.filterService.currentFields
+      .pipe(
+        takeUntil(this.subscription$)
+      )
+      .subscribe(
       (fields) => {
-        this.listSettings = fields;
-        this.cdRef.markForCheck();
-      },
-      (error) => {
-        console.log(error);
-        this.cdRef.markForCheck();
-      }
-    );
-  }
-  protected updateSelectedFilter() {
-    this._filterService.updateSelectedFilter.subscribe(() => {
-      this.cdRef.markForCheck();
-    });
+          this.listSettings = fields;
+          this.cdRef.markForCheck();
+        },
+        (error) => {
+          console.log(error);
+          this.cdRef.markForCheck();
+        },
+      );
   }
 
   /**
    * get item id and send this to app-genes-list  (for filtering)
    */
 
-  public onExpressionChange(id: number) {
-    this.expressionChangeId.emit(id);
-  }
-
-  public onFuncCluster(id: number) {
-    this.funcClusterId.emit(id);
-  }
-
-  public onMethylationChange(correlation: string) {
-    this.methylationChange.emit(correlation);
-  }
-
-  public onDisease(correlation: string) {
-    this.diseaseName.emit(correlation);
-  }
-  public onDiseaseCategories(correlation: string) {
-    this.diseaseCategories.emit(correlation);
-  }
-  public onSelectCriteria(correlation: string) {
-    this.selectionCriteria.emit(correlation);
+  public onApplyFilter(filterType: string, filterValue: number | string): void {
+    this.filterService.onApplyFilter(filterType, filterValue);
   }
 
   /**
@@ -100,8 +71,8 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
    */
   public favItem(geneId: number): void {
     if (!this.isFaved(geneId)) {
-      this._favouritesService.addToFavourites(geneId);
-      this._snackBar.openFromComponent(SnackBarComponent, {
+      this.favouritesService.addToFavourites(geneId);
+      this.snackBar.openFromComponent(SnackBarComponent, {
         data: {
           title: 'favourites_added',
           length: '',
@@ -115,8 +86,8 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
 
   public unFavItem(geneId: number): void {
     if (this.isFaved(geneId)) {
-      this._favouritesService.removeFromFavourites(geneId);
-      this._snackBar.openFromComponent(SnackBarComponent, {
+      this.favouritesService.removeFromFavourites(geneId);
+      this.snackBar.openFromComponent(SnackBarComponent, {
         data: {
           title: 'favourites_removed',
           length: '',
@@ -129,7 +100,7 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
   }
 
   public isFaved(geneId: number): Observable<boolean> {
-    return of(this._favouritesService.isInFavourites(geneId));
+    return of(this.favouritesService.isInFavourites(geneId));
   }
 
   /**

@@ -9,10 +9,10 @@ import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap
 })
 export class AssociatedDiseasesComponent extends WrapIntoAccordion implements OnInit {
   @Input() geneDiseases: AssociatedDiseases;
-  @Input() activeListItem: string;
+  @Input() activeListItem: string[];
   @Output() clickEvent: EventEmitter<string> = new EventEmitter();
 
-  public mappedDiseases: string[] = [];
+  public mappedDiseases: Map<string, any> = new Map();
 
   constructor() {
     super();
@@ -26,11 +26,11 @@ export class AssociatedDiseasesComponent extends WrapIntoAccordion implements On
 
   private mapDiseases(): void {
     for (const [key, value] of Object.entries(this.geneDiseases)) {
-      this.mappedDiseases.push(value['name']);
+      this.mappedDiseases.set(key, value);;
     }
   }
 
-  public emitOnClick(diseaseName: any): void {
-    this.clickEvent.emit(diseaseName);
+  public emitOnClick(diseaseKey: any): void {
+    this.clickEvent.emit(diseaseKey);
   }
 }

@@ -22,20 +22,18 @@
           <div class="row">
             <ng-container *ngIf="isAvailable; else errorMessage">
               <div class="col-12">
-                <app-search [genesList]="genes"
+                <app-search [showTitle]="false"
+                            [genesList]="searchedGenes"
                             [setSearchMode]="searchMode"
-                            (searchQuery)="setSearchQuery($event)"
-                            (notFoundAndFoundGenes)="setNotFoundAndFoundGenes($event)"
-                            [showTitle]="false">
+                            (confirmedQuery)="updateGenesList($event)"
+                            (searchQuery)="setSearchQuery($event)">
                 </app-search>
 
                 <app-genes-methylation-list
                   *ngIf="genes"
-                  [genesList]="genes"
+                  [genesList]="confirmedGenesList"
                   [compareWith]="curatedGeneSymbolsArray"
-                  [searchQuery]="searchQuery"
-                  (loaded)="setIsGenesListLoaded($event)"
-                >
+                  (loaded)="setIsGenesListLoaded($event)">
                 </app-genes-methylation-list>
 
                 <!-- When content is loading -->

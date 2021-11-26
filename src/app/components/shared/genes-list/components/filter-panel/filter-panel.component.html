@@ -2,8 +2,8 @@
   <div class="filters-group view-panel__filters">
     <button
       class="filter"
-      (click)="sortBy(filterTypes.name)"
-      [class.__active]="filters.byName"
+      (click)="sortBy(sortEnum.name)"
+      [class.__active]="sort.byName"
     >
       {{ "main_page_table_name" | translate }}
       <span class="fa far fa-sort-down"></span>
@@ -11,33 +11,33 @@
 
     <button
       class="filter"
-      (click)="sortBy(filterTypes.age)"
-      [class.__active]="filters.byAge"
+      (click)="sortBy(sortEnum.age)"
+      [class.__active]="sort.byAge"
     >
       {{ "age" | translate }} ({{ "million_years" | translate }})
       <span class="fa far fa-sort-down"></span>
     </button>
 
     <button
-      *ngIf="filters.byClasses.length > 0"
+      *ngIf="filters.byAgeRelatedProcess.length"
       class="filter __active"
-      (click)="clearFilters(filterTypes.classes)"
+      (click)="clearFilters(filterTypes.functional_clusters)"
     >
       {{ "functional_classes" | translate }}
       <span class="fa fal fa-times"></span>
     </button>
 
     <button
-      *ngIf="filters.byExpressionChange"
+      *ngIf="filters.byExpressionChange !== 0"
       class="filter __active"
-      (click)="clearFilters(filterTypes.expressionChange)"
+      (click)="clearFilters(filterTypes.expression_change)"
     >
       {{ "main_page_table_expression" | translate }}
       <span class="fa fal fa-times"></span>
     </button>
 
     <button
-      *ngIf="filters.byDisease"
+      *ngIf="filters.byDiseases.length"
       class="filter __active"
       (click)="clearFilters(filterTypes.disease)"
     >
@@ -46,18 +46,18 @@
     </button>
 
     <button
-      *ngIf="filters.byDiseaseCategories"
+      *ngIf="filters.byDiseaseCategories.length"
       class="filter __active"
-      (click)="clearFilters(filterTypes.diseaseCategories)"
+      (click)="clearFilters(filterTypes.disease_categories)"
     >
       {{ "gene_list_disease_categories" | translate }}
       <span class="fa fal fa-times"></span>
     </button>
 
     <button
-      *ngIf="filters.bySelectionCriteria"
+      *ngIf="filters.bySelectionCriteria.length"
       class="filter __active"
-      (click)="clearFilters(filterTypes.criteria)"
+      (click)="clearFilters(filterTypes.selection_criteria)"
     >
       {{ "main_page_table_criteria" | translate }}
       <span class="fa fal fa-times"></span>

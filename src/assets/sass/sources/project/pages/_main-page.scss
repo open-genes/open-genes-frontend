@@ -1,7 +1,7 @@
 .main-page { // .page
   // &__inner { }
   &__header {
-    background: $color-general-light url(../images/home-background.jpg) center center / cover no-repeat;
+    background: $color-general-light url($path-images + '/home-background.jpg') center center / cover no-repeat;
     padding: 30px 0 35px 0;
     margin-bottom: 20px;
     border-radius: 0 0 20px 20px;

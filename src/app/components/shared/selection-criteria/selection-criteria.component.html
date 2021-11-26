@@ -1,12 +1,13 @@
 <ng-container *ngIf="geneCriteria && listLength !== 0; else noCriteria">
+
   <ng-container *ngIf="!isAccordion; else accordion">
     <ul
-      *ngFor="let research of geneCriteria | keyvalue"
-      class="list list--bulletted"
-    >
-      <li [class.__active]="activeListItem === research.value"
-          (click)="emitOnClick(research.key)">
-        {{ research.value }}
+      *ngFor="let criteria of geneCriteria | keyvalue"
+      class="list list--bulletted">
+
+      <li [class.__active]="activeListItem.includes(criteria.key)"
+          (click)="emitOnClick(criteria.key)">
+        {{ criteria.value }}
       </li>
     </ul>
   </ng-container>
@@ -16,32 +17,37 @@
       class="criteria-accordion"
       [clickable]="false"
       [class.criteria-accordion--open]="isAccordionOpen"
-      [isOpen]="isAccordionOpen"
-    >
+      [isOpen]="isAccordionOpen">
+
       <div class="criteria-accordion__header" accordion-header>
         <ul class="list list--bulletted">
-          <li *ngFor="let research of geneCriteria | keyvalue | slice: 0:maxItemsToShow"
-              [class.__active]="activeListItem === research.value"
-              (click)="emitOnClick(research.key)">
-            {{ research.value }}
+          <li *ngFor="let criteria of geneCriteria | keyvalue | slice: 0:maxItemsToShow"
+              [class.__active]="activeListItem.includes(criteria.key)"
+              (click)="emitOnClick(criteria.key)">
+            {{ criteria.value }}
           </li>
         </ul>
+
         <button (click)="toggleAccordion()"
-                class="criteria-accordion__arrow"
-        ><span class="fa far fa-chevron-down"></span>
+                class="criteria-accordion__arrow">
+          <span class="fa far fa-chevron-down"></span>
         </button>
+
       </div>
+
       <div class="criteria-accordion__body" accordion-body>
         <ul class="list list--bulletted">
-          <li *ngFor="let research of geneCriteria | keyvalue | slice: maxItemsToShow"
-              [class.__active]="activeListItem === research.value"
-              (click)="emitOnClick(research.key)">
-            {{ research.value }}
+          <li *ngFor="let criteria of geneCriteria | keyvalue | slice: maxItemsToShow"
+              [class.__active]="activeListItem.includes(criteria.key)"
+              (click)="emitOnClick(criteria.key)">
+            {{ criteria.value }}
           </li>
         </ul>
       </div>
+
     </app-accordion>
   </ng-template>
+
 </ng-container>
 
 <ng-template #noCriteria>
