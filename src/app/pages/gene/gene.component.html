@@ -84,12 +84,6 @@
                 </a>
 
                 <a mat-list-item
-                   *ngIf="gene.commentCause.length !== 0"
-                   [routerLink]="['/gene', symbol]" fragment="cause">
-                  {{ 'gene_page_title_criteria' | translate }}
-                </a>
-
-                <a mat-list-item
                    *ngIf="gene.expression.length !== 0"
                    [routerLink]="['/gene', symbol]" fragment="expression">
                   {{ 'gene_page_title_expression' | translate }}
@@ -153,11 +147,13 @@
                     </div>
 
                     <div class="type__value">
-                      <div class="cause" *ngIf="gene.commentCause else noData">
-                        <span
-                          class="cause__value"
-                          *ngFor="let cause of gene.commentCause | keyvalue">{{cause.value}}</span>
-                      </div>
+                      <ul *ngIf="gene.commentCause.length !== 0 else noData"
+                          class="cause list list--bulletted">
+                        <!-- TODO: backend: return array of objects instead of object with objects -->
+                        <li *ngFor="let cause of gene.commentCause | keyvalue">
+                          {{cause.value}}
+                        </li>
+                      </ul>
 
                       <ng-template #noData>
                         {{'gene_page_no_data' | translate}}
@@ -278,16 +274,6 @@
               <div class="__w-100 articles__content"
                    *ngIf="isAnyContent;
                       else noContent">
-
-                <section *ngIf="gene.commentCause.length !== 0">
-                  <h3>{{ 'gene_page_title_criteria' | translate }}</h3>
-                  <article id="cause">
-                    <ul class="list list--bulletted">
-                      <!-- TODO: backend: return array of objects instead of object with objects -->
-                      <li *ngFor="let item of gene.commentCause | toArray">{{item}}</li>
-                    </ul>
-                  </article>
-                </section>
 
                 <section *ngIf="isAnyResearchFilled">
                   <h2 class="__mb-15">{{ 'gene_page_title_researches' | translate }}</h2>
