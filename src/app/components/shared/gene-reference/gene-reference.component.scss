@@ -1,0 +1,17 @@
+@import "../../../../assets/sass/dependencies";
+
+:host {
+  display: inline-block;
+  width: 100%;
+}
+
+.gene-reference {
+  border-top: 1px solid $color-borders;
+  padding: 20px 0;
+
+  @include typography;
+
+  &__db-links {
+    margin-top: 30px;
+  }
+}

@@ -368,55 +368,9 @@
       </div>
     </div>
 
-    <section class="wrapper gene-page__links">
-      <div class="container-fluid">
-        <div class="row no-gutters">
-          <div class="col-12">
-            <a href="https://genomics.senescence.info/genes/entry.php?hgnc={{gene.symbol}}"
-               target="_blank"
-               matTooltip="{{ 'link_geneage' | translate }}"
-               class="badge __brand-color-geneage"
-            >GeneAge</a>
-
-            <a href="https://www.ncbi.nlm.nih.gov/gene/{{gene.ncbiId}}"
-               target="_blank"
-               matTooltip="{{ 'link_entrez' | translate }}"
-               class="badge __brand-color-entrez"
-            >EntrezGene</a>
-
-            <a href="https://www.uniprot.org/uniprot/{{gene.uniprot}}"
-               target="_blank"
-               matTooltip="{{ 'link_uniprot' | translate }}"
-               class="badge __brand-color-uniprot"
-            >UniProt</a>
-
-            <a href="http://disgenet.org/browser/1/1/0/{{gene.ncbiId}}/"
-               target="_blank"
-               matTooltip="{{ 'link_disgenet' | translate }}"
-               class="badge __brand-color-disgenet"
-            >DisGenet</a>
-
-            <a href="https://thebiogrid.org/search.php?search={{gene.symbol}}&organism=9606/"
-               target="_blank"
-               matTooltip="{{ 'link_biogrid' | translate }}"
-               class="badge __brand-color-biogrid"
-            >BioGrid</a>
-
-            <a href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{gene.human_protein_atlas.Ensembl}}"
-               target="_blank"
-               matTooltip="{{ 'link_ensembl' | translate }}"
-               class="badge __brand-color-ensembl"
-            >Ensembl</a>
-
-            <a href="https://www.proteinatlas.org/{{gene.human_protein_atlas.Ensembl}}"
-               target="_blank"
-               matTooltip="{{ 'link_hpa' | translate }}"
-               class="badge __brand-color-hpa"
-            >HPA</a>
-          </div>
-        </div>
-      </div>
-    </section>
+    <app-gene-reference class="__mt-30"
+                        [gene]="gene"
+    ></app-gene-reference>
   </div>
 </div>
 
