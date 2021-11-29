@@ -10,7 +10,7 @@ import { NewsListParams } from '../../../core/models/vendors-api/pubmed/publicat
 })
 export class GeneReferenceComponent implements OnInit {
   @Input() gene: Gene;
-  public PubMedSearchLink: string;
+  public pubMedSearchLink: string;
   public geneListForNewsFeed: NewsListParams[] = [];
 
   constructor(public translate: TranslateService) {}
@@ -31,8 +31,20 @@ export class GeneReferenceComponent implements OnInit {
   }
 
   private generatePubMedSearchLink(gene: Gene): void {
-    const url = `https://pubmed.ncbi.nlm.nih.gov/?term=(${gene.symbol}[Title/Abstract])+AND+(aging[Title/Abstract])`;
-    const sinonyms = '';
+    const url = `https://pubmed.ncbi.nlm.nih.gov/?term=(${gene.symbol}[Title/Abstract])`;
+    const theme = '+AND+(aging[Title/Abstract])';
+    let aliases = '';
     const filters = '&filter=datesearch.y_5';
+    const synonyms: string[] = [];
+    gene.aliases.forEach((alias) => {
+      if (alias.length !== 0) {
+        synonyms.push(`(${alias}[Title/Abstract])`);
+      }
+    });
+    if (gene.aliases.length !== 0) {
+      aliases = `+OR+${[...synonyms].join('+OR+')}`;
+    }
+
+    this.pubMedSearchLink = `${url}${theme}${aliases}${filters}`;
   }
 }
