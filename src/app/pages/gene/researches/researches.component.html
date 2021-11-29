@@ -430,11 +430,30 @@
       <th>
         {{ "researches_comment" | translate }}
       </th>
+      <th>
+        {{ "researches_reference" | translate }}
+      </th>
       </thead>
 
       <tr *ngFor="let item of researches.additionalEvidences">
         <td>
           {{ item.comment }}
+        </td>
+        <td>
+          <a
+            *ngIf="item?.doi !== ''"
+            href="https://doi.org/{{ item?.doi }}"
+            class="link"
+            target="_blank"
+          >{{ item?.doi }}</a
+          ><br>
+
+          <a
+            *ngIf="item?.pmid !== ''"
+            href="https://pubmed.ncbi.nlm.nih.gov/17170002/{{ item?.pmid }}"
+            class="link"
+            target="_blank"
+          >{{ item?.pmid }}</a>
         </td>
       </tr>
     </table>
