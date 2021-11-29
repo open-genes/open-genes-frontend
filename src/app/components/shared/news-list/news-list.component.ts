@@ -9,11 +9,12 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { PubmedApiService } from '../../../core/services/api/pubmed-api.service';
-import { IPublication } from '../../../core/models/vendorsApi/pubMed/news.model';
-import { Gene, Genes } from '../../../core/models';
+import { Publication } from '../../../core/models/vendors-api/pubmed/news.model';
+import { Genes } from '../../../core/models';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
+import { NewsListParams } from '../../../core/models/vendors-api/pubmed/publications-search-api.model';
 
 @Component({
   selector: 'app-news-list',
@@ -22,7 +23,7 @@ import { Subject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewsListComponent implements OnInit, OnDestroy {
-  @Input() genesList: Genes[];
+  @Input() genesList: NewsListParams[];
   @Input() showDates = false;
   @Input() loadTotal: number;
   @Input() itemsForPage: number;
@@ -33,7 +34,7 @@ export class NewsListComponent implements OnInit, OnDestroy {
 
   public isLoading = true;
   public error: number;
-  public newsList: IPublication[] = [];
+  public newsList: Publication[] = [];
   public pageIndex = 1;
   public showMoreButtonVisible = false;
   public newsTotal: number;
@@ -55,12 +56,6 @@ export class NewsListComponent implements OnInit, OnDestroy {
   }
 
   public showMore(): void {
-    // console.log('showMore()');
-    // console.log(
-    //   this.newsTotal / this.responsePagePortion > this.pageIndex,
-    //   `page ${this.pageIndex} of ${this.newsTotal / this.responsePagePortion}`
-    // );
-
     if (this.newsTotal / this.responsePagePortion > this.pageIndex) {
       ++this.pageIndex;
       this.isLoading = true;
@@ -74,13 +69,16 @@ export class NewsListComponent implements OnInit, OnDestroy {
 
     // 1. Form a request for all genes in the database that meet the minimal number of gene functions
     const symbolsQuery = [];
-    const filteredGenes = this.genesList.filter(
-      (gene: Genes) =>
-        gene.functionalClusters.length > this.minGeneFunctionsCriteria
-    );
-    filteredGenes.forEach((gene: Gene) => {
+
+    this.genesList.forEach((gene: Genes) => {
       if (symbolsQuery.length <= this.genesListLimit) {
-        symbolsQuery.push(gene.symbol);
+        if (gene.functionalClusters) {
+          if (gene.functionalClusters.length > this.minGeneFunctionsCriteria) {
+            symbolsQuery.push(gene.symbol);
+          }
+        } else {
+          symbolsQuery.push(gene.symbol);
+        }
       }
     });
 
@@ -96,9 +94,7 @@ export class NewsListComponent implements OnInit, OnDestroy {
 
           if (this.newsList?.length !== 0) {
             // Set page length after checking the length of the 1st page
-            this.httpCallsCounter === 1
-              ? (this.responsePagePortion = this.newsList.length)
-              : this.httpCallsCounter;
+            this.httpCallsCounter === 1 ? (this.responsePagePortion = this.newsList.length) : this.httpCallsCounter;
 
             // Emit event to update view
             this.newItemsLoaded.emit(true);

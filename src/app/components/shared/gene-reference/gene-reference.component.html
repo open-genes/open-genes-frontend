@@ -1,9 +1,21 @@
 <section *ngIf="gene"
          class="wrapper gene-reference">
   <div class="container-fluid">
-    <div class="row no-gutters gene-reference__search-links">
-      <article class="col-12">
+    <div class="row no-gutters gene-reference__pubmed-articles">
+      <div class="col-12">
         <h3>{{ "gene_reference_title" | translate }}</h3>
+        <app-news-list
+          [genesList]="geneListForNewsFeed"
+          [loadTotal]="5"
+          [itemsForPage]="5"
+          [isMiniMode]="true"
+          [showDates]="true"
+        ></app-news-list>
+      </div>
+    </div>
+
+    <div class="row no-gutters gene-reference__search-links">
+      <div class="col-12">
         <ul class="list">
           <li><a
             target="_blank"
@@ -17,7 +29,7 @@
             {{ "gene_reference_search_google_scholar" | translate }}
           </a></li>
         </ul>
-      </article>
+      </div>
 
       <div class="row no-gutters gene-reference__db-links">
         <div class="col-12">

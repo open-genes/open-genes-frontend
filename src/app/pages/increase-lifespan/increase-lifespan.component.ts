@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { WizardService } from '../../components/shared/wizard/wizard-service.service';
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
-import { GenesWLifespanResearches } from '../../core/models/openGenesApi/genes-with-increase-lifespan-researches.model';
+import { GenesWLifespanResearches } from '../../core/models/open-genes-api/genes-with-increase-lifespan-researches.model';
 import { SearchMode } from '../../core/models/settings.model';
 
 @Component({

@@ -6,7 +6,7 @@ import { WizardService } from '../../components/shared/wizard/wizard-service.ser
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 import { SearchMode } from '../../core/models/settings.model';
-import { GenesInHorvathClock } from '../../core/models/openGenesApi/genes-in-horvath-clock.model';
+import { GenesInHorvathClock } from '../../core/models/open-genes-api/genes-in-horvath-clock.model';
 
 @Component({
   selector: 'app-horvath-clock-page',

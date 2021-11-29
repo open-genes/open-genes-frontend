@@ -7,6 +7,7 @@ import { WizardService } from '../../components/shared/wizard/wizard-service.ser
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
+import { NewsListParams } from '../../core/models/vendors-api/pubmed/publications-search-api.model';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public searchMode: SearchMode;
   public searchModeEnum = SearchModeEnum;
   public notFoundAndFoundGenes: any;
+  public geneListForNewsFeed: NewsListParams[] = [];
 
   constructor(
     public windowService: WindowService,
@@ -58,6 +60,12 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       .subscribe(
         (genes) => {
           this.genes = genes;
+          genes.forEach((gene) => {
+            this.geneListForNewsFeed.push({
+              symbol: gene.symbol,
+              functionalClusters: gene.functionalClusters,
+            });
+          });
           this.cdRef.markForCheck();
         },
         (err) => {
@@ -90,12 +98,10 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   public updateGenesList(event): void {
-    console.log('hi');
     this.confirmedGenesList = [...this.searchedGenes];
   }
 
   public setSearchMode(searchMode: SearchMode): void {
-    console.log('hi Mark');
     this.searchMode = searchMode;
   }
 
