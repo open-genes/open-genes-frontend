@@ -1,0 +1,69 @@
+<section *ngIf="gene"
+         class="wrapper gene-reference">
+  <div class="container-fluid">
+    <div class="row no-gutters gene-reference__search-links">
+      <article class="col-12">
+        <h3>{{ "gene_reference_title" | translate }}</h3>
+        <ul class="list">
+          <li><a
+            target="_blank"
+            class="link link--underline"
+            href="https://pubmed.ncbi.nlm.nih.gov/?term=({{ gene.symbol }}[Title/Abstract])+AND+(aging[Title/Abstract])&filter=datesearch.y_5">
+            {{ "gene_reference_search_pubmed" | translate }}</a></li>
+          <li><a
+            target="_blank"
+            class="link link--underline"
+            href="http://scholar.google.com/scholar?q={{ gene.symbol }}+aging">
+            {{ "gene_reference_search_google_scholar" | translate }}
+          </a></li>
+        </ul>
+      </article>
+
+      <div class="row no-gutters gene-reference__db-links">
+        <div class="col-12">
+          <a href="https://genomics.senescence.info/genes/entry.php?hgnc={{ gene.symbol }}"
+             target="_blank"
+             matTooltip="{{ 'link_geneage' | translate }}"
+             class="badge __brand-color-geneage"
+          >GeneAge</a>
+
+          <a href="https://www.ncbi.nlm.nih.gov/gene/{{ gene.ncbiId }}"
+             target="_blank"
+             matTooltip="{{ 'link_entrez' | translate }}"
+             class="badge __brand-color-entrez"
+          >EntrezGene</a>
+
+          <a href="https://www.uniprot.org/uniprot/{{ gene.uniprot }}"
+             target="_blank"
+             matTooltip="{{ 'link_uniprot' | translate }}"
+             class="badge __brand-color-uniprot"
+          >UniProt</a>
+
+          <a href="http://disgenet.org/browser/1/1/0/{{ gene.ncbiId }}/"
+             target="_blank"
+             matTooltip="{{ 'link_disgenet' | translate }}"
+             class="badge __brand-color-disgenet"
+          >DisGenet</a>
+
+          <a href="https://thebiogrid.org/search.php?search={{ gene.symbol }}&organism=9606/"
+             target="_blank"
+             matTooltip="{{ 'link_biogrid' | translate }}"
+             class="badge __brand-color-biogrid"
+          >BioGrid</a>
+
+          <a href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ gene?.human_protein_atlas.Ensembl }}"
+             target="_blank"
+             matTooltip="{{ 'link_ensembl' | translate }}"
+             class="badge __brand-color-ensembl"
+          >Ensembl</a>
+
+          <a href="https://www.proteinatlas.org/{{gene?.human_protein_atlas.Ensembl}}"
+             target="_blank"
+             matTooltip="{{ 'link_hpa' | translate }}"
+             class="badge __brand-color-hpa"
+          >HPA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

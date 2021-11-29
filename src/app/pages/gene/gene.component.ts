@@ -174,6 +174,7 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
    * Filters translations
    */
   public getExpressionLocaleKey(expression: number): string {
+    // TODO: DRY
     const expressionTranslations = new Map([
       [0, 'expression_change_no_data'],
       [1, 'expression_change_decreased'],
