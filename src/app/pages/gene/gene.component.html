@@ -40,19 +40,6 @@
               </span>
             </span>
           </div>
-          <div class="col col-12 header__functional-clusters">
-            <ng-container *ngIf="gene.functionalClusters; else tagSkeletal">
-              <ng-container *ngFor="let item of gene.functionalClusters">
-                <span class="alias">{{item.name}}</span>
-              </ng-container>
-            </ng-container>
-            <ng-template #tagSkeletal>
-              <span class="alias __skeletal"></span>
-              <span class="alias __skeletal"></span>
-              <span class="alias __skeletal"></span>
-              <span class="alias __skeletal"></span>
-            </ng-template>
-          </div>
         </div>
       </div>
     </section>
