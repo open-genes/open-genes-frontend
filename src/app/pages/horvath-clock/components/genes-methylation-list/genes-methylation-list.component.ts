@@ -4,7 +4,7 @@ import { Settings } from '../../../../core/models/settings.model';
 import { SettingsService } from '../../../../core/services/settings.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack-bar.component';
-import { GenesInHorvathClock } from '../../../../core/models/openGenesApi/genes-in-horvath-clock.model';
+import { GenesInHorvathClock } from '../../../../core/models/open-genes-api/genes-in-horvath-clock.model';
 import { Sort } from '@angular/material/sort';
 
 @Component({

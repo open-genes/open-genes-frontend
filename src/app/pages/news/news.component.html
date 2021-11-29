@@ -49,7 +49,7 @@
             <div class="col col-12 news-page__news">
               <app-news-list
                 *ngIf="genes"
-                [genesList]="genes"
+                [genesList]="geneListForNewsFeed"
                 [loadTotal]="80"
                 [itemsForPage]="10"
                 [showDates]="true"
