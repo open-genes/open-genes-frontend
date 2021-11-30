@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Researches } from '../../../core/models/openGenesApi/researches.model';
+import { Researches } from '../../../core/models/open-genes-api/researches.model';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModalComponent } from '../../../components/ui-components/components/modals/common-modal/common-modal.component';
 

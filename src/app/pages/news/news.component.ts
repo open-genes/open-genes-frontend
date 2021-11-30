@@ -14,6 +14,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { EightyLevelService } from '../../core/services/api/80level-api-service/80level-api.service';
 import { environment } from '../../../environments/environment';
+import { NewsListParams } from '../../core/models/vendors-api/pubmed/publications-search-api.model';
 
 @Component({
   selector: 'app-news',
@@ -24,6 +25,7 @@ import { environment } from '../../../environments/environment';
 export class NewsComponent implements OnInit, OnDestroy {
   public genes: Genes[];
   public environment = environment;
+  public geneListForNewsFeed: NewsListParams[] = [];
   private ngUnsubscribe = new Subject();
 
   @Output() loadMoreNewsEvent: EventEmitter<null> = new EventEmitter<null>();
@@ -54,6 +56,12 @@ export class NewsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((genes) => {
         this.genes = genes;
+        genes.forEach((gene) => {
+          this.geneListForNewsFeed.push({
+            symbol: gene.symbol,
+            functionalClusters: gene.functionalClusters,
+          });
+        });
         this.cdRef.markForCheck();
       });
   }

@@ -1,10 +1,10 @@
-interface IPublicationsList {
+interface PublicationsList {
   total: number;
   page: number;
-  items: IPublication[];
+  items: Publication[];
 }
 
-export interface IPublication {
+export interface Publication {
   gene: string;
   uid: string;
   url: string;

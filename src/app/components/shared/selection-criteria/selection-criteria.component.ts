@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SelectionCriteria } from '../../../core/models/openGenesApi/selection-criteria.model';
+import { SelectionCriteria } from '../../../core/models/open-genes-api/selection-criteria.model';
 import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrapIntoAccordion';
 
 @Component({
