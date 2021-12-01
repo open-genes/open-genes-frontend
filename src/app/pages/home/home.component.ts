@@ -98,7 +98,9 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   public updateGenesList(event): void {
-    this.confirmedGenesList = [...this.searchedGenes];
+    if (this.searchedGenes && this.searchedGenes.length) {
+      this.confirmedGenesList = [...this.searchedGenes];
+    }
   }
 
   public setSearchMode(searchMode: SearchMode): void {
