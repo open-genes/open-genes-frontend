@@ -45,14 +45,18 @@ export class GenesListComponent implements OnInit, OnDestroy {
     if (this.isGoTermsMode) {
       this.searchedData = genes;
       this.isGoSearchPerformed = true;
-    } else {
-      if (genes && genes.length) {
+      return;
+    }
+
+    if (genes) {
+      if (genes.length) {
         this.searchedData = genes;
         this.openSnackBar();
       } else {
         this.clearFilters();
       }
     }
+
     this.downloadSearch(this.searchedData);
   }
 
@@ -84,8 +88,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
     private favouritesService: FavouritesService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.favouritesService.getItems();
@@ -109,7 +112,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.searchedData = [];
           this.isLoading = true;
           return this.filterService.getFilteredGenes(filters);
-        })
+        }),
       )
       .subscribe(
         (filteredData) => {
@@ -131,7 +134,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
           console.log(error);
           this.isLoading = false;
           this.cdRef.markForCheck();
-        }
+        },
       );
 
   }
@@ -143,21 +146,20 @@ export class GenesListComponent implements OnInit, OnDestroy {
     this.filterService.onLoadMoreGenes(this.pageOptions.pagesTotal);
   }
 
-
-/*  // TODO: this function isn't pure
-  public searchGenesByGoTerm(query: string): void {
-    this.isLoading = true;
-            this.isGoSearchPerformed = true;
-
+  /*  // TODO: this function isn't pure
+    public searchGenesByGoTerm(query: string): void {
+      this.isLoading = true;
+              this.isGoSearchPerformed = true;
 
 
-            const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
-            this.isGoTermsModeError = !isAnyTermFound;
 
-          },
-        );
-    }
-  }*/
+              const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
+              this.isGoTermsModeError = !isAnyTermFound;
+
+            },
+          );
+      }
+    }*/
 
   private openSnackBar(): void {
     this.snackBar.openFromComponent(SnackBarComponent, {
@@ -239,33 +241,5 @@ export class GenesListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription$.next();
     this.subscription$.complete();
-  }
-
-  public isFaved(geneId: number): Observable<boolean> {
-    return of(this.favouritesService.isInFavourites(geneId));
-  }
-
-  public favItem(geneId: number): void {
-    this.favouritesService.addToFavourites(geneId);
-    this.snackBar.openFromComponent(SnackBarComponent, {
-      data: {
-        title: 'favourites_added',
-        length: '',
-      },
-      duration: 600,
-    });
-    this.isFaved(geneId);
-  }
-
-  public unFavItem(geneId: number): void {
-    this.favouritesService.removeFromFavourites(geneId);
-    this.snackBar.openFromComponent(SnackBarComponent, {
-      data: {
-        title: 'favourites_removed',
-        length: '',
-      },
-      duration: 600,
-    });
-    this.isFaved(geneId);
   }
 }

@@ -101,7 +101,14 @@
       }
     }
 
-    // .header__functional-clusters { }
+     .header__functional-clusters {
+       .alias {
+         cursor: pointer;
+         &:hover {
+           color: $color-purple;
+         }
+       }
+     }
   }
 
   &__age {

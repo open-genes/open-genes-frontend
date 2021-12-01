@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Filter, Sort } from './filter.model';
 import { FilterTypesEnum } from './filter-types.enum';
 import { GenesListSettings } from '../genes-list-settings.model';
@@ -7,6 +7,7 @@ import { FilteredGenes } from '../../../../core/models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,7 @@ export class FilterService {
   public currentFields: Observable<GenesListSettings> = this.listOfFields$.asObservable();
   public filterResult: Observable<Filter> = this.filterChanges$.asObservable();
   public isClearFiltersBtnShown = new BehaviorSubject<boolean>(false);
+  public otherPageFilterState: number;
 
   public genesListSettings: GenesListSettings = {
     // Default:
@@ -44,8 +46,7 @@ export class FilterService {
     bySelectionCriteria: [],
     byExpressionChange: 0,
     byMethylationChange: '',
-    page: 1,
-    pageSize: 20,
+    page:1
   };
 
   constructor(private http: HttpClient, private translate: TranslateService) {
@@ -60,7 +61,7 @@ export class FilterService {
   // Filter
   public onApplyFilter(filterType: string, filterValue: number | string): void {
     if (filterValue) {
-      if (this.filters[filterType] instanceof Array) {
+      if (Array.isArray(this.filters[filterType])) {
         if (!this.filters[filterType].includes(filterValue)) {
           this.filters[filterType].push(filterValue);
         } else {
@@ -134,6 +135,12 @@ export class FilterService {
         this.filters.byMethylationChange = '';
     }
     this.filters.page = 1;
+    this.filters.pageSize = 20;
+    if (this.otherPageFilterState) {
+      this.filters.byAgeRelatedProcess.push(this.otherPageFilterState);
+      this.otherPageFilterState = 0;
+    }
+
     this.areMoreThan2FiltersApplied();
   }
 
@@ -154,7 +161,7 @@ export class FilterService {
 
     Object.entries(filterParams).forEach(([key, value]) => {
       if (value) {
-        if (value instanceof Array) {
+        if (Array.isArray(value)) {
           if (value.length) {
             const str = value.join();
             params = params.set(`${key}`, `${str}`);
@@ -164,6 +171,7 @@ export class FilterService {
         }
       }
     });
+    debugger;
 
     return this.http.get<FilteredGenes>(`${this.url}/api/gene/search`, { params });
   }

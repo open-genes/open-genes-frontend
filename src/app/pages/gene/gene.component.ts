@@ -12,6 +12,7 @@ import { Settings } from '../../core/models/settings.model';
 import { FavouritesService } from '../../core/services/favourites.service';
 import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FilterService } from '../../components/shared/genes-list/services/filter.service';
 
 @Component({
   selector: 'app-gene',
@@ -52,6 +53,7 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
     private activateRoute: ActivatedRoute,
     private router: Router,
     private bottomSheet: MatBottomSheet,
+    private filterService: FilterService,
     private settingsService: SettingsService,
     private apiService: ApiService,
     private favouritesService: FavouritesService,
@@ -198,6 +200,12 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
 
   public onCloseUiHints(): void {
     this.bottomSheet.dismiss();
+  }
+
+  public onApplyFilter(id: number): void {
+    this.router.navigate(['']).then(() => {
+      this.filterService.otherPageFilterState = id;
+    });
   }
 
   toggleFavourites(id: any) {
