@@ -116,7 +116,7 @@
   </legend>
 
   <div class="paginator">
-    <mat-paginator [length]="genesList.length"
+    <mat-paginator [length]="searchedData.length"
                    [pageSize]="genesPerPage"
                    [pageSizeOptions]="pageSizeOptions"
                    (page)="pageEventHandler($event)"
