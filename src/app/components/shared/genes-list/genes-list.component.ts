@@ -6,7 +6,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
@@ -20,6 +20,7 @@ import { Filter, Sort } from './services/filter.model';
 import { SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { FavouritesService } from '../../../core/services/favourites.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-genes-list',
@@ -76,6 +77,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public currentPage: number;
   public pageOptions: any;
 
+  private cachedData: Genes[] = [];
   private retrievedSettings: Settings;
   private searchModeEnum = SearchModeEnum;
   private subscription$ = new Subject();
@@ -84,11 +86,17 @@ export class GenesListComponent implements OnInit, OnDestroy {
     private readonly apiService: ApiService,
     private filterService: FilterService,
     private settingsService: SettingsService,
+    private favouritesService: FavouritesService,
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
-    private favouritesService: FavouritesService
-  ) {}
+    private aRoute: ActivatedRoute,
+  ) {
+    this.aRoute.queryParams.subscribe((params) => {
+      debugger;
+      console.log(params)
+    })
+  }
 
   ngOnInit(): void {
     this.favouritesService.getItems();
@@ -112,17 +120,18 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.searchedData = [];
           this.isLoading = true;
           return this.filterService.getFilteredGenes(filters);
-        }),
+        })
       )
       .subscribe(
         (filteredData) => {
-          // debugger;
-          this.currentPage = this.filterService.filters.page;
+          this.currentPage = this.filterService.pagination.page;
           if (this.currentPage == 1) {
-            this.searchedData = [];
-            this.searchedData.push(...filteredData.items);
+            this.cachedData = [];
+            this.cachedData.push(...filteredData.items)
+            this.searchedData = [...this.cachedData];
           } else {
-            this.searchedData.push(...filteredData.items);
+            this.cachedData.push(...filteredData.items);
+            this.searchedData = [...this.cachedData];
           }
           this.openSnackBar();
           this.downloadSearch(this.searchedData);
@@ -134,9 +143,8 @@ export class GenesListComponent implements OnInit, OnDestroy {
           console.log(error);
           this.isLoading = false;
           this.cdRef.markForCheck();
-        },
+        }
       );
-
   }
 
   /**
@@ -145,21 +153,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public loadMoreGenes(): void {
     this.filterService.onLoadMoreGenes(this.pageOptions.pagesTotal);
   }
-
-  /*  // TODO: this function isn't pure
-    public searchGenesByGoTerm(query: string): void {
-      this.isLoading = true;
-              this.isGoSearchPerformed = true;
-
-
-
-              const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
-              this.isGoTermsModeError = !isAnyTermFound;
-
-            },
-          );
-      }
-    }*/
 
   private openSnackBar(): void {
     this.snackBar.openFromComponent(SnackBarComponent, {

@@ -8,8 +8,6 @@ export interface Filter {
   bySelectionCriteria: string[]; // see selection criteria
   byMethylationChange: string; // by the gene's methylation change with age
   byExpressionChange: number; // by gene's age related expression change variant
-  page?: number;
-  pageSize?: number;
 }
 
 export interface Sort {
