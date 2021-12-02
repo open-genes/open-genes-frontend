@@ -181,6 +181,8 @@ export class FilterService {
   }
 
   getFilteredGenes(filterParams: Filter): Observable<FilteredGenes> {
+
+    debugger;
     let params = new HttpParams()
       .set('lang', this.translate.currentLang)
       .set('page', this.pagination.page)

@@ -85,17 +85,20 @@ export class GenesListComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
     private aRoute: ActivatedRoute
-  ) {}
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.aRoute.queryParams.subscribe((params) => {
       if (Object.keys(params).length) {
         for (const key in params) {
-          this.filterService.filters[key].push(params[key]);
+          this.filterService.filters[key].push(+params[key]);
+          this.favouritesService.getItems();
         }
       }
     });
-    this.favouritesService.getItems();
+
     this.setInitialState();
     this.setInitSettings();
   }
