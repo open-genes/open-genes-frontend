@@ -91,13 +91,12 @@ export class GenesListComponent implements OnInit, OnDestroy {
     this.aRoute.queryParams.subscribe((params) => {
       if (Object.keys(params).length) {
         for (const key in params) {
-          this.filterService.filters[key] = params[key];
+          this.filterService.filters[key].push(params[key]);
         }
-      } else {
-        this.setInitialState();
       }
     });
     this.favouritesService.getItems();
+    this.setInitialState();
     this.setInitSettings();
   }
 

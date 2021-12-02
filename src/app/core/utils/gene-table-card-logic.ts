@@ -30,6 +30,8 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    debugger;
+    this.filters;
     this.updateCurrentFields();
   }
 
