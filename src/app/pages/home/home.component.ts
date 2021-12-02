@@ -97,9 +97,17 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     }
   }
 
-  public updateGenesList(event): void {
-    if (this.searchedGenes && this.searchedGenes.length) {
+  public updateGenesList(query): void {
+    if (query && this.searchedGenes.length) {
       this.confirmedGenesList = [...this.searchedGenes];
+    }
+
+    if (query && this.searchedGenes.length === 0) {
+      this.confirmedGenesList = null;
+    }
+
+    if (!query && this.searchedGenes.length === 0) {
+      this.confirmedGenesList = [];
     }
   }
 
@@ -108,7 +116,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   private searchByGenes(query: string): void {
-    if (query) {
+    if (query && query.length > 2) {
       this.searchedGenes = this.genes?.filter((gene) => {
         // Fields always acquired in response
         const searchedText = [
@@ -163,7 +171,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   private searchGenesByGoTerm(query: string): void {
-    if (query) {
+    if (query && query.length > 2) {
       this.apiService
         .getGoTermMatchByString(query)
         .pipe(takeUntil(this.subscription$))
