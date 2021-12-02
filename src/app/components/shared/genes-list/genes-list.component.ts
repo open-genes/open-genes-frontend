@@ -114,6 +114,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
       .subscribe(
         (filteredData) => {
           // debugger;
+          // TODO: add an interface for the whole response
           this.currentPage = this.filterService.filters.page;
           if (this.currentPage == 1) {
             this.searchedData = [];

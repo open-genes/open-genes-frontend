@@ -4,6 +4,7 @@ export interface Research {
   comment: string;
 }
 
+// purple form
 export interface increaseLifespan extends Research {
   interventionType: string;
   interventionResult: string;
@@ -16,6 +17,7 @@ export interface increaseLifespan extends Research {
   valueForAll: string;
 }
 
+// blue form
 export interface AgeRelatedChanges extends Research {
   changeType: string;
   sample: string;
@@ -29,17 +31,26 @@ export interface AgeRelatedChanges extends Research {
   measurementType: string;
 }
 
+//  green form
+interface InterventionResult {
+  id: string;
+  name: string;
+}
+
 export interface InterventionAffectsAgingProcess extends Research {
   geneIntervention: string;
-  interventionResult: string; // TODO: misleading name, rename
-  vitalProcess: string;
   modelOrganism: string; // TODO: backend: rename to 'object'
   organismLine: string; // TODO: backend: rename to 'line'
-  genotype: string;
+  interventionDeteriorates: InterventionResult[];
+  interventionImproves: InterventionResult[];
+  interventionResult: string; // TODO: misleading name, rename
+  vitalProcess: string;
   age: string;
+  genotype: string;
   sex: string;
 }
 
+// yellow form
 export interface ProteinRegulatesGenes extends Research {
   proteinActivity: string;
   regulationType: string;
@@ -51,10 +62,12 @@ export interface ProteinRegulatesGenes extends Research {
   };
 }
 
+// orange form
 export interface ProgeriaSyndromes extends Research {
   progeriaSyndrome: string;
 }
 
+// pink form
 export interface LongevityEffects extends Research {
   allelicPolymorphism: string;
   allelicVariant: string;
@@ -65,6 +78,7 @@ export interface LongevityEffects extends Research {
   sex: string;
 }
 
+// gray form
 export interface AdditionalEvidences extends Research {}
 
 // TODO: backend: misleading names of researches

@@ -52,6 +52,14 @@
     }
   }
 
+  td {
+    @include lists;
+
+    * + h6 {
+      margin-top: .8ex;
+    }
+  }
+
   @each $class, $color in $research-tables {
     &--#{$class} th:first-child::before {
       background: $color;
