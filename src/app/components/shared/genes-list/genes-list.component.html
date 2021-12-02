@@ -1,8 +1,6 @@
 <ng-container
-  *ngIf="
-    (isGoTermsMode && isGoSearchPerformed && !isGoTermsModeError) ||
-    (!isGoTermsMode && searchedData?.length)">
-
+  *ngIf="(isGoTermsMode && isGoSearchPerformed && !isGoTermsModeError) || (!isGoTermsMode && searchedData?.length)"
+>
   <!-- Filters Panel -->
   <ng-container *ngIf="showFiltersPanel">
     <app-filter-panel
@@ -15,13 +13,12 @@
     ></app-filter-panel>
   </ng-container>
 
-
   <!-- Content -->
   <section
     *ngIf="searchedData?.length"
     class="view-content"
-    [ngClass]="isTableView && !isMobile ? 'view-content--as-table' : 'view-content--as-cards'">
-
+    [ngClass]="isTableView && !isMobile ? 'view-content--as-table' : 'view-content--as-cards'"
+  >
     <!-- Table view -->
     <ng-container *ngIf="isTableView && !isMobile">
       <table>
@@ -31,81 +28,87 @@
         </thead>
 
         <ng-container *ngIf="isGoTermsMode; else table">
-          <app-gene-annotations-table-row *ngFor="let rowData of searchedData"
-                                          [item]="rowData">
+          <app-gene-annotations-table-row
+            *ngFor="let rowData of searchedData"
+            [item]="rowData"
+            [isAdded]="isFaved(rowData.id)"
+            (unFav)="unFavItem($event)"
+            (fav)="favItem($event)"
+          >
           </app-gene-annotations-table-row>
         </ng-container>
 
         <ng-template #table>
-          <app-gene-table-row *ngFor="let rowData of searchedData"
-                              [item]="rowData">
+          <app-gene-table-row
+            *ngFor="let rowData of searchedData"
+            [item]="rowData"
+            [isAdded]="isFaved(rowData.id)"
+            (unFav)="unFavItem($event)"
+            (fav)="favItem($event)"
+          >
           </app-gene-table-row>
         </ng-template>
-
       </table>
     </ng-container>
 
     <!-- Card view -->
     <ng-container *ngIf="!isTableView || isMobile">
       <ng-container *ngIf="isGoTermsMode; else card">
-        <app-gene-annotations-card class="card" *ngFor="let rowData of searchedData"
-                                   [item]="rowData">
+        <app-gene-annotations-card
+          class="card"
+          *ngFor="let rowData of searchedData"
+          [item]="rowData"
+          [isAdded]="isFaved(rowData.id)"
+          (unFav)="unFavItem($event)"
+          (fav)="favItem($event)"
+        >
         </app-gene-annotations-card>
       </ng-container>
 
       <ng-template #card>
-        <app-gene-card class="card" *ngFor="let rowData of searchedData"
-                       [item]="rowData">
+        <app-gene-card
+          class="card"
+          *ngFor="let rowData of searchedData"
+          [item]="rowData"
+          [isAdded]="isFaved(rowData.id)"
+          (unFav)="unFavItem($event)"
+          (fav)="favItem($event)"
+        >
         </app-gene-card>
       </ng-template>
-
     </ng-container>
   </section>
 
   <!-- Show more Button -->
-  <div
-    class="btn-wrap show-more"
-    *ngIf="searchedData.length >= pageOptions?.pageSize">
-    <button (click)="loadMoreGenes()"
-            class="btn show-more__button">
+  <div class="btn-wrap show-more" *ngIf="searchedData.length >= pageOptions?.pageSize">
+    <button (click)="loadMoreGenes()" class="btn show-more__button">
       {{ "show_more" | translate }}
     </button>
   </div>
-
 </ng-container>
 
 <!-- No content error message -->
 <section
   *ngIf="
     (isGoTermsMode && isGoSearchPerformed && !isLoading && searchedData?.length == 0) ||
-    (!isGoTermsMode && !isLoading && searchedData?.length == 0)">
-  <app-no-content
-    [title]="'nothing_found'">
+    (!isGoTermsMode && !isLoading && searchedData?.length == 0)
+  "
+>
+  <app-no-content [title]="'nothing_found'">
     <ng-container icon>
-      <app-icon
-        icon="default"
-        size="custom"
-        customWidth="100%"
-        customHeight="100%"
-      ></app-icon>
+      <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
     </ng-container>
   </app-no-content>
 </section>
 
 <!-- GO search mode start message -->
 <section *ngIf="isGoTermsMode && !isGoSearchPerformed && !isLoading">
-  <app-no-content
-    [title]="'go_results_start_title'">
+  <app-no-content [title]="'go_results_start_title'">
     <ng-container icon>
-      <app-icon
-        icon="default"
-        size="custom"
-        customWidth="100%"
-        customHeight="100%"
-      ></app-icon>
+      <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
     </ng-container>
     <ng-container description>
-      <p>{{ 'go_results_start_description' | translate }}</p>
+      <p>{{ "go_results_start_description" | translate }}</p>
     </ng-container>
   </app-no-content>
 </section>
@@ -113,5 +116,3 @@
 <ng-container *ngIf="isLoading">
   <app-spinner></app-spinner>
 </ng-container>
-
-
