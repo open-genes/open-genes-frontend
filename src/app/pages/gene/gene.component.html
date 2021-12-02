@@ -44,7 +44,8 @@
           <div class="col col-12 header__functional-clusters">
             <ng-container *ngIf="gene.functionalClusters; else tagSkeletal">
               <ng-container *ngFor="let item of gene.functionalClusters">
-                <span class="alias" (click)="onApplyFilter(item.id)">{{item.name}}</span>
+                <span class="alias"
+                      (click)="onApplyFilter(filterTypes.functional_clusters, item.id)">{{item.name}}</span>
               </ng-container>
             </ng-container>
             <ng-template #tagSkeletal>

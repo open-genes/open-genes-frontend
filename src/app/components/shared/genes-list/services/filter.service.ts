@@ -122,7 +122,7 @@ export class FilterService {
   }
 
   // Clear
-  public clearFilters(filterName?: string): void {
+  public clearFilters(filterName?: string, updateQueryParams?: boolean): void {
     const {
       disease,
       disease_categories,
@@ -161,7 +161,10 @@ export class FilterService {
         this.filters.byMethylationChange = '';
     }
     this.pagination.page = 1;
-    this.setQueryParams(this.filters);
+    if (updateQueryParams) {
+      this.setQueryParams(this.filters);
+    }
+    
     this.areMoreThan2FiltersApplied();
   }
 

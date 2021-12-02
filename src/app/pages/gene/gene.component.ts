@@ -13,6 +13,7 @@ import { FavouritesService } from '../../core/services/favourites.service';
 import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
+import { FilterTypesEnum } from '../../components/shared/genes-list/services/filter-types.enum';
 
 @Component({
   selector: 'app-gene',
@@ -41,6 +42,7 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
   public isGeneCandidate = false;
   public isUiHintsSettingOn: boolean;
   public isInFavourites: boolean;
+  public filterTypes = FilterTypesEnum;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
@@ -202,8 +204,12 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
     this.bottomSheet.dismiss();
   }
 
-  public onApplyFilter(id: number): void {
-    this.router.navigate([''], {queryParams: {'asdfsadfsf': id}});
+  public onApplyFilter(filterType: string, id: number): void {
+    const queryParams = {};
+    queryParams[filterType] = id;
+    this.router.navigate([''], {
+      queryParams: queryParams,
+    });
   }
 
   toggleFavourites(id: any) {

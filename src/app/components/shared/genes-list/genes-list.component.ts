@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
@@ -34,10 +27,10 @@ export class GenesListComponent implements OnInit, OnDestroy {
 
   @Input() set setSearchMode(searchMode: SearchMode) {
     if (searchMode) {
-      debugger;
       this.isGoSearchPerformed = false;
       this.isGoTermsMode = searchMode === this.searchModeEnum.searchByGoTerms;
       if (!this.isGoTermsMode) {
+        debugger;
         this.clearFilters();
       }
     }
@@ -91,19 +84,21 @@ export class GenesListComponent implements OnInit, OnDestroy {
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
-    private aRoute: ActivatedRoute,
-  ) {
-
-  }
+    private aRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.aRoute.queryParams.subscribe((params) => {
-      debugger;
-      console.log(params)
-    })
+      if (Object.keys(params).length) {
+        for (const key in params) {
+          this.filterService.filters[key] = params[key];
+        }
+      } else {
+        this.setInitialState();
+      }
+    });
     this.favouritesService.getItems();
     this.setInitSettings();
-    this.setInitialState();
   }
 
   private setInitSettings(): void {
@@ -119,6 +114,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.subscription$),
         switchMap((filters: Filter) => {
+          debugger;
           this.searchedData = [];
           this.isLoading = true;
           return this.filterService.getFilteredGenes(filters);
@@ -129,7 +125,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.currentPage = this.filterService.pagination.page;
           if (this.currentPage == 1) {
             this.cachedData = [];
-            this.cachedData.push(...filteredData.items)
+            this.cachedData.push(...filteredData.items);
             this.searchedData = [...this.cachedData];
           } else {
             this.cachedData.push(...filteredData.items);
@@ -183,8 +179,8 @@ export class GenesListComponent implements OnInit, OnDestroy {
   /**
    * Filter reset
    */
-  public clearFilters(filterName?: string): void {
-    this.filterService.clearFilters(filterName ? filterName : null);
+  public clearFilters(filterName?: string, updateQueryParams?: boolean): void {
+    this.filterService.clearFilters(filterName ? filterName : null, updateQueryParams);
   }
 
   /**

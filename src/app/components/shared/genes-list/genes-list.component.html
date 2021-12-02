@@ -11,7 +11,7 @@
       [downloadJsonLink]="downloadJsonLink"
       (tableView)="toggleGenesView($event)"
       (sortItem)="sortBy($event)"
-      (clearFilterItem)="clearFilters($event)"
+      (clearFilterItem)="clearFilters($event, true)"
     ></app-filter-panel>
   </ng-container>
 
