@@ -24,7 +24,6 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class GenesResearchListComponent implements OnInit, OnDestroy {
   @Input() set genesList(genes: GenesWLifespanResearches[]) {
-    debugger;
     if (genes) {
       this.searchedData = genes;
       this.openSnackBar();

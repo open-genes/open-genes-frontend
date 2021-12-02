@@ -42,7 +42,6 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
       this.searchedData = [];
       this.searchForm.get('searchField').setValue('');
     }
-    // debugger;
   }
 
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
@@ -99,12 +98,9 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchForm
       .get('searchField')
       .valueChanges.pipe(
-        map((query: string) => query?.toLowerCase()),
-        filter((query: string) => {
-          return this.clearFieldButton = !!query;
-        }),
         map((query: string) => query.toLowerCase().replace(/-/g, '')),
         filter((query: string) => {
+          this.clearFieldButton = !!query;
           this.highlightText = query;
           this.showSearchResult = query?.length >= 2;
 
@@ -139,7 +135,6 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public onSearch(): void {
-    debugger
     this.confirmedQuery.emit(this.highlightText);
   }
 

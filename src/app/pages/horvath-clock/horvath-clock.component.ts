@@ -86,17 +86,22 @@ export class HorvathClockComponent extends WindowWidth implements OnInit, OnDest
     this.searchByGenes(query);
   }
 
-  public updateGenesList(event): void {
-    debugger;
-    if (this.searchedGenes.length) {
+  public updateGenesList(query): void {
+    if (query && this.searchedGenes.length) {
       this.confirmedGenesList = [...this.searchedGenes];
-    } else {
+    }
+
+    if (query && this.searchedGenes.length === 0) {
+      this.confirmedGenesList = [];
+    }
+
+    if (!query && this.searchedGenes.length === 0) {
       this.confirmedGenesList = this.genes;
     }
   }
 
   private searchByGenes(query: string): void {
-    if (query) {
+    if (query && query.length > 2) {
       this.searchedGenes = this.genes?.filter((gene) => {
         // Fields always acquired in response
         const searchedText = [gene.id, gene?.ensembl ? gene.ensembl : '', gene.symbol, gene.name]
