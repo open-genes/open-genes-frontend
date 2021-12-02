@@ -73,10 +73,12 @@ export class IncreaseLifespanComponent extends WindowWidth implements OnInit, On
   }
 
   public setSearchQuery(query: string): void {
+    debugger;
     this.searchByGenes(query);
   }
 
   public updateGenesList(event): void {
+    debugger;
     if (this.searchedGenes.length) {
       this.confirmedGenesList = [...this.searchedGenes];
     } else {
@@ -94,6 +96,7 @@ export class IncreaseLifespanComponent extends WindowWidth implements OnInit, On
         return searchedText.includes(query);
       });
     } else {
+      debugger;
       this.searchedGenes = [];
     }
   }

@@ -49,8 +49,6 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Output() confirmedQuery: EventEmitter<any> = new EventEmitter<any>();
 
   public clearFieldButton: boolean;
-  public foundGenes: string[];
-  public notFoundGenes: string[] = [];
   public searchedData: Genes[];
   public searchForm: FormGroup;
   public searchMode: SearchMode;
@@ -141,6 +139,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public onSearch(): void {
+    debugger
     this.confirmedQuery.emit(this.highlightText);
   }
 

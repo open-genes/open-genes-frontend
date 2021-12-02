@@ -87,6 +87,7 @@ export class HorvathClockComponent extends WindowWidth implements OnInit, OnDest
   }
 
   public updateGenesList(event): void {
+    debugger;
     if (this.searchedGenes.length) {
       this.confirmedGenesList = [...this.searchedGenes];
     } else {
