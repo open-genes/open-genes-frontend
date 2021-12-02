@@ -136,7 +136,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   private searchByGenesList(query: string): void {
-    if (query && query.length > 2) {
+    if (query) {
       this.searchedGenes = [];
       const notFoundGenes = [];
       let foundGenes = [];

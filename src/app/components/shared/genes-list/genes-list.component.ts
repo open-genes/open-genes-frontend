@@ -42,10 +42,10 @@ export class GenesListComponent implements OnInit, OnDestroy {
   }
 
   @Input() set genesList(genes: Genes[]) {
+    this.isGoSearchPerformed = this.isGoTermsMode;
     if (genes) {
       if (genes.length) {
         this.searchedData = genes;
-        this.isGoSearchPerformed = this.isGoTermsMode;
         this.openSnackBar();
       } else {
         if (!this.isGoTermsMode) {
