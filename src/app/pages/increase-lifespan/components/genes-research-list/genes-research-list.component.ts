@@ -99,7 +99,6 @@ export class GenesResearchListComponent implements OnInit, OnDestroy {
     const start = event.pageIndex * event.pageSize;
     const end = start + event.pageSize;
     this.searchedData = this.genesList.slice(start, end);
-    console.log(event)
   }
 
   /**

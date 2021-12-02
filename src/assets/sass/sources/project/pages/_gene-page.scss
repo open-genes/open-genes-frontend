@@ -208,18 +208,6 @@
           }
         }
 
-        &.age__orthologs {
-          .list {
-            .alias {
-              text-transform: uppercase;
-
-              &:empty {
-                display: none; // TODO: это костыль для пустых значений ортологов из GeneAge, нужно добавить проверку
-              }
-            }
-          }
-        }
-
         @include resolution_smartphone {
           flex: 0 0 100%;
           flex-wrap: wrap;

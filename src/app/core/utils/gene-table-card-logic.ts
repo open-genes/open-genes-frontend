@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Directive, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Directive, Input, OnDestroy, OnInit } from '@angular/core';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
 import { Genes } from '../models';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
