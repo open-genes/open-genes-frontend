@@ -203,7 +203,7 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public onApplyFilter(id: number): void {
-    this.router.navigate([''], { queryParams: {'asd':1} });
+    this.router.navigate([''], {queryParams: {'asdfsadfsf': id}});
   }
 
   toggleFavourites(id: any) {

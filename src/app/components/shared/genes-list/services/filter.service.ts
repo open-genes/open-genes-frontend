@@ -161,6 +161,7 @@ export class FilterService {
         this.filters.byMethylationChange = '';
     }
     this.pagination.page = 1;
+    this.setQueryParams(this.filters);
     this.areMoreThan2FiltersApplied();
   }
 

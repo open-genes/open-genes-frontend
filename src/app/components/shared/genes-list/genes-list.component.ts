@@ -34,6 +34,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
 
   @Input() set setSearchMode(searchMode: SearchMode) {
     if (searchMode) {
+      debugger;
       this.isGoSearchPerformed = false;
       this.isGoTermsMode = searchMode === this.searchModeEnum.searchByGoTerms;
       if (!this.isGoTermsMode) {
@@ -92,13 +93,14 @@ export class GenesListComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private aRoute: ActivatedRoute,
   ) {
+
+  }
+
+  ngOnInit(): void {
     this.aRoute.queryParams.subscribe((params) => {
       debugger;
       console.log(params)
     })
-  }
-
-  ngOnInit(): void {
     this.favouritesService.getItems();
     this.setInitSettings();
     this.setInitialState();
