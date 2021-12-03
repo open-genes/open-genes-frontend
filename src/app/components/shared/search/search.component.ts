@@ -42,7 +42,6 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
       this.searchedData = [];
       this.searchForm.get('searchField').setValue('');
     }
-    // debugger;
   }
 
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();

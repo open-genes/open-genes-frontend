@@ -7,9 +7,8 @@ import { FilteredGenes } from '../../../../core/models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../../../environments/environment';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Pagination } from '../../../../core/models/settings.model';
-import { A } from '@angular/cdk/keycodes';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +21,6 @@ export class FilterService {
   public currentFields: Observable<GenesListSettings> = this.listOfFields$.asObservable();
   public filterResult: Observable<Filter> = this.filterChanges$.asObservable();
   public isClearFiltersBtnShown = new BehaviorSubject<boolean>(false);
-  public otherPageFilterState: number;
 
   public genesListSettings: GenesListSettings = {
     // Default:
@@ -55,27 +53,36 @@ export class FilterService {
     pageSize: 20,
   };
 
-  constructor(private http: HttpClient, private translate: TranslateService, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private translate: TranslateService,
+    private router: Router
+  ) {
     this.updateFields(this.genesListSettings);
     this.filterChanges$.next(this.filters);
   }
 
-  public updateFields(fields) {
+  public updateFields(fields): void {
     this.listOfFields$.next(fields);
   }
 
   // Filter
-  public onApplyFilter(filterType: string, filterValue: number | string): void {
+  public onApplyFilter(filterType: string, filterValue: number | string, isQueryParams?: boolean): void {
     if (filterValue) {
       if (Array.isArray(this.filters[filterType])) {
-        if (!this.filters[filterType].includes(filterValue)) {
-          this.filters[filterType].push(filterValue);
+        const arrayValues = filterValue.toString().split(',');
+        if (arrayValues.length > 1) {
+          this.filters[filterType] = arrayValues.map(Number);
         } else {
-          this.filters[filterType] = this.filters[filterType].filter((item) => item !== filterValue);
+          if (!this.filters[filterType].includes(+filterValue)) {
+            this.filters[filterType].push(+filterValue);
+          } else {
+            this.filters[filterType] = this.filters[filterType].filter((item) => item !== +filterValue);
+          }
         }
       } else if (typeof this.filters[filterType] === 'number') {
-        if (this.filters[filterType] !== filterValue) {
-          this.filters[filterType] = filterValue;
+        if (this.filters[filterType] !== +filterValue) {
+          this.filters[filterType] = +filterValue;
         } else {
           this.filters[filterType] = 0;
         }
@@ -87,7 +94,6 @@ export class FilterService {
         }
       }
       this.pagination.page = 1;
-      this.setQueryParams(this.filters);
     } else {
       return;
     }
@@ -95,7 +101,7 @@ export class FilterService {
     this.areMoreThan2FiltersApplied();
   }
 
-  private setQueryParams(filterParams: Filter) {
+  public setQueryParams(filterParams: Filter): void {
     const queryParams = {};
     for (const key in filterParams) {
       if (filterParams[key]) {
@@ -114,15 +120,19 @@ export class FilterService {
     });
   }
 
+  public updateList(filterParams: Filter): void {
+    this.filterChanges$.next(filterParams);
+  }
+
   public onLoadMoreGenes(pagesTotal: number): void {
     if (this.pagination.page < pagesTotal) {
       this.pagination.page++;
     }
-    this.areMoreThan2FiltersApplied();
+    this.updateList(this.filters);
   }
 
   // Clear
-  public clearFilters(filterName?: string, updateQueryParams?: boolean): void {
+  public clearFilters(filterName?: string): void {
     const {
       disease,
       disease_categories,
@@ -161,10 +171,6 @@ export class FilterService {
         this.filters.byMethylationChange = '';
     }
     this.pagination.page = 1;
-    if (updateQueryParams) {
-      this.setQueryParams(this.filters);
-    }
-    
     this.areMoreThan2FiltersApplied();
   }
 
@@ -177,12 +183,10 @@ export class FilterService {
     });
     this.isClearFiltersBtnShown.next(sum.length >= 2);
 
-    this.filterChanges$.next(this.filters);
+    this.setQueryParams(this.filters);
   }
 
-  getFilteredGenes(filterParams: Filter): Observable<FilteredGenes> {
-
-    debugger;
+  public getFilteredGenes(filterParams: Filter): Observable<FilteredGenes> {
     let params = new HttpParams()
       .set('lang', this.translate.currentLang)
       .set('page', this.pagination.page)

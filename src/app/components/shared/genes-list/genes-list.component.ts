@@ -13,7 +13,7 @@ import { Filter, Sort } from './services/filter.model';
 import { SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { FavouritesService } from '../../../core/services/favourites.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-genes-list',
@@ -30,7 +30,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
       this.isGoSearchPerformed = false;
       this.isGoTermsMode = searchMode === this.searchModeEnum.searchByGoTerms;
       if (!this.isGoTermsMode) {
-        debugger;
         this.clearFilters();
       }
     }
@@ -85,18 +84,18 @@ export class GenesListComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
     private aRoute: ActivatedRoute
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.aRoute.queryParams.subscribe((params) => {
       if (Object.keys(params).length) {
         for (const key in params) {
-          this.filterService.filters[key].push(+params[key]);
-          this.favouritesService.getItems();
+          if (params[key] !== this.filterService.filters[key].toString()) {
+            this.filterService.onApplyFilter(key, params[key]);
+          }
         }
       }
+      this.filterService.updateList(this.filterService.filters);
     });
 
     this.setInitialState();
@@ -116,7 +115,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.subscription$),
         switchMap((filters: Filter) => {
-          debugger;
           this.searchedData = [];
           this.isLoading = true;
           return this.filterService.getFilteredGenes(filters);
@@ -181,8 +179,8 @@ export class GenesListComponent implements OnInit, OnDestroy {
   /**
    * Filter reset
    */
-  public clearFilters(filterName?: string, updateQueryParams?: boolean): void {
-    this.filterService.clearFilters(filterName ? filterName : null, updateQueryParams);
+  public clearFilters(filterName?: string): void {
+    this.filterService.clearFilters(filterName ? filterName : null);
   }
 
   /**
