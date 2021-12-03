@@ -42,16 +42,21 @@ export class GenesListComponent implements OnInit, OnDestroy {
   }
 
   @Input() set genesList(genes: Genes[]) {
-    if (this.isGoTermsMode) {
-      this.searchedData = genes;
-      this.isGoSearchPerformed = true;
-    } else {
-      if (genes && genes.length) {
+    this.isGoSearchPerformed = this.isGoTermsMode;
+    if (genes) {
+      if (genes.length) {
         this.searchedData = genes;
         this.openSnackBar();
       } else {
-        this.clearFilters();
+        if (!this.isGoTermsMode) {
+          this.clearFilters();
+        }
+        this.isGoSearchPerformed = !this.isGoTermsMode;
       }
+    }
+
+    if (genes === null) {
+      this.searchedData = [];
     }
     this.downloadSearch(this.searchedData);
   }
@@ -83,9 +88,8 @@ export class GenesListComponent implements OnInit, OnDestroy {
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
-    private favouritesService: FavouritesService
-  ) {
-  }
+    private favouritesService: FavouritesService,
+  ) {}
 
   ngOnInit(): void {
     this.favouritesService.getItems();
@@ -109,11 +113,10 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.searchedData = [];
           this.isLoading = true;
           return this.filterService.getFilteredGenes(filters);
-        })
+        }),
       )
       .subscribe(
         (filteredData) => {
-          // debugger;
           // TODO: add an interface for the whole response
           this.currentPage = this.filterService.filters.page;
           if (this.currentPage == 1) {
@@ -132,7 +135,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
           console.log(error);
           this.isLoading = false;
           this.cdRef.markForCheck();
-        }
+        },
       );
 
   }
@@ -145,20 +148,20 @@ export class GenesListComponent implements OnInit, OnDestroy {
   }
 
 
-/*  // TODO: this function isn't pure
-  public searchGenesByGoTerm(query: string): void {
-    this.isLoading = true;
-            this.isGoSearchPerformed = true;
+  /*  // TODO: this function isn't pure
+    public searchGenesByGoTerm(query: string): void {
+      this.isLoading = true;
+              this.isGoSearchPerformed = true;
 
 
 
-            const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
-            this.isGoTermsModeError = !isAnyTermFound;
+              const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
+              this.isGoTermsModeError = !isAnyTermFound;
 
-          },
-        );
-    }
-  }*/
+            },
+          );
+      }
+    }*/
 
   private openSnackBar(): void {
     this.snackBar.openFromComponent(SnackBarComponent, {
