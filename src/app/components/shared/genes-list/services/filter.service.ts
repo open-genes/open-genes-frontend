@@ -12,7 +12,7 @@ import { environment } from '../../../../../environments/environment';
   providedIn: 'root',
 })
 export class FilterService {
-  private url = environment.testApiUrl;
+  private url = environment.apiUrl;
   private listOfFields$ = new BehaviorSubject<any>('');
   private filterChanges$ = new BehaviorSubject<any>([]);
 
