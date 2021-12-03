@@ -12,7 +12,7 @@ export class AssociatedDiseaseCategoriesComponent extends WrapIntoAccordion impl
   @Input() activeListItem: string[];
   @Output() clickEvent: EventEmitter<string> = new EventEmitter();
 
-  public mappedDiseaseCategories: Map<string, any> = new Map();
+  public mappedDiseaseCategories: Map<number, any> = new Map();
 
   constructor() {
     super();
@@ -26,7 +26,7 @@ export class AssociatedDiseaseCategoriesComponent extends WrapIntoAccordion impl
 
   private mapDiseaseCategories(): void {
     for (const [key, value] of Object.entries(this.geneDiseaseCategories)) {
-      this.mappedDiseaseCategories.set(key, value);
+      this.mappedDiseaseCategories.set(+key, value);
     }
   }
 

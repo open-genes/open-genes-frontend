@@ -9,7 +9,7 @@ import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap
 })
 export class SelectionCriteriaComponent extends WrapIntoAccordion implements OnInit {
   @Input() geneCriteria: SelectionCriteria;
-  @Input() activeListItem: string[];
+  @Input() activeListItem: number[];
   @Output() clickEvent: EventEmitter<string> = new EventEmitter();
 
   constructor() {

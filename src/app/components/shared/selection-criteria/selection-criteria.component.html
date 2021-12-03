@@ -5,7 +5,7 @@
       *ngFor="let criteria of geneCriteria | keyvalue"
       class="list list--bulletted">
 
-      <li [class.__active]="activeListItem.includes(criteria.key)"
+      <li [class.__active]="activeListItem.includes(+criteria.key)"
           (click)="emitOnClick(criteria.key)">
         {{ criteria.value }}
       </li>
@@ -22,7 +22,7 @@
       <div class="criteria-accordion__header" accordion-header>
         <ul class="list list--bulletted">
           <li *ngFor="let criteria of geneCriteria | keyvalue | slice: 0:maxItemsToShow"
-              [class.__active]="activeListItem.includes(criteria.key)"
+              [class.__active]="activeListItem.includes(+criteria.key)"
               (click)="emitOnClick(criteria.key)">
             {{ criteria.value }}
           </li>
@@ -38,7 +38,7 @@
       <div class="criteria-accordion__body" accordion-body>
         <ul class="list list--bulletted">
           <li *ngFor="let criteria of geneCriteria | keyvalue | slice: maxItemsToShow"
-              [class.__active]="activeListItem.includes(criteria.key)"
+              [class.__active]="activeListItem.includes(+criteria.key)"
               (click)="emitOnClick(criteria.key)">
             {{ criteria.value }}
           </li>
