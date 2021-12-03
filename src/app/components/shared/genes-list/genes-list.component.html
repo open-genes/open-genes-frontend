@@ -2,16 +2,23 @@
   *ngIf="(isGoTermsMode && isGoSearchPerformed && !isGoTermsModeError) || (!isGoTermsMode && searchedData?.length)"
 >
   <!-- Filters Panel -->
-  <ng-container *ngIf="showFiltersPanel">
+  <div class="row no-gutters">
     <app-filter-panel
+      *ngIf="showFiltersPanel"
+      class="col"
       [isMobile]="isMobile"
       [isGoTermsMode]="isGoTermsMode"
-      [downloadJsonLink]="downloadJsonLink"
-      (tableView)="toggleGenesView($event)"
       (sortItem)="sortBy($event)"
       (clearFilterItem)="clearFilters($event)"
     ></app-filter-panel>
-  </ng-container>
+
+    <app-search-view-panel
+      class="col"
+      [isMobile]="isMobile"
+      [downloadJsonLink]="downloadJsonLink"
+      (tableView)="toggleGenesView($event)"
+    ></app-search-view-panel>
+  </div>
 
   <!-- Content -->
   <section

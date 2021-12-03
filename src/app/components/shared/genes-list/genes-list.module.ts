@@ -25,6 +25,7 @@ import { FilterPanelComponent } from './components/filter-panel/filter-panel.com
 import { GeneAnnotationsCardComponent } from './components/gene/gene-annotations-card/gene-annotations-card.component';
 import { GeneAnnotationsTableRowComponent } from './components/gene/gene-annotations-table-row/gene-annotations-table-row.component';
 import { GenesAnnotationsTableHeaderComponent } from './components/genes-annotations-table-header/genes-annotations-table-header.component';
+import { SearchViewPanelComponent } from './components/search-view-panel/search-view-panel.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { GenesAnnotationsTableHeaderComponent } from './components/genes-annotat
     FilterPanelComponent,
     GeneAnnotationsCardComponent,
     GeneAnnotationsTableRowComponent,
+    SearchViewPanelComponent,
   ],
   imports: [
     CommonModule,
