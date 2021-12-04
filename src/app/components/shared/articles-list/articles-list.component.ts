@@ -18,7 +18,7 @@ import { EightyLevelService } from '../../../core/services/api/80level-api-servi
 import { environment } from '../../../../environments/environment';
 import { MockApiService } from '../../../core/services/api/mock-api.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ArticlesListModalComponent } from '../../ui-components/components/modals/articles-list-modal/articles-list-modal.component';
+import { ArticleModalComponent } from '../../ui-components/components/modals/article-modal/article-modal.component';
 import { CommonModalComponent } from '../../ui-components/components/modals/common-modal/common-modal.component';
 
 @Component({
@@ -147,7 +147,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       .subscribe(
         (modalData) => {
           this.cdRef.markForCheck();
-          this.dialog.open(ArticlesListModalComponent, {
+          this.dialog.open(ArticleModalComponent, {
             data: {
               modalData: modalData,
             },

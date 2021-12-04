@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Gene } from '../../../core/models';
 import { TranslateService } from '@ngx-translate/core';
-import { NewsListParams } from '../../../core/models/vendors-api/pubmed/publications-search-api.model';
+import { NewsListParams } from '../../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
 
 @Component({
   selector: 'app-gene-reference',

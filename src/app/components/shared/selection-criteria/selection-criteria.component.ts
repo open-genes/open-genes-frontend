@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectionCriteria } from '../../../core/models/open-genes-api/selection-criteria.model';
-import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrapIntoAccordion';
+import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap-into-accordion';
 
 @Component({
   selector: 'app-selection-criteria',
