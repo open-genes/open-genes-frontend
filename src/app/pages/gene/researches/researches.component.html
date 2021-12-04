@@ -493,6 +493,10 @@
       target="_blank"
     >{{ item?.pmid }}</a>
   </p>
+
+  <app-publication-info *ngIf="item?.doi"
+                        [doi]="item.doi"
+  ></app-publication-info>
 </ng-template>
 
 <ng-template #dash>
