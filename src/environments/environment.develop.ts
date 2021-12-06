@@ -1,7 +1,7 @@
 export const environment = {
   name: 'dev',
   production: false,
-  apiUrl: 'https://test.open-genes.com',
+  apiUrl: 'https://open-genes.com',
   testApiUrl: 'https://test.open-genes.com',
   searchApiUrl: 'https://publications-search-api-2yf55.ondigitalocean.app/',
   pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',

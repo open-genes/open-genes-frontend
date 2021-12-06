@@ -80,25 +80,5 @@
     </button>
 
   </div>
-
-  <div class="view-panel__buttons">
-
-    <a class="btn btn--small btn--purple"
-       [href]="downloadJsonLink"
-       target="_blank"
-       download="export.json">
-      <span class="fa far fa-download"></span> {{ 'main_page_download_results' | translate }}
-    </a>
-
-    <button
-      *ngIf="!isMobile"
-      class="toggler __ml-10"
-      (click)="toggleGenesView()"
-      [ngClass]="isTableView ? 'toggler--def' : 'toggler--alt'"
-      matTooltip="{{ 'gene_list_view' |translate }}">
-      <span class="fa far fa-table toggler__icon toggler__icon--def"></span>
-      <span class="fa far fa-th-large toggler__icon toggler__icon--alt"></span>
-    </button>
-  </div>
 </div>
 
