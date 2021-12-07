@@ -1,24 +1,41 @@
-<ng-container
-  *ngIf="(isGoTermsMode && isGoSearchPerformed && !isGoTermsModeError) || (!isGoTermsMode && searchedData?.length)"
->
-  <!-- Filters Panel -->
-  <div class="row no-gutters">
-    <app-filter-panel
-      *ngIf="showFiltersPanel"
-      class="col"
-      [isMobile]="isMobile"
-      [isGoTermsMode]="isGoTermsMode"
-      (sortItem)="sortBy($event)"
-      (clearFilterItem)="clearFilters($event)"
-    ></app-filter-panel>
+<!-- Filters Panel -->
+<div class="row no-gutters">
+  <app-filter-panel
+    *ngIf="showFiltersPanel"
+    class="col"
+    [isMobile]="isMobile"
+    [isGoTermsMode]="isGoTermsMode"
+    (sortItem)="sortBy($event)"
+    (clearFilterItem)="clearFilters($event)"
+  ></app-filter-panel>
 
-    <app-search-view-panel
-      class="col"
-      [isMobile]="isMobile"
-      [downloadJsonLink]="downloadJsonLink"
-      (tableView)="toggleGenesView($event)"
-    ></app-search-view-panel>
+  <app-search-view-panel
+    class="col"
+    [isMobile]="isMobile"
+    [downloadJsonLink]="downloadJsonLink"
+    (tableView)="toggleGenesView($event)"
+  ></app-search-view-panel>
+</div>
+
+<ng-container>
+  <div class="genes-info" *ngIf="searchMode === 'searchByGenesList'">
+    <div class="genes-info__found" *ngIf="notFoundAndFoundGenes?.foundGenes.length">
+      {{ 'items_found' | translate }} {{ notFoundAndFoundGenes?.foundGenes.length }}: <b><ng-container
+      *ngFor="let geneName of notFoundAndFoundGenes?.foundGenes; let last = last">
+      {{geneName}}<ng-container *ngIf="notFoundAndFoundGenes?.foundGenes.length > 1 && !last">,&nbsp;</ng-container>
+    </ng-container></b>
+    </div>
+    <div class="genes-info__found" *ngIf="notFoundAndFoundGenes?.notFoundGenes.length">
+      {{ 'items_not_found' | translate }} {{ notFoundAndFoundGenes?.notFoundGenes.length }}: <b><ng-container
+      *ngFor="let geneName of notFoundAndFoundGenes?.notFoundGenes;  let last = last">
+      {{geneName}}<ng-container *ngIf="notFoundAndFoundGenes?.notFoundGenes.length > 1 && !last">,&nbsp;</ng-container>
+    </ng-container></b>
+    </div>
   </div>
+
+</ng-container>
+
+<ng-container>
 
   <!-- Content -->
   <section
@@ -31,10 +48,10 @@
       <table>
         <thead>
           <app-genes-table-header *ngIf="!isGoTermsMode"></app-genes-table-header>
-          <app-genes-annotations-table-header *ngIf="isGoTermsMode"></app-genes-annotations-table-header>
+          <app-genes-annotations-table-header *ngIf="isGoTermsMode && isGoSearchPerformed "></app-genes-annotations-table-header>
         </thead>
 
-        <ng-container *ngIf="isGoTermsMode; else table">
+        <ng-container *ngIf="isGoTermsMode && isGoSearchPerformed ; else table">
           <app-gene-annotations-table-row
             *ngFor="let rowData of searchedData"
             [item]="rowData"
@@ -60,7 +77,7 @@
 
     <!-- Card view -->
     <ng-container *ngIf="!isTableView || isMobile">
-      <ng-container *ngIf="isGoTermsMode; else card">
+      <ng-container *ngIf="isGoTermsMode && isGoSearchPerformed ; else card">
         <app-gene-annotations-card
           class="card"
           *ngFor="let rowData of searchedData"
@@ -87,7 +104,7 @@
   </section>
 
   <!-- Show more Button -->
-  <div class="btn-wrap show-more" *ngIf="searchedData.length >= pageOptions?.pageSize">
+  <div class="btn-wrap show-more" *ngIf="searchedData.length !==0 && searchedData?.length >= pageOptions?.pageSize">
     <button (click)="loadMoreGenes()" class="btn show-more__button">
       {{ "show_more" | translate }}
     </button>
@@ -98,8 +115,7 @@
 <section
   *ngIf="
     (isGoTermsMode && isGoSearchPerformed && !isLoading && searchedData?.length == 0) ||
-    (!isGoTermsMode && !isLoading && searchedData?.length == 0)
-  "
+    (!isGoTermsMode && !isLoading && searchedData?.length == 0)"
 >
   <app-no-content [title]="'nothing_found'">
     <ng-container icon>

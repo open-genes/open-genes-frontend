@@ -69,3 +69,17 @@
     }
   }
 }
+
+.genes-info {
+  font-size: $font-size;
+  color: $color-gray;
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+
+  .genes-info__found {
+    display: inline-block;
+    margin-right: 20px;
+    margin-top: .5em;
+  }
+}

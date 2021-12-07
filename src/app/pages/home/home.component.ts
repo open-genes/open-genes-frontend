@@ -18,7 +18,7 @@ import { NewsListParams } from '../../core/models/vendors-api/pubmed/publication
 export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public genes: Genes[];
   public searchedGenes: Genes[];
-  public confirmedGenesList: Genes[];
+  public confirmedGenesList: Genes[] | string;
   public lastGenes: Genes[];
   public isAvailable = true;
   public genesListIsLoaded = false;
@@ -26,6 +26,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public searchMode: SearchMode;
   public searchModeEnum = SearchModeEnum;
   public notFoundAndFoundGenes: any;
+  public confirmedFoundGenes: any;
   public geneListForNewsFeed: NewsListParams[] = [];
 
   constructor(
@@ -109,10 +110,17 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     if (!query && this.searchedGenes.length === 0) {
       this.confirmedGenesList = [];
     }
+
+    this.confirmedFoundGenes = this.notFoundAndFoundGenes;
   }
 
   public setSearchMode(searchMode: SearchMode): void {
     this.searchMode = searchMode;
+    this.confirmedGenesList = '';
+    this.confirmedFoundGenes = {
+      foundGenes: [],
+      notFoundGenes: [],
+    };
   }
 
   private searchByGenes(query: string): void {

@@ -30,33 +30,36 @@ import { FavouritesService } from '../../../core/services/favourites.service';
 export class GenesListComponent implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
+  @Input() notFoundAndFoundGenes: any;
 
   @Input() set setSearchMode(searchMode: SearchMode) {
     if (searchMode) {
-      this.isGoSearchPerformed = false;
+      this.searchMode = searchMode;
       this.isGoTermsMode = searchMode === this.searchModeEnum.searchByGoTerms;
-      if (!this.isGoTermsMode) {
-        this.clearFilters();
-      }
+      this.clearFilters();
     }
   }
 
   @Input() set genesList(genes: Genes[]) {
-    this.isGoSearchPerformed = this.isGoTermsMode;
     if (genes) {
       if (genes.length) {
-        this.searchedData = genes;
+        if (genes.length > this.genesPerPage) {
+          this.currentPage = 1;
+          this.genesFromInput = genes;
+          this.searchedData = genes.slice(0, this.genesPerPage);
+        } else {
+          this.searchedData = genes;
+        }
+        this.isGoSearchPerformed = this.isGoTermsMode;
         this.openSnackBar();
       } else {
-        if (!this.isGoTermsMode) {
-          this.clearFilters();
-        }
-        this.isGoSearchPerformed = !this.isGoTermsMode;
+        this.clearFilters();
       }
     }
 
     if (genes === null) {
       this.searchedData = [];
+      this.isGoSearchPerformed = this.isGoTermsMode;
     }
     this.downloadSearch(this.searchedData);
   }
@@ -65,14 +68,12 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public filterTypes = FilterTypesEnum;
   public sortEnum = SortEnum;
   public sort: Sort = this.filterService.sort;
+  public searchMode: SearchMode;
 
   public isLoading = false;
-
   public isTableView: boolean;
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
-  public isGoTermsModeError = false;
-
   public downloadJsonLink: string | SafeResourceUrl = '#';
   public currentPage: number;
   public pageOptions: any;
@@ -80,6 +81,8 @@ export class GenesListComponent implements OnInit, OnDestroy {
   private retrievedSettings: Settings;
   private searchModeEnum = SearchModeEnum;
   private subscription$ = new Subject();
+  private genesFromInput: Genes[];
+  private genesPerPage = 20;
 
   constructor(
     private readonly apiService: ApiService,
@@ -110,24 +113,31 @@ export class GenesListComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.subscription$),
         switchMap((filters: Filter) => {
+          if (!this.isGoTermsMode) {
+            this.isLoading = true;
+          }
           this.searchedData = [];
-          this.isLoading = true;
+          this.isGoSearchPerformed = !this.isGoTermsMode;
           return this.filterService.getFilteredGenes(filters);
-        }),
+        })
       )
       .subscribe(
         (filteredData) => {
           // TODO: add an interface for the whole response
-          this.currentPage = this.filterService.filters.page;
-          if (this.currentPage == 1) {
-            this.searchedData = [];
-            this.searchedData.push(...filteredData.items);
+          if (!this.isGoTermsMode) {
+            this.currentPage = this.filterService.filters.page;
+            if (this.currentPage == 1) {
+              this.searchedData = [];
+              this.searchedData.push(...filteredData.items);
+            } else {
+              this.searchedData.push(...filteredData.items);
+            }
+            this.openSnackBar();
+            this.downloadSearch(this.searchedData);
+            this.pageOptions = filteredData.options.pagination;
           } else {
-            this.searchedData.push(...filteredData.items);
+            this.searchedData = [];
           }
-          this.openSnackBar();
-          this.downloadSearch(this.searchedData);
-          this.pageOptions = filteredData.options.pagination;
           this.isLoading = false;
           this.cdRef.markForCheck();
         },
@@ -137,31 +147,26 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.cdRef.markForCheck();
         },
       );
-
   }
 
   /**
    * Load next 20 genes
    */
   public loadMoreGenes(): void {
-    this.filterService.onLoadMoreGenes(this.pageOptions.pagesTotal);
+    debugger;
+    if (!this.isGoTermsMode) {
+      this.filterService.onLoadMoreGenes(this.pageOptions.pagesTotal);
+      return;
+    }
+
+    if (this.genesFromInput?.length >= this.genesPerPage) {
+      this.currentPage++;
+      const end = this.currentPage * this.genesPerPage;
+      const start = end - this.genesPerPage;
+      const nextPageData = this.genesFromInput.slice(start, end);
+      this.searchedData.push(...nextPageData);
+    }
   }
-
-
-  /*  // TODO: this function isn't pure
-    public searchGenesByGoTerm(query: string): void {
-      this.isLoading = true;
-              this.isGoSearchPerformed = true;
-
-
-
-              const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
-              this.isGoTermsModeError = !isAnyTermFound;
-
-            },
-          );
-      }
-    }*/
 
   private openSnackBar(): void {
     this.snackBar.openFromComponent(SnackBarComponent, {
