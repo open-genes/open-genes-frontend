@@ -70,25 +70,12 @@
   }
 }
 
-.description,
-.genes-info {
-  display: block;
-  width: 100%;
-}
-
-.description {
-  margin-bottom: 10px;
-  .description-content {
-    h2 {
-      font-size: calc(0.5vw + #{$font-size-bigger});
-      font-weight: $font-weight-medium;
-    }
-  }
-}
-
 .genes-info {
   font-size: $font-size;
   color: $color-gray;
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
 
   .genes-info__found {
     display: inline-block;

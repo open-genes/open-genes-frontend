@@ -1,7 +1,7 @@
 <!-- Filters Panel -->
 <div class="row no-gutters">
   <app-filter-panel
-    *ngIf="!isGoTermsMode"
+    *ngIf="showFiltersPanel"
     class="col"
     [isMobile]="isMobile"
     [isGoTermsMode]="isGoTermsMode"
@@ -18,16 +18,6 @@
 </div>
 
 <ng-container>
-
-  <div class="description">
-    <ng-container *ngFor="let item of toggleData">
-      <div class="description-content"
-           [class.hidden]="searchMode !== item.searchMode">
-        <h2>{{ item.description | translate }}</h2>
-      </div>
-    </ng-container>
-  </div>
-
   <div class="genes-info" *ngIf="searchMode === 'searchByGenesList'">
     <div class="genes-info__found" *ngIf="notFoundAndFoundGenes?.foundGenes.length">
       {{ 'items_found' | translate }} {{ notFoundAndFoundGenes?.foundGenes.length }}: <b><ng-container

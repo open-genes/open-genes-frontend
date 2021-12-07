@@ -23,3 +23,12 @@
   </div>
 </div>
 
+<div class="description">
+  <ng-container *ngFor="let item of toggleData">
+    <div class="description-content"
+         [class.hidden]="searchMode !== item.searchMode">
+      <h2>{{ item.description | translate }}</h2>
+    </div>
+  </ng-container>
+</div>
+

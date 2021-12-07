@@ -29,6 +29,7 @@ import { FavouritesService } from '../../../core/services/favourites.service';
 })
 export class GenesListComponent implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
+  @Input() showFiltersPanel: boolean;
   @Input() notFoundAndFoundGenes: any;
 
   @Input() set setSearchMode(searchMode: SearchMode) {
@@ -62,21 +63,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
     }
     this.downloadSearch(this.searchedData);
   }
-
-  public toggleData = [
-    {
-      searchMode: SearchModeEnum.searchByGenes,
-      description: 'search_for_genes_desc',
-    },
-    {
-      searchMode: SearchModeEnum.searchByGenesList,
-      description: 'search_for_genes_by_list_desc',
-    },
-    {
-      searchMode: SearchModeEnum.searchByGoTerms,
-      description: 'search_for_go_terms_desc',
-    },
-  ];
 
   public searchedData: Genes[] = [];
   public filterTypes = FilterTypesEnum;

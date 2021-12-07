@@ -66,4 +66,17 @@
   }
 }
 
+.description {
+  display: block;
+  width: 100%;
+}
 
+.description {
+  margin-top: 10px;
+  .description-content {
+    h2 {
+      font-size: calc(0.5vw + #{$font-size-bigger});
+      font-weight: $font-weight-medium;
+    }
+  }
+}

@@ -105,7 +105,8 @@
               [genesList]="confirmedGenesList"
               [notFoundAndFoundGenes]="confirmedFoundGenes"
               [isMobile]="isMobile"
-              [setSearchMode]="searchMode">
+              [setSearchMode]="searchMode"
+              [showFiltersPanel]="searchMode !== searchModeEnum.searchByGoTerms">
             </app-genes-list>
 
           </div>
