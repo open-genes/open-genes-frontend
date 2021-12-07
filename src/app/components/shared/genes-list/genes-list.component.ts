@@ -29,45 +29,57 @@ import { FavouritesService } from '../../../core/services/favourites.service';
 })
 export class GenesListComponent implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
-  @Input() showFiltersPanel: boolean;
+  @Input() notFoundAndFoundGenes: any;
 
   @Input() set setSearchMode(searchMode: SearchMode) {
     if (searchMode) {
-      this.isGoSearchPerformed = false;
+      this.searchMode = searchMode;
       this.isGoTermsMode = searchMode === this.searchModeEnum.searchByGoTerms;
-      if (!this.isGoTermsMode) {
-        this.clearFilters();
-      }
+      this.isGoSearchPerformed = true;
+      this.clearFilters();
     }
   }
 
   @Input() set genesList(genes: Genes[]) {
-    this.isGoSearchPerformed = this.isGoTermsMode;
     if (genes) {
       if (genes.length) {
         this.searchedData = genes;
+        this.isGoSearchPerformed = this.isGoTermsMode;
         this.openSnackBar();
       } else {
-        if (!this.isGoTermsMode) {
-          this.clearFilters();
-        }
-        this.isGoSearchPerformed = !this.isGoTermsMode;
+        this.clearFilters();
       }
     }
 
     if (genes === null) {
       this.searchedData = [];
+      this.isGoSearchPerformed = this.isGoTermsMode;
     }
     this.downloadSearch(this.searchedData);
   }
+
+  public toggleData = [
+    {
+      searchMode: SearchModeEnum.searchByGenes,
+      description: 'search_for_genes_desc',
+    },
+    {
+      searchMode: SearchModeEnum.searchByGenesList,
+      description: 'search_for_genes_by_list_desc',
+    },
+    {
+      searchMode: SearchModeEnum.searchByGoTerms,
+      description: 'search_for_go_terms_desc',
+    },
+  ];
 
   public searchedData: Genes[] = [];
   public filterTypes = FilterTypesEnum;
   public sortEnum = SortEnum;
   public sort: Sort = this.filterService.sort;
+  public searchMode: SearchMode;
 
   public isLoading = false;
-
   public isTableView: boolean;
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
@@ -89,7 +101,8 @@ export class GenesListComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
     private favouritesService: FavouritesService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.favouritesService.getItems();
@@ -110,24 +123,31 @@ export class GenesListComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.subscription$),
         switchMap((filters: Filter) => {
-          this.searchedData = [];
-          this.isLoading = true;
+          if (!this.isGoTermsMode) {
+            this.searchedData = [];
+            this.isLoading = true;
+          }
+
           return this.filterService.getFilteredGenes(filters);
-        }),
+        })
       )
       .subscribe(
         (filteredData) => {
           // TODO: add an interface for the whole response
-          this.currentPage = this.filterService.filters.page;
-          if (this.currentPage == 1) {
-            this.searchedData = [];
-            this.searchedData.push(...filteredData.items);
+          if (!this.isGoTermsMode) {
+            this.currentPage = this.filterService.filters.page;
+            if (this.currentPage == 1) {
+              this.searchedData = [];
+              this.searchedData.push(...filteredData.items);
+            } else {
+              this.searchedData.push(...filteredData.items);
+            }
+            this.openSnackBar();
+            this.downloadSearch(this.searchedData);
+            this.pageOptions = filteredData.options.pagination;
           } else {
-            this.searchedData.push(...filteredData.items);
+            this.searchedData = [];
           }
-          this.openSnackBar();
-          this.downloadSearch(this.searchedData);
-          this.pageOptions = filteredData.options.pagination;
           this.isLoading = false;
           this.cdRef.markForCheck();
         },
@@ -137,7 +157,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.cdRef.markForCheck();
         },
       );
-
   }
 
   /**

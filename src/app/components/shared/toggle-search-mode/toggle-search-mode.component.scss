@@ -66,34 +66,4 @@
   }
 }
 
-.description,
-.genes-info {
-  display: block;
-  width: 100%;
-}
 
-.description {
-  padding-top: 10px;
-
-  .description-content {
-    h2 {
-      font-size: calc(0.2vw + #{$font-size-bigger});
-      font-weight: $font-weight-medium;
-    }
-  }
-}
-
-.genes-info {
-  font-size: $font-size;
-  color: $color-gray;
-  margin-top: .3em;
-
-  .genes-info__found {
-    display: inline-block;
-    margin-right: 20px;
-  }
-
-  .genes-info__found + .genes-info__found {
-    margin-top: .5em;
-  }
-}

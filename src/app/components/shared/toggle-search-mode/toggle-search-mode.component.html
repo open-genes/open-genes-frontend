@@ -23,26 +23,3 @@
   </div>
 </div>
 
-<div class="description">
-  <ng-container *ngFor="let item of toggleData">
-    <div class="description-content"
-         [class.hidden]="searchMode !== item.searchMode">
-      <h2>{{ item.description | translate }}</h2>
-    </div>
-  </ng-container>
-</div>
-
-<div class="genes-info" *ngIf="searchMode === 'searchByGenesList'">
-  <div class="genes-info__found" *ngIf="notFoundAndFoundGenes?.foundGenes.length">
-    {{ 'items_found' | translate }} {{ notFoundAndFoundGenes?.foundGenes.length }}: <b><ng-container
-    *ngFor="let geneName of notFoundAndFoundGenes?.foundGenes; let last = last">
-      {{geneName}}<ng-container *ngIf="notFoundAndFoundGenes?.foundGenes.length > 1 && !last">,&nbsp;</ng-container>
-    </ng-container></b>
-  </div>
-  <div class="genes-info__found" *ngIf="notFoundAndFoundGenes?.notFoundGenes.length">
-    {{ 'items_not_found' | translate }} {{ notFoundAndFoundGenes?.notFoundGenes.length }}: <b><ng-container
-    *ngFor="let geneName of notFoundAndFoundGenes?.notFoundGenes;  let last = last">
-      {{geneName}}<ng-container *ngIf="notFoundAndFoundGenes?.notFoundGenes.length > 1 && !last">,&nbsp;</ng-container>
-    </ng-container></b>
-  </div>
-</div>

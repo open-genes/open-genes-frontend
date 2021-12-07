@@ -87,7 +87,6 @@
           </div>
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
             <app-toggle-search-mode
-              [notFoundAndFoundGenes]="notFoundAndFoundGenes"
               (setMode)="setSearchMode($event)"
             ></app-toggle-search-mode>
 
@@ -104,9 +103,9 @@
             <app-genes-list
               *ngIf="genes"
               [genesList]="confirmedGenesList"
+              [notFoundAndFoundGenes]="confirmedFoundGenes"
               [isMobile]="isMobile"
-              [setSearchMode]="searchMode"
-              [showFiltersPanel]="searchMode !== searchModeEnum.searchByGoTerms">
+              [setSearchMode]="searchMode">
             </app-genes-list>
 
           </div>
