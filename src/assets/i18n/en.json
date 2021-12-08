@@ -111,8 +111,8 @@
   "gene_page_orientation": "Orientation",
   "gene_page_orientation_minus_strand": "Minus strand",
   "gene_page_orientation_plus_strand": "Plus strand",
-  "gene_page_researches_age_related_changes_human": "Age-related changes in human expression",
-  "gene_page_researches_processes":"Related processes/functions/systems",
+  "gene_page_researches_age_related_changes_human": "Age-related gene expression changes in human",
+  "gene_page_researches_processes":"Related processes, functions or systems",
   "gene_page_researches_additional_evidence": "Other evidence for the gene's association with aging",
   "gene_page_researches_age_related_changes": "Age-related changes in the gene expression or protein activity",
   "gene_page_researches_lifespan": "Effect of modulation of gene activity on a lifespan",
@@ -318,7 +318,6 @@
   "цитоскелет": "cytoskeleton",
   "эмбриональное_развитие": "embryonic development",
   "эпигенетические_изменения": "epigenetic changes",
-
   "items_per_page": "Items per page",
   "next_page": "Next page",
   "prev_page": "Previous page",

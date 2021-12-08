@@ -104,8 +104,11 @@
   </section>
 
   <!-- Show more Button -->
-  <div class="btn-wrap show-more" *ngIf="searchedData.length !==0 && searchedData?.length >= pageOptions?.pageSize">
-    <button (click)="loadMoreGenes()" class="btn show-more__button">
+  <div
+    class="btn-wrap show-more"
+    *ngIf="searchedData.length >= pageOptions?.pageSize && currentPage < pageOptions?.pagesTotal">
+    <button (click)="loadMoreGenes()"
+            class="btn show-more__button">
       {{ "show_more" | translate }}
     </button>
   </div>

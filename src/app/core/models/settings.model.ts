@@ -17,3 +17,9 @@ export enum SearchModeEnum {
 }
 
 export type SearchMode = 'searchByGenes' | 'searchByGoTerms' | 'searchByGenesList';
+
+export interface Pagination {
+  page: number;
+  pageSize: number;
+  pagesTotal?: number;
+}

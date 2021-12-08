@@ -35,10 +35,25 @@
           <div class="col col-12 header__short-comment">
             <span class="str_source-GeneAge">
               {{gene.name}}
-              <span *ngIf="isGeneCandidate" class="alias alias--small alias--warning"
-              >{{ "gene_candidate" | translate }}
+              <span *ngIf="isGeneCandidate"
+                    class="alias alias--small alias--warning">
+                {{ "gene_candidate" | translate }}
               </span>
             </span>
+          </div>
+          <div class="col col-12 header__protein-classes">
+            <ng-container *ngIf="gene.proteinClasses; else tagSkeletal">
+              <span *ngFor="let item of gene.proteinClasses | keyvalue"
+                    class="alias">
+                {{ item.value | lowercase }}
+              </span>
+            </ng-container>
+            <ng-template #tagSkeletal>
+              <span class="alias __skeletal"></span>
+              <span class="alias __skeletal"></span>
+              <span class="alias __skeletal"></span>
+              <span class="alias __skeletal"></span>
+            </ng-template>
           </div>
         </div>
       </div>
@@ -99,63 +114,62 @@
           <div class="page-wrapper">
             <section class="wrapper gene-page__age">
               <div class="gene-page__annotation">
-                <div class="age__type age__phylogeny">
-                  <div class="type__inner">
-                    <div class="type__title col-5">
-                      {{ 'phylogeny' | translate }}:
-                    </div>
-
-                    <div class="type__value">
-                      <app-gene-age [gene]="gene" show="origin"></app-gene-age>
-                    </div>
+                <div class="annotation__row">
+                  <div class="row__title col-5">
+                    {{ 'phylogeny' | translate }}:
                   </div>
 
-                  <div class="type__inner">
-                    <div class="type__title  col-5">
-                      {{ 'gene_page_researches_processes' | translate }}:
-                    </div>
+                  <div class="row__value">
+                    <app-gene-age [gene]="gene" show="origin"></app-gene-age>
+                  </div>
+                </div>
 
-                    <div class="type__value">
-                      <div class="cluster" *ngIf="gene.functionalClusters.length else noData">
-                        <span
-                          class="cluster__value"
-                          *ngFor="let cluster of gene.functionalClusters">{{cluster.name}}</span>
-                      </div>
-
-                      <ng-template #noData>
-                        {{'gene_page_no_data' | translate}}
-                      </ng-template>
-                    </div>
+                <div class="annotation__row annotation__row--emphasized">
+                  <div class="row__title  col-5">
+                    {{ 'gene_page_researches_processes' | translate }}:
                   </div>
 
-                  <div class="type__inner">
-                    <div class="type__title  col-5">
-                      {{ 'gene_page_title_criteria' | translate }}:
-                    </div>
+                  <div class="row__value">
+                    <ng-container *ngIf="gene.functionalClusters; else noData">
+                        <button *ngFor="let item of gene.functionalClusters"
+                                class="alias item__value" (click)="onApplyFilter(filterTypes.functional_clusters, item.id)">
+                          {{item.name}}
+                        </button>
+                    </ng-container>
 
-                    <div class="type__value">
-                      <ul *ngIf="gene.commentCause.length !== 0 else noData"
-                          class="cause list list--bulletted">
-                        <!-- TODO: backend: return array of objects instead of object with objects -->
-                        <li *ngFor="let cause of gene.commentCause | keyvalue">
-                          {{cause.value}}
-                        </li>
-                      </ul>
+                    <ng-template #noData>
+                      {{'gene_page_no_data' | translate}}
+                    </ng-template>
+                  </div>
+                </div>
 
-                      <ng-template #noData>
-                        {{'gene_page_no_data' | translate}}
-                      </ng-template>
-                    </div>
+                <div class="annotation__row">
+                  <div class="row__title  col-5">
+                    {{ 'gene_page_title_criteria' | translate }}:
                   </div>
 
-                  <div class="type__inner">
-                    <div class="type__title  col-5">
-                      {{ 'gene_page_researches_age_related_changes_human' | translate }}:
-                    </div>
+                  <div class="row__value">
+                    <ul *ngIf="gene.commentCause.length !== 0 else noData"
+                        class="list list--bulletted">
+                      <!-- TODO: backend: return array of objects instead of object with objects -->
+                      <li *ngFor="let cause of gene.commentCause | keyvalue">
+                        {{cause.value}}
+                      </li>
+                    </ul>
 
-                    <div class="type__value">
-                      {{ getExpressionLocaleKey(gene.expressionChange) | translate }}
-                    </div>
+                    <ng-template #noData>
+                      {{'gene_page_no_data' | translate}}
+                    </ng-template>
+                  </div>
+                </div>
+
+                <div class="annotation__row">
+                  <div class="row__title  col-5">
+                    {{ 'gene_page_researches_age_related_changes_human' | translate }}:
+                  </div>
+
+                  <div class="row__value">
+                    {{ getExpressionLocaleKey(gene.expressionChange) | translate }}
                   </div>
                 </div>
               </div>
@@ -355,7 +369,8 @@
       </div>
     </div>
 
-    <app-gene-reference class="__mt-30"
+    <app-gene-reference *ngIf="isPageLoaded"
+                        class="__mt-30"
                         [gene]="gene"
     ></app-gene-reference>
   </div>
