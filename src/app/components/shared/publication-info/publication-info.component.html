@@ -1,0 +1,30 @@
+<h3>{{ 'publication_info_title' | translate }}</h3>
+<ng-container *ngIf="isDataLoaded">
+  <h4>
+    <a href=""
+       target="_blank">
+    {{ articleInfo.title }}</a>
+  </h4>
+  <p>
+    {{ articleInfo.publisher }}, {{ articleInfo.publicationYear }}
+  </p>
+  <p>
+    <small>
+      {{ 'publication_info_citation' | translate }} {{ articleInfo.citation }}
+    </small>
+  </p>
+</ng-container>
+
+<app-spinner *ngIf="isLoading"></app-spinner>
+
+<app-no-content
+  *ngIf="!isLoading && !isDataLoaded"
+  [title]="'nothing_found'" size="small">
+  <ng-container icon>
+    <app-icon icon="default"
+              size="custom"
+              customWidth="100%"
+              customHeight="100%"
+    ></app-icon>
+  </ng-container>
+</app-no-content>

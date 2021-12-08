@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AssociatedDiseases } from '../../../core/models/open-genes-api/associated-diseases.model';
-import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrapIntoAccordion';
+import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap-into-accordion';
 
 @Component({
   selector: 'app-associated-diseases',

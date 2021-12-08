@@ -11,9 +11,9 @@ import { GeneAgeComponent } from '../shared/gene-age/gene-age.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PopoverComponent } from './components/popover/popover.component';
 import { HintComponent } from './components/hint/hint.component';
+import { MaterialModule } from '../../modules/vendors/material.module'; // TODO: exclude
 import { CommonModalComponent } from './components/modals/common-modal/common-modal.component';
-import { ArticlesListModalComponent } from './components/modals/articles-list-modal/articles-list-modal.component';
-import { MaterialModule } from '../../modules/vendors/material.module';
+import { ArticleModalComponent } from './components/modals/article-modal/article-modal.component';
 
 const modules = [
   AccordionComponent,
@@ -28,7 +28,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...modules, ArticlesListModalComponent],
+  declarations: [...modules, ArticleModalComponent],
   exports: [...modules],
   imports: [CommonModule, IconModule, PipesModule, TranslateModule, MaterialModule]
 })

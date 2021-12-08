@@ -21,7 +21,8 @@ import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 import { DirectivesModule } from '../../directives/directives.module';
 import { NoContentModule } from '../../components/shared/no-content/no-content.module';
 import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
-import { GeneReferenceModule } from "../../components/shared/gene-reference/gene-reference.module";
+import { GeneReferenceModule } from '../../components/shared/gene-reference/gene-reference.module';
+import { PublicationInfoModule } from '../../components/shared/publication-info/publication-info.module';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { GeneReferenceModule } from "../../components/shared/gene-reference/gene
     DirectivesModule,
     NoContentModule,
     IconModule,
-    GeneReferenceModule
-  ]
+    GeneReferenceModule,
+    PublicationInfoModule,
+  ],
 })
 export class GeneModule {}

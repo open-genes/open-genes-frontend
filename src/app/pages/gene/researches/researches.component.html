@@ -475,24 +475,29 @@
 
 <!-- DRY -->
 <ng-template #links let-item="item">
-  <p>{{ item.comment }}</p>
+  <p *ngIf="item?.comment.length !== 0">
+    {{ item?.comment }}
+  </p>
 
-  <p>
+  <p *ngIf="item?.doi !== ''">
     <a
-      *ngIf="item?.doi !== ''"
       href="https://doi.org/{{ item?.doi }}"
       class="link"
       target="_blank"
-    >{{ item?.doi }}</a
-    ><br>
-
+    >{{ item?.doi }}</a>
+  </p>
+  <p *ngIf="item?.pmid !== ''">
     <a
-      *ngIf="item?.pmid !== ''"
       href="https://pubmed.ncbi.nlm.nih.gov/17170002/{{ item?.pmid }}"
       class="link"
       target="_blank"
     >{{ item?.pmid }}</a>
   </p>
+
+  <app-publication-info *ngIf="item?.doi"
+                        [doi]="item.doi"
+                        class="publication-info"
+  ></app-publication-info>
 </ng-template>
 
 <ng-template #dash>

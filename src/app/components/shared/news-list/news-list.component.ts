@@ -9,12 +9,12 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { PubmedApiService } from '../../../core/services/api/pubmed-api.service';
-import { Publication } from '../../../core/models/vendors-api/pubmed/news.model';
+import { Publication } from '../../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
 import { Genes } from '../../../core/models';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { NewsListParams } from '../../../core/models/vendors-api/pubmed/publications-search-api.model';
+import { NewsListParams } from '../../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
 
 @Component({
   selector: 'app-news-list',
