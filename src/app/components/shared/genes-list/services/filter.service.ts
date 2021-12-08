@@ -67,7 +67,7 @@ export class FilterService {
   }
 
   // Filter
-  public onApplyFilter(filterType: string, filterValue: number | string, isQueryParams?: boolean): void {
+  public onApplyFilter(filterType: string, filterValue: number | string): void {
     if (filterValue) {
       if (Array.isArray(this.filters[filterType])) {
         const arrayValues = filterValue.toString().split(',');
@@ -115,7 +115,7 @@ export class FilterService {
       }
     }
 
-    this.router.navigate([], {
+    this.router.navigate([''], {
       queryParams: queryParams,
     });
   }
@@ -171,10 +171,11 @@ export class FilterService {
         this.filters.byMethylationChange = '';
     }
     this.pagination.page = 1;
+
     this.areMoreThan2FiltersApplied();
   }
 
-  public areMoreThan2FiltersApplied(): void {
+  private areMoreThan2FiltersApplied(): void {
     const sum = [];
     Object.values(this.filters).forEach((value) => {
       if ((value && value.length) || (typeof value === 'number' && value !== 0)) {
@@ -182,6 +183,8 @@ export class FilterService {
       }
     });
     this.isClearFiltersBtnShown.next(sum.length >= 2);
+
+    this.updateList(this.filters);
 
     this.setQueryParams(this.filters);
   }

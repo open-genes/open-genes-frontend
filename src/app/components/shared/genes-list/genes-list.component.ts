@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
@@ -98,8 +98,8 @@ export class GenesListComponent implements OnInit, OnDestroy {
             this.filterService.onApplyFilter(key, params[key]);
           }
         }
+        this.filterService.updateList(this.filterService.filters);
       }
-      this.filterService.updateList(this.filterService.filters);
     });
 
     this.favouritesService.getItems();
@@ -125,28 +125,24 @@ export class GenesListComponent implements OnInit, OnDestroy {
           }
           this.searchedData = [];
           this.isGoSearchPerformed = !this.isGoTermsMode;
-          return this.filterService.getFilteredGenes(filters);
+          return this.isGoTermsMode ? EMPTY : this.filterService.getFilteredGenes(filters);
         })
       )
       .subscribe(
         (filteredData) => {
           // TODO: add an interface for the whole response
-          if (!this.isGoTermsMode) {
-            this.currentPage = this.filterService.pagination.page;
-            if (this.currentPage == 1) {
-              this.cachedData = [];
-              this.cachedData.push(...filteredData.items);
-              this.searchedData = [...this.cachedData];
-            } else {
-              this.cachedData.push(...filteredData.items);
-              this.searchedData = [...this.cachedData];
-            }
-            this.openSnackBar();
-            this.downloadSearch(this.searchedData);
-            this.pageOptions = filteredData.options.pagination;
+          this.currentPage = this.filterService.pagination.page;
+          if (this.currentPage == 1) {
+            this.cachedData = [];
+            this.cachedData.push(...filteredData.items);
+            this.searchedData = [...this.cachedData];
           } else {
-            this.searchedData = [];
+            this.cachedData.push(...filteredData.items);
+            this.searchedData = [...this.cachedData];
           }
+          this.openSnackBar();
+          this.downloadSearch(this.searchedData);
+          this.pageOptions = filteredData.options.pagination;
           this.isLoading = false;
           this.cdRef.markForCheck();
         },
