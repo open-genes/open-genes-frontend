@@ -90,25 +90,19 @@
       }
     }
 
+    .alias {
+      vertical-align: middle;
+    }
+
     .header__short-comment {
       font-size: $font-size-bigger;
       color: $color-gray;
       margin-bottom: 15px;
-
-      .alias {
-        margin: 0;
-        vertical-align: middle;
-      }
     }
 
-     .header__functional-clusters {
-       .alias {
-         cursor: pointer;
-         &:hover {
-           color: $color-purple;
-         }
-       }
-     }
+    .header__protein-classes {
+      margin-top: 10px;
+    }
   }
 
   &__age {
@@ -335,7 +329,14 @@
           z-index: 1;
           font-size: $font-size-smaller;
           color: #fff;
-          text-shadow: rgba($color-black, .25) 1px 0, rgba($color-black, .25) 1px 1px, rgba($color-black, .25) 0 1px, rgba($color-black, .25) -1px 1px, rgba($color-black, .25) -1px 0, rgba($color-black, .25) -1px -1px, rgba($color-black, .25) 0 -1px, rgba($color-black, .25) 1px -1px;
+          text-shadow: rgba($color-black, .25) 1px 0,
+          rgba($color-black, .25) 1px 1px,
+          rgba($color-black, .25) 0 1px,
+          rgba($color-black, .25) -1px 1px,
+          rgba($color-black, .25) -1px 0,
+          rgba($color-black, .25) -1px -1px,
+          rgba($color-black, .25) 0 -1px,
+          rgba($color-black, .25) 1px -1px;
         }
 
         &--minimum {
@@ -356,58 +357,43 @@
 .gene-page__annotation {
   width: 100%;
   display: flex;
+  flex-direction: column;
   background: $color-gray-very-light;
   border-radius: 5px;
-  padding: 9px 16px;
+  padding: 5px 0;
 
-  .age__type {
+  .annotation__row {
     width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    padding: 5px 20px;
 
-    .type__inner {
-      width: 100%;
-      display: flex;
-      margin: 5px;
-    }
-
-    .type__title {
+    .row__title {
       font-size: $font-size-bigger;
       color: $color-gray;
       padding: 0;
-
-      span:hover {
-        cursor: pointer;
-        color: $color-base;
-      }
     }
 
-    .type__value {
+    .row__value {
       font-size: $font-size-bigger;
       color: $color-black;
 
       small {
         font-size: $font-size-big;
       }
+    }
 
-      .cluster, .cause {
-        display: flex;
-        flex-wrap: wrap;
+    &--emphasized {
+      padding-top: 12px;
+      background-color: $color-general-light;
+    }
 
-        .cluster__value {
-          font-size: $font-size-very-small;
-          margin: 0 5px 5px 0px;
-          color: $color-clikable-500;
-          background: $color-clikable-100;
-          border-radius: 3px;
-          padding: 5px;
-        }
-      }
+    @include resolution_tablet-and-up {
+      flex-wrap: nowrap;
+    }
 
-      .cause {
-        display: flex;
-        flex-direction: column;
-      }
+    @include resolution_smartphone {
+      flex-wrap: wrap;
     }
   }
 }

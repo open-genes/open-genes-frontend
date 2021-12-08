@@ -42,7 +42,16 @@
   }
 }
 
-a.alias {
+a.alias,
+button.alias {
   color: $color-clikable-500;
   background-color: $color-clikable-100;
+
+  &:hover {
+    background-color: $color-clikable-200;
+  }
+
+  &:active {
+    background-color: $color-clikable-200;
+  }
 }

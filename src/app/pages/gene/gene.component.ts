@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
@@ -20,9 +20,10 @@ import { FilterTypesEnum } from '../../components/shared/genes-list/services/fil
   templateUrl: './gene.component.html',
   styleUrls: ['./gene.component.scss'],
 })
-export class GeneComponent extends ToMap implements OnInit, OnDestroy {
+export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('UiHints') UiHints: TemplateRef<any>;
 
+  public isPageLoaded = false;
   public gene: any;
   public symbol: string;
   public timestamp = 1562960035; // July 12 2019 - date when the first data was added
@@ -187,6 +188,10 @@ export class GeneComponent extends ToMap implements OnInit, OnDestroy {
     ]);
 
     return expressionTranslations.get(expression);
+  }
+
+  ngAfterViewInit(): void {
+    this.isPageLoaded = true;
   }
 
   ngOnDestroy(): void {
