@@ -7,6 +7,7 @@ import { WizardService } from '../../components/shared/wizard/wizard-service.ser
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
+import { NewsListParams } from '../../core/models/vendors-api/pubmed/publications-search-api.model';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,7 @@ import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
 export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public genes: Genes[];
   public searchedGenes: Genes[];
-  public confirmedGenesList: Genes[];
+  public confirmedGenesList: Genes[] | string;
   public lastGenes: Genes[];
   public isAvailable = true;
   public genesListIsLoaded = false;
@@ -25,6 +26,8 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public searchMode: SearchMode;
   public searchModeEnum = SearchModeEnum;
   public notFoundAndFoundGenes: any;
+  public confirmedFoundGenes: any;
+  public geneListForNewsFeed: NewsListParams[] = [];
 
   constructor(
     public windowService: WindowService,
@@ -58,6 +61,12 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       .subscribe(
         (genes) => {
           this.genes = genes;
+          genes.forEach((gene) => {
+            this.geneListForNewsFeed.push({
+              symbol: gene.symbol,
+              functionalClusters: gene.functionalClusters,
+            });
+          });
           this.cdRef.markForCheck();
         },
         (err) => {
@@ -89,18 +98,33 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     }
   }
 
-  public updateGenesList(event): void {
-    console.log('hi');
-    this.confirmedGenesList = [...this.searchedGenes];
+  public updateGenesList(query): void {
+    if (query && this.searchedGenes.length) {
+      this.confirmedGenesList = [...this.searchedGenes];
+    }
+
+    if (query && this.searchedGenes.length === 0) {
+      this.confirmedGenesList = null;
+    }
+
+    if (!query && this.searchedGenes.length === 0) {
+      this.confirmedGenesList = [];
+    }
+
+    this.confirmedFoundGenes = this.notFoundAndFoundGenes;
   }
 
   public setSearchMode(searchMode: SearchMode): void {
-    console.log('hi Mark');
     this.searchMode = searchMode;
+    this.confirmedGenesList = '';
+    this.confirmedFoundGenes = {
+      foundGenes: [],
+      notFoundGenes: [],
+    };
   }
 
   private searchByGenes(query: string): void {
-    if (query) {
+    if (query && query.length > 2) {
       this.searchedGenes = this.genes?.filter((gene) => {
         // Fields always acquired in response
         const searchedText = [
@@ -155,7 +179,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   private searchGenesByGoTerm(query: string): void {
-    if (query) {
+    if (query && query.length > 2) {
       this.apiService
         .getGoTermMatchByString(query)
         .pipe(takeUntil(this.subscription$))

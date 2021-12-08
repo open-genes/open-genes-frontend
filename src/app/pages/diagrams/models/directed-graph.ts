@@ -1,6 +1,6 @@
-import { AssociatedDiseaseCategories } from '../../../core/models/openGenesApi/associated-diseases.model';
+import { AssociatedDiseaseCategories } from '../../../core/models/open-genes-api/associated-diseases.model';
 import { FunctionalClusters } from '../../../core/models';
-import { Origin } from '../../../core/models/openGenesApi/origin.model';
+import { Origin } from '../../../core/models/open-genes-api/origin.model';
 
 export interface Node {
   id?: number;

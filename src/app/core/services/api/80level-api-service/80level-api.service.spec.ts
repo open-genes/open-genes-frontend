@@ -1,7 +1,7 @@
 import { EightyLevelService } from './80level-api.service';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { I80levelResponseAllArticles } from '../../../models/vendorsApi/80level/80level.model';
+import { I80levelResponseAllArticles } from '../../../models/vendors-api/80level/80level.model';
 
 describe('EightyLevelService', () => {
   beforeEach(() => {

@@ -12,7 +12,7 @@ import { Settings } from '../../../../core/models/settings.model';
 import { SettingsService } from '../../../../core/services/settings.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack-bar.component';
-import { GenesWLifespanResearches } from '../../../../core/models/openGenesApi/genes-with-increase-lifespan-researches.model';
+import { GenesWLifespanResearches } from '../../../../core/models/open-genes-api/genes-with-increase-lifespan-researches.model';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModalComponent } from '../../../../components/ui-components/components/modals/common-modal/common-modal.component';
 import { PageEvent } from '@angular/material/paginator';
@@ -99,7 +99,6 @@ export class GenesResearchListComponent implements OnInit, OnDestroy {
     const start = event.pageIndex * event.pageSize;
     const end = start + event.pageSize;
     this.searchedData = this.genesList.slice(start, end);
-    console.log(event)
   }
 
   /**

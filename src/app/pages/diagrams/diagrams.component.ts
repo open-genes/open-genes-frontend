@@ -4,7 +4,7 @@ import { DiagramGenes, Link, Node } from './models/directed-graph';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Subject } from 'rxjs';
 import { FunctionalClusters, Gene, Genes } from '../../core/models';
-import { AssociatedDiseaseCategories } from '../../core/models/openGenesApi/associated-diseases.model';
+import { AssociatedDiseaseCategories } from '../../core/models/open-genes-api/associated-diseases.model';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

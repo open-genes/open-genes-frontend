@@ -1,4 +1,4 @@
-@mixin typography {
+@mixin lists {
   ul, ol {
     &.list {
       width: 100%;
@@ -41,6 +41,10 @@
       }
     }
   }
+}
+
+@mixin typography {
+  @include lists;
 
   article,
   section {

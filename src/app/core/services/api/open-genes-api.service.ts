@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import { Gene, Genes } from '../../models';
 import { environment } from '../../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
-import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/openGenesApi/associated-diseases.model';
-import { GenesWLifespanResearches } from '../../models/openGenesApi/genes-with-increase-lifespan-researches.model';
-import { GenesInHorvathClock } from '../../models/openGenesApi/genes-in-horvath-clock.model';
+import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/open-genes-api/associated-diseases.model';
+import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with-increase-lifespan-researches.model';
+import { GenesInHorvathClock } from '../../models/open-genes-api/genes-in-horvath-clock.model';
 
 @Injectable({
   providedIn: 'root',

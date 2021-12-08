@@ -48,8 +48,6 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Output() confirmedQuery: EventEmitter<any> = new EventEmitter<any>();
 
   public clearFieldButton: boolean;
-  public foundGenes: string[];
-  public notFoundGenes: string[] = [];
   public searchedData: Genes[];
   public searchForm: FormGroup;
   public searchMode: SearchMode;
@@ -100,12 +98,9 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchForm
       .get('searchField')
       .valueChanges.pipe(
-        map((query: string) => query?.toLowerCase()),
-        filter((query: string) => {
-          return this.clearFieldButton = !!query;
-        }),
         map((query: string) => query.toLowerCase().replace(/-/g, '')),
         filter((query: string) => {
+          this.clearFieldButton = !!query;
           this.highlightText = query;
           this.showSearchResult = query?.length >= 2;
 

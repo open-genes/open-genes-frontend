@@ -209,7 +209,6 @@
       <th class="__cell-width-small">
         {{ "gene_intervention_result" | translate }}
       </th>
-      <th>{{ "intervention_aging_process" | translate }}</th>
       <th>{{ "researches_object" | translate }}</th>
       <th>{{ "researches_age" | translate }}<sup>*</sup></th>
       <th>{{ "researches_sex" | translate }}</th>
@@ -229,15 +228,29 @@
           </ng-container>
         </td>
         <td>
-          <ng-container *ngIf="item.interventionResult ; else dash">
-            {{ item.interventionResult }}
+          <ng-container
+            *ngIf="item?.interventionDeteriorates || item?.interventionImproves;
+            else dash">
+            <ng-container *ngIf="item?.interventionDeteriorates.length !== 0">
+              <h6>{{ "researches_deteriorates" | translate }}</h6>
+              <ul class="list list--bulletted __mt-0">
+                <li *ngFor="let result of item.interventionDeteriorates">
+                  {{ result.name }}
+                </li>
+              </ul>
+            </ng-container>
+
+            <ng-container *ngIf="item?.interventionImproves.length !== 0">
+              <h6>{{ "researches_improves" | translate }}</h6>
+              <ul class="list list--bulletted __mt-0">
+                <li *ngFor="let result of item.interventionImproves">
+                  {{ result.name }}
+                </li>
+              </ul>
+            </ng-container>
           </ng-container>
         </td>
-        <td>
-          <ng-container *ngIf="item.vitalProcess ; else dash">
-            {{ item.vitalProcess }}
-          </ng-container>
-        </td>
+
         <td class="__nowrap">
           <ng-container *ngIf="item.modelOrganism ; else dash">
             {{ item.modelOrganism }}
@@ -430,11 +443,30 @@
       <th>
         {{ "researches_comment" | translate }}
       </th>
+      <th>
+        {{ "researches_reference" | translate }}
+      </th>
       </thead>
 
       <tr *ngFor="let item of researches.additionalEvidences">
         <td>
           {{ item.comment }}
+        </td>
+        <td>
+          <a
+            *ngIf="item?.doi !== ''"
+            href="https://doi.org/{{ item?.doi }}"
+            class="link"
+            target="_blank"
+          >{{ item?.doi }}</a
+          ><br>
+
+          <a
+            *ngIf="item?.pmid !== ''"
+            href="https://pubmed.ncbi.nlm.nih.gov/17170002/{{ item?.pmid }}"
+            class="link"
+            target="_blank"
+          >{{ item?.pmid }}</a>
         </td>
       </tr>
     </table>

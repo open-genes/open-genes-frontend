@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AssociatedDiseases } from '../../../core/models/openGenesApi/associated-diseases.model';
+import { AssociatedDiseases } from '../../../core/models/open-genes-api/associated-diseases.model';
 import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrapIntoAccordion';
 
 @Component({

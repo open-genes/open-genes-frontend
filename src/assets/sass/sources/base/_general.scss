@@ -103,6 +103,7 @@ body {
 
 .link {
   @include base-link;
+  @include blue-link;
 
   &--gray {
     @include gray-link;

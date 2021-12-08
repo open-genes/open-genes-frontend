@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AsyncSubject, Subject } from 'rxjs';
-import { I80levelResponseArticle } from '../../../core/models/vendorsApi/80level/80level.model';
+import { I80levelResponseArticle } from '../../../core/models/vendors-api/80level/80level.model';
 import { map, takeUntil } from 'rxjs/operators';
 import { EightyLevelService } from '../../../core/services/api/80level-api-service/80level-api.service';
 import { environment } from '../../../../environments/environment';
