@@ -79,4 +79,25 @@
   }
 }
 
+::ng-deep .publication-info {
+  display: block;
+  width: 100%;
+  color: $color-gray;
+  margin-top: 2em;
+  border-top: 1px solid $color-borders;
+  padding-top: 12px;
+
+  h4 {
+    font-size: $font-size-big;
+  }
+
+  p {
+    font-size: $font-size-smaller;
+  }
+
+  small {
+    font-size: 95%;
+  }
+}
+
 @include modal-window('comment');

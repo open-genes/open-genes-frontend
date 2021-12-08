@@ -15,12 +15,13 @@ interface ArticleDataConverted {
 @Component({
   selector: 'app-publication-info',
   templateUrl: './publication-info.component.html',
-  styleUrls: ['./publication-info.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class PublicationInfoComponent implements OnInit, OnDestroy {
   @Input() doi: string;
 
+  public isLoading: boolean;
+  public isDataLoaded: boolean;
   public articleInfo: ArticleDataConverted;
   private subscription$ = new Subject();
 
@@ -31,7 +32,7 @@ export class PublicationInfoComponent implements OnInit, OnDestroy {
   }
 
   public getArticleData(doi): void {
-    console.log(doi);
+    this.isLoading = true;
     this.pubmedApiService
       .getArticleByDoi(doi)
       .pipe(
@@ -50,9 +51,13 @@ export class PublicationInfoComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           this.articleInfo = res;
+          this.isLoading = false;
+          this.isDataLoaded = true;
         },
         (error) => {
           console.log(error);
+          this.isLoading = false;
+          this.isDataLoaded = false;
         }
       );
   }
