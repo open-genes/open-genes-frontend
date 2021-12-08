@@ -111,6 +111,8 @@
   "gene_page_orientation": "方向",
   "gene_page_orientation_minus_strand": "负链",
   "gene_page_orientation_plus_strand": "正链",
+  "gene_page_researches_age_related_changes_human": "与年龄相关的人类基因表达变化",
+  "gene_page_researches_processes":"相关流程、功能或系统",
   "gene_page_researches_additional_evidence": "该基因与衰老相关的其他证据",
   "gene_page_researches_age_related_changes": "基因表达或蛋白质活性的年龄相关变化",
   "gene_page_researches_lifespan": "调节基因活性对寿命的影响",
@@ -228,6 +230,8 @@
   "product_name": "开放基因",
   "progeria_syndrome": "早衰综合症",
   "protein_regulates_genes_activity": "效果",
+  "publication_info_title": "出版信息",
+  "publication_info_citation": "引用次数: ",
   "read_more": "阅读更多",
   "researches_age": "年龄",
   "researches_age_from": "年龄（来自）",
@@ -313,5 +317,9 @@
   "участие_гена_в_связанных_со_старением_процессах_механизмах": "基因参与衰老相关过程或机制",
   "цитоскелет": "细胞骨架",
   "эмбриональное_развитие": "胚胎发育",
-  "эпигенетические_изменения": "表观遗传变化"
+  "эпигенетические_изменения": "表观遗传变化",
+  "items_per_page": "每页项目",
+  "next_page": "下一页",
+  "prev_page": "上一页",
+  "of_label": "中的"
 }

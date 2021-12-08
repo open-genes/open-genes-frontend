@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
@@ -20,6 +13,7 @@ import { Filter, Sort } from './services/filter.model';
 import { SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { FavouritesService } from '../../../core/services/favourites.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-genes-list',
@@ -30,33 +24,36 @@ import { FavouritesService } from '../../../core/services/favourites.service';
 export class GenesListComponent implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
+  @Input() notFoundAndFoundGenes: any;
 
   @Input() set setSearchMode(searchMode: SearchMode) {
     if (searchMode) {
-      this.isGoSearchPerformed = false;
+      this.searchMode = searchMode;
       this.isGoTermsMode = searchMode === this.searchModeEnum.searchByGoTerms;
-      if (!this.isGoTermsMode) {
-        this.clearFilters();
-      }
+      this.clearFilters();
     }
   }
 
   @Input() set genesList(genes: Genes[]) {
-    this.isGoSearchPerformed = this.isGoTermsMode;
     if (genes) {
       if (genes.length) {
-        this.searchedData = genes;
+        if (genes.length > this.genesPerPage) {
+          this.currentPage = 1;
+          this.genesFromInput = genes;
+          this.searchedData = genes.slice(0, this.genesPerPage);
+        } else {
+          this.searchedData = genes;
+        }
+        this.isGoSearchPerformed = this.isGoTermsMode;
         this.openSnackBar();
       } else {
-        if (!this.isGoTermsMode) {
-          this.clearFilters();
-        }
-        this.isGoSearchPerformed = !this.isGoTermsMode;
+        this.clearFilters();
       }
     }
 
     if (genes === null) {
       this.searchedData = [];
+      this.isGoSearchPerformed = this.isGoTermsMode;
     }
     this.downloadSearch(this.searchedData);
   }
@@ -65,33 +62,46 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public filterTypes = FilterTypesEnum;
   public sortEnum = SortEnum;
   public sort: Sort = this.filterService.sort;
+  public searchMode: SearchMode;
 
   public isLoading = false;
-
   public isTableView: boolean;
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
-  public isGoTermsModeError = false;
-
   public downloadJsonLink: string | SafeResourceUrl = '#';
   public currentPage: number;
   public pageOptions: any;
 
+  private cachedData: Genes[] = [];
   private retrievedSettings: Settings;
   private searchModeEnum = SearchModeEnum;
   private subscription$ = new Subject();
+  private genesFromInput: Genes[];
+  private genesPerPage = 20;
 
   constructor(
     private readonly apiService: ApiService,
     private filterService: FilterService,
     private settingsService: SettingsService,
+    private favouritesService: FavouritesService,
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
-    private favouritesService: FavouritesService,
+    private aRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.aRoute.queryParams.subscribe((params) => {
+      if (Object.keys(params).length) {
+        for (const key in params) {
+          if (params[key] !== this.filterService.filters[key].toString()) {
+            this.filterService.onApplyFilter(key, params[key]);
+          }
+        }
+        this.filterService.updateList(this.filterService.filters);
+      }
+    });
+
     this.favouritesService.getItems();
     this.setInitSettings();
     this.setInitialState();
@@ -110,20 +120,25 @@ export class GenesListComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.subscription$),
         switchMap((filters: Filter) => {
+          if (!this.isGoTermsMode) {
+            this.isLoading = true;
+          }
           this.searchedData = [];
-          this.isLoading = true;
-          return this.filterService.getFilteredGenes(filters);
-        }),
+          this.isGoSearchPerformed = !this.isGoTermsMode;
+          return this.isGoTermsMode ? EMPTY : this.filterService.getFilteredGenes(filters);
+        })
       )
       .subscribe(
         (filteredData) => {
           // TODO: add an interface for the whole response
-          this.currentPage = this.filterService.filters.page;
+          this.currentPage = this.filterService.pagination.page;
           if (this.currentPage == 1) {
-            this.searchedData = [];
-            this.searchedData.push(...filteredData.items);
+            this.cachedData = [];
+            this.cachedData.push(...filteredData.items);
+            this.searchedData = [...this.cachedData];
           } else {
-            this.searchedData.push(...filteredData.items);
+            this.cachedData.push(...filteredData.items);
+            this.searchedData = [...this.cachedData];
           }
           this.openSnackBar();
           this.downloadSearch(this.searchedData);
@@ -137,31 +152,25 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.cdRef.markForCheck();
         },
       );
-
   }
 
   /**
    * Load next 20 genes
    */
   public loadMoreGenes(): void {
-    this.filterService.onLoadMoreGenes(this.pageOptions.pagesTotal);
+    if (!this.isGoTermsMode) {
+      this.filterService.onLoadMoreGenes(this.pageOptions.pagesTotal);
+      return;
+    }
+
+    if (this.genesFromInput?.length >= this.genesPerPage) {
+      this.currentPage++;
+      const end = this.currentPage * this.genesPerPage;
+      const start = end - this.genesPerPage;
+      const nextPageData = this.genesFromInput.slice(start, end);
+      this.searchedData.push(...nextPageData);
+    }
   }
-
-
-  /*  // TODO: this function isn't pure
-    public searchGenesByGoTerm(query: string): void {
-      this.isLoading = true;
-              this.isGoSearchPerformed = true;
-
-
-
-              const isAnyTermFound = this.biologicalProcess || this.cellularComponent || this.molecularActivity;
-              this.isGoTermsModeError = !isAnyTermFound;
-
-            },
-          );
-      }
-    }*/
 
   private openSnackBar(): void {
     this.snackBar.openFromComponent(SnackBarComponent, {

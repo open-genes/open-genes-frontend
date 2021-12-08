@@ -14,7 +14,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { EightyLevelService } from '../../core/services/api/80level-api-service/80level-api.service';
 import { environment } from '../../../environments/environment';
-import { NewsListParams } from '../../core/models/vendors-api/pubmed/publications-search-api.model';
+import { NewsListParams } from '../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
 
 @Component({
   selector: 'app-news',
