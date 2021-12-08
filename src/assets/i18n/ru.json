@@ -112,7 +112,7 @@
   "gene_page_orientation_minus_strand": "Минус-цепь",
   "gene_page_orientation_plus_strand": "Плюс-цепь",
   "gene_page_researches_age_related_changes_human": "Возрастные изменения экспрессии у человека",
-  "gene_page_researches_processes":"Связанные процессы/функции/системы",
+  "gene_page_researches_processes":"Связанные процессы, функции или системы",
   "gene_page_researches_additional_evidence": "Другие подтверждения ассоциации гена со старением",
   "gene_page_researches_age_related_changes": "Возрастные изменения экспрессии гена или активности белка",
   "gene_page_researches_lifespan": "Влияние модуляции активности гена на продолжительность жизни",
@@ -316,7 +316,6 @@
   "цитоскелет": "цитоскелет",
   "эмбриональное_развитие": "эмбриональное развитие",
   "эпигенетические_изменения": "эпигенетические изменения",
-
   "items_per_page": "Количество элементов на странице",
   "next_page": "Следующая страница",
   "prev_page": "Предыдущая страница",
