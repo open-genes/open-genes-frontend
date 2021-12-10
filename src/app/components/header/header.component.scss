@@ -2,18 +2,46 @@
 
 .header {
   width: 100%;
-  height: $header-height;
+  min-height: $header-height - $header-announcement-height;
   color: $color-base;
   background-color: $color-white;
-  padding: 0 5px;
   box-shadow: $box-shadow;
+
+  &__announcement {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    height: $header-announcement-height;
+    width: 100%;
+    background-color: $color-clikable-200;
+    color: $color-clikable-500;
+    font-size: $font-size-smaller;
+
+    b {
+      font-weight: $font-weight-medium;
+      position: relative;
+
+      &::after {
+        content: ' ';
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px dotted currentColor;
+        position: absolute;
+        bottom: 1px;
+        left: 0;
+      }
+    }
+  }
 
   &__centering {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
+    height: $header-height - $header-announcement-height;
     width: 100%;
+    padding: 0 5px;
     margin: 0 auto;
     position: relative;
 
@@ -46,7 +74,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    height: $header-height;
+    height: $header-height - $header-announcement-height;
     position: relative;
 
     app-burger-menu {

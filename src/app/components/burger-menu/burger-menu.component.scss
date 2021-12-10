@@ -39,7 +39,7 @@
 
 .menu__panel {
   height: 100%;
-  padding: #{$header-height + 15px} 0;
+  padding: #{($header-height - $header-announcement-height) + 15px} 0;
   position: absolute;
   top: 0;
   right: 0;
@@ -61,13 +61,13 @@
     left: 0;
     z-index: 0;
     width: 100%;
-    height: $header-height;
   }
 
   .panel__header {
     display: block;
+    height: $header-height;
     top: 0;
-    background-color: $color-general-light;
+    background-color: $color-white;
   }
 
   .panel__links {
@@ -136,6 +136,7 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: center;
+    height: $header-height - $header-announcement-height;
     bottom: 0;
     background-color: $color-black;
     font-size: $font-size-bigger;
