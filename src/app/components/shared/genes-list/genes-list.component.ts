@@ -1,11 +1,18 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
 import { FilterService } from './services/filter.service';
 import { FilterTypesEnum, SortEnum } from './services/filter-types.enum';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { FileExportService } from '../../../core/services/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
@@ -30,6 +37,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
     if (searchMode) {
       this.searchMode = searchMode;
       this.isGoTermsMode = searchMode === this.searchModeEnum.searchByGoTerms;
+      this.snackBarRef?.dismiss();
       this.clearFilters();
     }
   }
@@ -78,6 +86,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   private subscription$ = new Subject();
   private genesFromInput: Genes[];
   private genesPerPage = 20;
+  private snackBarRef: MatSnackBarRef<SnackBarComponent>;
 
   constructor(
     private readonly apiService: ApiService,
@@ -140,7 +149,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
             this.cachedData.push(...filteredData.items);
             this.searchedData = [...this.cachedData];
           }
-          this.openSnackBar();
           this.downloadSearch(this.searchedData);
           this.pageOptions = filteredData.options.pagination;
           this.isLoading = false;
@@ -150,7 +158,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
           console.log(error);
           this.isLoading = false;
           this.cdRef.markForCheck();
-        },
+        }
       );
   }
 
@@ -173,7 +181,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   }
 
   private openSnackBar(): void {
-    this.snackBar.openFromComponent(SnackBarComponent, {
+    this.snackBarRef = this.snackBar.openFromComponent(SnackBarComponent, {
       data: {
         title: 'items_found',
         length: this.searchedData ? this.searchedData.length : 0,
