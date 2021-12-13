@@ -104,21 +104,15 @@ export class SwipeVeticalDirective {
         this.lastPosition = position;
 
         // TODO: Make the same for horizontal directive and use DRY
-        const density = 100;
         if (this.lastPosition > 0) {
-          if (height >= this.distance && this.distance >= density) {
+          if (height > 0) {
             this.renderer.setStyle(
               this.element.nativeElement,
-              'max-height',
-              `${height - position / this.distance}px`
-            );
+              'max-height', `${height - position / this.distance}px`);
           }
         } else if (this.lastPosition < 0) {
           this.renderer.setStyle(
-            this.element.nativeElement,
-            'max-height',
-            `100%`
-          );
+            this.element.nativeElement, 'max-height', `100%`);
         }
       }
     });
