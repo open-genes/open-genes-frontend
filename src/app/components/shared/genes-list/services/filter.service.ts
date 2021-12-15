@@ -46,6 +46,7 @@ export class FilterService {
     bySelectionCriteria: [],
     byExpressionChange: 0,
     byMethylationChange: '',
+    byAgingMechanism: [],
   };
 
   public pagination: Pagination = {
@@ -140,6 +141,7 @@ export class FilterService {
       selection_criteria,
       expression_change,
       methylation_change,
+      aging_mechanism,
     } = FilterTypesEnum;
     switch (filterName) {
       case functional_clusters:
@@ -159,6 +161,9 @@ export class FilterService {
         break;
       case methylation_change:
         this.filters.byMethylationChange = '';
+        break
+      case aging_mechanism:
+        this.filters.byAgingMechanism = [];
         break;
       default:
         this.sort.byName = false;
@@ -169,6 +174,7 @@ export class FilterService {
         this.filters.bySelectionCriteria = [];
         this.filters.byExpressionChange = 0;
         this.filters.byMethylationChange = '';
+        this.filters.byAgingMechanism = [];
     }
     this.pagination.page = 1;
 

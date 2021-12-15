@@ -11,13 +11,15 @@ interface TimestampObject {
   created: string;
 }
 
+export interface AgingMechanisms {
+  id: string;
+  name: string;
+}
+
 interface GeneralGeneInfo {
   id: number;
   symbol: string;
-  agingMechanisms: {
-    id: number;
-    name: string;
-  }[];
+  agingMechanisms: AgingMechanisms[];
   aliases: string[];
   commentCause?: SelectionCriteria;
   diseaseCategories?: AssociatedDiseaseCategories;

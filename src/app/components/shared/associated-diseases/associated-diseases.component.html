@@ -1,11 +1,9 @@
 <ng-container *ngIf="mappedDiseases && listLength !== 0; else noDisease">
 
   <ng-container *ngIf="!isAccordion; else accordion">
-    <ul
-      *ngFor="let disease of mappedDiseases | keyvalue"
-      class="list list--bulletted">
-
-      <li [class.__active]="activeListItem.includes(disease.key)"
+    <ul class="list list--bulletted">
+      <li *ngFor="let disease of mappedDiseases | keyvalue"
+          [class.__active]="activeListItem.includes(disease.key)"
           (click)="emitOnClick(disease.key)">
         {{ disease.value['name'] }}
       </li>
@@ -50,7 +48,7 @@
 </ng-container>
 
 <ng-template #noDisease>
-  <div class="no-criteria">
+  <div class="no-diseases">
     {{ 'no_diseases' | translate }}
   </div>
 </ng-template>
