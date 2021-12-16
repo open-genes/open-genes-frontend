@@ -1,11 +1,9 @@
 <ng-container *ngIf="geneCriteria && listLength !== 0; else noCriteria">
 
   <ng-container *ngIf="!isAccordion; else accordion">
-    <ul
-      *ngFor="let criteria of geneCriteria | keyvalue"
-      class="list list--bulletted">
-
-      <li [class.__active]="activeListItem.includes(+criteria.key)"
+    <ul class="list list--bulletted">
+      <li *ngFor="let criteria of geneCriteria | keyvalue"
+          [class.__active]="activeListItem.includes(+criteria.key)"
           (click)="emitOnClick(criteria.key)">
         {{ criteria.value }}
       </li>

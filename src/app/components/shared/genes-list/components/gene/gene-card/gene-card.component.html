@@ -55,12 +55,13 @@
          class="card__section">
       <span class="label">
       {{ "gene_list_aging_mechanisms" | translate }}
-    </span>
-      <ul class="list list--bulletted">
-        <li *ngFor="let mechanism of item?.agingMechanisms">
-          {{ mechanism.name }}
-        </li>
-      </ul>
+      </span>
+
+      <app-aging-mechanisms
+        [geneAgingMechanisms]="item.agingMechanisms"
+        [activeListItem]="filters.byAgingMechanism"
+        (clickEvent)="onApplyFilter(filterTypes.aging_mechanism, $event)"
+      ></app-aging-mechanisms>
     </div>
   </ng-container>
 

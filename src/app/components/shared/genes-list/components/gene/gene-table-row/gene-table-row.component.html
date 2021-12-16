@@ -57,12 +57,11 @@
   <ng-container *ngIf="listSettings.ifShowAgingMechanisms">
     <td class="cell cell--mechanisms">
       <div class="overflow">
-        <ul *ngIf="item?.agingMechanisms && item?.agingMechanisms.length !== 0"
-            class="list list--bulletted">
-          <li *ngFor="let mechanism of item?.agingMechanisms">
-            {{ mechanism.name }}
-          </li>
-        </ul>
+        <app-aging-mechanisms
+          [geneAgingMechanisms]="item.agingMechanisms"
+          [activeListItem]="filters.byAgingMechanism"
+          (clickEvent)="onApplyFilter(filterTypes.aging_mechanism, $event)"
+        ></app-aging-mechanisms>
       </div>
     </td>
   </ng-container>

@@ -49,11 +49,15 @@
         width: 100%;
         font-size: $font-size-small;
         color: $color-gray-halfing;
-        margin-bottom: 5px;
+        margin: 12px 0 5px 0;
       }
 
       &:last-child {
         margin-bottom: 0;
+      }
+
+      .label + .list {
+        margin-top: 0;
       }
     }
 
