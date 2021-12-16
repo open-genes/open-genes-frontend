@@ -6,7 +6,6 @@ import { GenesListSettings } from '../genes-list-settings.model';
 import { FilteredGenes } from '../../../../core/models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
-import { environment } from '../../../../../environments/environment';
 import { Router } from '@angular/router';
 import { Pagination } from '../../../../core/models/settings.model';
 import { SettingsService } from '../../../../core/services/settings.service';
@@ -15,7 +14,6 @@ import { SettingsService } from '../../../../core/services/settings.service';
   providedIn: 'root',
 })
 export class FilterService {
-  private url = environment.apiUrl;
   private listOfFields$ = new BehaviorSubject<any>('');
   private filterChanges$ = new BehaviorSubject<any>([]);
 
@@ -204,6 +202,6 @@ export class FilterService {
       }
     });
 
-    return this.http.get<FilteredGenes>(`${this.url}/api/gene/search`, { params });
+    return this.http.get<FilteredGenes>(`/api/gene/search`, { params });
   }
 }

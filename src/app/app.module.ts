@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { APP_ROUTES, ROUTER_OPTIONS } from './app-routing';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import localeRu from '@angular/common/locales/ru';
@@ -31,6 +31,7 @@ import { TermsModule } from './components/shared/terms/terms.module';
 import { SnackBarModule } from './components/shared/snack-bar/snack-bar.module';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomMatPaginatorIntl } from './core/services/custom-mat-paginator-int';
+import { HttpReqInterceptor } from './core/utils/http-req.interceptor';
 
 // required for AOT compilation
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new TranslateHttpLoader(http);
@@ -60,6 +61,11 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new Transla
   providers: [
     TranslateService,
     { provide: LOCALE_ID, useValue: 'en' },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpReqInterceptor,
+      multi: true,
+    },
     { provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl },
   ],
   exports: [MaterialModule],
