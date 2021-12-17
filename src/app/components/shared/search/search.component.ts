@@ -29,6 +29,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Inject(Document) public document: Document;
   @Input() genesLength: number;
   @Input() showTitle: boolean;
+  @Input() showProgressBar: boolean;
 
   @Input() set genesList(genes: any) {
     if (genes) {

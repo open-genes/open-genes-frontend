@@ -91,11 +91,12 @@
             ></app-toggle-search-mode>
 
             <app-search
-              class="__mt-30"
+              class="__mt-20 __mb-10"
               [showTitle]="true"
               [genesLength]="genes?.length"
               [genesList]="searchedGenes"
               [setSearchMode]="searchMode"
+              [showProgressBar]="showProgressBar"
               (confirmedQuery)="updateGenesList($event)"
               (searchQuery)="setSearchQuery($event)"
             ></app-search>

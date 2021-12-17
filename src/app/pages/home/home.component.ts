@@ -28,6 +28,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public notFoundAndFoundGenes: any;
   public confirmedFoundGenes: any;
   public geneListForNewsFeed: NewsListParams[] = [];
+  public showProgressBar = false;
 
   constructor(
     public windowService: WindowService,
@@ -180,6 +181,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
 
   private searchGenesByGoTerm(query: string): void {
     if (query && query.length > 2) {
+      this.showProgressBar = true;
       this.apiService
         .getGoTermMatchByString(query)
         .pipe(takeUntil(this.subscription$))
@@ -187,10 +189,12 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
           (genes) => {
             this.searchedGenes = genes; // If nothing found, will return empty array
             this.mapTerms();
+            this.showProgressBar = false;
             this.cdRef.markForCheck();
           },
           (error) => {
             console.log(error);
+            this.showProgressBar = false;
             this.cdRef.markForCheck();
           }
         );
