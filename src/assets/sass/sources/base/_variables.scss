@@ -99,7 +99,7 @@ $color-border-light: #e3e4e8;
 $color-borders-active: darken($color-hover, 10%);
 
 // - header
-$header-announcement-height: $ui-base-height;
+$header-announcement-height: 0; // 0 | $ui-base-height
 $header-height: 56px + $header-announcement-height;
 
 // - preloader
