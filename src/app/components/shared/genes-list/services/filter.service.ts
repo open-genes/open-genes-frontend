@@ -6,33 +6,20 @@ import { GenesListSettings } from '../genes-list-settings.model';
 import { FilteredGenes } from '../../../../core/models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
-import { environment } from '../../../../../environments/environment';
 import { Router } from '@angular/router';
 import { Pagination } from '../../../../core/models/settings.model';
+import { SettingsService } from '../../../../core/services/settings.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilterService {
-  private url = environment.apiUrl;
   private listOfFields$ = new BehaviorSubject<any>('');
   private filterChanges$ = new BehaviorSubject<any>([]);
 
   public currentFields: Observable<GenesListSettings> = this.listOfFields$.asObservable();
   public filterResult: Observable<Filter> = this.filterChanges$.asObservable();
   public isClearFiltersBtnShown = new BehaviorSubject<boolean>(false);
-
-  public genesListSettings: GenesListSettings = {
-    // Default:
-    ifShowAge: true,
-    ifShowFuncClusters: true,
-    ifShowExpression: true,
-    ifShowDiseases: true,
-    ifShowDiseaseCategories: false,
-    ifShowCriteria: true,
-    ifShowMethylation: false,
-    ifShowAgingMechanisms: false,
-  };
 
   public sort: Sort = {
     byName: false,
@@ -57,9 +44,10 @@ export class FilterService {
   constructor(
     private http: HttpClient,
     private translate: TranslateService,
+    private settingsService: SettingsService,
     private router: Router
   ) {
-    this.updateFields(this.genesListSettings);
+    this.updateFields(this.settingsService.genesListSettings);
     this.filterChanges$.next(this.filters);
   }
 
@@ -214,6 +202,6 @@ export class FilterService {
       }
     });
 
-    return this.http.get<FilteredGenes>(`${this.url}/api/gene/search`, { params });
+    return this.http.get<FilteredGenes>(`/api/gene/search`, { params });
   }
 }

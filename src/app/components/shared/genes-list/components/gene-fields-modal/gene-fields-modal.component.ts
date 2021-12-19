@@ -4,6 +4,7 @@ import { GenesListSettings } from '../../genes-list-settings.model';
 import { FilterService } from '../../services/filter.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { SettingsService } from '../../../../../core/services/settings.service';
 
 @Component({
   selector: 'app-gene-fields-modal',
@@ -18,6 +19,7 @@ export class GeneFieldsModalComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<GeneFieldsModalComponent>,
     private filterService: FilterService,
+    private settingsService: SettingsService,
     private cdRef: ChangeDetectorRef
   ) {}
 
@@ -32,6 +34,7 @@ export class GeneFieldsModalComponent implements OnInit {
   private updateCurrentFields() {
     this.filterService.currentFields.pipe(takeUntil(this.subscription$)).subscribe(
       (fields) => {
+        this.settingsService.setFieldsForShow(fields);
         this.listSettings = fields;
         this.cdRef.markForCheck();
       },
