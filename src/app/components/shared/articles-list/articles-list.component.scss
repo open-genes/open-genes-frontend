@@ -19,8 +19,7 @@ $articles-gap-l: 10px;
   }
 
   .no-articles:not(.no-articles--mini),
-  .show-more,
-  .skeleton {
+  .show-more {
     padding-right: #{$articles-gap-l};
     padding-left: #{$articles-gap-l};
   }
@@ -30,10 +29,6 @@ $articles-gap-l: 10px;
     padding-left: #{$articles-gap-s};
     margin-top: 8px;
   }
-}
-
-app-skeleton {
-  margin-top: 10px;
 }
 
 .tag-list {

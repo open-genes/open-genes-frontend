@@ -28,11 +28,10 @@ export class NewsListComponent implements OnInit, OnDestroy {
   @Input() loadTotal: number;
   @Input() itemsForPage: number;
   @Input() isMiniMode = false;
+  @Input() showSkeleton: boolean;
 
-  @Output()
-  newItemsLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() skeletonState: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  public isLoading = true;
   public error: number;
   public newsList: Publication[] = [];
   public pageIndex = 1;
@@ -58,7 +57,7 @@ export class NewsListComponent implements OnInit, OnDestroy {
   public showMore(): void {
     if (this.newsTotal / this.responsePagePortion > this.pageIndex) {
       ++this.pageIndex;
-      this.isLoading = true;
+      this.skeletonState.emit(true);
       this.cdRef.markForCheck();
       this.makeNewsList();
     }
@@ -97,7 +96,7 @@ export class NewsListComponent implements OnInit, OnDestroy {
             this.httpCallsCounter === 1 ? (this.responsePagePortion = this.newsList.length) : this.httpCallsCounter;
 
             // Emit event to update view
-            this.newItemsLoaded.emit(true);
+            this.skeletonState.emit(false);
 
             // Check if there is more content to show
             // and show/hide 'Show more' button
@@ -107,20 +106,12 @@ export class NewsListComponent implements OnInit, OnDestroy {
               this.showMoreButtonVisible = false;
             }
           }
-
-          // All content is loaded
-          this.stopLoader();
         },
         (error) => {
           this.error = error;
-          this.stopLoader();
+          this.skeletonState.emit(false);
         }
       );
-  }
-
-  stopLoader(): void {
-    this.isLoading = false;
-    this.cdRef.markForCheck();
   }
 
   ngOnDestroy() {
