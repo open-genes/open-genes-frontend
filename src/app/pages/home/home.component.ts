@@ -20,14 +20,16 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public searchedGenes: Genes[];
   public confirmedGenesList: Genes[] | string;
   public lastGenes: Genes[];
-  public isAvailable = true;
-  public genesListIsLoaded = false;
   public errorStatus: string;
   public searchMode: SearchMode;
   public searchModeEnum = SearchModeEnum;
   public notFoundAndFoundGenes: any;
   public confirmedFoundGenes: any;
   public geneListForNewsFeed: NewsListParams[] = [];
+  public isAvailable = true;
+  public genesListIsLoaded = false;
+  public showCardSkeleton = true;
+  public showRowSkeleton = true;
 
   constructor(
     public windowService: WindowService,
