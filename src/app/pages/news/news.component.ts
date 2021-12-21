@@ -3,9 +3,7 @@ import {
   OnInit,
   OnDestroy,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  EventEmitter,
-  Output,
+  ChangeDetectorRef
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Genes } from '../../core/models';
@@ -13,7 +11,6 @@ import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { EightyLevelService } from '../../core/services/api/80level-api-service/80level-api.service';
-import { environment } from '../../../environments/environment';
 import { NewsListParams } from '../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
 
 @Component({
@@ -24,16 +21,16 @@ import { NewsListParams } from '../../core/models/vendors-api/publications-searc
 })
 export class NewsComponent implements OnInit, OnDestroy {
   public genes: Genes[];
-  public environment = environment;
   public geneListForNewsFeed: NewsListParams[] = [];
+  public showCardSkeleton = true;
+  public showRowSkeleton = true;
+
   private ngUnsubscribe = new Subject();
 
-  @Output() loadMoreNewsEvent: EventEmitter<null> = new EventEmitter<null>();
-
   constructor(
+    public translate: TranslateService,
     private readonly apiService: ApiService,
     private readonly eightyLevelService: EightyLevelService,
-    public translate: TranslateService,
     private readonly cdRef: ChangeDetectorRef
   ) {}
 
