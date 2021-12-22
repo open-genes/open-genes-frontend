@@ -16,6 +16,13 @@ export interface AgingMechanisms {
   name: string;
 }
 
+// TODO: OG-561
+export interface ProteinClasses {
+  [n: string]: {
+    name: string;
+  };
+}
+
 interface GeneralGeneInfo {
   id: number;
   symbol: string;
@@ -39,6 +46,7 @@ interface GeneralGeneInfo {
 
 export interface Genes extends GeneralGeneInfo {
   ensembl?: string;
+  proteinClasses?: ProteinClasses;
 }
 
 export interface Gene extends GeneralGeneInfo {
