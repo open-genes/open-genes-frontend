@@ -33,7 +33,7 @@ export class FilterService {
     bySelectionCriteria: [],
     byExpressionChange: 0,
     byMethylationChange: '',
-    byAgingMechanism: [],
+    byAgingMechanisms: [],
   };
 
   public pagination: Pagination = {
@@ -149,9 +149,9 @@ export class FilterService {
         break;
       case methylation_change:
         this.filters.byMethylationChange = '';
-        break
+        break;
       case aging_mechanism:
-        this.filters.byAgingMechanism = [];
+        this.filters.byAgingMechanisms = [];
         break;
       default:
         this.sort.byName = false;
@@ -162,7 +162,7 @@ export class FilterService {
         this.filters.bySelectionCriteria = [];
         this.filters.byExpressionChange = 0;
         this.filters.byMethylationChange = '';
-        this.filters.byAgingMechanism = [];
+        this.filters.byAgingMechanisms = [];
     }
     this.pagination.page = 1;
 

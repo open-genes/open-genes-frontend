@@ -6,7 +6,7 @@ export enum FilterTypesEnum {
   selection_criteria = 'bySelectionCriteria',
   expression_change = 'byExpressionChange',
   methylation_change = 'byMethylationChange',
-  aging_mechanism = 'byAgingMechanism',
+  aging_mechanism = 'byAgingMechanisms',
 }
 
 export enum SortEnum {
