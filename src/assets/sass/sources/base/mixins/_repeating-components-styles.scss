@@ -52,26 +52,30 @@
       height: $arrow-button-size;
       width: $arrow-button-size;
       font-size: 14px;
-      color: $color-gray-halfing;
+      color: $color-clikable-500;
       line-height: $arrow-button-size + 2;
       text-align: center;
       border-radius: 50%;
       position: absolute;
-      top: 0;
+      top: -2px;
       right: 0;
       z-index: 1;
-      background-color: $color-gray-very-light;
-      transition: color, background-color .15s linear;
+      background-color: $color-clikable-100;
+      transition: background-color .15s linear;
 
       .fa {
+        opacity: .75;
         transition: opacity .15s linear;
       }
     }
 
     &:hover {
       #{$c}__arrow {
-        background-color: $color-gray-soft;
-        color: $color-gray;
+        background-color: $color-clikable-200;
+
+        .fa {
+          opacity: 1;
+        }
       }
     }
 
