@@ -3,7 +3,7 @@ import { ProteinClasses } from '../../../core/models/open-genes-api/genes.model'
 import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap-into-accordion';
 
 @Component({
-  selector: 'app-aging-mechanisms',
+  selector: 'app-protein-classes',
   templateUrl: './protein-classes.component.html',
   styleUrls: ['./protein-classes.component.scss'],
 })
@@ -12,7 +12,7 @@ export class ProteinClassesComponent extends WrapIntoAccordion implements OnInit
   @Input() activeListItem: string;
   @Output() clickEvent: EventEmitter<string> = new EventEmitter();
 
-  public mappedProteinClasses: Map<string, any> = new Map();
+  public mappedProteinClasses: Map<any, any> = new Map();
 
   constructor() {
     super();
@@ -25,9 +25,9 @@ export class ProteinClassesComponent extends WrapIntoAccordion implements OnInit
   }
 
   private mapProteinClasses(): void {
-    for (const [key, value] of Object.entries(this.geneProteinClasses)) {
-      this.mappedProteinClasses.set(key, value);
-    }
+    Object.entries(this.geneProteinClasses).forEach((proteinClass) => {
+      this.mappedProteinClasses.set(proteinClass[0], proteinClass[1].name);
+    });
   }
 
   public emitOnClick(mechanismKey: string): void {

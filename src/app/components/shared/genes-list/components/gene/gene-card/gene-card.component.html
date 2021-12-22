@@ -65,6 +65,21 @@
     </div>
   </ng-container>
 
+  <ng-container *ngIf="item?.proteinClasses">
+    <div *ngIf="listSettings.ifShowProteinClasses"
+         class="card__section">
+      <span class="label">
+      {{ "gene_list_protein_classes" | translate }}
+      </span>
+
+      <app-protein-classes
+        [geneProteinClasses]="item.proteinClasses"
+        [activeListItem]="filters.byProteinClasses"
+        (clickEvent)="onApplyFilter(filterTypes.protein_classes, $event)"
+      ></app-protein-classes>
+    </div>
+  </ng-container>
+
   <div *ngIf="listSettings.ifShowDiseases"
        class="card__section">
     <span class="label">

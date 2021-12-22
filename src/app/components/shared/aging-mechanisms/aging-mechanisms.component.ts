@@ -25,9 +25,11 @@ export class AgingMechanismsComponent extends WrapIntoAccordion implements OnIni
   }
 
   private mapAgingMechanisms(): void {
-    this.geneAgingMechanisms.forEach((mechanism) => {
-      this.mappedAgingMechanisms.set(mechanism.id, mechanism.name);
-    });
+    if (this.geneAgingMechanisms) {
+      this.geneAgingMechanisms.forEach((mechanism) => {
+        this.mappedAgingMechanisms.set(mechanism.id, mechanism.name);
+      });
+    }
   }
 
   public emitOnClick(mechanismKey: string): void {

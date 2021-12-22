@@ -66,6 +66,19 @@
     </td>
   </ng-container>
 
+  <ng-container *ngIf="item?.proteinClasses">
+    <td *ngIf="listSettings.ifShowProteinClasses"
+         class="cell cell--mechanisms">
+      <div class="overflow">
+        <app-protein-classes
+          [geneProteinClasses]="item.proteinClasses"
+          [activeListItem]="filters.byProteinClasses"
+          (clickEvent)="onApplyFilter(filterTypes.protein_classes, $event)"
+        ></app-protein-classes>
+      </div>
+    </td>
+  </ng-container>
+
   <td *ngIf="listSettings.ifShowExpression"
       class="cell cell--expression">
     <div class="overflow">

@@ -16,7 +16,7 @@
   </mat-checkbox>
   <mat-checkbox
     color="primary"
-    (change)="changeGenesListSettings('classes')"
+    (change)="changeGenesListSettings('processes')"
     [checked]="listSettings.ifShowFuncClusters"
   >{{ "functional_classes" | translate }}
   </mat-checkbox>
@@ -49,5 +49,11 @@
     (change)="changeGenesListSettings('mechanisms')"
     [checked]="listSettings.ifShowAgingMechanisms"
   >{{ "gene_list_aging_mechanisms" | translate }}
+  </mat-checkbox>
+  <mat-checkbox
+    color="primary"
+    (change)="changeGenesListSettings('classes')"
+    [checked]="listSettings.ifShowProteinClasses"
+  >{{ "gene_list_protein_classes" | translate }}
   </mat-checkbox>
 </div>

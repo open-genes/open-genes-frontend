@@ -1,10 +1,10 @@
-<ng-container *ngIf="mappedProteinClasses && listLength !== 0; else noMechanism">
+<ng-container *ngIf="mappedProteinClasses && listLength !== 0; else noproteinClass">
   <ng-container *ngIf="!isAccordion; else accordion">
     <ul class="list list--bulletted">
-      <li *ngFor="let mechanism of mappedProteinClasses"
-          [class.__active]="activeListItem === mechanism.key"
-          (click)="emitOnClick(mechanism.key)">
-        {{ mechanism.value }}
+      <li *ngFor="let proteinClass of mappedProteinClasses | keyvalue"
+          [class.__active]="activeListItem === proteinClass.key"
+          (click)="emitOnClick(proteinClass.key)">
+        {{ proteinClass.value }}
       </li>
     </ul>
   </ng-container>
@@ -18,10 +18,10 @@
     >
       <div class="protein-classes-accordion__header" accordion-header>
         <ul class="list list--bulletted">
-          <li *ngFor="let mechanism of mappedProteinClasses | slice: 0:maxItemsToShow"
-              [class.__active]="activeListItem === mechanism.key"
-              (click)="emitOnClick(mechanism.key)">
-            {{ mechanism.value }}
+          <li *ngFor="let proteinClass of mappedProteinClasses | keyvalue | slice: 0:maxItemsToShow"
+              [class.__active]="activeListItem === proteinClass.key"
+              (click)="emitOnClick(proteinClass.key)">
+            {{ proteinClass.value }}
           </li>
         </ul>
         <button (click)="toggleAccordion()"
@@ -31,10 +31,10 @@
       </div>
       <div class="protein-classes-accordion__body" accordion-body>
         <ul class="list list--bulletted">
-          <li *ngFor="let mechanism of mappedProteinClasses | slice: maxItemsToShow"
-              [class.__active]="activeListItem == mechanism.key"
-              (click)="emitOnClick(mechanism.key)">
-            {{ mechanism.value }}
+          <li *ngFor="let proteinClass of mappedProteinClasses | keyvalue | slice: maxItemsToShow"
+              [class.__active]="activeListItem == proteinClass.key"
+              (click)="emitOnClick(proteinClass.key)">
+            {{ proteinClass.value }}
           </li>
         </ul>
       </div>
@@ -42,8 +42,8 @@
   </ng-template>
 </ng-container>
 
-<ng-template #noMechanism>
+<ng-template #noproteinClass>
   <div class="no-protein-classes">
-    {{ 'no_associated_mechanisms' | translate }}
+    {{ 'protein_classes_no_data' | translate }}
   </div>
 </ng-template>

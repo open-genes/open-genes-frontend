@@ -34,6 +34,7 @@ export class FilterService {
     byExpressionChange: 0,
     byMethylationChange: '',
     byAgingMechanisms: [],
+    byProteinClasses: [],
   };
 
   public pagination: Pagination = {
@@ -130,6 +131,7 @@ export class FilterService {
       expression_change,
       methylation_change,
       aging_mechanism,
+      protein_classes,
     } = FilterTypesEnum;
     switch (filterName) {
       case functional_clusters:
@@ -153,6 +155,9 @@ export class FilterService {
       case aging_mechanism:
         this.filters.byAgingMechanisms = [];
         break;
+      case protein_classes:
+        this.filters.byProteinClasses = [];
+        break;
       default:
         this.sort.byName = false;
         this.sort.byAge = false;
@@ -163,6 +168,7 @@ export class FilterService {
         this.filters.byExpressionChange = 0;
         this.filters.byMethylationChange = '';
         this.filters.byAgingMechanisms = [];
+        this.filters.byProteinClasses = [];
     }
     this.pagination.page = 1;
 

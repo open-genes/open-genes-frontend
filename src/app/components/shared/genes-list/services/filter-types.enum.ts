@@ -7,10 +7,10 @@ export enum FilterTypesEnum {
   expression_change = 'byExpressionChange',
   methylation_change = 'byMethylationChange',
   aging_mechanism = 'byAgingMechanisms',
+  protein_classes = 'byProteinClasses',
 }
 
 export enum SortEnum {
   name = 'byName',
   age = 'byAge',
 }
-

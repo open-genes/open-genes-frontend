@@ -33,6 +33,13 @@
   </div>
 </td>
 
+<td *ngIf="listSettings.ifShowProteinClasses"
+    class="table-header__cell table-header__cell--mechanisms">
+  <div class="overflow">
+    {{ "gene_list_protein_classes" | translate }}
+  </div>
+</td>
+
 <td *ngIf="listSettings.ifShowExpression"
     class="table-header__cell table-header__cell--expression">
   <div class="overflow">
