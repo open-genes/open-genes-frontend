@@ -14,9 +14,11 @@ import { HintComponent } from './components/hint/hint.component';
 import { MaterialModule } from '../../modules/vendors/material.module'; // TODO: exclude
 import { CommonModalComponent } from './components/modals/common-modal/common-modal.component';
 import { ArticleModalComponent } from './components/modals/article-modal/article-modal.component';
+import { ConfirmModalComponent } from './components/modals/confirm-modal/confirm-modal.component';
 
 const modules = [
   AccordionComponent,
+  ArticleModalComponent,
   CodeBlockComponent,
   SkeletonLoaderComponent,
   SpinnerComponent,
@@ -25,10 +27,11 @@ const modules = [
   PopoverComponent,
   HintComponent,
   CommonModalComponent,
+  ConfirmModalComponent,
 ];
 
 @NgModule({
-  declarations: [...modules, ArticleModalComponent],
+  declarations: [...modules],
   exports: [...modules],
   imports: [CommonModule, IconModule, PipesModule, TranslateModule, MaterialModule]
 })
