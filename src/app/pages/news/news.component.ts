@@ -53,11 +53,11 @@ export class NewsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((genes) => {
         this.genes = genes;
-        genes.forEach((gene) => {
-          this.geneListForNewsFeed.push({
+        this.geneListForNewsFeed = genes.map((gene) => {
+          return {
             symbol: gene.symbol,
             functionalClusters: gene.functionalClusters,
-          });
+          };
         });
         this.cdRef.markForCheck();
       });
