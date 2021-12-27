@@ -22,8 +22,13 @@ import { NewsListParams } from '../../../core/models/vendors-api/publications-se
   styleUrls: ['./news-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewsListComponent implements OnInit, OnDestroy {
-  @Input() genesList: NewsListParams[];
+export class NewsListComponent implements OnDestroy {
+  @Input() set genesList(genes: NewsListParams[]) {
+    if (genes.length) {
+      this.makeNewsList(genes);
+    }
+  }
+
   @Input() showDates = false;
   @Input() loadTotal: number;
   @Input() itemsForPage: number;
@@ -34,24 +39,22 @@ export class NewsListComponent implements OnInit, OnDestroy {
 
   public error: number;
   public newsList: Publication[] = [];
-  public pageIndex = 1;
+  private pageIndex = 1;
   public showMoreButtonVisible = false;
   public newsTotal: number;
-  public responsePagePortion: number;
 
+  private symbolsQuery = [];
   private minGeneFunctionsCriteria = 4;
-  private subscription$ = new Subject();
+  private responsePagePortion: number;
   private httpCallsCounter = 0;
   private genesListLimit = 250;
+  private subscription$ = new Subject();
 
   constructor(
     public translate: TranslateService,
     private pubmedApiService: PubmedApiService,
-    private readonly cdRef: ChangeDetectorRef
-  ) {}
-
-  ngOnInit() {
-    this.makeNewsList();
+    private readonly cdRef: ChangeDetectorRef,
+  ) {
   }
 
   public showMore(): void {
@@ -59,31 +62,31 @@ export class NewsListComponent implements OnInit, OnDestroy {
       ++this.pageIndex;
       this.skeletonState.emit(true);
       this.cdRef.markForCheck();
-      this.makeNewsList();
+      this.getNewsList();
     }
   }
 
-  private makeNewsList(): void {
-    this.httpCallsCounter++;
-
+  private makeNewsList(genes?): void {
     // 1. Form a request for all genes in the database that meet the minimal number of gene functions
-    const symbolsQuery = [];
-
-    this.genesList.forEach((gene: Genes) => {
-      if (symbolsQuery.length <= this.genesListLimit) {
+    genes.forEach((gene: Genes) => {
+      if (this.symbolsQuery.length <= this.genesListLimit) {
         if (gene.functionalClusters) {
           if (gene.functionalClusters.length > this.minGeneFunctionsCriteria) {
-            symbolsQuery.push(gene.symbol);
+            this.symbolsQuery.push(gene.symbol);
           }
         } else {
-          symbolsQuery.push(gene.symbol);
+          this.symbolsQuery.push(gene.symbol);
         }
       }
     });
+    this.getNewsList();
+  }
 
+  private getNewsList(): void {
+    this.httpCallsCounter++;
     // 2. Make a long query string for all genes at once, but ask to return only n news in the response
     this.pubmedApiService
-      .getNewsList(symbolsQuery, this.loadTotal, this.pageIndex)
+      .getNewsList(this.symbolsQuery, this.loadTotal, this.pageIndex)
       .pipe(takeUntil(this.subscription$))
       .subscribe(
         (response) => {
@@ -100,17 +103,13 @@ export class NewsListComponent implements OnInit, OnDestroy {
 
             // Check if there is more content to show
             // and show/hide 'Show more' button
-            if (this.newsTotal / this.responsePagePortion > this.pageIndex) {
-              this.showMoreButtonVisible = true;
-            } else {
-              this.showMoreButtonVisible = false;
-            }
+            this.showMoreButtonVisible = this.newsTotal / this.responsePagePortion > this.pageIndex;
           }
         },
         (error) => {
           this.error = error;
           this.skeletonState.emit(false);
-        }
+        },
       );
   }
 
