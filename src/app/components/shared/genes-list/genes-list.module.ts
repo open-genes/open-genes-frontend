@@ -27,6 +27,7 @@ import { GeneAnnotationsTableRowComponent } from './components/gene/gene-annotat
 import { GenesAnnotationsTableHeaderComponent } from './components/genes-annotations-table-header/genes-annotations-table-header.component';
 import { SearchViewPanelComponent } from './components/search-view-panel/search-view-panel.component';
 import { AgingMechanismsModule } from "../aging-mechanisms/aging-mechanisms.module";
+import { ProteinClassesModule } from '../protein-classes/protein-classes.module';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { AgingMechanismsModule } from "../aging-mechanisms/aging-mechanisms.modu
     AssociatedDiseaseCategoriesModule,
     NoContentModule,
     IconModule,
-    AgingMechanismsModule
+    AgingMechanismsModule,
+    ProteinClassesModule,
   ],
   providers: [WindowService],
   exports: [GenesListComponent, SearchComponent, GeneCardComponent, GeneTableRowComponent],

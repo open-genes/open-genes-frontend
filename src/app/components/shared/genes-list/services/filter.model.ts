@@ -8,7 +8,8 @@ export interface Filter {
   bySelectionCriteria: number[]; // see selection criteria
   byMethylationChange: string; // by the gene's methylation change with age
   byExpressionChange: number; // by gene's age related expression change variant
-  byAgingMechanism: number[]; // by aging mechanisms the gene involved in
+  byAgingMechanisms: number[]; // by aging mechanisms the gene involved in
+  byProteinClasses: number[]; // by special categories of protein functions/associations (Human Protein Atlas)
 }
 
 export interface Sort {

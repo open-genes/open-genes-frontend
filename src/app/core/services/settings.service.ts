@@ -17,11 +17,12 @@ export class SettingsService {
     ifShowAge: true,
     ifShowFuncClusters: true,
     ifShowExpression: true,
-    ifShowDiseases: true,
-    ifShowDiseaseCategories: false,
-    ifShowCriteria: true,
+    ifShowDiseases: false,
+    ifShowDiseaseCategories: true,
+    ifShowCriteria: false,
     ifShowMethylation: false,
-    ifShowAgingMechanisms: false,
+    ifShowAgingMechanisms: true,
+    ifShowProteinClasses: true,
   };
 
   constructor() {

@@ -53,7 +53,7 @@ export class GeneFieldsModalComponent implements OnInit {
       case 'gene-age':
         this.listSettings.ifShowAge = !this.listSettings.ifShowAge;
         break;
-      case 'classes':
+      case 'processes':
         this.listSettings.ifShowFuncClusters = !this.listSettings.ifShowFuncClusters;
         break;
       case 'expression':
@@ -70,6 +70,9 @@ export class GeneFieldsModalComponent implements OnInit {
         break;
       case 'mechanisms':
         this.listSettings.ifShowAgingMechanisms = !this.listSettings.ifShowAgingMechanisms;
+        break;
+      case 'classes':
+        this.listSettings.ifShowProteinClasses = !this.listSettings.ifShowProteinClasses;
         break;
       default:
         break;
