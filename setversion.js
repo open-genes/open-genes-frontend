@@ -20,7 +20,7 @@ function searchReplaceFile(regexpFind, replace, fileName) {
   });
 }
 
-buildNumber = process.env.BUILD_NUMBER;
+buildNumber = process.argv.build;
 buildEnvVariableRegexp = /\$\{\{\s*BUILD_NUMBER\s*\}\}/g;
 searchReplaceFile(buildEnvVariableRegexp, buildNumber, 'src/environments/environment.ts');
 searchReplaceFile(buildEnvVariableRegexp, buildNumber, 'src/environments/environment.develop.ts');

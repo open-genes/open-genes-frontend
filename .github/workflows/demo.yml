@@ -25,7 +25,7 @@ jobs:
       - name: Build
         run: |
           npm install
-          node setversion.js
+          node setversion.js -build=${{ BUILD_NUMBER }}
           npm run build-demo
       - name: Upload project artifacts
         uses: actions/upload-artifact@v2
