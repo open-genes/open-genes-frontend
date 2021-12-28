@@ -24,6 +24,7 @@ jobs:
       - name: Build
         run: |
           npm install
+          node setversion.js
           npm run build-prod
       - name: Upload project artifacts
         uses: actions/upload-artifact@v2
