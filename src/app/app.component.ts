@@ -1,4 +1,4 @@
-import { Component, AfterViewChecked, Inject } from '@angular/core';
+import { Component, AfterViewChecked, Inject, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
 import { DOCUMENT } from '@angular/common';
@@ -7,7 +7,7 @@ import { DOCUMENT } from '@angular/common';
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
-export class AppComponent implements AfterViewChecked {
+export class AppComponent implements OnInit, AfterViewChecked {
   private lang: string;
 
   constructor(
@@ -26,6 +26,10 @@ export class AppComponent implements AfterViewChecked {
       this.lang = environment.languages[1];
     }
     this.translate.use(this.lang);
+  }
+
+  ngOnInit(): void {
+    console.log(environment.build);
   }
 
   ngAfterViewChecked(): void {

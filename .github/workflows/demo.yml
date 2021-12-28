@@ -52,3 +52,4 @@ jobs:
           SSH_USER: ${{ secrets.DROPLET_USER }}
           SSH_HOST: ${{ secrets.DROPLET_HOST }}
           PROJECT_PATH: ${{ secrets.DROPLET_FRONTEND_DEMO_PATH }}
+          BUILD_NUMBER: ${{ CI_COMMIT_SHORT_SHA }}
