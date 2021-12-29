@@ -16,11 +16,9 @@ export interface AgingMechanisms {
   name: string;
 }
 
-// TODO: OG-561
 export interface ProteinClasses {
-  [n: string]: {
-    name: string;
-  };
+  id: number;
+  name: string;
 }
 
 interface GeneralGeneInfo {
@@ -33,6 +31,7 @@ interface GeneralGeneInfo {
   diseases?: AssociatedDiseases;
   expressionChange?: number;
   functionalClusters: FunctionalClusters[];
+  proteinClasses: ProteinClasses[];
   terms?: Terms;
   name: string;
   familyOrigin?: Origin;
@@ -46,7 +45,6 @@ interface GeneralGeneInfo {
 
 export interface Genes extends GeneralGeneInfo {
   ensembl?: string;
-  proteinClasses?: ProteinClasses;
 }
 
 export interface Gene extends GeneralGeneInfo {
@@ -70,7 +68,6 @@ export interface Gene extends GeneralGeneInfo {
   researches: Researches;
   expression: Array<any>;
   expressionEN: string;
-  proteinClasses: string[]; // TODO: they don't match by order with human_protein_atlas.ProteinClass
   terms?: Terms;
   commentsReferenceLinks: { [n: number]: string };
   rating: number; // TODO: delete this field

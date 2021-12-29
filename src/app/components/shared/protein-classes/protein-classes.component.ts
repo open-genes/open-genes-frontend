@@ -8,7 +8,7 @@ import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap
   styleUrls: ['./protein-classes.component.scss'],
 })
 export class ProteinClassesComponent extends WrapIntoAccordion implements OnInit {
-  @Input() geneProteinClasses: ProteinClasses;
+  @Input() geneProteinClasses: ProteinClasses[];
   @Input() activeListItem: string;
   @Output() clickEvent: EventEmitter<string> = new EventEmitter();
 
@@ -25,8 +25,8 @@ export class ProteinClassesComponent extends WrapIntoAccordion implements OnInit
   }
 
   private mapProteinClasses(): void {
-    Object.entries(this.geneProteinClasses).forEach((proteinClass) => {
-      this.mappedProteinClasses.set(proteinClass[0], proteinClass[1].name);
+    this.geneProteinClasses.forEach((proteinClass) => {
+      this.mappedProteinClasses.set(proteinClass.id, proteinClass.name);
     });
   }
 

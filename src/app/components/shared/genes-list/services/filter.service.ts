@@ -34,7 +34,7 @@ export class FilterService {
     byExpressionChange: 0,
     byMethylationChange: '',
     byAgingMechanisms: [],
-    byProteinClasses: [],
+    byProteinClass: [],
   };
 
   public pagination: Pagination = {
@@ -156,7 +156,7 @@ export class FilterService {
         this.filters.byAgingMechanisms = [];
         break;
       case protein_classes:
-        this.filters.byProteinClasses = [];
+        this.filters.byProteinClass = [];
         break;
       default:
         this.sort.byName = false;
@@ -168,7 +168,7 @@ export class FilterService {
         this.filters.byExpressionChange = 0;
         this.filters.byMethylationChange = '';
         this.filters.byAgingMechanisms = [];
-        this.filters.byProteinClasses = [];
+        this.filters.byProteinClass = [];
     }
     this.pagination.page = 1;
 

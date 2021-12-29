@@ -43,11 +43,13 @@
           </div>
           <div class="col col-12 header__protein-classes">
             <ng-container *ngIf="gene.proteinClasses; else tagSkeletal">
-              <span *ngFor="let item of gene.proteinClasses | keyvalue"
-                    class="alias">
-                {{ item.value | lowercase }}
-              </span>
+              <button *ngFor="let item of gene.proteinClasses"
+                      class="alias"
+                      (click)="onApplyFilter(filterTypes.protein_classes, item.id)">
+                {{item.name}}
+              </button>
             </ng-container>
+
             <ng-template #tagSkeletal>
               <span class="alias __skeletal"></span>
               <span class="alias __skeletal"></span>
