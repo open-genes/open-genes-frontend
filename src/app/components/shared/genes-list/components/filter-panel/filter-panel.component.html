@@ -64,6 +64,24 @@
     </button>
 
     <button
+      *ngIf="filters.byAgingMechanisms.length"
+      class="filter __active"
+      (click)="clearFilters(filterTypes.aging_mechanism)"
+    >
+      {{ "gene_list_aging_mechanisms" | translate }}
+      <span class="fa fal fa-times"></span>
+    </button>
+
+    <button
+      *ngIf="filters.byProteinClass.length"
+      class="filter __active"
+      (click)="clearFilters(filterTypes.protein_classes)"
+    >
+      {{ "gene_list_protein_classes" | translate }}
+      <span class="fa fal fa-times"></span>
+    </button>
+
+    <button
       *ngIf="isClear$ | async"
       class="btn btn--small btn--purple"
       (click)="clearFilters()"
