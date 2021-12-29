@@ -81,6 +81,13 @@
       <span class="fa fal fa-times"></span>
     </button>
 
+    <button *ngIf="!isGoTermsMode"
+            class="btn btn--small btn--fill btn--purple"
+            (click)="openFiltersModal()">
+      <span class="fa far fa-plus"></span>
+      {{ 'filters_modal_title' | translate }}
+    </button>
+
     <button
       *ngIf="isClear$ | async"
       class="btn btn--small btn--purple"
@@ -88,13 +95,6 @@
     >
       <span class="fa far fa-times"></span>
       {{ "filters_reset" | translate }}
-    </button>
-
-    <button *ngIf="!isGoTermsMode"
-            class="btn btn--small btn--fill btn--purple"
-            (click)="openFiltersModal()">
-      <span class="fa far fa-plus"></span>
-      {{ 'filters_modal_title' | translate }}
     </button>
 
   </div>

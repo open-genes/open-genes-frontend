@@ -39,7 +39,7 @@
     }
 
     &__header {
-      padding-right: $arrow-button-size;
+      padding-right: $arrow-button-size + 5px;
       position: relative;
     }
 
@@ -52,15 +52,15 @@
       height: $arrow-button-size;
       width: $arrow-button-size;
       font-size: 14px;
-      color: $color-clikable-500;
+      color: $color-general;
       line-height: $arrow-button-size + 2;
       text-align: center;
       border-radius: 50%;
       position: absolute;
-      top: -2px;
+      top: 2px;
       right: 0;
       z-index: 1;
-      background-color: $color-clikable-100;
+      background-color: rgba($color-general, .15);
       transition: background-color .15s linear;
 
       .fa {
@@ -71,7 +71,7 @@
 
     &:hover {
       #{$c}__arrow {
-        background-color: $color-clikable-200;
+        background-color: rgba($color-general, .25);
 
         .fa {
           opacity: 1;
@@ -93,30 +93,18 @@
 
 @mixin list-item-as-filter-button {
   cursor: pointer;
+  padding: 4px 5px 4px 15px;
+  border-radius: $border-radius-regular;
 
-  &::after {
-    display: none;
-    font-family: 'Font Awesome 5 Pro';
-    content: "\f036";
-    color: $color-general;
-    font-size: $font-size-very-small;
-    position: absolute;
-    left: 0;
-    top: 2px;
-    z-index: 0;
+  &::before {
+    top: 11px;
+    left: 5px;
   }
 
   &.__active,
   &:hover {
     color: $color-general;
-
-    &::before {
-      display: none;
-    }
-
-    &::after {
-      display: inline-block;
-    }
+    background-color: rgba($color-general, .15);
   }
 }
 

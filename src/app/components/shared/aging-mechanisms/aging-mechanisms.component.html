@@ -1,10 +1,10 @@
-<ng-container *ngIf="mappedAgingMechanisms && listLength !== 0; else noMechanism">
+<ng-container *ngIf="geneAgingMechanisms && listLength !== 0; else noMechanism">
   <ng-container *ngIf="!isAccordion; else accordion">
     <ul class="list list--bulletted">
-      <li *ngFor="let mechanism of mappedAgingMechanisms | keyvalue"
-          [class.__active]="activeListItem === mechanism.key"
-          (click)="emitOnClick(mechanism.key)">
-        {{ mechanism.value }}
+      <li *ngFor="let mechanism of geneAgingMechanisms"
+          [class.__active]="activeListItem.includes(mechanism.id)"
+          (click)="emitOnClick(mechanism.id)">
+        {{ mechanism.name }}
       </li>
     </ul>
   </ng-container>
@@ -18,10 +18,10 @@
     >
       <div class="aging-mechanisms-accordion__header" accordion-header>
         <ul class="list list--bulletted">
-          <li *ngFor="let mechanism of mappedAgingMechanisms | keyvalue | slice: 0:maxItemsToShow"
-              [class.__active]="activeListItem === mechanism.key"
-              (click)="emitOnClick(mechanism.key)">
-            {{ mechanism.value }}
+          <li *ngFor="let mechanism of geneAgingMechanisms | slice: 0:maxItemsToShow"
+              [class.__active]="activeListItem.includes(mechanism.id)"
+              (click)="emitOnClick(mechanism.id)">
+            {{ mechanism.name }}
           </li>
         </ul>
         <button (click)="toggleAccordion()"
@@ -31,10 +31,10 @@
       </div>
       <div class="aging-mechanisms-accordion__body" accordion-body>
         <ul class="list list--bulletted">
-          <li *ngFor="let mechanism of mappedAgingMechanisms | keyvalue | slice: maxItemsToShow"
-              [class.__active]="activeListItem == mechanism.key"
-              (click)="emitOnClick(mechanism.key)">
-            {{ mechanism.value }}
+          <li *ngFor="let mechanism of geneAgingMechanisms | slice: maxItemsToShow"
+              [class.__active]="activeListItem == mechanism.id"
+              (click)="emitOnClick(mechanism.id)">
+            {{ mechanism.name }}
           </li>
         </ul>
       </div>
