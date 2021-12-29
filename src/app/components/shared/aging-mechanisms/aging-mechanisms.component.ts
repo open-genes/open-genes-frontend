@@ -9,27 +9,16 @@ import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap
 })
 export class AgingMechanismsComponent extends WrapIntoAccordion implements OnInit {
   @Input() geneAgingMechanisms: AgingMechanisms[];
-  @Input() activeListItem: string;
+  @Input() activeListItem: any[];
   @Output() clickEvent: EventEmitter<string> = new EventEmitter();
-
-  public mappedAgingMechanisms: Map<string, any> = new Map();
 
   constructor() {
     super();
   }
 
   ngOnInit(): void {
-    this.mapAgingMechanisms();
     this.setListLength(this.geneAgingMechanisms);
     this.putItemsIntoAccordion(this.geneAgingMechanisms);
-  }
-
-  private mapAgingMechanisms(): void {
-    if (this.geneAgingMechanisms) {
-      this.geneAgingMechanisms.forEach((mechanism) => {
-        this.mappedAgingMechanisms.set(mechanism.id, mechanism.name);
-      });
-    }
   }
 
   public emitOnClick(mechanismKey: string): void {

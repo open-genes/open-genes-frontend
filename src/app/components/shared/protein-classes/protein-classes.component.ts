@@ -9,25 +9,16 @@ import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap
 })
 export class ProteinClassesComponent extends WrapIntoAccordion implements OnInit {
   @Input() geneProteinClasses: ProteinClasses[];
-  @Input() activeListItem: string;
+  @Input() activeListItem: any[];
   @Output() clickEvent: EventEmitter<string> = new EventEmitter();
-
-  public mappedProteinClasses: Map<any, any> = new Map();
 
   constructor() {
     super();
   }
 
   ngOnInit(): void {
-    this.mapProteinClasses();
     this.setListLength(this.geneProteinClasses);
     this.putItemsIntoAccordion(this.geneProteinClasses);
-  }
-
-  private mapProteinClasses(): void {
-    this.geneProteinClasses.forEach((proteinClass) => {
-      this.mappedProteinClasses.set(proteinClass.id, proteinClass.name);
-    });
   }
 
   public emitOnClick(mechanismKey: string): void {
