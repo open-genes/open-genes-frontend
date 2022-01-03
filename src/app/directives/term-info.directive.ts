@@ -1,21 +1,12 @@
-import {
-  AfterViewInit,
-  Directive,
-  ElementRef,
-  HostListener,
-  OnDestroy,
-} from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostListener, OnDestroy } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { HttpClient } from '@angular/common/http';
-import { TermsComponent } from '../components/shared/terms/terms.component';
+import { TermHintComponent } from '../components/shared/terms/term-hint.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-interface Terms {
-  [key: string]: string;
-}
+import { AliasTerm, BasicTerm, Terms } from '../core/models/terms.model';
 
 @Directive({
   selector: '[appTermInfo]',
@@ -61,9 +52,8 @@ export class TermInfoDirective implements AfterViewInit, OnDestroy {
 
     Object.keys(this.terms).forEach((term) => {
       this.content = this.content.replace(
-        term,
-        `<span class="link link--term">${term}</span>`
-      );
+        ` ${term} `,
+        ` <span class="link link--term">${term}</span> `);
     });
 
     this.elementRef.nativeElement.innerHTML = this.content;
@@ -76,11 +66,24 @@ export class TermInfoDirective implements AfterViewInit, OnDestroy {
     }
 
     const term = evt.target.textContent;
-    this.bottomSheet.open(TermsComponent, {
+    let description = {};
+
+    if (this.terms[term] as AliasTerm | BasicTerm) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (this.terms[term].hasOwnProperty('alias')) {
+        description = Object.keys(this.terms).filter((item: any) => {
+          console.log(item.title === this.terms.alias);
+          return item.title === this.terms.alias;
+        });
+      } else {
+        description = this.terms[term];
+      }
+    }
+
+    this.bottomSheet.open(TermHintComponent, {
       data: {
         term: {
-          title: term,
-          description: this.terms[term],
+          ...description,
         },
       },
     });

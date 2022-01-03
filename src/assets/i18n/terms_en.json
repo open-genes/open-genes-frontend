@@ -1,4 +1,2782 @@
 {
-  "hemoglobin": "Hemoglobin, or haemoglobin is the iron-containing oxygen-transport metalloprotein in the red blood cells (erythrocytes) of almost all vertebrates as well as the tissues of some invertebrates.",
-  "bilirubin": ""
+  "a0": {
+    "title": "a0",
+    "disambiguation": "Symbol for pseudoaxial"
+  },
+  "omics": {
+    "title": "omics",
+    "disambiguation": "Collective term for a range of new high-throughput biological research methods (e.g., transcriptomics, proteomics, and metabolomics) that systematically investigate entire networks of genes, proteins, and metabolites within cells."
+  },
+  "2D": {
+    "title": "2D",
+    "disambiguation": "Two dimensional"
+  },
+  "3D": {
+    "title": "3D",
+    "disambiguation": "Three dimensional"
+  },
+  "abiotic": {
+    "title": "Abiotic",
+    "disambiguation": "Non-living chemical and physical factors (e.g., soil, water, air, temperature, and sunlight) in the environment that affect ecosystems."
+  },
+  "additive genetic effects": {
+    "title": "additive genetic effects",
+    "disambiguation": "When the combined effects of alleles at different loci are equal to the sum of their individual effects. See also: complex trait"
+  },
+  "adenine (A)": {
+    "title": "adenine (A)",
+    "disambiguation": "A nitrogenous base, one member of the base pair AT (adenine-thymine). See also: base pair, nucleotide"
+  },
+  "adsorption": {
+    "title": "Adsorption",
+    "disambiguation": "Accumulation of molecules or cells on the surface of a substance."
+  },
+  "aei": {
+    "title": "AEI",
+    "disambiguation": "Advanced Energy Initiative"
+  },
+  "aerobic": {
+    "title": "Aerobic",
+    "disambiguation": "Requiring oxygen."
+  },
+  "aerosols": {
+    "title": "Aerosols",
+    "disambiguation": "Airborne solid or liquid particles (typically no larger than a few micrometers) that can remain in the atmosphere for hours to days. Aerosols impact climate by scattering or absorbing radiation, initiating cloud formation, or altering the optical properties of clouds."
+  },
+  "afm": {
+    "title": "AFM",
+    "disambiguation": "atomic force microscopy"
+  },
+  "agu": {
+    "title": "AGU",
+    "disambiguation": "American Geophysical Union"
+  },
+  "albedo": {
+    "title": "Albedo",
+    "disambiguation": "Proportion of light or radiation reflected by a surface."
+  },
+  "alfisols": {
+    "title": "Alfisols",
+    "disambiguation": "Fertile soils in temperate forests with an underlying clay horizon."
+  },
+  "algae": {
+    "title": "Algae",
+    "disambiguation": "Photosynthetic, aquatic, eukaryotic organisms that contain chlorophyll but lack terrestrial plant structures (e.g., roots, stems, and leaves). Algae can exist in many sizes ranging from single cells to giant kelps several feet long."
+  },
+  "algorithm": {
+    "title": "Algorithm",
+    "disambiguation": "Formal set of instructions that tells a computer how to solve a problem or execute a task. A computer program typically consists of several algorithms."
+  },
+  "allele": {
+    "title": "Allele",
+    "disambiguation": "One of two or more forms of a gene or a genetic region (generally containing a group of genes). A population or species of organisms typically includes multiple alleles at each locus distributed among various individuals; except very rarely, each individual can have only two alleles at a given locus. Allelic variation at a locus is measurable as the number of alleles (polymorphism) present, or the proportion of heterozygotes in the population. See also: locus, gene expression"
+  },
+  "allogeneic": {
+    "title": "Allogeneic",
+    "disambiguation": "Variation in alleles among members of the same species."
+  },
+  "alternative splicing": {
+    "title": "alternative splicing",
+    "disambiguation": "Different ways of combining a gene's exons to make variants of the complete protein"
+  },
+  "amino acid": {
+    "title": "amino acid",
+    "disambiguation": "Any of a class of 20 molecules that are combined to form proteins in living things. The sequence of amino acids in a protein and hence protein function are determined by the genetic code."
+  },
+  "amplification": {
+    "title": "Amplification",
+    "disambiguation": "An increase in the number of copies of a specific DNA fragment; can be in vivo or in vitro. See also: cloning, polymerase chain reaction"
+  },
+  "anaerobic": {
+    "title": "Anaerobic",
+    "disambiguation": "Lacking or not requiring oxygen."
+  },
+  "andisols": {
+    "title": "Andisols",
+    "disambiguation": "Volcanic soils containing ash and volcanic glass."
+  },
+  "annotation": {
+    "title": "Annotation",
+    "disambiguation": "Adding pertinent information such as putative gene product function or other commentary to the database entry of raw sequence of DNA bases or amino acid sequence. See also: bioinformatics"
+  },
+  "anthropogenic": {
+    "title": "Anthropogenic",
+    "disambiguation": "Resulting from human activity."
+  },
+  "antisense": {
+    "title": "Antisense",
+    "disambiguation": "Nucleotide sequence exactly opposite to an mRNA molecule made through transcription; under given circumstances an antisense oligonucleotide binds to the mRNA molecule to prevent a protein from being made. See also: transcription"
+  },
+  "archaea": {
+    "title": "Archaea",
+    "disambiguation": "Single-celled prokaryotic microbes that are structurally and metabolically similar to bacteria but share some features of their molecular biology with eukaryotes. The archaea are a distinct branch of life from the Bacteria and Eukarya."
+  },
+  "aridisols": {
+    "title": "Aridisols",
+    "disambiguation": "Dry desert soils with a prominent clay horizon."
+  },
+  "arrayed library": {
+    "title": "arrayed library",
+    "disambiguation": "Individual primary recombinant clones (hosted in phage, cosmid, YAC, or other vector) that are placed in two-dimensional arrays in microtiter dishes. Each primary clone can be identified by the identity of the plate and the clone location (row and column) on that plate. Arrayed libraries of clones can be used for many applications, including screening for a specific gene or genomic region of interest. See also: library, genomic library, gene chip technology"
+  },
+  "ars": {
+    "title": "ARS",
+    "disambiguation": "Agricultural Research Service, USDA"
+  },
+  "asa": {
+    "title": "ASA",
+    "disambiguation": "American Society of Agronomy"
+  },
+  "assembly": {
+    "title": "Assembly",
+    "disambiguation": "Putting sequenced fragments of DNA into their correct chromosomal positions."
+  },
+  "atomic force microscopy": {
+    "title": "atomic force microscopy",
+    "disambiguation": "Technique that uses a mechanical probe to characterize and magnify surface features with atomic detail."
+  },
+  "atp": {
+    "alias": "adenosine triphosphate"
+  },
+  "adenosine triphosphate": {
+    "title": "ATP (adenosine triphosphate)",
+    "disambiguation": "A multifunctional nucleotide responsible for cellular energy transfer and storage."
+  },
+  "autoradiography": {
+    "title": "Autoradiography",
+    "disambiguation": "A technique that uses X-ray film to visualize radioactively labeled molecules or fragments of molecules; used in analyzing length and number of DNA fragments after they are separated by gel electrophoresis."
+  },
+  "autotroph": {
+    "title": "Autotroph",
+    "disambiguation": "An organism that biochemically synthesizes its own organic materials from inorganic compounds using light or chemical energy."
+  },
+  "axenic": {
+    "title": "Axenic",
+    "disambiguation": "Culture of an organism that is entirely free of all other \"contaminating\" organisms. Axenic culture is an important tool for the study of symbiotic and parasitic organisms in a controlled manner."
+  },
+  "backcross": {
+    "title": "Backcross",
+    "disambiguation": "A cross between a eukaryote that is heterozygous for alleles obtained from two parental strains and a second eukaryote from one of those parental strains. Also used to describe the breeding protocol of an outcross followed by a backcross."
+  },
+  "bacteria": {
+    "title": "Bacteria",
+    "disambiguation": "Single-celled prokaryote, typically without a discrete, membrane-bound nucleus."
+  },
+  "bacterial artificial chromosome": {
+    "title": "bacterial artificial chromosome (BAC)",
+    "disambiguation": "A vector used to clone DNA fragments (100- to 300-kb insert size; average, 150 kb) in Escherichia coli cells. Based on naturally occurring F-factor plasmid found in the bacterium E. coli. See also: cloning vector"
+  },
+  "bac": {
+    "alias": "bacterial artificial chromosome"
+  },
+  "bacteriophage": {
+    "title": "Bacteriophage",
+    "disambiguation": "See: phage"
+  },
+  "bacterioplankton": {
+    "title": "Bacterioplankton",
+    "disambiguation": "Bacteria that inhabit marine and freshwater environments."
+  },
+  "base": {
+    "title": "Base",
+    "disambiguation": "One of the molecules that form DNA and RNA molecules. See also: nucleotide, base pair, base sequence"
+  },
+  "base pair": {
+    "title": "Base pair (BP)",
+    "disambiguation": "Two nitrogenous bases (adenine and thymine or guanine and cytosine) held together by weak bonds. Two strands of DNA are held together in the shape of a double helix by the bonds between base pairs."
+  },
+  "bp": {
+    "alias": "base pair"
+  },
+  "base sequence": {
+    "title": "base sequence",
+    "disambiguation": "The order of nucleotide bases in a DNA molecule; determines structure of proteins encoded by that DNA."
+  },
+  "base sequence analysis": {
+    "title": "base sequence analysis",
+    "disambiguation": "A method, sometimes automated, for determining the base sequence."
+  },
+  "bayesian approach": {
+    "title": "bayesian approach",
+    "disambiguation": "Use of statistical methods that assign probabilities or distributions to future events based on knowledge of prior events."
+  },
+  "ber": {
+    "title": "BER",
+    "disambiguation": "Office of Biological and Environmental Research, DOE"
+  },
+  "berac": {
+    "title": "BERAC",
+    "disambiguation": "Biological and Environmental Research Advisory Committee"
+  },
+  "bgal": {
+    "title": "Bgal",
+    "disambiguation": "billion gallons"
+  },
+  "biochar": {
+    "title": "Biochar",
+    "disambiguation": "Biomass-derived black carbon."
+  },
+  "biogeochemical model": {
+    "title": "biogeochemical model",
+    "disambiguation": "A type of ecosystem model used to represent biologically mediated transformations and flows of carbon and other materials within an environment."
+  },
+  "biogeochemistry": {
+    "title": "Biogeochemistry",
+    "disambiguation": "Study of how interactions among biological and geochemical processes influence the global cycling of such essential elements as carbon, nitrogen, phosphorus, and sulfur."
+  },
+  "biogeographical model": {
+    "title": "biogeographical model",
+    "disambiguation": "A type of ecosystem model used to determine how populations in a particular region change over long time scales."
+  },
+  "bioinformatics": {
+    "title": "Bioinformatics",
+    "disambiguation": "The science of managing and analyzing biological data using advanced computing techniques. Especially important in analyzing genomic research data. See also: informatics"
+  },
+  "biological pump": {
+    "title": "biological pump",
+    "disambiguation": "Collection of biological ocean processes that regulate the uptake, storage, transformation, and release of carbon."
+  },
+  "biomass (cellulosic)": {
+    "title": "biomass (cellulosic)",
+    "disambiguation": "Plant stalks, trunks, stems, and leaves."
+  },
+  "biome": {
+    "title": "Biome",
+    "disambiguation": "A terrestrial region (e.g., grasslands, tropical forests) characterized by dominant vegetation and climate characteristics in terrestrial ecosystems. In aquatic environments, a biome is defined by a particular range of depths and biogeochemical properties."
+  },
+  "biopolymer": {
+    "title": "Biopolymer",
+    "disambiguation": "A large biological molecule formed by the linking together of smaller subunit molecules."
+  },
+  "bioremediation": {
+    "title": "Bioremediation",
+    "disambiguation": "The use of biological organisms such as plants or microbes to aid in removing hazardous substances from an area."
+  },
+  "biosequestration": {
+    "title": "Biosequestration",
+    "disambiguation": "Biologically mediated uptake and conversion of carbon dioxide to inert, long-lived, carbon-containing materials."
+  },
+  "biosphere": {
+    "title": "Biosphere",
+    "disambiguation": "All living organisms."
+  },
+  "biotechnology": {
+    "title": "Biotechnology",
+    "disambiguation": "A set of biological techniques developed through basic research and now applied to research and product development. In particular, biotechnology refers to the use by industry of recombinant DNA, cell fusion, and new bioprocessing techniques."
+  },
+  "biotic": {
+    "title": "Biotic",
+    "disambiguation": "Any living component that affects another organism. Biotic components include plants, animals, fungi, and bacteria."
+  },
+  "blast": {
+    "title": "BLAST",
+    "disambiguation": "Basic Local Alignment Search Tool. Computer program that, when given any nucleotide or amino acid (protein) sequence, returns similar sequences retrieved from a chosen query database, usually the non-redundant database which houses all submitted DNA or Protein sequences without duplication of a given sequence."
+  },
+  "bnf": {
+    "title": "BNF",
+    "disambiguation": "biological nitrogen fixation"
+  },
+  "bole": {
+    "title": "Bole",
+    "disambiguation": "Stem or trunk of a tree."
+  },
+  "bret": {
+    "title": "BRET",
+    "disambiguation": "Bioluminescence Resonance Energy Transfer"
+  },
+  "bscl": {
+    "title": "BSCL",
+    "disambiguation": "Biomass Surface Characterization Laboratory, DOE"
+  },
+  "btac": {
+    "title": "BTAC",
+    "disambiguation": "Biomass Research and Development Technical Advisory Committee, DOE-USDA"
+  },
+  "c3 plant": {
+    "title": "c3 plant",
+    "disambiguation": "Plants (e.g., soybean, wheat, and cotton) whose carbon-fixation products have three carbon atoms per molecule. Compared with C4 plants, C3 plants show a greater increase in photosynthesis with a doubling of CO2 concentration and less decrease in stomatal conductance, which results in an increase in leaf-level water use efficiency."
+  },
+  "c4 plant": {
+    "title": "c4 plant",
+    "disambiguation": "Plants (e.g., maize and sorghum) whose carbon fixation products have four carbon atoms per molecule. Compared with C3 plants, C4 plants show little photosynthetic response to increased CO2 concentrations above 340 ppmv but show a decrease in stomatal conductance, which results in an increase inphotosynthetic water use efficiency."
+  },
+  "calvin cycle": {
+    "title": "calvin cycle",
+    "disambiguation": "A series of photosynthetic chemical reactions that do not require light to occur. The Calvin cycle uses energy produced by light-dependent reactions of photosynthesis to incorporate carbon from carbon dioxide into organic compounds used to make sugars, starches, and other biological molecules."
+  },
+  "cam": {
+    "title": "CAM",
+    "disambiguation": "Crassulacean acid metabolism"
+  },
+  "candidate gene": {
+    "title": "candidate gene",
+    "disambiguation": "A gene located in a chromosome region suspected of being involved in a given trait or function. See also: positional cloning, protein"
+  },
+  "capillary array": {
+    "title": "capillary array",
+    "disambiguation": "Gel-filled silica capillaries used to separate fragments for DNA sequencing. The small diameter of the capillaries permit the application of higher electric fields, providing high speed, high throughput separations that are significantly faster than traditional slab gels."
+  },
+  "carbon allocation": {
+    "title": "carbon allocation",
+    "disambiguation": "See carbon partitioning."
+  },
+  "carbon cycle": {
+    "title": "carbon cycle",
+    "disambiguation": "The complex carbon flows and transformations among major Earth system components (atmosphere, oceans, and terrestrial systems). The global flow of carbon from one reservoir (carbon sink) to another. Each carbon exchange among reservoirs is mediated by a variety of physical, biogeochemical, and human activities."
+  },
+  "carbon dioxide": {
+    "title": "carbon dioxide",
+    "disambiguation": "Gas that is an important part of the global carbon cycle. CO2 is emitted from a variety of processes (e.g., cellular respiration, biomass decomposition, fossil fuel use) and taken up primarily by the photosynthesis of plants and microorganisms. CO2 is a greenhouse gas that absorbs infrared radiation and traps heat in the Earth's atmosphere."
+  },
+  "carbon fixation": {
+    "title": "carbon fixation",
+    "disambiguation": "Conversion of inorganic carbon dioxide to organic compounds by photosynthesis."
+  },
+  "carbon flux": {
+    "title": "carbon flux",
+    "disambiguation": "Rate of carbon movement as it flows from one carbon reservoir to another in the global carbon cycle. For the global carbon budget, carbon flux is usually expressed in gigatons of carbon per year (GT C/yr)."
+  },
+  "carbon partitioning": {
+    "title": "carbon partitioning",
+    "disambiguation": "Partitioning to different parts of a plant (e.g., leaf, stem, root, and seed) versus carbon allocation (partitioning between biomass and respiration)."
+  },
+  "carbon sequestration": {
+    "title": "carbon sequestration",
+    "disambiguation": "Biological or physical process that captures carbon dioxide and converts it into inert, long-lived, carbon-containing materials."
+  },
+  "carbon sink": {
+    "title": "carbon sink",
+    "disambiguation": "A pool (reservoir) that absorbs or takes up released carbon from another part of the carbon cycle. For example, if the net exchange between the biosphere and the atmosphereis toward the atmosphere, the biosphere is the source, and theatmosphere is the sink."
+  },
+  "carbon source": {
+    "title": "carbon source",
+    "disambiguation": "A pool (reservoir) that releases carbon to another part of the carbon cycle."
+  },
+  "carbon use efficiency (CUE)": {
+    "title": "carbon use efficiency (CUE)",
+    "disambiguation": "Ratio of net primary productivity to gross primary productivity."
+  },
+  "carrier": {
+    "title": "Carrier",
+    "disambiguation": "An individual who possesses an unexpressed, recessive trait."
+  },
+  "cbm": {
+    "title": "CBM",
+    "disambiguation": "cellulose-binding molecule, carbohydrate-binding module"
+  },
+  "cbp": {
+    "title": "CBP",
+    "disambiguation": "consolidated bioprocessing"
+  },
+  "cdf": {
+    "title": "CDF",
+    "disambiguation": "cumulative distribution function"
+  },
+  "cdna": {
+    "title": "cDNA",
+    "disambiguation": "complementary DNA"
+  },
+  "cdna library": {
+    "title": "cDNA library",
+    "disambiguation": "A collection of DNA sequences that code for genes. The sequences are generated in the laboratory from mRNA sequences. See also: messenger RNA"
+  },
+  "cell": {
+    "title": "Cell",
+    "disambiguation": "The basic unit of any living organism that carries on the biochemical processes of life. See also: genome, nucleus"
+  },
+  "cellulose": {
+    "title": "Cellulose",
+    "disambiguation": "Linear polysaccharide polymer with many glucose monosaccharide units. Cellulose is the major component of plant cell walls and the most abundant biological material on Earth."
+  },
+  "centimorgan": {
+    "title": "centimorgan (cM)",
+    "disambiguation": "A unit of measure of recombination frequency. One centimorgan is equal to a 1% chance that a marker at one genetic locus will be separated from a marker at a second locus due to crossing over in a single generation. See also: megabase"
+  },
+  "centromere": {
+    "title": "Centromere",
+    "disambiguation": "A specialized chromosome region to which spindle fibers attach during cell division."
+  },
+  "chemoautotroph": {
+    "title": "Chemoautotroph",
+    "disambiguation": "An organism that biochemically synthesizes its own organic materials from inorganic compounds using chemical energy."
+  },
+  "chemostat": {
+    "title": "Chemostat",
+    "disambiguation": "Apparatus for the continuous cultivation of bacteria. Chemostats keep bacterial cultures in an optimal growth state by continually adding media and removing old cells."
+  },
+  "chimera": {
+    "title": "chimera (pl. chimaera)",
+    "disambiguation": "An organism that contains cells or tissues with a different genotype. These can be mutated cells of the host organism or cells from a different organism or species."
+  },
+  "chimeraplasty": {
+    "title": "Chimeraplasty",
+    "disambiguation": "An experimental targeted repair process in which a desirable sequence of DNA is combined with RNA to form a chimeraplast. These molecules bind selectively to the target DNA. Once bound, the chimeraplast activates a naturally occurring gene-correcting mechanism. Does not use viral or other conventional gene-delivery vectors. See also: cloning vector"
+  },
+  "chip-seq": {
+    "title": "ChIP-Seq",
+    "disambiguation": "chromatin immunoprecipitation sequencing"
+  },
+  "chlorophyll": {
+    "title": "Chlorophyll",
+    "disambiguation": "A type of green pigment used to harness light energy in the chloroplasts of plants and other photosynthetic organisms."
+  },
+  "chloroplast": {
+    "title": "Chloroplast",
+    "disambiguation": "An organelle in the cells of green plants. It contains chlorophyll and functions in photosynthesis and protein synthesis."
+  },
+  "chloroplast chromosome": {
+    "title": "chloroplast chromosome",
+    "disambiguation": "Circular DNA found in the photosynthesizing organelle (chloroplast) of plants instead of the cell nucleus where most genetic material is located."
+  },
+  "chromatin immunoprecipitation": {
+    "title": "chromatin immunoprecipitation (ChIP)",
+    "disambiguation": "Method used to determine the location in a genome of DNA binding sites recognized by a particular protein of interest."
+  },
+  "chromomere": {
+    "title": "Chromomere",
+    "disambiguation": "One of the serially aligned beads or granules of a eukaryotic chromosome, resulting from local coiling of a continuous DNA thread."
+  },
+  "chromosomal deletion": {
+    "title": "chromosomal deletion",
+    "disambiguation": "The loss of part of a chromosome's DNA."
+  },
+  "chromosomal inversion": {
+    "title": "chromosomal inversion",
+    "disambiguation": "Chromosome segments that have been turned 180 degrees. The gene sequence for the segment is reversed with respect to the rest of the chromosome."
+  },
+  "chromosome": {
+    "title": "Chromosome",
+    "disambiguation": "The self-replicating genetic structure of cells containing the cellular DNA that bears in its nucleotide sequence the linear array of genes. In prokaryotes, chromosomal DNA is circular, and the entire genome is carried on one chromosome. Eukaryotic genomes consist of a number of chromosomes whose DNA is associated with different kinds of proteins."
+  },
+  "chromosome painting": {
+    "title": "chromosome painting",
+    "disambiguation": "Attachment of certain fluorescent dyes to targeted parts of the chromosome."
+  },
+  "chromosome region p": {
+    "title": "chromosome region p",
+    "disambiguation": "A designation for the short arm of a chromosome."
+  },
+  "chromosome region q": {
+    "title": "chromosome region q",
+    "disambiguation": "A designation for the long arm of a chromosome."
+  },
+  "climate": {
+    "title": "Climate",
+    "disambiguation": "Average weather conditions over a time period, usually several decades. Climate is largely determined by local geographical features, latitude, altitude, land- and sea-masses, and atmospheric circulation patterns."
+  },
+  "climate model": {
+    "title": "climate model",
+    "disambiguation": "Mathematical model used to understand, simulate, and predict climate trends by quantitatively analyzing interactions among Earth system components (e.g., land, ocean, atmosphere, and biosphere)."
+  },
+  "clone": {
+    "title": "Clone",
+    "disambiguation": "An exact copy made of biological material such as a DNA segment (e.g., a gene or other region), a whole cell, or a complete organism."
+  },
+  "clone bank": {
+    "title": "clone bank",
+    "disambiguation": "See: genomic library"
+  },
+  "cloning": {
+    "title": "Cloning",
+    "disambiguation": "Using specialized DNA technology to produce multiple, exact copies of a single gene or other segment of DNA to obtain enough material for further study. The resulting cloned (copied) collections of DNA molecules are called clone libraries. A second type of cloning exploits the natural process of cell division to make many copies of an entire cell. The genetic makeup of these cloned cells, called a cell line, is identical to the original cell. See also: cloning vector"
+  },
+  "cloning vector": {
+    "title": "cloning vector",
+    "disambiguation": "DNA molecule originating from a virus, a plasmid, or the cell of a higher organism into which another DNA fragment of appropriate size can be integrated without loss of the vector's capacity for self-replication; vectors introduce foreign DNA into host cells, where the DNA can be reproduced in large quantities. Examples are plasmids, cosmids, and yeast artificial chromosomes; vectors are often recombinant molecules containing DNA sequences from several sources."
+  },
+  "co2 fertilization": {
+    "title": "cO2 fertilization",
+    "disambiguation": "Increase in plant growth due to a higherΟ²¬≠than-normal carbon dioxide concentration in the environment."
+  },
+  "coccolithophore": {
+    "title": "Coccolithophore",
+    "disambiguation": "A type of single-celled marine algae distinguished by its production of intricate, microscopic shells that are aggregates of calcium carbonate discs called coccoliths."
+  },
+  "code": {
+    "title": "Code",
+    "disambiguation": "See: genetic code"
+  },
+  "codominance": {
+    "title": "Codominance",
+    "disambiguation": "Situation in which two different alleles for a genetic trait are both expressed. See also: recessive gene"
+  },
+  "codon": {
+    "title": "Codon",
+    "disambiguation": "See: genetic code"
+  },
+  "cofactor": {
+    "title": "Cofactor",
+    "disambiguation": "An organic or inorganic substance required by an enzyme to function."
+  },
+  "coisogenic or congenic": {
+    "title": "coisogenic or congenic",
+    "disambiguation": "Nearly identical strains of an organism; they vary at only a single locus."
+  },
+  "community": {
+    "title": "Community",
+    "disambiguation": "All the different species of organisms living together and interacting in a particular environment."
+  },
+  "comparative genomics": {
+    "title": "comparative genomics",
+    "disambiguation": "The study of genetics by comparisons with other organisms."
+  },
+  "complementary RNA (cRNA)": {
+    "title": "complementary RNA (cRNA)",
+    "disambiguation": "Synthetic transcripts of a specific DNA molecule or fragment made by an in vitro transcription system."
+  },
+  "complementary DNA (cDNA)": {
+    "title": "complementary DNA (cDNA)",
+    "disambiguation": "DNA that is synthesized in the laboratory from a messenger RNA template."
+  },
+  "complementary sequence": {
+    "title": "complementary sequence",
+    "disambiguation": "Nucleic acid base sequence that can form a double-stranded structure with another DNA fragment by following base-pairing rules (A pairs with T and C with G). The complementary sequence to GTAC for example, is CATG."
+  },
+  "complete Genome Sequence": {
+    "title": "complete Genome Sequence",
+    "disambiguation": "High-quality, low error, gap-free DNA sequence of an entire genome of an organism."
+  },
+  "complex trait": {
+    "title": "complex trait",
+    "disambiguation": "Trait that has a genetic component that does not follow strict Mendelian inheritance. May involve the interaction of two or more genes or gene-environment interactions. See also: Mendelian inheritance, additive genetic effects"
+  },
+  "computational biology": {
+    "title": "computational biology",
+    "disambiguation": "Development and application of data-analysis and theoretical methods, mathematical modeling, and computational simulation techniques to the study of biological systems. See also: bioinformatics"
+  },
+  "conserved hypothetical proteins": {
+    "title": "conserved hypothetical proteins",
+    "disambiguation": "The (often large) fraction of genes in sequenced genomes encoding proteins that are found in organisms from several phylogenetic lineages but have not been functionally characterized and described at the protein chemical level. These structures may represent up to half of the potential protein coding regions of a genome."
+  },
+  "conserved sequence": {
+    "title": "conserved sequence",
+    "disambiguation": "A base sequence in a DNA molecule (or an amino acid sequence in a protein) that has remained essentially unchanged throughout evolution."
+  },
+  "constitutive ablation": {
+    "title": "constitutive ablation",
+    "disambiguation": "Gene expression that results in cell death."
+  },
+  "contig": {
+    "title": "Contig",
+    "disambiguation": "Group of cloned (copied) pieces of DNA representing overlapping regions of a particular chromosome."
+  },
+  "contig map": {
+    "title": "contig map",
+    "disambiguation": "A map depicting the relative order of a linked library of overlapping clones representing a complete chromosomal segment."
+  },
+  "copepod": {
+    "title": "Copepod",
+    "disambiguation": "A type of microscopic marine and freshwater crustacean that has an elongated body and a forked tail."
+  },
+  "cosmid": {
+    "title": "Cosmid",
+    "disambiguation": "Artificially constructed cloning vector containing the cos gene of phage lambda. Cosmids can be packaged in lambda phage particles for infection into E. coli; this permits cloning of larger DNA fragments (up to 45kb) than can be introduced into bacterial hosts in plasmid vectors."
+  },
+  "crenarchaea": {
+    "title": "Crenarchaea",
+    "disambiguation": "A phylum of archaea distinguished from other phyla based on rRNA sequence. Crenarchaea are the most abundant type of marine archaea."
+  },
+  "crep": {
+    "title": "CREP",
+    "disambiguation": "Conservation Reserve Enhancement Program"
+  },
+  "crossing over": {
+    "title": "crossing over",
+    "disambiguation": "The breaking during meiosis of one maternal and one paternal chromosome, the exchange of corresponding sections of DNA, and the rejoining of the chromosomes. This process can result in an exchange of alleles between chromosomes. See also: recombination"
+  },
+  "cssa": {
+    "title": "CSSA",
+    "disambiguation": "Crop Science Society of America"
+  },
+  "cue": {
+    "title": "CUE",
+    "disambiguation": "carbon use efficiency"
+  },
+  "cwd": {
+    "title": "CWD",
+    "disambiguation": "coarse woody debris"
+  },
+  "cyanobacteria": {
+    "title": "Cyanobacteria",
+    "disambiguation": "Division of photosynthetic bacteria found in many environments, including oceans, fresh water, and soils. Cyanobacteria contain chlorophyll a and other photosynthetic pigments in an intracellular system of membranes called thylakoids. Many cyanobacterial species also are capable of nitrogen fixation."
+  },
+  "cytogenetics": {
+    "title": "Cytogenetics",
+    "disambiguation": "The study of the physical appearance of chromosomes. See also: karyotype"
+  },
+  "cytological band": {
+    "title": "Cytological band",
+    "disambiguation": "An area of the chromosome that stains differently from areas around it. See also: cytological map"
+  },
+  "cytological map": {
+    "title": "Cytological map",
+    "disambiguation": "A type of chromosome map whereby genes are located on the basis of cytological findings obtained with the aid of chromosome mutations."
+  },
+  "cytoplasm": {
+    "title": "Cytoplasm",
+    "disambiguation": "All cellular contents surrounding the nucleus of a membrane-bound eukaryotic cell."
+  },
+  "cytoplasmic (uniparental) inheritance": {
+    "title": "Cytoplasmic (uniparental) inheritance",
+    "disambiguation": "See: cytoplasmic trait"
+  },
+  "cytoplasmic trait": {
+    "title": "Cytoplasmic trait",
+    "disambiguation": "A genetic characteristic in which the genes are found outside the nucleus, in chloroplasts or mitochondria. Results in offspring inheriting genetic material from only one parent."
+  },
+  "cytosine": {
+    "title": "Cytosine (C)",
+    "disambiguation": "A nitrogenous base, one member of the base pair GC (guanine and cytosine) in DNA. See also: base pair, nucleotide"
+  },
+  "data warehouse": {
+    "title": "Data warehouse",
+    "disambiguation": "A collection of databases, data tables, and mechanisms to access the data on a single subject."
+  },
+  "deletion": {
+    "title": "Deletion",
+    "disambiguation": "A loss of part of the DNA from a chromosome; can lead to a disease or abnormality. See also: chromosome, mutation"
+  },
+  "deletion map": {
+    "title": "Deletion map",
+    "disambiguation": "A description of a specific chromosome that uses defined mutations --specific deleted areas in the genome-- as 'biochemical signposts,' or markers for specific areas."
+  },
+  "denitrification": {
+    "title": "Denitrification",
+    "disambiguation": "Anaerobic conversion of nitrate or nitrite to nitrogen gas (N2) by denitrifying bacteria. A small portion of nitrate or nitrite may be converted to nitrous oxide (N2O), a potent greenhouse gas."
+  },
+  "deoxyribonucleotide": {
+    "title": "Deoxyribonucleotide",
+    "disambiguation": "See: nucleotide"
+  },
+  "deoxyribose": {
+    "title": "Deoxyribose",
+    "disambiguation": "A type of sugar that is one component of DNA (deoxyribonucleic acid)."
+  },
+  "desorption": {
+    "title": "Desorption",
+    "disambiguation": "Removal of a substance in the reverse of absorption or adsorption."
+  },
+  "detritus": {
+    "title": "Detritus",
+    "disambiguation": "Remnants of biological material."
+  },
+  "dgvm": {
+    "title": "DGVM",
+    "disambiguation": "dynamic global vegetation model"
+  },
+  "diatom": {
+    "title": "Diatom",
+    "disambiguation": "Type of microscopic, photosynthetic algae known for its intricately designed, silica-containing shell. Thousands of diatom species are known; most are unicellular, but some form colonies. Diatoms are responsible for a large portion of photosynthetic carbon assimilation in marine and freshwater environments."
+  },
+  "dinoflagellate": {
+    "title": "Dinoflagellate",
+    "disambiguation": "Any of a group of eukaryotic microorganisms containing both plant-like and animal-like species that lives in marine and freshwater environments. These unicellular microorganisms use a pair of dissimilar cellular appendages called flagella for motility."
+  },
+  "diploid": {
+    "title": "Diploid",
+    "disambiguation": "A full set of genetic material consisting of paired chromosomes, one from each parental set. See also: haploid"
+  },
+  "directed evolution": {
+    "title": "directed evolution",
+    "disambiguation": "A laboratory process used on isolated molecules or microbes to cause mutations and identify subsequent adaptations to novel environments."
+  },
+  "directed mutagenesis": {
+    "title": "directed mutagenesis",
+    "disambiguation": "Alteration of DNA at a specific site and its reinsertion into an organism to study any effects of the change."
+  },
+  "directed sequencing": {
+    "title": "directed sequencing",
+    "disambiguation": "Successively sequencing DNA from adjacent stretches of chromosome."
+  },
+  "disturbance": {
+    "title": "Disturbance",
+    "disambiguation": "Any abrupt event that drastically changes ecosystem characteristics such as population diversity, behavior, or climate response."
+  },
+  "dms": {
+    "title": "DMS",
+    "disambiguation": "dimethyl sulfide"
+  },
+  "dna": {
+    "alias": "deoxyribonucleic acid"
+  },
+  "deoxyribonucleic acid": {
+    "title": "DNA (deoxyribonucleic acid)",
+    "disambiguation": "Molecule that encodes genetic information. DNA is a double-stranded molecule held together by weak bonds between base pairs of nucleotides. The four nucleotides in DNA contain the bases adenine (A), guanine (G), cytosine (C), and thymine (T). A pairs with T and C pairs with G."
+  },
+  "dna annotation": {
+    "title": "DNA annotation",
+    "disambiguation": "See genome annotation"
+  },
+  "dNA assembly": {
+    "title": "DNA assembly",
+    "disambiguation": "See genome assembly"
+  },
+  "dNA probe": {
+    "title": "DNA probe",
+    "disambiguation": "See: probe"
+  },
+  "dNA repair genes": {
+    "title": "DNA repair genes",
+    "disambiguation": "Genes encoding proteins that correct errors in DNA sequencing."
+  },
+  "dNA replication": {
+    "title": "DNA replication",
+    "disambiguation": "The use of existing DNA as a template for the synthesis of new DNA strands."
+  },
+  "dNA sequence": {
+    "title": "DNA sequence",
+    "disambiguation": "The relative order of base pairs, whether in a DNA fragment, gene, chromosome, or an entire genome. See also: base sequence analysis, genome sequence"
+  },
+  "dOE": {
+    "title": "DOE",
+    "disambiguation": "U.S. Department of Energy"
+  },
+  "domain": {
+    "title": "Domain",
+    "disambiguation": "A discrete portion of a protein with its own function. The combination of domains in a single protein determines its overall function."
+  },
+  "dominant": {
+    "title": "Dominant",
+    "disambiguation": "An allele that is almost always expressed, even if only one copy is present. See also: gene, genome"
+  },
+  "double helix": {
+    "title": "double helix",
+    "disambiguation": "The twisted-ladder shape that two linear strands of DNA assume when complementary nucleotides on opposing strands bond together."
+  },
+  "draft sequence": {
+    "title": "draft sequence",
+    "disambiguation": "A DNA sequence that, while incomplete, offers a virtual road map to many of the known genes. Draft sequence data are mostly in the form of large-sized base pair fragments whose approximate chromosomal locations are known. See also: sequencing, complete genome sequence, working draft DNA sequence"
+  },
+  "dynamic global vegetation model (DGVM)": {
+    "title": "dynamic global vegetation model (DGVM)",
+    "disambiguation": "Biogeographical model used to study how general categories of plant functional types are established and respond to competition, disturbances, and other factors."
+  },
+  "earth System Model (ESM)": {
+    "title": "earth System Model (ESM)",
+    "disambiguation": "A type of complex, global model that combines physical climate models, global biological processes, and human activities."
+  },
+  "ecophysiology": {
+    "title": "Ecophysiology",
+    "disambiguation": "Study of the physiological functions of organisms as they pertain to their ecology or interactions with each other and their environment."
+  },
+  "ecosystem": {
+    "title": "Ecosystem",
+    "disambiguation": "Set of living organisms (plants, animals, fungi, and microorganisms) and the physical and chemical factors that make up a particular environment."
+  },
+  "ectomycorrhizae": {
+    "title": "Ectomycorrhizae",
+    "disambiguation": "A type of mycorrhizal fungus that surrounds a plant root tip but does not penetrate the cell walls of the root with its hyphae."
+  },
+  "edaphic": {
+    "title": "Edaphic",
+    "disambiguation": "Related to or determined by soil characteristics (e.g., soil texture, composition, drainage)."
+  },
+  "eere": {
+    "title": "EERE",
+    "disambiguation": "Office of Energy Efficiency and Renewable Energy, DOE"
+  },
+  "eia": {
+    "title": "EIA",
+    "disambiguation": "Energy Information Administration"
+  },
+  "electron acceptor": {
+    "title": "electron acceptor",
+    "disambiguation": "Substance that gains electrons from another substance in an oxidation-reduction reaction."
+  },
+  "electron donor": {
+    "title": "electron donor",
+    "disambiguation": "Substance that loses electrons to another substance in an oxidation-reduction reaction."
+  },
+  "electrophoresis": {
+    "title": "Electrophoresis",
+    "disambiguation": "A method of separating large molecules (such as DNA fragments or proteins) from a mixture of similar molecules. An electric current is passed through a medium containing the mixture, and each kind of molecule travels through the medium at a different rate, depending on its electrical charge and size. Agarose and acrylamide gels are the media commonly used for electrophoresis of proteins and nucleic acids."
+  },
+  "electroporation": {
+    "title": "Electroporation",
+    "disambiguation": "A process using high-voltage current to make cell membranes permeable to allow the introduction of new DNA; commonly used in recombinant DNA technology. See also: transfection"
+  },
+  "elsi": {
+    "title": "ELSI",
+    "disambiguation": "ethical, legal, and social issues"
+  },
+  "emsl": {
+    "title": "EMSL",
+    "disambiguation": "DOE Environmental Molecular Sciences Laboratory"
+  },
+  "endomycorrhizae": {
+    "title": "Endomycorrhizae",
+    "disambiguation": "A type of mycorrhizal fungus that surrounds a plant root tip and uses its hyphae to penetrate the cell walls of the root. Endomycorrhizal fungi form vesicle-like structures at the root cell surface that enhance the transport of substances between a plant and fungus."
+  },
+  "endonuclease": {
+    "title": "Endonuclease",
+    "disambiguation": "See: restriction enzyme"
+  },
+  "endophyte": {
+    "title": "Endophyte",
+    "disambiguation": "Any organism (usually a fungus or microbe) that lives inside another organism and establishes a parasitic or mutualistic relationship with its host."
+  },
+  "entisols": {
+    "title": "Entisols",
+    "disambiguation": "Undifferentiated soils of recent origin found in river valleys and deltas."
+  },
+  "enzyme": {
+    "title": "Enzyme",
+    "disambiguation": "A protein that acts as a catalyst, speeding the rate at which a biochemical reaction proceeds but not altering the direction or nature of the reaction."
+  },
+  "epact": {
+    "title": "EPAct",
+    "disambiguation": "Energy Policy Act of 2005"
+  },
+  "epigenome": {
+    "title": "Epigenome",
+    "disambiguation": "Set of chemical compounds that modify, or mark, the genome in a way that tells it what to do, where to do it, and when to do it. The marks, which are not part of the DNA itself, can be passed on from cell to cell as cells divide, and from one generation to the next."
+  },
+  "epigenomics": {
+    "title": "Epigenomics",
+    "disambiguation": "Study of the complete set of epigenetic modifications on the genetic material of a cell, known as the epigenome. Epigenetic modifications are reversible modifications on a cell's DNA or histones that affect gene expression without altering the DNA sequence."
+  },
+  "epiphyte": {
+    "title": "Epiphyte",
+    "disambiguation": "Any organism that grows upon or attaches to a living plant for physical support but not for nutrients."
+  },
+  "epistasis": {
+    "title": "Epistasis",
+    "disambiguation": "Phenomenon where the effects of one gene are modified by one or several other genes. The gene whose phenotype is expressed is called epistatic, while the phenotype altered or suppressed is called hypostatic."
+  },
+  "epr": {
+    "title": "EPR",
+    "disambiguation": "electron paramagnetic resonance"
+  },
+  "eqtl": {
+    "title": "eQTL",
+    "disambiguation": "expression quantitative trait locus"
+  },
+  "escherichia coli": {
+    "title": "escherichia coli",
+    "disambiguation": "Common bacterium that has been studied intensively by geneticists because of its small genome size, normal lack of pathogenicity, and ease of growth in the laboratory."
+  },
+  "est": {
+    "title": "EST",
+    "disambiguation": "expressed sequence tag"
+  },
+  "eukaryote": {
+    "title": "Eukaryote",
+    "disambiguation": "Single-celled or multicellular organism (e.g., plant, animal, or fungi) with a cellular structure that includes a membrane-bound, structurally discrete nucleus and other well-developed subcellular compartments. See also: prokaryote"
+  },
+  "euphotic zone": {
+    "title": "euphotic zone",
+    "disambiguation": "The layer of a body of water that receives sufficient sunlight for photosynthesis. The depth of this layer, which is about 80 m, is determined by the water's extinction coefficient, its cloudiness, and the sunlight's angle of incidence."
+  },
+  "evolutionarily conserved": {
+    "title": "evolutionarily conserved",
+    "disambiguation": "See: conserved sequence"
+  },
+  "exogenous DNA": {
+    "title": "exogenous DNA",
+    "disambiguation": "DNA originating outside an organism that has been introduced into the organism."
+  },
+  "exon": {
+    "title": "Exon",
+    "disambiguation": "The protein-coding DNA sequence of a gene. See also: intron"
+  },
+  "exonuclease": {
+    "title": "Exonuclease",
+    "disambiguation": "An enzyme that cleaves nucleotides sequentially from free ends of a linear nucleic acid substrate."
+  },
+  "expressed gene": {
+    "title": "expressed gene",
+    "disambiguation": "See: gene expression"
+  },
+  "expressed sequence tag (EST)": {
+    "title": "expressed sequence tag (EST)",
+    "disambiguation": "A short strand of DNA that is a part of a cDNA molecule and can act as identifier of a gene. Used in locating and mapping genes."
+  },
+  "expression quantitative trait locus (eQTL)": {
+    "title": "expression quantitative trait locus (eQTL)",
+    "disambiguation": "Genomic locus that regulates expression levels of mRNAs or proteins. See also: quantitative trait locus"
+  },
+  "extremophile": {
+    "title": "Extremophile",
+    "disambiguation": "An organism that can survive in physically or chemically extreme conditions that are not livable to most other organisms."
+  },
+  "exudates": {
+    "title": "Exudates",
+    "disambiguation": "See root exudate."
+  },
+  "feedback": {
+    "title": "Feedback",
+    "disambiguation": "An interaction mechanism between processes in the Earth system that occurs when the result of an initial process triggers changes in a second process that in turn influences the initial one. A positive feedback intensifies the original process, and a negative feedback reduces it."
+  },
+  "fer": {
+    "title": "FER",
+    "disambiguation": "fossil energy-replacement ratio"
+  },
+  "flow cytometry": {
+    "title": "flow cytometry",
+    "disambiguation": "Analysis of biological material by detection of the light-absorbing or fluorescing properties of cells or subcellular fractions (i.e., chromosomes) passing in a narrow stream through a laser beam. An absorbance or fluorescence profile of the sample is produced. Automated sorting devices, used to fractionate samples, sort successive droplets of the analyzed stream into different fractions depending on the fluorescence emitted by each droplet. Also known as flow sorting."
+  },
+  "flow karyotyping": {
+    "title": "flow karyotyping",
+    "disambiguation": "Use of flow cytometry to analyze and separate chromosomes according to their DNA content."
+  },
+  "fluorescence in situ hybridization (FISH)": {
+    "title": "fluorescence in situ hybridization (FISH)",
+    "disambiguation": "A physical mapping approach that uses fluorescein tags to detect hybridization of probes with metaphase chromosomes and with the less-condensed somatic interphase chromatin."
+  },
+  "fret": {
+    "title": "FRET",
+    "disambiguation": "fluorescence resonance energy transfer"
+  },
+  "ft": {
+    "title": "FT",
+    "disambiguation": "look: \"Fischer Tropsch\" or \"Fourier Transform\""
+  },
+  "ftir": {
+    "title": "FTIR",
+    "disambiguation": "Fourier transform infrared (spectroscopy)"
+  },
+  "full gene sequence": {
+    "title": "full gene sequence",
+    "disambiguation": "The complete order of bases in a gene. This order determines which protein a gene will produce."
+  },
+  "functional annotation": {
+    "title": "functional annotation",
+    "disambiguation": "Process of attaching biological information (e.g., biochemical function, biological function, involved regulation and interactions, and expression) to genomic elements. See also: genome annotation"
+  },
+  "functional genomics": {
+    "title": "functional genomics",
+    "disambiguation": "Study of sequencing data to describe gene (and protein) functions and interactions. Unlike genomics, functional genomics focuses on dynamic aspects such as gene transcription, translation, and protein-protein interactions, as opposed to the static aspects of genomic information such as DNA sequence or structures."
+  },
+  "gas chromatography": {
+    "title": "gas chromatography",
+    "disambiguation": "An automated method for separating a substance into its components. The substance is volatilized and carried by a stream of gas through a column containing an inert solid or liquid matrix that separates each component before reaching a detector device."
+  },
+  "gbs": {
+    "title": "GBS",
+    "disambiguation": "genotyping by sequencing"
+  },
+  "gc": {
+    "title": "GC",
+    "disambiguation": "gas chromatography"
+  },
+  "gc-ms": {
+    "title": "GC-MS",
+    "disambiguation": "gas chromatography-mass spectrometry"
+  },
+  "gc-rich area": {
+    "title": "GC-rich area",
+    "disambiguation": "Many DNA sequences carry long stretches of repeated G and C which often indicate a gene-rich region."
+  },
+  "gec": {
+    "title": "GEC",
+    "disambiguation": "Governors' Ethanol Coalition"
+  },
+  "gel electrophoresis": {
+    "title": "gel electrophoresis",
+    "disambiguation": "See: electrophoresis"
+  },
+  "gelisols": {
+    "title": "Gelisols",
+    "disambiguation": "Cold surface soils with underlying permafrost."
+  },
+  "gene": {
+    "title": "Gene",
+    "disambiguation": "Fundamental physical and functional unit of heredity. A gene is an ordered sequence of nucleotides, located in a particular position on a particular chromosome, that encodes a specific functional product (i.e., a protein or RNA molecule). Multiple variants (see allele) can exist in a population."
+  },
+  "gene amplification": {
+    "title": "gene amplification",
+    "disambiguation": "Repeated copying of a piece of DNA. See also: gene"
+  },
+  "gene chip technology": {
+    "title": "gene chip technology",
+    "disambiguation": "Development of cDNA microarrays from a large number of genes. Used to monitor and measure changes in gene expression for each gene represented on the chip."
+  },
+  "gene expression": {
+    "title": "gene expression",
+    "disambiguation": "Process by which a gene's coded information is converted into structures present and operating in the cell. Expressed genes include those transcribed into messenger RNA (mRNA) and then translated into proteins, as well as those transcribed into RNA but not translated into proteins [e.g., transfer (tRNA) and ribosomal RNA (rRNA)]."
+  },
+  "gene family": {
+    "title": "gene family",
+    "disambiguation": "Group of closely related genes that make similar products."
+  },
+  "gene function": {
+    "title": "gene function",
+    "disambiguation": "Biochemical reaction, protein-protein interaction, metabolic or signaling pathway association, cellular localization, phenotype, and changes in protein function that are mediated by shifts in protein structure."
+  },
+  "gene library": {
+    "title": "gene library",
+    "disambiguation": "See: genomic library"
+  },
+  "gene mapping": {
+    "title": "gene mapping",
+    "disambiguation": "Determination of the relative positions of genes on a DNA molecule (chromosome or plasmid) and of the distance, in linkage units or physical units, between them."
+  },
+  "gene pool": {
+    "title": "Gene pool",
+    "disambiguation": "All the variations of genes in a species. See also: allele, gene, polymorphism"
+  },
+  "gene prediction": {
+    "title": "Gene prediction",
+    "disambiguation": "Predictions of possible genes made by a computer program based on how well a stretch of DNA sequence matches known gene sequences"
+  },
+  "gene regulatory network": {
+    "title": "Gene regulatory network",
+    "disambiguation": "Intracellular network of regulatory proteins that control the expression of gene subsets involved in particular cellular functions. A simple network would consist of one or more input signaling pathways, regulatory proteins that integrate the input signals, several target genes (in bacteria a target operon), and the RNA and proteins produced from those target genes."
+  },
+  "gene transfer": {
+    "title": "Gene transfer",
+    "disambiguation": "Incorporation of new DNA into and organism's cells, usually by a vector such as a modified virus. See also: mutation, vector"
+  },
+  "genera": {
+    "title": "Genera",
+    "disambiguation": "A taxonomic category of organisms that ranks between family and species. Genera (singular: genus) for higher organisms generally consist of species with similar characteristics."
+  },
+  "general circulation model": {
+    "title": "General circulation model (GCM)",
+    "disambiguation": "A class of computer- driven models (sometimes called global circulation models) that provide weather forecasts and climate projections. GCMs integrate a variety of fluid dynamical, chemical, and biological equations that represent processes in Earth system components(e.g., land, ocean, atmosphere, and biosphere)."
+  },
+  "gcm": {
+    "alias": "general circulation model"
+  },
+  "genetic code": {
+    "title": "Genetic code",
+    "disambiguation": "The sequence of nucleotides, coded in triplets (codons) along the mRNA, that determines the sequence of amino acids in protein synthesis. A gene's DNA sequence can be used to predict the mRNA sequence, and the genetic code can in turn be used to predict the amino acid sequence."
+  },
+  "genetic engineering": {
+    "title": "Genetic engineering",
+    "disambiguation": "Altering the genetic material of cells or organisms to enable them to make new substances or perform new functions."
+  },
+  "genetic engineering technology": {
+    "title": "Genetic engineering technology",
+    "disambiguation": "See: recombinant DNA technology"
+  },
+  "genetic informatics": {
+    "title": "Genetic informatics",
+    "disambiguation": "See: bioinformatics"
+  },
+  "genetic map": {
+    "title": "Genetic map",
+    "disambiguation": "See: linkage map"
+  },
+  "genetic marker": {
+    "title": "Genetic marker",
+    "disambiguation": "A gene or other identifiable portion of DNA whose inheritance can be followed. See also: chromosome, DNA, gene, inherit"
+  },
+  "genetic material": {
+    "title": "Genetic material",
+    "disambiguation": "See: genome"
+  },
+  "genetic mosaic": {
+    "title": "Genetic mosaic",
+    "disambiguation": "An organism in which different cells contain different genetic sequence. This can be the result of a mutation during development or fusion of embryos at an early developmental stage."
+  },
+  "genetics": {
+    "title": "Genetics",
+    "disambiguation": "The study of inheritance patterns of specific traits."
+  },
+  "genome": {
+    "title": "Genome",
+    "disambiguation": "All the genetic material in the chromosomes of a particular organism. Most prokaryotes package their entire genome into a single chromosome, while eukaryotes have different numbers of chromosomes. Genome size generally is given as total number of base pairs."
+  },
+  "genome annotation": {
+    "title": "Genome annotation",
+    "disambiguation": "Process of identifying elements in the genome and attaching biological information to these elements. Automatic annotation tools perform this process by computer analysis, as opposed to manual annotation (i.e., curation), which involves human expertise. Ideally, these approaches co-exist and complement each other in the same annotation pipeline. See also: functional annotation, structural annotation"
+  },
+  "genome assembly": {
+    "title": "Genome assembly",
+    "disambiguation": "Process of taking a large number of short DNA sequences and putting them back together to create a representation of the original chromosomes from which the DNA originated. In a shotgun sequencing project, all the DNA from a source is first fractured into millions of small pieces. These pieces are then \"read\" by automated sequencing machines, which can read up to 1,000 nucleotides or bases at a time. A genome assembly algorithm works by taking all the pieces and aligning them to one another, and detecting all places where two of the short sequences, or reads, overlap. These overlapping reads can be merged, and the process continues."
+  },
+  "genome engineering": {
+    "title": "Genome engineering",
+    "disambiguation": "Techniques for the targeted, specific modification of the genetic information (or genome) of living organisms."
+  },
+  "genome project": {
+    "title": "Genome project",
+    "disambiguation": "Research and technology-development effort aimed at mapping and sequencing the genome of organisms."
+  },
+  "genome sequence": {
+    "title": "Genome sequence",
+    "disambiguation": "Order of nucleotides or bases within DNA molecules that make up an organism's entire genome. The four bases are adenine, guanine, cytosine, and thymine, represented as A, G, C, and T."
+  },
+  "genome-wide association study": {
+    "title": "Genome-Wide Association Study (GWAS)",
+    "disambiguation": "Examination of many common genetic variants in different organisms to see if any variant is statistically associated with a trait. GWAS are used to identify candidate genes or sequence variants that may link to a condition or property of interest."
+  },
+  "gwas": {
+    "alias": "genome-wide association study"
+  },
+  "genomic library": {
+    "title": "Genomic library",
+    "disambiguation": "A collection of clones made from a set of randomly generated overlapping DNA fragments that represent the entire genome of an organism. See also: library, arrayed library"
+  },
+  "genomic science": {
+    "title": "Genomic Science",
+    "disambiguation": "Genomic Science program, DOE (formerly Genomics:GTL and Genomes to Life)"
+  },
+  "genomics": {
+    "title": "Genomics",
+    "disambiguation": "The study of genes and their function."
+  },
+  "genotype": {
+    "title": "Genotype",
+    "disambiguation": "An organism's genetic constitution, as distinguished from its physical characteristics (phenotype)."
+  },
+  "gh": {
+    "title": "GH",
+    "disambiguation": "glycosyl hydrolase"
+  },
+  "ghg": {
+    "title": "GHG",
+    "disambiguation": "greenhouse gas"
+  },
+  "gigaton": {
+    "title": "Gigaton (GT)",
+    "disambiguation": "One billion metric tons; a metric ton is a unit of mass equal to 1000 kg (about 2200 lb)."
+  },
+  "gt": {
+    "alias": "gigaton"
+  },
+  "gos": {
+    "title": "GOS",
+    "disambiguation": "Global Ocean Sampling"
+  },
+  "greenhouse gas": {
+    "title": "Greenhouse gas",
+    "disambiguation": "Heat-trapping gas such as carbon dioxide, methane, nitrous oxide, or dimethyl sulfide released into the atmosphere as a result of human activities (primarily fossil fuel combustion) and natural processes (e.g., cellular respiration, biomass decomposition, volcanic activity)."
+  },
+  "gross primary productivity": {
+    "title": "Gross primary productivity (GPP)",
+    "disambiguation": "Total amount of organic matter created by photosynthesis over a defined time period (total product of photosynthesis)."
+  },
+  "gpp": {
+    "alias": "gross primary productivity (GPP)"
+  },
+  "gt": {
+    "title": "GT",
+    "disambiguation": "gigaton"
+  },
+  "gtc/y": {
+    "title": "GtC/y",
+    "disambiguation": "gigatons of carbon per year"
+  },
+  "gtl": {
+    "title": "GTL",
+    "disambiguation": "see Genomic Science"
+  },
+  "guanine (G)": {
+    "title": "guanine (G)",
+    "disambiguation": "A nitrogenous base, one member of the base pair GC (guanine and cytosine) in DNA. See also: base pair, nucleotide"
+  },
+  "geas": {
+    "title": "GWAS",
+    "disambiguation": "genome-wide association study"
+  },
+  "haploid": {
+    "title": "Haploid",
+    "disambiguation": "A single set of chromosomes (half the full set of genetic material) present in the egg and pollen cells of plants. See also: diploid"
+  },
+  "haplotype": {
+    "title": "Haplotype",
+    "disambiguation": "A segment of DNA containing closely linked gene variations that are inherited as a unit."
+  },
+  "hc": {
+    "title": "HC",
+    "disambiguation": "hemicellulose"
+  },
+  "hemicellulose": {
+    "title": "Hemicellulose",
+    "disambiguation": "Any of several polysaccharides (e.g., xylans, mannans, and galactans) that cross link and surround cellulose fibers in plant cell walls. Where cellulose is regular in organization and consequently strong, hemicelluloses are more commonly random in structure and more easily hydrolyzed."
+  },
+  "heterotroph": {
+    "title": "Heterotroph",
+    "disambiguation": "Organism that obtains organic carbon by consuming other organisms or the products of other organisms."
+  },
+  "heterozygosity": {
+    "title": "Heterozygosity",
+    "disambiguation": "The presence of different alleles at one or more loci on homologous chromosomes."
+  },
+  "heterozygote": {
+    "title": "Heterozygote",
+    "disambiguation": "See: heterozygosity"
+  },
+  "heterozygous": {
+    "title": "Heterozygous",
+    "disambiguation": "Having two different alleles for a single trait, or having two different alleles at a single gene or genetic locus. An allele can be dominant, co-dominant, or recessive."
+  },
+  "hexose": {
+    "title": "Hexose",
+    "disambiguation": "A type of sugar molecule that contains six carbon atoms (e.g., glucose, fructose)."
+  },
+  "hgt": {
+    "title": "HGT",
+    "disambiguation": "horizontal gene transfer"
+  },
+  "hi": {
+    "title": "HI",
+    "disambiguation": "harvest index"
+  },
+  "high throughput": {
+    "title": "high throughput",
+    "disambiguation": "Done on a massive, automated scale."
+  },
+  "high-throughput sequencing": {
+    "title": "high-throughput sequencing",
+    "disambiguation": "A fast method of determining the order of bases in DNA. See also: sequencing"
+  },
+  "highly conserved sequence": {
+    "title": "highly conserved sequence",
+    "disambiguation": "DNA sequence that is very similar across several different types of organisms. See also: gene, mutation"
+  },
+  "histone": {
+    "title": "Histone",
+    "disambiguation": "Protein that provides structural support to a chromosome. For very long DNA molecules to fit into the cell nucleus, they wrap around complexes of histone proteins, giving the chromosome a more compact shape. Some histones variants are associated with the regulation of gene expression."
+  },
+  "histosols": {
+    "title": "Histosols",
+    "disambiguation": "Poorly drained soils in swamps and bogs that contain more than 20% organic matter."
+  },
+  "homeobox": {
+    "title": "Homeobox",
+    "disambiguation": "A short stretch of nucleotides whose base sequence is virtually identical in all the genes that contain it. Homeoboxes have been found in many organisms. In the fruit fly, a homeobox appears to determine when particular groups of genes are expressed during development."
+  },
+  "homeostasis": {
+    "title": "Homeostasis",
+    "disambiguation": "Tendency of an organism or a cell to maintain its internal conditions regardless of external changing conditions."
+  },
+  "homolog": {
+    "title": "Homolog",
+    "disambiguation": "A member of a chromosome pair in diploid organisms or a gene that has the same origin and functions in two or more species."
+  },
+  "homologous chromosome": {
+    "title": "homologous chromosome",
+    "disambiguation": "Chromosome containing the same linear gene sequences as another, each derived from one parent."
+  },
+  "homologous recombination": {
+    "title": "homologous recombination",
+    "disambiguation": "Swapping of DNA fragments between paired chromosomes."
+  },
+  "homology": {
+    "title": "Homology",
+    "disambiguation": "Similarity in DNA sequence or structure based on descent from a common ancestor."
+  },
+  "homozygote": {
+    "title": "Homozygote",
+    "disambiguation": "An organism that has two identical alleles of a gene. See also: heterozygote"
+  },
+  "homozygous": {
+    "title": "Homozygous",
+    "disambiguation": "See: homozygote"
+  },
+  "horizontal gene transfer": {
+    "title": "horizontal gene transfer",
+    "disambiguation": "Exchange of genetic material between two different organisms (typically different species of prokaryotes). This process gives prokaryotes the ability to obtain novel functionalities or cause dramatic changes in community structure over relatively short periods of time."
+  },
+  "hrm": {
+    "title": "HRM",
+    "disambiguation": "Hierarchical Response Model"
+  },
+  "htp": {
+    "title": "HTP",
+    "disambiguation": "high throughput"
+  },
+  "humus": {
+    "title": "Humus",
+    "disambiguation": "Long-lived mixture of organic compounds derived from the microbial decomposition of plant and animal matter in soils."
+  },
+  "hybrid": {
+    "title": "Hybrid",
+    "disambiguation": "The offspring of genetically different parents. See also: heterozygote"
+  },
+  "hybridization": {
+    "title": "Hybridization",
+    "disambiguation": "The process of joining two complementary strands of DNA or one each of DNA and RNA to form a double-stranded molecule."
+  },
+  "hydrometeoric": {
+    "title": "Hydrometeoric",
+    "disambiguation": "Relating to atmospheric phenomena that depend on water vapor."
+  },
+  "hydrophilic": {
+    "title": "Hydrophilic",
+    "disambiguation": "Having the ability to readily interact with water."
+  },
+  "hydrophobic": {
+    "title": "Hydrophobic",
+    "disambiguation": "Incapable of interacting with water."
+  },
+  "hydrotropism": {
+    "title": "Hydrotropism",
+    "disambiguation": "Ability of a plant to sense and grow toward water."
+  },
+  "hyphae": {
+    "title": "Hyphae",
+    "disambiguation": "Branching, threadlike filamentous cells of a fungus."
+  },
+  "iam": {
+    "title": "IAM",
+    "disambiguation": "Integrated Assessment Model"
+  },
+  "iea": {
+    "title": "IEA",
+    "disambiguation": "International Energy Agency"
+  },
+  "img/m": {
+    "title": "IMG/M",
+    "disambiguation": "JGI's Integrated Microbial Genome/Metagenome database"
+  },
+  "in silico": {
+    "title": "in silico",
+    "disambiguation": "Using computers to simulate and investigate natural processes."
+  },
+  "in situ": {
+    "title": "in situ",
+    "disambiguation": "In a natural environment."
+  },
+  "in situ hybridization": {
+    "title": "in situ hybridization",
+    "disambiguation": "Use of a DNA or RNA probe to detect the presence of the complementary DNA sequence in cloned bacterial or cultured eukaryotic cells."
+  },
+  "in vitro": {
+    "title": "in vitro",
+    "disambiguation": "Outside of a living organism."
+  },
+  "in vivo": {
+    "title": "in vivo",
+    "disambiguation": "Within a living organism."
+  },
+  "inceptisols": {
+    "title": "Inceptisols",
+    "disambiguation": "Variable soils with horizon development in early stages."
+  },
+  "independent assortment": {
+    "title": "independent assortment",
+    "disambiguation": "During meiosis each of the two copies of a gene is distributed to the germ cells independently of the distribution of other genes. See also: linkage"
+  },
+  "informatics": {
+    "title": "Informatics",
+    "disambiguation": "See: bioinformatics"
+  },
+  "inherit": {
+    "title": "Inherit",
+    "disambiguation": "In genetics, to receive genetic material from parents through biological processes."
+  },
+  "inherited": {
+    "title": "Inherited",
+    "disambiguation": "See: inherit"
+  },
+  "insertion": {
+    "title": "Insertion",
+    "disambiguation": "A chromosome abnormality in which a piece of DNA is incorporated into a gene and thereby disrupts the gene's normal function. See also: chromosome, DNA, gene, mutation"
+  },
+  "insertional mutation": {
+    "title": "insertional mutation",
+    "disambiguation": "See: insertion"
+  },
+  "intellectual property rights": {
+    "title": "intellectual property rights",
+    "disambiguation": "Patents, copyrights, and trademarks. See also: patent"
+  },
+  "interaction network": {
+    "title": "Interaction network",
+    "disambiguation": "Diagram that shows numerous molecular interactions of a cell. Each point or node on the diagram represents a molecule (typically a protein), and each line connecting two nodes indicates that two molecules are capable of interacting."
+  },
+  "interaction network": {
+    "title": "Interaction network",
+    "disambiguation": "Diagram that shows numerous molecular interactions of a cell. Each point or node on the diagram represents a molecule (typically a protein), and each line connecting two nodes indicates that two molecules are capable of interacting."
+  },
+  "interactome": {
+    "title": "Interactome",
+    "disambiguation": "Molecular interactions of a cell, typically used to describe all protein-protein interactions or those between proteins and other molecules."
+  },
+  "interference": {
+    "title": "Interference",
+    "disambiguation": "One crossover event inhibits the chances of another crossover event. Also known as positive interference. Negative interference increases the chance of a second crossover. See also: crossing over"
+  },
+  "intron": {
+    "title": "Intron",
+    "disambiguation": "DNA sequence that interrupts the protein-coding sequence of a gene; an intron is transcribed into RNA but is cut out of the message before it is translated into protein. See also: exon"
+  },
+  "ipcc": {
+    "title": "IPCC",
+    "disambiguation": "Intergovernmental Panel on Climate Change"
+  },
+  "ir": {
+    "title": "IR",
+    "disambiguation": "infrared (spectroscopy)"
+  },
+  "isoenzyme": {
+    "title": "Isoenzyme",
+    "disambiguation": "An enzyme performing the same function as another enzyme but having a different set of amino acids. The two enzymes may function at different speeds."
+  },
+  "isotope": {
+    "title": "Isotope",
+    "disambiguation": "Atom that has the same number of protons as another atom but a different number of neutrons and hence atomic mass. For example, 13C is an isotope of carbon that has one more neutron than the most common isotope of carbon, 12C."
+  },
+  "jgi": {
+    "title": "JGI",
+    "disambiguation": "DOE Joint Genome Institute"
+  },
+  "junk dna": {
+    "title": "Junk DNA",
+    "disambiguation": "Stretches of DNA that do not code for genes; most of the genome consists of so-called junk DNA which may have regulatory and other functions. Also called non-coding DNA."
+  },
+  "karyotype": {
+    "title": "Karyotype",
+    "disambiguation": "A photomicrograph of individual chromosomes arranged in a standard format showing the number, size, and shape of each chromosome type; used in low-resolution physical mapping."
+  },
+  "kbase": {
+    "title": "KBase",
+    "disambiguation": "DOE Systems Biology Knowledgebase"
+  },
+  "kilobase": {
+    "title": "Kylobase (kb)",
+    "disambiguation": "Unit of length for DNA fragments equal to 1000 nucleotides."
+  },
+  "kb": {
+    "title": "Kylobase",
+    "alias": "kilobase",
+    "disambiguation": "Unit of length for DNA fragments equal to 1000 nucleotides."
+  },
+  "kis": {
+    "title": "KIS",
+    "disambiguation": "knowledge integration and synthesis"
+  },
+  "knockout": {
+    "title": "Knockout",
+    "disambiguation": "Deactivation of specific genes; used in laboratory organisms to study gene function. See also: gene, locus"
+  },
+  "la niΟ±a": {
+    "title": "La NiΟ±a",
+    "disambiguation": "An irregular variation of ocean current that flows off the west coast of South America, carrying cool, nutrient-rich water to the surface. La NiΟ±a typically follows El NiΟ±o events, which occur every 4 to 12 years."
+  },
+  "lateral gene transfer": {
+    "title": "Lateral gene transfer",
+    "disambiguation": "Exchange of genetic material between two different organisms (typically different species of prokaryotes). This process gives prokaryotes the ability to obtain novel functionalities or cause dramatic changes in community structure over relatively short periods of time."
+  },
+  "lc": {
+    "title": "LC",
+    "disambiguation": "liquid chromatography"
+  },
+  "lc-ms": {
+    "alias": "ms"
+  },
+  "ms": {
+    "title": "LC-MS/MS",
+    "disambiguation": "liquid chromatography-mass spectrometry/mass spectrometry"
+  },
+  "lcc": {
+    "title": "LCC",
+    "disambiguation": "lignin carbohydrate complex"
+  },
+  "library": {
+    "title": "Library",
+    "disambiguation": "An unordered collection of clones (i.e., cloned DNA from a particular organism) whose relationship to each other can be established by physical mapping. See also: genomic library, arrayed library"
+  },
+  "lignin": {
+    "title": "Lignin",
+    "disambiguation": "Complex, insoluble polymer whose structure, while not well understood, gives strength and rigidity to cellulose fibers in the cell walls of woody plants. Lignin makes up a significant portion of the mass of dry wood and, after cellulose, is the second most abundant form of organic carbon in the biosphere."
+  },
+  "lims": {
+    "title": "LIMS",
+    "disambiguation": "laboratory information management system"
+  },
+  "linkage": {
+    "title": "Linkage",
+    "disambiguation": "The proximity of two or more markers (e.g., genes, RFLP markers) on a chromosome; the closer the markers, the lower the probability that they will be separated during DNA repair or replication processes (binary fission in prokaryotes, mitosis or meiosis in eukaryotes), and hence the greater the probability that they will be inherited together."
+  },
+  "linkage disequilibrium": {
+    "title": "Linkage disequilibrium",
+    "disambiguation": "Where alleles occur together more often than can be accounted for by chance. Indicates that the two alleles are physically close on the DNA strand. See also: Mendelian inheritance"
+  },
+  "linkage map": {
+    "title": "Linkage map",
+    "disambiguation": "A map of the relative positions of genetic loci on a chromosome, determined on the basis of how often the loci are inherited together. Distance is measured in centimorgans (cM)."
+  },
+  "liquid chromatography": {
+    "title": "liquid chromatography",
+    "disambiguation": "An automated method used to separate, identify, and quantify the components of a liquid solution.A sample is carried by a mobile liquid phase through a columnpacked with solid particles that separates each component beforereaching a detector device."
+  },
+  "localize": {
+    "title": "Localize",
+    "disambiguation": "Determination of the original position (locus) of a gene or other marker on a chromosome."
+  },
+  "loci": {
+    "title": "Loci",
+    "disambiguation": "Chromosomal locations of genes or genetic markers. (singular: locus)"
+  },
+  "long-Range Restriction Mapping": {
+    "title": "long-Range Restriction Mapping",
+    "disambiguation": "Restriction enzymes are proteins that cut DNA at precise locations. Restriction maps depict the chromosomal positions of restriction-enzyme cutting sites. These are used as biochemical \"signposts,\" or markers of specific areas along the chromosomes. The map will detail the positions where the DNA molecule is cut by particular restriction enzymes."
+  },
+  "lpj-guess": {
+    "title": "LPJ-GUESS",
+    "disambiguation": "Lund-Potsdam-Jena General Ecosystem Simulator"
+  },
+  "macre": {
+    "title": "Macre",
+    "disambiguation": "million acres"
+  },
+  "macroaggregates": {
+    "title": "Macroaggregates",
+    "disambiguation": "Large (greater than 250 micrometers in size) mineral-organic matter complexes in soils that physically protect organic matter from degradation."
+  },
+  "macrorestriction map": {
+    "title": "Macrorestriction map",
+    "disambiguation": "Map depicting the order of and distance between sites at which restriction enzymes cleave chromosomes."
+  },
+  "mapping": {
+    "title": "Mapping",
+    "disambiguation": "See: gene mapping, linkage map, physical map"
+  },
+  "mapping population": {
+    "title": "Mapping population",
+    "disambiguation": "The group of related organisms used in constructing a genetic map."
+  },
+  "marine snow": {
+    "title": "Marine snow",
+    "disambiguation": "Aggregates of mostly organic materials that sink to the ocean floor from the photosynthetically active surface layers."
+  },
+  "marker": {
+    "title": "Marker",
+    "disambiguation": "See: genetic marker"
+  },
+  "mass spectrometry": {
+    "title": "Mass spectrometry",
+    "disambiguation": "Method involving specialized instruments for measuring the mass and abundance of molecules in a mixture and identifying mixture components by mass and charge."
+  },
+  "mb": {
+    "alias": "megabase"
+  },
+  "megabase": {
+    "title": "Megabase (Mb)",
+    "disambiguation": "Unit of length for DNA fragments equal to 1 million nucleotides and roughly equal to 1 cM. See also: centimorgan"
+  },
+  "meiosis": {
+    "title": "Meiosis",
+    "disambiguation": "The process of two consecutive cell divisions in the diploid progenitors of sex cells. Meiosis results in four rather than two daughter cells, each with a haploid set of chromosomes. See also: mitosis"
+  },
+  "membrane": {
+    "title": "Membrane",
+    "disambiguation": "Semipermeable biological barrier consisting of lipids, proteins, and small amounts of carbohydrate. Membranes control the flow of chemical substances (e.g., nutrients, protons, ions, and wastes) in and out of cells or cellular compartments. They also serve as structural supports for systems of membrane- embedded proteins that mediate important biological processes such as photosynthesis and cellular respiration."
+  },
+  "mendelian inheritance": {
+    "title": "Mendelian inheritance",
+    "disambiguation": "One method in which genetic traits are passed from parents to offspring. Named for Gregor Mendel, who first studied and recognized the existence of genes and this method of inheritance. See also: recessive gene"
+  },
+  "mesofauna": {
+    "title": "Mesofauna",
+    "disambiguation": "Any animal of intermediate size (e.g., insects, earthworms)."
+  },
+  "mesophyll": {
+    "title": "Mesophyll",
+    "disambiguation": "Internal, irregularly-shaped, photosynthetic tissue within a leaf."
+  },
+  "messenger rna": {
+    "alias": "mrna"
+  },
+  "mrna": {
+    "title": "mRNA",
+    "disambiguation": "Messenger RNA — RNA that serves as a template for protein synthesis. See also: genetic code, transcription, translation"
+  },
+  "metabolic engineering": {
+    "title": "Metabolic engineering",
+    "disambiguation": "Optimizing genetic and regulatory processes within cells to increase the cells' production of a certain substance."
+  },
+  "mfa": {
+    "alias": ""
+  },
+  "metabolic flux analysis": {
+    "title": "Metabolic flux analysis (MFA)",
+    "disambiguation": "Method for measuring all the metabolic fluxes of an organism's central metabolism; 13C-labeled substrate is taken up by an organism, and the distribution of 13C throughout the metabolic network enables the quantification of labeled metabolite pools."
+  },
+  "metabolism": {
+    "title": "Metabolism",
+    "disambiguation": "Collection of all biochemical reactions that an organism uses to obtain the energy and materials it needs to sustain life. An organism uses energy and common biochemical intermediates released from the breakdown of nutrients to drive the synthesis of biological molecules."
+  },
+  "metabolites": {
+    "title": "Metabolites",
+    "disambiguation": "Small molecules (<500 Da) that are the substrates, intermediates, and products of enzyme-catalyzed metabolic reactions."
+  },
+  "metabolomics": {
+    "title": "Metabolomics",
+    "disambiguation": "Type of global molecular analysis that involves identifying and quantifying the metabolome-Ο²¬ùall metabolites present in a cell at a given time."
+  },
+  "metadata": {
+    "title": "Metadata",
+    "disambiguation": "Data that describe specific characteristics and usage aspects (e.g., what data are about, when and how data were created, who can access the data, and available formats) of raw data generated from different analyses."
+  },
+  "metagenome": {
+    "title": "Metagenome",
+    "disambiguation": "Genetic material recovered directly from environmental samples."
+  },
+  "metagenomics": {
+    "title": "Metagenomics",
+    "disambiguation": "Study of the collective DNA isolated directly from a community of organisms living in a particular environment."
+  },
+  "metaomics": {
+    "title": "Metaomics",
+    "disambiguation": "High-throughput, global analysis of DNA, RNA, proteins, or metabolites isolated directly from a community of organisms living in a particular environment."
+  },
+  "metaphase": {
+    "title": "Metaphase",
+    "disambiguation": "A stage in mitosis or meiosis during which the chromosomes are aligned along the equatorial plane of the cell."
+  },
+  "metaproteomics": {
+    "title": "Metaproteomics",
+    "disambiguation": "High-throughput, global analysis of proteins isolated directly from a community of organisms living in a particular environment. Metaproteomics can reveal which genes are actively translated into functional proteins by a community."
+  },
+  "metatranscriptome": {
+    "title": "Metatranscriptome",
+    "disambiguation": "Transcriptome of a group of interacting organisms or species."
+  },
+  "metatranscriptomics": {
+    "title": "Metatranscriptomics",
+    "disambiguation": "High-throughput, global analysis of RNA isolated directly from a community of organisms living in a particular environment. Metatranscriptomics can reveal which genes are actively expressed by a community."
+  },
+  "methane clathrates": {
+    "title": "Methane clathrates",
+    "disambiguation": "Ice crystals that contain large amounts of methane. Massive quantities of methane clathrates have been found under sediments in the ocean floor."
+  },
+  "mfd": {
+    "title": "MFD",
+    "disambiguation": "microfluidic device"
+  },
+  "mg": {
+    "title": "Mg",
+    "disambiguation": "magnesium"
+  },
+  "mgal": {
+    "title": "Mgal",
+    "disambiguation": "million gallons"
+  },
+  "microaggregates": {
+    "title": "Microaggregates",
+    "disambiguation": "Small (50-250 micrometers in size) mineral-organic matter complexes in soils that physically protect organic matter from degradation."
+  },
+  "microarray": {
+    "title": "Microarray",
+    "disambiguation": "Analytical technique used to measure the mRNA abundance (gene expression) of thousands of genes in one experiment. The most common type of microarray is a glass slide onto which DNA fragments are chemically attached in an ordered pattern. As fluorescently labeled nucleic acids from a sample are applied to the microarray, they bind the immobilized DNA fragments and generate a fluorescent signal indicating the relative abundance of each nucleic acid in the sample."
+  },
+  "microbial genetics": {
+    "title": "Microbial genetics",
+    "disambiguation": "The study of genes and gene function in bacteria, archaea, and other microorganisms. Often used in research in the fields of bioremediation, alternative energy, and disease prevention. See also: biotechnology, bioremediation"
+  },
+  "microbiome": {
+    "title": "Microbiome",
+    "disambiguation": "A community of microorganisms that inhabit a particular environment. For example, a plant microbiome includes all the microorganisms that colonize a plant's surfaces and internal passages."
+  },
+  "microfluidics": {
+    "title": "Microfluidics",
+    "disambiguation": "Technology platforms that deal with the behavior, precise control, and manipulation of fluids that are geometrically constrained to a small, typically sub-millimeter, scale."
+  },
+  "microinjection": {
+    "title": "Microinjection",
+    "disambiguation": "A technique for introducing a solution of DNA into a cell using a fine microcapillary pipet."
+  },
+  "micronuclei": {
+    "title": "Micronuclei",
+    "disambiguation": "Chromosome fragments that are not incorporated into the nucleus at cell division."
+  },
+  "microorganism": {
+    "title": "Microorganism",
+    "disambiguation": "Any unicellular prokaryotic or eukaryotic organism, sometimes called a microbe."
+  },
+  "mitochondrial DNA": {
+    "title": "Mitochondrial DNA",
+    "disambiguation": "The genetic material found in mitochondria, the organelles that generate energy for the cell. Not inherited in the same fashion as nucleic DNA. See also: cell, DNA, genome, nucleus"
+  },
+  "mitosis": {
+    "title": "Mitosis",
+    "disambiguation": "The process of nuclear division in cells that produces daughter cells that are genetically identical to each other and to the parent cell. See also: meiosis"
+  },
+  "mixotrophic": {
+    "title": "Mixotrophic",
+    "disambiguation": "Having both autotrophic and heterotrophic capabilities."
+  },
+  "mLST": {
+    "title": "MLST",
+    "disambiguation": "multilocus sequence typing"
+  },
+  "mn": {
+    "title": "Mn",
+    "disambiguation": "manganese"
+  },
+  "mOC": {
+    "title": "MOC",
+    "disambiguation": "mineral-associated organic carbon"
+  },
+  "model": {
+    "title": "Model",
+    "disambiguation": "Mathematical or other (e.g., engineering) representation used in computer simulations to calculate the evolving state of dynamic systems."
+  },
+  "model ecosystem": {
+    "title": "Model ecosystem",
+    "disambiguation": "A specific type of ecosystem that is widely studied in great detail by a community of researchers to provide insights into the processes controlling the behavior of other ecosystems."
+  },
+  "model organism": {
+    "title": "Model organism",
+    "disambiguation": "Organism studied widely by a community of researchers. Biological understanding obtained from model-organism research is used to provide insights into the biological mechanisms of other organisms. Model organisms include the bacteria Escherichia coli, the yeast Saccharomyces cerevisiae, and the mustard weed Arabidopsis thaliana."
+  },
+  "modeling": {
+    "title": "Modeling",
+    "disambiguation": "Use of statistical and computational techniques to create working computer-based models of biological phenomena that can help to formulate hypotheses for experimentation and predict outcomes of research."
+  },
+  "molecular biology": {
+    "title": "Molecular biology",
+    "disambiguation": "The study of the structure, function, and makeup of biologically important molecules."
+  },
+  "molecular genetics": {
+    "title": "Molecular genetics",
+    "disambiguation": "The study of macromolecules important in biological inheritance."
+  },
+  "molecular machine": {
+    "title": "Molecular machine",
+    "disambiguation": "Highly organized assembly of proteins and other molecules that work together as a functional unit to carry out operational, structural, and regulatory activities in the cells."
+  },
+  "mollisols": {
+    "title": "Mollisols",
+    "disambiguation": "Grassland soils with a thick, dark organic-surface horizon."
+  },
+  "mRI": {
+    "title": "MRI",
+    "disambiguation": "magnetic resonance imaging"
+  },
+  "mS": {
+    "title": "MS",
+    "disambiguation": "mass spectrometry, spectroscopy"
+  },
+  "mSW": {
+    "title": "MSW",
+    "disambiguation": "municipal solid waste"
+  },
+  "mton": {
+    "title": "Mton",
+    "disambiguation": "million tons"
+  },
+  "multiplexing": {
+    "title": "Multiplexing",
+    "disambiguation": "A laboratory approach that performs multiple sets of reactions in parallel (simultaneously); greatly increasing speed and throughput."
+  },
+  "mutagen": {
+    "title": "Mutagen",
+    "disambiguation": "An agent that causes a permanent genetic change in a cell. Does not include changes occurring during normal genetic recombination."
+  },
+  "mutagenicity": {
+    "title": "Mutagenicity",
+    "disambiguation": "The capacity of a chemical or physical agent to cause permanent genetic alterations."
+  },
+  "mutation": {
+    "title": "Mutation",
+    "disambiguation": "Any heritable change in DNA sequence. See also: polymorphism"
+  },
+  "mVA": {
+    "title": "MVA",
+    "disambiguation": "multivariate analysis"
+  },
+  "mycelium": {
+    "title": "Mycelium",
+    "disambiguation": "Mass of hyphae that make up the body of a fungus."
+  },
+  "mycorrhizae": {
+    "title": "Mycorrhizae",
+    "disambiguation": "Fungi that establish symbiotic relationships with plant roots."
+  },
+  "nad": {
+    "title": "NAD, NADH, NAD(H)",
+    "disambiguation": "nicotinamide adenine dinucleotide"
+  },
+  "nadh": {
+    "alias": "nad"
+  },
+  "nad(h)": {
+    "alias": "nad"
+  },
+  "nadp": {
+    "title": "NADP, NADPH, NADP(H)",
+    "disambiguation": "nicotinamide adenine dinucleotide phosphate"
+  },
+  "nadph": {
+    "alias": "nadp"
+  },
+  "nadp(h)": {
+    "alias": "nadp"
+  },
+  "nano-sims": {
+    "title": "Nano-SIMS",
+    "disambiguation": "Imaging technique that uses a nanoscale secondary ion mass spectrometer (nano-SIMS) and cells labeled with stable isotopes of carbon and/or nitrogen to identify areas of active growth and follow nutrient fluxes between cells."
+  },
+  "nbp": {
+    "title": "NBP",
+    "disambiguation": "net biome productivity"
+  },
+  "ncep": {
+    "title": "NCEP",
+    "disambiguation": "National Commission on Energy Policy"
+  },
+  "nee": {
+    "title": "NEE",
+    "disambiguation": "net ecosystem exchange"
+  },
+  "nep": {
+    "title": "NEP",
+    "disambiguation": "look \"net ecosystem productivity\" or \"National Energy Policy\""
+  },
+  "nepdg": {
+    "title": "NEPDG",
+    "disambiguation": "National Energy Policy Development Group"
+  },
+  "nersc": {
+    "title": "NERSC",
+    "disambiguation": "National Energy Research Scientific Computing Center"
+  },
+  "net biome productivity": {
+    "title": "Net biome productivity (NBP)",
+    "disambiguation": "Amount of organic carbon that remains in a biome after accounting for carbon losses or gains from disturbances such as fire, disease, and human land use."
+  },
+  "nep": {
+    "alias": "net ecosystem productivity"
+  },
+  "net ecosystem productivity": {
+    "title": "Net ecosystem productivity (NEP)",
+    "disambiguation": "Amount of organic carbon (e.g., plant biomass, soil organic matter) that remains after respiration by photosynthetic organisms, heterotrophs, and decomposers."
+  },
+  "npp": {
+    "alias": "net ecosystem productivity"
+  },
+  "net primary productivity": {
+    "title": "Net primary productivity (NPP)",
+    "disambiguation": "Fraction of photosynthetically fixed energy that remains after accounting for cellular respiration. NPP also is defined as the total amount of photosynthetic biomass created annually."
+  },
+  "nh3": {
+    "title": "NH3",
+    "disambiguation": "ammonia"
+  },
+  "nih": {
+    "title": "NIH",
+    "disambiguation": "National Institutes of Health"
+  },
+  "nir": {
+    "title": "NIR",
+    "disambiguation": "near infrared (spectroscopy)"
+  },
+  "nitrification": {
+    "title": "Nitrification",
+    "disambiguation": "Transformation of ammonium ions to nitrate by nitrifying bacteria."
+  },
+  "nitrogen fixation": {
+    "title": "Nitrogen fixation",
+    "disambiguation": "Process carried out by certain species of bacteria and archaea in which atmospheric nitrogen (N2) is converted to organic nitrogen-containing compounds that can be used by other organisms."
+  },
+  "nitrogenase": {
+    "title": "Nitrogenase",
+    "disambiguation": "Enzyme that catalyzes the conversion of atmospheric nitrogen (N2) to nitrate in nitrogen-fixing bacteria and archaea."
+  },
+  "nitrogenous base": {
+    "title": "Nitrogenous base",
+    "disambiguation": "A nitrogen-containing molecule having the chemical properties of a base. DNA contains the nitrogenous bases adenine (A), guanine (G), cytosine (C), and thymine (T). See also: DNA"
+  },
+  "nmr": {
+    "title": "NMR",
+    "disambiguation": "nuclear magnetic resonance"
+  },
+  "northern blot": {
+    "title": "Northern blot",
+    "disambiguation": "A gel-based laboratory procedure that locates mRNA sequences on a gel that are complementary to a piece of DNA used as a probe. See also: DNA, library"
+  },
+  "nr": {
+    "title": "NR",
+    "disambiguation": "non redundant"
+  },
+  "nrc": {
+    "title": "NRC",
+    "disambiguation": "National Research Council"
+  },
+  "nrdc": {
+    "title": "NRDC",
+    "disambiguation": "Natural Resources Defense Council"
+  },
+  "nrel": {
+    "title": "NREL",
+    "disambiguation": "National Renewable Energy Laboratory, DOE"
+  },
+  "nsf": {
+    "title": "NSF",
+    "disambiguation": "National Science Foundation"
+  },
+  "nuclear magnetic resonance": {
+    "title": "Nuclear magnetic resonance (NMR)",
+    "disambiguation": "Technique used to study molecular structure by analyzing the absorption of electromagnetic resonance at a specific frequency in atoms subjected to strong magnetic field."
+  },
+  "nmr": {
+    "alias": "nuclear magnetic resonance"
+  },
+  "nucleic acid": {
+    "title": "Nucleic acid",
+    "disambiguation": "A large molecule composed of nucleotide subunits. See also: DNA"
+  },
+  "nucleolar organizing region": {
+    "title": "Nucleolar organizing region",
+    "disambiguation": "A part of the chromosome containing rRNA genes."
+  },
+  "nucleotide": {
+    "title": "Nucleotide",
+    "disambiguation": "A subunit of DNA or RNA consisting of a nitrogenous base (adenine, guanine, thymine, or cytosine in DNA; adenine, guanine, uracil, or cytosine in RNA), a phosphate molecule, and a sugar molecule (deoxyribose in DNA and ribose in RNA). Thousands of nucleotides are linked to form a DNA or RNA molecule. See also: DNA, base pair, RNA"
+  },
+  "nucleus": {
+    "title": "Nucleus",
+    "disambiguation": "The cellular organelle in eukaryotes that contains most of the genetic material."
+  },
+  "nue": {
+    "title": "NUE",
+    "disambiguation": "nutrient use efficiency"
+  },
+  "oascr": {
+    "title": "OASCR",
+    "disambiguation": "Office of Advanced Scientific Computing Research, DOE"
+  },
+  "ober": {
+    "title": "OBER",
+    "disambiguation": "see BER"
+  },
+  "obr": {
+    "title": "OBP",
+    "disambiguation": "Office of the Biomass Program, DOE"
+  },
+  "oit": {
+    "title": "OIT",
+    "disambiguation": "Office of Industrial Technologies, DOE"
+  },
+  "oligo": {
+    "title": "Oligo",
+    "disambiguation": "See: oligonucleotide"
+  },
+  "oligogenic": {
+    "title": "Oligogenic",
+    "disambiguation": "A phenotypic trait produced by two or more genes working together."
+  },
+  "oligonucleotide": {
+    "title": "Oligonucleotide",
+    "disambiguation": "Short nucleic acid polymer, typically with 50 or fewer bases. See also: nucleotide"
+  },
+  "oligotrophic": {
+    "title": "Oligotrophic",
+    "disambiguation": "Term used to describe lakes or other bodies of water that lack nutrients and plant life and have high concentrations of dissolved oxygen."
+  },
+  "open reading frame (ORF)": {
+    "title": "Open reading frame (ORF)",
+    "disambiguation": "The sequence of DNA or RNA located between the start-code sequence (initiation codon) and the stop-code sequence (termination codon)."
+  },
+  "operon": {
+    "title": "Operon",
+    "disambiguation": "A set of genes transcribed under the control of an operator gene."
+  },
+  "organelle": {
+    "title": "Organelle",
+    "disambiguation": "Specialized subunit within a cell that has a specific function and is usually separately enclosed within its own lipid bilayer."
+  },
+  "ortholog": {
+    "title": "Ortholog",
+    "disambiguation": "Similar gene or gene segments appearing in the genomes of different species but resulting from speciation and mutation."
+  },
+  "overlapping clones": {
+    "title": "Overlapping clones",
+    "disambiguation": "See: genomic library"
+  },
+  "oxidation": {
+    "title": "Oxidation",
+    "disambiguation": "Loss of one or more electrons from a chemical substance."
+  },
+  "oxisols": {
+    "title": "Oxisols",
+    "disambiguation": "Tropical soils rich in iron and aluminum oxides."
+  },
+  "p1-derived artificial chromosome": {
+    "title": "P1-derived artificial chromosome (PAC)",
+    "disambiguation": "One type of vector used to clone DNA fragments (100- to 300-kb insert size; average, 150 kb) in Escherichia coli cells. Based on bacteriophage (a virus) P1 genome. See also: cloning vector"
+  },
+  "pac": {
+    "alias": "p1-derived artificial chromosome"
+  },
+  "patent": {
+    "title": "Patent",
+    "disambiguation": "In genetics, conferring the right or title to genes, gene variations, or identifiable portions of sequenced genetic material to an individual or organization. See also: gene"
+  },
+  "pathway": {
+    "title": "Pathway",
+    "disambiguation": "Series of molecular interactions that occur in a specific sequence to carry out a particular cellular process (e.g., sense a signal from the environment, convert sunlight to chemical energy, break down or harvest energy from a carbohydrate, synthesize ATP, or construct a molecular machine)."
+  },
+  "pc02": {
+    "title": "pCO2",
+    "disambiguation": "partial pressure of carbon dioxide"
+  },
+  "pcr": {
+    "title": "PCR",
+    "disambiguation": "polymerase chain reaction"
+  },
+  "pdf": {
+    "title": "PDF",
+    "disambiguation": "probability density function"
+  },
+  "pedigree": {
+    "title": "Pedigree",
+    "disambiguation": "A family tree diagram that shows how a particular genetic trait has been inherited. See also: inherit"
+  },
+  "pelagic zone": {
+    "title": "Pelagic zone",
+    "disambiguation": "Open ocean that is not near the coast or ocean floor."
+  },
+  "penetrance": {
+    "title": "Penetrance",
+    "disambiguation": "The probability of a gene or genetic trait being expressed. \"Complete\" penetrance means the gene or genes for a trait are expressed in all the population who have the genes. \"Incomplete\" penetrance means the genetic trait is expressed in only part of the population. The percent penetrance also may change with the age range of the population."
+  },
+  "peptide": {
+    "title": "Peptide",
+    "disambiguation": "Two or more amino acids joined by a bond called a \"peptide bond.\" See also: polypeptide"
+  },
+  "perennial": {
+    "title": "Perennial",
+    "disambiguation": "Plant that lives from year to year."
+  },
+  "pft": {
+    "title": "PFT",
+    "disambiguation": "plant functional type"
+  },
+  "pg": {
+    "title": "Pg",
+    "disambiguation": "petagram"
+  },
+  "ph": {
+    "title": "PH",
+    "disambiguation": "Scale used to specify acidity or alkalinity. The hydrogen ion (H+) concentration of a sample determines its pH (pH = -log10 [H+]); the higher the H+ concentration, the lower the pH. A solution with a pH value of 7 is neutral; less than 7 is acidic; and greater than 7 is alkaline or basic."
+  },
+  "phage": {
+    "title": "Phage",
+    "disambiguation": "A virus for which the natural host is a bacterial cell."
+  },
+  "phenocopy": {
+    "title": "Phenocopy",
+    "disambiguation": "A trait not caused by inheritance of a gene but appears to be identical to a genetic trait."
+  },
+  "phenology": {
+    "title": "Phenology",
+    "disambiguation": "Study of recurring biological phenomena."
+  },
+  "phenomics": {
+    "title": "Phenomics",
+    "disambiguation": "Collective study of multiple phenotypes (e.g., all phenotypes associated with a particular biological function)."
+  },
+  "phenotype": {
+    "title": "Phenotype",
+    "disambiguation": "Physical characteristics of an organism."
+  },
+  "phloem": {
+    "title": "Phloem",
+    "disambiguation": "Vascular tissue that distributes sugars and nutrients throughout a plant."
+  },
+  "photosynthate": {
+    "title": "Photosynthate",
+    "disambiguation": "Organic carbon produced by photosynthesis."
+  },
+  "photosynthesis": {
+    "title": "Photosynthesis",
+    "disambiguation": "Process by which plants, algae, and certain types of prokaryotic organisms capture light energy and use it to drive the transfer of electrons from inorganic donors (e.g., water) to carbon dioxide to produce energy-rich carbohydrates."
+  },
+  "photosystem": {
+    "title": "Photosystem",
+    "disambiguation": "Large, membrane-bound molecular complex consisting of multiple proteins containing pigment molecules (e.g., chlorophylls) that absorb light at a particular wavelength and transfer the energy from the absorbed photon to a reaction center that initiates a series of electron-transport reactions."
+  },
+  "phototroph": {
+    "title": "Phototroph",
+    "disambiguation": "Organism capable of photosynthesis."
+  },
+  "phylogenetics": {
+    "title": "Phylogenetics",
+    "disambiguation": "Study of evolutionary relationships among groups of organisms (e.g., species, populations), based on their DNA sequences."
+  },
+  "phylogenomics": {
+    "title": "Phylogenomics",
+    "disambiguation": "Comparison and analysis of entire genomes, or large portions of genomes, to determine the relationship of the function of genes to their evolution."
+  },
+  "phylogeny": {
+    "title": "Phylogeny",
+    "disambiguation": "Evolutionary history that traces the development of a species or taxonomic group over time."
+  },
+  "physical map": {
+    "title": "Physical map",
+    "disambiguation": "A map of the locations of identifiable landmarks on DNA (e.g., restriction-enzyme cutting sites, genes), regardless of inheritance. Distance is measured in base pairs."
+  },
+  "physicochemical": {
+    "title": "Physicochemical",
+    "disambiguation": "Relating to both physical and chemical properties."
+  },
+  "physiology": {
+    "title": "Physiology",
+    "disambiguation": "Study of the functions of living organisms and the factors that influence those functions."
+  },
+  "phytoplankton": {
+    "title": "Phytoplankton",
+    "disambiguation": "Free-floating, microscopic photosynthetic organisms (e.g., algae, cyanobacteria, dinoflagellates found in the surface layers of marine and freshwater environments)."
+  },
+  "phytosiderophores": {
+    "title": "Phytosiderophores",
+    "disambiguation": "Chemical compounds released from the roots of certain plants (e.g., grasses) to sequester iron from the environment."
+  },
+  "plasmid": {
+    "title": "Plasmid",
+    "disambiguation": "Autonomously replicating extra-chromosomal circular DNA molecules, distinct from the normal bacterial genome and nonessential for cell survival under nonselective conditions. Some plasmids are capable of integrating into the host genome. A number of artificially constructed plasmids are used as cloning vectors."
+  },
+  "pleiotropy": {
+    "title": "Pleiotropy",
+    "disambiguation": "One gene that causes many different physical traits such as multiple disease symptoms."
+  },
+  "pluripotency": {
+    "title": "Pluripotency",
+    "disambiguation": "The potential of a cell to develop into more than one type of mature cell, depending on environment."
+  },
+  "poc": {
+    "title": "POC",
+    "disambiguation": "particulate organic carbon"
+  },
+  "polymer": {
+    "title": "Polymer",
+    "disambiguation": "A large molecule formed by the linking together of smaller subunit molecules."
+  },
+  "polymerase chain reaction (PCR)": {
+    "title": "Polymerase chain reaction (PCR)",
+    "disambiguation": "A method for amplifying a DNA base sequence using a heat-stable polymerase and two 20-base primers, one complementary to the (+) strand at one end of the sequence to be amplified and one complementary to the (-) strand at the other end. Because the newly synthesized DNA strands can subsequently serve as additional templates for the same primer sequences, successive rounds of primer annealing, strand elongation, and dissociation produce rapid and highly specific amplification of the desired sequence. PCR also can be used to detect the existence of the defined sequence in a DNA sample."
+  },
+  "polymerase, DNA or RNA": {
+    "title": "Polymerase, DNA or RNA",
+    "disambiguation": "Enzyme that catalyzes the synthesis of nucleic acids on preexisting nucleic acid templates, assembling RNA from ribonucleotides or DNA from deoxyribonucleotides."
+  },
+  "polymorphism": {
+    "title": "Polymorphism",
+    "disambiguation": "Occurs when two or more clearly different phenotypes exist in the same population of a species (i.e., the occurrence of more than one form or morph)."
+  },
+  "polypeptide": {
+    "title": "Polypeptide",
+    "disambiguation": "A protein or part of a protein made of a chain of amino acids joined by a peptide bond."
+  },
+  "polyploid": {
+    "title": "Polyploid",
+    "disambiguation": "Cells and organisms that contain more than two paired (homologous) sets of chromosomes. Most eukaryotic species are diploid, meaning they have two sets of chromosomes-one set inherited from each parent. However, polyploidy is found in some organisms and is especially common in plants."
+  },
+  "population": {
+    "title": "Population",
+    "disambiguation": "Collection of organisms of the same species living together in a given area. A community comprises several different populations."
+  },
+  "population genetics": {
+    "title": "Population genetics",
+    "disambiguation": "Study of allele frequency distribution and change under the influence of the four main evolutionary processes: natural selection, genetic drift, mutation, and gene flow. Population genetics also encompasses the factors of recombination, population subdivision, and population structure and attempts to explain such phenomena as adaptation and speciation."
+  },
+  "positional cloning": {
+    "title": "Positional cloning",
+    "disambiguation": "A technique used to identify genes, usually those that are associated with diseases, based on their location on a chromosome."
+  },
+  "ppmv": {
+    "title": "PPMV",
+    "disambiguation": "parts per million by volume"
+  },
+  "premature chromosome condensation": {
+    "title": "premature chromosome condensation (PCC)",
+    "disambiguation": "A method of studying chromosomes in the interphase stage of the cell cycle."
+  },
+  "pcc": {
+    "alias": "premature chromosome condensation"
+  },
+  "primary production": {
+    "title": "Primary production",
+    "disambiguation": "Synthesis and storage of organic molecules (biomass), starting with fixation of CO2 by photosynthesis, in plants and microorganisms."
+  },
+  "primer": {
+    "title": "Primer",
+    "disambiguation": "Short preexisting polynucleotide chain to which new deoxyribonucleotides can be added by DNA polymerase."
+  },
+  "probe": {
+    "title": "Probe",
+    "disambiguation": "Single-stranded DNA or RNA molecules of specific base sequence, labeled either radioactively or immunologically, that are used to detect the complementary base sequence by hybridization."
+  },
+  "product": {
+    "title": "Gene product",
+    "disambiguation": "Biochemical material, either RNA or protein, resulting from expression of a gene. The amount of gene product is used to measure a gene's level of expression (transcription)."
+  },
+  "prokaryote": {
+    "title": "Prokaryote",
+    "disambiguation": "Single-celled organism lacking a membrane-bound, structurally discrete nucleus and other subcellular compartments. Bacteria and archaea are prokaryotes. See also: eukaryote"
+  },
+  "promoter": {
+    "title": "Promoter",
+    "disambiguation": "A DNA site to which RNA polymerase will bind and initiate transcription."
+  },
+  "protein": {
+    "title": "Protein",
+    "disambiguation": "Large molecule composed of one or more chains of amino acids in a specific order; the order is determined by the base sequence of nucleotides in the gene that codes for the protein. Proteins maintain distinct cell structure, function, and regulation."
+  },
+  "protein complex": {
+    "title": "Protein complex",
+    "disambiguation": "Aggregate structure consisting of multiple protein molecules."
+  },
+  "protein expression": {
+    "title": "Protein expression",
+    "disambiguation": "Subcomponent of gene expression. It consists of the stages after DNA has been transcribed to mRNA. The mRNA is then translated into polypeptide chains, which are ultimately folded into proteins."
+  },
+  "proteome": {
+    "title": "Proteome",
+    "disambiguation": "Collection of proteins expressed by a cell at a particular time and under specific conditions."
+  },
+  "proteomics": {
+    "title": "Proteomics",
+    "disambiguation": "Large-scale analysis of the proteome to identify which proteins are expressed by an organism under certain conditions. Proteomics provides insights into protein function, modification, regulation, and interaction."
+  },
+  "proteorhodopsin": {
+    "title": "Proteorhodopsin",
+    "disambiguation": "Light-dependent proton pumps in marine bacteria."
+  },
+  "protozoa": {
+    "title": "Protozoa",
+    "disambiguation": "Single-celled, eukaryotic microorganisms that use cellular appendages called flagella to propel them through their environments."
+  },
+  "pseudogene": {
+    "title": "Pseudogene",
+    "disambiguation": "A sequence of DNA similar to a gene but nonfunctional; probably the remnant of a once-functional gene that accumulated mutations."
+  },
+  "purine": {
+    "title": "Purine",
+    "disambiguation": "A nitrogen-containing, double-ring, basic compound that occurs in nucleic acids. The purines in DNA and RNA are adenine and guanine. See also: base pair"
+  },
+  "pyrimidine": {
+    "title": "Pyrimidine",
+    "disambiguation": "A nitrogen-containing, single-ring, basic compound that occurs in nucleic acids. The pyrimidines in DNA are cytosine and thymine; in RNA, cytosine and uracil. See also: base pair"
+  },
+  "qtl": {
+    "alias": "quantitative trait locus"
+  },
+  "quantitative trait locus": {
+    "title": "Quantitative trait locus",
+    "disambiguation": "Stretch of DNA containing or linked to the genes that underlie a quantitative trait. See also: expression quantitative trait locus"
+  },
+  "r&d": {
+    "title": "R&D",
+    "disambiguation": "research and development"
+  },
+  "ra": {
+    "title": "Ra",
+    "disambiguation": "autotrophic respiration"
+  },
+  "radioisotope": {
+    "title": "Radioisotope",
+    "disambiguation": "Unstable isotope of an element that releases radiation as it decays to a stable form."
+  },
+  "rare-cutter enzyme": {
+    "title": "Rare-cutter enzyme",
+    "disambiguation": "See: restriction-enzyme cutting site"
+  },
+  "rd": {
+    "title": "Rd",
+    "disambiguation": "respiration by decomposers"
+  },
+  "rddd&d": {
+    "title": "RDDD&D",
+    "disambiguation": "research, development, demonstration, deployment, and decommissioning"
+  },
+  "recessive gene": {
+    "title": "Recessive gene",
+    "disambiguation": "A gene which will be expressed only if there are 2 identical copies."
+  },
+  "reciprocal translocation": {
+    "title": "Reciprocal translocation",
+    "disambiguation": "When a pair of chromosomes exchange exactly the same length and area of DNA. Results in a shuffling of genes."
+  },
+  "recombinant clone": {
+    "title": "Recombinant clone",
+    "disambiguation": "Clone containing recombinant DNA molecules. See also: recombinant DNA technology"
+  },
+  "recombinant DNA molecules": {
+    "title": "Recombinant DNA molecules",
+    "disambiguation": "A combination of DNA molecules of different origin that are joined using recombinant DNA technologies."
+  },
+  "recombinant DNA technology": {
+    "title": "Recombinant DNA technology",
+    "disambiguation": "Procedure used to join together DNA segments in a cell-free system (an environment outside a cell or organism). Under appropriate conditions, a recombinant DNA molecule can enter a cell and replicate there, either autonomously or after it has become integrated into a cellular chromosome."
+  },
+  "recombination": {
+    "title": "Recombination",
+    "disambiguation": "The process by which progeny derive a combination of genes different from that of either parent. In higher organisms, this can occur by crossing over. See also: crossing over, mutation"
+  },
+  "redfield ratio": {
+    "title": "Redfield ratio",
+    "disambiguation": "Optimal ratio of carbon, nitrogen, and phosphorus for phytoplankton growth (106C:16N:1P) based on molecular concentrations."
+  },
+  "reduction": {
+    "title": "Reduction",
+    "disambiguation": "Electron-transfer reaction in which a substance gains one or more electrons."
+  },
+  "regulatory elements": {
+    "title": "Regulatory elements",
+    "disambiguation": "Segments of the genome (e.g., regulatory regions, genes that encode regulatory proteins, or small RNAs) involved in controlling gene expression."
+  },
+  "regulatory region or sequence": {
+    "title": "Regulatory region or sequence",
+    "disambiguation": "Segment of DNA sequence to which a regulatory protein binds to control expression of a gene or group of genes that are expressed together."
+  },
+  "reporter gene": {
+    "title": "Reporter gene",
+    "disambiguation": "See: marker"
+  },
+  "resolution": {
+    "title": "Resolution",
+    "disambiguation": "Degree of molecular detail on a physical map of DNA, ranging from low to high."
+  },
+  "respiration": {
+    "title": "Respiration",
+    "disambiguation": "Series of biochemical redox reactions in which the energy released from the oxidation of organic or inorganic compounds is used to generate cellular energy in the form of ATP."
+  },
+  "restriction enzyme, endonuclease": {
+    "title": "Restriction enzyme, endonuclease",
+    "disambiguation": "A protein that recognizes specific, short nucleotide sequences and cuts DNA at those sites. Bacteria contain over 400 such enzymes that recognize and cut more than 100 different DNA sequences. See also: restriction enzyme cutting site"
+  },
+  "restriction fragment length polymorphism (RFLP)": {
+    "title": "Restriction fragment length polymorphism (RFLP)",
+    "disambiguation": "Variation between individuals in DNA fragment sizes cut by specific restriction enzymes; polymorphic sequences that result in RFLPs are used as markers on both physical maps and genetic linkage maps. RFLPs usually are caused by mutation at a cutting site. See also: marker, polymorphism"
+  },
+  "restriction-enzyme cutting site": {
+    "title": "Restriction-enzyme cutting site",
+    "disambiguation": "A specific nucleotide sequence of DNA at which a particular restriction enzyme cuts the DNA. Some sites occur frequently in DNA (e.g., every several hundred base pairs); others much less frequently (rare-cutter; e.g., every 10,000 base pairs)."
+  },
+  "retroviral infection": {
+    "title": "Retroviral infection",
+    "disambiguation": "The presence of retroviral vectors, such as some viruses, which use their recombinant DNA to insert their genetic material into the chromosomes of the host's cells. The virus is then propagated by the host cell."
+  },
+  "reverse transcriptase": {
+    "title": "Reverse transcriptase",
+    "disambiguation": "An enzyme used by retroviruses to form a complementary DNA sequence (cDNA) from their RNA. The resulting DNA is then inserted into the chromosome of the host cell."
+  },
+  "rfa": {
+    "title": "RFA",
+    "disambiguation": "Renewable Fuels Association"
+  },
+  "rh": {
+    "title": "Rh",
+    "disambiguation": "heterotrophic respiration"
+  },
+  "rhizosphere": {
+    "title": "Rhizosphere",
+    "disambiguation": "Narrow zone of soil surrounding a plant root, typically inhabited by microbial community(ies) that interact with the root."
+  },
+  "ri": {
+    "title": "RI",
+    "disambiguation": "recombinant inbred"
+  },
+  "ribonucleotide": {
+    "title": "Ribonucleotide",
+    "disambiguation": "See: nucleotide"
+  },
+  "ribose": {
+    "title": "Ribose",
+    "disambiguation": "The five-carbon sugar that serves as a component of RNA. See also: ribonucleic acid, deoxyribose"
+  },
+  "ribosomal RNA (rRNA)": {
+    "title": "Ribosomal RNA (rRNA)",
+    "disambiguation": "Specialized RNA found in the catalytic core of the ribosome, a molecular machine that synthesizes proteins in all living organisms."
+  },
+  "ribosomes": {
+    "title": "Ribosomes",
+    "disambiguation": "Small cellular components composed of specialized ribosomal RNA and protein; site of protein synthesis. See also: RNA"
+  },
+  "rna": {
+    "title": "RNA",
+    "alias": "ribonucleic acid"
+  },
+  "ribonucleic acid": {
+    "title": "RNA (ribonucleic acid)",
+    "disambiguation": "Molecule that plays an important role in protein synthesis and other chemical activities of the cell. RNA's structure is similar to that of DNA. Classes of RNA molecules include messenger RNA (mRNA), transfer RNA (tRNA), ribosomal RNA (rRNA), and other small RNAs, each serving a different purpose."
+  },
+  "rna-seq": {
+    "title": "RNA-Seq",
+    "disambiguation": "Use of high-throughput sequencing technologies to sequence complementary DNA (cDNA) and obtain information about a sample's RNA content."
+  },
+  "root exudate": {
+    "title": "Root exudate",
+    "disambiguation": "Chemical substance released from the root of a plant."
+  },
+  "ros": {
+    "title": "ROS",
+    "disambiguation": "reactive oxygen species"
+  },
+  "rrna": {
+    "title": "rRNA",
+    "disambiguation": "ribosomal RNA"
+  },
+  "rs": {
+    "title": "Rs",
+    "disambiguation": "respiration by plant roots and soil heterotrophs"
+  },
+  "rubisco": {
+    "title": "RuBisCo (Ribulose-1,5-bisphosphate carboxylase/oxygenase)",
+    "disambiguation": "Enzyme that catalyzes the first major step of photosynthetic carbon fixation by adding a molecule of carbon dioxide to a short 5-carbon sugar called ribulose bisphosphate. The resulting 6-carbon sugar is split into two 3-carbon molecules that can be used to build larger sugar molecules. RuBisCo also catalyzes photorespiration, which releases CO2."
+  },
+  "sanger sequencing": {
+    "title": "Sanger sequencing",
+    "disambiguation": "A widely used method of determining the order of bases in DNA. See also: sequencing, shotgun sequencing"
+  },
+  "satellite": {
+    "title": "Satellite",
+    "disambiguation": "A chromosomal segment that branches off from the rest of the chromosome but is still connected by a thin filament or stalk."
+  },
+  "sc": {
+    "title": "SC",
+    "disambiguation": "Office of Science, DOE"
+  },
+  "scaffold": {
+    "title": "Scaffold",
+    "disambiguation": "In genomic mapping, a series of contigs that are in the right order but not necessarily connected in one continuous stretch of sequence."
+  },
+  "segregation": {
+    "title": "Segregation",
+    "disambiguation": "The normal biological process whereby the two pieces of a chromosome pair are separated during meiosis and randomly distributed to the germ cells."
+  },
+  "sem": {
+    "title": "SEM",
+    "disambiguation": "scanning electron microscopy"
+  },
+  "senescence": {
+    "title": "Senescence",
+    "disambiguation": "Process of aging."
+  },
+  "sequence": {
+    "title": "Sequence",
+    "disambiguation": "See: base sequence"
+  },
+  "sequence assembly": {
+    "title": "Sequence assembly",
+    "disambiguation": "A process whereby the order of multiple sequenced DNA fragments is determined."
+  },
+  "sequencing": {
+    "title": "Sequencing",
+    "disambiguation": "Determination of the order of nucleotides (base sequences) in a DNA or RNA molecule or the order of amino acids in a protein."
+  },
+  "sequencing technology": {
+    "title": "Sequencing technology",
+    "disambiguation": "The instrumentation and procedures used to determine the order of nucleotides in DNA."
+  },
+  "shotgun method": {
+    "title": "Shotgun method",
+    "disambiguation": "Sequencing method that involves randomly sequenced cloned pieces of the genome, with no foreknowledge of where the piece originally came from. This can be contrasted with \"directed\" strategies, in which pieces of DNA from known chromosomal locations are sequenced. See also: library, genomic library"
+  },
+  "simulation": {
+    "title": "Simulation",
+    "disambiguation": "Combination of multiple models into a meaningful representation of a whole system that can be used to predict how the system will behave under various conditions. Simulations can be used to run in silico experiments to gain first insights, form hypotheses, and predict outcomes before conducting more expensive physical experiments."
+  },
+  "single nucleotide polymorphism (SNP)": {
+    "title": "Single nucleotide polymorphism (SNP)",
+    "disambiguation": "DNA sequence variations that occur when a single nucleotide (A, T, C, or G) in the genome sequence is altered. See also: mutation, polymorphism,"
+  },
+  "snp": {
+    "title": "SNP",
+    "disambiguation": "single nucleotide polymorphism"
+  },
+  "soc": {
+    "title": "SOC",
+    "disambiguation": "soil organic carbon"
+  },
+  "sod": {
+    "title": "SOD",
+    "disambiguation": "superoxide dismutase"
+  },
+  "solubility pump": {
+    "title": "Solubility pump",
+    "disambiguation": "System of physical processes [e.g., changes in water temperature, ocean circulation, and gradient of carbon dioxide (CO2) spanning the ocean depth] that influences the ocean's uptake of CO2 from the atmosphere. In combination with ocean circulation, the solubility pump results in net CO2 emissions at the equator and net CO2 drawdown at high latitudes."
+  },
+  "som": {
+    "title": "SOM",
+    "disambiguation": "soil organic matter"
+  },
+  "southern blotting": {
+    "title": "Southern blotting",
+    "disambiguation": "Transfer by absorption of DNA fragments separated in electrophoretic gels to membrane filters for detection of specific base sequences by radio-labeled complementary probes."
+  },
+  "species": {
+    "title": "Species",
+    "disambiguation": "Taxonomic group of closely related organisms sharing structural and physiological features that distinguish them from individuals belonging to other species. In organisms capable of sexual reproduction, individuals of the same species can interbreed and generate fertile offspring. For microorganisms, a species is a collection of closely related strains."
+  },
+  "spectral karyotype": {
+    "title": "Spectral karyotype (SKY)",
+    "disambiguation": "A graphic of all an organism's chromosomes, each labeled with a different color. Useful for identifying chromosomal abnormalities. See also: chromosome"
+  },
+  "sky": {
+    "alias": "spectral karyotype"
+  },
+  "splice site": {
+    "title": "Splice site",
+    "disambiguation": "Location in the DNA sequence where RNA removes the noncoding areas to form a continuous gene transcript for translation into a protein."
+  },
+  "spodosols": {
+    "title": "Spodosols",
+    "disambiguation": "Acidic soilsβÄîΟ²¬ùtypically found in coniferous forestsβÄîΟ²¬ùcontaining organic matter, aluminum oxides, and iron oxides."
+  },
+  "spr": {
+    "title": "SPR",
+    "disambiguation": "surface plasmon resonance"
+  },
+  "sscf": {
+    "title": "SSCF",
+    "disambiguation": "simultaneous saccharification and cofermentation"
+  },
+  "ssf": {
+    "title": "SSF",
+    "disambiguation": "simultaneous saccharification and fermentation"
+  },
+  "ssr": {
+    "title": "SSR",
+    "disambiguation": "simple sequence repeat"
+  },
+  "sssa": {
+    "title": "SSSA",
+    "disambiguation": "Soil Science Society of America"
+  },
+  "ssu rna": {
+    "title": "ssu rRNA",
+    "disambiguation": "small subunit ribosomal RNA"
+  },
+  "stable isotope": {
+    "title": "Stable isotope",
+    "disambiguation": "Isotope that does not undergo radioactive decay."
+  },
+  "stochastic": {
+    "title": "Stochastic",
+    "disambiguation": "Relating to a series of random events."
+  },
+  "stoichiometry": {
+    "title": "Stoichiometry",
+    "disambiguation": "Ratio of molecules in a structural complex or chemical reaction."
+  },
+  "structural annotation": {
+    "title": "Structural annotation",
+    "disambiguation": "Process of identifying gene elements such as coding regions, gene structure, regulatory motifs, and open reading frames (ORFs). See also: genome annotation"
+  },
+  "structural genomics": {
+    "title": "Structural genomics",
+    "disambiguation": "The effort to determine the 3D structures of large numbers of proteins using both experimental techniques and computer simulation"
+  },
+  "substitution": {
+    "title": "Substitution",
+    "disambiguation": "In genetics, a type of mutation due to replacement of one nucleotide in a DNA sequence by another nucleotide or replacement of one amino acid in a protein by another amino acid. See also: mutation"
+  },
+  "superoxide dismutase": {
+    "title": "Superoxide dismutase",
+    "disambiguation": "Enzyme that protects cells from oxidative damage by catalyzing the transformation of superoxide (a harmful species of oxygen) into oxygen and hydrogen peroxide."
+  },
+  "suppressor gene": {
+    "title": "Suppressor gene",
+    "disambiguation": "A gene that can suppress the action of another gene."
+  },
+  "symbiosis": {
+    "title": "Symbiosis",
+    "disambiguation": "Ecological relationship between two organisms in which both parties benefit."
+  },
+  "synchrotron": {
+    "title": "Synchrotron",
+    "disambiguation": "Research facility that accelerates charged particles and uses an increasing magnetic field to keep the particles in a circular path. Electromagnetic radiation emitted by the high- energy, accelerated particles can be used in a variety of scientific applications."
+  },
+  "syndrome": {
+    "title": "Syndrome",
+    "disambiguation": "The group or recognizable pattern of symptoms or abnormalities that indicate a particular trait or disease."
+  },
+  "syngeneic": {
+    "title": "Syngeneic",
+    "disambiguation": "Genetically identical members of the same species."
+  },
+  "synteny": {
+    "title": "Synteny",
+    "disambiguation": "Genes occurring in the same order on chromosomes of different species. See also: linkage, conserved sequence"
+  },
+  "synthetic biology": {
+    "title": "Synthetic biology",
+    "disambiguation": "Field of biological research and technology that combines science and engineering with the goal of designing and constructing new biological functions and systems not found in nature. Essential synthetic biology tools include DNA sequencing, fabrication of genes, modeling how synthetic genes behave, and precisely measuring gene behavior."
+  },
+  "systems biology": {
+    "title": "Systems biology",
+    "disambiguation": "Use of molecular analyses (e.g., measurements of all genes and proteins expressed in a cell at a particular time) and advanced computational methods to study how networks of interacting biological components determine the properties and activities of living systems."
+  },
+  "t-DNA": {
+    "title": "T-DNA",
+    "disambiguation": "transferred DNA"
+  },
+  "tandem repeat sequences": {
+    "title": "Tandem repeat sequences",
+    "disambiguation": "Multiple copies of the same base sequence on a chromosome; used as markers in physical mapping. See also: physical map"
+  },
+  "targeted mutagenesis": {
+    "title": "Targeted mutagenesis",
+    "disambiguation": "Deliberate change in the genetic structure directed at a specific site on the chromosome. Used in research to determine the targeted region's function. See also: mutation, polymorphism"
+  },
+  "taxa": {
+    "title": "Taxa",
+    "disambiguation": "Categories (e.g., phylum, order, family, genus, or species) used to classify animals and plants. (singular: taxon)"
+  },
+  "taxonomy": {
+    "title": "Taxonomy",
+    "disambiguation": "Hierarchical classification system for naming and grouping organisms based on evolutionary relationships."
+  },
+  "tdf": {
+    "title": "TDF",
+    "disambiguation": "transcript-derived fragments"
+  },
+  "technology transfer": {
+    "title": "Technology transfer",
+    "disambiguation": "The process of transferring scientific findings from research laboratories to the commercial sector."
+  },
+  "telomerase": {
+    "title": "Telomerase",
+    "disambiguation": "The enzyme that directs the replication of telomeres."
+  },
+  "telomere": {
+    "title": "Telomere",
+    "disambiguation": "The end of a chromosome. This specialized structure is involved in the replication and stability of linear DNA molecules. See also: DNA replication"
+  },
+  "tem": {
+    "title": "TEM",
+    "disambiguation": "transmission electron microscopy"
+  },
+  "thymine (T)": {
+    "title": "Thymine (T)",
+    "disambiguation": "A nitrogenous base, one member of the base pair AT (adenine-thymine). See also: base pair, nucleotide"
+  },
+  "tigr": {
+    "title": "TIGR",
+    "disambiguation": "The Institute for Genomic Research"
+  },
+  "tms": {
+    "title": "TMS",
+    "disambiguation": "theory, modeling, and simulation"
+  },
+  "tof": {
+    "title": "TOF",
+    "disambiguation": "time of flight"
+  },
+  "transcript": {
+    "title": "Transcript",
+    "disambiguation": "RNA molecule (mRNA) generated from a gene's DNA sequence during transcription."
+  },
+  "transcription": {
+    "title": "Transcription",
+    "disambiguation": "Synthesis of an RNA copy of a gene's DNA sequence; the first step in gene expression. See also: translation"
+  },
+  "transcription factor": {
+    "title": "Transcription factor",
+    "disambiguation": "Protein that binds to regulatory regions in the genome and helps control gene expression."
+  },
+  "transcriptome": {
+    "title": "Transcriptome",
+    "disambiguation": "Set of all RNA molecules, including mRNA, rRNA, tRNA, and other non-coding RNA produced in one or a population of cells."
+  },
+  "transcriptomics": {
+    "title": "Transcriptomics",
+    "disambiguation": "Global analysis of expression levels of all RNA transcripts present in a cell at a given time."
+  },
+  "transfection": {
+    "title": "Transfection",
+    "disambiguation": "The introduction of foreign DNA into a host cell. See also: cloning vector"
+  },
+  "transfer rna": {
+    "title": "Transfer RNA (tRNA)",
+    "disambiguation": "RNA that transports amino acids to ribosomes for incorporation into a polypeptide undergoing synthesis."
+  },
+  "tRNA": {
+    "alias": "transfer rna"
+  },
+  "transformation": {
+    "title": "Transformation",
+    "disambiguation": "A process by which the genetic material carried by an individual cell is altered by incorporation of exogenous DNA into its genome."
+  },
+  "transgenic": {
+    "title": "Transgenic",
+    "disambiguation": "An experimentally produced organism in which DNA has been artificially introduced and incorporated into the organism's germ line. See also: cell, DNA, gene, nucleus"
+  },
+  "translation": {
+    "title": "Translation",
+    "disambiguation": "The process in which the genetic code carried by mRNA directs the synthesis of proteins from amino acids. See also: transcription"
+  },
+  "translocation": {
+    "title": "Translocation",
+    "disambiguation": "A mutation in which a large segment of one chromosome breaks off and attaches to another chromosome. See also: mutation"
+  },
+  "transposable element": {
+    "title": "Transposable element",
+    "disambiguation": "A class of DNA sequences that can move from one chromosomal site to another."
+  },
+  "troposphere": {
+    "title": "Troposphere",
+    "disambiguation": "Region of the atmosphere closest to the Earth's surface."
+  },
+  "tussock": {
+    "title": "Tussock",
+    "disambiguation": "A tuft or clump of grass or other vegetation."
+  },
+  "ultisols": {
+    "title": "Ultisols",
+    "disambiguation": "Acidic, clay-containing soils with strong horizons found in temperate humid and tropical regions."
+  },
+  "uracil": {
+    "title": "Uracil",
+    "disambiguation": "A nitrogenous base normally found in RNA but not DNA; uracil is capable of forming a base pair with adenine. See also: base pair, nucleotide"
+  },
+  "usda": {
+    "title": "USDA",
+    "disambiguation": "U.S. Department of Agriculture"
+  },
+  "uv": {
+    "title": "UV",
+    "disambiguation": "ultraviolet"
+  },
+  "van der Waals bonds": {
+    "title": "Van der Waals bonds",
+    "disambiguation": "Weak intermolecular bonds resulting from the attraction between electron-rich regions of one molecule and electron-poor regions of another."
+  },
+  "vector": {
+    "title": "Vector",
+    "disambiguation": "See: cloning vector"
+  },
+  "vertisols": {
+    "title": "Vertisols",
+    "disambiguation": "Seasonally dry soils with a high clay content that swell when moist and then crack when dry."
+  },
+  "virus": {
+    "title": "Virus",
+    "disambiguation": "A noncellular biological entity that can reproduce only within a host cell. Viruses consist of nucleic acid covered by protein; some animal viruses are also surrounded by membrane. Inside the infected cell, the virus uses the synthetic capability of the host to produce progeny virus. See also: cloning vector"
+  },
+  "vmax": {
+    "title": "Vmax",
+    "disambiguation": "maximum enzyme velocity"
+  },
+  "western blot": {
+    "title": "Western blot",
+    "disambiguation": "A technique used to identify and locate proteins based on their ability to bind to specific antibodies. See also: DNA, Northern blot, protein, RNA, Southern blotting"
+  },
+  "wild type": {
+    "title": "Wild type",
+    "disambiguation": "The form of an organism that occurs most frequently in nature."
+  },
+  "working Draft DNA Sequence": {
+    "title": "Working Draft DNA Sequence",
+    "disambiguation": "See: Draft DNA Sequence"
+  },
+  "wue": {
+    "title": "WUE",
+    "disambiguation": "water use efficiency"
+  },
+  "yeast artificial chromosome": {
+    "title": "Yeast artificial chromosome (YAC)",
+    "disambiguation": "Constructed from yeast DNA, it is a vector used to clone large DNA fragments. See also: cloning vector, cosmid"
+  },
+  "yac": {
+    "alias": "yeast artificial chromosome"
+  },
+  "Zinc-finger protein": {
+    "title": "Zinc-finger protein",
+    "disambiguation": "A secondary feature of some proteins containing a zinc atom; a DNA-binding protein."
+  },
+  "Zooplankton": {
+    "title": "Zooplankton",
+    "disambiguation": "Free-floating, microscopic animals that drift with water currents."
+  }
 }
