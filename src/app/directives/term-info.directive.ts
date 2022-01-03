@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, HostListener, OnDestroy } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostListener, Input, OnDestroy } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -7,23 +7,32 @@ import { TermHintComponent } from '../components/shared/terms/term-hint.componen
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AliasTerm, BasicTerm, Terms } from '../core/models/terms.model';
+import { SettingsService } from '../core/services/settings.service';
 
 @Directive({
   selector: '[appTermInfo]',
 })
 export class TermInfoDirective implements AfterViewInit, OnDestroy {
+  private isApplicable = true;
   private terms: Terms;
   private unsubscribe$ = new Subject();
   private content: string;
 
   constructor(
+    private settingsService: SettingsService,
     private http: HttpClient,
     private elementRef: ElementRef,
     private translateService: TranslateService,
     private bottomSheet: MatBottomSheet
-  ) {}
+  ) {
+    const retrievedSettings = this.settingsService.getSettings();
+    this.isApplicable = retrievedSettings.showUiHints;
+  }
 
   ngAfterViewInit(): void {
+    if (!this.isApplicable) {
+      return;
+    }
     this.content = this.elementRef.nativeElement.innerText;
     this.getTermsByLang();
   }
