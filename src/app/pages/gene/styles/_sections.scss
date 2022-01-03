@@ -1,112 +1,7 @@
 .gene-page { // .page
-  // &__inner { }
-
-  $header-title-height: 30px;
-
-  // TODO: DRY
-  // Use em units
-  .add-to-favorites {
-    display: block;
-    min-height: $header-title-height;
-    width: auto;
-    float: left;
-    margin-left: -10px;
-
-    .icon {
-      color: $color-yellow;
-    }
-
-    @include resolution_tablet-and-up {
-      margin-top: -7px;
-
-      .icon {
-        font-size: 22px;
-      }
-    }
-
-    @include resolution_smartphone {
-      margin-top: -11px;
-
-      .icon {
-        font-size: 20px;
-      }
-    }
-  }
-
-  &__header {
-    padding: 15px 0 10px 0;
-    border-bottom: 1px solid $color-borders;
-    background-color: #fff;
-    margin-bottom: 30px;
-
-    .header__title {
-      margin-bottom: 10px;
-      padding-right: 60px; // free space for date
-
-      .title__caption,
-      .title__vendors {
-        display: block;
-        min-height: $header-title-height;
-        width: auto;
-        float: left; // floats are more simple there
-      }
-
-      .title__caption {
-        position: relative;
-        max-width: 6em; // length: 6 letters
-        padding-right: 10px;
-        font-weight: $font-weight-medium;
-
-        @include resolution_tablet-and-up {
-          font-size: 30px;
-        }
-
-        @include resolution_smartphone {
-          font-size: 20px;
-        }
-
-        .caption__inner {
-          height: $header-title-height;
-          line-height: 1;
-          @include text-overflow;
-        }
-      }
-
-      .title__vendors { // this block may go under the title
-        max-width: 100%;
-
-        @include resolution_tablet-and-up {
-          padding-top: 5px; // because .alias inside have the same margin-bottom
-        }
-      }
-
-      .title__updated { // date always remains on top right corner
-        position: absolute;
-        top: 5px;
-        right: 10px;
-        font-size: $font-size-very-small;
-        color: $color-gray;
-        white-space: nowrap;
-      }
-    }
-
-    .alias {
-      vertical-align: middle;
-    }
-
-    .header__short-comment {
-      font-size: $font-size-bigger;
-      color: $color-gray;
-      margin-bottom: 15px;
-    }
-
-    .header__protein-classes {
-      margin-top: 10px;
-    }
-  }
-
+  // AGE
   &__age {
-    margin: 0 -5px;
+    margin: 0 -5px 30px -5px;
 
     .age__types {
       display: flex;
@@ -192,23 +87,6 @@
           }
         }
 
-        &.age__diseases {
-          .type__inner {
-            &:hover {
-              background-color: lighten(#7774D1, 10%);
-            }
-          }
-        }
-
-        &.age__interactions {
-          .type__inner {
-            &:hover,
-            &:active {
-              background-color: darken(desaturate(#FFC769, 2%), 10%);
-            }
-          }
-        }
-
         @include resolution_smartphone {
           flex: 0 0 100%;
           flex-wrap: wrap;
@@ -217,11 +95,7 @@
     }
   }
 
-  .mat-expansion-panel-header-title {
-    font-size: 16px;
-    font-weight: $font-weight-medium;
-  }
-
+  // TEXT CONTENT
   &__articles {
     .articles__content + .articles__content {
       margin-top: 30px;
@@ -276,6 +150,7 @@
     }
   }
 
+  // GENE EXPRESSION CHART
   &__expression {
     .expression__rows {
       margin-top: 5px;
@@ -352,48 +227,49 @@
       margin-top: 10px;
     }
   }
-}
 
-.gene-page__annotation {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  background: $color-gray-very-light;
-  border-radius: 5px;
-  padding: 5px 0;
-
-  .annotation__row {
+  // GO ANNOTATION
+  &__annotation {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    padding: 5px 20px;
+    flex-direction: column;
+    background: $color-gray-very-light;
+    border-radius: 5px;
+    padding: 5px 0;
 
-    .row__title {
-      font-size: $font-size-bigger;
-      color: $color-gray;
-      padding: 0;
-    }
+    .annotation__row {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      padding: 5px 20px;
 
-    .row__value {
-      font-size: $font-size-bigger;
-      color: $color-black;
-
-      small {
-        font-size: $font-size-big;
+      .row__title {
+        font-size: $font-size-bigger;
+        color: $color-gray;
+        padding: 0;
       }
-    }
 
-    &--emphasized {
-      padding-top: 12px;
-      background-color: $color-general-light;
-    }
+      .row__value {
+        font-size: $font-size-bigger;
+        color: $color-black;
 
-    @include resolution_tablet-and-up {
-      flex-wrap: nowrap;
-    }
+        small {
+          font-size: $font-size-big;
+        }
+      }
 
-    @include resolution_smartphone {
-      flex-wrap: wrap;
+      &--emphasized {
+        padding-top: 12px;
+        background-color: $color-general-light;
+      }
+
+      @include resolution_tablet-and-up {
+        flex-wrap: nowrap;
+      }
+
+      @include resolution_smartphone {
+        flex-wrap: wrap;
+      }
     }
   }
 }

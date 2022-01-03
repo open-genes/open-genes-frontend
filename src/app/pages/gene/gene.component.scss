@@ -5,38 +5,16 @@
   width: 100%;
 }
 
-// TODO: Move page styles here
-
-.term {
-  width: 100%;
-  max-height: 100%;
-  min-height: $ui-base-height * 3;
-  position: relative;
-
-  &, * {
-    box-sizing: border-box;
-  }
-
-  &__header {
-    position: relative;
-    padding: 12px 40px 12px 0;
-    font-weight: $font-weight-medium;
-    color: $color-base;
-  }
-
-  &__title {
-    margin: 0 8px;
-  }
-
-  &__description {
-    @include typography;
-  }
-
-  &__close-button {
-    color: $color-gray;
-    @include close-button(0, 20px);
-  }
+// Expansion panels
+.mat-expansion-panel-header-title {
+  font-size: 16px;
+  font-weight: $font-weight-medium;
 }
+
+@import './styles/header';
+@import './styles/sections';
+@import './styles/ui-hints';
+
 
 
 

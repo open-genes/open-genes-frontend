@@ -4,32 +4,31 @@
       <div class="container-fluid">
         <div class="row no-gutters">
           <div class="col col-12 header__title">
-            <div class="add-to-favorites">
-              <button mat-icon-button>
+            <div class="title__caption">
+              <div class="add-to-favorites">
+                <button mat-icon-button>
                 <span
                   [ngClass]="isInFavourites ? 'fas fa-star' : 'far fa-star'"
                   (click)="toggleFavourites(gene.id)"
                   class="icon"
                   aria-hidden="true"
                 ></span>
-              </button>
-            </div>
-            <div class="title__caption">
+                </button>
+              </div>
               <div class="caption__inner">
                 {{gene.symbol}}
               </div>
             </div>
 
-            <div class="title__vendors" *ngIf="gene.aliases.length !== 0">
-              <ng-container
-                *ngFor="let item of gene.aliases">
-                <span class="alias">{{item}}</span>
-              </ng-container>
+            <div *ngIf="gene.aliases.length !== 0"
+                 class="title__vendors">
+              <span *ngFor="let item of gene.aliases"
+                      class="alias">{{item}}</span>
             </div>
 
-            <div class="title__updated">
+            <time class="title__updated" dateTime="{{timestamp | unixTimeFormatter}}">
               {{ timestamp | unixTimeFormatter | localizedDate:'d MMMM yyyy'}}
-            </div>
+            </time>
 
           </div>
           <div class="col col-12 header__short-comment">
@@ -44,9 +43,10 @@
           <div class="col col-12 header__protein-classes">
             <ng-container *ngIf="gene.proteinClasses; else tagSkeletal">
               <button *ngFor="let item of gene.proteinClasses"
+                      matTooltip="{{ item.name }}"
                       class="alias"
                       (click)="onApplyFilter(filterTypes.protein_classes, item.id)">
-                {{item.name}}
+                <div class="alias__overflow">{{item.name}}</div>
               </button>
             </ng-container>
 
