@@ -91,6 +91,7 @@ $open-genes-theme:   mat-light-theme($open-genes-primary, $open-genes-accent);
 // - Bottom sheet
 mat-bottom-sheet-container.mat-bottom-sheet-container {
   max-height: calc(100vh - #{$header-height});
+  overflow: hidden;
 }
 
 mat-step-header.mat-step-header {

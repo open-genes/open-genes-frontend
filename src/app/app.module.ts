@@ -27,7 +27,7 @@ import { MaterialModule } from './modules/vendors/material.module';
 import { IconModule } from './components/ui-components/components/icon/app-icon.module';
 import { GoogleAnalyticsModule } from './modules/vendors/google-analytics.module';
 import { DirectivesModule } from './directives/directives.module';
-import { TermsModule } from './components/shared/terms/terms.module';
+import { TermHintModule } from './components/shared/terms/term-hint.module';
 import { SnackBarModule } from './components/shared/snack-bar/snack-bar.module';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomMatPaginatorIntl } from './core/services/custom-mat-paginator-int';
@@ -55,7 +55,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new Transla
     IconModule,
     GoogleAnalyticsModule,
     DirectivesModule,
-    TermsModule,
+    TermHintModule,
     SnackBarModule,
   ],
   providers: [

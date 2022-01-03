@@ -13,6 +13,13 @@
   background-color: $color-gray-soft;
   user-select: none;
 
+  // optional nested block for text truncation
+  &__overflow {
+    display: block;
+    max-width: 20ch; // 20 characters
+    @include text-overflow;
+  }
+
   &--small {
     min-width: 20px;
     font-size: 10px;

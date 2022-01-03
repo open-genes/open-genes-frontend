@@ -6,8 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./skeleton.component.scss'],
 })
 export class SkeletonLoaderComponent {
-  @Input()
-  groups: number;
+  @Input() groups: number;
   @Input() view?: 'line' | 'card' = 'line';
   @Input() cardsInARow?: number = 3;
 

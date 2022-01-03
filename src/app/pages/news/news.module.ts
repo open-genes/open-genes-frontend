@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ArticlesListModule } from '../../components/shared/articles-list/articles-list.module';
 import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 import { MatListModule } from '@angular/material/list';
+import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
 
 const routes: Routes = [{ path: '', component: NewsComponent }];
 
@@ -24,6 +25,7 @@ const routes: Routes = [{ path: '', component: NewsComponent }];
     ArticlesListModule,
     SidebarModule,
     MatListModule,
+    UiComponentsModule,
   ],
 })
 export class NewsModule {}

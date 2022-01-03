@@ -3,6 +3,7 @@
 :host {
   display: block;
   width: 100%;
+  max-width: 600px;
 }
 
 // TODO: DRY
@@ -26,8 +27,15 @@
     margin: 0 8px;
   }
 
+  @include typography;
+
   &__description {
-    margin-bottom: 1em;
+    font-family: serif;
+    margin: 1em 0 2em;
+
+    p {
+      font-size: 120%;
+    }
   }
 
   &__drag-button {
@@ -54,10 +62,9 @@
   &__not-found {
     display: flex;
     justify-content: center;
-    margin-bottom: 1em ;
+    margin: 1em 0 2em;
     color: $color-gray;
   }
-
 }
 
 

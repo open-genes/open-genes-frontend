@@ -52,39 +52,62 @@
                 ></app-mini-cards>
               </app-sidebar-item>
 
-              <app-sidebar-item *ngIf="genes">
+              <app-sidebar-item>
                 <ng-container title>
                   {{ "articles_list_title" | translate }}
                   <a href="/news" class="link link--gray __ml-10">
                     {{ "show_more_short" | translate }}
                   </a>
                 </ng-container>
-                <app-articles-list
-                  content
-                  class="__h-100"
-                  [isMiniMode]="true"
-                  [sliceTo]="2"
-                ></app-articles-list>
+
+                <ng-container content>
+                  <app-articles-list
+                    class="__h-100"
+                    [isMiniMode]="true"
+                    [sliceTo]="2"
+                    [showSkeleton] = 'showCardSkeleton'
+                    (skeletonState)='showCardSkeleton = $event'
+                  ></app-articles-list>
+                  <app-skeleton
+                    *ngIf="showCardSkeleton"
+                    [view]="'card'"
+                    [cardsInARow]="1"
+                    [groups]="2"
+                  ></app-skeleton>
+                </ng-container>
+
               </app-sidebar-item>
 
-              <app-sidebar-item *ngIf="genes">
+              <app-sidebar-item>
                 <ng-container title>
                   {{ "news_list_title" | translate }}
                   <a href="/news" class="link link--gray __ml-10">
                     {{ "show_more_short" | translate }}
                   </a>
                 </ng-container>
-                <app-news-list
-                  content
-                  class="__pl-5 __pr-5"
-                  [genesList]="geneListForNewsFeed"
-                  [loadTotal]="2"
-                  [itemsForPage]="2"
-                  [isMiniMode]="true"
-                ></app-news-list>
+
+                <ng-container content>
+                  <app-news-list
+                    class="__pl-5 __pr-5"
+                    [isMiniMode]="true"
+                    [genesList]="geneListForNewsFeed"
+                    [loadTotal]="2"
+                    [showSkeleton] = 'showRowSkeleton'
+                    (skeletonState)='showRowSkeleton = $event'
+                  ></app-news-list>
+
+                  <app-skeleton
+                    *ngIf="showRowSkeleton"
+                    [view]="'line'"
+                    [groups]="2"
+                  ></app-skeleton>
+                </ng-container>
+
               </app-sidebar-item>
+
             </app-sidebar>
           </div>
+
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
             <app-toggle-search-mode
               (setMode)="setSearchMode($event)"

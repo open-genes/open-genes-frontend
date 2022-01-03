@@ -20,21 +20,23 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public searchedGenes: Genes[];
   public confirmedGenesList: Genes[] | string;
   public lastGenes: Genes[];
-  public isAvailable = true;
-  public genesListIsLoaded = false;
   public errorStatus: string;
   public searchMode: SearchMode;
   public searchModeEnum = SearchModeEnum;
   public notFoundAndFoundGenes: any;
   public confirmedFoundGenes: any;
   public geneListForNewsFeed: NewsListParams[] = [];
+  public isAvailable = true;
+  public genesListIsLoaded = false;
+  public showCardSkeleton = true;
+  public showRowSkeleton = true;
 
   constructor(
     public windowService: WindowService,
     private filterService: FilterService,
     private wizardService: WizardService,
     private readonly apiService: ApiService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
   ) {
     super(windowService);
   }
@@ -61,17 +63,18 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       .subscribe(
         (genes) => {
           this.genes = genes;
-          genes.forEach((gene) => {
-            this.geneListForNewsFeed.push({
+          this.geneListForNewsFeed = genes.map((gene) => {
+            return {
               symbol: gene.symbol,
               functionalClusters: gene.functionalClusters,
-            });
+            };
           });
           this.cdRef.markForCheck();
         },
         (err) => {
           this.isAvailable = false;
           this.errorStatus = err.statusText;
+          this.cdRef.markForCheck();
         },
       );
   }
@@ -192,7 +195,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
           (error) => {
             console.log(error);
             this.cdRef.markForCheck();
-          }
+          },
         );
     } else {
       this.searchedGenes = [];

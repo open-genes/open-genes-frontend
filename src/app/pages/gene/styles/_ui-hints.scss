@@ -1,0 +1,32 @@
+// TODO: move into a separate component
+
+.term {
+  width: 100%;
+  max-height: 100%;
+  min-height: $ui-base-height * 3;
+  position: relative;
+
+  &, * {
+    box-sizing: border-box;
+  }
+
+  &__header {
+    position: relative;
+    padding: 12px 40px 12px 0;
+    font-weight: $font-weight-medium;
+    color: $color-base;
+  }
+
+  &__title {
+    margin: 0 8px;
+  }
+
+  &__description {
+    @include typography;
+  }
+
+  &__close-button {
+    color: $color-gray;
+    @include close-button(0, 20px);
+  }
+}
