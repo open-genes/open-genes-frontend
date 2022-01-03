@@ -36,7 +36,7 @@ export class TermInfoDirective implements AfterViewInit, OnDestroy {
   getTermsByLang(): void {
     const lang = this.translateService.currentLang;
     this.http
-      .get(environment.termsJsonUrl[lang === 'en' ? 0 : 1])
+      .get(environment.termsJsonUrl[lang === 'en' || lang === 'zh' ? 0 : 1])
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((terms: Terms) => {
         this.terms = terms;
@@ -51,9 +51,7 @@ export class TermInfoDirective implements AfterViewInit, OnDestroy {
     }
 
     Object.keys(this.terms).forEach((term) => {
-      this.content = this.content.replace(
-        ` ${term} `,
-        ` <span class="link link--term">${term}</span> `);
+      this.content = this.content.replace(` ${term} `, ` <span class="link link--term">${term}</span> `);
     });
 
     this.elementRef.nativeElement.innerHTML = this.content;
