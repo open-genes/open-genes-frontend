@@ -1,0 +1,32 @@
+@import "../../../../../assets/sass/dependencies";
+.breadcrumb {
+  background: none;
+  font-size: 14px;
+  margin: 0;
+  a,
+  span {
+    color: $color-gray;
+  }
+  a:hover,
+  span:hover {
+    cursor: pointer;
+    color: $color-black-light;
+    text-decoration: underline;
+  }
+  li {
+    list-style: none;
+    float: left;
+    margin: 5px;
+  }
+  li:last-child {
+    margin-left: 0px;
+  }
+  li::after {
+    content: "/";
+    color: $color-gray;
+  }
+  li:last-child::after {
+    content: "";
+  }
+}
+
