@@ -269,7 +269,7 @@
   "search_for_go_terms_desc": "Search genes by Gene Ontology annotations descriptions",
   "search_genes_in_horvath_clock": "Genes in Horvath methylation clock",
   "settings": "Settings",
-  "settings_educational_content_description": "(turns on hints for terms and educational content)",
+  "settings_educational_content_description": "This setting turns on hints for terms and educational content",
   "settings_educational_content_title": "Open Genes educational features",
   "settings_settings_changed": "Settings changed",
   "show_less": "Show less",

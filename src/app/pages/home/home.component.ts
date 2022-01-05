@@ -7,7 +7,6 @@ import { WizardService } from '../../components/shared/wizard/wizard-service.ser
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
-import { NewsListParams } from '../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +24,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public searchModeEnum = SearchModeEnum;
   public notFoundAndFoundGenes: any;
   public confirmedFoundGenes: any;
-  public geneListForNewsFeed: NewsListParams[] = [];
+  public geneListForNewsFeed: string[] = [];
   public isAvailable = true;
   public genesListIsLoaded = false;
   public showCardSkeleton = true;
@@ -64,10 +63,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
         (genes) => {
           this.genes = genes;
           this.geneListForNewsFeed = genes.map((gene) => {
-            return {
-              symbol: gene.symbol,
-              functionalClusters: gene.functionalClusters,
-            };
+            return gene.symbol;
           });
           this.cdRef.markForCheck();
         },
