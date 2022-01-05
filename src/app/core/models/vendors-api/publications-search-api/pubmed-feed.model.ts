@@ -1,10 +1,3 @@
-import { FunctionalClusters } from '../..';
-
-export interface NewsListParams {
-  symbol: string;
-  functionalClusters: FunctionalClusters[];
-}
-
 interface PublicationsList {
   total: number;
   page: number;

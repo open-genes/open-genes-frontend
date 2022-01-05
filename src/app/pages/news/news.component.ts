@@ -11,7 +11,6 @@ import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { EightyLevelService } from '../../core/services/api/80level-api-service/80level-api.service';
-import { NewsListParams } from '../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
 
 @Component({
   selector: 'app-news',
@@ -21,7 +20,7 @@ import { NewsListParams } from '../../core/models/vendors-api/publications-searc
 })
 export class NewsComponent implements OnInit, OnDestroy {
   public genes: Genes[];
-  public geneListForNewsFeed: NewsListParams[] = [];
+  public geneListForNewsFeed: string[] = [];
   public showCardSkeleton = true;
   public showRowSkeleton = true;
 
@@ -54,10 +53,7 @@ export class NewsComponent implements OnInit, OnDestroy {
       .subscribe((genes) => {
         this.genes = genes;
         this.geneListForNewsFeed = genes.map((gene) => {
-          return {
-            symbol: gene.symbol,
-            functionalClusters: gene.functionalClusters,
-          };
+          return gene.symbol;
         });
         this.cdRef.markForCheck();
       });

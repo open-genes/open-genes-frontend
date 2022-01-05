@@ -10,7 +10,16 @@
           [itemsForPage]="5"
           [isMiniMode]="true"
           [showDates]="true"
+          [showSkeleton] = 'showNewsListSkeleton'
+          (skeletonState)='showNewsListSkeleton = $event'
         ></app-news-list>
+
+        <app-skeleton
+          *ngIf="showNewsListSkeleton"
+          class="pubmed-articles__skeleton"
+          [view]="'line'"
+          [groups]="2"
+        ></app-skeleton>
       </div>
     </div>
 

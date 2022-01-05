@@ -244,7 +244,7 @@
       .row__title {
         font-size: $font-size-bigger;
         color: $color-gray;
-        padding: 0;
+        padding: 0 0 8px 0;
       }
 
       .row__value {
@@ -260,6 +260,10 @@
         padding-top: 12px;
         background-color: $color-general-light;
       }
+    }
+
+    .annotation__row + .annotation__row {
+      margin-top: 8px;
     }
   }
 }
