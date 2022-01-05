@@ -116,22 +116,22 @@
           <div class="page-wrapper">
             <section class="wrapper gene-page__age">
               <div class="gene-page__annotation">
-                <div class="annotation__row">
-                  <div class="row__title col-5">
+                <div class="row no-gutters annotation__row">
+                  <div class="row__title col-xs-12 col-md-5">
                     {{ 'phylogeny' | translate }}:
                   </div>
 
-                  <div class="row__value">
+                  <div class="row__value col">
                     <app-gene-age [gene]="gene" show="origin"></app-gene-age>
                   </div>
                 </div>
 
-                <div class="annotation__row annotation__row--emphasized">
-                  <div class="row__title  col-5">
+                <div class="row no-gutters annotation__row row no-gutters annotation__row--emphasized">
+                  <div class="row__title col-xs-12 col-md-5">
                     {{ 'gene_page_researches_processes' | translate }}:
                   </div>
 
-                  <div class="row__value">
+                  <div class="row__value col">
                     <ng-container *ngIf="gene.functionalClusters; else noData">
                         <button *ngFor="let item of gene.functionalClusters"
                                 class="alias item__value" (click)="onApplyFilter(filterTypes.functional_clusters, item.id)">
@@ -145,12 +145,12 @@
                   </div>
                 </div>
 
-                <div class="annotation__row">
-                  <div class="row__title  col-5">
+                <div class="row no-gutters annotation__row">
+                  <div class="row__title col-xs-12 col-md-5">
                     {{ 'gene_page_title_criteria' | translate }}:
                   </div>
 
-                  <div class="row__value">
+                  <div class="row__value col">
                     <ul *ngIf="gene.commentCause.length !== 0 else noData"
                         class="list list--bulletted">
                       <!-- TODO: backend: return array of objects instead of object with objects -->
@@ -165,12 +165,12 @@
                   </div>
                 </div>
 
-                <div class="annotation__row">
-                  <div class="row__title  col-5">
+                <div class="row no-gutters annotation__row">
+                  <div class="row__title col-xs-12 col-md-5">
                     {{ 'gene_page_researches_age_related_changes_human' | translate }}:
                   </div>
 
-                  <div class="row__value">
+                  <div class="row__value col">
                     {{ getExpressionLocaleKey(gene.expressionChange) | translate }}
                   </div>
                 </div>
@@ -265,7 +265,7 @@
             </section>
 
             <section class="wrapper gene-page__articles">
-              <div class="__w-100 articles__content"
+              <div class="__w-content articles__content"
                    *ngIf="isAnyContent;
                       else noContent">
 
