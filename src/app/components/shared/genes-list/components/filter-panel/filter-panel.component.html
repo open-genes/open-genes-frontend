@@ -1,5 +1,5 @@
 <div class="view-panel">
-  <div class="filters-group view-panel__filters">
+  <div class="view-panel__filters">
     <button
       class="filter"
       (click)="sortBy(sortEnum.name)"
@@ -96,7 +96,10 @@
       <span class="fa far fa-times"></span>
       {{ "filters_reset" | translate }}
     </button>
+  </div>
 
+  <div class="view-panel__buttons">
+    <ng-content select="[buttons]"></ng-content>
   </div>
 </div>
 
