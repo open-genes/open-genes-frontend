@@ -269,7 +269,7 @@
   "search_for_go_terms_desc": "通过基因本体注释描述搜索基因",
   "search_genes_in_horvath_clock": "Horvath 甲基化时钟中的基因",
   "settings": "设置",
-  "settings_educational_content_description": "（打开术语和教育内容的提示）",
+  "settings_educational_content_description": "此设置打开术语和教育内容的提示",
   "settings_educational_content_title": "Open Genes教育功能",
   "settings_settings_changed": "设置已更改",
   "show_less": "显示更少",

@@ -269,7 +269,7 @@
   "search_for_go_terms_desc": "Поиск генов по описаниям аннотаций Gene Ontology",
   "search_genes_in_horvath_clock": "Гены из часов метилирования Хорвата",
   "settings": "Настройки",
-  "settings_educational_content_description": "(включает подсказки для терминов и научно-популярный контент)",
+  "settings_educational_content_description": "Включает подсказки для терминов (доступно для языков: английский) и научно-популярный контент",
   "settings_educational_content_title": "Образовательные функции Open Genes",
   "settings_settings_changed": "Настройки изменены",
   "show_less": "Скрыть",
