@@ -14,7 +14,7 @@ function searchReplaceFile(regexpFind, replace, fileName) {
       if (err) {
         return console.log('Trouble with replacing value in .env file\n', err);
       } else {
-        console.log('Updated .env file!');
+        console.log(`Updated .env file ${fileName}`);
       }
     });
   });
