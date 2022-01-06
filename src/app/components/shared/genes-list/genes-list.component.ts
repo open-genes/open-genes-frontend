@@ -135,7 +135,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.searchedData = [];
           this.isGoSearchPerformed = !this.isGoTermsMode;
           return this.isGoTermsMode ? EMPTY : this.filterService.getSortedAndFilteredGenes();
-        })
+        }),
       )
       .subscribe(
         (filteredData) => {
@@ -215,12 +215,11 @@ export class GenesListComponent implements OnInit, OnDestroy {
    * Sorting genes list
    */
   public sortBy(sort: Sort): void {
-    debugger;
     const unSortedData = this.searchedData.slice();
 
     if (sort.active !== this.sortEnum.byCriteriaQuantity) {
       if (!sort.active || sort.direction === '') {
-        this.searchedData = unSortedData;
+        this.searchedData = this.cachedData;
         return;
       }
       this.searchedData = unSortedData.sort((a, b) => {

@@ -178,7 +178,7 @@ export class FilterService {
         .set('sortBy', this.sortParams.active)
         .set('sortOrder', this.sortParams.direction)
     }
-    debugger;
+
     return this.http.get<FilteredGenes>(`/api/gene/search`, { params });
   }
 
