@@ -23,9 +23,9 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v2
       - name: Create temporary .env file
-      run: |
-        touch .env
-        echo ${{ env.GITHUB_ACTION }} }} >> .env
+        run: |
+          touch .env
+          echo ${{ env.GITHUB_ACTION }} }} >> .env
       - name: Build
         run: |
           npm install
