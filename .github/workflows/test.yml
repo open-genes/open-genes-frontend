@@ -20,6 +20,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Create temporary .env file
         run: |
+          echo ${{ env.GITHUB_ACTION }}
           touch .env
           echo ${{ env.GITHUB_ACTION }} >> .env
       - name: Build
