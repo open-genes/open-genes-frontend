@@ -18,11 +18,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout project
         uses: actions/checkout@v2
-      - name: Create temporary .env file
+      - name: Generate build number
+        uses: einaregilsson/build-number@v3
+        with:
+          token: ${{secrets.github_token}}
+      - name: Create temporary .env fule and print a build number
         run: |
-          echo $PROJECT_PATH
+          echo $BUILD_NUMBER
           touch .env
-          echo $PROJECT_PATH >> .env
+          echo $BUILD_NUMBER >> .env
       - name: Build
         run: |
           npm install
