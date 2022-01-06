@@ -26,14 +26,12 @@ jobs:
         run: |
           touch .env
           echo ${{ env.GITHUB_ACTION }} }} >> .env
+      - name: Create temporary .env file
+        run: node setversion.js
       - name: Build
         run: |
           npm install
-          node setversion.js
           npm run build-demo
-      - name: Delete temporary files
-        run: |
-          rm .env
       - name: Upload project artifacts
         uses: actions/upload-artifact@v2
         with:
