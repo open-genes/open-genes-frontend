@@ -20,7 +20,8 @@ function searchReplaceFile(regexpFind, replace, fileName) {
   });
 }
 
-buildNumber = fs.createReadStream('.env', 'utf8');
+buildNumber = fs.readFileSync('.env', 'utf8');
+console.log(buildNumber);
 buildEnvVariableRegexp = /\$\{\{\s*BUILD_NUMBER\s*\}\}/g;
 searchReplaceFile(buildEnvVariableRegexp, buildNumber, 'src/environments/environment.ts');
 searchReplaceFile(buildEnvVariableRegexp, buildNumber, 'src/environments/environment.develop.ts');
