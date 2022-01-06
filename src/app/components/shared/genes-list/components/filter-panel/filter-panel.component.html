@@ -1,28 +1,32 @@
 <div class="view-panel">
   <div class="view-panel__filters">
-    <button
-      class="filter"
-      (click)="sortBy(sortEnum.name)"
-      [class.__active]="sort.byName"
-    >
-      {{ "main_page_table_name" | translate }}
-      <span class="fa far fa-sort-down"></span>
-    </button>
+    <div matSort (matSortChange)="sortBy($event)">
 
-    <button
-      class="filter"
-      (click)="sortBy(sortEnum.age)"
-      [class.__active]="sort.byAge"
-    >
-      {{ "age" | translate }} ({{ "million_years" | translate }})
-      <span class="fa far fa-sort-down"></span>
-    </button>
+      <button
+        class="filter"
+        [mat-sort-header]="sortEnum.byName">
+        {{ "main_page_table_name" | translate }}
+      </button>
+
+      <button
+        class="filter"
+        [mat-sort-header]="sortEnum.byAge">
+        {{ "age" | translate }} ({{ "million_years" | translate }})
+      </button>
+
+      <button
+        class="filter"
+        [mat-sort-header]="sortEnum.byCriteriaQuantity">
+        {{ "criteriaQuantity" | translate }}
+      </button>
+
+    </div>
+
 
     <button
       *ngIf="filters.byAgeRelatedProcess.length"
       class="filter __active"
-      (click)="clearFilters(filterTypes.functional_clusters)"
-    >
+      (click)="clearFilters(filterTypes.functional_clusters)">
       {{ "functional_classes" | translate }}
       <span class="fa fal fa-times"></span>
     </button>

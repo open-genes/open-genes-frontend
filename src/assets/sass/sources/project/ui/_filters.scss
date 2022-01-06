@@ -24,7 +24,7 @@ $element-base-color: $color-general;
   @include text-overflow;
   transition: background-color .15s ease-in;
   cursor: pointer;
-  padding: 0 25px 0 8px;
+  padding: 0 8px 0 8px;
   border-radius: 15px;
   background-color: lighten($element-base-color, 10%);
   user-select: none;
