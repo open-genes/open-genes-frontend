@@ -2,14 +2,14 @@
 const fs = require('fs');
 
 function searchReplaceFile(regexpFind, replace, fileName) {
-  var file = fs.createReadStream(fileName, 'utf8');
-  var updatedContent = '';
+  const targetFile = fs.createReadStream(fileName, 'utf8');
+  let updatedContent = '';
 
-  file.on('data', function(chunk) {
+  targetFile.on('data', function(chunk) {
     updatedContent += chunk.toString().replace(regexpFind, replace);
   });
 
-  file.on('end', function() {
+  targetFile.on('end', function() {
     fs.writeFile(fileName, updatedContent, function(err) {
       if (err) {
         return console.log('Trouble with replacing value in .env file\n', err);
@@ -20,7 +20,7 @@ function searchReplaceFile(regexpFind, replace, fileName) {
   });
 }
 
-buildNumber = process.argv.build;
+buildNumber = fs.createReadStream('.env', 'utf8');
 buildEnvVariableRegexp = /\$\{\{\s*BUILD_NUMBER\s*\}\}/g;
 searchReplaceFile(buildEnvVariableRegexp, buildNumber, 'src/environments/environment.ts');
 searchReplaceFile(buildEnvVariableRegexp, buildNumber, 'src/environments/environment.develop.ts');
