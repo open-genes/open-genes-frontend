@@ -21,12 +21,12 @@ jobs:
       - name: Create temporary .env file
         run: |
           touch .env
-          echo ${{ env.GITHUB_ACTION }} }} >> .env
+          echo ${{ env.GITHUB_ACTION }} >> .env
       - name: Build
         run: |
           npm install
           node setversion.js
-          npm run build-demo
+          npm run build-dev
       - name: Delete temporary files
         run: |
           rm .env
