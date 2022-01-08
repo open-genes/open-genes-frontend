@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
-    console.log(`version: ${environment.version}\n build: ${environment.build}`);
+    console.log(`version: ${environment.version} \nbuild: ${environment.build}`);
   }
 
   ngAfterViewChecked(): void {

@@ -38,6 +38,5 @@ function searchReplaceFile(comment, replacementsMap, fileName) {
 }
 
 for (const file of targetFiles) {
-  console.log(version);
   searchReplaceFile('build number', replacements, file);
 }
