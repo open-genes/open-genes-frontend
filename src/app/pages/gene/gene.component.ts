@@ -8,7 +8,7 @@ import { ToMap } from '../../core/utils/to-map';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { SettingsService } from '../../core/services/settings.service';
-import { Settings } from '../../core/models/settings.model';
+import { SearchModeEnum, Settings } from '../../core/models/settings.model';
 import { FavouritesService } from '../../core/services/favourites.service';
 import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -48,8 +48,8 @@ export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDes
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
   private retrievedSettings: Settings;
+  private searchModeEnum = SearchModeEnum;
   private dateChanged: number | any;
-
 
   constructor(
     public translate: TranslateService,
@@ -213,6 +213,11 @@ export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDes
   public onApplyFilter(filterType: string, id: number): void {
     const queryParams = {};
     queryParams[filterType] = id;
+
+    if (this.retrievedSettings.searchMode === this.searchModeEnum.searchByGoTerms) {
+      this.settingsService.setSettings('searchMode', this.searchModeEnum.searchByGenes);
+    }
+
     this.router.navigate([''], {
       queryParams: queryParams,
     });
