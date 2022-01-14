@@ -219,7 +219,7 @@
                     <ul class="list">
                       <ng-container *ngFor="let item of gene.orthologs | keyvalue">
                         <li *ngIf="item.value.length !== 0">
-                          {{ item.key }} <span class="alias">{{ item.value }}</span>
+                          <span [innerHTML]="item.key | orthologLinks: 'drosophila'"></span> <span class="alias">{{ item.value }}</span>
                         </li>
                       </ng-container>
                     </ul>

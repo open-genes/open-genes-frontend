@@ -10,6 +10,7 @@ import { ZeroPaddingPipe } from './specific/zero-padding.pipe';
 import { PublicationLinksWrapperPipe } from './specific/publication-links-wrapper.pipe';
 import { getResearchStatsById } from './specific/getResearchStatsById.pipe';
 import { AnchorLinksPipe } from './specific/anchor-links.pipe';
+import { OrthologLinksPipe } from './specific/ortholog-links.pipe';
 
 const GENERAL_PIPES = [
   SafePipe,
@@ -24,6 +25,7 @@ const SPECIFIC_PIPES = [
   ZeroPaddingPipe,
   PublicationLinksWrapperPipe,
   AnchorLinksPipe,
+  OrthologLinksPipe,
   getResearchStatsById,
 ];
 
