@@ -29,6 +29,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public confirmedFoundGenes: any;
   public geneListForNewsFeed: NewsListParams[] = [];
   public showProgressBar = false;
+  public isLoading = true;
 
   constructor(
     public windowService: WindowService,
@@ -215,6 +216,9 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     });
   }
 
+  setLoader(event: boolean) {
+    this.isLoading = event;
+  }
 
   /**
    * Wizard

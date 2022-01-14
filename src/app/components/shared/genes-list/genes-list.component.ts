@@ -2,9 +2,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
   OnDestroy,
   OnInit,
+  Output,
 } from '@angular/core';
 import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
@@ -71,14 +73,14 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public sortEnum = SortEnum;
   public sort: Sort = this.filterService.sort;
   public searchMode: SearchMode;
-
-  public isLoading = false;
   public isTableView: boolean;
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
   public downloadJsonLink: string | SafeResourceUrl = '#';
   public currentPage: number;
   public pageOptions: any;
+
+  @Output() isLoading = new EventEmitter<boolean>();
 
   private cachedData: Genes[] = [];
   private retrievedSettings: Settings;
@@ -130,7 +132,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
         takeUntil(this.subscription$),
         switchMap((filters: Filter) => {
           if (!this.isGoTermsMode) {
-            this.isLoading = true;
+            this.isLoading.emit(true);
           }
           this.searchedData = [];
           this.isGoSearchPerformed = !this.isGoTermsMode;
@@ -151,12 +153,12 @@ export class GenesListComponent implements OnInit, OnDestroy {
           }
           this.downloadSearch(this.searchedData);
           this.pageOptions = filteredData.options.pagination;
-          this.isLoading = false;
+          this.isLoading.emit(false);
           this.cdRef.markForCheck();
         },
         (error) => {
           console.log(error);
-          this.isLoading = false;
+          this.isLoading.emit(false);
           this.cdRef.markForCheck();
         }
       );
