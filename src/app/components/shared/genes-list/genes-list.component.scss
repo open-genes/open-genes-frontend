@@ -52,7 +52,10 @@
   color: $color-gray;
   display: block;
   width: 100%;
-  margin-bottom: 10px;
+
+  &:not(:empty) {
+    margin-bottom: 10px;
+  }
 
   .genes-info__found {
     display: inline-block;

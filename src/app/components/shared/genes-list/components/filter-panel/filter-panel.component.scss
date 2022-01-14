@@ -15,17 +15,18 @@
   align-content: flex-start;
   justify-items: flex-start;
 
+  &__filters {
+    a,
+    button {
+      margin: 0 5px 5px 0;
+    }
+  }
+
   &__filters,
   &__buttons {
     position: relative;
     display: flex;
     flex-flow: row wrap;
-    margin: 0 -5px;
-
-    a,
-    button {
-      margin: 5px;
-    }
 
     @include resolution_smartphone-and-tablet {
       flex: 0 0 100%;
