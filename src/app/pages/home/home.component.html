@@ -125,15 +125,13 @@
 
             <app-genes-list
               *ngIf="genes"
-              (isLoading)="setLoader($event)"
+              (loading)="setLoader($event)"
               [genesList]="confirmedGenesList"
               [notFoundAndFoundGenes]="confirmedFoundGenes"
               [isMobile]="isMobile"
               [setSearchMode]="searchMode"
               [showFiltersPanel]="searchMode !== searchModeEnum.searchByGoTerms">
             </app-genes-list>
-
-            <app-spinner *ngIf="genesListIsLoading"></app-spinner>
           </div>
         </ng-container>
       </div>

@@ -117,8 +117,7 @@
 <section
   *ngIf="
     (isGoTermsMode && isGoSearchPerformed && !isLoading && searchedData?.length == 0) ||
-    (!isGoTermsMode && !isLoading && searchedData?.length == 0)"
->
+    (!isGoTermsMode && !isLoading && searchedData?.length == 0)">
   <app-no-content [title]="'nothing_found'">
     <ng-container icon>
       <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
@@ -137,4 +136,6 @@
     </ng-container>
   </app-no-content>
 </section>
+
+<app-spinner *ngIf="isLoading"></app-spinner>
 

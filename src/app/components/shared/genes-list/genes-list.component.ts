@@ -79,8 +79,8 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public downloadJsonLink: string | SafeResourceUrl = '#';
   public currentPage: number;
   public pageOptions: any;
-
-  @Output() isLoading = new EventEmitter<boolean>();
+  public isLoading = false;
+  @Output() loading = new EventEmitter<boolean>();
 
   private cachedData: Genes[] = [];
   private retrievedSettings: Settings;
@@ -130,8 +130,12 @@ export class GenesListComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.subscription$),
         switchMap((filters: Filter) => {
-          if (!this.isGoTermsMode) {
-            this.isLoading.emit(true);
+          if (this.isGoTermsMode) {
+            this.isLoading = false;
+            this.loading.emit(false);
+          } else {
+            this.isLoading = true;
+            this.loading.emit(true);
           }
           this.searchedData = [];
           this.isGoSearchPerformed = !this.isGoTermsMode;
@@ -152,12 +156,14 @@ export class GenesListComponent implements OnInit, OnDestroy {
           }
           this.downloadSearch(this.searchedData);
           this.pageOptions = filteredData.options.pagination;
-          this.isLoading.emit(false);
+          this.isLoading = false;
+          this.loading.emit(false);
           this.cdRef.markForCheck();
         },
         (error) => {
           console.log(error);
-          this.isLoading.emit(false);
+          this.isLoading = false;
+          this.loading.emit(false);
           this.cdRef.markForCheck();
         }
       );

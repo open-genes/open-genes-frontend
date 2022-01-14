@@ -30,7 +30,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public showArticlesSkeleton = true;
   public showPubmedFeedSkeleton = true;
   public showProgressBar = false;
-  public genesListIsLoading = true;
+  public genesListIsLoading: boolean;
 
   constructor(
     public windowService: WindowService,
@@ -43,6 +43,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.genesListIsLoading = true;
     this.getGenes();
 
     this.getLastEditedGenes();
@@ -217,6 +218,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
 
   setLoader(event: boolean) {
     this.genesListIsLoading = event;
+    this.cdRef.markForCheck();
   }
 
   /**
