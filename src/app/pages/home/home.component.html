@@ -65,11 +65,11 @@
                     class="__h-100"
                     [isMiniMode]="true"
                     [sliceTo]="2"
-                    [showSkeleton] = 'showCardSkeleton'
-                    (skeletonState)='showCardSkeleton = $event'
+                    [showSkeleton]="showArticlesSkeleton"
+                    (skeletonState)="showArticlesSkeleton = $event"
                   ></app-articles-list>
                   <app-skeleton
-                    *ngIf="showCardSkeleton"
+                    *ngIf="showArticlesSkeleton"
                     [view]="'card'"
                     [cardsInARow]="1"
                     [groups]="2"
@@ -92,20 +92,18 @@
                     [isMiniMode]="true"
                     [genesList]="geneListForNewsFeed"
                     [loadTotal]="2"
-                    [showSkeleton] = 'showRowSkeleton'
-                    (skeletonState)='showRowSkeleton = $event'
+                    [showSkeleton]="showPubmedFeedSkeleton"
+                    (skeletonState)="showPubmedFeedSkeleton = $event"
                   ></app-news-list>
 
                   <app-skeleton
-                    *ngIf="showRowSkeleton"
+                    *ngIf="showPubmedFeedSkeleton"
                     class="__mt-10"
                     [view]="'line'"
                     [groups]="2"
                   ></app-skeleton>
                 </ng-container>
-
               </app-sidebar-item>
-
             </app-sidebar>
           </div>
 

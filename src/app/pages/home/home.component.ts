@@ -27,8 +27,8 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public confirmedFoundGenes: any;
   public geneListForNewsFeed: string[] = [];
   public genesListIsLoaded = false;
-  public showCardSkeleton = true;
-  public showRowSkeleton = true;
+  public showArticlesSkeleton = true;
+  public showPubmedFeedSkeleton = true;
   public showProgressBar = false;
   public genesListIsLoading = true;
 
