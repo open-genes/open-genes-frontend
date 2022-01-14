@@ -1,0 +1,15 @@
+<div class="confirm-modal__header" mat-dialog-title>
+  {{ data.title | translate }}
+
+  <button mat-icon-button
+          class="close-button"
+          (click)="closeCommentModal()"
+          aria-label="Закрыть">
+    <span class="fa fal fa-times"></span>
+  </button>
+</div>
+<mat-dialog-actions class="confirm-modal__buttons" align="end">
+  <button class="confirm" mat-button (click)="handleConfirm()"> {{ data.buttons?.conf_txt || "ДА"}}</button>
+  <button class="cancel" mat-button mat-dialog-close>{{ data.buttons?.canc_txt || "НЕТ"}}</button>
+</mat-dialog-actions>
+

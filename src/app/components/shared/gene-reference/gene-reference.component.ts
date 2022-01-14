@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Gene } from '../../../core/models';
 import { TranslateService } from '@ngx-translate/core';
-import { NewsListParams } from '../../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
 
 @Component({
   selector: 'app-gene-reference',
@@ -11,7 +10,8 @@ import { NewsListParams } from '../../../core/models/vendors-api/publications-se
 export class GeneReferenceComponent implements OnInit {
   @Input() gene: Gene;
   public pubMedSearchLink: string;
-  public geneListForNewsFeed: NewsListParams[] = [];
+  public geneListForNewsFeed: string[] = [];
+  public showNewsListSkeleton = true;
 
   constructor(public translate: TranslateService) {}
 
@@ -23,10 +23,7 @@ export class GeneReferenceComponent implements OnInit {
   private generateListForPubmedArticlesList(gene): void {
     const genes = [gene.symbol, ...gene.aliases];
     genes.forEach((gene) => {
-      this.geneListForNewsFeed.push({
-        symbol: gene,
-        functionalClusters: null,
-      });
+      this.geneListForNewsFeed.push(gene);
     });
   }
 

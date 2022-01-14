@@ -59,9 +59,22 @@
       <div class="overflow">
         <app-aging-mechanisms
           [geneAgingMechanisms]="item.agingMechanisms"
-          [activeListItem]="filters.byAgingMechanism"
+          [activeListItem]="filters.byAgingMechanisms"
           (clickEvent)="onApplyFilter(filterTypes.aging_mechanism, $event)"
         ></app-aging-mechanisms>
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container *ngIf="item?.proteinClasses">
+    <td *ngIf="listSettings.ifShowProteinClasses"
+         class="cell cell--classes">
+      <div class="overflow">
+        <app-protein-classes
+          [geneProteinClasses]="item.proteinClasses"
+          [activeListItem]="filters.byProteinClass"
+          (clickEvent)="onApplyFilter(filterTypes.protein_classes, $event)"
+        ></app-protein-classes>
       </div>
     </td>
   </ng-container>

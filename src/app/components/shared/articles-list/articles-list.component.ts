@@ -30,15 +30,16 @@ import { CommonModalComponent } from '../../ui-components/components/modals/comm
 export class ArticlesListComponent implements OnInit, OnDestroy {
   public articlesList: I80levelResponseArticle[] = [];
   public environment = environment;
-  public isLoading = true;
+
   public error: number;
   public defaultAvatar = '/assets/images/avatar.png';
   public defaultCover = '/assets/images/default-article-cover.jpg';
   public pageIndex = 1;
-  public showMoreButtonVisible = false;
   public articlesTotal = 0;
   public responsePagePortion: number;
   public articleTags: any[] = [];
+  public isLoading = true;
+  public showMoreButtonVisible = false;
   public isAnyArticleModalOpen = false;
 
   private subscription$ = new Subject();
@@ -48,8 +49,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   @Input() isMiniMode = false;
   @Input() sliceTo: number | undefined = undefined;
-  @Output()
-  newArticlesLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() showSkeleton: boolean;
+  @Output() skeletonState: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @ViewChild('articleModalBody') dialogRef: TemplateRef<any>;
   @ViewChild('cantGetArticle') cantGetArticleRef: TemplateRef<any>;
@@ -69,10 +70,27 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public showMore(): void {
     if (this.articlesTotal / this.responsePagePortion > this.pageIndex) {
       ++this.pageIndex;
-      this.isLoading = true;
+      this.skeletonState.emit(true);
       this.cdRef.markForCheck();
       this.makeArticlesList();
     }
+  }
+
+  private makeArticlesList(): void {
+    this.eightyLevelService
+      .getArticles(
+        this.showOnlyForOpenGenes ? { category: 'open-genes', page: this.pageIndex } : { page: this.pageIndex }
+      )
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
+        (data) => {
+          this.handleResponse(data);
+        },
+        (error) => {
+          this.error = error;
+          this.skeletonState.emit(false);
+        }
+      );
   }
 
   private handleResponse(data): void {
@@ -94,7 +112,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       });
 
       // Emit event to update view
-      this.newArticlesLoaded.emit(true);
+      this.skeletonState.emit(false);
 
       // Check if there is more content to show
       // and show/hide 'Show more' button
@@ -108,20 +126,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     // All content is loaded
     this.isLoading = false;
     this.cdRef.markForCheck();
-  }
-
-  private makeArticlesList(): void {
-    this.eightyLevelService
-      .getArticles(
-        this.showOnlyForOpenGenes ? { category: 'open-genes', page: this.pageIndex } : { page: this.pageIndex }
-      )
-      .pipe(takeUntil(this.subscription$))
-      .subscribe(
-        (data) => {
-          this.handleResponse(data);
-        },
-        (error) => (this.error = error)
-      );
   }
 
   public openArticleModal(slug: string): void {

@@ -4,6 +4,7 @@ import { GenesListSettings } from '../../genes-list-settings.model';
 import { FilterService } from '../../services/filter.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { SettingsService } from '../../../../../core/services/settings.service';
 
 @Component({
   selector: 'app-gene-fields-modal',
@@ -18,6 +19,7 @@ export class GeneFieldsModalComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<GeneFieldsModalComponent>,
     private filterService: FilterService,
+    private settingsService: SettingsService,
     private cdRef: ChangeDetectorRef
   ) {}
 
@@ -32,6 +34,7 @@ export class GeneFieldsModalComponent implements OnInit {
   private updateCurrentFields() {
     this.filterService.currentFields.pipe(takeUntil(this.subscription$)).subscribe(
       (fields) => {
+        this.settingsService.setFieldsForShow(fields);
         this.listSettings = fields;
         this.cdRef.markForCheck();
       },
@@ -50,7 +53,7 @@ export class GeneFieldsModalComponent implements OnInit {
       case 'gene-age':
         this.listSettings.ifShowAge = !this.listSettings.ifShowAge;
         break;
-      case 'classes':
+      case 'processes':
         this.listSettings.ifShowFuncClusters = !this.listSettings.ifShowFuncClusters;
         break;
       case 'expression':
@@ -67,6 +70,9 @@ export class GeneFieldsModalComponent implements OnInit {
         break;
       case 'mechanisms':
         this.listSettings.ifShowAgingMechanisms = !this.listSettings.ifShowAgingMechanisms;
+        break;
+      case 'classes':
+        this.listSettings.ifShowProteinClasses = !this.listSettings.ifShowProteinClasses;
         break;
       default:
         break;

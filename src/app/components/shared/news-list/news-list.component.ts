@@ -10,11 +10,9 @@ import {
 } from '@angular/core';
 import { PubmedApiService } from '../../../core/services/api/pubmed-api.service';
 import { Publication } from '../../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
-import { Genes } from '../../../core/models';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { NewsListParams } from '../../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
 
 @Component({
   selector: 'app-news-list',
@@ -23,27 +21,25 @@ import { NewsListParams } from '../../../core/models/vendors-api/publications-se
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewsListComponent implements OnInit, OnDestroy {
-  @Input() genesList: NewsListParams[];
+  @Input() genesList: string[] = [];
+
   @Input() showDates = false;
   @Input() loadTotal: number;
   @Input() itemsForPage: number;
   @Input() isMiniMode = false;
+  @Input() showSkeleton: boolean;
 
-  @Output()
-  newItemsLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() skeletonState: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  public isLoading = true;
   public error: number;
   public newsList: Publication[] = [];
-  public pageIndex = 1;
+  private pageIndex = 1;
   public showMoreButtonVisible = false;
   public newsTotal: number;
-  public responsePagePortion: number;
 
-  private minGeneFunctionsCriteria = 4;
-  private subscription$ = new Subject();
+  private responsePagePortion: number;
   private httpCallsCounter = 0;
-  private genesListLimit = 250;
+  private subscription$ = new Subject();
 
   constructor(
     public translate: TranslateService,
@@ -51,40 +47,28 @@ export class NewsListComponent implements OnInit, OnDestroy {
     private readonly cdRef: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
-    this.makeNewsList();
+  ngOnInit(): void {
+    this.getNewsList();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
   }
 
   public showMore(): void {
     if (this.newsTotal / this.responsePagePortion > this.pageIndex) {
       ++this.pageIndex;
-      this.isLoading = true;
+      this.skeletonState.emit(true);
       this.cdRef.markForCheck();
-      this.makeNewsList();
+      this.getNewsList();
     }
   }
 
-  private makeNewsList(): void {
+  private getNewsList(): void {
     this.httpCallsCounter++;
-
-    // 1. Form a request for all genes in the database that meet the minimal number of gene functions
-    const symbolsQuery = [];
-
-    this.genesList.forEach((gene: Genes) => {
-      if (symbolsQuery.length <= this.genesListLimit) {
-        if (gene.functionalClusters) {
-          if (gene.functionalClusters.length > this.minGeneFunctionsCriteria) {
-            symbolsQuery.push(gene.symbol);
-          }
-        } else {
-          symbolsQuery.push(gene.symbol);
-        }
-      }
-    });
-
     // 2. Make a long query string for all genes at once, but ask to return only n news in the response
     this.pubmedApiService
-      .getNewsList(symbolsQuery, this.loadTotal, this.pageIndex)
+      .getNewsList(this.genesList, this.loadTotal, this.pageIndex)
       .pipe(takeUntil(this.subscription$))
       .subscribe(
         (response) => {
@@ -97,33 +81,17 @@ export class NewsListComponent implements OnInit, OnDestroy {
             this.httpCallsCounter === 1 ? (this.responsePagePortion = this.newsList.length) : this.httpCallsCounter;
 
             // Emit event to update view
-            this.newItemsLoaded.emit(true);
+            this.skeletonState.emit(false);
 
             // Check if there is more content to show
             // and show/hide 'Show more' button
-            if (this.newsTotal / this.responsePagePortion > this.pageIndex) {
-              this.showMoreButtonVisible = true;
-            } else {
-              this.showMoreButtonVisible = false;
-            }
+            this.showMoreButtonVisible = this.newsTotal / this.responsePagePortion > this.pageIndex;
           }
-
-          // All content is loaded
-          this.stopLoader();
         },
         (error) => {
           this.error = error;
-          this.stopLoader();
+          this.skeletonState.emit(false);
         }
       );
-  }
-
-  stopLoader(): void {
-    this.isLoading = false;
-    this.cdRef.markForCheck();
-  }
-
-  ngOnDestroy() {
-    this.subscription$.unsubscribe();
   }
 }

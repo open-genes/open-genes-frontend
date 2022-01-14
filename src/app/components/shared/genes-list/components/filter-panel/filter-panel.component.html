@@ -1,5 +1,5 @@
 <div class="view-panel">
-  <div class="filters-group view-panel__filters">
+  <div class="view-panel__filters">
     <button
       class="filter"
       (click)="sortBy(sortEnum.name)"
@@ -64,12 +64,21 @@
     </button>
 
     <button
-      *ngIf="isClear$ | async"
-      class="btn btn--small btn--purple"
-      (click)="clearFilters()"
+      *ngIf="filters.byAgingMechanisms.length"
+      class="filter __active"
+      (click)="clearFilters(filterTypes.aging_mechanism)"
     >
-      <span class="fa far fa-times"></span>
-      {{ "filters_reset" | translate }}
+      {{ "gene_list_aging_mechanisms" | translate }}
+      <span class="fa fal fa-times"></span>
+    </button>
+
+    <button
+      *ngIf="filters.byProteinClass.length"
+      class="filter __active"
+      (click)="clearFilters(filterTypes.protein_classes)"
+    >
+      {{ "gene_list_protein_classes" | translate }}
+      <span class="fa fal fa-times"></span>
     </button>
 
     <button *ngIf="!isGoTermsMode"
@@ -79,6 +88,18 @@
       {{ 'filters_modal_title' | translate }}
     </button>
 
+    <button
+      *ngIf="isClear$ | async"
+      class="btn btn--small btn--purple"
+      (click)="clearFilters()"
+    >
+      <span class="fa far fa-times"></span>
+      {{ "filters_reset" | translate }}
+    </button>
+  </div>
+
+  <div class="view-panel__buttons">
+    <ng-content select="[buttons]"></ng-content>
   </div>
 </div>
 

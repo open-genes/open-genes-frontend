@@ -36,14 +36,14 @@
 
   <ng-container *ngIf="listSettings.ifShowAge">
     <div class="card__section card__age-mya">
-        <span class="label">
+        <span class="label __mb-0">
           {{ "phylogeny" | translate }}
         </span>
       <app-gene-age [gene]="item" show="origin"></app-gene-age>
     </div>
 
     <div *ngIf="item.homologueTaxon" class="card__section card__age-homologs">
-        <span class="label">
+        <span class="label __mb-0">
           {{ "ncbi_homologs" | translate }}
         </span>
       <app-gene-age [gene]="item" show="homologs"></app-gene-age>
@@ -53,21 +53,36 @@
   <ng-container *ngIf="item?.agingMechanisms && item?.agingMechanisms.length !== 0">
     <div *ngIf="listSettings.ifShowAgingMechanisms"
          class="card__section">
-      <span class="label">
+      <span class="label __mb-0">
       {{ "gene_list_aging_mechanisms" | translate }}
       </span>
 
       <app-aging-mechanisms
         [geneAgingMechanisms]="item.agingMechanisms"
-        [activeListItem]="filters.byAgingMechanism"
+        [activeListItem]="filters.byAgingMechanisms"
         (clickEvent)="onApplyFilter(filterTypes.aging_mechanism, $event)"
       ></app-aging-mechanisms>
     </div>
   </ng-container>
 
+  <ng-container *ngIf="item?.proteinClasses">
+    <div *ngIf="listSettings.ifShowProteinClasses"
+         class="card__section">
+      <span class="label __mb-0">
+      {{ "gene_list_protein_classes" | translate }}
+      </span>
+
+      <app-protein-classes
+        [geneProteinClasses]="item.proteinClasses"
+        [activeListItem]="filters.byProteinClass"
+        (clickEvent)="onApplyFilter(filterTypes.protein_classes, $event)"
+      ></app-protein-classes>
+    </div>
+  </ng-container>
+
   <div *ngIf="listSettings.ifShowDiseases"
        class="card__section">
-    <span class="label">
+    <span class="label __mb-0">
       {{ "gene_list_diseases" | translate }}
     </span>
     <app-associated-diseases
@@ -79,7 +94,7 @@
 
   <div *ngIf="listSettings.ifShowDiseaseCategories"
        class="card__section">
-    <span class="label">
+    <span class="label __mb-0">
       {{ "gene_list_disease_categories" | translate }}
     </span>
     <app-associated-disease-categories
@@ -91,7 +106,7 @@
 
   <div *ngIf="listSettings.ifShowCriteria"
        class="card__section">
-    <span class="label">
+    <span class="label __mb-0">
       {{ "main_page_table_criteria" | translate }}
     </span>
     <app-selection-criteria

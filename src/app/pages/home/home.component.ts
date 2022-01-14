@@ -7,7 +7,6 @@ import { WizardService } from '../../components/shared/wizard/wizard-service.ser
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
-import { NewsListParams } from '../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +25,10 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public searchModeEnum = SearchModeEnum;
   public notFoundAndFoundGenes: any;
   public confirmedFoundGenes: any;
-  public geneListForNewsFeed: NewsListParams[] = [];
+  public geneListForNewsFeed: string[] = [];
+  public genesListIsLoaded = false;
+  public showCardSkeleton = true;
+  public showRowSkeleton = true;
   public showProgressBar = false;
   public genesListIsLoading = true;
 
@@ -35,7 +37,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     private filterService: FilterService,
     private wizardService: WizardService,
     private readonly apiService: ApiService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
   ) {
     super(windowService);
   }
@@ -62,17 +64,15 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       .subscribe(
         (genes) => {
           this.genes = genes;
-          genes.forEach((gene) => {
-            this.geneListForNewsFeed.push({
-              symbol: gene.symbol,
-              functionalClusters: gene.functionalClusters,
-            });
+          this.geneListForNewsFeed = genes.map((gene) => {
+            return gene.symbol;
           });
           this.cdRef.markForCheck();
         },
         (err) => {
           this.isAvailable = false;
           this.errorStatus = err.statusText;
+          this.cdRef.markForCheck();
         },
       );
   }
@@ -196,7 +196,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
             console.log(error);
             this.showProgressBar = false;
             this.cdRef.markForCheck();
-          }
+          },
         );
     } else {
       this.searchedGenes = [];

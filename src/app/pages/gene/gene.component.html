@@ -1,35 +1,35 @@
+ <app-breadcrumbs></app-breadcrumbs>
 <div class="page gene-page" *ngIf="gene">
   <div class="page__inner __pb-60">
     <section class="wrapper gene-page__header">
       <div class="container-fluid">
         <div class="row no-gutters">
           <div class="col col-12 header__title">
-            <div class="add-to-favorites">
-              <button mat-icon-button>
+            <div class="title__caption">
+              <div class="add-to-favorites">
+                <button mat-icon-button>
                 <span
                   [ngClass]="isInFavourites ? 'fas fa-star' : 'far fa-star'"
                   (click)="toggleFavourites(gene.id)"
                   class="icon"
                   aria-hidden="true"
                 ></span>
-              </button>
-            </div>
-            <div class="title__caption">
+                </button>
+              </div>
               <div class="caption__inner">
                 {{gene.symbol}}
               </div>
             </div>
 
-            <div class="title__vendors" *ngIf="gene.aliases.length !== 0">
-              <ng-container
-                *ngFor="let item of gene.aliases">
-                <span class="alias">{{item}}</span>
-              </ng-container>
+            <div *ngIf="gene.aliases.length !== 0"
+                 class="title__vendors">
+              <span *ngFor="let item of gene.aliases"
+                      class="alias">{{item}}</span>
             </div>
 
-            <div class="title__updated">
+            <time class="title__updated" dateTime="{{timestamp | unixTimeFormatter}}">
               {{ timestamp | unixTimeFormatter | localizedDate:'d MMMM yyyy'}}
-            </div>
+            </time>
 
           </div>
           <div class="col col-12 header__short-comment">
@@ -43,11 +43,14 @@
           </div>
           <div class="col col-12 header__protein-classes">
             <ng-container *ngIf="gene.proteinClasses; else tagSkeletal">
-              <span *ngFor="let item of gene.proteinClasses | keyvalue"
-                    class="alias">
-                {{ item.value | lowercase }}
-              </span>
+              <button *ngFor="let item of gene.proteinClasses"
+                      matTooltip="{{ item.name }}"
+                      class="alias"
+                      (click)="onApplyFilter(filterTypes.protein_classes, item.id)">
+                <div class="alias__overflow">{{item.name}}</div>
+              </button>
             </ng-container>
+
             <ng-template #tagSkeletal>
               <span class="alias __skeletal"></span>
               <span class="alias __skeletal"></span>
@@ -114,22 +117,22 @@
           <div class="page-wrapper">
             <section class="wrapper gene-page__age">
               <div class="gene-page__annotation">
-                <div class="annotation__row">
-                  <div class="row__title col-5">
+                <div class="row no-gutters annotation__row">
+                  <div class="row__title col-xs-12 col-md-5">
                     {{ 'phylogeny' | translate }}:
                   </div>
 
-                  <div class="row__value">
+                  <div class="row__value col">
                     <app-gene-age [gene]="gene" show="origin"></app-gene-age>
                   </div>
                 </div>
 
-                <div class="annotation__row annotation__row--emphasized">
-                  <div class="row__title  col-5">
+                <div class="row no-gutters annotation__row row no-gutters annotation__row--emphasized">
+                  <div class="row__title col-xs-12 col-md-5">
                     {{ 'gene_page_researches_processes' | translate }}:
                   </div>
 
-                  <div class="row__value">
+                  <div class="row__value col">
                     <ng-container *ngIf="gene.functionalClusters; else noData">
                         <button *ngFor="let item of gene.functionalClusters"
                                 class="alias item__value" (click)="onApplyFilter(filterTypes.functional_clusters, item.id)">
@@ -143,12 +146,12 @@
                   </div>
                 </div>
 
-                <div class="annotation__row">
-                  <div class="row__title  col-5">
+                <div class="row no-gutters annotation__row">
+                  <div class="row__title col-xs-12 col-md-5">
                     {{ 'gene_page_title_criteria' | translate }}:
                   </div>
 
-                  <div class="row__value">
+                  <div class="row__value col">
                     <ul *ngIf="gene.commentCause.length !== 0 else noData"
                         class="list list--bulletted">
                       <!-- TODO: backend: return array of objects instead of object with objects -->
@@ -163,12 +166,12 @@
                   </div>
                 </div>
 
-                <div class="annotation__row">
-                  <div class="row__title  col-5">
+                <div class="row no-gutters annotation__row">
+                  <div class="row__title col-xs-12 col-md-5">
                     {{ 'gene_page_researches_age_related_changes_human' | translate }}:
                   </div>
 
-                  <div class="row__value">
+                  <div class="row__value col">
                     {{ getExpressionLocaleKey(gene.expressionChange) | translate }}
                   </div>
                 </div>
@@ -227,16 +230,7 @@
 
 
             <section *ngIf="isNcbiDescription || isLocationData">
-              <h3>{{ 'gene_page_title_description' | translate }}</h3>
               <article>
-                <p *ngIf="isNcbiDescription"
-                   [innerHTML]="gene.descriptionNCBI"></p>
-
-                <!-- TEST TEXT for Terms-->
-                <!-- <div appTermInfo>-->
-                <!-- {{testText}}-->
-                <!-- </div>-->
-
                 <ul *ngIf="isLocationData"
                     class="list" >
                   <li
@@ -272,7 +266,7 @@
             </section>
 
             <section class="wrapper gene-page__articles">
-              <div class="__w-100 articles__content"
+              <div class="__w-content articles__content"
                    *ngIf="isAnyContent;
                       else noContent">
 
@@ -289,28 +283,36 @@
                   <ng-container *ngIf="gene.commentEvolution">
                     <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
                     <article
+                      appTermInfo
                       id="evolution"
                       [innerHTML]="gene.commentEvolution | publicationLinksWrap: 'link'"
-                    >
-                    </article>
+                    ></article>
+                  </ng-container>
+
+                  <ng-container *ngIf="isNcbiDescription">
+                    <h3>{{ 'gene_page_title_description' | translate }}</h3>
+                    <article
+                      appTermInfo
+                      [innerHTML]="gene.descriptionNCBI"
+                    ></article>
                   </ng-container>
 
                   <ng-container *ngIf="gene.proteinDescriptionOpenGenes?.length !== 0">
                     <h3>{{ 'gene_page_title_protein_description_og' | translate }}</h3>
                     <article
+                      appTermInfo
                       id="description-open-genes"
                       [innerHTML]="gene.proteinDescriptionOpenGenes | publicationLinksWrap: 'link'"
-                    >
-                    </article>
+                    ></article>
                   </ng-container>
 
                   <ng-container *ngIf="gene.proteinDescriptionUniProt?.length !== 0">
                     <h3>{{ 'gene_page_title_protein_description_uniprot' | translate }}</h3>
                     <article
+                      appTermInfo
                       id="description-uniprot"
                       [innerHTML]="gene.proteinDescriptionUniProt"
-                    >
-                    </article>
+                    ></article>
                   </ng-container>
                 </section>
 

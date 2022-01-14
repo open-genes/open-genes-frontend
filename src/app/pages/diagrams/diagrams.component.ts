@@ -37,7 +37,7 @@ export class DiagramsComponent implements OnDestroy {
       .getGenes()
       .pipe(
         map((genes: Genes[]) => {
-          return genes.map((gene: Gene) => {
+          return genes.map((gene: Genes) => {
             const diagramGenes: DiagramGenes = {
               id: gene.id,
               name: gene.name,

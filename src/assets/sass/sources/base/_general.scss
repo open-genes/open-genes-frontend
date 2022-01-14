@@ -122,6 +122,10 @@ body {
     @include gray-link;
     border-bottom: 1px dashed currentColor;
   }
+
+  &--term {
+    font-style: italic;
+  }
 }
 
 app-header,

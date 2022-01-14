@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TermsComponent } from './terms.component';
+import { TermHintComponent } from './term-hint.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { MAT_BOTTOM_SHEET_DEFAULT_OPTIONS } from '@angular/material/bottom-sheet';
 import { NgCapitalizePipeModule } from 'angular-pipes';
 
 @NgModule({
-  declarations: [TermsComponent],
+  declarations: [TermHintComponent],
   imports: [
     CommonModule,
     TranslateModule,
@@ -23,4 +23,4 @@ import { NgCapitalizePipeModule } from 'angular-pipes';
     },
   ],
 })
-export class TermsModule {}
+export class TermHintModule {}

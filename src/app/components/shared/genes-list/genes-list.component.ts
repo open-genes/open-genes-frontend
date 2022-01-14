@@ -109,7 +109,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
             this.filterService.onApplyFilter(key, params[key]);
           }
         }
-        this.filterService.updateList(this.filterService.filters);
       }
     });
 

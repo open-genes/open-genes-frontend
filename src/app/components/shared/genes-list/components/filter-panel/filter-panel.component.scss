@@ -1,13 +1,40 @@
 @import "../../../../styles";
 
+:host {
+  width: 100%;
+  display: inline-block;
+}
+
 .view-panel {
   position: relative;
-  display: grid;
-  grid-auto-flow: column;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
   align-items: start;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  align-content: flex-start;
+  justify-items: flex-start;
 
-  &__filters {
-    padding-right: 5px;
+  &__filters,
+  &__buttons {
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0 -5px;
+
+    a,
+    button {
+      margin: 5px;
+    }
+
+    @include resolution_smartphone-and-tablet {
+      flex: 0 0 100%;
+    }
+  }
+
+  &__buttons {
+    @include resolution_desktop-and-up {
+      justify-content: flex-end;
+    }
   }
 }
