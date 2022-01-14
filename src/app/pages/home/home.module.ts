@@ -18,6 +18,7 @@ import { WizardModule } from '../../components/shared/wizard/wizard.module';
 import { NoContentModule } from '../../components/shared/no-content/no-content.module';
 import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
 import { ToggleSearchModeModule } from '../../components/shared/toggle-search-mode/toggle-search-mode.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { ToggleSearchModeModule } from '../../components/shared/toggle-search-mo
     NoContentModule,
     IconModule,
     ToggleSearchModeModule,
+    MatProgressBarModule,
   ],
   exports: [PipesModule],
 })

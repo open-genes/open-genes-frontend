@@ -19,16 +19,18 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public searchedGenes: Genes[];
   public confirmedGenesList: Genes[] | string;
   public lastGenes: Genes[];
+  public isAvailable = true;
   public errorStatus: string;
   public searchMode: SearchMode;
   public searchModeEnum = SearchModeEnum;
   public notFoundAndFoundGenes: any;
   public confirmedFoundGenes: any;
   public geneListForNewsFeed: string[] = [];
-  public isAvailable = true;
   public genesListIsLoaded = false;
-  public showCardSkeleton = true;
-  public showRowSkeleton = true;
+  public showArticlesSkeleton = true;
+  public showPubmedFeedSkeleton = true;
+  public showProgressBar = false;
+  public genesListIsLoading: boolean;
 
   constructor(
     public windowService: WindowService,
@@ -41,6 +43,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.genesListIsLoading = true;
     this.getGenes();
 
     this.getLastEditedGenes();
@@ -179,6 +182,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
 
   private searchGenesByGoTerm(query: string): void {
     if (query && query.length > 2) {
+      this.showProgressBar = true;
       this.apiService
         .getGoTermMatchByString(query)
         .pipe(takeUntil(this.subscription$))
@@ -186,10 +190,12 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
           (genes) => {
             this.searchedGenes = genes; // If nothing found, will return empty array
             this.mapTerms();
+            this.showProgressBar = false;
             this.cdRef.markForCheck();
           },
           (error) => {
             console.log(error);
+            this.showProgressBar = false;
             this.cdRef.markForCheck();
           },
         );
@@ -210,6 +216,10 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     });
   }
 
+  setLoader(event: boolean) {
+    this.genesListIsLoading = event;
+    this.cdRef.markForCheck();
+  }
 
   /**
    * Wizard
