@@ -20,41 +20,38 @@
     </button>
 
     <div class="search-form__wrapper">
-      <div>
-        <button *ngIf="clearFieldButton"
-                mat-icon-button
-                class="clear-search-button"
-                (click)="clearSearch()">
-          <span class="fa fal fa-times"></span>
-        </button>
+      <button *ngIf="clearFieldButton"
+              mat-icon-button
+              class="clear-search-button"
+              (click)="clearSearch()">
+        <span class="fa fal fa-times"></span>
+      </button>
 
-        <button
-          mat-icon-button
-          class="search-form__submit search-form__submit--active"
-          type="submit"
-          (click)="onSearch()">
-          <span class="fa fal fa-search"></span>
-        </button>
+      <button
+        mat-icon-button
+        class="search-form__submit search-form__submit--active"
+        type="submit"
+        (click)="onSearch()">
+        <span class="fa fal fa-search"></span>
+      </button>
 
-        <!-- TODO: Use matNativeControl -->
-        <ng-container *ngFor="let item of inputData">
-          <input
-            *ngIf="searchMode === item.searchMode"
-            formControlName="searchField"
-            type="text"
-            placeholder="{{ item.placeholder | translate }}"
-            class="field search-form__field"
-            (keyup.enter)="onSearch()"
-          >
-        </ng-container>
-      </div>
+      <!-- TODO: Use matNativeControl -->
+      <ng-container *ngFor="let item of inputData">
+        <input
+          *ngIf="searchMode === item.searchMode"
+          formControlName="searchField"
+          type="text"
+          placeholder="{{ item.placeholder | translate }}"
+          class="field search-form__field"
+          (keyup.enter)="onSearch()"
+        >
+      </ng-container>
       <mat-progress-bar
         *ngIf="showProgressBar"
         mode="indeterminate"
+        class="search-form__progress"
       ></mat-progress-bar>
     </div>
-
-
 
     <div *ngIf="showSearchResult && clearFieldButton"
          class="search-form__autocomplete-list">
