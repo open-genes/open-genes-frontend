@@ -24,11 +24,15 @@
 </div>
 
 <div class="description">
-  <ng-container *ngFor="let item of toggleData">
-    <div class="description-content"
-         [class.hidden]="searchMode !== item.searchMode">
-      <h2>{{ item.description | translate }}</h2>
+  <ng-container *ngIf="searchMode === searchModeEnum.searchByGoTerms; else byGenes">
+    <div class="description-content">
+      <h2 >{{ 'search_for_go_terms_desc' | translate }}</h2>
     </div>
   </ng-container>
 </div>
 
+<ng-template #byGenes>
+  <div class="description-content">
+    <h2>{{(queryLength > 1 ? 'search_for_genes_by_list_desc' : 'search_for_genes_desc') | translate }}</h2>
+  </div>
+</ng-template>
