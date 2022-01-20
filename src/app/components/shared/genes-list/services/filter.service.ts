@@ -23,6 +23,7 @@ export class FilterService {
   public isClearFiltersBtnShown = new BehaviorSubject<boolean>(false);
 
   public sortParams: Sort;
+  public numOfFilters: number[];
 
   public filters: Filter = {
     byAgeRelatedProcess: [],
@@ -183,13 +184,13 @@ export class FilterService {
   }
 
   private areMoreThan2FiltersApplied(): void {
-    const sum = [];
+    this.numOfFilters = [];
     Object.values(this.filters).forEach((value) => {
       if ((value && value.length) || (typeof value === 'number' && value !== 0)) {
-        sum.push(1);
+        this.numOfFilters.push(1);
       }
     });
-    this.isClearFiltersBtnShown.next(sum.length >= 2);
+    this.isClearFiltersBtnShown.next(this.numOfFilters.length >= 2);
 
     this.updateList(this.filters);
 

@@ -155,6 +155,9 @@ export class GenesListComponent implements OnInit, OnDestroy {
             this.searchedData = [...this.cachedData];
           }
           this.downloadSearch(this.searchedData);
+          if (this.filterService.numOfFilters.length) {
+            this.openSnackBar();
+          }
           this.pageOptions = filteredData.options.pagination;
           this.isLoading = false;
           this.loading.emit(false);
