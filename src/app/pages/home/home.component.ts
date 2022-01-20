@@ -31,6 +31,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public showPubmedFeedSkeleton = true;
   public showProgressBar = false;
   public genesListIsLoading: boolean;
+  public queryLength: number;
 
   constructor(
     public windowService: WindowService,
@@ -89,14 +90,24 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   public setSearchQuery(query: string): void {
-    if (this.searchMode === this.searchModeEnum.searchByGenes) {
-      this.searchByGenes(query);
-    }
-    if (this.searchMode === this.searchModeEnum.searchByGenesList) {
-      this.searchByGenesList(query);
-    }
-    if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
-      this.searchGenesByGoTerm(query);
+    this.queryLength = query.split(',').length;
+    if (this.queryLength === 1) {
+      if (this.searchMode === this.searchModeEnum.searchByGenes) {
+        this.searchByGenes(query);
+      }
+
+      if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
+        this.searchGenesByGoTerm(query);
+      }
+
+      this.notFoundAndFoundGenes = {
+        foundGenes: [],
+        notFoundGenes: [],
+      };
+    } else {
+      if (this.searchMode !== this.searchModeEnum.searchByGoTerms) {
+        this.searchByGenesList(query);
+      }
     }
   }
 
@@ -172,10 +183,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
         notFoundGenes: notFoundGenes,
       };
     } else {
-      this.notFoundAndFoundGenes = {
-        foundGenes: [],
-        notFoundGenes: [],
-      };
       this.searchedGenes = [];
     }
   }

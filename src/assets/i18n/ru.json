@@ -264,7 +264,7 @@
   "search_field_by_comma": "HGNC генов через запятую",
   "search_field_start_typing": "HGNC, название или Ensembl",
   "search_field_tap_search": "По аннотациям, пр.: \"cytokine\"",
-  "search_for_genes": "Поиск по одному гену",
+  "search_for_genes": "Поиск по генам",
   "search_for_genes_by_list": "Поиск по списку генов",
   "search_for_genes_by_list_desc": "Поиск по списку генов",
   "search_for_genes_desc": "Поиск по генам, ассоциированным со старением",
