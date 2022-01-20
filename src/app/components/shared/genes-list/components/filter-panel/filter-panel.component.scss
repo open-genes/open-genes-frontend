@@ -11,7 +11,6 @@
   display: flex;
   flex-flow: row wrap;
   align-items: start;
-  justify-content: space-between;
   align-content: flex-start;
   justify-items: flex-start;
 
@@ -20,22 +19,34 @@
     button {
       margin: 0 5px 5px 0;
     }
+
+    [mat-sort] {
+      display: contents;
+    }
   }
 
   &__filters,
   &__buttons {
     position: relative;
-    display: flex;
-    flex-flow: row wrap;
+  }
 
-    @include resolution_smartphone-and-tablet {
-      flex: 0 0 100%;
+  @include resolution_tablet-and-up {
+    justify-content: space-between;
+
+    &__filters,
+    &__buttons {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-end;
     }
   }
 
-  &__buttons {
-    @include resolution_desktop-and-up {
-      justify-content: flex-end;
+  @include resolution_smartphone {
+    justify-content: flex-start;
+
+    &__filters,
+    &__buttons {
+      display: contents;
     }
   }
 }

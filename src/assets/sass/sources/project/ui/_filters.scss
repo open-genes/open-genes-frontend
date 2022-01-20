@@ -21,7 +21,6 @@ $element-base-color: $color-general;
   position: relative;
   line-height: 26px;
   font-size: 12px;
-  @include text-overflow;
   transition: background-color .15s ease-in;
   cursor: pointer;
   padding: 0 8px 0 8px;
@@ -59,13 +58,5 @@ $element-base-color: $color-general;
     &:hover {
       background-color: $element-base-color;
     }
-  }
-
-  @include resolution_desktop-and-up {
-    max-width: 150px;
-  }
-
-  @include resolution_smartphone-and-tablet {
-    max-width: 90px;
   }
 }
