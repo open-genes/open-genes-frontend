@@ -99,6 +99,11 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
         this.searchGenesByGoTerm(query);
       }
+
+      this.notFoundAndFoundGenes = {
+        foundGenes: [],
+        notFoundGenes: [],
+      };
     } else {
       if (this.searchMode !== this.searchModeEnum.searchByGoTerms) {
         this.searchByGenesList(query);
@@ -178,10 +183,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
         notFoundGenes: notFoundGenes,
       };
     } else {
-      this.notFoundAndFoundGenes = {
-        foundGenes: [],
-        notFoundGenes: [],
-      };
       this.searchedGenes = [];
     }
   }
