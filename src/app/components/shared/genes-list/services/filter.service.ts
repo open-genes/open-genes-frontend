@@ -176,7 +176,7 @@ export class FilterService {
     if (this.sortParams && this.sortParams.direction) {
       params = params
         .set('sortBy', this.sortParams.active)
-        .set('sortOrder', this.sortParams.direction)
+        .set('sortOrder', this.sortParams.direction.toUpperCase())
     }
 
     return this.http.get<FilteredGenes>(`/api/gene/search`, { params });
