@@ -14,24 +14,23 @@
     display: table-row-group;
     width: 100%;
     position: relative;
+    overflow: hidden;
+    border-radius: $border-radius-medium;
 
-    &::after {
-      content: ' ';
-      position: absolute;
-      display: block;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 0;
-      background: $color-white;
-    }
+    //&::after {
+    //  content: ' ';
+    //  position: absolute;
+    //  display: block;
+    //  top: 0;
+    //  right: 0;
+    //  bottom: 0;
+    //  left: 0;
+    //  z-index: 0;
+    //  background: $color-white;
+    //}
 
     &:nth-child(odd) {
-      &::after {
-        background: $color-general-light;
-        border-radius: $border-radius-medium;
-      }
+      background: $color-general-light;
     }
 
     &:last-child {

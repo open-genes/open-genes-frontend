@@ -15,6 +15,8 @@ export const environment = {
   mockJsonUrl: ['data/articles-1.json', 'data/articles-2.json'],
   termsJsonUrl: ['assets/i18n/terms-en.json', 'assets/i18n/terms-ru.json'],
   gaTrackingCode: 'G-825YYNSJFC',
+  version: '{{VERSION}}',
+  build: '{{BUILD_NUMBER}}',
 };
 
 /*

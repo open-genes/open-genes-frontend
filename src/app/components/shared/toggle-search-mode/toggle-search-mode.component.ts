@@ -8,22 +8,17 @@ import { SettingsService } from '../../../core/services/settings.service';
   styleUrls: ['./toggle-search-mode.component.scss'],
 })
 export class ToggleSearchModeComponent implements OnInit {
+  @Input() queryLength: number;
   public searchMode: SearchMode;
+  public searchModeEnum = SearchModeEnum;
   public toggleData = [
     {
       searchMode: SearchModeEnum.searchByGenes,
       toggleTitle: 'search_for_genes',
-      description: 'search_for_genes_desc',
-    },
-    {
-      searchMode: SearchModeEnum.searchByGenesList,
-      toggleTitle: 'search_for_genes_by_list',
-      description: 'search_for_genes_by_list_desc',
     },
     {
       searchMode: SearchModeEnum.searchByGoTerms,
       toggleTitle: 'search_for_go_terms',
-      description: 'search_for_go_terms_desc',
     },
   ];
 

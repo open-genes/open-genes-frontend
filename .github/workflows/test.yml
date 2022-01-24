@@ -18,10 +18,18 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout project
         uses: actions/checkout@v2
+      - name: Create temporary .env file and print a build number
+        run: |
+          touch .env
+          echo ${{ github.run_id }}.${{ github.run_number }} >> .env
       - name: Build
         run: |
           npm install
+          node setversion.js
           npm run build-dev
+      - name: Delete temporary files
+        run: |
+          rm .env
       - name: Upload project artifacts
         uses: actions/upload-artifact@v2
         with:

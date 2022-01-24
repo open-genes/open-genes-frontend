@@ -15,7 +15,8 @@
   ></app-search-view-panel>
 </app-filter-panel>
 
-<div class="genes-info" *ngIf="searchMode === 'searchByGenesList'">
+<div *ngIf="searchedData?.length"
+     class="genes-info">
   <div class="genes-info__found" *ngIf="notFoundAndFoundGenes?.foundGenes.length">
     {{ 'items_found' | translate }} {{ notFoundAndFoundGenes?.foundGenes.length }}: <b>
     <ng-container
@@ -117,8 +118,7 @@
 <section
   *ngIf="
     (isGoTermsMode && isGoSearchPerformed && !isLoading && searchedData?.length == 0) ||
-    (!isGoTermsMode && !isLoading && searchedData?.length == 0)"
->
+    (!isGoTermsMode && !isLoading && searchedData?.length == 0)">
   <app-no-content [title]="'nothing_found'">
     <ng-container icon>
       <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
@@ -138,6 +138,5 @@
   </app-no-content>
 </section>
 
-<ng-container *ngIf="isLoading">
-  <app-spinner></app-spinner>
-</ng-container>
+<app-spinner *ngIf="isLoading"></app-spinner>
+

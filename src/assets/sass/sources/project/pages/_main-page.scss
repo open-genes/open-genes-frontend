@@ -1,6 +1,7 @@
 .main-page { // .page
   // &__inner { }
   &__header {
+    $gutter: 15px;
     background: $color-general-light url($path-images + '/home-background.jpg') center center / cover no-repeat;
     padding: 30px 0 35px 0;
     text-shadow: 1px 0 2px 1px $color-black;
@@ -39,8 +40,8 @@
     }
 
     @include resolution_smartphone {
-      width: calc(100% - 40px);
-      margin: 20px;
+      width: calc(100% - #{$gutter * 2});
+      margin: $gutter;
       border-radius: $border-radius-medium;
     }
   }

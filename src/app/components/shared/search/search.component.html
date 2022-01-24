@@ -46,6 +46,11 @@
           (keyup.enter)="onSearch()"
         >
       </ng-container>
+      <mat-progress-bar
+        *ngIf="showProgressBar"
+        mode="indeterminate"
+        class="search-form__progress"
+      ></mat-progress-bar>
     </div>
 
     <div *ngIf="showSearchResult && clearFieldButton"

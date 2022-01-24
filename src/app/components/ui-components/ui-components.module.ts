@@ -15,6 +15,8 @@ import { MaterialModule } from '../../modules/vendors/material.module'; // TODO:
 import { CommonModalComponent } from './components/modals/common-modal/common-modal.component';
 import { ArticleModalComponent } from './components/modals/article-modal/article-modal.component';
 import { ConfirmModalComponent } from './components/modals/confirm-modal/confirm-modal.component';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
+import { RouterModule } from '@angular/router';
 
 const modules = [
   AccordionComponent,
@@ -28,11 +30,12 @@ const modules = [
   HintComponent,
   CommonModalComponent,
   ConfirmModalComponent,
+  BreadcrumbsComponent,
 ];
 
 @NgModule({
   declarations: [...modules],
   exports: [...modules],
-  imports: [CommonModule, IconModule, PipesModule, TranslateModule, MaterialModule]
+  imports: [CommonModule, IconModule, PipesModule, TranslateModule, MaterialModule, RouterModule],
 })
 export class UiComponentsModule {}

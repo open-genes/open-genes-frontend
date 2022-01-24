@@ -65,11 +65,11 @@
                     class="__h-100"
                     [isMiniMode]="true"
                     [sliceTo]="2"
-                    [showSkeleton] = 'showCardSkeleton'
-                    (skeletonState)='showCardSkeleton = $event'
+                    [showSkeleton]="showArticlesSkeleton"
+                    (skeletonState)="showArticlesSkeleton = $event"
                   ></app-articles-list>
                   <app-skeleton
-                    *ngIf="showCardSkeleton"
+                    *ngIf="showArticlesSkeleton"
                     [view]="'card'"
                     [cardsInARow]="1"
                     [groups]="2"
@@ -92,47 +92,47 @@
                     [isMiniMode]="true"
                     [genesList]="geneListForNewsFeed"
                     [loadTotal]="2"
-                    [showSkeleton] = 'showRowSkeleton'
-                    (skeletonState)='showRowSkeleton = $event'
+                    [showSkeleton]="showPubmedFeedSkeleton"
+                    (skeletonState)="showPubmedFeedSkeleton = $event"
                   ></app-news-list>
 
                   <app-skeleton
-                    *ngIf="showRowSkeleton"
+                    *ngIf="showPubmedFeedSkeleton"
                     class="__mt-10"
                     [view]="'line'"
                     [groups]="2"
                   ></app-skeleton>
                 </ng-container>
-
               </app-sidebar-item>
-
             </app-sidebar>
           </div>
 
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
             <app-toggle-search-mode
+              [queryLength]="queryLength"
               (setMode)="setSearchMode($event)"
             ></app-toggle-search-mode>
 
             <app-search
-              class="__mt-30"
+              class="__mt-20 __mb-10"
               [showTitle]="true"
               [genesLength]="genes?.length"
               [genesList]="searchedGenes"
               [setSearchMode]="searchMode"
+              [showProgressBar]="showProgressBar"
               (confirmedQuery)="updateGenesList($event)"
               (searchQuery)="setSearchQuery($event)"
             ></app-search>
 
             <app-genes-list
               *ngIf="genes"
+              (loading)="setLoader($event)"
               [genesList]="confirmedGenesList"
               [notFoundAndFoundGenes]="confirmedFoundGenes"
               [isMobile]="isMobile"
               [setSearchMode]="searchMode"
               [showFiltersPanel]="searchMode !== searchModeEnum.searchByGoTerms">
             </app-genes-list>
-
           </div>
         </ng-container>
       </div>

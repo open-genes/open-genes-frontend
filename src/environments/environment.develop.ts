@@ -8,10 +8,9 @@ export const environment = {
   openLongevity80LevelCMS: 'https://openlongevity.com/',
   debugMode: false,
   languages: ['ru', 'en', 'zh'],
-  mockJsonUrl: [
-    'assets/data/articles-page-1.mock.json',
-    'assets/data/articles-page-2.mock.json',
-  ],
+  mockJsonUrl: ['assets/data/articles-page-1.mock.json', 'assets/data/articles-page-2.mock.json'],
   termsJsonUrl: ['assets/i18n/terms-en.json', 'assets/i18n/terms-ru.json'],
   gaTrackingCode: 'G-825YYNSJFC',
+  version: '{{VERSION}}',
+  build: '{{BUILD_NUMBER}}',
 };

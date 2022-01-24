@@ -12,7 +12,7 @@ export interface Filter {
   byProteinClass: number[]; // by special categories of protein functions/associations (Human Protein Atlas)
 }
 
-export interface Sort {
+export interface ISort {
   byName: boolean; // by gene name
   byAge: boolean; // by gene evolutionary age (familyOrigin.order field)
 }
