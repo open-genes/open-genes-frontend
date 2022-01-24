@@ -268,6 +268,7 @@
   "search_for_genes_by_list": "Поиск по списку генов",
   "search_for_genes_by_list_desc": "Поиск по списку генов",
   "search_for_genes_desc": "Поиск по генам, ассоциированным со старением",
+  "search_for_genes_desc_hint": "Напишите HGNC через запятую чтобы искать совпадения по списку",
   "search_for_go_terms": "Поиск по аннотациям Gene Ontology",
   "search_for_go_terms_desc": "Поиск генов по описаниям аннотаций Gene Ontology",
   "search_genes_in_horvath_clock": "Гены из часов метилирования Хорвата",

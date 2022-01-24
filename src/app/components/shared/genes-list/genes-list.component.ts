@@ -25,6 +25,11 @@ import { FavouritesService } from '../../../core/services/favourites.service';
 import { ActivatedRoute } from '@angular/router';
 import { Sort } from '@angular/material/sort';
 
+interface FoundGenes {
+  foundGenes: string[];
+  notFoundGenes: string[];
+}
+
 @Component({
   selector: 'app-genes-list',
   templateUrl: './genes-list.component.html',
@@ -34,7 +39,7 @@ import { Sort } from '@angular/material/sort';
 export class GenesListComponent implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
-  @Input() notFoundAndFoundGenes: any;
+  @Input() notFoundAndFoundGenes: FoundGenes;
 
   @Input() set setSearchMode(searchMode: SearchMode) {
     if (searchMode) {
