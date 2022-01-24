@@ -29,7 +29,7 @@ jobs:
         run: |
           npm install
           node setversion.js
-          npm run build-demo
+          npm run build-prod
       - name: Delete temporary files
         run: |
           rm .env
