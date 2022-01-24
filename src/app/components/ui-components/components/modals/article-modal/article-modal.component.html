@@ -17,7 +17,7 @@
 
   <div class="article-modal__body">
     <article *ngFor="let item of article">
-      <span [innerHTML]="item?.text | safe: 'html' | truncate:maxCharacters"></span>
+      <span [innerHTML]="item?.text | safe: 'html'"></span>
     </article>
     <div class="article-modal__button-wrap btn-wrap show-more">
       <a class="btn show-more__button"
