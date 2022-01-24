@@ -71,8 +71,8 @@
                   <app-skeleton
                     *ngIf="showArticlesSkeleton"
                     [view]="'card'"
-                    [cardsInARow]="1"
-                    [groups]="2"
+                    [cardsInARow]="isTablet ? 2 : 1"
+                    [groups]="isTablet? 1 : 2"
                   ></app-skeleton>
                 </ng-container>
 
