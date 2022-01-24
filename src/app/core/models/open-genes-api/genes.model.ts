@@ -2,7 +2,6 @@ import { Researches } from './researches.model';
 import { Origin } from './origin.model';
 import { Terms } from './gene-ontology.model';
 import { HumanProteinAtlas } from './human-protein-atlas.model';
-import { SelectionCriteria } from './selection-criteria.model';
 import { AssociatedDiseases, AssociatedDiseaseCategories } from './associated-diseases.model';
 import { MethylationCorrelation } from './methylation-correlation.model';
 
@@ -11,15 +10,15 @@ interface TimestampObject {
   created: string;
 }
 
-export interface AgingMechanisms {
+interface GenericItem {
   id: string;
   name: string;
 }
 
-export interface ProteinClasses {
-  id: number;
-  name: string;
-}
+export type AgingMechanisms = GenericItem;
+export type ProteinClasses = GenericItem;
+export type SelectionCriteria = GenericItem;
+export type AgeRelatedProcesses = GenericItem;
 
 interface GeneralGeneInfo {
   id: number;
@@ -30,7 +29,7 @@ interface GeneralGeneInfo {
   diseaseCategories?: AssociatedDiseaseCategories;
   diseases?: AssociatedDiseases;
   expressionChange?: number;
-  functionalClusters: FunctionalClusters[];
+  functionalClusters: AgeRelatedProcesses[];
   proteinClasses: ProteinClasses[];
   terms?: Terms;
   name: string;
@@ -72,11 +71,6 @@ export interface Gene extends GeneralGeneInfo {
   commentsReferenceLinks: { [n: number]: string };
   rating: number; // TODO: delete this field
   human_protein_atlas: HumanProteinAtlas | ''; // TODO: ask backend to change field name to camelCase, return null or empty object if no fields
-}
-
-export interface FunctionalClusters {
-  id: number;
-  name: string;
 }
 
 export interface FilteredGenes {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Gene, Genes } from '../../models';
+import { AgeRelatedProcesses, AgingMechanisms, Gene, Genes, SelectionCriteria } from '../../models';
 import { TranslateService } from '@ngx-translate/core';
 import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/open-genes-api/associated-diseases.model';
 import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with-increase-lifespan-researches.model';
@@ -24,6 +24,8 @@ export class ApiService {
       this.currentLang = 'en';
     }
   }
+
+  // Legacy API
 
   getGenes(): Observable<Genes[]> {
     return this.http.get<Genes[]>(`/api/gene?lang=${this.currentLang}`);
@@ -49,19 +51,32 @@ export class ApiService {
     return this.http.get<Genes[]>(`/api/gene/by-go-term/${request}`);
   }
 
-  getDiseases(): Observable<AssociatedDiseases[]> {
-    return this.http.get<AssociatedDiseases[]>(`/api/disease/`);
-  }
-
-  getDiseaseCategories(): Observable<AssociatedDiseaseCategories[]> {
-    return this.http.get<AssociatedDiseaseCategories[]>(`/api/disease-category/`);
-  }
-
   getGenesWLifespanResearches(): Observable<GenesWLifespanResearches[]> {
     return this.http.get<GenesWLifespanResearches[]>(`/api/increase-lifespan?lang=${this.currentLang}`);
   }
 
   getGenesInHorvathClock(): Observable<GenesInHorvathClock[]> {
     return this.http.get<GenesInHorvathClock[]>(`/api/methylation?lang=${this.currentLang}`);
+  }
+
+  // New API
+  getDiseases(): Observable<AssociatedDiseases[]> {
+    return this.http.get<AssociatedDiseases[]>(`/api/disease?lang=${this.currentLang}`);
+  }
+
+  getDiseaseCategories(): Observable<AssociatedDiseaseCategories[]> {
+    return this.http.get<AssociatedDiseaseCategories[]>(`/api/disease-category?lang=${this.currentLang}`);
+  }
+
+  getSelectionCriteria(): Observable<SelectionCriteria[]> {
+    return this.http.get<SelectionCriteria[]>('/api/criteria');
+  }
+
+  getAgeRelatedProcesses(): Observable<AgeRelatedProcesses[]> {
+    return this.http.get<AgeRelatedProcesses[]>('/api/age-related-processes');
+  }
+
+  getAgingMechanisms(): Observable<AgingMechanisms[]> {
+    return this.http.get<AgingMechanisms[]>('/api/aging-mechanisms');
   }
 }

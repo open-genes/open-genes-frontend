@@ -3,7 +3,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { DiagramGenes, Link, Node } from './models/directed-graph';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Subject } from 'rxjs';
-import { FunctionalClusters, Gene, Genes } from '../../core/models';
+import { AgeRelatedProcesses, Genes } from '../../core/models';
 import { AssociatedDiseaseCategories } from '../../core/models/open-genes-api/associated-diseases.model';
 
 @Component({
@@ -102,7 +102,7 @@ export class DiagramsComponent implements OnDestroy {
     });
   }
 
-  private filteringByFunctionalClusters(gene: FunctionalClusters[], res: FunctionalClusters[]): boolean {
+  private filteringByFunctionalClusters(gene: AgeRelatedProcesses[], res: AgeRelatedProcesses[]): boolean {
     return gene.some((cluster) => {
       return res.some((res) => res.id === cluster.id);
     });
@@ -221,7 +221,7 @@ export class DiagramsComponent implements OnDestroy {
     return geneKeys.length && geneKeys.length === resKeys.length && geneKeys.every((key) => resKeys.includes(key));
   }
 
-  private groupByFunctionalClusters(clusters: FunctionalClusters[], res: FunctionalClusters[]): boolean {
+  private groupByFunctionalClusters(clusters: AgeRelatedProcesses[], res: AgeRelatedProcesses[]): boolean {
     return (
       clusters.length &&
       clusters.length === res.length &&
