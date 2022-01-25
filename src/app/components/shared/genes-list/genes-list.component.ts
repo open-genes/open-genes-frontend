@@ -53,6 +53,12 @@ export class GenesListComponent implements OnInit, OnDestroy {
   @Input() set genesList(genes: Genes[]) {
     if (genes) {
       if (genes.length) {
+        if (genes[0] === null) {
+          this.searchedData = [];
+          this.isGoSearchPerformed = this.isGoTermsMode;
+          return;
+        }
+
         if (genes.length > this.genesPerPage) {
           this.currentPage = 1;
           this.genesFromInput = genes;
@@ -67,10 +73,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (genes === null) {
-      this.searchedData = [];
-      this.isGoSearchPerformed = this.isGoTermsMode;
-    }
     this.downloadSearch(this.searchedData);
   }
 
