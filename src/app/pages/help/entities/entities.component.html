@@ -1,0 +1,45 @@
+<div class="page text-page entities-page">
+  <div class="page__inner __pb-60">
+    <div class="text-page__header wrapper">
+      <div class="container-fluid">
+        <div class="row no-gutters">
+          <div class="col col-12">
+            <app-breadcrumbs></app-breadcrumbs>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container entities-page__variants">
+      <app-hint>
+        <ng-container title>
+          Документация для разработчиков
+        </ng-container>
+        <ng-container description>
+          Как получить данные из Open Genes API
+        </ng-container>
+        <ng-container button>
+          <a href=""
+             class="btn btn--fill btn--small btn--purple">
+            Открыть
+          </a>
+        </ng-container>
+
+      </app-hint>
+      <ng-container *ngIf="list">
+        <section class="col-12 variant">
+          <h3>{{ title | translate }}</h3>
+          <ol class="list" start="{{ currentPage !== 1 ? (currentPage * itemsPerPage) + 1 : 1 }}">
+            <li *ngFor="let item of list">{{ item.name }}</li>
+          </ol>
+        </section>
+        <mat-paginator [length]="data.length"
+                       [pageSize]="itemsPerPage"
+                       (page)="pageEventHandler($event)"
+                       aria-label="Select page">
+        </mat-paginator>
+      </ng-container>
+    </div>
+  </div>
+</div>
+

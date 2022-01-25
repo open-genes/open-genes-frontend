@@ -36,6 +36,9 @@ export const APP_ROUTES: Routes = [
   {
     path: 'help',
     loadChildren: () => import('./pages/help/help.module').then((m) => m.HelpModule),
+    data: {
+      breadcrumb: 'header_menu_help',
+    },
   },
   {
     path: 'contributors',
@@ -65,6 +68,7 @@ export const APP_ROUTES: Routes = [
     path: '**',
     redirectTo: '/404',
   },
+
 ];
 
 export const ROUTER_OPTIONS: ExtraOptions = {
