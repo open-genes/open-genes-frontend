@@ -2,10 +2,10 @@
 
   <ng-container *ngIf="!isAccordion; else accordion">
     <ul class="list list--bulletted">
-      <li *ngFor="let criteria of geneCriteria | keyvalue"
-          [class.__active]="activeListItem.includes(+criteria.key)"
+      <li *ngFor="let criteria of geneCriteria"
+          [class.__active]="activeListItem.includes(+criteria.id)"
           (click)="emitOnClick(criteria.key)">
-        {{ criteria.value }}
+        {{ criteria.name }}
       </li>
     </ul>
   </ng-container>
@@ -19,10 +19,10 @@
 
       <div class="criteria-accordion__header" accordion-header>
         <ul class="list list--bulletted">
-          <li *ngFor="let criteria of geneCriteria | keyvalue | slice: 0:maxItemsToShow"
-              [class.__active]="activeListItem.includes(+criteria.key)"
-              (click)="emitOnClick(criteria.key)">
-            {{ criteria.value }}
+          <li *ngFor="let criteria of geneCriteria | slice: 0:maxItemsToShow"
+              [class.__active]="activeListItem.includes(+criteria.id)"
+              (click)="emitOnClick(criteria.id)">
+            {{ criteria.name }}
           </li>
         </ul>
 
@@ -35,10 +35,10 @@
 
       <div class="criteria-accordion__body" accordion-body>
         <ul class="list list--bulletted">
-          <li *ngFor="let criteria of geneCriteria | keyvalue | slice: maxItemsToShow"
-              [class.__active]="activeListItem.includes(+criteria.key)"
-              (click)="emitOnClick(criteria.key)">
-            {{ criteria.value }}
+          <li *ngFor="let criteria of geneCriteria | slice: maxItemsToShow"
+              [class.__active]="activeListItem.includes(+criteria.id)"
+              (click)="emitOnClick(criteria.id)">
+            {{ criteria.name }}
           </li>
         </ul>
       </div>

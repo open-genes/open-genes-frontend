@@ -118,6 +118,7 @@
               [showTitle]="true"
               [genesLength]="genes?.length"
               [genesList]="searchedGenes"
+              [isDisabled]="genesListIsLoading"
               [setSearchMode]="searchMode"
               [showProgressBar]="showProgressBar"
               (confirmedQuery)="updateGenesList($event)"

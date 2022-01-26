@@ -16,7 +16,7 @@ import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
 })
 export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public genes: Genes[];
-  public searchedGenes: Genes[];
+  public searchedGenes: Genes[] = [];
   public confirmedGenesList: Genes[] | string;
   public lastGenes: Genes[];
   public isAvailable = true;
@@ -26,7 +26,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public notFoundAndFoundGenes: any;
   public confirmedFoundGenes: any;
   public geneListForNewsFeed: string[] = [];
-  public genesListIsLoaded = false;
   public showArticlesSkeleton = true;
   public showPubmedFeedSkeleton = true;
   public showProgressBar = false;
@@ -117,7 +116,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     }
 
     if (query && this.searchedGenes.length === 0) {
-      this.confirmedGenesList = null;
+      this.confirmedGenesList = [null];
     }
 
     if (!query && this.searchedGenes.length === 0) {
