@@ -330,5 +330,8 @@
   "items_per_page": "Items per page",
   "next_page": "Next page",
   "prev_page": "Previous page",
-  "of_label": "of"
+  "of_label": "of",
+  "warning_researches_title": "In this research type data may miss",
+  "warning_researches_description": "Now we are changing the researches structure, and essential data may miss. Unfortunately, we could not support backward compatibility. \nYou will see here more detailed data from this research very soon. We are about to present a new detailed way of researches description.",
+  "warning_researches_button": "Read the article"
 }
