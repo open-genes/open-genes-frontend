@@ -25,7 +25,7 @@ interface GeneralGeneInfo {
   symbol: string;
   agingMechanisms: AgingMechanisms[];
   aliases: string[];
-  commentCause?: SelectionCriteria;
+  commentCause?: SelectionCriteria[];
   diseaseCategories?: AssociatedDiseaseCategories;
   diseases?: AssociatedDiseases;
   expressionChange?: number;

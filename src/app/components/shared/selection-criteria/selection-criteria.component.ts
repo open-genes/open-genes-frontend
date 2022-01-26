@@ -8,7 +8,7 @@ import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap
   styleUrls: ['./selection-criteria.component.scss'],
 })
 export class SelectionCriteriaComponent extends WrapIntoAccordion implements OnInit {
-  @Input() geneCriteria: SelectionCriteria;
+  @Input() geneCriteria: SelectionCriteria[];
   @Input() activeListItem: number[];
   @Output() clickEvent: EventEmitter<string> = new EventEmitter();
 
