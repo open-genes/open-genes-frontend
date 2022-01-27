@@ -36,9 +36,10 @@ $element-base-color: $color-general;
     height: 26px;
     line-height: inherit;
     font-size: 16px;
-    position: absolute;
-    top: 0;
-    right: 8px;
+    position: relative;
+    top: -1px;
+    vertical-align: middle;
+    margin-left: 5px;
 
     &.fa-sort-down {
       line-height: 20px;
