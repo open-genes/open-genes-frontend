@@ -11,7 +11,7 @@ export const HELP_ROUTES: Routes = [
     path: ':slug',
     component: EntitiesComponent,
     data: {
-      breadcrumb: 'entities_title',
+      breadcrumb: 'entities_breadcrumb',
     },
   },
 ];

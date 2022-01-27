@@ -12,16 +12,20 @@
 
     <div class="container entities-page__variants">
       <app-hint>
+        <ng-container image>
+          <img src="assets/images/hint-api-docs.jpg"
+               alt="{{ 'screenshot' | translate }}">
+        </ng-container>
         <ng-container title>
-          Документация для разработчиков
+          {{ "hint_api_docs_title" | translate }}
         </ng-container>
         <ng-container description>
-          Как получить данные из Open Genes API
+          {{ "hint_api_docs_description" | translate }}
         </ng-container>
         <ng-container button>
           <a href=""
              class="btn btn--fill btn--small btn--purple">
-            Открыть
+            {{ "hint_api_docs_button" | translate }}
           </a>
         </ng-container>
 
