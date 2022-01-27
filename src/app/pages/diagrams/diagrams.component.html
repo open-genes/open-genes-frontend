@@ -13,7 +13,8 @@
     </div>
 
     <div class="container">
-      <mat-tab-group class="diagrams-container __w-content-fluid"
+      <mat-tab-group animationDuration="0ms"
+                     class="diagrams-container __w-content-fluid"
         (selectedTabChange)="onTabClick()">
         <mat-tab label="{{ 'diagrams_title_1_short' | translate }}">
           <ng-template matTabContent>

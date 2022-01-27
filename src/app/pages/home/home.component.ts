@@ -63,9 +63,9 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       .getGenes()
       .pipe(takeUntil(this.subscription$))
       .subscribe(
-        (genes) => {
-          this.genes = genes;
-          this.geneListForNewsFeed = genes.map((gene) => {
+        (filteredGenes) => {
+          this.genes = filteredGenes.items;
+          this.geneListForNewsFeed = filteredGenes.items.map((gene) => {
             return gene.symbol;
           });
           this.cdRef.markForCheck();
