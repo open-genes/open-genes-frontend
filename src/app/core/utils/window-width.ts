@@ -10,7 +10,7 @@ export abstract class WindowWidth extends ToMap {
   public isTouchDevice = false;
   public breakpoints = {
     desktop: 1199.98,
-    mobile: 767,
+    mobile: 767.98,
   };
 
   protected constructor(public windowService: WindowService) {
