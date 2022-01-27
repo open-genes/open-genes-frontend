@@ -55,8 +55,8 @@ export class HorvathClockComponent extends WindowWidth implements OnInit, OnDest
     this.apiService.getGenes()
       .pipe(
         takeUntil(this.subscription$),
-        switchMap((genes) => {
-          genes.forEach((gene) => {
+        switchMap((filteredGenes) => {
+          filteredGenes.items.forEach((gene) => {
             this.curatedGeneSymbolsArray.push(gene.symbol);
           });
           return this.apiService.getGenesInHorvathClock();

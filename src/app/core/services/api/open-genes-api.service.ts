@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AgeRelatedProcesses, AgingMechanisms, Gene, Genes, SelectionCriteria } from '../../models';
+import { AgeRelatedProcesses, AgingMechanisms, FilteredGenes, Gene, Genes, SelectionCriteria } from '../../models';
 import { TranslateService } from '@ngx-translate/core';
 import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/open-genes-api/associated-diseases.model';
 import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with-increase-lifespan-researches.model';
@@ -27,8 +27,8 @@ export class ApiService {
 
   // Legacy API
 
-  getGenes(): Observable<Genes[]> {
-    return this.http.get<Genes[]>(`/api/gene?lang=${this.currentLang}`);
+  getGenes(): Observable<FilteredGenes> {
+    return this.http.get<FilteredGenes>(`/api/gene/search?lang=${this.currentLang}`);
   }
 
   getLastEditedGene(): Observable<Genes[]> {
