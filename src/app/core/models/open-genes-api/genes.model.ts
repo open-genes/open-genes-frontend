@@ -72,15 +72,3 @@ export interface Gene extends GeneralGeneInfo {
   rating: number; // TODO: delete this field
   human_protein_atlas: HumanProteinAtlas | ''; // TODO: ask backend to change field name to camelCase, return null or empty object if no fields
 }
-
-export interface FilteredGenes {
-  items: Genes[];
-  options: {
-    objTotal: number;
-    pagination: {
-      page: number;
-      pageSize: number;
-      pagesTotal: number;
-    };
-  };
-}

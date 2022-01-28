@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Filter, ISort } from './filter.model';
+import { Filter } from './filter.model';
 import { FilterTypesEnum } from './filter-types.enum';
 import { GenesListSettings } from '../genes-list-settings.model';
-import { FilteredGenes } from '../../../../core/models';
+import { Genes } from '../../../../core/models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { Pagination } from '../../../../core/models/settings.model';
 import { SettingsService } from '../../../../core/services/settings.service';
 import { Sort } from '@angular/material/sort';
+import { ApiResponse } from '../../../../core/models/api-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -152,7 +153,7 @@ export class FilterService {
     this.areMoreThan2FiltersApplied();
   }
 
-  public getSortedAndFilteredGenes(): Observable<FilteredGenes> {
+  public getSortedAndFilteredGenes(): Observable<ApiResponse<Genes>> {
     let params = new HttpParams()
       .set('lang', this.translate.currentLang)
       .set('page', this.pagination.page)
@@ -179,7 +180,7 @@ export class FilterService {
         .set('sortOrder', this.sortParams.direction.toUpperCase())
     }
 
-    return this.http.get<FilteredGenes>(`/api/gene/search`, { params });
+    return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });
   }
 
   private areMoreThan2FiltersApplied(): void {
