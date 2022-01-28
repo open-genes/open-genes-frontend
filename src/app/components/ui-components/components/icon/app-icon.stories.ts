@@ -10,7 +10,7 @@ export default {
     moduleMetadata({
       declarations: [IconComponent],
       imports: [CommonModule],
-      providers: [IconService]
+      providers: [IconService],
     }),
   ],
 };
