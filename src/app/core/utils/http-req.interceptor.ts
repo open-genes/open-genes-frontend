@@ -9,8 +9,10 @@ export class HttpReqInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let headers = new HttpHeaders();
-    headers = headers.append('Accept', 'application/json');
-    headers = headers.append('Content-Type', 'application/json');
+    headers = headers
+      .append('Accept', 'application/json')
+      .append('Content-Type', 'application/json');
+
 
     if (req.url.includes('/api/') && !req.url.includes('https')) {
       const request = req.clone({
