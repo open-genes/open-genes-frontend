@@ -24,6 +24,7 @@ import { SettingsService } from '../../../core/services/settings.service';
 import { FavouritesService } from '../../../core/services/favourites.service';
 import { ActivatedRoute } from '@angular/router';
 import { Sort } from '@angular/material/sort';
+import { ApiResponse } from '../../../core/models/api-response.model';
 
 interface FoundGenes {
   foundGenes: string[];
@@ -147,22 +148,22 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.searchedData = [];
           this.isGoSearchPerformed = !this.isGoTermsMode;
           return this.isGoTermsMode ? EMPTY : this.filterService.getSortedAndFilteredGenes();
-        }),
+        })
       )
       .subscribe(
-        (filteredData) => {
+        (res: ApiResponse<Genes>) => {
           // TODO: add an interface for the whole response
           this.currentPage = this.filterService.pagination.page;
           if (this.currentPage == 1) {
             this.cachedData = [];
-            this.cachedData.push(...filteredData.items);
+            this.cachedData.push(...res.items);
             this.searchedData = [...this.cachedData];
           } else {
-            this.cachedData.push(...filteredData.items);
+            this.cachedData.push(...res.items);
             this.searchedData = [...this.cachedData];
           }
           this.downloadSearch(this.searchedData);
-          this.pageOptions = filteredData.options.pagination;
+          this.pageOptions = res.options.pagination;
           this.isLoading = false;
           this.loading.emit(false);
           this.cdRef.markForCheck();
@@ -172,7 +173,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.loading.emit(false);
           this.cdRef.markForCheck();
-        },
+        }
       );
   }
 
