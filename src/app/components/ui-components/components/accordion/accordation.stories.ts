@@ -20,15 +20,15 @@ export default {
 const Template: Story<AccordionComponent> = () => ({
   component: AccordionComponent,
   template: `<app-accordion [isOpen]="false">
-  <div accordion-header>
+  <ng-container accordion-header>
     <button class="badge badge-primary">Нажми меня!!</button>
-  </div>
-  <div accordion-body>
+  </ng-container>
+  <ng-container accordion-body>
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
     Dicta doloribus eaque nesciunt officiis soluta. Aspernatur 
     dolor eaque ex iure modi mollitia officiis quo voluptatum. 
     Dolorem odio pariatur quas repudiandae unde.
-  </div>
+  </ng-container>
 </app-accordion>`,
 
 });
