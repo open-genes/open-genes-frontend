@@ -2,7 +2,7 @@
   // &__inner { }
   &__header {
     min-height: 140px;
-    background: $color-gray-very-light;
+    background: linear-gradient(to bottom, $color-general-light, $color-gray-very-light);
     padding: 30px 0 35px 0;
     margin-bottom: 20px;
     border-radius: 0 0 20px 20px;

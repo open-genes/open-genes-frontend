@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BreadCrumb } from './breadcrumb';
 import { BreadcrumbService } from './breadcrumb.service';
+import { BreadcrumbModel } from './breadcrumb.model';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -8,23 +8,18 @@ import { BreadcrumbService } from './breadcrumb.service';
   styleUrls: ['./breadcrumbs.component.scss'],
 })
 export class BreadcrumbsComponent implements OnInit {
-  breadcrumbs: BreadCrumb[] = [
+  breadcrumbs: BreadcrumbModel[] = [
     {
       label: 'home_page_breadcrumb',
       url: '',
     },
   ];
 
-  constructor(
-    private breadcrumbService: BreadcrumbService,
-  ) {
-  }
+  constructor(private breadcrumbService: BreadcrumbService) {}
 
   ngOnInit(): void {
-    this.breadcrumbService.breadcrumbs$
-      .subscribe((breadcrumbs) => {
-        this.breadcrumbs.push(...breadcrumbs);
-      });
+    this.breadcrumbService.breadcrumbs$.subscribe((breadcrumbs) => {
+      this.breadcrumbs.push(...breadcrumbs);
+    });
   }
-
 }
