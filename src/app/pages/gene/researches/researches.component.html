@@ -1,7 +1,7 @@
 <section *ngIf="isAgeRelatedChanges">
   <h4>{{ "gene_page_researches_age_related_changes" | translate }}</h4>
   <div class="table-section __mt-20 __w-content">
-    <table class="table table--age-related-change">
+    <table class="table table--sticky table--age-related-change">
       <thead>
       <th class="__cell-width-small">
         {{ "age_related_changes_type" | translate }}
@@ -32,7 +32,7 @@
         {{ "researches_comment" | translate }}
       </th>
       </thead>
-
+      <tbody>
       <tr *ngFor="let item of researches.ageRelatedChangesOfGene">
         <td>
           <ng-container *ngIf="item.changeType ; else dash">
@@ -92,14 +92,17 @@
           </button>
         </td>
       </tr>
+      </tbody>
     </table>
   </div>
 </section>
 
+
 <section *ngIf="isIncreaseLifespan">
   <h4>{{ "gene_page_researches_lifespan" | translate }}</h4>
   <app-hint hintType="emphasized">
-    <ng-container title><span class="fa far fa-exclamation-triangle"></span> {{ "warning_researches_title" | translate }}</ng-container>
+    <ng-container title><span
+      class="fa far fa-exclamation-triangle"></span> {{ "warning_researches_title" | translate }}</ng-container>
     <ng-container description>{{ "warning_researches_description" | translate }}</ng-container>
     <ng-container button>
       <a class="btn btn--fill btn--small btn--white"
@@ -110,110 +113,153 @@
       </a>
     </ng-container>
   </app-hint>
+
   <div class="table-section __mt-20 __w-content">
     <table class="table">
       <thead>
-      <th class="__cell-width-medium">
-        {{ "researches_method" | translate }}
-      </th>
-      <th class="__cell-width-medium">
-        {{ "researches_result" | translate }}
-      </th>
-      <th>{{ "researches_object" | translate }}</th>
-      <th>{{ "researches_line" | translate }}</th>
-      <th>{{ "researches_age" | translate }}<sup>*</sup></th>
-      <th>{{ "researches_genotype" | translate }}</th>
       <th>
-        {{ "researches_change" | translate }}&nbsp;<span
-        class="fa fal fa-mars"
-      ></span
-      ><sup>**</sup>
+        Результат
       </th>
       <th>
-        {{ "researches_change" | translate }}&nbsp;<span
-        class="fa fal fa-venus"
-      ></span
-      ><sup>**</sup>
+        Условия содержания
       </th>
       <th>
-        {{ "researches_change" | translate }}&nbsp;<span
-        class="fa fal fa-venus"
-      ></span
-      >&nbsp;<span class="fa fal fa-mars"></span><sup>**</sup>
+        Изменение экспрессии целевого гена (%)
       </th>
       <th>
-        {{ "researches_comment" | translate }}
+        Продолжительность жизни, % изменения (мин, средняя, медиана, макс),
+        значимость да/нет
+      </th>
+      <th>
+        Другие результаты этого эксперимента
       </th>
       </thead>
 
-      <tr *ngFor="let item of researches.increaseLifespan">
-        <td>
-          <ng-container *ngIf="item.interventionType; else dash">
-            {{ item.interventionType }}
-          </ng-container>
-        </td>
-        <td>
-          <ng-container *ngIf="item.interventionResult; else dash">
-            {{ item.interventionResult }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.modelOrganism ; else dash">
-            {{ item.modelOrganism }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.organismLine ; else dash">
-            {{ item.organismLine }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.age ; else dash">
-            {{ item.age }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.genotype ; else dash">
-            {{ item.genotype }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.valueForMale ; else dash">
-            {{ item.valueForMale }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.valueForFemale ; else dash">
-            {{ item.valueForFemale }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.valueForAll ; else dash">
-            {{ item.valueForAll }}
-          </ng-container>
-        </td>
-        <td>
-          <button class="btn btn--small btn--purple btn--flat"
-                  (click)="openCommentModal('researches_comment', item, links)"
-          >
-            {{ "researches_comment_button" | translate }}
-          </button>
-        </td>
-      </tr>
+      <tbody>
+      <ng-container *ngFor="let research of researches.increaseLifespan">
+        <tr class="table__gap"><td colspan="100%"><div></div></td></tr>
+        <tr>
+          <td>
+            {{ research.interventionResultForLifespan }}
+          </td>
+          <th>
+            Условия содержания
+          </th>
+          <th>
+            Количество в группе (controlCohortSize, experimentCohortSize)
+          </th>
+          <th>
+            Изменение экспрессии целевого гена (%)
+          </th>
+          <th>
+            Продолжительность жизни, % изменения (мин, средняя, медиана, макс),
+            значимость да/нет
+          </th>
+          <th>
+            Улучшает/ухудшает (Цикл с interventionImproves и interventionDeteriorates)
+          </th>
+        </tr>
+        <tr>
+          <td colspan="100%"
+              class="__p-0">
+            <table *ngIf="research?.interventions">
+              <thead>
+              <th>
+                Основной эффект воздействия
+              </th>
+              <th>
+                Способ воздействия, метод
+              </th>
+              <th>
+                Генотип
+              </th>
+              <th>
+                Условия эксперимента (поля "тканеспецифичность")
+              </th>
+              <th>
+                Препарат
+              </th>
+              <th>
+                Период терапии, начало, конец, описание
+              </th>
+              <th>
+                Стадия развития, начало, конец
+              </th>
+              </thead>
+
+              <ng-container *ngIf="research.interventions?.controlAndExperiment">
+                <tr *ngFor="let sample of research.interventions.controlAndExperiment">
+                  <td>
+                    <a
+                      href="['gene', sample.gene.id]"
+                      class="link link--gray">
+                      {{ sample.gene.symbol }} {{ sample.gene.name }}
+                    </a>
+                    <a href="https://www.ncbi.nlm.nih.gov/gene/{{ sample.gene.ncbiId }}"
+                       target="_blank"
+                       class="badge __brand-color-entrez"></a>
+                  </td>
+
+                  <td>{{ sample.interventionWay }}</td>
+                  <td>{{ sample.interventionMethod }}</td>
+                  <td>{{ sample.genotype }}</td>
+                  <td>
+                    <p>{{ sample.tissueSpecific }}</p>
+                    <p>{{ sample.tissueSpecificPromoter }}</p>
+                    <p>{{ sample.tissues.name }}</p>
+                  </td>
+                  <td>{{ sample.drug }}</td>
+                  <td>
+                    <p>{{ sample.treatmentPeriod }}</p>
+                    <p>{{ sample.treatmentStart }} {{ sample.startTimeUnit }}</p>
+                    <p>{{ sample.treatmentEnd }} {{ sample.endTimeUnit }}</p>
+                    <p>{{ sample.treatmentDescription }}</p>
+                  </td>
+                  <td>
+                    <p>{{ sample.startStageOfDevelopment }}</p>
+                    <p>{{ sample.startStageOfDevelopment }}</p>
+                  </td>
+                </tr>
+              </ng-container>
+
+              <ng-container *ngIf="research.interventions?.experiment">
+                <tr *ngFor="let sample of research.interventions.experiment">
+                  <td></td>
+                  <td>{{ sample.interventionWay }}</td>
+                  <td>{{ sample.interventionMethod }}</td>
+                  <td>{{ sample.genotype }}</td>
+                  <td>
+                    <p>{{ sample.tissueSpecific }}</p>
+                    <p>{{ sample.tissueSpecificPromoter }}</p>
+                    <p>{{ sample.tissues.name }}</p>
+                  </td>
+                  <td>{{ sample.drug }}</td>
+                  <td>
+                    <p>{{ sample.treatmentPeriod }}</p>
+                    <p>{{ sample.treatmentStart }} {{ sample.startTimeUnit }}</p>
+                    <p>{{ sample.treatmentEnd }} {{ sample.endTimeUnit }}</p>
+                    <p>{{ sample.treatmentDescription }}</p>
+                  </td>
+                  <td>
+                    <p>{{ sample.startStageOfDevelopment }}</p>
+                    <p>{{ sample.startStageOfDevelopment }}</p>
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
     </table>
   </div>
-  <legend class="reference">
-    <p><sup>*</sup>{{ "gene_page_researches_lifespan_hint1" | translate }}</p>
-    <p>
-      <sup>**</sup>{{ "gene_page_researches_lifespan_hint2" | translate }}
-    </p>
-  </legend>
 </section>
+
 
 <section *ngIf="isInterventionAffectsAgingProcess">
   <h4>{{ "gene_page_intervention_moderates_aging" | translate }}</h4>
   <div class="table-section __mt-20 __w-content">
-    <table class="table table--gene-intervention-to-vital-processes">
+    <table class="table table--sticky table--gene-intervention-to-vital-processes">
       <thead>
       <th class="__cell-width-small">
         {{ "gene_intervention_type" | translate }}
@@ -306,7 +352,7 @@
 <section *ngIf="isProteinRegulatesOtherGenes">
   <h4>{{ "gene_page_researches_protein_regulates_genes" | translate }}</h4>
   <div class="table-section __mt-20 __w-content">
-    <table class="table table--protein-to-gene">
+    <table class="table table--sticky table--protein-to-gene">
       <thead>
       <th class="__cell-width-small">
         {{ "protein_regulates_genes_activity" | translate }}
@@ -349,7 +395,7 @@
 <section *ngIf="isGeneAssociatedWithProgeriaSyndromes">
   <h4>{{ "gene_page_researches_progeria" | translate }}</h4>
   <div class="table-section __mt-20 __w-content">
-    <table class="table table--gene-to-progeria">
+    <table class="table table--sticky table--gene-to-progeria">
       <thead>
       <th>{{ "progeria_syndrome" | translate }}</th>
       <th>
@@ -378,7 +424,7 @@
 <section *ngIf="isGeneAssociatedWithLongevityEffects">
   <h4>{{ "gene_page_researches_longevity_effects" | translate }}</h4>
   <div class="table-section __mt-20 __w-content">
-    <table class="table table--gene-to-longevity-effect">
+    <table class="table table--sticky table--gene-to-longevity-effect">
       <thead>
       <th>{{ "researches_data_type" | translate }}</th>
       <th class="__cell-width-small">
@@ -450,7 +496,7 @@
 <section *ngIf="isAdditionalEvidences">
   <h4>{{ "gene_page_researches_additional_evidence" | translate }}</h4>
   <div class="table-section __mt-20 __w-content">
-    <table class="table table--gene-to-additional-evidence">
+    <table class="table table--sticky table--gene-to-additional-evidence">
       <thead>
       <th>
         {{ "researches_comment" | translate }}

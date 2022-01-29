@@ -25,8 +25,7 @@ table.table {
     // Table cell min-width hack
     &:after {
       content: ' ';
-      display: block;
-      min-width: 5em;
+      display: none;
       height: 0;
     }
   }
@@ -77,18 +76,21 @@ table.table {
 
   .__cell-width-small {
     &:after {
+      display: block;
       width: 8em;
     }
   }
 
   .__cell-width-medium {
     &:after {
+      display: block;
       width: 12em;
     }
   }
 
   .__cell-width-large {
     &:after {
+      display: block;
       width: 16em;
     }
   }
