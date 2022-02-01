@@ -24,8 +24,16 @@ export default {
   ],
 };
 
-const Template: Story<ConfirmModalComponent> = () => ({
+const Template: Story<ConfirmModalComponent> = (args) => ({
+  props: args,
   component: ConfirmModalComponent,
   template: `<app-confirm-modal></app-confirm-modal>`,
+
 });
-export const Base = Template.bind({});
+export const Base = Template.bind({})
+Base.args = {
+  data: {
+    title: '',
+    buttons: {}
+  }
+}
