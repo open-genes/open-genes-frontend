@@ -28746,6 +28746,16 @@
                 "name": "Base",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/components/ui-components/components/modals/modal.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Base",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/components/ui-components/components/popover/popover.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -28826,21 +28836,21 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.prod.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "object",
-                "defaultValue": "{\r\n  name: 'prod',\r\n  production: true,\r\n  apiUrl: 'https://open-genes.com',\r\n  searchApiUrl: 'https://publications-search-api-2yf55.ondigitalocean.app/',\r\n  pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',\r\n  proteinAtlasUrl: 'https://www.proteinatlas.org/',\r\n  openLongevity80LevelCMS: 'https://openlongevity.com/',\r\n  debugMode: false,\r\n  languages: ['ru', 'en', 'zh'],\r\n  mockJsonUrl: ['../data/articles-1.json', '../data/articles-2.json'],\r\n  termsJsonUrl: ['assets/i18n/terms-en.json', 'assets/i18n/terms-ru.json'],\r\n  gaTrackingCode: 'G-825YYNSJFC',\r\n  version: '{{VERSION}}',\r\n  build: '{{BUILD_NUMBER}}',\r\n}"
-            },
-            {
-                "name": "environment",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/environments/environment.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{\r\n  name: 'default',\r\n  production: false,\r\n  apiUrl: 'https://open-genes.com',\r\n  searchApiUrl: 'https://publications-search-api-2yf55.ondigitalocean.app/',\r\n  pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',\r\n  proteinAtlasUrl: 'https://www.proteinatlas.org/',\r\n  openLongevity80LevelCMS: 'https://openlongevity.com/',\r\n  debugMode: true,\r\n  languages: ['ru', 'en', 'zh'],\r\n  mockJsonUrl: ['data/articles-1.json', 'data/articles-2.json'],\r\n  termsJsonUrl: ['assets/i18n/terms-en.json', 'assets/i18n/terms-ru.json'],\r\n  gaTrackingCode: 'G-825YYNSJFC',\r\n  version: '{{VERSION}}',\r\n  build: '{{BUILD_NUMBER}}',\r\n}"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/environments/environment.prod.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\r\n  name: 'prod',\r\n  production: true,\r\n  apiUrl: 'https://open-genes.com',\r\n  searchApiUrl: 'https://publications-search-api-2yf55.ondigitalocean.app/',\r\n  pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',\r\n  proteinAtlasUrl: 'https://www.proteinatlas.org/',\r\n  openLongevity80LevelCMS: 'https://openlongevity.com/',\r\n  debugMode: false,\r\n  languages: ['ru', 'en', 'zh'],\r\n  mockJsonUrl: ['../data/articles-1.json', '../data/articles-2.json'],\r\n  termsJsonUrl: ['assets/i18n/terms-en.json', 'assets/i18n/terms-ru.json'],\r\n  gaTrackingCode: 'G-825YYNSJFC',\r\n  version: '{{VERSION}}',\r\n  build: '{{BUILD_NUMBER}}',\r\n}"
             },
             {
                 "name": "GENERAL_PIPES",
@@ -28949,7 +28959,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<AccordionComponent>",
-                "defaultValue": "() => ({\n  component: AccordionComponent,\n  template: `<app-accordion [isOpen]=\"false\">\n  <div accordion-header>\n    <button class=\"badge badge-primary\">Нажми меня!!</button>\n  </div>\n  <div accordion-body>\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit. \n    Dicta doloribus eaque nesciunt officiis soluta. Aspernatur \n    dolor eaque ex iure modi mollitia officiis quo voluptatum. \n    Dolorem odio pariatur quas repudiandae unde.\n  </div>\n</app-accordion>`,\n\n})"
+                "defaultValue": "() => ({\n  component: AccordionComponent,\n  template: `<app-accordion [isOpen]=\"false\">\n  <ng-container accordion-header>\n    <button class=\"badge badge-primary\">Нажми меня!!</button>\n  </ng-container>\n  <ng-container accordion-body>\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit. \n    Dicta doloribus eaque nesciunt officiis soluta. Aspernatur \n    dolor eaque ex iure modi mollitia officiis quo voluptatum. \n    Dolorem odio pariatur quas repudiandae unde.\n  </ng-container>\n</app-accordion>`,\n\n})"
             },
             {
                 "name": "Template",
@@ -28959,7 +28969,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<BreadcrumbsComponent>",
-                "defaultValue": "() => ({\n  component: BreadcrumbsComponent,\n  template: `<app-breadcrumbs></app-breadcrumbs>`,\n\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  component: BreadcrumbsComponent,\n  template: `<app-breadcrumbs></app-breadcrumbs>`,\n})"
             },
             {
                 "name": "Template",
@@ -28969,7 +28979,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<CodeBlockComponent>",
-                "defaultValue": "() => ({\n  component: CodeBlockComponent,\n  template: `<app-code-block text='<div>{</div>\n<div>&nbsp;&nbsp;\"id\": <var class=\"number\">254</var>,</div>\n<div>&nbsp;&nbsp;\"ageMya\": <var>\"1000\"</var>,</div>\n<div>&nbsp;&nbsp;\"agePhylo\": <var>\"Eumetazoa\"</var>,</div>\n<div>&nbsp;&nbsp;\"symbol\": <var>\"ADCY5\"</var>,</div>\n<div>&nbsp;&nbsp;\"aliases\": [</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"AC5\"</var></div>\n<div>&nbsp;&nbsp;],</div>\n<div>&nbsp;&nbsp;\"name\": <var>\"adenylate cyclase 5\"</var>,</div>\n<div>&nbsp;&nbsp;\"ncbiId\": <var>\"111\"</var>,</div>\n<div>&nbsp;&nbsp;\"uniprot\": <var>\"ADCY5_HUMAN\"</var>,</div>\n<div>&nbsp;&nbsp;\"commentEvolution\": <var>\"Adenylyl cyclases are conserved enzymes which were duplicated during evolution [1].\"</var>,</div>\n<div>&nbsp;&nbsp;\"commentFunction\": <var>\"ADCY5 catalyzes the synthesis of cyclic AMP, are critical regulators of cellular functions. The activity of adenylyl cyclase is stimulated by a range of hormone receptors, primarily via interactions with G-proteins [2]. Type 5 AC (AC5) is 1 of 2 major isoforms in heart, overexpression of AC5 exacerbates the cardiomyopathy induced by chronic catecholamine stress by altering regulation of SIRT1/FoxO3a, MEK/ERK, and MnSOD, resulting in oxidative stress intolerance [3]. AC-cAMP signaling plays crucial roles in normal biological function, for example, lipolysis, gluconeogenesis, respiration and cytoskeletal organization, and its dysregulation in pathophysiological states including memory and neurodegenerative disorders, tumorigenesis, and heart disease [4].\",\"commentCause\":[\"Direct evidence in mammals\",\"Gene involvement in aging-related processes or mechanisms\"],\"commentAging\":\"ADCY5 knock-out increases the healthy lifespan of mice by approximately 30 percent [5]. Old AC5 KO mice are also protected from aging-induced cardiomyopathy, e.g., hypertrophy, apoptosis, fibrosis, and reduced cardiac function [6, 7]. Mitochondrial biogenesis, as one of the key factors in longevity, is upregulated in ADCY5 knockout mice [8].\"</var>,</div>\n<div>&nbsp;&nbsp;\"commentCause\": [</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"Direct evidence in mammals\"</var>,</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"Gene involvement in aging-related processes or mechanisms\"</var></div>\n<div>&nbsp;&nbsp;],</div>\n<div>&nbsp;&nbsp;\"commentAging\": <var>\"ADCY5 knock-out increases the healthy lifespan of mice by approximately 30 percent [5]. Old AC5 KO mice are also protected from aging-induced cardiomyopathy, e.g., hypertrophy, apoptosis, fibrosis, and reduced cardiac function [6, 7]. Mitochondrial biogenesis, as one of the key factors in longevity, is upregulated in ADCY5 knockout mice [8].\"</var>,</div>\n<div>&nbsp;&nbsp;\"commentsReferenceLinks\": {</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"10.1124/pr.109.001370\": \"[1] 10.1124/pr.109.001370\"</var>,</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"10.1124/mol.115.099556\": \" <br>[2] 10.1124/mol.115.099556\"</var>,</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var class=\"mark\">...</var></div>\n<div>&nbsp;&nbsp;},</div>\n<div>&nbsp;&nbsp;\"rating\": <var class=\"null\">null</var>,</div>\n<div>&nbsp;&nbsp;\"functionalClusters\": [</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": <var class=\"number\">11</var>,</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"name\": <var>\"mitochondrial function\"</var></div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;}, {...}</div>\n<div>&nbsp;&nbsp;],</div>\n<div>&nbsp;&nbsp;\"expression\": [</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"name\": <var>\"heart\"</var>,</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"exp_rpkm\": <var>\"22.9328\"</var></div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;}, <var class=\"mark\">{...}</var></div>\n<div>&nbsp;&nbsp;],</div>\n<div>&nbsp;&nbsp;\"expressionChange\": <var>4</var></div>\n<div>}</div>'> </app-code-block>`,\n})"
+                "defaultValue": "() => ({\r\n  component: CodeBlockComponent,\r\n  template: `<app-code-block text='<div>{</div>\r\n<div>&nbsp;&nbsp;\"id\": <var class=\"number\">254</var>,</div>\r\n<div>&nbsp;&nbsp;\"ageMya\": <var>\"1000\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"agePhylo\": <var>\"Eumetazoa\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"symbol\": <var>\"ADCY5\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"aliases\": [</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"AC5\"</var></div>\r\n<div>&nbsp;&nbsp;],</div>\r\n<div>&nbsp;&nbsp;\"name\": <var>\"adenylate cyclase 5\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"ncbiId\": <var>\"111\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"uniprot\": <var>\"ADCY5_HUMAN\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"commentEvolution\": <var>\"Adenylyl cyclases are conserved enzymes which were duplicated during evolution [1].\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"commentFunction\": <var>\"ADCY5 catalyzes the synthesis of cyclic AMP, are critical regulators of cellular functions. The activity of adenylyl cyclase is stimulated by a range of hormone receptors, primarily via interactions with G-proteins [2]. Type 5 AC (AC5) is 1 of 2 major isoforms in heart, overexpression of AC5 exacerbates the cardiomyopathy induced by chronic catecholamine stress by altering regulation of SIRT1/FoxO3a, MEK/ERK, and MnSOD, resulting in oxidative stress intolerance [3]. AC-cAMP signaling plays crucial roles in normal biological function, for example, lipolysis, gluconeogenesis, respiration and cytoskeletal organization, and its dysregulation in pathophysiological states including memory and neurodegenerative disorders, tumorigenesis, and heart disease [4].\",\"commentCause\":[\"Direct evidence in mammals\",\"Gene involvement in aging-related processes or mechanisms\"],\"commentAging\":\"ADCY5 knock-out increases the healthy lifespan of mice by approximately 30 percent [5]. Old AC5 KO mice are also protected from aging-induced cardiomyopathy, e.g., hypertrophy, apoptosis, fibrosis, and reduced cardiac function [6, 7]. Mitochondrial biogenesis, as one of the key factors in longevity, is upregulated in ADCY5 knockout mice [8].\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"commentCause\": [</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"Direct evidence in mammals\"</var>,</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"Gene involvement in aging-related processes or mechanisms\"</var></div>\r\n<div>&nbsp;&nbsp;],</div>\r\n<div>&nbsp;&nbsp;\"commentAging\": <var>\"ADCY5 knock-out increases the healthy lifespan of mice by approximately 30 percent [5]. Old AC5 KO mice are also protected from aging-induced cardiomyopathy, e.g., hypertrophy, apoptosis, fibrosis, and reduced cardiac function [6, 7]. Mitochondrial biogenesis, as one of the key factors in longevity, is upregulated in ADCY5 knockout mice [8].\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"commentsReferenceLinks\": {</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"10.1124/pr.109.001370\": \"[1] 10.1124/pr.109.001370\"</var>,</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"10.1124/mol.115.099556\": \" <br>[2] 10.1124/mol.115.099556\"</var>,</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var class=\"mark\">...</var></div>\r\n<div>&nbsp;&nbsp;},</div>\r\n<div>&nbsp;&nbsp;\"rating\": <var class=\"null\">null</var>,</div>\r\n<div>&nbsp;&nbsp;\"functionalClusters\": [</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": <var class=\"number\">11</var>,</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"name\": <var>\"mitochondrial function\"</var></div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;}, {...}</div>\r\n<div>&nbsp;&nbsp;],</div>\r\n<div>&nbsp;&nbsp;\"expression\": [</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"name\": <var>\"heart\"</var>,</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"exp_rpkm\": <var>\"22.9328\"</var></div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;}, <var class=\"mark\">{...}</var></div>\r\n<div>&nbsp;&nbsp;],</div>\r\n<div>&nbsp;&nbsp;\"expressionChange\": <var>4</var></div>\r\n<div>}</div>'> </app-code-block>`,\r\n})"
             },
             {
                 "name": "Template",
@@ -28979,7 +28989,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<HintComponent>",
-                "defaultValue": "() => ({\n  component: HintComponent,\n  template: `<app-hint\n              hintType=\"emphasized\">\n    <ng-container title><span class=\"fa far fa-magic\"></span> С чего начать</ng-container>\n    <ng-container description>Узнайте как пользоваться поиском и фильтрами</ng-container>\n    <ng-container button>\n      <button class=\"btn btn--fill btn--small btn--white\">\n        Посмотреть\n      </button></ng-container>\n  </app-hint>`,\n})"
+                "defaultValue": "() => ({\r\n  component: HintComponent,\r\n  template: `<app-hint\r\n              hintType=\"emphasized\">\r\n    <ng-container title><span class=\"fa far fa-magic\"></span> С чего начать</ng-container>\r\n    <ng-container description>Узнайте как пользоваться поиском и фильтрами</ng-container>\r\n    <ng-container button>\r\n      <button class=\"btn btn--fill btn--small btn--white\">\r\n        Посмотреть\r\n      </button></ng-container>\r\n  </app-hint>`,\r\n})"
             },
             {
                 "name": "Template",
@@ -28990,6 +29000,16 @@
                 "deprecationMessage": "",
                 "type": "Story<IconComponent>",
                 "defaultValue": "() => ({\r\n  component: IconComponent,\r\n  template: `<app-icon \r\n                staticSrc=\"https://www.svgrepo.com/show/173011/dna-strand.svg\"\r\n                customHeight=\"100px\"\r\n                customWidth=\"100px\"\r\n                size=\"lg\"\r\n                ></app-icon>`,\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/components/ui-components/components/modals/modal.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<ConfirmModalComponent>",
+                "defaultValue": "(args) => ({\n  props: args,\n  component: ConfirmModalComponent,\n  template: `<app-confirm-modal></app-confirm-modal>`,\n\n})"
             },
             {
                 "name": "Template",
@@ -29515,7 +29535,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<AccordionComponent>",
-                    "defaultValue": "() => ({\n  component: AccordionComponent,\n  template: `<app-accordion [isOpen]=\"false\">\n  <div accordion-header>\n    <button class=\"badge badge-primary\">Нажми меня!!</button>\n  </div>\n  <div accordion-body>\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit. \n    Dicta doloribus eaque nesciunt officiis soluta. Aspernatur \n    dolor eaque ex iure modi mollitia officiis quo voluptatum. \n    Dolorem odio pariatur quas repudiandae unde.\n  </div>\n</app-accordion>`,\n\n})"
+                    "defaultValue": "() => ({\n  component: AccordionComponent,\n  template: `<app-accordion [isOpen]=\"false\">\n  <ng-container accordion-header>\n    <button class=\"badge badge-primary\">Нажми меня!!</button>\n  </ng-container>\n  <ng-container accordion-body>\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit. \n    Dicta doloribus eaque nesciunt officiis soluta. Aspernatur \n    dolor eaque ex iure modi mollitia officiis quo voluptatum. \n    Dolorem odio pariatur quas repudiandae unde.\n  </ng-container>\n</app-accordion>`,\n\n})"
                 }
             ],
             "src/app/components/ui-components/components/breadcrumbs/breadcrumb.stories.ts": [
@@ -29537,7 +29557,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<BreadcrumbsComponent>",
-                    "defaultValue": "() => ({\n  component: BreadcrumbsComponent,\n  template: `<app-breadcrumbs></app-breadcrumbs>`,\n\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  component: BreadcrumbsComponent,\n  template: `<app-breadcrumbs></app-breadcrumbs>`,\n})"
                 }
             ],
             "src/app/components/ui-components/components/code-block/code-block.stories.ts": [
@@ -29559,7 +29579,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<CodeBlockComponent>",
-                    "defaultValue": "() => ({\n  component: CodeBlockComponent,\n  template: `<app-code-block text='<div>{</div>\n<div>&nbsp;&nbsp;\"id\": <var class=\"number\">254</var>,</div>\n<div>&nbsp;&nbsp;\"ageMya\": <var>\"1000\"</var>,</div>\n<div>&nbsp;&nbsp;\"agePhylo\": <var>\"Eumetazoa\"</var>,</div>\n<div>&nbsp;&nbsp;\"symbol\": <var>\"ADCY5\"</var>,</div>\n<div>&nbsp;&nbsp;\"aliases\": [</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"AC5\"</var></div>\n<div>&nbsp;&nbsp;],</div>\n<div>&nbsp;&nbsp;\"name\": <var>\"adenylate cyclase 5\"</var>,</div>\n<div>&nbsp;&nbsp;\"ncbiId\": <var>\"111\"</var>,</div>\n<div>&nbsp;&nbsp;\"uniprot\": <var>\"ADCY5_HUMAN\"</var>,</div>\n<div>&nbsp;&nbsp;\"commentEvolution\": <var>\"Adenylyl cyclases are conserved enzymes which were duplicated during evolution [1].\"</var>,</div>\n<div>&nbsp;&nbsp;\"commentFunction\": <var>\"ADCY5 catalyzes the synthesis of cyclic AMP, are critical regulators of cellular functions. The activity of adenylyl cyclase is stimulated by a range of hormone receptors, primarily via interactions with G-proteins [2]. Type 5 AC (AC5) is 1 of 2 major isoforms in heart, overexpression of AC5 exacerbates the cardiomyopathy induced by chronic catecholamine stress by altering regulation of SIRT1/FoxO3a, MEK/ERK, and MnSOD, resulting in oxidative stress intolerance [3]. AC-cAMP signaling plays crucial roles in normal biological function, for example, lipolysis, gluconeogenesis, respiration and cytoskeletal organization, and its dysregulation in pathophysiological states including memory and neurodegenerative disorders, tumorigenesis, and heart disease [4].\",\"commentCause\":[\"Direct evidence in mammals\",\"Gene involvement in aging-related processes or mechanisms\"],\"commentAging\":\"ADCY5 knock-out increases the healthy lifespan of mice by approximately 30 percent [5]. Old AC5 KO mice are also protected from aging-induced cardiomyopathy, e.g., hypertrophy, apoptosis, fibrosis, and reduced cardiac function [6, 7]. Mitochondrial biogenesis, as one of the key factors in longevity, is upregulated in ADCY5 knockout mice [8].\"</var>,</div>\n<div>&nbsp;&nbsp;\"commentCause\": [</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"Direct evidence in mammals\"</var>,</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"Gene involvement in aging-related processes or mechanisms\"</var></div>\n<div>&nbsp;&nbsp;],</div>\n<div>&nbsp;&nbsp;\"commentAging\": <var>\"ADCY5 knock-out increases the healthy lifespan of mice by approximately 30 percent [5]. Old AC5 KO mice are also protected from aging-induced cardiomyopathy, e.g., hypertrophy, apoptosis, fibrosis, and reduced cardiac function [6, 7]. Mitochondrial biogenesis, as one of the key factors in longevity, is upregulated in ADCY5 knockout mice [8].\"</var>,</div>\n<div>&nbsp;&nbsp;\"commentsReferenceLinks\": {</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"10.1124/pr.109.001370\": \"[1] 10.1124/pr.109.001370\"</var>,</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"10.1124/mol.115.099556\": \" <br>[2] 10.1124/mol.115.099556\"</var>,</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var class=\"mark\">...</var></div>\n<div>&nbsp;&nbsp;},</div>\n<div>&nbsp;&nbsp;\"rating\": <var class=\"null\">null</var>,</div>\n<div>&nbsp;&nbsp;\"functionalClusters\": [</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": <var class=\"number\">11</var>,</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"name\": <var>\"mitochondrial function\"</var></div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;}, {...}</div>\n<div>&nbsp;&nbsp;],</div>\n<div>&nbsp;&nbsp;\"expression\": [</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"name\": <var>\"heart\"</var>,</div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"exp_rpkm\": <var>\"22.9328\"</var></div>\n<div>&nbsp;&nbsp;&nbsp;&nbsp;}, <var class=\"mark\">{...}</var></div>\n<div>&nbsp;&nbsp;],</div>\n<div>&nbsp;&nbsp;\"expressionChange\": <var>4</var></div>\n<div>}</div>'> </app-code-block>`,\n})"
+                    "defaultValue": "() => ({\r\n  component: CodeBlockComponent,\r\n  template: `<app-code-block text='<div>{</div>\r\n<div>&nbsp;&nbsp;\"id\": <var class=\"number\">254</var>,</div>\r\n<div>&nbsp;&nbsp;\"ageMya\": <var>\"1000\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"agePhylo\": <var>\"Eumetazoa\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"symbol\": <var>\"ADCY5\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"aliases\": [</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"AC5\"</var></div>\r\n<div>&nbsp;&nbsp;],</div>\r\n<div>&nbsp;&nbsp;\"name\": <var>\"adenylate cyclase 5\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"ncbiId\": <var>\"111\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"uniprot\": <var>\"ADCY5_HUMAN\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"commentEvolution\": <var>\"Adenylyl cyclases are conserved enzymes which were duplicated during evolution [1].\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"commentFunction\": <var>\"ADCY5 catalyzes the synthesis of cyclic AMP, are critical regulators of cellular functions. The activity of adenylyl cyclase is stimulated by a range of hormone receptors, primarily via interactions with G-proteins [2]. Type 5 AC (AC5) is 1 of 2 major isoforms in heart, overexpression of AC5 exacerbates the cardiomyopathy induced by chronic catecholamine stress by altering regulation of SIRT1/FoxO3a, MEK/ERK, and MnSOD, resulting in oxidative stress intolerance [3]. AC-cAMP signaling plays crucial roles in normal biological function, for example, lipolysis, gluconeogenesis, respiration and cytoskeletal organization, and its dysregulation in pathophysiological states including memory and neurodegenerative disorders, tumorigenesis, and heart disease [4].\",\"commentCause\":[\"Direct evidence in mammals\",\"Gene involvement in aging-related processes or mechanisms\"],\"commentAging\":\"ADCY5 knock-out increases the healthy lifespan of mice by approximately 30 percent [5]. Old AC5 KO mice are also protected from aging-induced cardiomyopathy, e.g., hypertrophy, apoptosis, fibrosis, and reduced cardiac function [6, 7]. Mitochondrial biogenesis, as one of the key factors in longevity, is upregulated in ADCY5 knockout mice [8].\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"commentCause\": [</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"Direct evidence in mammals\"</var>,</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"Gene involvement in aging-related processes or mechanisms\"</var></div>\r\n<div>&nbsp;&nbsp;],</div>\r\n<div>&nbsp;&nbsp;\"commentAging\": <var>\"ADCY5 knock-out increases the healthy lifespan of mice by approximately 30 percent [5]. Old AC5 KO mice are also protected from aging-induced cardiomyopathy, e.g., hypertrophy, apoptosis, fibrosis, and reduced cardiac function [6, 7]. Mitochondrial biogenesis, as one of the key factors in longevity, is upregulated in ADCY5 knockout mice [8].\"</var>,</div>\r\n<div>&nbsp;&nbsp;\"commentsReferenceLinks\": {</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"10.1124/pr.109.001370\": \"[1] 10.1124/pr.109.001370\"</var>,</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var>\"10.1124/mol.115.099556\": \" <br>[2] 10.1124/mol.115.099556\"</var>,</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;<var class=\"mark\">...</var></div>\r\n<div>&nbsp;&nbsp;},</div>\r\n<div>&nbsp;&nbsp;\"rating\": <var class=\"null\">null</var>,</div>\r\n<div>&nbsp;&nbsp;\"functionalClusters\": [</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": <var class=\"number\">11</var>,</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"name\": <var>\"mitochondrial function\"</var></div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;}, {...}</div>\r\n<div>&nbsp;&nbsp;],</div>\r\n<div>&nbsp;&nbsp;\"expression\": [</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"name\": <var>\"heart\"</var>,</div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"exp_rpkm\": <var>\"22.9328\"</var></div>\r\n<div>&nbsp;&nbsp;&nbsp;&nbsp;}, <var class=\"mark\">{...}</var></div>\r\n<div>&nbsp;&nbsp;],</div>\r\n<div>&nbsp;&nbsp;\"expressionChange\": <var>4</var></div>\r\n<div>}</div>'> </app-code-block>`,\r\n})"
                 }
             ],
             "src/app/components/ui-components/components/hint/hint.stories.ts": [
@@ -29581,7 +29601,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<HintComponent>",
-                    "defaultValue": "() => ({\n  component: HintComponent,\n  template: `<app-hint\n              hintType=\"emphasized\">\n    <ng-container title><span class=\"fa far fa-magic\"></span> С чего начать</ng-container>\n    <ng-container description>Узнайте как пользоваться поиском и фильтрами</ng-container>\n    <ng-container button>\n      <button class=\"btn btn--fill btn--small btn--white\">\n        Посмотреть\n      </button></ng-container>\n  </app-hint>`,\n})"
+                    "defaultValue": "() => ({\r\n  component: HintComponent,\r\n  template: `<app-hint\r\n              hintType=\"emphasized\">\r\n    <ng-container title><span class=\"fa far fa-magic\"></span> С чего начать</ng-container>\r\n    <ng-container description>Узнайте как пользоваться поиском и фильтрами</ng-container>\r\n    <ng-container button>\r\n      <button class=\"btn btn--fill btn--small btn--white\">\r\n        Посмотреть\r\n      </button></ng-container>\r\n  </app-hint>`,\r\n})"
                 }
             ],
             "src/app/components/ui-components/components/icon/app-icon.stories.ts": [
@@ -29604,6 +29624,28 @@
                     "deprecationMessage": "",
                     "type": "Story<IconComponent>",
                     "defaultValue": "() => ({\r\n  component: IconComponent,\r\n  template: `<app-icon \r\n                staticSrc=\"https://www.svgrepo.com/show/173011/dna-strand.svg\"\r\n                customHeight=\"100px\"\r\n                customWidth=\"100px\"\r\n                size=\"lg\"\r\n                ></app-icon>`,\r\n})"
+                }
+            ],
+            "src/app/components/ui-components/components/modals/modal.stories.ts": [
+                {
+                    "name": "Base",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/ui-components/components/modals/modal.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/ui-components/components/modals/modal.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<ConfirmModalComponent>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  component: ConfirmModalComponent,\n  template: `<app-confirm-modal></app-confirm-modal>`,\n\n})"
                 }
             ],
             "src/app/components/ui-components/components/popover/popover.stories.ts": [
@@ -29751,18 +29793,6 @@
                     "defaultValue": "{\r\n  name: 'dev',\r\n  production: false,\r\n  apiUrl: 'https://test.open-genes.com',\r\n  searchApiUrl: 'https://publications-search-api-2yf55.ondigitalocean.app/',\r\n  pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',\r\n  proteinAtlasUrl: 'https://www.proteinatlas.org/',\r\n  openLongevity80LevelCMS: 'https://openlongevity.com/',\r\n  debugMode: false,\r\n  languages: ['ru', 'en', 'zh'],\r\n  mockJsonUrl: ['assets/data/articles-page-1.mock.json', 'assets/data/articles-page-2.mock.json'],\r\n  termsJsonUrl: ['assets/i18n/terms-en.json', 'assets/i18n/terms-ru.json'],\r\n  gaTrackingCode: 'G-825YYNSJFC',\r\n  version: '{{VERSION}}',\r\n  build: '{{BUILD_NUMBER}}',\r\n}"
                 }
             ],
-            "src/environments/environment.prod.ts": [
-                {
-                    "name": "environment",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/environments/environment.prod.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "object",
-                    "defaultValue": "{\r\n  name: 'prod',\r\n  production: true,\r\n  apiUrl: 'https://open-genes.com',\r\n  searchApiUrl: 'https://publications-search-api-2yf55.ondigitalocean.app/',\r\n  pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',\r\n  proteinAtlasUrl: 'https://www.proteinatlas.org/',\r\n  openLongevity80LevelCMS: 'https://openlongevity.com/',\r\n  debugMode: false,\r\n  languages: ['ru', 'en', 'zh'],\r\n  mockJsonUrl: ['../data/articles-1.json', '../data/articles-2.json'],\r\n  termsJsonUrl: ['assets/i18n/terms-en.json', 'assets/i18n/terms-ru.json'],\r\n  gaTrackingCode: 'G-825YYNSJFC',\r\n  version: '{{VERSION}}',\r\n  build: '{{BUILD_NUMBER}}',\r\n}"
-                }
-            ],
             "src/environments/environment.ts": [
                 {
                     "name": "environment",
@@ -29773,6 +29803,18 @@
                     "deprecationMessage": "",
                     "type": "object",
                     "defaultValue": "{\r\n  name: 'default',\r\n  production: false,\r\n  apiUrl: 'https://open-genes.com',\r\n  searchApiUrl: 'https://publications-search-api-2yf55.ondigitalocean.app/',\r\n  pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',\r\n  proteinAtlasUrl: 'https://www.proteinatlas.org/',\r\n  openLongevity80LevelCMS: 'https://openlongevity.com/',\r\n  debugMode: true,\r\n  languages: ['ru', 'en', 'zh'],\r\n  mockJsonUrl: ['data/articles-1.json', 'data/articles-2.json'],\r\n  termsJsonUrl: ['assets/i18n/terms-en.json', 'assets/i18n/terms-ru.json'],\r\n  gaTrackingCode: 'G-825YYNSJFC',\r\n  version: '{{VERSION}}',\r\n  build: '{{BUILD_NUMBER}}',\r\n}"
+                }
+            ],
+            "src/environments/environment.prod.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.prod.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\r\n  name: 'prod',\r\n  production: true,\r\n  apiUrl: 'https://open-genes.com',\r\n  searchApiUrl: 'https://publications-search-api-2yf55.ondigitalocean.app/',\r\n  pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',\r\n  proteinAtlasUrl: 'https://www.proteinatlas.org/',\r\n  openLongevity80LevelCMS: 'https://openlongevity.com/',\r\n  debugMode: false,\r\n  languages: ['ru', 'en', 'zh'],\r\n  mockJsonUrl: ['../data/articles-1.json', '../data/articles-2.json'],\r\n  termsJsonUrl: ['assets/i18n/terms-en.json', 'assets/i18n/terms-ru.json'],\r\n  gaTrackingCode: 'G-825YYNSJFC',\r\n  version: '{{VERSION}}',\r\n  build: '{{BUILD_NUMBER}}',\r\n}"
                 }
             ],
             "src/app/modules/pipes/pipes.module.ts": [
@@ -31038,6 +31080,26 @@
                 "name": "ConfirmModalComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/ui-components/components/modals/modal.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Base",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/ui-components/components/modals/modal.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
