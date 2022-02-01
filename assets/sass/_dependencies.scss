@@ -1,0 +1,7 @@
+// Export project dependencies into components incapsulated styles.
+// Generally it's not UI elements styles itself, but code snippets used to avoid repeating.
+@import "sources/base/variables";
+@import "sources/base/mixins";
+@import "sources/base/functions";
+@import "sources/base/grid/variables";
+@import "sources/base/grid/breakpoints";

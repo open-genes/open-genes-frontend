@@ -1,0 +1,62 @@
+$element-base-color: $color-general;
+
+.filters-group {
+  width: auto;
+  display: flex;
+  align-items: flex-start;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+
+  .filter,
+  .btn {
+    margin: 0 5px 5px 0;
+  }
+}
+
+.filter {
+  display: block;
+  float: left;
+  width: auto;
+  height: 26px;
+  position: relative;
+  line-height: 26px;
+  font-size: 12px;
+  transition: background-color .15s ease-in;
+  cursor: pointer;
+  padding: 0 8px 0 8px;
+  border-radius: 15px;
+  background-color: lighten($element-base-color, 10%);
+  user-select: none;
+
+  &, * {
+    color: $color-white;
+  }
+
+  .fa {
+    height: 26px;
+    line-height: inherit;
+    font-size: 16px;
+    position: absolute;
+    top: 0;
+    right: 8px;
+
+    &.fa-sort-down {
+      line-height: 20px;
+    }
+  }
+
+  &:hover {
+    background-color: $element-base-color;
+  }
+
+  &.__active {
+    .fa {
+      transform: scale(1, -1) translateZ(0);
+    }
+
+    &,
+    &:hover {
+      background-color: $element-base-color;
+    }
+  }
+}

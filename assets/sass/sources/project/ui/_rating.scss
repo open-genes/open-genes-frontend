@@ -1,0 +1,19 @@
+.rating {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid $color-gray;
+  font-size: 24px;
+  font-weight: $font-weight-regular;
+  line-height: 33px;
+  text-align: center;
+
+  &--medium {
+    border-color: $color-yellow;
+  }
+
+  &--high {
+    border-color: $color-green;
+  }
+}

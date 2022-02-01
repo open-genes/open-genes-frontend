@@ -1,0 +1,19 @@
+// Стили скелетон-скрина перенесены в компонент
+
+// Класс-модификатор, который делает неподгрузившийся элемент плейсхолдером
+.__skeletal {
+  font-size: 0;
+  color: $color-gray;
+  font-weight: $font-weight-regular;
+  background-color: $color-gray-soft;
+
+  * {
+    display: none;
+  }
+}
+
+
+
+
+
+

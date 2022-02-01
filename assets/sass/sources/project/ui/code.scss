@@ -1,0 +1,14 @@
+// Inline code snippet
+
+code {
+  display: inline-block;
+  padding: 0 4px;
+  border-radius: 3px;
+  color: $color-red-text;
+  background-color: $color-red-light;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+// Code blocks should be wrapped in a component app-code-block
+

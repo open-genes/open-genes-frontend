@@ -1,0 +1,64 @@
+// ALias
+.alias {
+  display: inline-block;
+  vertical-align: middle;
+  min-width: 40px;
+  padding: 3px 5px;
+  font-size: ($font-size-small - 1);
+  font-weight: $font-weight-medium;
+  white-space: nowrap;
+  text-align: center;
+  border-radius: 3px;
+  margin: 0 5px 5px 0;
+  background-color: $color-gray-soft;
+  user-select: none;
+
+  // optional nested block for text truncation
+  &__overflow {
+    display: block;
+    max-width: 20ch; // 20 characters
+    @include text-overflow;
+  }
+
+  &--small {
+    min-width: 20px;
+    font-size: 10px;
+    padding: 3px 2px;
+  }
+
+  &--approval {
+    background-color: lighten($color-green-light, 20%);
+    color: $color-green-dark;
+  }
+
+  &--warning {
+    background-color: $color-orange-100;
+    color: $color-orange-400;
+  }
+
+  @include resolution_smartphone-and-tablet {
+    min-height: 17px;
+    font-size: 10px;
+    font-weight: $font-weight-bold;
+  }
+
+  // Класс для skeleton screens
+  &.__skeletal {
+    height: 23px;
+    min-width: 100px;
+  }
+}
+
+a.alias,
+button.alias {
+  color: $color-clikable-500;
+  background-color: $color-clikable-100;
+
+  &:hover {
+    background-color: $color-clikable-200;
+  }
+
+  &:active {
+    background-color: $color-clikable-200;
+  }
+}

@@ -1,0 +1,231 @@
+.btn {
+  @include display(inline-block);
+  min-width: 80px;
+  height: 33px;
+  line-height: 33px;
+  padding: 0 16px;
+  font-size: $font-size-small;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  text-transform: uppercase;
+  transition: background-color, border, .15s linear;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 3px;
+
+  // Truncate text if it's wider than button
+  &:not(.btn--icon-only) {
+    @include text-overflow;
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .loader {
+    display: inline-block;
+    pointer-events: none;
+    font-size: 14px;
+    z-index: 1;
+  }
+
+  &.btn--fill {
+    line-height: (33px - 2px);
+  }
+}
+
+// Types
+// Button without a border and background
+@mixin btn--flat {
+  width: auto;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+
+  &:hover {
+    border: 0;
+  }
+
+}
+
+.btn.btn--flat {
+  @include btn--flat;
+}
+
+// Colors
+@mixin btn-color($name, $color, $text-color: $color-white) {
+  .btn--#{$name} {
+    &:not(.btn--fill) {
+      color: $color;
+
+      .loader {
+        border: .2em solid rgba($color, 0.2);
+        border-top-color: $color;
+      }
+
+      &.disabled {
+        opacity: 1;
+        color: lighten($color, 10%);
+      }
+    }
+
+    &:not(.btn--flat):not(.btn--icon-only) {
+      border: 1px solid lighten($color, 5%);
+
+      &.disabled {
+        border-color: lighten($color, 10%);
+      }
+    }
+
+    &:not(.disabled):hover {
+      border-color: darken($color, 10%);
+      &:not(.btn--fill) {
+        color: darken($color, 10%);
+      }
+    }
+
+    &.btn--fill {
+      background: $color;
+      $color2: lighten(adjust-hue($color, 10deg), 5%);
+      background: linear-gradient(135deg, $color 0%, $color2 100%);
+      color: $text-color;
+
+      &.disabled {
+        opacity: 1;
+        background-color: lighten($color, 5%);
+      }
+
+      &:not(.disabled):hover {
+        background-color: darken($color, 10%);
+        border-color: darken($color, 10%);
+        $color2-dark: lighten(adjust-hue($color, 10deg), 5%);
+        background: linear-gradient(150deg, $color 0%, $color2-dark 100%);
+      }
+
+      .loader {
+        border: .2em solid rgba(255, 255, 255, 0.2);
+        border-top-color: #fff;
+      }
+    }
+  }
+}
+
+@include btn-color('black', $color-black);
+@include btn-color('red', $color-red-medium);
+@include btn-color('green', $color-green-medium);
+@include btn-color('purple', $color-purple);
+@include btn-color('gray', $color-gray);
+@include btn-color('white', $color-white, $color-orange-300);
+// TODO: make it possible to construct gradient buttons
+// @include btn-color('orange-gradient', $orange-gradient1, $color-white);
+
+// SIZES
+
+@mixin btn--small {
+  $btn-height: $ui-base-height;
+  height: $btn-height;
+  line-height: $btn-height;
+  padding: 0 5px;
+  font-size: 11px;
+  font-weight: $font-weight-medium;
+  .loader {
+    font-size: 11px;
+  }
+  &.btn--fill {
+    line-height: ($btn-height - 1px);
+  }
+}
+
+.btn.btn--small {
+  @include btn--small;
+}
+
+@mixin btn--big {
+  $btn-height: $ui-base-height * 1.5;
+  height: $btn-height;
+  line-height: $btn-height;
+  padding: 0 15px;
+  font-size: $font-size;
+  font-weight: $font-weight-bold;
+  border-radius: 4px;
+  &.btn--fill {
+    line-height: ($btn-height - 2px);
+  }
+}
+
+.btn.btn--big {
+  @include btn--big;
+}
+
+@mixin btn--icon-only {
+  width: auto;
+  height: auto;
+  min-width: auto;
+  font-size: 22px; // default
+  padding: .05em;
+  text-align: center;
+  line-height: 0;
+  border-radius: 50%;
+  border: 0;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    bottom: -4px;
+    left: -4px;
+    z-index: 0;
+    border-radius: 50%;
+    background-color: rgba($color-hover, .75);
+    opacity: 0;
+    transition: color, opacity, .15s ease-in-out;
+  }
+
+  .fa {
+    position: relative;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    z-index: 1;
+  }
+
+  &:hover,
+  &:active {
+    &::after {
+      opacity: 1;
+    }
+  }
+}
+
+.btn.btn--icon-only {
+  @include btn--icon-only;
+}
+
+// A button for contend preloading
+.show-more {
+  &__button {
+    width: 100%;
+    $btn-height: 35px;
+    height: $btn-height;
+    line-height: ($btn-height - 2px);
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: $font-weight-medium;
+    color: $color-general;
+    background-color: lighten($color-hover, 3%);
+    border: 1px solid $color-borders-active;
+
+    &:hover {
+      background-color: $color-hover;
+    }
+  }
+}
+
+// Fixes
+button.btn {
+  line-height: normal;
+}

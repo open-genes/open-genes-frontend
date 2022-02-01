@@ -1,0 +1,148 @@
+@mixin lists {
+  ul, ol {
+    &.list {
+      width: 100%;
+
+      li {
+        width: 100%;
+        position: relative;
+
+        .alias {
+          vertical-align: top;
+        }
+
+        .callout {
+          display: block;
+          float: left;
+        }
+      }
+
+      li + li {
+        margin-top: .8ex;
+      }
+    }
+  }
+
+  ul.list--bulletted {
+    li {
+      padding-left: 1.8ex;
+
+      &:before {
+        content: " ";
+        display: block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: $color-general;
+        position: absolute;
+        left: 0;
+        top: 1ex;
+        z-index: 0;
+      }
+    }
+  }
+}
+
+@mixin typography {
+  @include lists;
+
+  article,
+  section {
+    width: 100%;
+    @include resolution_desktop-and-up {
+      font-size: calc(0.2vw + 13px);
+    }
+    @include resolution_tablet {
+      font-size: 15px;
+    }
+    @include resolution_smartphone {
+      font-size: 14px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      width: 100%;
+      color: $color-indent;
+      font-weight: $font-weight-medium;
+    }
+
+    h1 {
+      font-size: calc(0.2vw + 25px);
+      color: $color-indent;
+    }
+
+    h2 {
+      font-size: calc(0.2vw + 20px);
+    }
+
+    h3 {
+      font-size: calc(0.2vw + 16px);
+    }
+
+    h4 {
+      font-size: calc(0.2vw + 14px);
+    }
+
+    h5 {
+      font-size: calc(0.2vw + 13px);
+    }
+
+    h6 {
+      font-size: $font-size;
+    }
+
+    * + h1,
+    * + h2 {
+      margin-top: 3ex;
+    }
+
+    * + h3,
+    * + p,
+    * + .list,
+    * + app-code-block {
+      margin-top: 2ex;
+    }
+
+    h3 + *,
+    h4 + * {
+      margin-top: .8ex;
+    }
+
+    // It's made in order to not affect styled links.
+    // Links in the text received from endpoint don't have classes
+    & > a:not(.btn),
+    & > p a:not(.btn) {
+      font-weight: $font-weight-medium;
+      color: $color-general;
+
+      &:hover,
+      &:active {
+        color: lighten(mix($color-general, $color-blue, 5%), 3%);
+      }
+    }
+  }
+
+  article + article, // TODO: Change it to one class common for article, section and components tags
+  article + section,
+  section + section,
+  section + article,
+  h1 + section,
+  h1 + article,
+  h2 + section,
+  h2 + article {
+    margin-top: 30px;
+  }
+
+  .reference {
+    font-size: 80%;
+    margin-top: 1em;
+
+    p + p {
+      margin-top: .8em;
+    }
+  }
+}

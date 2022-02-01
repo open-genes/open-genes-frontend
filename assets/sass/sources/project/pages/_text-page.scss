@@ -1,0 +1,41 @@
+.text-page { // .page
+  // &__inner { }
+  &__header {
+    min-height: 140px;
+    background: $color-gray-very-light;
+    padding: 30px 0 35px 0;
+    margin-bottom: 20px;
+    border-radius: 0 0 20px 20px;
+
+    .page__title,
+    .header__description,
+    .header__button {
+      width: 100%;
+      text-align: center;
+    }
+
+    .page__title { // переиспользуем
+      h1 {
+        font-weight: $font-weight-medium;
+      }
+    }
+
+    .header__description {
+      font-size: calc(0.2vw + 18px);
+      color: $color-black-light;
+      padding: 0 4vw;
+    }
+
+    .header__button {
+      margin-top: 30px;
+
+      a {
+        min-width: 120px;
+      }
+    }
+  }
+
+  &__articles {
+    padding: 20px 0;
+  }
+}

@@ -1,0 +1,103 @@
+table.table {
+  width: 100%;
+  color: $color-black;
+  background: #fff;
+  border: 1px solid $color-borders;
+  font-size: $font-size-smaller;
+  border-collapse: collapse;
+
+  thead th,
+  tfoot th {
+    color: $color-black-light;
+    text-align: left;
+    background: $color-gray-very-light;
+  }
+
+  caption {
+    padding: .5em;
+  }
+
+  th,
+  td {
+    border: 1px solid $color-border-light;
+    word-wrap: normal;
+
+    // Table cell min-width hack
+    &:after {
+      content: ' ';
+      display: block;
+      min-width: 5em;
+      height: 0;
+    }
+  }
+
+  th {
+    padding: .5em;
+  }
+
+  td {
+    padding: .2em .5em;
+  }
+
+  &--zebra,
+  &--dark {
+    tbody tr:nth-of-type(odd) {
+      background: rgba(255, 255, 255, .05);
+    }
+  }
+
+  &--zebra {
+    tbody tr:nth-of-type(odd) {
+      background: rgba(0, 0, 0, .05);
+    }
+  }
+
+  &--dark {
+    color: #ddd;
+    background: #333;
+    font-size: 12pt;
+    border-collapse: collapse;
+
+    thead th,
+    tfoot th {
+      color: #aaa;
+      background: rgba(255, 255, 255, .15);
+    }
+
+    caption {
+      padding: .4em;
+    }
+
+    th,
+    td {
+      padding: .5em;
+      border: 1px solid $color-borders;
+    }
+  }
+
+  .__cell-width-small {
+    &:after {
+      width: 8em;
+    }
+  }
+
+  .__cell-width-medium {
+    &:after {
+      width: 12em;
+    }
+  }
+
+  .__cell-width-large {
+    &:after {
+      width: 16em;
+    }
+  }
+}
+
+.table-section {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+

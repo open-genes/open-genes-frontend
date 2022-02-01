@@ -1,0 +1,29 @@
+// Static styles used in the whole project - angular app and static pages
+
+//
+// BASE
+//
+@import "sources/base/variables";
+@import "sources/base/mixins";
+@import "sources/base/functions";
+@import "sources/base/fonts";
+@import "sources/base/reset";
+@import "sources/base/grid";
+@import "sources/base/general";
+
+//
+// VENDOR
+//
+@import "sources/vendor/vendor";
+
+//
+// PROJECT
+//
+@import "sources/project/ui";
+@import "sources/project/pages";
+
+//
+// COSMETIC
+//
+@import "sources/cosmetic/helpers";
+@import "sources/cosmetic/brand-colors";
