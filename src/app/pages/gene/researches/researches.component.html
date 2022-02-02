@@ -115,38 +115,14 @@
   </app-hint>
 
   <div class="table-section __mt-20 __w-content">
-    <table class="table">
-      <thead>
-      <th>
-        Результат
-      </th>
-      <th>
-        Условия содержания
-      </th>
-      <th>
-        Изменение экспрессии целевого гена (%)
-      </th>
-      <th>
-        Продолжительность жизни, % изменения (мин, средняя, медиана, макс),
-        значимость да/нет
-      </th>
-      <th>
-        Другие результаты этого эксперимента
-      </th>
-      </thead>
-
-      <tbody>
-      <ng-container *ngFor="let research of researches.increaseLifespan">
-        <tr class="table__gap"><td colspan="100%"><div></div></td></tr>
-        <tr>
-          <td>
-            {{ research.interventionResultForLifespan }}
-          </td>
+    <ng-container *ngFor="let research of researches.increaseLifespan; let i = index">
+      <table class="table" [class.__mt-20]="i > 0">
+        <thead>
           <th>
-            Условия содержания
+            Результат
           </th>
           <th>
-            Количество в группе (controlCohortSize, experimentCohortSize)
+            Условия содержания
           </th>
           <th>
             Изменение экспрессии целевого гена (%)
@@ -156,102 +132,145 @@
             значимость да/нет
           </th>
           <th>
-            Улучшает/ухудшает (Цикл с interventionImproves и interventionDeteriorates)
+            Другие результаты этого эксперимента
           </th>
-        </tr>
-        <tr>
-          <td colspan="100%"
-              class="__p-0">
-            <table *ngIf="research?.interventions">
-              <thead>
-              <th>
-                Основной эффект воздействия
-              </th>
-              <th>
-                Способ воздействия, метод
-              </th>
-              <th>
-                Генотип
-              </th>
-              <th>
-                Условия эксперимента (поля "тканеспецифичность")
-              </th>
-              <th>
-                Препарат
-              </th>
-              <th>
-                Период терапии, начало, конец, описание
-              </th>
-              <th>
-                Стадия развития, начало, конец
-              </th>
-              </thead>
+        </thead>
+          <tbody>
+            <tr>
+            <td>
+              {{ research.interventionResultForLifespan }}
+            </td>
+            <td>
+              {{ research.density }}, <br>
+              t<sup>°</sup> {{ research.temperatureFrom }}—{{ research.temperatureTo }}
+            </td>
+            <td>
+              {{ research.controlCohortSize }}, {{ research.experimentCohortSize }}
+            </td>
+            <td>
+              {{ research.expressionChangePercent }}, {{ research.expressionMeasurementType }} в {{ research.expressionChangeTissue }}
+            </td>
+            <td>
+              {{ research.interventionResultForLifespan }} {{ research.lifespanTimeUnit }},
+              В группе контроля
+              {{ research.lifespanMinControl }},
+              {{ research.lifespanMeanControl }},
+              {{ research.lifespanMedianControl }},
+              {{ research.lifespanMaxControl }} <br>
 
-              <ng-container *ngIf="research.interventions?.controlAndExperiment">
-                <tr *ngFor="let sample of research.interventions.controlAndExperiment">
-                  <td>
-                    <a
-                      href="['gene', sample.gene.id]"
-                      class="link link--gray">
-                      {{ sample.gene.symbol }} {{ sample.gene.name }}
-                    </a>
-                    <a href="https://www.ncbi.nlm.nih.gov/gene/{{ sample.gene.ncbiId }}"
-                       target="_blank"
-                       class="badge __brand-color-entrez"></a>
-                  </td>
+              В группе эксперимента
+              {{ research.lifespanMinExperiment }},
+              {{ research.lifespanMeanExperiment }}
+              {{ research.lifespanMedianExperiment }}
+              {{ research.lifespanMaxExperiment }}
+            </td>
+            <td>
+              <ng-container
+                *ngIf="research?.interventionDeteriorates || research?.interventionImproves;
+              else dash">
+                <ng-container *ngIf="research?.interventionDeteriorates.length !== 0">
+                  <h6>{{ "researches_deteriorates" | translate }}</h6>
+                  <ul class="list list--bulletted __mt-0">
+                    <li *ngFor="let result of research.interventionDeteriorates">
+                      {{ result.name }}
+                    </li>
+                  </ul>
+                </ng-container>
 
-                  <td>{{ sample.interventionWay }}</td>
-                  <td>{{ sample.interventionMethod }}</td>
-                  <td>{{ sample.genotype }}</td>
-                  <td>
-                    <p>{{ sample.tissueSpecific }}</p>
-                    <p>{{ sample.tissueSpecificPromoter }}</p>
-                    <p>{{ sample.tissues.name }}</p>
-                  </td>
-                  <td>{{ sample.drug }}</td>
-                  <td>
-                    <p>{{ sample.treatmentPeriod }}</p>
-                    <p>{{ sample.treatmentStart }} {{ sample.startTimeUnit }}</p>
-                    <p>{{ sample.treatmentEnd }} {{ sample.endTimeUnit }}</p>
-                    <p>{{ sample.treatmentDescription }}</p>
-                  </td>
-                  <td>
-                    <p>{{ sample.startStageOfDevelopment }}</p>
-                    <p>{{ sample.startStageOfDevelopment }}</p>
-                  </td>
-                </tr>
+                <ng-container *ngIf="research?.interventionImproves.length !== 0">
+                  <h6>{{ "researches_improves" | translate }}</h6>
+                  <ul class="list list--bulletted __mt-0">
+                    <li *ngFor="let result of research.interventionImproves">
+                      {{ result.name }}
+                    </li>
+                  </ul>
+                </ng-container>
               </ng-container>
+            </td>
+          </tr>
 
-              <ng-container *ngIf="research.interventions?.experiment">
-                <tr *ngFor="let sample of research.interventions.experiment">
-                  <td></td>
-                  <td>{{ sample.interventionWay }}</td>
-                  <td>{{ sample.interventionMethod }}</td>
-                  <td>{{ sample.genotype }}</td>
-                  <td>
-                    <p>{{ sample.tissueSpecific }}</p>
-                    <p>{{ sample.tissueSpecificPromoter }}</p>
-                    <p>{{ sample.tissues.name }}</p>
-                  </td>
-                  <td>{{ sample.drug }}</td>
-                  <td>
-                    <p>{{ sample.treatmentPeriod }}</p>
-                    <p>{{ sample.treatmentStart }} {{ sample.startTimeUnit }}</p>
-                    <p>{{ sample.treatmentEnd }} {{ sample.endTimeUnit }}</p>
-                    <p>{{ sample.treatmentDescription }}</p>
-                  </td>
-                  <td>
-                    <p>{{ sample.startStageOfDevelopment }}</p>
-                    <p>{{ sample.startStageOfDevelopment }}</p>
-                  </td>
-                </tr>
-              </ng-container>
-            </table>
-          </td>
-        </tr>
-      </ng-container>
-      </tbody>
-    </table>
+            <tr class="table__gap"><td colspan="100%"><div></div></td></tr>
+            <tr>
+            <td colspan="100%"
+                class="__p-0">
+              <table *ngIf="research?.interventions">
+                <thead>
+                <th>
+                  Основной эффект воздействия
+                </th>
+                <th>
+                  Способ воздействия, метод
+                </th>
+                <th>
+                  Генотип
+                </th>
+                <th>
+                  Тканеспецифичность
+                </th>
+                <th>
+                  Препарат
+                </th>
+                <th>
+                  Период терапии, начало, конец, описание
+                </th>
+                <th>
+                  Стадия развития, начало, конец
+                </th>
+                </thead>
+
+                <ng-container *ngIf="research.interventions?.controlAndExperiment">
+                  <tr *ngFor="let sample of research.interventions.controlAndExperiment">
+                    <td>{{ sample.interventionWay }}</td>
+                    <td>{{ sample.interventionMethod }}</td>
+                    <td>{{ sample.genotype }}</td>
+                    <td>
+                      <p>{{ sample.tissueSpecific }}</p>
+                      <p>{{ sample.tissueSpecificPromoter }}</p>
+                      <p>{{ sample.tissues.name }}</p>
+                    </td>
+                    <td>{{ sample.drug }}</td>
+                    <td>
+                      <p>{{ sample.treatmentPeriod }}</p>
+                      <p>{{ sample.treatmentStart }} {{ sample.startTimeUnit }}</p>
+                      <p>{{ sample.treatmentEnd }} {{ sample.endTimeUnit }}</p>
+                      <p>{{ sample.treatmentDescription }}</p>
+                    </td>
+                    <td>
+                      <p>{{ sample.startStageOfDevelopment }}</p>
+                      <p>{{ sample.startStageOfDevelopment }}</p>
+                    </td>
+                  </tr>
+                </ng-container>
+
+                <ng-container *ngIf="research.interventions?.experiment">
+                  <tr *ngFor="let sample of research.interventions.experiment">
+                    <td>{{ sample.interventionWay }}</td>
+                    <td>{{ sample.interventionMethod }}</td>
+                    <td>{{ sample.genotype }}</td>
+                    <td>
+                      <p>{{ sample.tissueSpecific }}</p>
+                      <p>{{ sample.tissueSpecificPromoter }}</p>
+                      <p>{{ sample.tissues.name }}</p>
+                    </td>
+                    <td>{{ sample.drug }}</td>
+                    <td>
+                      <p>{{ sample.treatmentPeriod }}</p>
+                      <p>{{ sample.treatmentStart }} {{ sample.startTimeUnit }}</p>
+                      <p>{{ sample.treatmentEnd }} {{ sample.endTimeUnit }}</p>
+                      <p>{{ sample.treatmentDescription }}</p>
+                    </td>
+                    <td>
+                      <p>{{ sample.startStageOfDevelopment }}</p>
+                      <p>{{ sample.startStageOfDevelopment }}</p>
+                    </td>
+                  </tr>
+                </ng-container>
+              </table>
+            </td>
+          </tr>
+          </tbody>
+      </table>
+    </ng-container>
   </div>
 </section>
 
