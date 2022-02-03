@@ -128,6 +128,7 @@
         <th>Продолжительность жизни контроля</th>
         <th>Продолжительность жизни эксперимента</th>
         <th>Продолжительность жизни, % изменения <br>(мин, средняя, медиана, макс), значимость да/нет</th>
+        <th>Другие результаты</th>
         <!-- Control & experiment data columns -->
         <th>Тканеспецифичность</th>
         </thead>
@@ -137,18 +138,61 @@
 
           <!-- General data columns -->
           <td>
-            {{ research.modelOrganism }}, {{ research.sex }}, {{ research.organismLine }}
+            {{ research.modelOrganism }}, пол {{ research.sex }}, линия {{ research.organismLine }}
           </td>
           <td>{{ research.interventionResultForLifespan }}</td>
-          <td>Основной эффект воздействия</td>
-          <td>Способ воздействия, метод</td>
-          <td>Размер групп <br>контроля и эксперимента</td>
-          <td>Условия содержания</td>
+          <td>(нет поля)</td>
+          <td>(нет поля)</td>
+          <td>
+            <p>Контроль: {{ research.controlCohortSize }}</p>
+            <p>Эксперимент: {{ research.experimentCohortSize }}</p>
+          </td>
+          <td>
+            <p>Плотность содержания: {{ research.density }}</p>
+            <p>t<sup>°</sup>: {{ research.temperatureFrom }}—{{ research.temperatureTo }}</p>
+            <p>Корм: {{ research.diet }}</p>
+          </td>
           <td>Изменение экспрессии целевого гена (%)</td>
-          <td>Продолжительность жизни контроля</td>
-          <td>Продолжительность жизни эксперимента</td>
-          <td>Продолжительность жизни, % изменения <br>
-            (мин, средняя, медиана, макс), значимость да/нет
+          <td>
+            <p>Min: {{ research.lifespanMinControl }} {{ research.lifespanTimeUnit }}</p>
+            <p>Mean: {{ research.lifespanMeanControl }} {{ research.lifespanTimeUnit }}</p>
+            <p>Median: {{ research.lifespanMedianControl }} {{ research.lifespanTimeUnit }}</p>
+            <p>Max: {{ research.lifespanMaxControl }} {{ research.lifespanTimeUnit }}</p>
+          </td>
+          <td>
+            <p>Min: {{ research.lifespanMinExperiment }} {{ research.lifespanTimeUnit }}</p>
+            <p>Mean: {{ research.lifespanMeanExperiment }} {{ research.lifespanTimeUnit }}</p>
+            <p>Median: {{ research.lifespanMedianExperiment }} {{ research.lifespanTimeUnit }}</p>
+            <p>Max: {{ research.lifespanMaxExperiment }} {{ research.lifespanTimeUnit }}</p>
+          </td>
+          <td>
+            <p>Min: {{ research.lifespanMinChangePercent }}%, p-value {{ research.lMinChangeStatSignificance }}</p>
+            <p>Mean: {{ research.lifespanMeanChangePercent }}%, p-value {{ research.lMeanChangeStatSignificance }}</p>
+            <p>Median: {{ research.lifespanMedianChangePercent }}%, p-value {{ research.lMedianChangeStatSignificance }}</p>
+            <p>Max: {{ research.lifespanMaxChangePercent }}%, p-value {{ research.lMaxChangeStatSignificance }}</p>
+          </td>
+          <td>
+            <ng-container
+              *ngIf="research?.interventionDeteriorates || research?.interventionImproves;
+              else dash">
+              <ng-container *ngIf="research?.interventionDeteriorates.length !== 0">
+                <h6>{{ "researches_deteriorates" | translate }}</h6>
+                <ul class="list list--bulletted __mt-0">
+                  <li *ngFor="let result of research.interventionDeteriorates">
+                    {{ result.name }}
+                  </li>
+                </ul>
+              </ng-container>
+
+              <ng-container *ngIf="research?.interventionImproves.length !== 0">
+                <h6>{{ "researches_improves" | translate }}</h6>
+                <ul class="list list--bulletted __mt-0">
+                  <li *ngFor="let result of research.interventionImproves">
+                    {{ result.name }}
+                  </li>
+                </ul>
+              </ng-container>
+            </ng-container>
           </td>
 
           <!-- Control & experiment data columns -->
@@ -156,7 +200,16 @@
             <ng-container *ngFor="let sample of research.interventions.controlAndExperiment">
               <ng-container *ngIf="!sample.hasOwnProperty('gene')">
                 <td>
+                  <ng-container *ngIf="sample.tissueSpecific; else dash">
+                    <p>Промотор: {{ sample.tissueSpecificPromoter }}</p>
 
+                    <ul *ngIf="sample.tissues.length !== 0"
+                        class="list">
+                      <li *ngFor="let tissue of sample.tissues">
+                        {{ tissue.name }}
+                      </li>
+                    </ul>
+                  </ng-container>
                 </td>
               </ng-container>
             </ng-container>
@@ -164,7 +217,16 @@
             <!-- Experiment data columns -->
             <ng-container *ngFor="let sample of research.interventions.experiment">
               <td>
+                <ng-container *ngIf="sample.tissueSpecific; else dash">
+                  <p>Промотор: {{ sample.tissueSpecificPromoter }}</p>
 
+                  <ul *ngIf="sample.tissues.length !== 0"
+                      class="list">
+                    <li *ngFor="let tissue of sample.tissues">
+                      {{ tissue.name }}
+                    </li>
+                  </ul>
+                </ng-container>
               </td>
             </ng-container>
           </ng-container>
@@ -173,7 +235,6 @@
       </table>
   </div>
 </section>
-
 
 <section *ngIf="isInterventionAffectsAgingProcess">
   <h4>{{ "gene_page_intervention_moderates_aging" | translate }}</h4>
@@ -200,7 +261,7 @@
         *ngFor="let item of researches.interventionToGeneImprovesVitalProcesses"
       >
         <td>
-          <ng-container *ngIf="item.geneIntervention ; else dash">
+          <ng-container *ngIf="item.geneIntervention; else dash">
             {{ item.geneIntervention }}
           </ng-container>
         </td>

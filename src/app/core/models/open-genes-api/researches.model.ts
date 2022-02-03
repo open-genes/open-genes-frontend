@@ -10,14 +10,14 @@ interface PurpleTableSample {
   interventionMethod: string;
   genotype: string;
   // The tissue specificity fields:
-  tissueSpecific: boolean;
-  tissueSpecificPromoter: null;
+  tissueSpecific: boolean; // ✅
+  tissueSpecificPromoter: null; // ✅
   tissues:
     | {
         id: number;
         name: string;
       }[]
-    | [];
+    | []; // ✅
   // The drug therapy fields:
   inductionByDrugWithdrawal: boolean;
   drug: string;
@@ -46,36 +46,36 @@ interface InterventionResult {
 }
 
 export interface PurpleTable extends Research {
-  modelOrganism: string;
-  organismLine: string;
-  sex: string;
-  controlCohortSize: number;
-  experimentCohortSize: number;
-  density: number;
-  temperatureFrom: number;
-  temperatureTo: number;
-  diet: string;
-  interventionResultForLifespan: string;
+  modelOrganism: string; // ✅
+  organismLine: string; // ✅
+  sex: string; // ✅
+  controlCohortSize: number; // ✅
+  experimentCohortSize: number; // ✅
+  density: number; // ✅
+  temperatureFrom: number; // ✅
+  temperatureTo: number; // ✅
+  diet: string; // ✅
+  interventionResultForLifespan: string; // ✅
   expressionChangePercent: number;
   expressionMeasurementType: string;
   expressionChangeTissue: string;
-  lifespanMinControl: number;
-  lifespanMeanControl: number;
-  lifespanMedianControl: number;
-  lifespanMaxControl: number;
-  lifespanMinExperiment: number;
-  lifespanMeanExperiment: number;
-  lifespanMedianExperiment: number;
-  lifespanMaxExperiment: number;
-  lifespanTimeUnit: string;
-  lifespanMinChangePercent: number;
-  lMinChangeStatSignificance: string;
-  lifespanMeanChangePercent: number;
-  lMeanChangeStatSignificance: string;
-  lifespanMedianChangePercent: number;
+  lifespanMinControl: number; // ✅
+  lifespanMeanControl: number; // ✅
+  lifespanMedianControl: number; // ✅
+  lifespanMaxControl: number; // ✅
+  lifespanMinExperiment: number; // ✅
+  lifespanMeanExperiment: number; // ✅
+  lifespanMedianExperiment: number; // ✅
+  lifespanMaxExperiment: number; // ✅
+  lifespanTimeUnit: string; // ✅
+  lifespanMinChangePercent: number; // ✅
+  lMinChangeStatSignificance: string; // ✅
+  lifespanMeanChangePercent: number; // ✅
+  lMeanChangeStatSignificance: string; // ✅
+  lifespanMedianChangePercent: number; // ✅
   lMedianChangeStatSignificance: string;
-  lifespanMaxChangePercent: number;
-  lMaxChangeStatSignificance: string;
+  lifespanMaxChangePercent: number; // ✅
+  lMaxChangeStatSignificance: string; // ✅
   interventionImproves: InterventionResult[] | [];
   interventionDeteriorates: InterventionResult[] | [];
   interventions: {
