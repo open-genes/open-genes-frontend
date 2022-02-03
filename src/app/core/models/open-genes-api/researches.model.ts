@@ -9,12 +9,16 @@ interface PurpleTableSample {
   interventionWay: string;
   interventionMethod: string;
   genotype: string;
+  // The tissue specificity fields:
   tissueSpecific: boolean;
   tissueSpecificPromoter: null;
-  tissues: {
-    id: number;
-    name: string;
-  }[];
+  tissues:
+    | {
+        id: number;
+        name: string;
+      }[]
+    | [];
+  // The drug therapy fields:
   inductionByDrugWithdrawal: boolean;
   drug: string;
   treatmentPeriod: string;
@@ -26,6 +30,14 @@ interface PurpleTableSample {
   treatmentEnd: number;
   endStageOfDevelopment: string;
   endTimeUnit: string;
+  // Intervention with an impact on another gene
+  // (exists if there is an additional intervention)
+  gene?: {
+    id: number;
+    symbol: string;
+    name: string;
+    ncbiId: string;
+  };
 }
 
 interface InterventionResult {
@@ -43,17 +55,6 @@ export interface PurpleTable extends Research {
   temperatureFrom: number;
   temperatureTo: number;
   diet: string;
-  interventions: {
-    controlAndExperiment: PurpleTableSample[] & {
-      gene: {
-        id: number;
-        symbol: string;
-        name: string;
-        ncbiId: string;
-      };
-    };
-    experiment: PurpleTableSample[];
-  };
   interventionResultForLifespan: string;
   expressionChangePercent: number;
   expressionMeasurementType: string;
@@ -75,8 +76,12 @@ export interface PurpleTable extends Research {
   lMedianChangeStatSignificance: string;
   lifespanMaxChangePercent: number;
   lMaxChangeStatSignificance: string;
-  interventionImproves: InterventionResult[];
-  interventionDeteriorates: InterventionResult[];
+  interventionImproves: InterventionResult[] | [];
+  interventionDeteriorates: InterventionResult[] | [];
+  interventions: {
+    controlAndExperiment: PurpleTableSample[];
+    experiment: PurpleTableSample[];
+  };
 }
 
 // blue form
