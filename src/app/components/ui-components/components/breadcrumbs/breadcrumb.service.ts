@@ -1,18 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { BreadcrumbModel } from './breadcrumb.model';
-import { ActivatedRoute, ActivatedRouteSnapshot, Data, NavigationEnd, Router } from '@angular/router';
-import { distinctUntilChanged, filter } from 'rxjs/operators';
+import { ActivatedRouteSnapshot, Data } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BreadcrumbService {
-  constructor(
-    private router: Router,
-    private aRoute: ActivatedRoute
-  ) {
-  }
 
   public addBreadcrumb(route: ActivatedRouteSnapshot, parentUrl: string[], breadcrumbs: BreadcrumbModel[]) {
     if (route) {
