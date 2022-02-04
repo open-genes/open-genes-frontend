@@ -23,17 +23,20 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   constructor(
     private aRoute: ActivatedRoute,
     private router: Router,
-    private breadcrumbService: BreadcrumbService
-  ) {}
+    private breadcrumbService: BreadcrumbService,
+  ) {
+  }
 
   ngOnInit(): void {
-    this.aRoute.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
-      const root = this.router.routerState.snapshot.root;
-      const breadcrumbs: BreadcrumbModel[] = [];
-      this.breadcrumbService.addBreadcrumb(root, [], breadcrumbs);
-      debugger;
-      this.breadcrumbs.push(...breadcrumbs);
-    });
+    this.aRoute.params
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        const root = this.router.routerState.snapshot.root;
+        const breadcrumbs: BreadcrumbModel[] = [];
+        this.breadcrumbService.addBreadcrumb(root, [], breadcrumbs);
+
+        this.breadcrumbs.push(...breadcrumbs);
+      });
   }
 
   ngOnDestroy(): void {
