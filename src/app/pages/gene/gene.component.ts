@@ -63,6 +63,7 @@ export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDes
     private snackBar: MatSnackBar
   ) {
     super();
+    debugger;
     this.routeSubscribe = activateRoute.params.subscribe((params) => {
       this.symbol = params.id;
     });
