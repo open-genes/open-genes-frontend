@@ -60,7 +60,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
 
   public getGenes(): void {
     this.apiService
-      .getGenes()
+      .getGenesV2()
       .pipe(takeUntil(this.subscription$))
       .subscribe(
         (filteredGenes) => {
