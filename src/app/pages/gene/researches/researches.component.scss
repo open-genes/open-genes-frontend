@@ -14,28 +14,6 @@
     }
   }
 
-  @mixin sticky {
-    position: sticky;
-    left: 0;
-    z-index: 2;
-  }
-
-  &--sticky {
-    border-collapse: separate;
-
-    thead {
-      th:first-of-type {
-        @include sticky;
-      }
-    }
-    tr{
-      td:first-of-type {
-        @include sticky;
-        background-color: $color-white;
-      }
-    }
-  }
-
   th {
     position: relative;
   }
@@ -69,34 +47,6 @@
   @each $class, $color in $research-tables {
     &--#{$class} > thead th:first-child::before {
       background: $color;
-    }
-  }
-
-  &__gap {
-    &,
-    & > td {
-      border: 0;
-      padding: 0;
-    }
-
-    & > td {
-      div {
-        width: 100%;
-        height: 20px;
-        position: relative;
-
-        &::after {
-          content: ' ';
-          display: block;
-          position: absolute;
-          left: -2px;
-          top: 1px;
-          right: -2px;
-          bottom: 0;
-          z-index: 0;
-          background-color: $color-white;
-        }
-      }
     }
   }
 

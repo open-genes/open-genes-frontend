@@ -5,10 +5,10 @@ export interface Research {
 }
 
 // purple form
-interface PurpleTableSample {
-  interventionWay: string;
-  interventionMethod: string;
-  genotype: string;
+interface PurpleTableExperimentConditions {
+  interventionWay: string; // ✅
+  interventionMethod: string; // ✅
+  genotype: string; // ✅
   // The tissue specificity fields:
   tissueSpecific: boolean; // ✅
   tissueSpecificPromoter: null; // ✅
@@ -76,11 +76,11 @@ export interface PurpleTable extends Research {
   lMedianChangeStatSignificance: string;
   lifespanMaxChangePercent: number; // ✅
   lMaxChangeStatSignificance: string; // ✅
-  interventionImproves: InterventionResult[] | [];
-  interventionDeteriorates: InterventionResult[] | [];
+  interventionImproves: InterventionResult[] | []; // ✅
+  interventionDeteriorates: InterventionResult[] | []; // ✅
   interventions: {
-    controlAndExperiment: PurpleTableSample[];
-    experiment: PurpleTableSample[];
+    controlAndExperiment: PurpleTableExperimentConditions[];
+    experiment: PurpleTableExperimentConditions[];
   };
 }
 
