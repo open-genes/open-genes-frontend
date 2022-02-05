@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AgeRelatedProcesses, AgingMechanisms, FilteredGenes, Gene, Genes, SelectionCriteria } from '../../models';
+import { AgeRelatedProcesses, AgingMechanisms, Gene, Genes, SelectionCriteria } from '../../models';
 import { TranslateService } from '@ngx-translate/core';
 import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/open-genes-api/associated-diseases.model';
 import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with-increase-lifespan-researches.model';
 import { GenesInHorvathClock } from '../../models/open-genes-api/genes-in-horvath-clock.model';
+import { ApiResponse } from '../../models/api-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +14,7 @@ import { GenesInHorvathClock } from '../../models/open-genes-api/genes-in-horvat
 export class ApiService {
   private readonly currentLang: string;
 
-  constructor(
-    private http: HttpClient,
-    private translate: TranslateService
-  ) {
+  constructor(private http: HttpClient, private translate: TranslateService) {
     this.currentLang = this.translate.currentLang;
 
     // API doesn't have Chinese language
@@ -27,8 +25,8 @@ export class ApiService {
 
   // Legacy API
 
-  getGenes(): Observable<FilteredGenes> {
-    return this.http.get<FilteredGenes>(`/api/gene/search?lang=${this.currentLang}`);
+  getGenes(): Observable<ApiResponse<Genes>> {
+    return this.http.get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`);
   }
 
   getLastEditedGene(): Observable<Genes[]> {
