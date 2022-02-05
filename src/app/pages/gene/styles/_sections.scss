@@ -1,4 +1,9 @@
 .gene-page { // .page
+  // ANNOTATION
+  &__annotation {
+    margin: 0 0 30px 0;
+  }
+
   // AGE
   &__age {
     margin: 0 -5px 30px -5px;

@@ -50,15 +50,29 @@
     }
   }
 
-  &__dash {
+  @mixin placeholder {
     display: inline-block;
     vertical-align: middle;
     width: 100%;
     text-align: center;
     color: $color-gray;
 
-    &::before {
-      content: '—';
+    & + & {
+      display: none;
+    }
+  }
+
+  ::ng-deep {
+    .table__placeholder {
+      @include placeholder;
+    }
+
+    .table__dash {
+      @include placeholder;
+
+      &::before {
+        content: '—';
+      }
     }
   }
 }

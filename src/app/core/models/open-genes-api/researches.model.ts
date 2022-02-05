@@ -51,30 +51,30 @@ export interface PurpleTable extends Research {
   sex: string; // ✅
   controlCohortSize: number; // ✅
   experimentCohortSize: number; // ✅
-  density: number; // ✅
-  temperatureFrom: number; // ✅
-  temperatureTo: number; // ✅
+  populationDensity: string; // ✅
+  temperatureFrom: string; // ✅
+  temperatureTo: string; // ✅
   diet: string; // ✅
   interventionResultForLifespan: string; // ✅
-  expressionChangePercent: number;
+  expressionChangePercent: number; // ✅
   expressionMeasurementType: string;
   expressionChangeTissue: string;
-  lifespanMinControl: number; // ✅
-  lifespanMeanControl: number; // ✅
-  lifespanMedianControl: number; // ✅
-  lifespanMaxControl: number; // ✅
-  lifespanMinExperiment: number; // ✅
-  lifespanMeanExperiment: number; // ✅
-  lifespanMedianExperiment: number; // ✅
-  lifespanMaxExperiment: number; // ✅
+  lifespanMinControl: string; // ✅
+  lifespanMeanControl: string; // ✅
+  lifespanMedianControl: string; // ✅
+  lifespanMaxControl: string; // ✅
+  lifespanMinExperiment: string; // ✅
+  lifespanMeanExperiment: string; // ✅
+  lifespanMedianExperiment: string; // ✅
+  lifespanMaxExperiment: string; // ✅
   lifespanTimeUnit: string; // ✅
   lifespanMinChangePercent: number; // ✅
   lMinChangeStatSignificance: string; // ✅
-  lifespanMeanChangePercent: number; // ✅
+  lifespanMeanChangePercent: string; // ✅
   lMeanChangeStatSignificance: string; // ✅
-  lifespanMedianChangePercent: number; // ✅
+  lifespanMedianChangePercent: string; // ✅
   lMedianChangeStatSignificance: string;
-  lifespanMaxChangePercent: number; // ✅
+  lifespanMaxChangePercent: string; // ✅
   lMaxChangeStatSignificance: string; // ✅
   interventionImproves: InterventionResult[] | []; // ✅
   interventionDeteriorates: InterventionResult[] | []; // ✅
