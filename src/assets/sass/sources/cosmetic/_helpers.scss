@@ -67,13 +67,7 @@ $sizes: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 80, 100, 120);
 }
 
 .__w-content-fluid {
-  @include resolution_widescreen {
-    max-width: calc(100vw - #{$gutter});
-  }
-
-  @include resolution_all-but-widescreen {
-    max-width: calc(100vw - #{$gutter});
-  }
+  max-width: calc(100vw - #{$gutter});
 }
 
 .__not-flex {

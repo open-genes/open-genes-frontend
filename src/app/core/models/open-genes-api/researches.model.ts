@@ -5,20 +5,87 @@ export interface Research {
 }
 
 // purple form
-export interface increaseLifespan extends Research {
-  interventionType: string;
-  interventionResult: string;
-  modelOrganism: string; // TODO: backend: rename to 'object'
-  organismLine: string; // TODO: backend: rename to 'line'
-  age: string;
-  genotype: '+-' | '--';
-  valueForMale: string;
-  valueForFemale: string;
-  valueForAll: string;
+interface PurpleTableExperimentConditions {
+  interventionWay: string; // ✅
+  interventionMethod: string; // ✅
+  genotype: string; // ✅
+  // The tissue specificity fields:
+  tissueSpecific: boolean; // ✅
+  tissueSpecificPromoter: null; // ✅
+  tissues:
+    | {
+        id: number;
+        name: string;
+      }[]
+    | []; // ✅
+  // The drug therapy fields:
+  inductionByDrugWithdrawal: boolean;
+  drug: string;
+  treatmentPeriod: string;
+  treatmentDescription: string;
+  drugDeliveryWay: string;
+  treatmentStart: number;
+  startStageOfDevelopment: string;
+  startTimeUnit: string;
+  treatmentEnd: number;
+  endStageOfDevelopment: string;
+  endTimeUnit: string;
+  // Intervention with an impact on another gene
+  // (exists if there is an additional intervention)
+  gene?: {
+    id: number;
+    symbol: string;
+    name: string;
+    ncbiId: string;
+  };
+}
+
+interface InterventionResult {
+  id: string;
+  name: string;
+}
+
+export interface PurpleTable extends Research {
+  modelOrganism: string; // ✅
+  organismLine: string; // ✅
+  sex: string; // ✅
+  controlCohortSize: number; // ✅
+  experimentCohortSize: number; // ✅
+  populationDensity: string; // ✅
+  temperatureFrom: string; // ✅
+  temperatureTo: string; // ✅
+  diet: string; // ✅
+  interventionResultForLifespan: string; // ✅
+  expressionChangePercent: number; // ✅
+  expressionMeasurementType: string;
+  expressionChangeTissue: string;
+  lifespanMinControl: string; // ✅
+  lifespanMeanControl: string; // ✅
+  lifespanMedianControl: string; // ✅
+  lifespanMaxControl: string; // ✅
+  lifespanMinExperiment: string; // ✅
+  lifespanMeanExperiment: string; // ✅
+  lifespanMedianExperiment: string; // ✅
+  lifespanMaxExperiment: string; // ✅
+  lifespanTimeUnit: string; // ✅
+  lifespanMinChangePercent: number; // ✅
+  lMinChangeStatSignificance: string; // ✅
+  lifespanMeanChangePercent: string; // ✅
+  lMeanChangeStatSignificance: string; // ✅
+  lifespanMedianChangePercent: string; // ✅
+  lMedianChangeStatSignificance: string;
+  lifespanMaxChangePercent: string; // ✅
+  lMaxChangeStatSignificance: string; // ✅
+  interventionImproves: InterventionResult[] | []; // ✅
+  interventionDeteriorates: InterventionResult[] | []; // ✅
+  interventions: {
+    controlAndExperiment: PurpleTableExperimentConditions[];
+    experiment: PurpleTableExperimentConditions[];
+  };
 }
 
 // blue form
-export interface AgeRelatedChanges extends Research {
+export interface BlueTable extends Research {
   changeType: string;
   sample: string;
   modelOrganism: string; // TODO: backend: rename to 'object'
@@ -32,12 +99,7 @@ export interface AgeRelatedChanges extends Research {
 }
 
 //  green form
-interface InterventionResult {
-  id: string;
-  name: string;
-}
-
-export interface InterventionAffectsAgingProcess extends Research {
+export interface GreenTable extends Research {
   geneIntervention: string;
   modelOrganism: string; // TODO: backend: rename to 'object'
   organismLine: string; // TODO: backend: rename to 'line'
@@ -46,12 +108,12 @@ export interface InterventionAffectsAgingProcess extends Research {
   interventionResult: string; // TODO: misleading name, rename
   vitalProcess: string;
   age: string;
-  genotype: string;
+  genotype: '+-' | '--';
   sex: string;
 }
 
 // yellow form
-export interface ProteinRegulatesGenes extends Research {
+export interface YellowTable extends Research {
   proteinActivity: string;
   regulationType: string;
   regulatedGene: {
@@ -63,12 +125,12 @@ export interface ProteinRegulatesGenes extends Research {
 }
 
 // orange form
-export interface ProgeriaSyndromes extends Research {
+export interface OrangeTable extends Research {
   progeriaSyndrome: string;
 }
 
 // pink form
-export interface LongevityEffects extends Research {
+export interface PinkTable extends Research {
   allelicPolymorphism: string;
   allelicVariant: string;
   changeType: string; // TODO: backend: rename to 'charsOfTranscriptomeOrProteome'
@@ -79,15 +141,15 @@ export interface LongevityEffects extends Research {
 }
 
 // gray form
-export interface AdditionalEvidences extends Research {}
+export type GrayTable = Research;
 
 // TODO: backend: misleading names of researches
 export interface Researches {
-  increaseLifespan: increaseLifespan[];
-  ageRelatedChangesOfGene: AgeRelatedChanges[];
-  interventionToGeneImprovesVitalProcesses: InterventionAffectsAgingProcess[];
-  proteinRegulatesOtherGenes: ProteinRegulatesGenes[];
-  geneAssociatedWithProgeriaSyndromes: ProgeriaSyndromes[];
-  geneAssociatedWithLongevityEffects: LongevityEffects[];
-  additionalEvidences: AdditionalEvidences[];
+  increaseLifespan: PurpleTable[];
+  ageRelatedChangesOfGene: BlueTable[];
+  interventionToGeneImprovesVitalProcesses: GreenTable[];
+  proteinRegulatesOtherGenes: YellowTable[];
+  geneAssociatedWithProgeriaSyndromes: OrangeTable[];
+  geneAssociatedWithLongevityEffects: PinkTable[];
+  additionalEvidences: GrayTable[];
 }
