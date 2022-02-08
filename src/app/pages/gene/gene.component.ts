@@ -130,8 +130,8 @@ export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDes
             this.isGeneCandidate = true;
           }
 
-          this.isAnyOrtholog = Object.values(this.gene.orthologs).toString() !== ''; // TODO: backend: instead of {"":""} should be an empty array of objects
-          this.isHpa = this.gene.humanProteinAtlas !== '';
+          this.isAnyOrtholog = this.gene.ortholog.length !== 0;
+          this.isHpa = this.gene.human_protein_atlas !== '';
 
           this.isAnyContent =
             this.gene?.commentEvolution ||

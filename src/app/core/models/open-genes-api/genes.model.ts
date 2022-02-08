@@ -55,12 +55,21 @@ export interface Gene extends GeneralGeneInfo {
   accPromoter: any;
   accOrf: string;
   accCds: string;
+  descriptionNCBI: string;
   references: string;
+  ortholog: {
+    id: number;
+    species: string;
+    symbol: string;
+    externalBaseId: number;
+    externalBaseName: string;
+  }[];
   orthologs: {
     [n: string]: string;
   };
   commentEvolution: string;
   commentEvolutionEN: string;
+  commentAging: string;
   proteinDescriptionUniProt: string;
   proteinDescriptionOpenGenes: string;
   commentAgingEN: string;

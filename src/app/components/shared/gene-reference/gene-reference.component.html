@@ -72,13 +72,13 @@
              class="badge __brand-color-biogrid"
           >BioGrid</a>
 
-          <a href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ gene?.humanProteinAtlas.Ensembl }}"
+          <a href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ gene?.human_protein_atlas?.Ensembl }}"
              target="_blank"
              matTooltip="{{ 'link_ensembl' | translate }}"
              class="badge __brand-color-ensembl"
           >Ensembl</a>
 
-          <a href="https://www.proteinatlas.org/{{gene?.humanProteinAtlas.Ensembl}}"
+          <a href="https://www.proteinatlas.org/{{gene?.human_protein_atlas?.Ensembl}}"
              target="_blank"
              matTooltip="{{ 'link_hpa' | translate }}"
              class="badge __brand-color-hpa"

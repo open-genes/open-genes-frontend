@@ -38,8 +38,8 @@ export class ApiService {
     return this.http.get<Genes[]>(`/api/gene/by-expression-change/${expression}?lang=${this.currentLang}`);
   }
 
-  getGeneByHGNCsymbol(symbol: string): Observable<Gene[]> {
-    return this.http.get<Gene[]>(`/api/gene/${symbol}?lang=${this.currentLang}`);
+  getGeneByHGNCsymbol(symbol: string): Observable<Gene> {
+    return this.http.get<Gene>(`/api/gene/${symbol}?lang=${this.currentLang}`);
   }
 
   getGoTermMatchByString(request: string): Observable<Genes[]> {
