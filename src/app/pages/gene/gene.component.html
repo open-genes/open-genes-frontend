@@ -133,7 +133,7 @@
                   </div>
 
                   <div class="row__value col">
-                    <ng-container *ngIf="gene.functionalClusters; else noData">
+                    <ng-container *ngIf="gene.functionalClusters.length; else noData">
                         <button *ngFor="let item of gene.functionalClusters"
                                 class="alias item__value" (click)="onApplyFilter(filterTypes.functional_clusters, item.id)">
                           {{item.name}}
@@ -152,7 +152,7 @@
                   </div>
 
                   <div class="row__value col">
-                    <ul *ngIf="gene.commentCause.length !== 0 else noData"
+                    <ul *ngIf="gene.commentCause else noData"
                         class="list list--bulletted">
                       <!-- TODO: backend: return array of objects instead of object with objects -->
                       <li *ngFor="let cause of gene.commentCause | keyvalue">
@@ -217,9 +217,9 @@
                     </div>
 
                     <ul class="list">
-                      <ng-container *ngFor="let item of gene.orthologs | keyvalue">
-                        <li *ngIf="item.value.length !== 0">
-                          <span [innerHTML]="item.key | orthologLinks: 'drosophila'"></span> <span class="alias">{{ item.value }}</span>
+                      <ng-container *ngFor="let item of gene.ortholog">
+                        <li *ngIf="item.species">
+                          <span [innerHTML]="item.species | orthologLinks: item"></span> <span class="alias">{{ item.symbol }}</span>
                         </li>
                       </ng-container>
                     </ul>

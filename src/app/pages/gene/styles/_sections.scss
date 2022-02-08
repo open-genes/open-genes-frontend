@@ -67,6 +67,13 @@
             flex-basis: 36px;
           }
         }
+        &.age__orthologs {
+          .list {
+            li {
+              width: auto;
+            }
+          }
+        }
 
         &.age__diseases,
         &.age__interactions {
