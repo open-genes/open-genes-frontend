@@ -24,11 +24,6 @@ export class ApiService {
   }
 
   // Legacy API
-
-  getGenes(): Observable<ApiResponse<Genes>> {
-    return this.http.get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`);
-  }
-
   getLastEditedGene(): Observable<Genes[]> {
     return this.http.get<Genes[]>(`/api/gene/by-latest`);
   }
@@ -58,6 +53,10 @@ export class ApiService {
   }
 
   // New API
+  getGenes(): Observable<ApiResponse<Genes>> {
+    return this.http.get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`);
+  }
+
   getDiseases(): Observable<AssociatedDiseases[]> {
     return this.http.get<AssociatedDiseases[]>(`/api/disease?lang=${this.currentLang}`);
   }

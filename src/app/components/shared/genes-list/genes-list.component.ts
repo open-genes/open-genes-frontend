@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
-import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
 import { FilterService } from './services/filter.service';
 import { FilterTypesEnum, SortEnum } from './services/filter-types.enum';
