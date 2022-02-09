@@ -18,7 +18,6 @@
           <app-sidebar>
             <div class="__not-flex __w-100">
               <b>{{ "gene_page_title_contents" | translate }}</b>
-
               <mat-nav-list>
                 <a mat-list-item [routerLink]="['/news']" fragment="articles">
                   {{ "news_page_articles_title" | translate }}
@@ -32,28 +31,44 @@
         </div>
 
         <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-8">
-          <section *ngIf="genes" id="articles" class="row no-gutters">
+          <section  id="articles" class="row no-gutters">
             <h1 class="col col-12">
               {{ "news_page_articles_title" | translate }}
             </h1>
+
             <app-articles-list
-              (newArticlesLoaded)="updateView()"
+              [showSkeleton] = 'showCardSkeleton'
+              (skeletonState)='showCardSkeleton = $event'
               class="__mt-10"
             ></app-articles-list>
+
+            <app-skeleton
+              *ngIf="showCardSkeleton"
+              [view]="'card'"
+              [groups]="3"
+            ></app-skeleton>
           </section>
 
           <section id="pubmed" class="row no-gutters __mt-40">
             <h1 class="col col-12">
               {{ "news_page_pubmed_title" | translate }}
             </h1>
+
             <div class="col col-12 news-page__news">
               <app-news-list
-                *ngIf="genes"
                 [genesList]="geneListForNewsFeed"
                 [loadTotal]="80"
-                [itemsForPage]="10"
                 [showDates]="true"
+                [showSkeleton] = 'showRowSkeleton'
+                (skeletonState)='showRowSkeleton = $event'
               ></app-news-list>
+
+              <app-skeleton
+                *ngIf="showRowSkeleton"
+                [view]="'line'"
+                [groups]="10"
+                class="news__skeleton"
+              ></app-skeleton>
             </div>
           </section>
         </div>
