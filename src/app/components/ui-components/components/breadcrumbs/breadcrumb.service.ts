@@ -1,34 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { BreadCrumb } from './breadcrumb';
-import { ActivatedRouteSnapshot, Data, NavigationEnd, Router } from '@angular/router';
-import { distinctUntilChanged, filter } from 'rxjs/operators';
+import { BreadcrumbModel } from './breadcrumb.model';
+import { ActivatedRouteSnapshot, Data } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BreadcrumbService {
-  private readonly _breadcrumbs$ = new BehaviorSubject<BreadCrumb[]>([]);
-  public breadcrumbs$ = this._breadcrumbs$.asObservable();
 
-  constructor(
-    private router: Router
-  ) {
-    this.router.events
-      .pipe(
-        filter((event) => event instanceof NavigationEnd),
-        distinctUntilChanged()
-      )
-      .subscribe((event) => {
-        const root = this.router.routerState.snapshot.root;
-        const breadcrumbs: BreadCrumb[] = [];
-        this.addBreadcrumb(root, [], breadcrumbs);
-
-        this._breadcrumbs$.next(breadcrumbs);
-      });
-  }
-
-  private addBreadcrumb(route: ActivatedRouteSnapshot, parentUrl: string[], breadcrumbs: BreadCrumb[]) {
+  public addBreadcrumb(route: ActivatedRouteSnapshot, parentUrl: string[], breadcrumbs: BreadcrumbModel[]) {
     if (route) {
       const routeUrl = parentUrl.concat(route.url.map((url) => url.path));
 

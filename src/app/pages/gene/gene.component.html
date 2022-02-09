@@ -1,8 +1,10 @@
- <app-breadcrumbs></app-breadcrumbs>
 <div class="page gene-page" *ngIf="gene">
   <div class="page__inner __pb-60">
     <section class="wrapper gene-page__header">
       <div class="container-fluid">
+        <div class="row no-gutters __mb-10">
+          <app-breadcrumbs></app-breadcrumbs>
+        </div>
         <div class="row no-gutters">
           <div class="col col-12 header__title">
             <div class="title__caption">
@@ -345,7 +347,7 @@
                   </h3>
                   <app-human-protein-atlas
                     [gene]="gene"
-                    [hpa]="gene.human_protein_atlas"
+                    [hpa]="gene.humanProteinAtlas"
                   ></app-human-protein-atlas>
                 </section>
               </div>

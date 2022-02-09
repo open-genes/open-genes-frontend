@@ -25,7 +25,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public searchModeEnum = SearchModeEnum;
   public notFoundAndFoundGenes: any;
   public confirmedFoundGenes: any;
-  public geneListForNewsFeed: string[] = [];
   public showArticlesSkeleton = true;
   public showPubmedFeedSkeleton = true;
   public showProgressBar = false;
@@ -46,8 +45,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.genesListIsLoading = true;
     this.getGenes();
 
-    this.getLastEditedGenes();
-
     this.initWindowWidth(() => {
       this.cdRef.markForCheck();
     });
@@ -65,10 +62,9 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       .subscribe(
         (filteredGenes) => {
           this.genes = filteredGenes.items;
-          this.geneListForNewsFeed = filteredGenes.items.map((gene) => {
-            return gene.symbol;
-          });
           this.cdRef.markForCheck();
+
+          this.getLastEditedGenes();
         },
         (err) => {
           this.isAvailable = false;

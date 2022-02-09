@@ -34,7 +34,9 @@ import { CustomMatPaginatorIntl } from './core/services/custom-mat-paginator-int
 import { HttpReqInterceptor } from './core/utils/http-req.interceptor';
 
 // required for AOT compilation
-const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new TranslateHttpLoader(http);
+// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
+  new TranslateHttpLoader(http, '/assets/i18n/', `.json?v=${new Date().getTime()}`);
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent, LanguageComponent, BurgerMenuComponent],

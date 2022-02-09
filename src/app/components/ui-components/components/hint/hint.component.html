@@ -1,9 +1,13 @@
 <div class="hint"
      [ngClass]="hintType === 'emphasized' ? 'hint--emphasized' : ''">
+  <div class="hint__image">
+    <ng-content select="[image]"></ng-content>
+  </div>
   <div class="hint__text">
     <div class="hint__title">
       <ng-content select="[title]"></ng-content>
     </div>
+
     <div class="hint__description">
       <ng-content select="[description]"></ng-content>
     </div>
