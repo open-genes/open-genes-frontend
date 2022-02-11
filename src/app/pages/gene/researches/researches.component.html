@@ -135,14 +135,14 @@
 
         <!-- General data columns -->
         <td class="__cell-width-medium">
-          <ng-container *ngIf="r.modelOrganism || r.sex || r.sex; else dash">
+          <ng-container *ngIf="r.modelOrganism || r.sex || r.organismLine; else dash">
             <p *ngIf="r.modelOrganism">
               {{ "researches_model_organism" | translate }}: {{ r.modelOrganism }}
             </p>
             <p *ngIf="r.sex">
               {{ "researches_sex" | translate }}: {{ r.sex }}
             </p>
-            <p *ngIf="r.line">
+            <p *ngIf="r.organismLine">
               {{ "researches_line" | translate }}: {{ r.organismLine }}
             </p>
           </ng-container>
@@ -163,8 +163,8 @@
           </ng-container>
         </td>
         <td>
-          <ng-container *ngIf="r.populationDensity?.length !== 0 || r.temperature?.length !== 0 || r.diet?.length !== 0; else dash">
-            <p *ngIf="r.populationDensity?.length !== 0">
+          <ng-container *ngIf="r.populationDensity || r.temperature || r.diet; else dash">
+            <p *ngIf="r.populationDensity && r.populationDensity !== 0; else dash">
               {{ "researches_l_density" | translate: { data: r.populationDensity } }}
             </p>
             <p *ngIf="r.temperatureFrom">
