@@ -30,7 +30,7 @@ export class ApiService {
   }
 
   getGenesV2(): Observable<ApiResponse<Genes>> {
-    return this.http.get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`);
+    return this.http.get<ApiResponse<Genes>>(`/api/gene/search`);
   }
 
   getLastEditedGene(): Observable<Genes[]> {
