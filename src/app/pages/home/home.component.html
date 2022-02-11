@@ -39,7 +39,7 @@
                 </div>
               </app-sidebar-item>
 
-              <ng-container *ngIf="genesListIsLoading == false">
+              <ng-container *ngIf="!genesListIsLoading">
               <app-sidebar-item *ngIf="lastGenes">
                 <ng-container title>
                   {{ "main_page_last" | translate }}
@@ -133,6 +133,10 @@
               [setSearchMode]="searchMode"
               [showFiltersPanel]="searchMode !== searchModeEnum.searchByGoTerms">
             </app-genes-list>
+
+            <app-spinner *ngIf="!genes"
+                         description="{{ 'spinner_loading_genes' | translate }}"
+            ></app-spinner>
           </div>
         </ng-container>
       </div>

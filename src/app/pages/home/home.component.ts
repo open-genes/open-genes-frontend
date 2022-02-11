@@ -28,7 +28,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public showArticlesSkeleton = true;
   public showPubmedFeedSkeleton = true;
   public showProgressBar = false;
-  public genesListIsLoading: boolean;
+  public genesListIsLoading = true;
   public queryLength: number;
 
   constructor(
@@ -53,24 +53,25 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     });
 
     this.loadWizard();
+    this.getLastEditedGenes();
   }
 
   public getGenes(): void {
     this.apiService
-      .getGenes()
+      .getGenesV2()
       .pipe(takeUntil(this.subscription$))
       .subscribe(
         (filteredGenes) => {
           this.genes = filteredGenes.items;
+          // Make the genes property immutable after we set a value
+          Object.defineProperty(this.genes, 'genes', { writable: false });
           this.cdRef.markForCheck();
-
-          this.getLastEditedGenes();
         },
         (err) => {
           this.isAvailable = false;
           this.errorStatus = err.statusText;
           this.cdRef.markForCheck();
-        },
+        }
       );
   }
 

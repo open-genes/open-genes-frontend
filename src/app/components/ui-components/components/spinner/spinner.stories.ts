@@ -15,6 +15,6 @@ export default {
 
 const Template: Story<SpinnerComponent> = () => ({
   component: SpinnerComponent,
-  template: `<app-spinner></app-spinner>`,
+  template: `<app-spinner description="Загрузка"></app-spinner>`,
 });
 export const Base = Template.bind({});

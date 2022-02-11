@@ -48,7 +48,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 
   private getGenes() {
     this.apiService
-      .getGenes()
+      .getGenesV2()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((filteredGenes) => {
         this.genes = filteredGenes.items;

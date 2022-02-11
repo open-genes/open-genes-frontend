@@ -7,11 +7,13 @@ import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/op
 import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with-increase-lifespan-researches.model';
 import { GenesInHorvathClock } from '../../models/open-genes-api/genes-in-horvath-clock.model';
 import { ApiResponse } from '../../models/api-response.model';
+import { shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
+  private genes$: Observable<ApiResponse<Genes>>;
   private readonly currentLang: string;
 
   constructor(private http: HttpClient, private translate: TranslateService) {
@@ -52,8 +54,19 @@ export class ApiService {
     return this.http.get<GenesInHorvathClock[]>(`/api/methylation?lang=${this.currentLang}`);
   }
 
+  getGenes(): Observable<Genes[]> {
+    return this.http.get<Genes[]>(`/api/gene?lang=${this.currentLang}`);
+  }
+
   // New API
-  getGenes(): Observable<ApiResponse<Genes>> {
+  getGenesV2(): Observable<ApiResponse<Genes>> {
+    if (this.genes$) {
+      this.genes$ = this.http
+        .get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`)
+        .pipe(shareReplay(1));
+      return this.genes$;
+    }
+
     return this.http.get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`);
   }
 

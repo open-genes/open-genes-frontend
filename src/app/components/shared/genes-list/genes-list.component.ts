@@ -151,7 +151,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (res: ApiResponse<Genes>) => {
-          // TODO: add an interface for the whole response
           this.currentPage = this.filterService.pagination.page;
           if (this.currentPage == 1) {
             this.cachedData = [];

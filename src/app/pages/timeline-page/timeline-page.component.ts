@@ -41,7 +41,7 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
 
   private getGenes() {
     this.apiService
-      .getGenes()
+      .getGenesV2()
       .pipe(takeUntil(this.subscription$))
       .subscribe(
         (filteredGenes) => {

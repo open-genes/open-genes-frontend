@@ -46,7 +46,7 @@ export class FavouritesComponent implements OnInit, OnDestroy {
             this.favouriteGenesIds = idList;
             this.cdRef.markForCheck();
 
-            return this.apiService.getGenes();
+            return this.apiService.getGenesV2();
           }
 
           return EMPTY;

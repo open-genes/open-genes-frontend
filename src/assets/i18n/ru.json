@@ -316,6 +316,7 @@
   "show_less": "Скрыть",
   "show_more": "Показать еще",
   "show_more_short": "Еще",
+  "spinner_loading_genes": "Загружается список генов...",
   "support_us_gitcoin": "Поддержите нас на Gitcoin Grants Round 12!",
   "term_ref": "Справка по термину «{{term}}»",
   "term_ref_not_found": "Не удалось найти справку по этому термину",
