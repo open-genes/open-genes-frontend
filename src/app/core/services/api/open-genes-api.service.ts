@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AgeRelatedProcesses, AgingMechanisms, Gene, Genes, SelectionCriteria } from '../../models';
 import { TranslateService } from '@ngx-translate/core';
@@ -7,11 +7,14 @@ import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/op
 import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with-increase-lifespan-researches.model';
 import { GenesInHorvathClock } from '../../models/open-genes-api/genes-in-horvath-clock.model';
 import { ApiResponse } from '../../models/api-response.model';
+import { Diet } from '../../models/open-genes-api/diet.model';
+import { Pagination } from '../../models/settings.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
+
   private readonly currentLang: string;
 
   constructor(private http: HttpClient, private translate: TranslateService) {
@@ -55,6 +58,15 @@ export class ApiService {
 
   getGenesInHorvathClock(): Observable<GenesInHorvathClock[]> {
     return this.http.get<GenesInHorvathClock[]>(`/api/methylation?lang=${this.currentLang}`);
+  }
+
+  getGenesForDiet(pagination?: Pagination): Observable<ApiResponse<Diet>> {
+    const params = new HttpParams()
+        .set('lang', this.translate.currentLang)
+        .set('page', pagination?.page ? pagination.page : 1)
+        .set('pageSize', pagination?.pageSize ? pagination.pageSize : 20);
+
+    return this.http.get<ApiResponse<Diet>>(`/api/diet`, { params });
   }
 
   // New API

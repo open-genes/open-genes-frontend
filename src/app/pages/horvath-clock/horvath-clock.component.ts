@@ -27,7 +27,6 @@ export class HorvathClockComponent extends WindowWidth implements OnInit, OnDest
 
   constructor(
     public windowService: WindowService,
-    private filterService: FilterService,
     private wizardService: WizardService,
     private readonly apiService: ApiService,
     private readonly cdRef: ChangeDetectorRef,

@@ -54,11 +54,16 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'by-researches',
-    loadChildren: () => import('./pages/increase-lifespan/increase-lifespan.module').then((m) => m.IncreaseLifespanModule),
+    loadChildren: () =>
+      import('./pages/increase-lifespan/increase-lifespan.module').then((m) => m.IncreaseLifespanModule),
   },
   {
     path: 'horvath-clock',
     loadChildren: () => import('./pages/horvath-clock/horvath-clock.module').then((m) => m.HorvathClockModule),
+  },
+  {
+    path: 'diet',
+    loadChildren: () => import('./pages/diet/diet.module').then((m) => m.DietModule),
   },
   {
     path: '404',
