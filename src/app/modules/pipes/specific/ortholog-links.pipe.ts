@@ -10,7 +10,7 @@ export class OrthologLinksPipe implements PipeTransform {
 
   private parseUrl(wholeText, item: any): string {
     if (
-      (wholeText.toLowerCase().includes('drosophila') || wholeText.toLowerCase().includes('дрозофила')) &&
+      item.species?.latinName.toLowerCase().includes('drosophila') &&
       item.externalBaseName.toLowerCase() == 'flybase'
     ) {
       const url = `https://flybase.org/reports/${item.externalBaseId}`;

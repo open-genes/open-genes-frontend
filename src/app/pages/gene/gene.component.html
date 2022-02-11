@@ -218,8 +218,8 @@
 
                     <ul class="list">
                       <ng-container *ngFor="let item of gene.ortholog">
-                        <li *ngIf="item.species">
-                          <span [innerHTML]="item.species | orthologLinks: item"></span> <span class="alias">{{ item.symbol }}</span>
+                        <li *ngIf="item.species?.commonName">
+                          <span [innerHTML]="item.species.commonName | orthologLinks: item"></span> <span class="alias">{{ item.symbol }}</span>
                         </li>
                       </ng-container>
                     </ul>
