@@ -59,7 +59,10 @@ export interface Gene extends GeneralGeneInfo {
   references: string;
   ortholog: {
     id: number;
-    species: string;
+    species: {
+      commonName: string;
+      latinName: string;
+    };
     symbol: string;
     externalBaseId: number;
     externalBaseName: string;

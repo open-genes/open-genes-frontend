@@ -10,7 +10,7 @@
 
     .age__types {
       display: flex;
-      flex-flow: row wrap;
+      flex-flow: column wrap;
       justify-content: flex-start;
       align-items: stretch;
       font-size: $font-size;
@@ -74,8 +74,11 @@
         }
         &.age__orthologs {
           .list {
-            li {
-              width: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+
+            @include resolution_smartphone {
+              grid-template-columns: 1fr
             }
           }
         }
