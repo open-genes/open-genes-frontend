@@ -120,16 +120,6 @@
         <div class="col-12">
           <div class="page-wrapper">
             <section class="wrapper gene-page__annotation">
-                <div class="row no-gutters annotation__row">
-                  <div class="row__title col-xs-12 col-md-5">
-                    {{ 'phylogeny' | translate }}:
-                  </div>
-
-                  <div class="row__value col">
-                    <app-gene-age [gene]="gene" show="origin"></app-gene-age>
-                  </div>
-                </div>
-
                 <div class="row no-gutters annotation__row row no-gutters annotation__row--emphasized">
                   <div class="row__title col-xs-12 col-md-5">
                     {{ 'gene_page_researches_processes' | translate }}:
@@ -185,22 +175,23 @@
                 <div class="age__type age__phylogeny">
                   <div class="type__inner">
                     <div class="type__title">
-                      {{ 'origin' | translate }}
-
+                      {{ 'phylogeny' | translate }}, {{ 'origin' | translate | lowercase }}:
                       <span class="fa far fa-info-circle"
                             *ngIf="isUiHintsSettingOn"
-                            (click)="onShowUiHints($event)"></span>
+                            (click)="onShowUiHints($event)"
+                      ></span>
                     </div>
                     <div class="type__value">
-                      {{ gene?.origin?.phylum || ('gene_page_no_data' | translate) }}
+                      <app-gene-age [gene]="gene" show="origin"></app-gene-age>
                     </div>
                   </div>
+
                   <div class="type__inner">
                     <div class="type__title">
                       {{ 'ncbi_homologs' | translate }}
                     </div>
                     <div class="type__value">
-                      {{ gene.homologueTaxon || ('gene_page_no_data' | translate) }}
+                      <app-gene-age [gene]="gene" show="homologs"></app-gene-age>
                     </div>
                   </div>
                 </div>
