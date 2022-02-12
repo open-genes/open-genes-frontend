@@ -214,7 +214,7 @@
                     </div>
 
                     <ul class="orthologs">
-                      <ng-container *ngFor="let item of gene.ortholog">
+                      <ng-container *ngFor="let item of gene.ortholog | slice: 0:orthologsMaxItems">
                         <li *ngIf="item.species?.commonName || item.species?.latinName"
                             class="ortholog">
                           <div class="ortholog__species">
@@ -235,6 +235,21 @@
                         </li>
                       </ng-container>
                     </ul>
+
+                    <div *ngIf="gene.ortholog.length > orthologsMaxItemsToShow"
+                         class="show-more __mt-10">
+                      <button *ngIf="orthologsMaxItems !== orthologsMaxItemsToShow"
+                              class="btn show-more__button"
+                              (click)="orthologsMaxItems = orthologsMaxItemsToShow">
+                        {{ "show_less" | translate }}
+                      </button>
+
+                      <button *ngIf="orthologsMaxItems == orthologsMaxItemsToShow"
+                              class="btn show-more__button"
+                              (click)="orthologsMaxItems = gene.ortholog.length">
+                        {{ "show_more" | translate }}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

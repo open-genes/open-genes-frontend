@@ -45,6 +45,8 @@ export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDes
   public isUiHintsSettingOn: boolean;
   public isInFavourites: boolean;
   public filterTypes = FilterTypesEnum;
+  public orthologsMaxItemsToShow = 9;
+  public orthologsMaxItems: number = this.orthologsMaxItemsToShow;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
