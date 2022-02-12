@@ -17,15 +17,10 @@
   li {
     list-style: none;
     float: left;
-    margin: 5px;
 
     &:not(:last-child)::after {
       content: "/";
       color: $color-gray;
-    }
-
-    &:last-child {
-      margin-left: 0;
     }
   }
 }
