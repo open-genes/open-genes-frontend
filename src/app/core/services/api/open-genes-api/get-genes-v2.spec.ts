@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApiService } from '../open-genes-api.service';
 import { ApiResponse } from '../../../models/api-response.model';
 import { Genes } from '../../../models';
@@ -19,14 +19,14 @@ describe('ApiServiceTest', () => {
     apiService = TestBed.inject(ApiService);
   });
 
-  it('getGenesV2 method should return correct data structure', () => {
+  it('api/gene/search endpoint response has a correct data structure', () => {
     apiService.getGenesV2().subscribe((response: ApiResponse<Genes>) => {
       void expect(response).toContain('items');
       void expect(response).toContain('options');
     });
   });
 
-  it('Subscribed Genes has same keys as mocked Genes', () => {
+  it('api/gene/search endpoint response items have all the expected fields', () => {
     apiService.getGenesV2().subscribe((response: ApiResponse<Genes>) => {
       const genes = response.items[0];
       for (const key in mockedGenes) {
@@ -35,7 +35,7 @@ describe('ApiServiceTest', () => {
     });
   });
 
-  it('getGenesV2 method options have the same structure as subscribed', () => {
+  it('api/gene/search endpoint response options have an expected data structure', () => {
     apiService.getGenesV2().subscribe((response: ApiResponse<Genes>) => {
       const options = response.options;
       for (const key in mockedOptions) {
