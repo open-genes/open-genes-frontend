@@ -1,0 +1,79 @@
+@import '../../styles';
+
+// GENE EXPRESSION CHART
+.expression {
+  .expression__rows {
+    margin-top: 5px;
+  }
+
+  .expression__row {
+    font-size: 0;
+
+    .row__name,
+    .row__value {
+      display: inline-block;
+      vertical-align: middle;
+      @include resolution_tablet-and-up {
+        width: 50%;
+      }
+      @include resolution_smartphone {
+        width: 100%;
+      }
+    }
+
+    .row__name {
+      font-size: $font-size-bigger;
+      font-weight: $font-weight-medium;
+      color: $color-black;
+
+      @include resolution_tablet-and-up {
+        padding-right: 10px;
+      }
+      @include resolution_smartphone {
+        margin-bottom: 5px;
+      }
+    }
+
+    .row__value {
+      height: 20px;
+      overflow: hidden;
+      position: relative;
+      background-color: $color-general-light;
+      border-radius: 3px;
+
+      .value__bar {
+        height: 100%;
+        background-color: #7673d1;
+        max-width: 100%;
+      }
+
+      .value__rpkm {
+        position: absolute;
+        top: 1px;
+        left: 10px;
+        z-index: 1;
+        font-size: $font-size-smaller;
+        color: #fff;
+        text-shadow: rgba($color-black, .25) 1px 0,
+        rgba($color-black, .25) 1px 1px,
+        rgba($color-black, .25) 0 1px,
+        rgba($color-black, .25) -1px 1px,
+        rgba($color-black, .25) -1px 0,
+        rgba($color-black, .25) -1px -1px,
+        rgba($color-black, .25) 0 -1px,
+        rgba($color-black, .25) 1px -1px;
+      }
+
+      &--minimum {
+        .value__rpkm {
+          color: $color-indent;
+          text-shadow: none;
+        }
+      }
+    }
+  }
+
+  .expression__row + .expression__row {
+    margin-top: 10px;
+  }
+}
