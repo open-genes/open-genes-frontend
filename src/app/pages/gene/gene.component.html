@@ -190,14 +190,9 @@
                       <span class="fa far fa-info-circle"
                             *ngIf="isUiHintsSettingOn"
                             (click)="onShowUiHints($event)"></span>
-
                     </div>
                     <div class="type__value">
                       {{ gene?.origin?.phylum || ('gene_page_no_data' | translate) }}
-                    </div>
-                    <div class="type__value">
-                      {{ gene?.origin?.age }}
-                      <small *ngIf="gene?.origin?.age">{{ 'million_years' | translate }}</small>
                     </div>
                   </div>
                   <div class="type__inner">
@@ -212,16 +207,31 @@
 
                 <div
                   *ngIf="isAnyOrtholog"
-                  class="age__type age__orthologs"> <!-- TODO: отображается пустое, приходит {"":""} -->
+                  class="age__type age__orthologs">
                   <div class="type__inner">
                     <div class="type__title">
                       {{ "gene_page_title_orthologs" | translate }}
                     </div>
 
-                    <ul class="list">
+                    <ul class="orthologs">
                       <ng-container *ngFor="let item of gene.ortholog">
-                        <li *ngIf="item.species?.commonName">
-                          <span [innerHTML]="item.species.commonName | orthologLinks: item"></span> <span class="alias">{{ item.symbol }}</span>
+                        <li *ngIf="item.species?.commonName || item.species?.latinName"
+                            class="ortholog">
+                          <div class="ortholog__species">
+                            <div *ngIf="item.species.latinName"
+                                 class="latin-name"
+                                  [innerHTML]="item.species.latinName | orthologLinkWrapper: item:'link':null"
+                            ></div>
+
+                            <div *ngIf="item.species.commonName && item.species.commonName !== item.species.latinName"
+                                 class="common-name">
+                              {{ item.species.commonName }}
+                            </div>
+                          </div>
+
+                          <div class="ortholog__gene"
+                               [innerHTML]="item.symbol | orthologLinkWrapper: item:'alias':{el: 'span', className: 'alias'}">
+                          </div>
                         </li>
                       </ng-container>
                     </ul>

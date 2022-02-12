@@ -1,20 +1,30 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'orthologLinks',
+  name: 'orthologLinkWrapper',
 })
-export class OrthologLinksPipe implements PipeTransform {
-  transform(wholeText: unknown, item: any): string {
-    return this.parseUrl(wholeText, item);
+export class OrthologLinkWrapperPipe implements PipeTransform {
+  transform(wholeText: unknown, item: any, className: string, ifFalse: { el: string; className: string }): string {
+    return this.wrapOrthologIntoLink(wholeText, item, className, ifFalse);
   }
 
-  private parseUrl(wholeText, item: any): string {
+  private wrapOrthologIntoLink(
+    wholeText,
+    item: any,
+    className: string,
+    alternativeWrapper: { el: string; className: string }
+  ): string {
     if (
       item.species?.latinName.toLowerCase().includes('drosophila') &&
       item.externalBaseName.toLowerCase() == 'flybase'
     ) {
       const url = `https://flybase.org/reports/${item.externalBaseId}`;
-      return wholeText.replace(wholeText, `<a href="${url}" target="_blank" class="link">${wholeText}</a>`);
+      return wholeText.replace(wholeText, `<a href="${url}" target="_blank" class="${className}">${wholeText}</a>`);
+    } else if (alternativeWrapper) {
+      return wholeText.replace(
+        wholeText,
+        `<${alternativeWrapper.el} class="${alternativeWrapper.className}">${wholeText}</${alternativeWrapper.el}>`
+      );
     }
 
     return wholeText;

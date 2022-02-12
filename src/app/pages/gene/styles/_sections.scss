@@ -48,7 +48,7 @@
 
         .type__value {
           flex: 1 1 auto;
-          font-size: 24px;
+          font-size: 20px;
           color: $color-black;
 
           small {
@@ -62,22 +62,60 @@
           padding-left: 10px;
         }
 
-        &.age__rating {
-          .type__title {
-            margin-top: -3px;
-          }
-
-          .type__value {
-            flex-grow: 0;
-            flex-basis: 36px;
-          }
-        }
         &.age__orthologs {
-          .list {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+          flex: 0 0 100%;
 
-            @include resolution_smartphone {
+          .orthologs {
+            display: grid;
+            grid-column-gap: 10px;
+            grid-row-gap: 10px;
+            margin-top: 20px;
+
+            li.ortholog {
+              display: inline-grid;
+              grid-template-columns: auto 120px;
+              grid-column-gap: 10px;
+              background-color: $color-gray-very-light;
+              padding: 5px 10px;
+              border-radius: $border-radius-medium;
+
+              .ortholog__species {
+                .latin-name,
+                .common-name {
+                  font-weight: $font-weight-medium;
+                  color: $color-black;
+
+                  &:first-letter {
+                    text-transform: capitalize;
+                  }
+                }
+
+                .latin-name + .common-name {
+                  margin-top: .2em;
+                  font-size: .8em;
+                  color: $color-gray;
+                  font-style: italic;
+                  font-weight: $font-weight-regular;
+                }
+              }
+              .ortholog__gene {
+                text-align: right;
+
+                ::ng-deep .alias {
+                  margin-right: 0;
+                }
+              }
+            }
+
+            @include resolution_desktop-and-up {
+              grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            @include resolution_phablet-and-tablet {
+              grid-template-columns: 1fr 1fr
+            }
+
+            @include resolution_phone {
               grid-template-columns: 1fr
             }
           }
