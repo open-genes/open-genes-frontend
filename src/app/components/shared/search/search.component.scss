@@ -59,6 +59,15 @@ $input-border-radius: 5px;
     justify-content: flex-start;
   }
 
+  &__progress {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    border-radius: 0 0 3px 3px;
+  }
+
   // Field
   &__field {
     appearance: none;
@@ -231,7 +240,17 @@ $input-border-radius: 5px;
     }
   }
 
-  // TODO: сделать без переопределений
+  &--disabled {
+    cursor: default;
+    pointer-events: none;
+
+    .search-form__field,
+    .search-form__submit {
+      opacity: .5;
+    }
+  }
+
+  // TODO: refactor without redefinition
   @include resolution_smartphone-and-tablet {
     &--active {
       position: fixed;

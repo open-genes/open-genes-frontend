@@ -6,9 +6,11 @@ import { ToMap } from './to-map';
 export abstract class WindowWidth extends ToMap {
   public subscription$ = new Subject();
   public isMobile: boolean;
+  public isTablet: boolean;
   public isTouchDevice = false;
   public breakpoints = {
     desktop: 1199.98,
+    mobile: 767.98,
   };
 
   protected constructor(public windowService: WindowService) {
@@ -25,14 +27,18 @@ export abstract class WindowWidth extends ToMap {
       .pipe(takeUntil(this.subscription$))
       .subscribe((width) => {
         this.isMobile = width <= this.breakpoints.desktop;
+        this.isTablet = width > this.breakpoints.mobile && width <= this.breakpoints.desktop;
         callback();
       });
   }
 
   protected detectWindowWidth(callback: any): void {
-    this.windowService.windowWidth$.pipe(takeUntil(this.subscription$)).subscribe((width) => {
-      this.isMobile = width <= this.breakpoints.desktop;
-      callback();
-    });
+    this.windowService.windowWidth$
+      .pipe(takeUntil(this.subscription$))
+      .subscribe((width) => {
+        this.isMobile = width <= this.breakpoints.desktop;
+        this.isTablet = width > this.breakpoints.mobile && width <= this.breakpoints.desktop;
+        callback();
+      });
   }
 }

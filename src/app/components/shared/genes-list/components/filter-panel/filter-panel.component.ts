@@ -3,7 +3,8 @@ import { FilterTypesEnum, SortEnum } from '../../services/filter-types.enum';
 import { FilterService } from '../../services/filter.service';
 import { GeneFieldsModalComponent } from '../gene-fields-modal/gene-fields-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Filter, Sort } from '../../services/filter.model';
+import { Sort } from '@angular/material/sort';
+import { Filter } from '../../services/filter.model';
 import { SettingsService } from '../../../../../core/services/settings.service';
 import { Settings, SettingsEnum } from '../../../../../core/models/settings.model';
 
@@ -17,13 +18,12 @@ export class FilterPanelComponent {
   @Input() isMobile: boolean;
   @Input() isGoTermsMode: boolean;
 
-  @Output() sortItem: EventEmitter<string> = new EventEmitter();
+  @Output() sortItem: EventEmitter<Sort> = new EventEmitter<Sort>();
   @Output() clearFilterItem: EventEmitter<any> = new EventEmitter();
 
   public filterTypes = FilterTypesEnum;
   public filters: Filter = this.filterService.filters;
   public sortEnum = SortEnum;
-  public sort: Sort = this.filterService.sort;
   public isClear$ = this.filterService.isClearFiltersBtnShown;
 
   private settingsKey = SettingsEnum;
@@ -32,8 +32,9 @@ export class FilterPanelComponent {
   constructor(
     private filterService: FilterService,
     private settingsService: SettingsService,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+  ) {
+  }
 
   /**
    * Send clear filter item
@@ -45,8 +46,8 @@ export class FilterPanelComponent {
   /**
    * Send sort item
    */
-  public sortBy(name: string) {
-    this.sortItem.emit(name);
+  public sortBy(event: Sort) {
+    this.sortItem.emit(event);
   }
 
   /**

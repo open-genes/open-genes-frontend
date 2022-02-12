@@ -4,6 +4,7 @@ $uniprot-color: lighten(#5caecd, 15%);
 $disgenet-color: lighten(#7774D1, 10%);
 $biogrid-color: $color-orange-300;
 $ensembl-color: #697ec9;
+$open-genes-color: $color-general;
 
 $brand-colors: (
   'entrez': $entrez-color,
@@ -12,6 +13,7 @@ $brand-colors: (
   'disgenet': $disgenet-color,
   'biogrid': $biogrid-color,
   'ensembl': $ensembl-color,
+  'open-genes': $open-genes-color,
 );
 
 @each $brand-name, $brand-color in $brand-colors {

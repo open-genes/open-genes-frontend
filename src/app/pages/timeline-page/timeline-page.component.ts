@@ -41,10 +41,11 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
 
   private getGenes() {
     this.apiService
-      .getGenes()
+      .getGenesV2()
       .pipe(takeUntil(this.subscription$))
       .subscribe(
-        (genes) => {
+        (filteredGenes) => {
+          const genes = filteredGenes.items;
           let timestampChanged,
             timestampCreated = 1562960035; // July 12 2019 - date when the first data was added
 

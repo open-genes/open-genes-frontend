@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Filter, Sort } from './filter.model';
+import { Filter } from './filter.model';
 import { FilterTypesEnum } from './filter-types.enum';
 import { GenesListSettings } from '../genes-list-settings.model';
-import { FilteredGenes } from '../../../../core/models';
+import { Genes } from '../../../../core/models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { Pagination } from '../../../../core/models/settings.model';
 import { SettingsService } from '../../../../core/services/settings.service';
+import { Sort } from '@angular/material/sort';
+import { ApiResponse } from '../../../../core/models/api-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,10 +23,7 @@ export class FilterService {
   public filterResult: Observable<Filter> = this.filterChanges$.asObservable();
   public isClearFiltersBtnShown = new BehaviorSubject<boolean>(false);
 
-  public sort: Sort = {
-    byName: false,
-    byAge: false,
-  };
+  public sortParams: Sort;
 
   public filters: Filter = {
     byAgeRelatedProcess: [],
@@ -91,34 +90,15 @@ export class FilterService {
     this.areMoreThan2FiltersApplied();
   }
 
-  public setQueryParams(filterParams: Filter): void {
-    const queryParams = {};
-    for (const key in filterParams) {
-      if (filterParams[key]) {
-        if (Array.isArray(filterParams[key])) {
-          if (filterParams[key].length) {
-            queryParams[key] = this.filters[key].join();
-          }
-        } else {
-          queryParams[key] = filterParams[key];
-        }
-      }
-    }
-
-    this.router.navigate([''], {
-      queryParams: queryParams,
-    });
-  }
-
-  public updateList(filterParams: Filter): void {
-    this.filterChanges$.next(filterParams);
-  }
-
   public onLoadMoreGenes(pagesTotal: number): void {
     if (this.pagination.page < pagesTotal) {
       this.pagination.page++;
     }
     this.updateList(this.filters);
+  }
+
+  public updateList(filterParams: Filter): void {
+    this.filterChanges$.next(filterParams);
   }
 
   // Clear
@@ -159,8 +139,6 @@ export class FilterService {
         this.filters.byProteinClass = [];
         break;
       default:
-        this.sort.byName = false;
-        this.sort.byAge = false;
         this.filters.byAgeRelatedProcess = [];
         this.filters.byDiseases = [];
         this.filters.byDiseaseCategories = [];
@@ -173,6 +151,36 @@ export class FilterService {
     this.pagination.page = 1;
 
     this.areMoreThan2FiltersApplied();
+  }
+
+  public getSortedAndFilteredGenes(): Observable<ApiResponse<Genes>> {
+    let params = new HttpParams()
+      .set('lang', this.translate.currentLang)
+      .set('page', this.pagination.page)
+      .set('pageSize', this.pagination.pageSize);
+
+    if (this.filters) {
+      Object.entries(this.filters).forEach(([key, value]) => {
+        if (value) {
+          if (Array.isArray(value)) {
+            if (value.length) {
+              const str = value.join();
+              params = params.set(`${key}`, `${str}`);
+            }
+          } else {
+            params = params.set(`${key}`, `${value}`);
+          }
+        }
+      });
+    }
+
+    if (this.sortParams && this.sortParams.direction) {
+      params = params
+        .set('sortBy', this.sortParams.active)
+        .set('sortOrder', this.sortParams.direction.toUpperCase())
+    }
+
+    return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });
   }
 
   private areMoreThan2FiltersApplied(): void {
@@ -189,25 +197,22 @@ export class FilterService {
     this.setQueryParams(this.filters);
   }
 
-  public getFilteredGenes(filterParams: Filter): Observable<FilteredGenes> {
-    let params = new HttpParams()
-      .set('lang', this.translate.currentLang)
-      .set('page', this.pagination.page)
-      .set('pageSize', this.pagination.pageSize);
-
-    Object.entries(filterParams).forEach(([key, value]) => {
-      if (value) {
-        if (Array.isArray(value)) {
-          if (value.length) {
-            const str = value.join();
-            params = params.set(`${key}`, `${str}`);
+  private setQueryParams(filterParams: Filter): void {
+    const queryParams = {};
+    for (const key in filterParams) {
+      if (filterParams[key]) {
+        if (Array.isArray(filterParams[key])) {
+          if (filterParams[key].length) {
+            queryParams[key] = this.filters[key].join();
           }
         } else {
-          params = params.set(`${key}`, `${value}`);
+          queryParams[key] = filterParams[key];
         }
       }
-    });
+    }
 
-    return this.http.get<FilteredGenes>(`/api/gene/search`, { params });
+    this.router.navigate([''], {
+      queryParams: queryParams,
+    });
   }
 }

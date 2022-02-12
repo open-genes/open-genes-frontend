@@ -6,6 +6,7 @@ body {
   display: table;
   height: 100%;
   width: 100%;
+  min-width: $smartphone;
   position: absolute;
   top: 0;
   bottom: 0;

@@ -48,11 +48,11 @@ export class NewsComponent implements OnInit, OnDestroy {
 
   private getGenes() {
     this.apiService
-      .getGenes()
+      .getGenesV2()
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((genes) => {
-        this.genes = genes;
-        this.geneListForNewsFeed = genes.map((gene) => {
+      .subscribe((filteredGenes) => {
+        this.genes = filteredGenes.items;
+        this.geneListForNewsFeed = filteredGenes.items.map((gene) => {
           return gene.symbol;
         });
         this.cdRef.markForCheck();

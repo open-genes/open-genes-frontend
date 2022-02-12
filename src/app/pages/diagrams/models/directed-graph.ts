@@ -1,5 +1,5 @@
 import { AssociatedDiseaseCategories } from '../../../core/models/open-genes-api/associated-diseases.model';
-import { FunctionalClusters } from '../../../core/models';
+import { AgeRelatedProcesses } from '../../../core/models';
 import { Origin } from '../../../core/models/open-genes-api/origin.model';
 
 export interface Node {
@@ -23,6 +23,6 @@ export interface DiagramGenes {
   homologueTaxon: string;
   familyOrigin: Origin;
   originId: number;
-  functionalClusters: FunctionalClusters[];
+  functionalClusters: AgeRelatedProcesses[];
   diseaseCategories: AssociatedDiseaseCategories;
 }

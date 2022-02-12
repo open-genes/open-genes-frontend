@@ -16,8 +16,8 @@
   </div>
 
   <div class="article-modal__body">
-    <article *ngFor="let item of data?.modalData?.description">
-      <span [innerHTML]="item['content']?.text | safe: 'html'"></span>
+    <article *ngFor="let item of article">
+      <span [innerHTML]="item?.text | safe: 'html'"></span>
     </article>
     <div class="article-modal__button-wrap btn-wrap show-more">
       <a class="btn show-more__button"

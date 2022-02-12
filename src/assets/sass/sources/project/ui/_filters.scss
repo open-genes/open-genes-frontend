@@ -21,10 +21,9 @@ $element-base-color: $color-general;
   position: relative;
   line-height: 26px;
   font-size: 12px;
-  @include text-overflow;
   transition: background-color .15s ease-in;
   cursor: pointer;
-  padding: 0 25px 0 8px;
+  padding: 0 8px 0 8px;
   border-radius: 15px;
   background-color: lighten($element-base-color, 10%);
   user-select: none;
@@ -37,9 +36,10 @@ $element-base-color: $color-general;
     height: 26px;
     line-height: inherit;
     font-size: 16px;
-    position: absolute;
-    top: 0;
-    right: 8px;
+    position: relative;
+    top: -1px;
+    vertical-align: middle;
+    margin-left: 5px;
 
     &.fa-sort-down {
       line-height: 20px;
@@ -59,13 +59,5 @@ $element-base-color: $color-general;
     &:hover {
       background-color: $element-base-color;
     }
-  }
-
-  @include resolution_desktop-and-up {
-    max-width: 150px;
-  }
-
-  @include resolution_smartphone-and-tablet {
-    max-width: 90px;
   }
 }

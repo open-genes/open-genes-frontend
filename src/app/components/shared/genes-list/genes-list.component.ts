@@ -2,13 +2,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
   OnDestroy,
   OnInit,
+  Output,
 } from '@angular/core';
 import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
-import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
 import { FilterService } from './services/filter.service';
 import { FilterTypesEnum, SortEnum } from './services/filter-types.enum';
@@ -16,11 +17,18 @@ import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { FileExportService } from '../../../core/services/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
-import { Filter, Sort } from './services/filter.model';
+import { Filter } from './services/filter.model';
 import { SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { FavouritesService } from '../../../core/services/favourites.service';
 import { ActivatedRoute } from '@angular/router';
+import { Sort } from '@angular/material/sort';
+import { ApiResponse } from '../../../core/models/api-response.model';
+
+interface FoundGenes {
+  foundGenes: string[];
+  notFoundGenes: string[];
+}
 
 @Component({
   selector: 'app-genes-list',
@@ -31,7 +39,7 @@ import { ActivatedRoute } from '@angular/router';
 export class GenesListComponent implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
-  @Input() notFoundAndFoundGenes: any;
+  @Input() notFoundAndFoundGenes: FoundGenes;
 
   @Input() set setSearchMode(searchMode: SearchMode) {
     if (searchMode) {
@@ -45,6 +53,12 @@ export class GenesListComponent implements OnInit, OnDestroy {
   @Input() set genesList(genes: Genes[]) {
     if (genes) {
       if (genes.length) {
+        if (genes[0] === null) {
+          this.searchedData = [];
+          this.isGoSearchPerformed = this.isGoTermsMode;
+          return;
+        }
+
         if (genes.length > this.genesPerPage) {
           this.currentPage = 1;
           this.genesFromInput = genes;
@@ -59,26 +73,21 @@ export class GenesListComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (genes === null) {
-      this.searchedData = [];
-      this.isGoSearchPerformed = this.isGoTermsMode;
-    }
     this.downloadSearch(this.searchedData);
   }
 
   public searchedData: Genes[] = [];
   public filterTypes = FilterTypesEnum;
   public sortEnum = SortEnum;
-  public sort: Sort = this.filterService.sort;
   public searchMode: SearchMode;
-
-  public isLoading = false;
   public isTableView: boolean;
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
   public downloadJsonLink: string | SafeResourceUrl = '#';
   public currentPage: number;
   public pageOptions: any;
+  public isLoading = false;
+  @Output() loading = new EventEmitter<boolean>();
 
   private cachedData: Genes[] = [];
   private retrievedSettings: Settings;
@@ -89,15 +98,15 @@ export class GenesListComponent implements OnInit, OnDestroy {
   private snackBarRef: MatSnackBarRef<SnackBarComponent>;
 
   constructor(
-    private readonly apiService: ApiService,
     private filterService: FilterService,
     private settingsService: SettingsService,
     private favouritesService: FavouritesService,
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
-    private aRoute: ActivatedRoute
-  ) {}
+    private aRoute: ActivatedRoute,
+  ) {
+  }
 
   ngOnInit(): void {
     this.aRoute.queryParams.subscribe((params) => {
@@ -128,34 +137,39 @@ export class GenesListComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.subscription$),
         switchMap((filters: Filter) => {
-          if (!this.isGoTermsMode) {
+          if (this.isGoTermsMode) {
+            this.isLoading = false;
+            this.loading.emit(false);
+          } else {
             this.isLoading = true;
+            this.loading.emit(true);
           }
           this.searchedData = [];
           this.isGoSearchPerformed = !this.isGoTermsMode;
-          return this.isGoTermsMode ? EMPTY : this.filterService.getFilteredGenes(filters);
+          return this.isGoTermsMode ? EMPTY : this.filterService.getSortedAndFilteredGenes();
         })
       )
       .subscribe(
-        (filteredData) => {
-          // TODO: add an interface for the whole response
+        (res: ApiResponse<Genes>) => {
           this.currentPage = this.filterService.pagination.page;
           if (this.currentPage == 1) {
             this.cachedData = [];
-            this.cachedData.push(...filteredData.items);
+            this.cachedData.push(...res.items);
             this.searchedData = [...this.cachedData];
           } else {
-            this.cachedData.push(...filteredData.items);
+            this.cachedData.push(...res.items);
             this.searchedData = [...this.cachedData];
           }
           this.downloadSearch(this.searchedData);
-          this.pageOptions = filteredData.options.pagination;
+          this.pageOptions = res.options.pagination;
           this.isLoading = false;
+          this.loading.emit(false);
           this.cdRef.markForCheck();
         },
         (error) => {
           console.log(error);
           this.isLoading = false;
+          this.loading.emit(false);
           this.cdRef.markForCheck();
         }
       );
@@ -213,40 +227,43 @@ export class GenesListComponent implements OnInit, OnDestroy {
   /**
    * Sorting genes list
    */
-  public sortBy(evt: string): void {
-    // TODO: use enum types here
-    if (evt === this.sortEnum.name) {
-      if (this.sort.byName) {
-        this.reverse();
-      } else {
-        this.sortByName();
+  public sortBy(sort: Sort): void {
+    const unSortedData = this.searchedData.slice();
+
+    if (sort.active !== this.sortEnum.byCriteriaQuantity) {
+      if (!sort.active || sort.direction === '') {
+        this.searchedData = this.cachedData;
+        return;
       }
-      this.sort.byName = !this.sort.byName;
+      this.searchedData = unSortedData.sort((a, b) => {
+        const isAsc = sort.direction === 'asc';
+        switch (sort.active) {
+          case this.sortEnum.byName:
+            return this.compare((a.symbol + a.name).toLowerCase(), (b.symbol + b.name).toLowerCase(), isAsc);
+          case this.sortEnum.byAge:
+            return this.compare(a.familyOrigin?.order, b.familyOrigin?.order, isAsc);
+          default:
+            return 0;
+        }
+      });
     } else {
-      if (this.sort.byAge) {
-        this.reverse();
-      } else {
-        this.sortByAge();
-      }
-      this.sort.byAge = !this.sort.byAge;
+      this.filterService.sortParams = sort;
+      this.isLoading = true;
+      this.searchedData = [];
+      this.filterService
+        .getSortedAndFilteredGenes()
+        .subscribe((sortedGenes) => {
+          this.searchedData = sortedGenes.items;
+          this.isLoading = false;
+          this.cdRef.markForCheck();
+        });
     }
-    this.cdRef.markForCheck();
+
+
   }
 
-  private reverse() {
-    this.searchedData.reverse();
-  }
-
-  private sortByName() {
-    this.searchedData.sort((a, b) => {
-      const A = (a.symbol + a.name).toLowerCase();
-      const B = (b.symbol + b.name).toLowerCase();
-      return A > B ? 1 : A < B ? -1 : 0;
-    });
-  }
-
-  private sortByAge() {
-    this.searchedData.sort((a, b) => a.familyOrigin?.order - b.familyOrigin?.order);
+  private compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
   /**

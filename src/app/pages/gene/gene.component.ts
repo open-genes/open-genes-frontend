@@ -125,7 +125,7 @@ export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDes
             this.isGeneCandidate = false;
           } else if (
             (!!this.gene.researches?.proteinRegulatesOtherGenes &&
-              this.gene.researches.proteinRegulatesOtherGenes.length !== 0) ||
+              this.gene.researches.proteinRegulatesOtherGenes !== 0) ||
             (!!this.gene.researches?.additionalEvidences && this.gene.researches.additionalEvidences.length !== 0)
           ) {
             this.isGeneCandidate = true;
@@ -135,14 +135,14 @@ export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDes
           this.isHpa = this.gene.human_protein_atlas !== '';
 
           this.isAnyContent =
-            !!this.gene?.commentEvolution ||
-            !!this.gene?.proteinDescriptionUniProt ||
-            !!this.gene?.commentCause ||
-            this.gene?.commentAging.length !== 0 ||
+            this.gene?.commentEvolution ||
+            this.gene?.proteinDescriptionUniProt ||
+            this.gene?.commentCause.length !== 0 ||
+            this.gene?.commentAging ||
             this.isAnyResearchFilled ||
             this.gene?.expression.length !== 0 ||
             this.isAnyOrtholog ||
-            !!this.gene?.terms;
+            this.gene?.terms;
 
           this.isAnyGoCategory =
             this.gene?.terms.biological_process.length >= 1 ||
@@ -152,7 +152,7 @@ export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDes
           this.isNcbiDescription = this.gene?.descriptionNCBI.length !== 0;
 
           this.isLocationData =
-            !!this.gene?.band?.length || !!this.gene?.locationStart  || !!this.gene?.locationEnd ;
+            this.gene?.band?.length || this.gene?.locationStart?.length || this.gene?.locationEnd?.length;
 
           this.isInFavourites = this.favouritesService.isInFavourites(this.gene.id);
 

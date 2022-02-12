@@ -29,6 +29,15 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Inject(Document) public document: Document;
   @Input() genesLength: number;
   @Input() showTitle: boolean;
+  @Input() showProgressBar: boolean;
+  @Input() set isDisabled(value: boolean) {
+    this.formDisabled = value;
+    if (value) {
+      this.searchForm.controls['searchField'].disable();
+    } else {
+      this.searchForm.controls['searchField'].enable();
+    }
+  }
 
   @Input() set genesList(genes: any) {
     if (genes) {
@@ -51,6 +60,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   public searchedData: Genes[];
   public searchForm: FormGroup;
   public searchMode: SearchMode;
+  public formDisabled: boolean;
   public showSearchResult = false;
   public highlightText: string;
 

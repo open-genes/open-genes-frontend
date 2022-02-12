@@ -1,8 +1,10 @@
- <app-breadcrumbs></app-breadcrumbs>
 <div class="page gene-page" *ngIf="gene">
   <div class="page__inner __pb-60">
     <section class="wrapper gene-page__header">
       <div class="container-fluid">
+        <div class="row no-gutters __mb-10">
+          <app-breadcrumbs></app-breadcrumbs>
+        </div>
         <div class="row no-gutters">
           <div class="col col-12 header__title">
             <div class="title__caption">
@@ -64,59 +66,60 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2">
-          <app-sidebar>
-            <div class="__not-flex __w-100">
-              <b>{{ 'gene_page_title_contents' | translate }}</b>
+        <div class="col-12 __mb-30">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ 'gene_page_title_contents' | translate }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
 
-              <mat-nav-list *ngIf="isAnyContent">
-                <a mat-list-item
-                   *ngIf="gene.commentEvolution"
-                   [routerLink]="['/gene', symbol]" fragment="evolution">
-                  {{ 'gene_page_title_evolution' | translate }}
-                </a>
+            <mat-nav-list *ngIf="isAnyContent">
+              <a mat-list-item
+                 *ngIf="gene.commentEvolution"
+                 [routerLink]="['/gene', symbol]" fragment="evolution">
+                {{ 'gene_page_title_evolution' | translate }}
+              </a>
 
-                <a mat-list-item
-                   *ngIf="gene.proteinDescriptionOpenGenes?.length !== 0"
-                   [routerLink]="['/gene', symbol]" fragment="description-open-genes">
-                  {{ 'gene_page_title_protein_description_og' | translate }}
-                </a>
+              <a mat-list-item
+                 *ngIf="gene.proteinDescriptionOpenGenes?.length !== 0"
+                 [routerLink]="['/gene', symbol]" fragment="description-open-genes">
+                {{ 'gene_page_title_protein_description_og' | translate }}
+              </a>
 
-                <a mat-list-item
-                   *ngIf="gene.proteinDescriptionUniProt?.length !== 0"
-                   [routerLink]="['/gene', symbol]" fragment="description-uniprot">
-                  {{ 'gene_page_title_protein_description_uniprot' | translate }}
-                </a>
+              <a mat-list-item
+                 *ngIf="gene.proteinDescriptionUniProt?.length !== 0"
+                 [routerLink]="['/gene', symbol]" fragment="description-uniprot">
+                {{ 'gene_page_title_protein_description_uniprot' | translate }}
+              </a>
 
-                <a mat-list-item
-                   *ngIf="gene.expression.length !== 0"
-                   [routerLink]="['/gene', symbol]" fragment="expression">
-                  {{ 'gene_page_title_expression' | translate }}
-                </a>
+              <a mat-list-item
+                 *ngIf="gene.expression.length !== 0"
+                 [routerLink]="['/gene', symbol]" fragment="expression">
+                {{ 'gene_page_title_expression' | translate }}
+              </a>
 
-                <a mat-list-item
-                   *ngIf="
-                    gene.terms.biological_process.length >= 1 ||
-                    gene.terms.cellular_component.length >= 1 ||
-                    gene.terms.molecular_activity.length >= 1"
-                   [routerLink]="['/gene', symbol]" fragment="terms">
-                  Gene Ontology
-                </a>
+              <a mat-list-item
+                 *ngIf="
+                  gene.terms.biological_process.length >= 1 ||
+                  gene.terms.cellular_component.length >= 1 ||
+                  gene.terms.molecular_activity.length >= 1"
+                 [routerLink]="['/gene', symbol]" fragment="terms">
+                Gene Ontology
+              </a>
 
-                <a mat-list-item
-                   *ngIf="isHpa"
-                   [routerLink]="['/gene', symbol]" fragment="human-protein-atlas">
-                  Human Protein Atlas
-                </a>
-              </mat-nav-list>
-            </div>
-          </app-sidebar>
+              <a mat-list-item
+                 *ngIf="isHpa"
+                 [routerLink]="['/gene', symbol]" fragment="human-protein-atlas">
+                Human Protein Atlas
+              </a>
+            </mat-nav-list>
+          </mat-expansion-panel>
         </div>
 
-        <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-8">
+        <div class="col-12">
           <div class="page-wrapper">
-            <section class="wrapper gene-page__age">
-              <div class="gene-page__annotation">
+            <section class="wrapper gene-page__annotation">
                 <div class="row no-gutters annotation__row">
                   <div class="row__title col-xs-12 col-md-5">
                     {{ 'phylogeny' | translate }}:
@@ -175,8 +178,7 @@
                     {{ getExpressionLocaleKey(gene.expressionChange) | translate }}
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="wrapper gene-page__age">
               <div class="age__types">
@@ -266,7 +268,7 @@
             </section>
 
             <section class="wrapper gene-page__articles">
-              <div class="__w-content articles__content"
+              <div class="__w-content-fluid articles__content"
                    *ngIf="isAnyContent;
                       else noContent">
 
@@ -345,7 +347,7 @@
                   </h3>
                   <app-human-protein-atlas
                     [gene]="gene"
-                    [hpa]="gene.human_protein_atlas"
+                    [hpa]="gene.humanProteinAtlas"
                   ></app-human-protein-atlas>
                 </section>
               </div>

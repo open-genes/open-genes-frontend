@@ -78,5 +78,14 @@
       font-size: calc(0.5vw + #{$font-size-bigger});
       font-weight: $font-weight-medium;
     }
+
+    p {
+      margin-top: .1em;
+      color: $color-gray;
+
+      span {
+        vertical-align: baseline;
+      }
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { increaseLifespan } from './researches.model';
+import { PurpleTable } from './researches.model';
 
 export interface GenesWLifespanResearches {
   id: number;
@@ -9,6 +9,6 @@ export interface GenesWLifespanResearches {
   ensembl: string;
   methylationCorrelation: string;
   researches: {
-    increaseLifespan: increaseLifespan[];
+    increaseLifespan: PurpleTable[];
   };
 }

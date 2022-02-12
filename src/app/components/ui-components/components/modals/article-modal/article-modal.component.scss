@@ -43,6 +43,17 @@
     }
     ::ng-deep {
       @include typography;
+
+      a:not(.btn) {
+        font-weight: $font-weight-medium;
+        color: $color-general;
+        text-decoration: underline;
+
+        &:hover,
+        &:active {
+          color: lighten(mix($color-general, $color-blue, 5%), 3%);
+        }
+      }
     }
   }
 

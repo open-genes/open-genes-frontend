@@ -46,7 +46,7 @@ export class FavouritesComponent implements OnInit, OnDestroy {
             this.favouriteGenesIds = idList;
             this.cdRef.markForCheck();
 
-            return this.apiService.getGenes();
+            return this.apiService.getGenesV2();
           }
 
           return EMPTY;
@@ -54,15 +54,15 @@ export class FavouritesComponent implements OnInit, OnDestroy {
         takeUntil(this.subscription$)
       )
       .subscribe(
-        (genes) => {
-          this.genes = genes;
+        (filteredGenes) => {
+          this.genes = filteredGenes.items;
           const queryParamsId = this.route.snapshot.queryParams.selected;
           const queryParamsIdSplit = queryParamsId?.split(',');
           if (queryParamsId) {
-            this.favouriteGenes = genes.filter((gene) => queryParamsIdSplit.includes(gene.id.toString()));
+            this.favouriteGenes = filteredGenes.items.filter((gene) => queryParamsIdSplit.includes(gene.id.toString()));
             this.isSharedList = true;
           } else {
-            this.favouriteGenes = genes.filter((gene) => this.favouriteGenesIds.includes(gene.id));
+            this.favouriteGenes = filteredGenes.items.filter((gene) => this.favouriteGenesIds.includes(gene.id));
           }
           this.cdRef.markForCheck();
         },

@@ -11,6 +11,7 @@ export enum FilterTypesEnum {
 }
 
 export enum SortEnum {
-  name = 'byName',
-  age = 'byAge',
+  byName = 'name',
+  byAge = 'age',
+  byCriteriaQuantity = 'criteriaQuantity',
 }
