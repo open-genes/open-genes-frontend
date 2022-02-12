@@ -1,7 +1,7 @@
 @import "../../styles";
 
 .table {
-  border-collapse: separate;
+  border-collapse: collapse;
   border-spacing: 0;
 
   a {
@@ -14,27 +14,19 @@
     }
   }
 
-  @mixin sticky {
-    position: sticky;
-    left: 0;
-    z-index: 2;
-  }
-
-  thead {
-    th:first-of-type {
-      @include sticky;
-    }
-  }
-
-  tr{
-    td:first-of-type {
-      @include sticky;
-      background-color: $color-white;
-    }
-  }
   th {
     position: relative;
+  }
 
+  td {
+    @include lists;
+
+    * + h6 {
+      margin-top: .8ex;
+    }
+  }
+
+  & > thead th {
     &:first-child {
       padding-left: 1em;
 
@@ -52,29 +44,35 @@
     }
   }
 
-  td {
-    @include lists;
-
-    * + h6 {
-      margin-top: .8ex;
-    }
-  }
-
   @each $class, $color in $research-tables {
-    &--#{$class} th:first-child::before {
+    &--#{$class} > thead th:first-child::before {
       background: $color;
     }
   }
 
-  &__dash {
+  @mixin placeholder {
     display: inline-block;
     vertical-align: middle;
     width: 100%;
     text-align: center;
     color: $color-gray;
 
-    &::before {
-      content: '—';
+    & + & {
+      display: none;
+    }
+  }
+
+  ::ng-deep {
+    .table__placeholder {
+      @include placeholder;
+    }
+
+    .table__dash {
+      @include placeholder;
+
+      &::before {
+        content: '—';
+      }
     }
   }
 }

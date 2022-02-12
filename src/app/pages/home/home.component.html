@@ -39,6 +39,7 @@
                 </div>
               </app-sidebar-item>
 
+              <ng-container *ngIf="!genesListIsLoading">
               <app-sidebar-item *ngIf="lastGenes">
                 <ng-container title>
                   {{ "main_page_last" | translate }}
@@ -51,7 +52,6 @@
                   [lastGenes]="lastGenes"
                 ></app-mini-cards>
               </app-sidebar-item>
-
               <app-sidebar-item>
                 <ng-container title>
                   {{ "articles_list_title" | translate }}
@@ -64,7 +64,7 @@
                   <app-articles-list
                     class="__h-100"
                     [isMiniMode]="true"
-                    [sliceTo]="2"
+                    [sliceTo]="1"
                     [showSkeleton]="showArticlesSkeleton"
                     (skeletonState)="showArticlesSkeleton = $event"
                   ></app-articles-list>
@@ -77,7 +77,6 @@
                 </ng-container>
 
               </app-sidebar-item>
-
               <app-sidebar-item>
                 <ng-container title>
                   {{ "news_list_title" | translate }}
@@ -90,8 +89,7 @@
                   <app-news-list
                     class="__pl-5 __pr-5"
                     [isMiniMode]="true"
-                    [genesList]="geneListForNewsFeed"
-                    [loadTotal]="2"
+                    [loadTotal]="1"
                     [showSkeleton]="showPubmedFeedSkeleton"
                     (skeletonState)="showPubmedFeedSkeleton = $event"
                   ></app-news-list>
@@ -104,6 +102,7 @@
                   ></app-skeleton>
                 </ng-container>
               </app-sidebar-item>
+              </ng-container>
             </app-sidebar>
           </div>
 
@@ -134,6 +133,10 @@
               [setSearchMode]="searchMode"
               [showFiltersPanel]="searchMode !== searchModeEnum.searchByGoTerms">
             </app-genes-list>
+
+            <app-spinner *ngIf="!genes"
+                         description="{{ 'spinner_loading_genes' | translate }}"
+            ></app-spinner>
           </div>
         </ng-container>
       </div>

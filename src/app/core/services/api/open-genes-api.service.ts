@@ -7,11 +7,13 @@ import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/op
 import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with-increase-lifespan-researches.model';
 import { GenesInHorvathClock } from '../../models/open-genes-api/genes-in-horvath-clock.model';
 import { ApiResponse } from '../../models/api-response.model';
+import { shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
+  private genes$: Observable<ApiResponse<Genes>>;
   private readonly currentLang: string;
 
   constructor(private http: HttpClient, private translate: TranslateService) {
@@ -25,14 +27,6 @@ export class ApiService {
 
   // Legacy API
 
-  getGenes(): Observable<ApiResponse<Genes>> {
-    return this.http.get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`);
-  }
-
-  getGenesV2(): Observable<ApiResponse<Genes>> {
-    return this.http.get<ApiResponse<Genes>>(`/api/gene/search`);
-  }
-
   getLastEditedGene(): Observable<Genes[]> {
     return this.http.get<Genes[]>(`/api/gene/by-latest`);
   }
@@ -45,8 +39,8 @@ export class ApiService {
     return this.http.get<Genes[]>(`/api/gene/by-expression-change/${expression}?lang=${this.currentLang}`);
   }
 
-  getGeneByHGNCsymbol(symbol: string): Observable<Gene[]> {
-    return this.http.get<Gene[]>(`/api/gene/${symbol}?lang=${this.currentLang}`);
+  getGeneByHGNCsymbol(symbol: string): Observable<Gene> {
+    return this.http.get<Gene>(`/api/gene/${symbol}?lang=${this.currentLang}`);
   }
 
   getGoTermMatchByString(request: string): Observable<Genes[]> {
@@ -61,7 +55,22 @@ export class ApiService {
     return this.http.get<GenesInHorvathClock[]>(`/api/methylation?lang=${this.currentLang}`);
   }
 
+  getGenes(): Observable<Genes[]> {
+    return this.http.get<Genes[]>(`/api/gene?lang=${this.currentLang}`);
+  }
+
   // New API
+  getGenesV2(): Observable<ApiResponse<Genes>> {
+    if (this.genes$) {
+      this.genes$ = this.http
+        .get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`)
+        .pipe(shareReplay(1));
+      return this.genes$;
+    }
+
+    return this.http.get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`);
+  }
+
   getDiseases(): Observable<AssociatedDiseases[]> {
     return this.http.get<AssociatedDiseases[]>(`/api/disease?lang=${this.currentLang}`);
   }

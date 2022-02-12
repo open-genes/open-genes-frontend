@@ -37,7 +37,7 @@
   <ng-container *ngIf="listSettings.ifShowAge">
     <div class="card__section card__age-mya">
         <span class="label __mb-0">
-          {{ "phylogeny" | translate }}
+          {{ 'phylogeny' | translate }}, {{ 'origin' | translate | lowercase }}
         </span>
       <app-gene-age [gene]="item" show="origin"></app-gene-age>
     </div>

@@ -9,7 +9,10 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { PubmedApiService } from '../../../core/services/api/pubmed-api.service';
-import { Publication } from '../../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
+import {
+  Publication,
+  PublicationsList,
+} from '../../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
@@ -71,7 +74,7 @@ export class NewsListComponent implements OnInit, OnDestroy {
       .getNewsList(this.genesList, this.loadTotal, this.pageIndex)
       .pipe(takeUntil(this.subscription$))
       .subscribe(
-        (response) => {
+        (response: PublicationsList) => {
           // Get data
           this.newsTotal = response.total;
           this.newsList.push(...response.items);

@@ -1,0 +1,9 @@
+# Run with "openGenesApi" environment
+
+# Get genes array
+GET https://open-genes.com/api
+Accept: application/json
+###
+# Get one gene
+GET https://open-genes.com/api/gene/{{geneHgnc}}
+Accept: application/json

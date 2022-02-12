@@ -240,7 +240,17 @@ $input-border-radius: 5px;
     }
   }
 
-  // TODO: сделать без переопределений
+  &--disabled {
+    cursor: default;
+    pointer-events: none;
+
+    .search-form__field,
+    .search-form__submit {
+      opacity: .5;
+    }
+  }
+
+  // TODO: refactor without redefinition
   @include resolution_smartphone-and-tablet {
     &--active {
       position: fixed;

@@ -1,11 +1,16 @@
 .gene-page { // .page
+  // ANNOTATION
+  &__annotation {
+    margin: 0 0 30px 0;
+  }
+
   // AGE
   &__age {
     margin: 0 -5px 30px -5px;
 
     .age__types {
       display: flex;
-      flex-flow: row wrap;
+      flex-flow: column wrap;
       justify-content: flex-start;
       align-items: stretch;
       font-size: $font-size;
@@ -43,7 +48,7 @@
 
         .type__value {
           flex: 1 1 auto;
-          font-size: 24px;
+          font-size: 20px;
           color: $color-black;
 
           small {
@@ -57,14 +62,62 @@
           padding-left: 10px;
         }
 
-        &.age__rating {
-          .type__title {
-            margin-top: -3px;
-          }
+        &.age__orthologs {
+          flex: 0 0 100%;
 
-          .type__value {
-            flex-grow: 0;
-            flex-basis: 36px;
+          .orthologs {
+            display: grid;
+            grid-column-gap: 10px;
+            grid-row-gap: 10px;
+            margin-top: 20px;
+
+            li.ortholog {
+              display: inline-grid;
+              grid-template-columns: auto 120px;
+              grid-column-gap: 10px;
+              background-color: $color-gray-very-light;
+              padding: 5px 10px;
+              border-radius: $border-radius-medium;
+
+              .ortholog__species {
+                .latin-name,
+                .common-name {
+                  font-weight: $font-weight-medium;
+                  color: $color-black;
+
+                  &:first-letter {
+                    text-transform: capitalize;
+                  }
+                }
+
+                .latin-name + .common-name {
+                  margin-top: .2em;
+                  font-size: .8em;
+                  color: $color-gray;
+                  font-style: italic;
+                  font-weight: $font-weight-regular;
+                }
+              }
+              .ortholog__gene {
+                text-align: right;
+
+                ::ng-deep .alias {
+                  margin-right: 0;
+                }
+              }
+            }
+
+            @include resolution_desktop-and-up {
+              grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            @include resolution_phablet-and-tablet {
+              grid-template-columns: 1fr 1fr
+            }
+
+            @include resolution_phone {
+              grid-template-columns: 1fr
+            }
           }
         }
 
@@ -147,84 +200,6 @@
         position: relative;
         top: -10px;
       }
-    }
-  }
-
-  // GENE EXPRESSION CHART
-  &__expression {
-    .expression__rows {
-      margin-top: 5px;
-    }
-
-    .expression__row {
-      font-size: 0;
-
-      .row__name,
-      .row__value {
-        display: inline-block;
-        vertical-align: middle;
-        @include resolution_tablet-and-up {
-          width: 50%;
-        }
-        @include resolution_smartphone {
-          width: 100%;
-        }
-      }
-
-      .row__name {
-        font-size: $font-size-bigger;
-        font-weight: $font-weight-medium;
-        color: $color-black;
-
-        @include resolution_tablet-and-up {
-          padding-right: 10px;
-        }
-        @include resolution_smartphone {
-          margin-bottom: 5px;
-        }
-      }
-
-      .row__value {
-        height: 20px;
-        overflow: hidden;
-        position: relative;
-        background-color: $color-general-light;
-        border-radius: 3px;
-
-        .value__bar {
-          height: 100%;
-          background-color: #7673d1;
-          max-width: 100%;
-        }
-
-        .value__rpkm {
-          position: absolute;
-          top: 1px;
-          left: 10px;
-          z-index: 1;
-          font-size: $font-size-smaller;
-          color: #fff;
-          text-shadow: rgba($color-black, .25) 1px 0,
-          rgba($color-black, .25) 1px 1px,
-          rgba($color-black, .25) 0 1px,
-          rgba($color-black, .25) -1px 1px,
-          rgba($color-black, .25) -1px 0,
-          rgba($color-black, .25) -1px -1px,
-          rgba($color-black, .25) 0 -1px,
-          rgba($color-black, .25) 1px -1px;
-        }
-
-        &--minimum {
-          .value__rpkm {
-            color: $color-indent;
-            text-shadow: none;
-          }
-        }
-      }
-    }
-
-    .expression__row + .expression__row {
-      margin-top: 10px;
     }
   }
 

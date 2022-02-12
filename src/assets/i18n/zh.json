@@ -288,6 +288,7 @@
   "show_less": "显示更少",
   "show_more": "显示更多",
   "show_more_short": "更多",
+  "spinner_loading_genes": "基因列表正在加载中...",
   "support_us_gitcoin": "Support us on Gitcoin Grants Round 12!",
   "term_ref": "一个词的定义 \"{{term}}\"",
   "term_ref_not_found": "找不到这个词的参考",
