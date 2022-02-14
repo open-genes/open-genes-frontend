@@ -65,7 +65,6 @@ export class DietComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (res) => {
-          debugger;
           this.genes = res[0].items;
           this.confirmedGenesList = res[1].items;
           this.totalGenesLength = res[1].options.objTotal;
@@ -91,7 +90,6 @@ export class DietComponent implements OnInit, OnDestroy {
           this.cdRef.markForCheck();
         },
         (error) => {
-          this.errorStatus = error.statusText;
           this.isLoading = false;
           this.cdRef.markForCheck();
         }

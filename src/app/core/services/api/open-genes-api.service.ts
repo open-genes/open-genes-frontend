@@ -66,7 +66,7 @@ export class ApiService {
         .set('page', pagination?.page)
         .set('pageSize', pagination?.pageSize);
     }
-    debugger;
+
     return this.http.get<ApiResponse<Diet>>(`/api/diet`, { params });
   }
 

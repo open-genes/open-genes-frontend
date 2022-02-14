@@ -55,7 +55,6 @@ export class DietTableComponent {
     this.paginationChange.emit(this.pagination);
   }
   public sortData(sort: Sort): void {
-    debugger
     const data = this.genesList.slice();
     if (!sort.active || sort.direction === '') {
       this.genesList = data;
