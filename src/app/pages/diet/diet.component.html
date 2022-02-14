@@ -28,8 +28,12 @@
                   [confirmedGenesList]="confirmedGenesList"
                   [totalGenesLength]="totalGenesLength"
                   [isLoading]="isLoading"
+                  [pagination]="pagination"
                   (paginationChange)="onPaginationChange($event)"
                   ></app-diet-table>
+
+                <!-- When content is loading -->
+                <app-spinner *ngIf="!confirmedGenesList?.length" class="__mt-10 __mb-10"></app-spinner>
 
               </div>
             </ng-container>

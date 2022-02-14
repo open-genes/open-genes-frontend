@@ -14,7 +14,7 @@
           <tbody *ngFor="let gene of genesList">
 
             <tr *ngFor="let data of gene.calorieRestrictionExperiments; let first=first">
-              <td *ngIf="first" [attr.rowspan]="gene.calorieRestrictionExperiments.length +1">{{gene.name}}</td>
+              <td *ngIf="first" class="gene-name" [attr.rowspan]="gene.calorieRestrictionExperiments.length +1">{{gene.name}}</td>
               <td>{{data.lexpressionChangeLogFc}}</td>
               <td>{{data.pValue}}</td>
               <td>{{data.crResult}}</td>
@@ -39,6 +39,7 @@
 
   <div class="paginator">
     <mat-paginator [length]="totalGenesLength"
+                   [pageIndex]="pagination.page - 1"
                    [pageSize]="pagination.pageSize"
                    [pageSizeOptions]="pageSizeOptions"
                    (page)="pageEventHandler($event)"

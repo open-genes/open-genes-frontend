@@ -186,7 +186,7 @@ $input-border-radius: 5px;
     overflow-y: scroll;
     background: #fff;
     border-radius: 5px;
-    z-index: 12;
+    z-index: 85;
 
     &:not(:empty) {
       border: 1px solid $color-borders;

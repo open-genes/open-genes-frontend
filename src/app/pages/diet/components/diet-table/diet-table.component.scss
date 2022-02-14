@@ -23,11 +23,9 @@
 
     table {
       width: 100%;
-
       thead {
         tr {
           height: 50px;
-
           th {
             text-align: center;
             vertical-align: middle;
@@ -37,9 +35,10 @@
           th:first-child {
             min-width: 250px;
             text-align: left;
+            position: sticky;
+            left: 0;
+            z-index: 80;
           }
-
-
         }
       }
 
@@ -52,14 +51,16 @@
             vertical-align: middle;
             box-sizing: border-box;
           }
-        }
-        .mat-header-cell, .mat-cell {
-
+          .gene-name {
+            text-align: left;
+            position: sticky;
+            left: 0;
+            z-index: 80;
+          }
         }
       }
     }
   }
-
 }
 
 
