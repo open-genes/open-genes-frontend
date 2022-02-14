@@ -1,7 +1,8 @@
 <form [formGroup]="searchForm"
       class="search-form"
-      [class.search-form--active]="showSearchResult">
-
+      [ngClass]="
+      {'search-form--disabled': formDisabled,
+      'search-form--active': showSearchResult}">
   <div *ngIf="showTitle"
        class="search-form__quantity">
     <span *ngIf="genesLength">{{ 'main_page_total' | translate: { number: genesLength } }}</span>

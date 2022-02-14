@@ -34,7 +34,7 @@ export class DiagramsComponent implements OnDestroy {
 
   private getAllGenes(): void {
     this.apiService
-      .getGenes()
+      .getGenesV2()
       .pipe(
         map((filteredGenes) => {
           return filteredGenes.items.map((gene: Genes) => {

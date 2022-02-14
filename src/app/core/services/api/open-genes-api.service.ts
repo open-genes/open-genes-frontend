@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AgeRelatedProcesses, AgingMechanisms, Gene, Genes, SelectionCriteria } from '../../models';
 import { TranslateService } from '@ngx-translate/core';
@@ -7,14 +7,13 @@ import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/op
 import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with-increase-lifespan-researches.model';
 import { GenesInHorvathClock } from '../../models/open-genes-api/genes-in-horvath-clock.model';
 import { ApiResponse } from '../../models/api-response.model';
-import { Diet } from '../../models/open-genes-api/diet.model';
-import { Pagination } from '../../models/settings.model';
+import { shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-
+  private genes$: Observable<ApiResponse<Genes>>;
   private readonly currentLang: string;
 
   constructor(private http: HttpClient, private translate: TranslateService) {
@@ -28,10 +27,6 @@ export class ApiService {
 
   // Legacy API
 
-  getGenes(): Observable<ApiResponse<Genes>> {
-    return this.http.get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`);
-  }
-
   getLastEditedGene(): Observable<Genes[]> {
     return this.http.get<Genes[]>(`/api/gene/by-latest`);
   }
@@ -44,8 +39,8 @@ export class ApiService {
     return this.http.get<Genes[]>(`/api/gene/by-expression-change/${expression}?lang=${this.currentLang}`);
   }
 
-  getGeneByHGNCsymbol(symbol: string): Observable<Gene[]> {
-    return this.http.get<Gene[]>(`/api/gene/${symbol}?lang=${this.currentLang}`);
+  getGeneByHGNCsymbol(symbol: string): Observable<Gene> {
+    return this.http.get<Gene>(`/api/gene/${symbol}?lang=${this.currentLang}`);
   }
 
   getGoTermMatchByString(request: string): Observable<Genes[]> {
@@ -60,16 +55,22 @@ export class ApiService {
     return this.http.get<GenesInHorvathClock[]>(`/api/methylation?lang=${this.currentLang}`);
   }
 
-  getGenesForDiet(pagination?: Pagination): Observable<ApiResponse<Diet>> {
-    const params = new HttpParams()
-        .set('lang', this.translate.currentLang)
-        .set('page', pagination?.page ? pagination.page : 1)
-        .set('pageSize', pagination?.pageSize ? pagination.pageSize : 20);
-
-    return this.http.get<ApiResponse<Diet>>(`/api/diet`, { params });
+  getGenes(): Observable<Genes[]> {
+    return this.http.get<Genes[]>(`/api/gene?lang=${this.currentLang}`);
   }
 
   // New API
+  getGenesV2(): Observable<ApiResponse<Genes>> {
+    if (this.genes$) {
+      this.genes$ = this.http
+        .get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`)
+        .pipe(shareReplay(1));
+      return this.genes$;
+    }
+
+    return this.http.get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`);
+  }
+
   getDiseases(): Observable<AssociatedDiseases[]> {
     return this.http.get<AssociatedDiseases[]>(`/api/disease?lang=${this.currentLang}`);
   }

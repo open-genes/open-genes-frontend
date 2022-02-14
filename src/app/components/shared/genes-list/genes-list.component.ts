@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
-import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { Genes } from '../../../core/models';
 import { FilterService } from './services/filter.service';
 import { FilterTypesEnum, SortEnum } from './services/filter-types.enum';
@@ -152,7 +151,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (res: ApiResponse<Genes>) => {
-          // TODO: add an interface for the whole response
           this.currentPage = this.filterService.pagination.page;
           if (this.currentPage == 1) {
             this.cachedData = [];

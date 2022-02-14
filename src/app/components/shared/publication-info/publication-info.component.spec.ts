@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PublicationInfoComponent } from './publication-info.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('PublicationInfoComponent', () => {
   let component: PublicationInfoComponent;
@@ -8,9 +9,10 @@ describe('PublicationInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PublicationInfoComponent ]
-    })
-    .compileComponents();
+      imports: [HttpClientTestingModule, TranslateModule.forRoot()],
+      declarations: [PublicationInfoComponent],
+      providers: [TranslateService],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -20,6 +22,6 @@ describe('PublicationInfoComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    void expect(component).toBeTruthy();
   });
 });

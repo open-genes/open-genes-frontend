@@ -100,33 +100,21 @@
 
 <section *ngIf="isIncreaseLifespan">
   <h4>{{ "gene_page_researches_lifespan" | translate }}</h4>
-  <app-hint>
-    <ng-container title><span
-      class="fa far fa-exclamation-triangle"></span> {{ "warning_researches_title" | translate }}</ng-container>
-    <ng-container description>{{ "warning_researches_description" | translate }}</ng-container>
-    <ng-container button>
-      <a class="btn btn--fill btn--small btn--purple"
-         target="_blank"
-         href="https://shortest.link/2MdQ"
-      >
-        {{ 'warning_researches_button' | translate }}
-      </a>
-    </ng-container>
-  </app-hint>
 
   <div class="table-section __mt-20 __w-content-fluid">
     <table class="table table--zebra">
       <thead>
       <!-- General data columns -->
-      <th>Модельный организм, пол, линия</th>
+      <th>{{ "researches_model_organism" | translate }},
+        {{ "researches_sex" | translate | lowercase }},
+        {{ "researches_line" | translate | lowercase }}</th>
       <th>{{ "researches_result" | translate }}</th>
-      <!-- <th>Основной эффект воздействия</th>-->
       <th>{{ "researches_l_cohort_size" | translate }}</th>
       <th>{{ "researches_l_containment_conditions" | translate }}</th>
       <th>{{ "researches_l_target_gene_expression" | translate }}</th>
       <th>{{ "researches_l_control_lifespan" | translate }}</th>
       <th>{{ "researches_l_experiment_lifespan" | translate }}</th>
-      <th>{{ "researches_l_lifespan_percent" | translate }}</th>
+      <th class="__cell-width-medium">{{ "researches_l_lifespan_percent" | translate }}</th>
       <th>{{ "researches_l_other_results" | translate }} </th>
       <!-- Control & experiment data columns -->
       <th class="__cell-width-medium">
@@ -134,6 +122,7 @@
         {{ "researches_method" | translate | lowercase }},
         {{ "researches_genotype" | translate | lowercase }}
       </th>
+      <th class="__cell-width-small">{{ "researches_l_main_effect" | translate }}</th>
       <th>{{ "researches_l_tissue_specificity" | translate }}</th>
       <!-- General data columns again -->
       <th>
@@ -146,14 +135,14 @@
 
         <!-- General data columns -->
         <td class="__cell-width-medium">
-          <ng-container *ngIf="r.modelOrganism || r.sex || r.sex; else dash">
+          <ng-container *ngIf="r.modelOrganism || r.sex || r.organismLine; else dash">
             <p *ngIf="r.modelOrganism">
               {{ "researches_model_organism" | translate }}: {{ r.modelOrganism }}
             </p>
             <p *ngIf="r.sex">
               {{ "researches_sex" | translate }}: {{ r.sex }}
             </p>
-            <p *ngIf="r.line">
+            <p *ngIf="r.organismLine">
               {{ "researches_line" | translate }}: {{ r.organismLine }}
             </p>
           </ng-container>
@@ -163,24 +152,23 @@
             {{ r.interventionResultForLifespan }}
           </ng-container>
         </td>
-        <!-- <td></td> -->
         <td>
           <ng-container *ngIf="r.controlCohortSize || r.experimentCohortSize else dash">
             <p *ngIf="r.controlCohortSize">
               {{ "researches_l_control" | translate: { data: r.controlCohortSize } }}
             </p>
             <p *ngIf="r.experimentCohortSize">
-              {{ "researches_l_experiment" | translate: { data: r.experimentCohortSize } }}
+              {{ "researches_l_experiment" | translate }}: {{ r.experimentCohortSize }}
             </p>
           </ng-container>
         </td>
         <td>
-          <ng-container *ngIf="r.populationDensity?.length !== 0 || r.temperature?.length !== 0 || r.diet?.length !== 0; else dash">
-            <p *ngIf="r.populationDensity?.length !== 0">
+          <ng-container *ngIf="r.populationDensity || r.temperature || r.diet; else dash">
+            <p *ngIf="r.populationDensity && r.populationDensity !== 0; else dash">
               {{ "researches_l_density" | translate: { data: r.populationDensity } }}
             </p>
-            <p *ngIf="r.temperatureFrom?.length !== 0">
-              {{ "researches_l_temperature" | translate: { from: r.temperatureFrom, to: r.temperatureFrom } }}
+            <p *ngIf="r.temperatureFrom">
+              {{ "researches_l_temperature" | translate: { from: r.temperatureFrom, to: r.temperatureTo } }}
             </p>
             <p *ngIf="r.diet?.length !== 0">
               {{ "researches_l_diet" | translate: { data: r.diet } }}
@@ -188,54 +176,54 @@
           </ng-container>
         </td>
         <td>
-          <ng-container *ngIf="r.expressionChangePercent.length !== 0; else dash">
+          <ng-container *ngIf="r.expressionChangePercent && r.expressionChangePercent !== 0; else dash">
             {{ r.expressionChangePercent }}%
           </ng-container>
         </td>
         <td>
-          <p *ngIf="r.lifespanMinControl.length !== 0; else dash">
-            {{ "researches_l_min" | translate: { data: r.lifespanMinControl, unit: r.lifespanTimeUnit } }},
+          <p *ngIf="r.lifespanMinControl; else dash">
+            {{ "researches_l_min" | translate: { data: r.lifespanMinControl, unit: r.lifespanTimeUnit } }}
           </p>
-          <p *ngIf="r.lifespanMeanControl.length !== 0; else dash">
-            {{ "researches_l_mean" | translate: { data: r.lifespanMeanControl, unit: r.lifespanTimeUnit } }},
+          <p *ngIf="r.lifespanMeanControl; else dash">
+            {{ "researches_l_mean" | translate: { data: r.lifespanMeanControl, unit: r.lifespanTimeUnit } }}
           </p>
-          <p *ngIf="r.lifespanMedianControl.length !== 0; else dash">
-            {{ "researches_l_median" | translate: { data: r.lifespanMedianControl, unit: r.lifespanTimeUnit } }},
+          <p *ngIf="r.lifespanMedianControl; else dash">
+            {{ "researches_l_median" | translate: { data: r.lifespanMedianControl, unit: r.lifespanTimeUnit } }}
           </p>
-          <p *ngIf="r.lifespanMaxControl.length !== 0; else dash">
-            {{ "researches_l_max" | translate: { data: r.lifespanMaxControl, unit: r.lifespanTimeUnit } }},
-          </p>
-        </td>
-        <td>
-          <p *ngIf="r.lifespanMinExperiment.length !== 0; else dash">
-            {{ "researches_l_min" | translate: { data: r.lifespanMinExperiment, unit: r.lifespanTimeUnit } }},
-          </p>
-          <p *ngIf="r.lifespanMeanExperiment.length !== 0; else dash">
-            {{ "researches_l_mean" | translate: { data: r.lifespanMeanExperiment, unit: r.lifespanTimeUnit } }},
-          </p>
-          <p *ngIf="r.lifespanMedianExperiment.length !== 0; else dash">
-            {{ "researches_l_median" | translate: { data: r.lifespanMedianExperiment, unit: r.lifespanTimeUnit } }},
-          </p>
-          <p *ngIf="r.lifespanMaxExperiment.length !== 0; else dash">
-            {{ "researches_l_max" | translate: { data: r.lifespanMaxExperiment, unit: r.lifespanTimeUnit } }},
+          <p *ngIf="r.lifespanMaxControl; else dash">
+            {{ "researches_l_max" | translate: { data: r.lifespanMaxControl, unit: r.lifespanTimeUnit } }}
           </p>
         </td>
         <td>
-          <p *ngIf="r.lifespanMinChangePercent.length !== 0; else dash">
-            {{ "researches_l_min" | translate: { data: r.lifespanMinChangePercent, unit: "%" } }},
-            {{ "researches_l_significance" | translate: { data: r.lMinChangeStatSignificance } }}
+          <p *ngIf="r.lifespanMinExperiment; else dash">
+            {{ "researches_l_min" | translate: { data: r.lifespanMinExperiment, unit: r.lifespanTimeUnit } }}
           </p>
-          <p *ngIf="r.lifespanMeanChangePercent.length !== 0; else dash">
-            {{ "researches_l_mean" | translate: { data: r.lifespanMeanChangePercent, unit: "%" } }},
-            {{ "researches_l_significance" | translate: { data: r.lMeanChangeStatSignificance } }}
+          <p *ngIf="r.lifespanMeanExperiment; else dash">
+            {{ "researches_l_mean" | translate: { data: r.lifespanMeanExperiment, unit: r.lifespanTimeUnit } }}
           </p>
-          <p *ngIf="r.lifespanMedianChangePercent.length !== 0; else dash">
-            {{ "researches_l_median" | translate: { data: r.lifespanMedianChangePercent, unit: "%" } }},
-            {{ "researches_l_significance" | translate: { data: r.lMedianChangeStatSignificance } }}
+          <p *ngIf="r.lifespanMedianExperiment; else dash">
+            {{ "researches_l_median" | translate: { data: r.lifespanMedianExperiment, unit: r.lifespanTimeUnit } }}
           </p>
-          <p *ngIf="r.lifespanMaxChangePercent.length !== 0; else dash">
-            {{ "researches_l_max" | translate: { data: r.lifespanMaxChangePercent, unit: "%" } }},
-            {{ "researches_l_significance" | translate: { data: r.lMaxChangeStatSignificance } }}
+          <p *ngIf="r.lifespanMaxExperiment; else dash">
+            {{ "researches_l_max" | translate: { data: r.lifespanMaxExperiment, unit: r.lifespanTimeUnit } }}
+          </p>
+        </td>
+        <td>
+          <p *ngIf="r.lifespanMinChangePercent; else dash">
+            {{ "researches_l_min" | translate: { data: r.lifespanMinChangePercent, unit: "%" } }}, <br>
+            {{ "researches_l_significance" | translate: { data: r.lMinChangeStatSignificance | trueFalseNull | translate } }}
+          </p>
+          <p *ngIf="r.lifespanMeanChangePercent; else dash">
+            {{ "researches_l_mean" | translate: { data: r.lifespanMeanChangePercent, unit: "%" } }}, <br>
+            {{ "researches_l_significance" | translate: { data: r.lMeanChangeStatSignificance | trueFalseNull | translate } }}
+          </p>
+          <p *ngIf="r.lifespanMedianChangePercent; else dash">
+            {{ "researches_l_median" | translate: { data: r.lifespanMedianChangePercent, unit: "%" } }}, <br>
+            {{ "researches_l_significance" | translate: { data: r.lMedianChangeStatSignificance | trueFalseNull | translate } }}
+          </p>
+          <p *ngIf="r.lifespanMaxChangePercent; else dash">
+            {{ "researches_l_max" | translate: { data: r.lifespanMaxChangePercent, unit: "%" } }}, <br>
+            {{ "researches_l_significance" | translate: { data: r.lMaxChangeStatSignificance | trueFalseNull | translate  } }}
           </p>
         </td>
 
@@ -263,49 +251,59 @@
           </ng-container>
         </td>
 
-        <ng-container *ngIf="r.interventions?.length !== 0">
-          <td>
-            <!-- Control & experiment data -->
-            <ng-container *ngFor="let sample of r.interventions.controlAndExperiment">
-              {{ "researches_l_control_and_experiment" | translate }}
-              <ng-container *ngIf="!sample.hasOwnProperty('gene')">
-                <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay }}</p>
-                <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod }}</p>
-                <p>{{ "researches_genotype" | translate }}: {{ sample.genotype }}</p>
-              </ng-container>
-            </ng-container>
-
-            <!-- Experiment data -->
-
-            <!-- There is only one condition of experiment -->
-            <!-- if there is no additional intervention -->
-            <ng-container *ngFor="let sample of r.interventions.experiment">
-              Эксперимент:
+        <td>
+          <!-- Control & experiment data -->
+          <ng-container *ngFor="let sample of r.interventions.controlAndExperiment">
+            <h6>{{ "researches_l_control_and_experiment" | translate }}: </h6>
+            <ng-container *ngIf="!sample.hasOwnProperty('gene')">
               <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay }}</p>
               <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod }}</p>
-              <p>{{ "researches_genotype" | translate }}:  {{ sample.genotype }}</p>
+              <p>{{ "researches_genotype" | translate }}: {{ sample.genotype }}</p>
             </ng-container>
-          </td>
+          </ng-container>
 
-          <td>
-            <ng-container *ngFor="let sample of r.interventions.experiment">
-              <!-- Tissue specificity can only be in experiment group -->
-              <!-- if there is no any additional intervention -->
-              <ng-container *ngIf="!sample.hasOwnProperty('gene')">
-                <ng-container *ngIf="sample.tissueSpecific.toNumber; else notTissueSpecific">
-                  <p>{{ "researches_promoter" | translate }}: {{ sample.tissueSpecificPromoter }}</p>
+          <!-- Experiment data -->
 
-                  <ul *ngIf="sample.tissues.length !== 0"
-                      class="list">
-                    <li *ngFor="let tissue of sample.tissues">
-                      {{ tissue.name }}
-                    </li>
-                  </ul>
-                </ng-container>
+          <!-- There is only one condition of experiment -->
+          <!-- if there is no additional intervention -->
+          <ng-container *ngFor="let sample of r.interventions.experiment">
+            <h6>{{ "researches_l_experiment" | translate }}: </h6>
+            <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay }}</p>
+            <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod }}</p>
+            <p>{{ "researches_genotype" | translate }}:  {{ sample.genotype }}</p>
+          </ng-container>
+        </td>
+
+        <td>
+          <ng-container *ngFor="let sample of r.interventions.experiment">
+            <!-- Experiment main effect can only be in experiment group if  -->
+            <!-- there is no any additional intervention -->
+            <ng-container *ngIf="!sample.hasOwnProperty('gene')">
+              <ng-container *ngIf="sample.experimentMainEffect; else dash">
+                <p>{{ sample.experimentMainEffect }}</p>
               </ng-container>
             </ng-container>
-          </td>
-        </ng-container>
+          </ng-container>
+        </td>
+
+        <td>
+          <ng-container *ngFor="let sample of r.interventions.experiment">
+            <!-- Tissue specificity can only be in experiment group if  -->
+            <!-- there is no any additional intervention -->
+            <ng-container *ngIf="!sample.hasOwnProperty('gene')">
+              <ng-container *ngIf="sample.tissueSpecific; else notTissueSpecific">
+                <p>{{ "researches_promoter" | translate }}: {{ sample.tissueSpecificPromoter }}</p>
+
+                <ul *ngIf="sample.tissues.length !== 0"
+                    class="list">
+                  <li *ngFor="let tissue of sample.tissues">
+                    {{ tissue.name }}
+                  </li>
+                </ul>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </td>
 
         <!-- General data columns again -->
         <td>

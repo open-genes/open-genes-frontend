@@ -6,7 +6,7 @@
 
 <td *ngIf="listSettings.ifShowAge"
     class="table-header__cell table-header__cell--age">
-  <div class="overflow">{{ "phylogeny" | translate }},</div>
+  <div class="overflow">{{ 'phylogeny' | translate }}, {{ 'origin' | translate | lowercase }}. </div>
   <div class="overflow">
     {{ "ncbi_homologs" | translate }}
   </div>
