@@ -7,6 +7,7 @@ import { WizardService } from '../../components/shared/wizard/wizard-service.ser
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
+import { SessionStorageService } from '../../core/services/session-storage.service';
 
 @Component({
   selector: 'app-home',
@@ -33,10 +34,11 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
 
   constructor(
     public windowService: WindowService,
+    private sessionStorageService: SessionStorageService,
     private filterService: FilterService,
     private wizardService: WizardService,
     private readonly apiService: ApiService,
-    private readonly cdRef: ChangeDetectorRef,
+    private readonly cdRef: ChangeDetectorRef
   ) {
     super(windowService);
   }
@@ -53,7 +55,12 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     });
 
     this.loadWizard();
-    this.getLastEditedGenes();
+
+    if (this.sessionStorageService.getStorageValue('byLatest')) {
+      this.lastGenes = this.sessionStorageService.getStorageValue('byLatest');
+    } else {
+      this.getLastEditedGenes();
+    }
   }
 
   public getGenes(): void {
@@ -81,6 +88,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       .pipe(takeUntil(this.subscription$))
       .subscribe((genes) => {
         this.lastGenes = genes;
+        this.sessionStorageService.setStorage('byLatest', genes);
         this.cdRef.markForCheck();
       });
   }
@@ -200,7 +208,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
             console.log(error);
             this.showProgressBar = false;
             this.cdRef.markForCheck();
-          },
+          }
         );
     } else {
       this.searchedGenes = [];

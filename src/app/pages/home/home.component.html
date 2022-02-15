@@ -65,8 +65,7 @@
                     class="__h-100"
                     [isMiniMode]="true"
                     [sliceTo]="1"
-                    [showSkeleton]="showArticlesSkeleton"
-                    (skeletonState)="showArticlesSkeleton = $event"
+                    [(showSkeleton)]="showArticlesSkeleton"
                   ></app-articles-list>
                   <app-skeleton
                     *ngIf="showArticlesSkeleton"
@@ -90,8 +89,7 @@
                     class="__pl-5 __pr-5"
                     [isMiniMode]="true"
                     [loadTotal]="1"
-                    [showSkeleton]="showPubmedFeedSkeleton"
-                    (skeletonState)="showPubmedFeedSkeleton = $event"
+                    [(showSkeleton)]="showPubmedFeedSkeleton"
                   ></app-news-list>
 
                   <app-skeleton

@@ -6,7 +6,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Output,
-  EventEmitter,
+  EventEmitter, AfterViewInit,
 } from '@angular/core';
 import { PubmedApiService } from '../../../core/services/api/pubmed-api.service';
 import {
@@ -16,6 +16,7 @@ import {
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
+import { SessionStorageService } from '../../../core/services/session-storage.service';
 
 @Component({
   selector: 'app-news-list',
@@ -30,9 +31,10 @@ export class NewsListComponent implements OnInit, OnDestroy {
   @Input() loadTotal: number;
   @Input() itemsForPage: number;
   @Input() isMiniMode = false;
-  @Input() showSkeleton: boolean;
 
-  @Output() skeletonState: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Input() showSkeleton: boolean;
+  @Output() showSkeletonChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public error: number;
   public newsList: Publication[] = [];
@@ -45,24 +47,29 @@ export class NewsListComponent implements OnInit, OnDestroy {
   private subscription$ = new Subject();
 
   constructor(
-    public translate: TranslateService,
     private pubmedApiService: PubmedApiService,
+    private readonly sessionStorageService: SessionStorageService,
     private readonly cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.getNewsList();
-  }
+    if (this.sessionStorageService.getStorageValue('news')) {
+      const storageData = this.sessionStorageService.getStorageValue('news');
+      this.newsList = storageData.news;
+      this.newsTotal = storageData.total;
+      this.cdRef.markForCheck();
+      this.showSkeletonChange.emit(false);
+      this.cdRef.detectChanges();
 
-  ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
+    } else {
+      this.getNewsList();
+    }
   }
 
   public showMore(): void {
     if (this.newsTotal / this.responsePagePortion > this.pageIndex) {
       ++this.pageIndex;
-      this.skeletonState.emit(true);
-      this.cdRef.markForCheck();
+      this.showSkeletonChange.emit(true);
       this.getNewsList();
     }
   }
@@ -76,15 +83,16 @@ export class NewsListComponent implements OnInit, OnDestroy {
       .subscribe(
         (response: PublicationsList) => {
           // Get data
-          this.newsTotal = response.total;
           this.newsList.push(...response.items);
+          this.newsTotal = response.total;
+          this.sessionStorageService.setStorage('news', { news: this.newsList, total: this.newsTotal });
 
           if (this.newsList?.length !== 0) {
             // Set page length after checking the length of the 1st page
             this.httpCallsCounter === 1 ? (this.responsePagePortion = this.newsList.length) : this.httpCallsCounter;
 
             // Emit event to update view
-            this.skeletonState.emit(false);
+            this.showSkeletonChange.emit(false);
 
             // Check if there is more content to show
             // and show/hide 'Show more' button
@@ -93,8 +101,12 @@ export class NewsListComponent implements OnInit, OnDestroy {
         },
         (error) => {
           this.error = error;
-          this.skeletonState.emit(false);
+          this.showSkeletonChange.emit(false);
         }
       );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
   }
 }

@@ -8,7 +8,7 @@ import {
   Output,
   Input,
   ViewChild,
-  TemplateRef,
+  TemplateRef, AfterContentInit, AfterViewInit,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AsyncSubject, Subject } from 'rxjs';
@@ -16,10 +16,10 @@ import { I80levelResponseArticle } from '../../../core/models/vendors-api/80leve
 import { map, takeUntil } from 'rxjs/operators';
 import { EightyLevelService } from '../../../core/services/api/80level-api-service/80level-api.service';
 import { environment } from '../../../../environments/environment';
-import { MockApiService } from '../../../core/services/api/mock-api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ArticleModalComponent } from '../../ui-components/components/modals/article-modal/article-modal.component';
 import { CommonModalComponent } from '../../ui-components/components/modals/common-modal/common-modal.component';
+import { SessionStorageService } from '../../../core/services/session-storage.service';
 
 @Component({
   selector: 'app-articles-list',
@@ -38,7 +38,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public articlesTotal = 0;
   public responsePagePortion: number;
   public articleTags: any[] = [];
-  public isLoading = true;
+
   public showMoreButtonVisible = false;
   public isAnyArticleModalOpen = false;
 
@@ -50,7 +50,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   @Input() isMiniMode = false;
   @Input() sliceTo: number | undefined = undefined;
   @Input() showSkeleton: boolean;
-  @Output() skeletonState: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() showSkeletonChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @ViewChild('articleModalBody') dialogRef: TemplateRef<any>;
   @ViewChild('cantGetArticle') cantGetArticleRef: TemplateRef<any>;
@@ -58,20 +58,26 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   constructor(
     public translate: TranslateService,
     private readonly eightyLevelService: EightyLevelService,
-    private readonly mock: MockApiService,
+    private readonly sessionStorageService: SessionStorageService,
     private readonly cdRef: ChangeDetectorRef,
     private dialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.makeArticlesList();
+    if (this.sessionStorageService.getStorageValue('articles')) {
+      const storageData = this.sessionStorageService.getStorageValue('articles');
+      this.articlesList = storageData.articles;
+      this.articlesTotal = storageData.total;
+      this.showSkeletonChange.emit(false);
+    } else {
+      this.makeArticlesList();
+    }
   }
 
   public showMore(): void {
     if (this.articlesTotal / this.responsePagePortion > this.pageIndex) {
       ++this.pageIndex;
-      this.skeletonState.emit(true);
-      this.cdRef.markForCheck();
+      this.showSkeletonChange.emit(true)
       this.makeArticlesList();
     }
   }
@@ -88,7 +94,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         },
         (error) => {
           this.error = error;
-          this.skeletonState.emit(false);
+          this.showSkeletonChange.emit(false);
         }
       );
   }
@@ -96,6 +102,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   private handleResponse(data): void {
     this.articlesList.push(...data.articles.items);
     this.articlesTotal = data.articles.total;
+    this.sessionStorageService.setStorage('articles', { articles: this.articlesList, total: +this.articlesTotal });
 
     if (this.articlesList?.length !== 0) {
       // Set page length after checking the length of the 1st page
@@ -112,7 +119,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       });
 
       // Emit event to update view
-      this.skeletonState.emit(false);
+      this.showSkeletonChange.emit(false)
 
       // Check if there is more content to show
       // and show/hide 'Show more' button
@@ -122,9 +129,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         this.showMoreButtonVisible = false;
       }
     }
-
-    // All content is loaded
-    this.isLoading = false;
     this.cdRef.markForCheck();
   }
 
