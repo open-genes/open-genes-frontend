@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Genes } from '../../core/models';
-import { FilterService } from '../../components/shared/genes-list/services/filter.service';
 import { takeUntil } from 'rxjs/operators';
 import { WizardService } from '../../components/shared/wizard/wizard-service.service';
 import { WindowWidth } from '../../core/utils/window-width';
@@ -35,7 +34,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   constructor(
     public windowService: WindowService,
     private sessionStorageService: SessionStorageService,
-    private filterService: FilterService,
     private wizardService: WizardService,
     private readonly apiService: ApiService,
     private readonly cdRef: ChangeDetectorRef

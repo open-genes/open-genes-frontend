@@ -20,6 +20,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ArticleModalComponent } from '../../ui-components/components/modals/article-modal/article-modal.component';
 import { CommonModalComponent } from '../../ui-components/components/modals/common-modal/common-modal.component';
 import { SessionStorageService } from '../../../core/services/session-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-articles-list',
@@ -58,6 +59,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   constructor(
     public translate: TranslateService,
+    private router: Router,
     private readonly eightyLevelService: EightyLevelService,
     private readonly sessionStorageService: SessionStorageService,
     private readonly cdRef: ChangeDetectorRef,
@@ -65,11 +67,15 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    if (this.sessionStorageService.getStorageValue('articles')) {
-      const storageData = this.sessionStorageService.getStorageValue('articles');
-      this.articlesList = storageData.articles;
-      this.articlesTotal = storageData.total;
-      this.showSkeletonChange.emit(false);
+    if (this.router.url === '/') {
+      if (this.sessionStorageService.getStorageValue('articles')) {
+        const storageData = this.sessionStorageService.getStorageValue('articles');
+        this.articlesList = storageData.articles;
+        this.articlesTotal = storageData.total;
+        this.showSkeletonChange.emit(false);
+      } else {
+        this.makeArticlesList();
+      }
     } else {
       this.makeArticlesList();
     }
@@ -103,7 +109,9 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   private handleResponse(data): void {
     this.articlesList.push(...data.articles.items);
     this.articlesTotal = data.articles.total;
-    this.sessionStorageService.setStorage('articles', { articles: this.articlesList, total: +this.articlesTotal });
+    if (this.router.url === '/') {
+      this.sessionStorageService.setStorage('articles', { articles: this.articlesList, total: +this.articlesTotal });
+    }
 
     if (this.articlesList?.length !== 0) {
       // Set page length after checking the length of the 1st page

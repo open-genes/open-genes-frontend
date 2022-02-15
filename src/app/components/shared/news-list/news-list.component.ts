@@ -14,9 +14,9 @@ import {
   PublicationsList,
 } from '../../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
 import { takeUntil } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { SessionStorageService } from '../../../core/services/session-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-news-list',
@@ -48,15 +48,20 @@ export class NewsListComponent implements OnInit, OnDestroy {
   constructor(
     private pubmedApiService: PubmedApiService,
     private readonly sessionStorageService: SessionStorageService,
+    private readonly router: Router,
     private readonly cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    if (this.sessionStorageService.getStorageValue('news')) {
-      const storageData = this.sessionStorageService.getStorageValue('news');
-      this.newsList = storageData.news;
-      this.newsTotal = storageData.total;
-      this.showSkeletonChange.emit(false);
+    if (this.router.url === '/') {
+      if (this.sessionStorageService.getStorageValue('news')) {
+        const storageData = this.sessionStorageService.getStorageValue('news');
+        this.newsList = storageData.news;
+        this.newsTotal = storageData.total;
+        this.showSkeletonChange.emit(false);
+      } else {
+        this.getNewsList();
+      }
     } else {
       this.getNewsList();
     }
@@ -81,7 +86,11 @@ export class NewsListComponent implements OnInit, OnDestroy {
           // Get data
           this.newsList.push(...response.items);
           this.newsTotal = response.total;
-          this.sessionStorageService.setStorage('news', { news: this.newsList, total: this.newsTotal });
+
+          if (this.router.url === '/') {
+            this.sessionStorageService.setStorage('news', { news: this.newsList, total: this.newsTotal });
+          }
+
 
           if (this.newsList?.length !== 0) {
             // Set page length after checking the length of the 1st page
@@ -94,10 +103,13 @@ export class NewsListComponent implements OnInit, OnDestroy {
             // and show/hide 'Show more' button
             this.showMoreButtonVisible = this.newsTotal / this.responsePagePortion > this.pageIndex;
           }
+
+          this.cdRef.markForCheck();
         },
         (error) => {
           this.error = error;
           this.showSkeletonChange.emit(false);
+          this.cdRef.markForCheck();
         }
       );
   }
