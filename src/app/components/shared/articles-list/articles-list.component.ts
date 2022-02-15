@@ -8,7 +8,7 @@ import {
   Output,
   Input,
   ViewChild,
-  TemplateRef, AfterContentInit, AfterViewInit,
+  TemplateRef,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AsyncSubject, Subject } from 'rxjs';
@@ -49,6 +49,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   @Input() isMiniMode = false;
   @Input() sliceTo: number | undefined = undefined;
+
   @Input() showSkeleton: boolean;
   @Output() showSkeletonChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 

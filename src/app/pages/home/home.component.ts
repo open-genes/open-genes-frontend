@@ -246,4 +246,16 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
   }
+
+  updateViewOnSkeletonChange(event, name) {
+    if (name === 'articles') {
+      this.showArticlesSkeleton = event;
+    }
+
+    if (name === 'news') {
+      this.showPubmedFeedSkeleton = event;
+    }
+
+    this.cdRef.detectChanges();
+  }
 }

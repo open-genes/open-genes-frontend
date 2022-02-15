@@ -32,7 +32,6 @@ export class NewsListComponent implements OnInit, OnDestroy {
   @Input() itemsForPage: number;
   @Input() isMiniMode = false;
 
-
   @Input() showSkeleton: boolean;
   @Output() showSkeletonChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -57,10 +56,7 @@ export class NewsListComponent implements OnInit, OnDestroy {
       const storageData = this.sessionStorageService.getStorageValue('news');
       this.newsList = storageData.news;
       this.newsTotal = storageData.total;
-      this.cdRef.markForCheck();
       this.showSkeletonChange.emit(false);
-      this.cdRef.detectChanges();
-
     } else {
       this.getNewsList();
     }
