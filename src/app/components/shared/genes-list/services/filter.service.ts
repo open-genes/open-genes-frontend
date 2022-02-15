@@ -56,7 +56,8 @@ export class FilterService {
   }
 
   // Filter
-  public onApplyFilter(filterType: string, filterValue: number | string): void {
+  // TODO: filter types typing problems
+  public applyFilter(filterType: string, filterValue: number | string): void {
     if (filterValue) {
       if (Array.isArray(this.filters[filterType])) {
         const arrayValues = filterValue.toString().split(',');
@@ -106,7 +107,7 @@ export class FilterService {
     const {
       disease,
       disease_categories,
-      functional_clusters,
+      age_related_processes,
       selection_criteria,
       expression_change,
       methylation_change,
@@ -114,7 +115,7 @@ export class FilterService {
       protein_classes,
     } = FilterTypesEnum;
     switch (filterName) {
-      case functional_clusters:
+      case age_related_processes:
         this.filters.byAgeRelatedProcess = [];
         break;
       case disease:

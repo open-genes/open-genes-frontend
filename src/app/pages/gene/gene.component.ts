@@ -213,7 +213,7 @@ export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDes
     this.bottomSheet.dismiss();
   }
 
-  public onApplyFilter(filterType: string, id: number): void {
+  public applyFilter(filterType: string, id: number): void {
     const queryParams = {};
     queryParams[filterType] = id;
 

@@ -62,8 +62,8 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
    * get item id and send this to app-genes-list  (for filtering)
    */
 
-  public onApplyFilter(filterType: string, filterValue: number | string): void {
-    this.filterService.onApplyFilter(filterType, filterValue);
+  public applyFilter(filterType: string, filterValue: number | string): void {
+    this.filterService.applyFilter(filterType, filterValue);
   }
 
   /**

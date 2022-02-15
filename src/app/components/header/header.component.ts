@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnDestroy {
+  public showAnnouncement = false;
   private favouritesSubscription: Subscription;
 
   constructor(

@@ -1,10 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { GenesListSettings } from '../../genes-list-settings.model';
 import { FilterService } from '../../services/filter.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { SettingsService } from '../../../../../core/services/settings.service';
+import { ApiService } from '../../../../../core/services/api/open-genes-api.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FilterTypes } from '../../../../../core/models/filter-types.model';
 
 @Component({
   selector: 'app-gene-fields-modal',
@@ -12,20 +15,75 @@ import { SettingsService } from '../../../../../core/services/settings.service';
   styleUrls: ['./gene-fields-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GeneFieldsModalComponent implements OnInit {
+export class GeneFieldsModalComponent implements OnInit, OnDestroy {
+  public filtersForm: FormGroup;
   public listSettings: GenesListSettings;
+
+  public processes: any[];
+  public processesModel: Observable<any[]>;
+
+  private unsubscribe$ = new Subject();
   private subscription$ = new Subject();
 
   constructor(
+    private apiService: ApiService,
     private dialogRef: MatDialogRef<GeneFieldsModalComponent>,
     private filterService: FilterService,
     private settingsService: SettingsService,
     private cdRef: ChangeDetectorRef
-  ) {}
+  ) {
+    this.filtersForm = new FormGroup({
+      ageRelatedProcessesSelect: new FormControl([], null),
+    });
+  }
 
   ngOnInit(): void {
     this.updateCurrentFields();
+    this.processesModel = this.getEntitiesList('age-related-processes');
+    this.processesModel.pipe(takeUntil(this.subscription$)).subscribe((data) => {
+      this.processes = data;
+    });
   }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.complete();
+  }
+
+  /**
+   * Get entities for filters lists
+   */
+
+  private getEntitiesList(key): Observable<any[]> {
+    switch (key) {
+      case 'age-related-processes':
+        return this.apiService.getAgeRelatedProcesses();
+      case 'aging-mechanisms':
+        return this.apiService.getAgingMechanisms();
+      case 'selection-criteria':
+        return this.apiService.getSelectionCriteria();
+      case 'diseases':
+        return this.apiService.getDiseases();
+      // TODO: diseases have a different structure than other entities
+      case 'disease-categories':
+        return this.apiService.getDiseaseCategories();
+      default:
+        return;
+    }
+  }
+
+  public apply(filterType: FilterTypes, filterValue: number | string): void {
+    this.filterService.applyFilter(filterType, filterValue);
+    this.cdRef.markForCheck();
+  }
+
+  public resetForm(): void {
+    this.filtersForm.reset();
+  }
+
+  // Каждый форм контрол вызывает метод, получает объект formControlModel и потом:
+  // formControlModel.stream$.pipe(takeUntil(this.unsubscribe$)).subscribe((items) => {
+  //   data = Object.values(items)
+  // });
 
   /**
    * Update list view

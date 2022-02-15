@@ -33,6 +33,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   imports: [
@@ -68,6 +69,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatPaginatorModule,
     MatBottomSheetModule,
     MatBadgeModule,
+    MatRippleModule,
   ],
   exports: [
     MatCheckboxModule,

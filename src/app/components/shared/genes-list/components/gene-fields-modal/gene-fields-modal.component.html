@@ -7,19 +7,45 @@
     <span class="fa fal fa-times"></span>
   </button>
 </div>
-<div class="filters-modal__body">
+<form class="filters-modal__body" [formGroup]="filtersForm">
+  <div class="body__row">
+
+    <!-- TODO: move into app-eye-checkbox and use the same logic as app-switch -->
+    <div class="eye-checkbox"
+         [class.eye-checkbox--checked]="listSettings.ifShowFuncClusters">
+      <input type="checkbox"
+             class="eye-checkbox__checkbox"
+             id="toggle-processes"
+             (change)="changeGenesListSettings('processes')"
+             [checked]="listSettings.ifShowFuncClusters"
+
+      >
+      <label class="eye-checkbox__label"
+             for="toggle-processes">
+        <span [ngClass]="listSettings.ifShowFuncClusters? 'fa-eye' : 'fa-eye-slash'"
+          class="icon far"
+        ></span>
+      </label>
+    </div>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "functional_classes" | translate }}</mat-label>
+      <mat-select formControlName="ageRelatedProcessesSelect"
+                  multiple="true"
+                  (selectionChange)="apply('byAgeRelatedProcess', $event)"
+                  [(ngModel)]="processesModel">
+        <mat-option *ngFor="let c of processes" [value]="c.id">{{c.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <mat-checkbox
     color="primary"
     (change)="changeGenesListSettings('gene-age')"
     [checked]="listSettings.ifShowAge"
   >{{ "gene_list_evolutionary_age" | translate }}
   </mat-checkbox>
-  <mat-checkbox
-    color="primary"
-    (change)="changeGenesListSettings('processes')"
-    [checked]="listSettings.ifShowFuncClusters"
-  >{{ "functional_classes" | translate }}
-  </mat-checkbox>
+
   <mat-checkbox
     color="primary"
     [checked]="listSettings.ifShowExpression"
@@ -56,4 +82,4 @@
     [checked]="listSettings.ifShowProteinClasses"
   >{{ "gene_list_protein_classes" | translate }}
   </mat-checkbox>
-</div>
+</form>

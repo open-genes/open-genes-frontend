@@ -17,6 +17,7 @@ import { ArticleModalComponent } from './components/modals/article-modal/article
 import { ConfirmModalComponent } from './components/modals/confirm-modal/confirm-modal.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { RouterModule } from '@angular/router';
+import { EyeCheckboxComponent } from './components/eye-checkbox/eye-checkbox.component';
 
 const modules = [
   AccordionComponent,
@@ -34,7 +35,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...modules],
+  declarations: [...modules, EyeCheckboxComponent],
   exports: [...modules],
   imports: [CommonModule, IconModule, PipesModule, TranslateModule, MaterialModule, RouterModule],
 })
