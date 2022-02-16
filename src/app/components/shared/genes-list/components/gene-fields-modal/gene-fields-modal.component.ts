@@ -7,7 +7,9 @@ import { Observable, Subject } from 'rxjs';
 import { SettingsService } from '../../../../../core/services/settings.service';
 import { ApiService } from '../../../../../core/services/api/open-genes-api.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FilterTypes } from '../../../../../core/models/filter-types.model';
+import { FilterTypes } from '../../../../../core/models/filters/filter-types.model';
+import { MatSelectChange } from '@angular/material/select';
+import { Filter } from '../../../../../core/models/filters/filter.model';
 
 @Component({
   selector: 'app-gene-fields-modal',
@@ -33,16 +35,17 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef
   ) {
     this.filtersForm = new FormGroup({
-      ageRelatedProcessesSelect: new FormControl([], null),
+      ageRelatedProcessesSelect: new FormControl([], [Validators.minLength(1)]),
     });
   }
 
   ngOnInit(): void {
-    this.updateCurrentFields();
+    this.updateVisibleFields();
     this.processesModel = this.getEntitiesList('age-related-processes');
     this.processesModel.pipe(takeUntil(this.subscription$)).subscribe((data) => {
       this.processes = data;
     });
+    this.filtersForm.controls.ageRelatedProcessesSelect.setValue(this.filterService.filters.byAgeRelatedProcess);
   }
 
   ngOnDestroy(): void {
@@ -71,8 +74,13 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  public apply(filterType: FilterTypes, filterValue: number | string): void {
-    this.filterService.applyFilter(filterType, filterValue);
+  public apply(filterType: FilterTypes, $event: MatSelectChange): void {
+    // Check if event is emitted on select change
+    if (Array.isArray($event.value) && $event.value.length === 0) {
+      return;
+    }
+
+    this.filterService.applyFilter(filterType, $event.value);
     this.cdRef.markForCheck();
   }
 
@@ -80,16 +88,11 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     this.filtersForm.reset();
   }
 
-  // Каждый форм контрол вызывает метод, получает объект formControlModel и потом:
-  // formControlModel.stream$.pipe(takeUntil(this.unsubscribe$)).subscribe((items) => {
-  //   data = Object.values(items)
-  // });
-
   /**
    * Update list view
    */
 
-  private updateCurrentFields() {
+  private updateVisibleFields() {
     this.filterService.currentFields.pipe(takeUntil(this.subscription$)).subscribe(
       (fields) => {
         this.settingsService.setFieldsForShow(fields);

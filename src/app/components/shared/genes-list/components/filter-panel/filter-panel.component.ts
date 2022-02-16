@@ -4,7 +4,7 @@ import { FilterService } from '../../services/filter.service';
 import { GeneFieldsModalComponent } from '../gene-fields-modal/gene-fields-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
-import { Filter } from '../../services/filter.model';
+import { Filter } from '../../../../../core/models/filters/filter.model';
 import { SettingsService } from '../../../../../core/services/settings.service';
 import { Settings, SettingsEnum } from '../../../../../core/models/settings.model';
 

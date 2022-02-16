@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Filter } from './filter.model';
+import { Filter } from '../../../../core/models/filters/filter.model';
 import { FilterTypesEnum } from './filter-types.enum';
 import { GenesListSettings } from '../genes-list-settings.model';
 import { Genes } from '../../../../core/models';
@@ -25,6 +25,7 @@ export class FilterService {
 
   public sortParams: Sort;
 
+  // TODO: it's bad that the one can directly change filters state here
   public filters: Filter = {
     byAgeRelatedProcess: [],
     byDiseases: [],

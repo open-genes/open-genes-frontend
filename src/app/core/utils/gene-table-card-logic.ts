@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
 import { Observable, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Filter } from '../../components/shared/genes-list/services/filter.model';
+import { Filter } from '../models/filters/filter.model';
 import { FilterTypesEnum } from '../../components/shared/genes-list/services/filter-types.enum';
 
 @Directive()

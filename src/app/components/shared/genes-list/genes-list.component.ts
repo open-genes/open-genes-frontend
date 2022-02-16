@@ -17,7 +17,7 @@ import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { FileExportService } from '../../../core/services/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
-import { Filter } from './services/filter.model';
+import { Filter } from '../../../core/models/filters/filter.model';
 import { SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { FavouritesService } from '../../../core/services/favourites.service';
@@ -154,9 +154,8 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.currentPage = this.filterService.pagination.page;
           if (this.currentPage == 1) {
             this.cachedData = [];
-            this.cachedData.push(...res.items);
-            this.searchedData = [...this.cachedData];
-          } else {
+          }
+          if (res.items?.length) {
             this.cachedData.push(...res.items);
             this.searchedData = [...this.cachedData];
           }
