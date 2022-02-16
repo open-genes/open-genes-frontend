@@ -7,7 +7,7 @@
         <table class="table table--zebra" matSort (matSortChange)="sortData($event)">
           <thead>
             <tr>
-              <th *ngFor="let head of displayedColumns" [mat-sort-header]="head">{{head}}</th>
+              <th *ngFor="let head of displayedColumns" [mat-sort-header]="head">{{head | translate}}</th>
             </tr>
           </thead>
 
