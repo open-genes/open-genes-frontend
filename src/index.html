@@ -31,11 +31,47 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
   <link rel="preload" as="font" href="/fa-regular-400.woff2" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" as="font" href="/fa-light-300.woff2" type="font/woff2" crossorigin="anonymous">
+  <style>
+    .ie-message {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 1;
+      transform: translate(-50%, -50%);
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.5;
+      text-align: center;
+    }
+  </style>
 </head>
 <body class="body--loading">
-  <div class="preloader">
-    <div class="preloader__loader"></div>
-  </div>
-  <app-root></app-root>
+  <h1 class="ie-message"
+      id="ie-message-en">
+    It seems you are using Internet Explorer. This browser is outdated and unsupported. <br>Please open a website in another browser.
+  </h1>
+
+  <h1 class="ie-message"
+      id="ie-message-ru">
+    Кажется, вы используете Internet Explorer. Этот браузер устарел и не поддерживается. <br>Пожалуйста, откройте сайт в другом браузере.
+  </h1>
+
+  <script type="text/javascript">
+    const msie = /msie\s|trident/i.test(window.navigator.userAgent);
+    if (msie) {
+      switch (navigator.language.substring(0, 2)) {
+        case 'ru':
+          document.getElementById('ie-message-ru').style.display = 'block';
+          break;
+        default:
+          document.getElementById('ie-message-en').style.display = 'block';
+      }
+    }
+    else {
+      //render app
+      document.body.innerHTML = "<div class=\"preloader\"><div class=\"preloader__loader\"></div></div> <app-root></app-root>"
+    }
+  </script>
 </body>
 </html>
