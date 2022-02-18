@@ -18,13 +18,13 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public genes: Genes[];
   public searchedGenes: Genes[] = [];
   public confirmedGenesList: Genes[] | string;
-  public lastGenes: Genes[];
   public isAvailable = true;
   public errorStatus: string;
   public searchMode: SearchMode;
   public searchModeEnum = SearchModeEnum;
   public notFoundAndFoundGenes: any;
   public confirmedFoundGenes: any;
+  public showLatestGenesSkeleton = true;
   public showArticlesSkeleton = true;
   public showPubmedFeedSkeleton = true;
   public showProgressBar = false;
@@ -53,12 +53,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     });
 
     this.loadWizard();
-
-    if (this.sessionStorageService.getStorageValue('byLatest')) {
-      this.lastGenes = this.sessionStorageService.getStorageValue('byLatest');
-    } else {
-      this.getLastEditedGenes();
-    }
   }
 
   public getGenes(): void {
@@ -78,17 +72,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
           this.cdRef.markForCheck();
         }
       );
-  }
-
-  public getLastEditedGenes(): void {
-    this.apiService
-      .getLastEditedGene()
-      .pipe(takeUntil(this.subscription$))
-      .subscribe((genes) => {
-        this.lastGenes = genes;
-        this.sessionStorageService.setStorage('byLatest', genes);
-        this.cdRef.markForCheck();
-      });
   }
 
   public setSearchQuery(query: string): void {
@@ -245,13 +228,17 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
-  updateViewOnSkeletonChange(event, name) {
+  updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'news' | 'latest'): void {
     if (name === 'articles') {
       this.showArticlesSkeleton = event;
     }
 
     if (name === 'news') {
       this.showPubmedFeedSkeleton = event;
+    }
+
+    if (name === 'latest') {
+      this.showLatestGenesSkeleton = event;
     }
 
     this.cdRef.detectChanges();
