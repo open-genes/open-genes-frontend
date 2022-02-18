@@ -35,19 +35,23 @@
   </div>
 
   <ng-container *ngIf="listSettings.ifShowAge">
-    <div class="card__section card__age-mya">
+
+    <div class="card__section card__age">
+      <div class="card__age-mya">
         <span class="label __mb-0">
           {{ 'phylogeny' | translate }}, {{ 'origin' | translate | lowercase }}
         </span>
-      <app-gene-age [gene]="item" show="origin"></app-gene-age>
-    </div>
+        <app-gene-age [gene]="item" show="origin"></app-gene-age>
+      </div>
 
-    <div *ngIf="item.homologueTaxon" class="card__section card__age-homologs">
+      <div *ngIf="item.homologueTaxon" class="card__age-homologs">
         <span class="label __mb-0">
           {{ "ncbi_homologs" | translate }}
         </span>
-      <app-gene-age [gene]="item" show="homologs"></app-gene-age>
+        <app-gene-age [gene]="item" show="homologs"></app-gene-age>
+      </div>
     </div>
+
   </ng-container>
 
   <ng-container *ngIf="item?.agingMechanisms && item?.agingMechanisms.length !== 0">
@@ -117,7 +121,7 @@
   </div>
 </div>
 
-<div class="card__controls">
+<div class="card__controls" *ngIf="listSettings.ifShowMethylation || listSettings.ifShowExpression || listSettings.ifShowExpression">
 
   <div *ngIf="item.functionalClusters && listSettings.ifShowFuncClusters"
        class="card__section">

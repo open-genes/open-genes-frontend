@@ -3,3 +3,23 @@
 
 @include item;
 @include card;
+
+:host {
+  padding: 12px 0 0 !important;
+}
+
+.card__age {
+  display: flex;
+
+  &-mya, &-homologs {
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid $color-borders;
+  }
+}
+.card__controls {
+  background-color: rgba($color-base, .1) ;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px ;
+  padding: 12px 0;
+}
