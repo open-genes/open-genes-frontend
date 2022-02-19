@@ -11,9 +11,9 @@
   <div *ngIf="processes?.length !== 0"
        class="body__row">
 
- <app-eye-checkbox
-   (changeEvent)="changeGenesListSettings('processes')"
-   [switch]="listSettings.ifShowFuncClusters"></app-eye-checkbox>
+    <app-eye-checkbox
+      (changeEvent)="changeGenesListSettings('processes')"
+      [switch]="listSettings.ifShowFuncClusters"></app-eye-checkbox>
 
     <mat-form-field appearance="fill">
       <mat-label>{{ "functional_classes" | translate }}</mat-label>
@@ -22,52 +22,109 @@
                   [(ngModel)]="predefinedProcesses"
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('byAgeRelatedProcess', $event)">
-        <mat-option *ngFor="let c of processes" [value]="c.id">{{c.name}}</mat-option>
+        <mat-option *ngFor="let i of processes" [value]="i.id">{{ i.name }}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 
-  <mat-checkbox
-    color="primary"
-    (change)="changeGenesListSettings('gene-age')"
-    [checked]="listSettings.ifShowAge"
-  >{{ "gene_list_evolutionary_age" | translate }}
-  </mat-checkbox>
+  <div class="body__row">
+    <app-eye-checkbox
+      (changeEvent)="changeGenesListSettings('gene-age')"
+      [switch]="listSettings.ifShowAge"></app-eye-checkbox>
+    {{ "gene_list_evolutionary_age" | translate }}
+  </div>
 
-  <mat-checkbox
-    color="primary"
-    [checked]="listSettings.ifShowExpression"
-    (change)="changeGenesListSettings('expression')"
-  >{{ "main_page_table_expression" | translate }}
-  </mat-checkbox>
-  <mat-checkbox
-    color="primary"
-    [checked]="listSettings.ifShowDiseases"
-    (change)="changeGenesListSettings('diseases')">
-    {{ "gene_list_diseases" | translate }}
-  </mat-checkbox>
-  <mat-checkbox
-    color="primary"
-    [checked]="listSettings.ifShowDiseaseCategories"
-    (change)="changeGenesListSettings('disease-categories')">
-    {{ "gene_list_disease_categories" | translate }}
-  </mat-checkbox>
-  <mat-checkbox
-    color="primary"
-    [checked]="listSettings.ifShowCriteria"
-    (change)="changeGenesListSettings('criteria')">
-    {{ "main_page_table_criteria" | translate }}
-  </mat-checkbox>
-  <mat-checkbox
-    color="primary"
-    (change)="changeGenesListSettings('mechanisms')"
-    [checked]="listSettings.ifShowAgingMechanisms"
-  >{{ "gene_list_aging_mechanisms" | translate }}
-  </mat-checkbox>
-  <mat-checkbox
-    color="primary"
-    (change)="changeGenesListSettings('classes')"
-    [checked]="listSettings.ifShowProteinClasses"
-  >{{ "gene_list_protein_classes" | translate }}
-  </mat-checkbox>
+  <div class="body__row">
+    <app-eye-checkbox
+      (changeEvent)="changeGenesListSettings('expression')"
+      [switch]="listSettings.ifShowExpression"></app-eye-checkbox>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "main_page_table_expression" | translate }}</mat-label>
+      <mat-select formControlName="expressionChangeSelect"
+                  [(ngModel)]="predefinedExpressionChanges"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byExpressionChange', $event)">
+        <mat-option [value]="1">{{ "expression_change_decreased" | translate }}</mat-option>
+        <mat-option [value]="2">{{ "expression_change_increased" | translate }}</mat-option>
+        <mat-option [value]="3">{{ "expression_change_mixed" | translate }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <app-eye-checkbox
+      (changeEvent)="changeGenesListSettings('diseases')"
+      [switch]="listSettings.ifShowDiseases"></app-eye-checkbox>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "gene_list_diseases" | translate }}</mat-label>
+      <mat-select formControlName="diseasesSelect"
+                  multiple="true"
+                  [(ngModel)]="predefinedDiseases"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byDiseases', $event)">
+        <mat-option *ngFor="let i of diseases | keyvalue" [value]="i.key">{{ i?.value['name'] }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <app-eye-checkbox
+      (changeEvent)="changeGenesListSettings('disease-categories')"
+      [switch]="listSettings.ifShowDiseaseCategories"></app-eye-checkbox>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "gene_list_disease_categories" | translate }}</mat-label>
+      <mat-select formControlName="diseaseCategoriesSelect"
+                  multiple="true"
+                  [(ngModel)]="predefinedDiseaseCategories"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byDiseaseCategories', $event)">
+        <mat-option *ngFor="let i of diseaseCategories | keyvalue"
+                    [value]="i.key">{{ i.value['icdCategoryName'] }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <app-eye-checkbox
+      (changeEvent)="changeGenesListSettings('criteria')"
+      [switch]="listSettings.ifShowCriteria"></app-eye-checkbox>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "main_page_table_criteria" | translate }}</mat-label>
+      <mat-select formControlName="selectionCriteriaSelect"
+                  multiple="true"
+                  [(ngModel)]="predefinedSelectionCriteria"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('bySelectionCriteria', $event)">
+        <mat-option *ngFor="let i of selectionCriteria" [value]="i.id">{{ i.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <app-eye-checkbox
+      (changeEvent)="changeGenesListSettings('mechanisms')"
+      [switch]="listSettings.ifShowAgingMechanisms"></app-eye-checkbox>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "gene_list_aging_mechanisms" | translate }}</mat-label>
+      <mat-select formControlName="AgingMechanismsSelect"
+                  multiple="true"
+                  [(ngModel)]="predefinedAgingMechanisms"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byAgingMechanisms', $event)">
+        <mat-option *ngFor="let i of agingMechanisms" [value]="i.id">{{ i.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <app-eye-checkbox
+      (changeEvent)="changeGenesListSettings('classes')"
+      [switch]="listSettings.ifShowProteinClasses"></app-eye-checkbox>
+    {{ "gene_list_protein_classes" | translate }}
+  </div>
 </form>
