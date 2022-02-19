@@ -8,7 +8,8 @@
   </button>
 </div>
 <form class="filters-modal__body" [formGroup]="filtersForm">
-  <div class="body__row">
+  <div *ngIf="processes?.length !== 0"
+       class="body__row">
 
     <!-- TODO: move into app-eye-checkbox and use the same logic as app-switch -->
     <div class="eye-checkbox"
@@ -18,7 +19,6 @@
              id="toggle-processes"
              (change)="changeGenesListSettings('processes')"
              [checked]="listSettings.ifShowFuncClusters"
-
       >
       <label class="eye-checkbox__label"
              for="toggle-processes">
@@ -32,8 +32,9 @@
       <mat-label>{{ "functional_classes" | translate }}</mat-label>
       <mat-select formControlName="ageRelatedProcessesSelect"
                   multiple="true"
-                  (selectionChange)="apply('byAgeRelatedProcess', $event)"
-                  [(ngModel)]="processesModel">
+                  [(ngModel)]="predefinedProcesses"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byAgeRelatedProcess', $event)">
         <mat-option *ngFor="let c of processes" [value]="c.id">{{c.name}}</mat-option>
       </mat-select>
     </mat-form-field>

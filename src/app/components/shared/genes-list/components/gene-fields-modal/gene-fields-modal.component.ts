@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { GenesListSettings } from '../../genes-list-settings.model';
 import { FilterService } from '../../services/filter.service';
@@ -9,7 +9,6 @@ import { ApiService } from '../../../../../core/services/api/open-genes-api.serv
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FilterTypes } from '../../../../../core/models/filters/filter-types.model';
 import { MatSelectChange } from '@angular/material/select';
-import { Filter } from '../../../../../core/models/filters/filter.model';
 
 @Component({
   selector: 'app-gene-fields-modal',
@@ -17,13 +16,14 @@ import { Filter } from '../../../../../core/models/filters/filter.model';
   styleUrls: ['./gene-fields-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GeneFieldsModalComponent implements OnInit, OnDestroy {
-  public filtersForm: FormGroup;
+export class GeneFieldsModalComponent implements OnDestroy {
   public listSettings: GenesListSettings;
-
+  //
   public processes: any[];
+  public predefinedProcesses: any[];
   public processesModel: Observable<any[]>;
-
+  //
+  public filtersForm: FormGroup;
   private unsubscribe$ = new Subject();
   private subscription$ = new Subject();
 
@@ -35,21 +35,33 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef
   ) {
     this.filtersForm = new FormGroup({
-      ageRelatedProcessesSelect: new FormControl([], [Validators.minLength(1)]),
+      ageRelatedProcessesSelect: new FormControl([[], [Validators.minLength(1)]]),
     });
-  }
 
-  ngOnInit(): void {
     this.updateVisibleFields();
-    this.processesModel = this.getEntitiesList('age-related-processes');
-    this.processesModel.pipe(takeUntil(this.subscription$)).subscribe((data) => {
-      this.processes = data;
+
+    this.processesModel = this.getEntitiesList('processes');
+    this.processesModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
+      this.processes = data.sort();
     });
-    this.filtersForm.controls.ageRelatedProcessesSelect.setValue(this.filterService.filters.byAgeRelatedProcess);
+
+    this.predefinedProcesses = this.filterService.filters.byAgeRelatedProcess;
+    this.cdRef.markForCheck();
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.complete();
+  }
+
+  /**
+   * Check if values being passed into a select control exist in options array
+   */
+
+  compareSelectValues(value1: any | any[], value2: any): boolean {
+    if (value1 && value2) {
+      return value1.id === value2.id;
+    }
+    return false;
   }
 
   /**
@@ -58,11 +70,11 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
 
   private getEntitiesList(key): Observable<any[]> {
     switch (key) {
-      case 'age-related-processes':
+      case 'processes':
         return this.apiService.getAgeRelatedProcesses();
-      case 'aging-mechanisms':
+      case 'mechanisms':
         return this.apiService.getAgingMechanisms();
-      case 'selection-criteria':
+      case 'criteria':
         return this.apiService.getSelectionCriteria();
       case 'diseases':
         return this.apiService.getDiseases();
@@ -81,7 +93,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     }
 
     this.filterService.applyFilter(filterType, $event.value);
-    this.cdRef.markForCheck();
+    console.log(this.filterService.filters.byAgeRelatedProcess);
   }
 
   public resetForm(): void {
