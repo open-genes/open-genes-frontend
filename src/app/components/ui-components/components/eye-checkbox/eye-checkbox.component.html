@@ -1,1 +1,10 @@
-
+<div class="eye-checkbox"
+     [ngClass]="switch ? 'eye-checkbox--checked' : ''"
+     (click)="toggle()">
+  <div class="eye-checkbox__label"
+         for="toggle-processes">
+        <span [ngClass]="switch? 'fa-eye' : 'fa-eye-slash'"
+              class="icon far"
+        ></span>
+  </div>
+</div>

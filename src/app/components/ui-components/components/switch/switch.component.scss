@@ -1,4 +1,4 @@
-@import "../../styles";
+@import "../../../styles";
 
 $switch-width: 40px;
 $switch-height: 20px;
@@ -31,9 +31,10 @@ $switch-item-background: $color-white;
     border-radius: 100%;
     box-shadow: 0 1px 3px rgba($color-black, .25);
   }
+
+  &--toggled {
+    background: $switch-background-active;
+    justify-content: flex-end;
+  }
 }
 
-.switch-toggle {
-  background: $switch-background-active;
-  justify-content: flex-end;
-}

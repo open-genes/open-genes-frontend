@@ -42,7 +42,7 @@ export class GeneFieldsModalComponent implements OnDestroy {
 
     this.processesModel = this.getEntitiesList('processes');
     this.processesModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
-      this.processes = data.sort();
+      this.processes = data;
     });
 
     this.predefinedProcesses = this.filterService.filters.byAgeRelatedProcess;

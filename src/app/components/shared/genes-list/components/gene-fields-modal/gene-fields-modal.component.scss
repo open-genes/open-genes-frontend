@@ -34,49 +34,6 @@
   }
 }
 
-.eye-checkbox {
-  $checkbox-size: 40px;
-  position: relative;
-
-  @mixin checked {
-    background-color: $color-selected;
-    color: $color-general;
-  }
-
-  &__checkbox {
-    display: none;
-  }
-
-  &__label {
-    display: block;
-    width: $checkbox-size;
-    height: $checkbox-size;
-    font-size: 16px;
-    color: $color-gray-halfing;
-    line-height: $checkbox-size;
-    text-align: center;
-    cursor: pointer;
-    background-color: $color-gray-soft;
-    border-radius: 50%;
-    transition: background-color, color, linear .15s;
-
-    &:hover {
-      background-color: $color-gray-soft;
-      color: $color-gray;
-    }
-
-    &:active {
-     @include checked;
-    }
-  }
-
-  &--checked {
-    .eye-checkbox__label {
-      @include checked;
-    }
-  }
-}
-
 mat-checkbox {
   display: flex;
   width: 100%;
@@ -110,7 +67,7 @@ mat-checkbox + mat-checkbox {
 
   $mat-form-field-p-bottom: 1.34375em;
 
-  .eye-checkbox {
+  app-eye-checkbox {
     margin-bottom: $mat-form-field-p-bottom;
     margin-right: 10px;
   }

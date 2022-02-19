@@ -17,6 +17,7 @@ import { ArticleModalComponent } from './components/modals/article-modal/article
 import { ConfirmModalComponent } from './components/modals/confirm-modal/confirm-modal.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { RouterModule } from '@angular/router';
+import { SwitchComponent } from './components/switch/switch.component';
 import { EyeCheckboxComponent } from './components/eye-checkbox/eye-checkbox.component';
 
 const modules = [
@@ -32,10 +33,12 @@ const modules = [
   CommonModalComponent,
   ConfirmModalComponent,
   BreadcrumbsComponent,
+  SwitchComponent,
+  EyeCheckboxComponent,
 ];
 
 @NgModule({
-  declarations: [...modules, EyeCheckboxComponent],
+  declarations: [...modules],
   exports: [...modules],
   imports: [CommonModule, IconModule, PipesModule, TranslateModule, MaterialModule, RouterModule],
 })

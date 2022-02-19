@@ -11,22 +11,9 @@
   <div *ngIf="processes?.length !== 0"
        class="body__row">
 
-    <!-- TODO: move into app-eye-checkbox and use the same logic as app-switch -->
-    <div class="eye-checkbox"
-         [class.eye-checkbox--checked]="listSettings.ifShowFuncClusters">
-      <input type="checkbox"
-             class="eye-checkbox__checkbox"
-             id="toggle-processes"
-             (change)="changeGenesListSettings('processes')"
-             [checked]="listSettings.ifShowFuncClusters"
-      >
-      <label class="eye-checkbox__label"
-             for="toggle-processes">
-        <span [ngClass]="listSettings.ifShowFuncClusters? 'fa-eye' : 'fa-eye-slash'"
-          class="icon far"
-        ></span>
-      </label>
-    </div>
+ <app-eye-checkbox
+   (changeEvent)="changeGenesListSettings('processes')"
+   [switch]="listSettings.ifShowFuncClusters"></app-eye-checkbox>
 
     <mat-form-field appearance="fill">
       <mat-label>{{ "functional_classes" | translate }}</mat-label>
