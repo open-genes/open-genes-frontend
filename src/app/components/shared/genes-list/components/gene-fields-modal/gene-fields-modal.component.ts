@@ -14,7 +14,6 @@ import { MatSelectChange } from '@angular/material/select';
   selector: 'app-gene-fields-modal',
   templateUrl: './gene-fields-modal.component.html',
   styleUrls: ['./gene-fields-modal.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GeneFieldsModalComponent implements OnDestroy {
   public listSettings: GenesListSettings;
@@ -32,7 +31,6 @@ export class GeneFieldsModalComponent implements OnDestroy {
     private dialogRef: MatDialogRef<GeneFieldsModalComponent>,
     private filterService: FilterService,
     private settingsService: SettingsService,
-    private cdRef: ChangeDetectorRef
   ) {
     this.filtersForm = new FormGroup({
       ageRelatedProcessesSelect: new FormControl([[], [Validators.minLength(1)]]),
@@ -46,7 +44,6 @@ export class GeneFieldsModalComponent implements OnDestroy {
     });
 
     this.predefinedProcesses = this.filterService.filters.byAgeRelatedProcess;
-    this.cdRef.markForCheck();
   }
 
   ngOnDestroy(): void {
@@ -109,7 +106,6 @@ export class GeneFieldsModalComponent implements OnDestroy {
       (fields) => {
         this.settingsService.setFieldsForShow(fields);
         this.listSettings = fields;
-        this.cdRef.markForCheck();
       },
       (error) => {
         console.log(error);
