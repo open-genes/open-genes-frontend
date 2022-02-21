@@ -56,11 +56,11 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
   @Output() confirmedQuery: EventEmitter<any> = new EventEmitter<any>();
 
-  public clearFieldButton: boolean;
-  public searchedData: Genes[];
+  public searchedData: Partial<Genes[]>;
   public searchForm: FormGroup;
   public searchMode: SearchMode;
   public formDisabled: boolean;
+  public clearFieldButton: boolean;
   public showSearchResult = false;
   public highlightText: string;
 
@@ -120,19 +120,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
             this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
           }
 
-          if (this.searchMode === this.searchModeEnum.searchByGoTerms && this.showSearchResult) {
-            return true;
-          }
-
-          if (this.searchMode === this.searchModeEnum.searchByGenes) {
-            this.searchQuery.emit(query);
-          }
-
-          if (this.searchMode === this.searchModeEnum.searchByGenesList) {
-            this.searchQuery.emit(query);
-          }
-
-          return false;
+          return this.showSearchResult;
         }),
         debounceTime(500),
         distinctUntilChanged(),

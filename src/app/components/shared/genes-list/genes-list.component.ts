@@ -76,6 +76,8 @@ export class GenesListComponent implements OnInit, OnDestroy {
     this.downloadSearch(this.searchedData);
   }
 
+  @Output() loading = new EventEmitter<boolean>();
+
   public searchedData: Genes[] = [];
   public filterTypes = FilterTypesEnum;
   public sortEnum = SortEnum;
@@ -87,7 +89,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public currentPage: number;
   public pageOptions: any;
   public isLoading = false;
-  @Output() loading = new EventEmitter<boolean>();
+
 
   private cachedData: Genes[] = [];
   private retrievedSettings: Settings;

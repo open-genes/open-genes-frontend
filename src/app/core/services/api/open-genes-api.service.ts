@@ -43,6 +43,10 @@ export class ApiService {
     return this.http.get<Gene>(`/api/gene/${symbol}?lang=${this.currentLang}`);
   }
 
+  getGenesMatchByString(request: string): Observable<Partial<Genes[]>> {
+    return this.http.get<Partial<Genes[]>>(`/api/gene/suggestions?input=${request}`);
+  }
+
   getGoTermMatchByString(request: string): Observable<Genes[]> {
     return this.http.get<Genes[]>(`/api/gene/by-go-term/${request}`);
   }

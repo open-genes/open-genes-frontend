@@ -24,6 +24,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public searchModeEnum = SearchModeEnum;
   public notFoundAndFoundGenes: any;
   public confirmedFoundGenes: any;
+
   public showLatestGenesSkeleton = true;
   public showArticlesSkeleton = true;
   public showPubmedFeedSkeleton = true;
@@ -78,7 +79,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.queryLength = query.split(',').length;
     if (this.queryLength === 1) {
       if (this.searchMode === this.searchModeEnum.searchByGenes) {
-        this.searchByGenes(query);
+        this.searchGenes(query);
       }
 
       if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
@@ -167,6 +168,29 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
         foundGenes: foundGenes,
         notFoundGenes: notFoundGenes,
       };
+    } else {
+      this.searchedGenes = [];
+    }
+  }
+
+  private searchGenes(query: string): void {
+    if (query && query.length > 2) {
+      this.showProgressBar = true;
+      this.apiService
+        .getGenesMatchByString(query)
+        .pipe(takeUntil(this.subscription$))
+        .subscribe(
+          (genes) => {
+            this.searchedGenes = genes; // If nothing found, will return empty array
+            this.showProgressBar = false;
+            this.cdRef.markForCheck();
+          },
+          (error) => {
+            console.log(error);
+            this.showProgressBar = false;
+            this.cdRef.markForCheck();
+          }
+        );
     } else {
       this.searchedGenes = [];
     }
