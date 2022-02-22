@@ -33,12 +33,10 @@ export abstract class WindowWidth extends ToMap {
   }
 
   protected detectWindowWidth(callback: any): void {
-    this.windowService.windowWidth$
-      .pipe(takeUntil(this.subscription$))
-      .subscribe((width) => {
-        this.isMobile = width <= this.breakpoints.desktop;
-        this.isTablet = width > this.breakpoints.mobile && width <= this.breakpoints.desktop;
-        callback();
-      });
+    this.windowService.windowWidth$.pipe(takeUntil(this.subscription$)).subscribe((width) => {
+      this.isMobile = width <= this.breakpoints.desktop;
+      this.isTablet = width > this.breakpoints.mobile && width <= this.breakpoints.desktop;
+      callback();
+    });
   }
 }
