@@ -93,7 +93,7 @@
   </ng-container>
 </ng-container>
 
-<div *ngIf="!isMiniMode && showMoreButtonVisible && translate.currentLang === 'ru' && !showSkeleton"
+<div *ngIf="!isMiniMode && showMoreButtonVisible && translate.currentLang === 'ru'"
      class="__mt-5 btn-wrap show-more">
   <button class="btn show-more__button"
           (click)="showMore()">
@@ -101,7 +101,7 @@
   </button>
 </div>
 
-<section *ngIf="(articlesTotal === 0 || translate.currentLang === 'en') && !showSkeleton"
+<section *ngIf="(articlesList.length === 0 || translate.currentLang === 'en') && !showSkeleton"
          class="no-articles"
          [class.no-articles--mini]="isMiniMode">
   <app-no-content
