@@ -17,9 +17,47 @@
     border-bottom: 1px solid $color-borders;
   }
 }
+
 .card__controls {
-  background-color: rgba($color-base, .1) ;
+  background-color: rgba($color-base, .1);
   border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px ;
+  border-bottom-left-radius: 5px;
   padding: 12px 0;
+
+  .card__section {
+    .label {
+      margin-bottom: 0;
+    }
+  }
+}
+
+:host::ng-deep  {
+  app-gene-age {
+    .gene-age {
+      .type__title, &__error {
+        font-size: $font-size;
+      }
+
+    }
+  }
+
+  app-aging-mechanisms,
+  app-protein-classes,
+  app-associated-diseases,
+  app-associated-disease-categories,
+  app-selection-criteria {
+    ul {
+      li {
+        font-size: $font-size;
+      }
+
+      li + li {
+        margin-top: 0 !important;
+      }
+    }
+
+    .no-diseases, .no-disease-category {
+      font-size: $font-size;
+    }
+  }
 }
