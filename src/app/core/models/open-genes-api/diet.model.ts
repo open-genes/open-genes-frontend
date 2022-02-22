@@ -15,14 +15,17 @@ export interface Calorie {
   measurementMethod: string;
   measurementType: string;
   restrictionPercent: number;
-  restrictionTime: string;
   age: string;
+  ageUnit: string;
+  duration: number;
+  durationUnit: string;
   organism: string;
   line: string;
   sex: string;
   tissue: string;
   experimentNumber: string;
   doi: string;
+  experimentGroupsQuantity: string;
   expressionChangePercent: number;
   isoform: string;
 }

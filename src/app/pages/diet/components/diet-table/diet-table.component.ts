@@ -40,7 +40,7 @@ export class DietTableComponent {
     'researches_model_organism',
     'researches_line',
     'researches_sex',
-    'tissue',
+    'researches_l_tissue_specificity',
     'experiment_number',
     'researches_reference',
     'expression_change_percent',
