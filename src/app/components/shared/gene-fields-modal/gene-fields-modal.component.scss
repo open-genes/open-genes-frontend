@@ -34,13 +34,25 @@
     align-content: space-between;
     align-items: start;
     justify-items: center;
-    grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 10px;
     justify-content: center;
 
-    .separator {
-      grid-column-start: 1;
-      grid-column-end: 4;
+    @include resolution_tablet-and-up {
+      grid-template-columns: 1fr 1fr;
+
+      .separator {
+        grid-column-start: 1;
+        grid-column-end: 3;
+      }
+    }
+
+    @include resolution_smartphone {
+      grid-template-columns: 1fr;
+
+      .separator {
+        grid-column-start: 1;
+        grid-column-end: 2;
+      }
     }
   }
 }
