@@ -1,13 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { GenesListSettings } from '../../genes-list-settings.model';
-import { FilterService } from '../../services/filter.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { GenesListSettings } from '../genes-list/genes-list-settings.model';
+import { FilterService } from '../genes-list/services/filter.service';
 import { takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
-import { SettingsService } from '../../../../../core/services/settings.service';
-import { ApiService } from '../../../../../core/services/api/open-genes-api.service';
+import { SettingsService } from '../../../core/services/settings.service';
+import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FilterTypes } from '../../../../../core/models/filters/filter-types.model';
+import { FilterTypes } from '../../../core/models/filters/filter-types.model';
 import { MatSelectChange } from '@angular/material/select';
 
 @Component({
@@ -15,7 +14,7 @@ import { MatSelectChange } from '@angular/material/select';
   templateUrl: './gene-fields-modal.component.html',
   styleUrls: ['./gene-fields-modal.component.scss'],
 })
-export class GeneFieldsModalComponent implements OnDestroy {
+export class GeneFieldsModalComponent implements OnInit, OnDestroy {
   // FIELDS VISIBILITY
   public listSettings: GenesListSettings;
   // FILTERS
@@ -43,14 +42,12 @@ export class GeneFieldsModalComponent implements OnDestroy {
   private agingMechanismsModel: Observable<any[]>;
 
   public filtersForm: FormGroup;
-  private unsubscribe$ = new Subject();
   private subscription$ = new Subject();
 
   constructor(
     private apiService: ApiService,
-    private dialogRef: MatDialogRef<GeneFieldsModalComponent>,
     private filterService: FilterService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
   ) {
     this.filtersForm = new FormGroup({
       ageRelatedProcessesSelect: new FormControl([[], [Validators.minLength(1)]]),
@@ -60,7 +57,9 @@ export class GeneFieldsModalComponent implements OnDestroy {
       selectionCriteriaSelect: new FormControl([[], [Validators.minLength(1)]]),
       agingMechanismsSelect: new FormControl([[], [Validators.minLength(1)]]),
     });
+  }
 
+  ngOnInit() {
     this.updateVisibleFields();
 
     // FILTERS
@@ -110,7 +109,7 @@ export class GeneFieldsModalComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe$.complete();
+    this.subscription$.complete();
   }
 
   /**
@@ -174,7 +173,7 @@ export class GeneFieldsModalComponent implements OnDestroy {
       },
       (error) => {
         console.log(error);
-      }
+      },
     );
   }
 
@@ -211,7 +210,8 @@ export class GeneFieldsModalComponent implements OnDestroy {
     this.filterService.updateFields(this.listSettings);
   }
 
-  public onClose(): void {
-    this.dialogRef.close();
+  public filterOptions(arr: any[], event) {
+    arr = arr.filter((item) => item?.name.includes(event.target.value));
+    console.log(arr);
   }
 }

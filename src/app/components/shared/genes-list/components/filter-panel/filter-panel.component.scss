@@ -30,6 +30,10 @@
     position: relative;
   }
 
+  button.view-panel__modal-button {
+    margin-right: 10px;
+  }
+
   @include resolution_tablet-and-up {
     justify-content: space-between;
 

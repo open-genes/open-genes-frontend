@@ -114,7 +114,7 @@ export class FilterService {
       methylation_change,
       aging_mechanism,
       protein_classes,
-    } = FilterTypesEnum;
+    } = FilterTypesEnum; // TODO: this enum is excessive
     switch (filterName) {
       case age_related_processes:
         this.filters.byAgeRelatedProcess = [];

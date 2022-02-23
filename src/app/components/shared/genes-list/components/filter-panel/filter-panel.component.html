@@ -1,7 +1,14 @@
 <div class="view-panel">
   <div class="view-panel__filters">
-    <div matSort (matSortChange)="sortBy($event)">
+    <button *ngIf="!isGoTermsMode && isMobile"
+            class="view-panel__modal-button btn btn--small btn--icon-only btn--purple"
+            (click)="openFiltersModal('filters_modal_title', null, GeneFieldsModalTemplate)">
+      <span class="fa far fa-sliders-h"></span>
+    </button>
 
+    <div matSort
+         (matSortChange)="sortBy($event)"
+         class="filters-group">
       <button
         class="filter"
         [mat-sort-header]="sortEnum.byName">
@@ -19,9 +26,7 @@
         [mat-sort-header]="sortEnum.byCriteriaQuantity">
         {{ "criteriaQuantity" | translate }}
       </button>
-
     </div>
-
 
     <button
       *ngIf="filters.byAgeRelatedProcess.length"
@@ -85,13 +90,6 @@
       <span class="fa fal fa-times"></span>
     </button>
 
-    <button *ngIf="!isGoTermsMode"
-            class="btn btn--small btn--fill btn--purple"
-            (click)="openFiltersModal()">
-      <span class="fa far fa-plus"></span>
-      {{ 'filters_modal_title' | translate }}
-    </button>
-
     <button
       *ngIf="isClear$ | async"
       class="btn btn--small btn--purple"
@@ -106,4 +104,8 @@
     <ng-content select="[buttons]"></ng-content>
   </div>
 </div>
+
+<ng-template #GeneFieldsModalTemplate>
+  <app-gene-fields-modal></app-gene-fields-modal>
+</ng-template>
 

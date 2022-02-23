@@ -1,0 +1,47 @@
+@import "../../styles";
+
+:host {
+  max-width: 100%;
+  display: block;
+}
+
+.body__row {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 220px;
+  font-size: 12px; // regulates mat-select size
+
+  mat-form-field {
+    max-width: 100%;
+  }
+
+  ::ng-deep .mat-form-field-prefix {
+    top: -0.5em;
+  }
+}
+
+.separator {
+  width: 100%;
+  height: 0;
+  border-top: 1px solid $color-borders;
+  margin: 10px 0;
+}
+
+:host-context(.filters-modal) {
+  .filters-modal__body {
+    display: grid;
+    align-content: space-between;
+    align-items: start;
+    justify-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+    justify-content: center;
+
+    .separator {
+      grid-column-start: 1;
+      grid-column-end: 4;
+    }
+  }
+}
+

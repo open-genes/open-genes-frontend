@@ -39,6 +39,12 @@
                 </div>
               </app-sidebar-item>
 
+              <app-sidebar-item *ngIf="!isMobile">
+                <div content class="filters-wrapper">
+                  <app-gene-fields-modal></app-gene-fields-modal>
+                </div>
+              </app-sidebar-item>
+
               <ng-container *ngIf="!genesListIsLoading">
               <app-sidebar-item *ngIf="lastGenes">
                 <ng-container title>

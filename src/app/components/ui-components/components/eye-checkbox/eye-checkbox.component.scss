@@ -1,11 +1,14 @@
 @import "../../../styles";
 
+:host {
+  display: contents;
+}
+
 .eye-checkbox {
-  $checkbox-size: 40px;
+  $checkbox-size: 2.2em;
   position: relative;
 
   @mixin checked {
-    background-color: $color-selected;
     color: $color-general;
   }
 
@@ -13,17 +16,15 @@
     display: block;
     width: $checkbox-size;
     height: $checkbox-size;
-    font-size: 16px;
+    font-size: 1.2em;
     color: $color-gray-halfing;
     line-height: $checkbox-size;
     text-align: center;
     cursor: pointer;
-    background-color: $color-gray-soft;
     border-radius: 50%;
-    transition: background-color, color, linear .15s;
+    transition: color, linear .15s;
 
     &:hover {
-      background-color: $color-gray-soft;
       color: $color-gray;
     }
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-eye-checkbox',
@@ -9,8 +9,9 @@ export class EyeCheckboxComponent {
   @Input() switch = false;
   @Output() changeEvent = new EventEmitter<boolean>();
 
-  public toggle() {
+  public toggle(event) {
     this.switch = !this.switch;
     this.changeEvent.emit(this.switch);
+    event.stopPropagation();
   }
 }
