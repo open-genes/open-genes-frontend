@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Genes } from '../../core/models';
-import { FilterService } from '../../components/shared/genes-list/services/filter.service';
 import { takeUntil } from 'rxjs/operators';
 import { WizardService } from '../../components/shared/wizard/wizard-service.service';
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
+import { SessionStorageService } from '../../core/services/session-storage.service';
 
 @Component({
   selector: 'app-home',
@@ -18,13 +18,13 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public genes: Genes[];
   public searchedGenes: Genes[] = [];
   public confirmedGenesList: Genes[] | string;
-  public lastGenes: Genes[];
   public isAvailable = true;
   public errorStatus: string;
   public searchMode: SearchMode;
   public searchModeEnum = SearchModeEnum;
   public notFoundAndFoundGenes: any;
   public confirmedFoundGenes: any;
+  public showLatestGenesSkeleton = true;
   public showArticlesSkeleton = true;
   public showPubmedFeedSkeleton = true;
   public showProgressBar = false;
@@ -33,10 +33,10 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
 
   constructor(
     public windowService: WindowService,
-    private filterService: FilterService,
+    private sessionStorageService: SessionStorageService,
     private wizardService: WizardService,
     private readonly apiService: ApiService,
-    private readonly cdRef: ChangeDetectorRef,
+    private readonly cdRef: ChangeDetectorRef
   ) {
     super(windowService);
   }
@@ -53,7 +53,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     });
 
     this.loadWizard();
-    this.getLastEditedGenes();
   }
 
   public getGenes(): void {
@@ -73,16 +72,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
           this.cdRef.markForCheck();
         }
       );
-  }
-
-  public getLastEditedGenes(): void {
-    this.apiService
-      .getLastEditedGene()
-      .pipe(takeUntil(this.subscription$))
-      .subscribe((genes) => {
-        this.lastGenes = genes;
-        this.cdRef.markForCheck();
-      });
   }
 
   public setSearchQuery(query: string): void {
@@ -200,7 +189,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
             console.log(error);
             this.showProgressBar = false;
             this.cdRef.markForCheck();
-          },
+          }
         );
     } else {
       this.searchedGenes = [];
@@ -237,5 +226,21 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
+  }
+
+  updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'news' | 'latest'): void {
+    if (name === 'articles') {
+      this.showArticlesSkeleton = event;
+    }
+
+    if (name === 'news') {
+      this.showPubmedFeedSkeleton = event;
+    }
+
+    if (name === 'latest') {
+      this.showLatestGenesSkeleton = event;
+    }
+
+    this.cdRef.detectChanges();
   }
 }

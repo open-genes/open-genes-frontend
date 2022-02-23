@@ -38,7 +38,7 @@
 
             <app-articles-list
               [showSkeleton] = 'showCardSkeleton'
-              (skeletonState)='showCardSkeleton = $event'
+              (showSkeletonChange)='showCardSkeleton = $event'
               class="__mt-10"
             ></app-articles-list>
 
@@ -60,7 +60,7 @@
                 [loadTotal]="80"
                 [showDates]="true"
                 [showSkeleton] = 'showRowSkeleton'
-                (skeletonState)='showRowSkeleton = $event'
+                (showSkeletonChange)='showRowSkeleton = $event'
               ></app-news-list>
 
               <app-skeleton

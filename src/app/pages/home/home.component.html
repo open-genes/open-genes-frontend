@@ -45,19 +45,27 @@
                 </div>
               </app-sidebar-item>
 
-              <ng-container *ngIf="!genesListIsLoading">
-              <app-sidebar-item *ngIf="lastGenes">
+              <app-sidebar-item>
                 <ng-container title>
                   {{ "main_page_last" | translate }}
                   <a class="link link--gray" href="/timeline">
                     {{ "show_more_short" | translate }}
                   </a>
                 </ng-container>
-                <app-mini-cards
-                  content
-                  [lastGenes]="lastGenes"
-                ></app-mini-cards>
+                <ng-container content>
+                  <app-mini-cards
+                    *ngIf="!genesListIsLoading"
+                    (showSkeletonChange)="updateViewOnSkeletonChange($event, 'latest')"
+                  ></app-mini-cards>
+                  <app-skeleton
+                    *ngIf="showLatestGenesSkeleton"
+                    [view]="'card'"
+                    [cardsInARow]="2"
+                    [groups]="1"
+                  ></app-skeleton>
+                </ng-container>
               </app-sidebar-item>
+
               <app-sidebar-item>
                 <ng-container title>
                   {{ "articles_list_title" | translate }}
@@ -65,24 +73,24 @@
                     {{ "show_more_short" | translate }}
                   </a>
                 </ng-container>
-
                 <ng-container content>
                   <app-articles-list
+                    *ngIf="!genesListIsLoading"
                     class="__h-100"
                     [isMiniMode]="true"
                     [sliceTo]="1"
                     [showSkeleton]="showArticlesSkeleton"
-                    (skeletonState)="showArticlesSkeleton = $event"
+                    (showSkeletonChange)="updateViewOnSkeletonChange($event, 'articles')"
                   ></app-articles-list>
                   <app-skeleton
                     *ngIf="showArticlesSkeleton"
                     [view]="'card'"
                     [cardsInARow]="isTablet ? 2 : 1"
-                    [groups]="isTablet? 1 : 2"
+                    [groups]="1"
                   ></app-skeleton>
                 </ng-container>
-
               </app-sidebar-item>
+
               <app-sidebar-item>
                 <ng-container title>
                   {{ "news_list_title" | translate }}
@@ -90,25 +98,23 @@
                     {{ "show_more_short" | translate }}
                   </a>
                 </ng-container>
-
                 <ng-container content>
-                  <app-news-list
+                  <app-news-list *ngIf="!genesListIsLoading"
                     class="__pl-5 __pr-5"
                     [isMiniMode]="true"
-                    [loadTotal]="1"
+                    [loadTotal]="2"
                     [showSkeleton]="showPubmedFeedSkeleton"
-                    (skeletonState)="showPubmedFeedSkeleton = $event"
+                    (showSkeletonChange)="updateViewOnSkeletonChange($event, 'news')"
                   ></app-news-list>
 
                   <app-skeleton
                     *ngIf="showPubmedFeedSkeleton"
-                    class="__mt-10"
+                    class="__mt-5"
                     [view]="'line'"
                     [groups]="2"
                   ></app-skeleton>
                 </ng-container>
               </app-sidebar-item>
-              </ng-container>
             </app-sidebar>
           </div>
 
