@@ -32,7 +32,7 @@ export class FilterService {
     bySelectionCriteria: [],
     byExpressionChange: 0,
     byMethylationChange: '',
-    byAgingMechanisms: [],
+    byAgingMechanism: [],
     byProteinClass: [],
   };
 
@@ -133,7 +133,7 @@ export class FilterService {
         this.filters.byMethylationChange = '';
         break;
       case aging_mechanism:
-        this.filters.byAgingMechanisms = [];
+        this.filters.byAgingMechanism = [];
         break;
       case protein_classes:
         this.filters.byProteinClass = [];
@@ -145,7 +145,7 @@ export class FilterService {
         this.filters.bySelectionCriteria = [];
         this.filters.byExpressionChange = 0;
         this.filters.byMethylationChange = '';
-        this.filters.byAgingMechanisms = [];
+        this.filters.byAgingMechanism = [];
         this.filters.byProteinClass = [];
     }
     this.pagination.page = 1;
