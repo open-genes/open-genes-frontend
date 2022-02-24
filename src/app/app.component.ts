@@ -8,7 +8,7 @@ import { DOCUMENT } from '@angular/common';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit, AfterViewChecked {
-  private lang: string;
+  private readonly lang: string;
 
   constructor(
     private translate: TranslateService,
@@ -33,6 +33,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
+
     setTimeout(() => {
       // TODO: find a proper way to wait for the full DOM loading considering all modules
       this.document.body.classList.remove('body--loading');
