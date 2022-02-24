@@ -5,5 +5,5 @@ export type FilterTypes =
   | 'bySelectionCriteria'
   | 'byExpressionChange'
   | 'byMethylationChange'
-  | 'byAgingMechanisms'
+  | 'byAgingMechanism'
   | 'byProteinClass';

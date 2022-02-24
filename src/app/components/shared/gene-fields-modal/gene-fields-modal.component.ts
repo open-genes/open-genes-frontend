@@ -102,7 +102,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     this.agingMechanismsModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
       this.agingMechanisms = data;
     });
-    this.predefinedAgingMechanisms = this.filterService.filters.byAgingMechanisms;
+    this.predefinedAgingMechanisms = this.filterService.filters.byAgingMechanism;
 
     // Protein classes
     // TODO: нет эндпоинта со списком

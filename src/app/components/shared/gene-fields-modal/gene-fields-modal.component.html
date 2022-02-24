@@ -105,7 +105,7 @@
                   multiple="true"
                   [(ngModel)]="predefinedAgingMechanisms"
                   [compareWith]="compareSelectValues"
-                  (selectionChange)="apply('byAgingMechanisms', $event)">
+                  (selectionChange)="apply('byAgingMechanism', $event)">
         <mat-option *ngFor="let i of agingMechanisms" [value]="i.id">{{ i.name }}</mat-option>
       </mat-select>
     </mat-form-field>
