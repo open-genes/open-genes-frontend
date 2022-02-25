@@ -30,7 +30,7 @@
             min-width: 150px;
             text-align: center;
             vertical-align: middle;
-            font-size: calc(0.2vw + #{$font-size});;
+            font-size: $font-size;
           }
 
           th:first-child {

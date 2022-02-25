@@ -3,8 +3,6 @@ import { Diet } from '../../../../core/models/open-genes-api/diet.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Pagination } from '../../../../core/models/settings.model';
 import { Sort } from '@angular/material/sort';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'app-diet-table',
