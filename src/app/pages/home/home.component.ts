@@ -16,7 +16,8 @@ import { SessionStorageService } from '../../core/services/session-storage.servi
 })
 export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public searchedGenes: Genes[] = [];
-  public confirmedGenesList: Genes[] | string;
+  public confirmedGenesList: Genes[];
+  public confirmedGenesIds: number[];
   public isAvailable = true;
   public errorStatus: string;
   public searchMode: SearchMode;
@@ -61,27 +62,27 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   public updateGenesList(query): void {
-    if (query && this.searchedGenes.length) {
-      this.confirmedGenesList = [...this.searchedGenes];
+    if (query) {
+      if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
+        this.confirmedGenesList = this.searchedGenes;
+      } else {
+        this.confirmedGenesIds = this.searchedGenes.map((gene) => gene.id);
+      }
+    } else {
+      this.confirmedGenesIds = null;
+      this.confirmedGenesList = null;
     }
 
-    if (query && this.searchedGenes.length === 0) {
-      this.confirmedGenesList = [null];
-    }
-
-    if (!query && this.searchedGenes.length === 0) {
-      this.confirmedGenesList = [];
-    }
-
+    this.cdRef.markForCheck();
   }
 
   public setSearchMode(searchMode: SearchMode): void {
     this.searchMode = searchMode;
-    this.confirmedGenesList = '';
+    this.confirmedGenesIds = null;
+    this.confirmedGenesList = null;
   }
 
   private searchGenes(query: string): void {
-    debugger;
     if (query && query.length > 2) {
       this.showProgressBar = true;
       this.apiService

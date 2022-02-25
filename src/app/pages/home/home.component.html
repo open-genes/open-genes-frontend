@@ -129,9 +129,8 @@
             ></app-search>
 
             <app-genes-list
-
               (loading)="setLoader($event)"
-              [genesList]="confirmedGenesList"
+              [genesList]="searchMode !== searchModeEnum.searchByGoTerms ? confirmedGenesIds : confirmedGenesList"
               [isMobile]="isMobile"
               [setSearchMode]="searchMode"
               [showFiltersPanel]="searchMode !== searchModeEnum.searchByGoTerms">

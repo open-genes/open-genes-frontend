@@ -97,7 +97,7 @@ export class FilterService {
     this.updateList(this.filters);
   }
 
-  public updateList(filterParams: Filter): void {
+  public updateList(filterParams: Filter | any): void {
     this.filterChanges$.next(filterParams);
   }
 

@@ -54,7 +54,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
-  @Output() confirmedQuery: EventEmitter<any> = new EventEmitter<any>();
+  @Output() confirmedQuery: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public searchedData: Partial<Genes[]>;
   public searchForm: FormGroup;
@@ -64,7 +64,6 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   public showSearchResult = false;
   public highlightText: string;
 
-  private searchModeEnum = SearchModeEnum;
   public inputData = [
     {
       searchMode: SearchModeEnum.searchByGenes,
@@ -133,7 +132,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public onSearch(): void {
-    this.confirmedQuery.emit(this.highlightText);
+    this.confirmedQuery.emit(!!this.highlightText);
   }
 
   public cancelSearch(event?): void {
@@ -146,7 +145,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchForm.get('searchField').setValue('');
     const query: string = this.searchForm.get('searchField').value;
     this.searchQuery.emit(query);
-    this.confirmedQuery.emit(query.toLowerCase());
+    this.confirmedQuery.emit(false);
     this.cancelSearch();
   }
 }
