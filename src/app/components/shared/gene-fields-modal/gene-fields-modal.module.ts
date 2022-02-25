@@ -4,7 +4,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../../../modules/vendors/material.module';
 import { GeneFieldsModalComponent } from './gene-fields-modal.component';
 import { UiComponentsModule } from '../../ui-components/ui-components.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PipesModule } from '../../../modules/pipes/pipes.module';
 
 @NgModule({
   declarations: [GeneFieldsModalComponent],
@@ -14,7 +15,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     UiComponentsModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    PipesModule,
+    FormsModule,
   ],
   exports: [GeneFieldsModalComponent],
 })

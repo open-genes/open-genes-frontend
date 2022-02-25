@@ -1,9 +1,7 @@
 <form class="filters-modal__body" [formGroup]="filtersForm">
   <div *ngIf="processes?.length !== 0"
        class="body__row">
-
     <mat-form-field appearance="fill" color="primary">
-      <input matInput type="text" (keyup)="filterOptions(processes, $event)">
       <app-eye-checkbox
         matPrefix
         (changeEvent)="changeGenesListSettings('processes')"
@@ -14,7 +12,13 @@
                   [(ngModel)]="predefinedProcesses"
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('byAgeRelatedProcess', $event)">
-        <mat-option *ngFor="let i of processes" [value]="i.id">{{ i.name }}</mat-option>
+        <input matInput
+               type="text"
+               class="mat-select__search"
+               [(ngModel)]="searchText"
+               placeholder="search">
+        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
+        <mat-option *ngFor="let i of processes | searchFilter : searchText" [value]="i.id">{{ i.name }}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -30,6 +34,7 @@
                   [(ngModel)]="predefinedExpressionChanges"
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('byExpressionChange', $event)">
+        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
         <mat-option [value]="1">{{ "expression_change_decreased" | translate }}</mat-option>
         <mat-option [value]="2">{{ "expression_change_increased" | translate }}</mat-option>
         <mat-option [value]="3">{{ "expression_change_mixed" | translate }}</mat-option>
@@ -50,6 +55,7 @@
                   [(ngModel)]="predefinedDiseases"
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('byDiseases', $event)">
+        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
         <mat-option *ngFor="let i of diseases | keyvalue" [value]="i.key">{{ i?.value['name'] }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -68,6 +74,7 @@
                   [(ngModel)]="predefinedDiseaseCategories"
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('byDiseaseCategories', $event)">
+        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
         <mat-option *ngFor="let i of diseaseCategories | keyvalue"
                     [value]="i.key">{{ i.value['icdCategoryName'] }}</mat-option>
       </mat-select>
@@ -87,6 +94,7 @@
                   [(ngModel)]="predefinedSelectionCriteria"
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('bySelectionCriteria', $event)">
+        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
         <mat-option *ngFor="let i of selectionCriteria" [value]="i.id">{{ i.name }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -106,6 +114,9 @@
                   [(ngModel)]="predefinedAgingMechanisms"
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('byAgingMechanism', $event)">
+        <mat-option>
+          {{ 'nothing_selected' | translate }}
+        </mat-option>
         <mat-option *ngFor="let i of agingMechanisms" [value]="i.id">{{ i.name }}</mat-option>
       </mat-select>
     </mat-form-field>

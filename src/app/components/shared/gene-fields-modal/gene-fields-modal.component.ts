@@ -18,6 +18,9 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
   // FIELDS VISIBILITY
   public listSettings: GenesListSettings;
   // FILTERS
+  // Search in selects
+  searchText: any;
+
   // Age-related processes
   public processes: any[]; // TODO: typing
   public predefinedProcesses: any[];
@@ -157,15 +160,20 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     console.log(this.filterService.filters.byAgeRelatedProcess);
   }
 
-  public resetForm(): void {
-    this.filtersForm.reset();
+  // TODO
+  public resetForm(formControlName: string): void {
+    if (formControlName) {
+      this.filtersForm.reset(formControlName);
+    } else {
+      this.filtersForm.reset();
+    }
   }
 
   /**
    * Update list view
    */
 
-  private updateVisibleFields() {
+  private updateVisibleFields(): void {
     this.filterService.currentFields.pipe(takeUntil(this.subscription$)).subscribe(
       (fields) => {
         this.settingsService.setFieldsForShow(fields);
@@ -210,6 +218,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     this.filterService.updateFields(this.listSettings);
   }
 
+  // TODO
   public filterOptions(arr: any[], event) {
     arr = arr.filter((item) => item?.name.includes(event.target.value));
     console.log(arr);
