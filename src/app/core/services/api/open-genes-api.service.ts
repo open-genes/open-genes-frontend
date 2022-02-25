@@ -44,7 +44,7 @@ export class ApiService {
   }
 
   getGenesMatchByString(request: string): Observable<Partial<Genes[]>> {
-    return this.http.get<Partial<Genes[]>>(`/api/gene/suggestions?input=${request}`);
+    return this.http.get<Partial<Genes[]>>(`https://test.open-genes.com/api/gene/suggestions?input=${request}`);
   }
 
   getGoTermMatchByString(request: string): Observable<Genes[]> {

@@ -97,7 +97,7 @@ export class FilterService {
     this.updateList(this.filters);
   }
 
-  public updateList(filterParams: Filter | any): void {
+  public updateList(filterParams: Filter): void {
     this.filterChanges$.next(filterParams);
   }
 
@@ -180,7 +180,7 @@ export class FilterService {
         .set('sortOrder', this.sortParams.direction.toUpperCase())
     }
 
-    return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });
+    return this.http.get<ApiResponse<Genes>>(`https://test.open-genes.com/api/gene/search`, { params });
   }
 
   private areMoreThan2FiltersApplied(): void {

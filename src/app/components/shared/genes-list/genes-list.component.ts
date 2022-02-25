@@ -39,7 +39,9 @@ interface FoundGenes {
 export class GenesListComponent implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
-  @Input() notFoundAndFoundGenes: FoundGenes;
+  @Input() set arrayOfWords(words: string[]) {
+    this.uniqWords = words;
+  }
 
   @Input() set setSearchMode(searchMode: SearchMode) {
     if (searchMode) {
@@ -69,18 +71,23 @@ export class GenesListComponent implements OnInit, OnDestroy {
 
       this.isGoSearchPerformed = this.isGoTermsMode;
     } else {
-      this.clearFilters();
+      if (!this.isGoTermsMode) {
+        this.clearFilters();
+      }
     }
 
     this.downloadSearch(this.searchedData);
   }
 
-  @Output() loading = new EventEmitter<boolean>();
+  @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() errorStatus: EventEmitter<string> = new EventEmitter<string>();
+  @Output() genesLength: EventEmitter<number> = new EventEmitter<number>();
 
   public searchedData: Genes[] = [];
   public filterTypes = FilterTypesEnum;
   public sortEnum = SortEnum;
   public searchMode: SearchMode;
+  public notFoundAndFoundGenes: FoundGenes;
   public isTableView: boolean;
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
@@ -90,6 +97,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public isLoading = false;
 
   private cachedData: Genes[] = [];
+  private uniqWords: string[] = [];
   private retrievedSettings: Settings;
   private searchModeEnum = SearchModeEnum;
   private subscription$ = new Subject();
@@ -148,26 +156,28 @@ export class GenesListComponent implements OnInit, OnDestroy {
       .subscribe(
         (res: ApiResponse<Genes>) => {
           this.currentPage = this.filterService.pagination.page;
+
           if (this.currentPage == 1) {
             this.cachedData = [];
-            this.cachedData.push(...res.items);
-            this.searchedData = [...this.cachedData];
-          } else {
-            this.cachedData.push(...res.items);
-            this.searchedData = [...this.cachedData];
           }
+          this.cachedData.push(...res.items);
+          this.searchedData = [...this.cachedData];
           this.downloadSearch(this.searchedData);
+          this.setFoundAndNotfoundGenes(this.searchedData);
+
           this.pageOptions = res.options.pagination;
           this.isLoading = false;
           this.loading.emit(false);
+          this.genesLength.emit(res.options.objTotal);
           this.cdRef.markForCheck();
         },
         (error) => {
           console.log(error);
           this.isLoading = false;
           this.loading.emit(false);
+          this.errorStatus.emit(error.statusText);
           this.cdRef.markForCheck();
-        },
+        }
       );
   }
 
@@ -295,6 +305,34 @@ export class GenesListComponent implements OnInit, OnDestroy {
       },
       duration: 600,
     });
+  }
+
+  private setFoundAndNotfoundGenes(genes: Genes[]): void {
+    const notFoundGenes = [];
+    let foundGenes = [];
+
+    if (this.uniqWords?.length > 1) {
+      debugger;
+      foundGenes = this.uniqWords.filter((symbol) => {
+        const foundGene = genes.find((gene) => symbol === gene.symbol.toLowerCase());
+
+        if (!foundGene) {
+          notFoundGenes.push(symbol);
+        }
+
+        return !!foundGene;
+      });
+
+      this.notFoundAndFoundGenes = {
+        foundGenes: foundGenes,
+        notFoundGenes: notFoundGenes,
+      };
+    } else {
+      this.notFoundAndFoundGenes = {
+        foundGenes: [],
+        notFoundGenes: [],
+      };
+    }
   }
 
   ngOnDestroy(): void {

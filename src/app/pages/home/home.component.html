@@ -21,7 +21,7 @@
     </div>
     <div class="container-fluid">
       <div class="row">
-        <ng-container *ngIf="isAvailable; else errorMessage">
+        <ng-container *ngIf="!errorStatus; else errorMessage">
           <div class="col-12">
             <div *ngIf="isMobile"
                  class="__mb-20">
@@ -119,7 +119,7 @@
             <app-search
               class="__mt-20 __mb-10"
               [showTitle]="true"
-              [genesLength]="100"
+              [genesLength]="genesLength"
               [genesList]="searchedGenes"
               [isDisabled]="genesListIsLoading"
               [setSearchMode]="searchMode"
@@ -130,7 +130,10 @@
 
             <app-genes-list
               (loading)="setLoader($event)"
+              (errorStatus)="errorStatus = $event"
+              (genesLength)="genesLength = $event"
               [genesList]="searchMode !== searchModeEnum.searchByGoTerms ? confirmedGenesIds : confirmedGenesList"
+              [arrayOfWords]="arrayOfWords"
               [isMobile]="isMobile"
               [setSearchMode]="searchMode"
               [showFiltersPanel]="searchMode !== searchModeEnum.searchByGoTerms">
