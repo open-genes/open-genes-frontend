@@ -1,10 +1,10 @@
 <button class="eye-checkbox"
-     [ngClass]="switch ? 'eye-checkbox--checked' : ''"
-     (click)="toggle($event)">
-  <div class="eye-checkbox__label"
-         for="toggle-processes">
+        [ngClass]="switch ? 'eye-checkbox--checked' : ''"
+        (click)="toggle($event)"
+        title="{{ (switch? 'filters_modal_hide' : 'filters_modal_show') | translate }}">
+  <span class="eye-checkbox__label">
         <span [ngClass]="switch? 'fa-eye' : 'fa-eye-slash'"
               class="icon far"
         ></span>
-  </div>
+  </span>
 </button>

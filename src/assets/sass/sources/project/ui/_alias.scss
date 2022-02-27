@@ -51,14 +51,14 @@
 
 a.alias,
 button.alias {
-  color: $color-clikable-500;
-  background-color: $color-clikable-100;
+  color: $color-clickable-500;
+  background-color: $color-clickable-100;
 
   &:hover {
-    background-color: $color-clikable-200;
+    background-color: $color-clickable-200;
   }
 
   &:active {
-    background-color: $color-clikable-200;
+    background-color: $color-clickable-200;
   }
 }

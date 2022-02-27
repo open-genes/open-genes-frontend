@@ -11,6 +11,25 @@
   width: 100%;
   max-width: 220px;
   font-size: 12px; // regulates mat-select size
+
+  mat-form-field {
+    max-width: 100%;
+  }
+
+  ::ng-deep {
+    .mat-form-field-prefix {
+      top: -0.5em;
+    }
+
+    .mat-form-field-underline {
+      display: none;
+    }
+
+    .mat-form-field-flex {
+      border-radius: $border-radius-regular;
+      background-color: rgba($color-general, .10);;
+    }
+  }
 }
 
 .separator {
@@ -52,25 +71,6 @@
     }
   }
 }
-
-mat-form-field {
-  max-width: 100%;
-}
-
-::ng-deep {
-  .mat-form-field-prefix {
-    top: -0.5em;
-  }
-
-  .mat-form-field-underline {
-    display: none;
-  }
-}
-
-.mat-form-field-flex {
-  border-radius: $border-radius-regular;
-}
-
 
 .mat-select__search {
   box-sizing: border-box;
