@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { GenesListSettings } from '../genes-list/genes-list-settings.model';
 import { FilterService } from '../genes-list/services/filter.service';
 import { takeUntil } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import { FilterTypes } from '../../../core/models/filters/filter-types.model';
 import { MatSelectChange } from '@angular/material/select';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-gene-fields-modal',
   templateUrl: './gene-fields-modal.component.html',
   styleUrls: ['./gene-fields-modal.component.scss'],
@@ -51,6 +52,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     private apiService: ApiService,
     private filterService: FilterService,
     private settingsService: SettingsService,
+    private readonly cdRef: ChangeDetectorRef
   ) {
     this.filtersForm = new FormGroup({
       ageRelatedProcessesSearchInput: new FormControl([[], null]),
@@ -157,12 +159,18 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // If value is emited when user clicks empty option which is "Not selected"
+    // There is no id 0, so we don't send this value
+    if (Number($event.value) === 0) {
+      return;
+    }
+
     this.filterService.applyFilter(filterType, $event.value);
-    console.log(this.filterService.filters.byAgeRelatedProcess);
+    this.cdRef.markForCheck();
   }
 
   // TODO
-  public resetForm(formControlName: string): void {
+  public resetForm(formControlName: string = null): void {
     if (formControlName) {
       this.filtersForm.reset(formControlName);
     } else {
@@ -182,7 +190,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
       },
       (error) => {
         console.log(error);
-      },
+      }
     );
   }
 

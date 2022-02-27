@@ -20,12 +20,16 @@
   margin: 0 0 10px 0;
 }
 
+.reset-button {
+  width: 100%;
+}
+
 :host-context(.filters-modal) {
   .filters-modal__body {
     display: grid;
     align-content: space-between;
     align-items: start;
-    justify-items: center;
+    justify-items: start;
     grid-gap: 10px;
     justify-content: center;
 
