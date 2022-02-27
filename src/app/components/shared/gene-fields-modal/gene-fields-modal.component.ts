@@ -53,6 +53,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
   ) {
     this.filtersForm = new FormGroup({
+      ageRelatedProcessesSearchInput: new FormControl([[], null]),
       ageRelatedProcessesSelect: new FormControl([[], [Validators.minLength(1)]]),
       expressionChangeSelect: new FormControl([[], null]),
       diseasesSelect: new FormControl([[], [Validators.minLength(1)]]),
@@ -119,9 +120,9 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
    * Check if values being passed into a select control exist in options array
    */
 
-  compareSelectValues(value1: any | any[], value2: any): boolean {
+  compareSelectValues(value1: any, value2: any): boolean {
     if (value1 && value2) {
-      return value1.id === value2.id;
+      return value1 === value2;
     }
     return false;
   }

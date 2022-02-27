@@ -13,9 +13,10 @@
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('byAgeRelatedProcess', $event)">
         <input matInput
+               formControlName="ageRelatedProcessesSearchInput"
+               [(ngModel)]="searchText"
                type="text"
                class="mat-select__search"
-               [(ngModel)]="searchText"
                placeholder="search">
         <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
         <mat-option *ngFor="let i of processes | searchFilter : searchText" [value]="i.id">{{ i.name }}</mat-option>
