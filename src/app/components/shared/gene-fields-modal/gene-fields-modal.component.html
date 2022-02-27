@@ -13,6 +13,7 @@
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('byAgeRelatedProcess', $event)">
         <input matInput
+               appMatSearchInput
                formControlName="ageRelatedProcessesSearchInput"
                [(ngModel)]="searchText"
                type="text"
