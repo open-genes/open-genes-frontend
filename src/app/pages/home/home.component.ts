@@ -31,7 +31,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public showProgressBar = false;
   public queryLength: number;
 
-
+  private words: string[];
 
   constructor(
     public windowService: WindowService,
@@ -62,12 +62,12 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       if (this.queryLength === 1) {
         this.searchGenes(query);
       } else {
-        const words = query
+         this.words = query
           .split(',')
           .map((res) => res.trim())
           .filter((res) => res);
 
-        this.arrayOfWords = [...new Set(words)] as string[];
+
         const newQuery = query.split(',').join(' ');
         this.searchGenes(newQuery);
       }
@@ -75,11 +75,13 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   public updateGenesList(query): void {
+    this.arrayOfWords = [];
     if (query) {
       if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
         this.confirmedGenesList = this.searchedGenes;
       } else {
         this.confirmedGenesIds = this.searchedGenes.map((gene) => gene.id);
+        this.arrayOfWords = [...new Set(this.words)] as string[];
       }
     } else {
       this.confirmedGenesIds = null;
@@ -93,6 +95,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.searchMode = searchMode;
     this.confirmedGenesIds = null;
     this.confirmedGenesList = null;
+    this.arrayOfWords = [];
   }
 
   public updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'news' | 'latest'): void {
@@ -181,8 +184,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       }
     });
   }
-
-
 
   private loadWizard() {
     this.wizardService.openOnce();

@@ -40,7 +40,10 @@ export class GenesListComponent implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
   @Input() set arrayOfWords(words: string[]) {
-    this.uniqWords = words;
+    if (words) {
+      this.uniqWords = words;
+    }
+
   }
 
   @Input() set setSearchMode(searchMode: SearchMode) {
@@ -311,8 +314,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
     const notFoundGenes = [];
     let foundGenes = [];
 
-    if (this.uniqWords?.length > 1) {
-      debugger;
+    if (this.uniqWords.length > 1) {
       foundGenes = this.uniqWords.filter((symbol) => {
         const foundGene = genes.find((gene) => symbol === gene.symbol.toLowerCase());
 
