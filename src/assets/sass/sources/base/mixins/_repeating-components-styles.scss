@@ -205,12 +205,6 @@
         font-weight: $font-weight-medium;
         opacity: 1;
       }
-
-      // Make arrow icons be visible by default
-      &:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
-        opacity: 0.54 !important;
-        transform: translateY(0px) !important;
-      }
     }
   }
 }

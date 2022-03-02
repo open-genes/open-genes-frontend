@@ -3,6 +3,18 @@
 // Sort header fix
 .filters-group {
   @include material-sort-header-fix;
+
+  .filter {
+    ::ng-deep .mat-sort-header-container {
+      opacity: .75;
+
+      // Make arrow icons be visible by default
+      &:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
+        opacity: 0.54 !important;
+        transform: translateY(0px) !important;
+      }
+    }
+  }
 }
 
 @include simple-gene-list-item(methylated-gene);
