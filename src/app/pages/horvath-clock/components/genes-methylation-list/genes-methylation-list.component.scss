@@ -1,15 +1,8 @@
 @import "../../../styles";
 
+// Sort header fix
 .filters-group {
-  .filter {
-    padding-right: 8px;
-    max-width: 100%;
-
-    ::ng-deep .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
-      opacity: 0.54 !important;
-      transform: translateY(0px) !important;
-    }
-  }
+  @include material-sort-header-fix;
 }
 
 @include simple-gene-list-item(methylated-gene);

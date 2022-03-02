@@ -200,6 +200,7 @@
   "main_page_last": "最后添加的基因",
   "main_page_link": "主页",
   "main_page_table_criteria": "选择标准",
+  "main_page_table_criteria_quantity": "选择标准 数量",
   "main_page_table_expression": "年龄相关的表情变化",
   "main_page_table_methylation": "是否与甲基化变化有关",
   "main_page_table_name": "HGNC，基因名称",

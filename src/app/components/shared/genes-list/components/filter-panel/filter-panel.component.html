@@ -23,7 +23,7 @@
     <button
       class="filter"
       [mat-sort-header]="sortEnum.byCriteriaQuantity">
-      {{ "criteriaQuantity" | translate }}
+      {{ "main_page_table_criteria_quantity" | translate }}
     </button>
   </ng-container>
 
@@ -54,20 +54,20 @@
   </button>
 
   <button
-    *ngIf="filters.byDiseaseCategories.length"
-    class="filter __active"
-    (click)="clearFilters(filterTypes.disease_categories)"
-  >
-    {{ "gene_list_disease_categories" | translate }}
-    <span class="fa fal fa-times"></span>
-  </button>
-
-  <button
     *ngIf="filters.bySelectionCriteria.length"
     class="filter __active"
     (click)="clearFilters(filterTypes.selection_criteria)"
   >
     {{ "main_page_table_criteria" | translate }}
+    <span class="fa fal fa-times"></span>
+  </button>
+
+  <button
+    *ngIf="filters.byDiseaseCategories.length"
+    class="filter __active"
+    (click)="clearFilters(filterTypes.disease_categories)"
+  >
+    {{ "gene_list_disease_categories" | translate }}
     <span class="fa fal fa-times"></span>
   </button>
 
