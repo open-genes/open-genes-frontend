@@ -12,6 +12,7 @@ import { getResearchStatsById } from './specific/getResearchStatsById.pipe';
 import { AnchorLinksPipe } from './specific/anchor-links.pipe';
 import { OrthologLinkWrapperPipe } from './specific/ortholog-links.pipe';
 import { TrueFalseNullPipe } from './specific/true-false-null';
+import { SearchFilterPipe } from './general/search-filter.pipe';
 
 const GENERAL_PIPES = [
   SafePipe,
@@ -20,6 +21,7 @@ const GENERAL_PIPES = [
   LocalizedDatePipe,
   UnixTimeFormatterPipe,
   ReplacePipe,
+  SearchFilterPipe,
 ];
 
 const SPECIFIC_PIPES = [

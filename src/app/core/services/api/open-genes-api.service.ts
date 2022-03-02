@@ -80,14 +80,14 @@ export class ApiService {
   }
 
   getSelectionCriteria(): Observable<SelectionCriteria[]> {
-    return this.http.get<SelectionCriteria[]>('/api/criteria');
+    return this.http.get<SelectionCriteria[]>(`/api/criteria?lang=${this.currentLang}`);
   }
 
   getAgeRelatedProcesses(): Observable<AgeRelatedProcesses[]> {
-    return this.http.get<AgeRelatedProcesses[]>('/api/age-related-processes');
+    return this.http.get<AgeRelatedProcesses[]>(`/api/age-related-processes?lang=${this.currentLang}`);
   }
 
   getAgingMechanisms(): Observable<AgingMechanisms[]> {
-    return this.http.get<AgingMechanisms[]>('/api/aging-mechanisms');
+    return this.http.get<AgingMechanisms[]>(`/api/aging-mechanisms?lang=${this.currentLang}`);
   }
 }

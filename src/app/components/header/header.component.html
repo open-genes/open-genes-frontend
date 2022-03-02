@@ -1,7 +1,8 @@
 <header class="header">
-  <a href="https://gitcoin.co/grants/4270/open-genes-structured-data-on-human-genes-associa"
+  <a *ngIf="showAnnouncement"
+     href="https://gitcoin.co/grants/4270/open-genes-structured-data-on-human-genes-associa"
      target="_blank"
-     class="header__announcement hidden">
+     class="header__announcement">
     <span class="fab fa-ethereum __mr-5"></span> <b>{{ "support_us_gitcoin" | translate }}</b>
   </a>
   <div class="header__centering">

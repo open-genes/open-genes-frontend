@@ -24,6 +24,7 @@ export class AssociatedDiseaseCategoriesComponent extends WrapIntoAccordion impl
     this.putItemsIntoAccordion(this.geneDiseaseCategories);
   }
 
+  // TODO: OG-661. Это поменяется при переходе на новую версию api/gene/search (будет массивом объектов)
   private mapDiseaseCategories(): void {
     for (const [key, value] of Object.entries(this.geneDiseaseCategories)) {
       this.mappedDiseaseCategories.set(+key, value);

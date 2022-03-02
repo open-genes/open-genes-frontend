@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid home-container">
       <div class="row">
         <ng-container *ngIf="isAvailable; else errorMessage">
           <div class="col-12">
@@ -33,9 +33,15 @@
                [ngClass]="isMobile? '__mb-btm' : ''">
             <app-sidebar>
               <app-sidebar-item *ngIf="!isMobile">
-                <div content class="__pl-5 __pr-5">
+                <div content class="wizard-banner-wrapper">
                   <ng-container [ngTemplateOutlet]="wizardBanner"
                   ></ng-container>
+                </div>
+              </app-sidebar-item>
+
+              <app-sidebar-item *ngIf="!isMobile && !genesListIsLoading">
+                <div content class="filters-wrapper">
+                  <app-gene-fields-modal></app-gene-fields-modal>
                 </div>
               </app-sidebar-item>
 
@@ -141,6 +147,7 @@
             </app-genes-list>
 
             <app-spinner *ngIf="!genes"
+                         class="__mb-20"
                          description="{{ 'spinner_loading_genes' | translate }}"
             ></app-spinner>
           </div>
@@ -187,7 +194,6 @@
         {{ 'wizard_where_to_start_button' | translate }}
       </button>
     </ng-container>
-
   </app-hint>
 </ng-template>
 

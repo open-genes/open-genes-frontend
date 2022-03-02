@@ -48,7 +48,7 @@
               <button *ngFor="let item of gene.proteinClasses"
                       matTooltip="{{ item.name }}"
                       class="alias"
-                      (click)="onApplyFilter(filterTypes.protein_classes, item.id)">
+                      (click)="applyFilter(filterTypes.protein_classes, item.id)">
                 <div class="alias__overflow">{{item.name}}</div>
               </button>
             </ng-container>
@@ -128,7 +128,7 @@
                   <div class="row__value col">
                     <ng-container *ngIf="gene.functionalClusters.length; else noData">
                         <button *ngFor="let item of gene.functionalClusters"
-                                class="alias item__value" (click)="onApplyFilter(filterTypes.functional_clusters, item.id)">
+                                class="alias item__value" (click)="applyFilter(filterTypes.age_related_processes, item.id)">
                           {{item.name}}
                         </button>
                     </ng-container>

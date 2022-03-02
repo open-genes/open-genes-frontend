@@ -2,7 +2,7 @@
 export enum FilterTypesEnum {
   disease = 'byDiseases',
   disease_categories = 'byDiseaseCategories',
-  functional_clusters = 'byAgeRelatedProcess',
+  age_related_processes = 'byAgeRelatedProcess',
   selection_criteria = 'bySelectionCriteria',
   expression_change = 'byExpressionChange',
   methylation_change = 'byMethylationChange',

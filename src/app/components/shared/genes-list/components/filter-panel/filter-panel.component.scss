@@ -13,40 +13,22 @@
   align-items: start;
   align-content: flex-start;
   justify-items: flex-start;
+  justify-content: flex-start;
 
-  &__filters {
-    a,
-    button {
-      margin: 0 5px 5px 0;
-    }
-
-    [mat-sort] {
-      display: contents;
-    }
+  a,
+  button {
+    margin: 0 5px 5px 0;
   }
 
-  &__filters,
-  &__buttons {
-    position: relative;
+  [mat-sort] {
+    display: contents;
   }
 
-  @include resolution_tablet-and-up {
-    justify-content: space-between;
 
-    &__filters,
-    &__buttons {
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: flex-end;
-    }
-  }
-
-  @include resolution_smartphone {
-    justify-content: flex-start;
-
-    &__filters,
-    &__buttons {
-      display: contents;
-    }
+  button.view-panel__modal-button {
+    margin-right: 10px;
   }
 }
+
+// - Sort header fix
+@include material-sort-header-fix;

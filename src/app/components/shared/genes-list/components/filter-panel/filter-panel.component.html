@@ -1,109 +1,107 @@
 <div class="view-panel">
-  <div class="view-panel__filters">
-    <div matSort (matSortChange)="sortBy($event)">
+  <button *ngIf="!isGoTermsMode && isMobile"
+          class="view-panel__modal-button btn btn--small btn--icon-only btn--purple"
+          (click)="openFiltersModal('filters_modal_title', null, GeneFieldsModalTemplate)">
+    <span class="fa far fa-sliders-h"></span>
+  </button>
 
-      <button
-        class="filter"
-        [mat-sort-header]="sortEnum.byName">
-        {{ "main_page_table_name" | translate }}
-      </button>
-
-      <button
-        class="filter"
-        [mat-sort-header]="sortEnum.byAge">
-        {{ "age" | translate }} ({{ "million_years" | translate }})
-      </button>
-
-      <button
-        class="filter"
-        [mat-sort-header]="sortEnum.byCriteriaQuantity">
-        {{ "criteriaQuantity" | translate }}
-      </button>
-
-    </div>
-
-
+  <ng-container matSort
+       (matSortChange)="sortBy($event)"
+       class="filters-group">
     <button
-      *ngIf="filters.byAgeRelatedProcess.length"
-      class="filter __active"
-      (click)="clearFilters(filterTypes.functional_clusters)">
-      {{ "functional_classes" | translate }}
-      <span class="fa fal fa-times"></span>
+      class="filter"
+      [mat-sort-header]="sortEnum.byName">
+      {{ "main_page_table_name" | translate }}
     </button>
 
     <button
-      *ngIf="filters.byExpressionChange !== 0"
-      class="filter __active"
-      (click)="clearFilters(filterTypes.expression_change)"
-    >
-      {{ "main_page_table_expression" | translate }}
-      <span class="fa fal fa-times"></span>
+      class="filter"
+      [mat-sort-header]="sortEnum.byAge">
+      {{ "age" | translate }} ({{ "million_years" | translate }})
     </button>
 
     <button
-      *ngIf="filters.byDiseases.length"
-      class="filter __active"
-      (click)="clearFilters(filterTypes.disease)"
-    >
-      {{ "gene_list_diseases" | translate }}
-      <span class="fa fal fa-times"></span>
+      class="filter"
+      [mat-sort-header]="sortEnum.byCriteriaQuantity">
+      {{ "main_page_table_criteria_quantity" | translate }}
     </button>
+  </ng-container>
 
-    <button
-      *ngIf="filters.byDiseaseCategories.length"
-      class="filter __active"
-      (click)="clearFilters(filterTypes.disease_categories)"
-    >
-      {{ "gene_list_disease_categories" | translate }}
-      <span class="fa fal fa-times"></span>
-    </button>
+  <button
+    *ngIf="filters.byAgeRelatedProcess.length"
+    class="filter __active"
+    (click)="clearFilters(filterTypes.age_related_processes)">
+    {{ "functional_classes" | translate }}
+    <span class="fa fal fa-times"></span>
+  </button>
 
-    <button
-      *ngIf="filters.bySelectionCriteria.length"
-      class="filter __active"
-      (click)="clearFilters(filterTypes.selection_criteria)"
-    >
-      {{ "main_page_table_criteria" | translate }}
-      <span class="fa fal fa-times"></span>
-    </button>
+  <button
+    *ngIf="filters.byExpressionChange !== 0"
+    class="filter __active"
+    (click)="clearFilters(filterTypes.expression_change)"
+  >
+    {{ "main_page_table_expression" | translate }}
+    <span class="fa fal fa-times"></span>
+  </button>
 
-    <button
-      *ngIf="filters.byAgingMechanism.length"
-      class="filter __active"
-      (click)="clearFilters(filterTypes.aging_mechanism)"
-    >
-      {{ "gene_list_aging_mechanisms" | translate }}
-      <span class="fa fal fa-times"></span>
-    </button>
+  <button
+    *ngIf="filters.byDiseases.length"
+    class="filter __active"
+    (click)="clearFilters(filterTypes.disease)"
+  >
+    {{ "gene_list_diseases" | translate }}
+    <span class="fa fal fa-times"></span>
+  </button>
 
-    <button
-      *ngIf="filters.byProteinClass.length"
-      class="filter __active"
-      (click)="clearFilters(filterTypes.protein_classes)"
-    >
-      {{ "gene_list_protein_classes" | translate }}
-      <span class="fa fal fa-times"></span>
-    </button>
+  <button
+    *ngIf="filters.bySelectionCriteria.length"
+    class="filter __active"
+    (click)="clearFilters(filterTypes.selection_criteria)"
+  >
+    {{ "main_page_table_criteria" | translate }}
+    <span class="fa fal fa-times"></span>
+  </button>
 
-    <button *ngIf="!isGoTermsMode"
-            class="btn btn--small btn--fill btn--purple"
-            (click)="openFiltersModal()">
-      <span class="fa far fa-plus"></span>
-      {{ 'filters_modal_title' | translate }}
-    </button>
+  <button
+    *ngIf="filters.byDiseaseCategories.length"
+    class="filter __active"
+    (click)="clearFilters(filterTypes.disease_categories)"
+  >
+    {{ "gene_list_disease_categories" | translate }}
+    <span class="fa fal fa-times"></span>
+  </button>
 
-    <button
-      *ngIf="isClear$ | async"
-      class="btn btn--small btn--purple"
-      (click)="clearFilters()"
-    >
-      <span class="fa far fa-times"></span>
-      {{ "filters_reset" | translate }}
-    </button>
-  </div>
+  <button
+    *ngIf="filters.byAgingMechanism.length"
+    class="filter __active"
+    (click)="clearFilters(filterTypes.aging_mechanism)"
+  >
+    {{ "gene_list_aging_mechanisms" | translate }}
+    <span class="fa fal fa-times"></span>
+  </button>
 
-  <div class="view-panel__buttons">
-    <ng-content select="[buttons]"></ng-content>
-  </div>
+  <button
+    *ngIf="filters.byProteinClass.length"
+    class="filter __active"
+    (click)="clearFilters(filterTypes.protein_classes)"
+  >
+    {{ "gene_list_protein_classes" | translate }}
+    <span class="fa fal fa-times"></span>
+  </button>
+
+  <button
+    *ngIf="isClear$ | async"
+    class="btn btn--small btn--purple"
+    (click)="clearFilters()"
+  >
+    <span class="fa far fa-times"></span>
+    {{ "filters_reset" | translate }}
+  </button>
+
+  <ng-content select="[buttons]"></ng-content>
 </div>
+
+<ng-template #GeneFieldsModalTemplate>
+  <app-gene-fields-modal></app-gene-fields-modal>
+</ng-template>
 

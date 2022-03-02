@@ -1,12 +1,12 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FilterTypesEnum, SortEnum } from '../../services/filter-types.enum';
 import { FilterService } from '../../services/filter.service';
-import { GeneFieldsModalComponent } from '../gene-fields-modal/gene-fields-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
-import { Filter } from '../../services/filter.model';
+import { Filter } from '../../../../../core/models/filters/filter.model';
 import { SettingsService } from '../../../../../core/services/settings.service';
 import { Settings, SettingsEnum } from '../../../../../core/models/settings.model';
+import { CommonModalComponent } from '../../../../ui-components/components/modals/common-modal/common-modal.component';
 
 @Component({
   selector: 'app-filter-panel',
@@ -14,7 +14,7 @@ import { Settings, SettingsEnum } from '../../../../../core/models/settings.mode
   styleUrls: ['./filter-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilterPanelComponent {
+export class FilterPanelComponent implements OnChanges {
   @Input() isMobile: boolean;
   @Input() isGoTermsMode: boolean;
 
@@ -33,7 +33,12 @@ export class FilterPanelComponent {
     private filterService: FilterService,
     private settingsService: SettingsService,
     private dialog: MatDialog,
-  ) {
+  ) {}
+
+  ngOnChanges(): void {
+    if (!this.isMobile) {
+      this.dialog.closeAll();
+    }
   }
 
   /**
@@ -53,8 +58,9 @@ export class FilterPanelComponent {
   /**
    * Opening modal for filters and fields settings
    */
-  public openFiltersModal(): void {
-    this.dialog.open(GeneFieldsModalComponent, {
+  public openFiltersModal(title, body, template = null): void {
+    this.dialog.open(CommonModalComponent, {
+      data: { title: title, body: body, template: template },
       panelClass: 'filters-modal',
       minWidth: '320px',
       maxWidth: '768px',

@@ -19,6 +19,7 @@ import { NoContentModule } from '../../components/shared/no-content/no-content.m
 import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
 import { ToggleSearchModeModule } from '../../components/shared/toggle-search-mode/toggle-search-mode.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { GeneFieldsModalModule } from "../../components/shared/gene-fields-modal/gene-fields-modal.module";
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     IconModule,
     ToggleSearchModeModule,
     MatProgressBarModule,
+    GeneFieldsModalModule
   ],
   exports: [PipesModule],
 })

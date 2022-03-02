@@ -1,14 +1,15 @@
 <div class="toggle-content">
-  <ng-container *ngFor="let item of toggleData">
-    <div
-      class="toggle-content__button"
-      [class.toggle-content__button--active]="searchMode === item.searchMode"
-      (click)="setSearchMode(item.searchMode)">
-      <button>
-        {{ item.toggleTitle | translate }}
-      </button>
-    </div>
-  </ng-container>
+  <mat-button-toggle-group class="toggle-content__group">
+    <ng-container *ngFor="let item of toggleData">
+      <mat-button-toggle
+        class="toggle-content__button"
+        [class.toggle-content__button--active]="searchMode === item.searchMode"
+        (click)="setSearchMode(item.searchMode)">
+          <span class="fa {{item.icon}}"></span>
+          <span class="text">{{ item.toggleTitle | translate }}</span>
+      </mat-button-toggle>
+    </ng-container>
+  </mat-button-toggle-group>
 </div>
 
 <div class="description">
