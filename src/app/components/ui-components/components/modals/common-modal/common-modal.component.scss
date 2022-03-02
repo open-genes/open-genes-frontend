@@ -2,7 +2,17 @@
 @include modal-window('comment');
 
 :host {
-  .comment-modal__body {
+  .common-modal__header {
+    position: relative;
+    padding-right: 40px;
+    margin-bottom: 15px;
+
+    .close-button {
+      @include close-button(-10px, 10px);
+    }
+  }
+
+  .common-modal__body {
     ::ng-deep {
       @include typography;
     }

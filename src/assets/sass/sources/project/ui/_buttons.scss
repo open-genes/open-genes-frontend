@@ -160,8 +160,8 @@
 }
 
 @mixin btn--icon-only {
-  width: auto;
-  height: auto;
+  width: 1em;
+  height: 1em;
   min-width: auto;
   font-size: 22px; // default
   padding: .05em;

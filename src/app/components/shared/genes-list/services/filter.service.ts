@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Filter } from './filter.model';
+import { Filter } from '../../../../core/models/filters/filter.model';
 import { FilterTypesEnum } from './filter-types.enum';
 import { GenesListSettings } from '../genes-list-settings.model';
 import { Genes } from '../../../../core/models';
@@ -25,6 +25,7 @@ export class FilterService {
 
   public sortParams: Sort;
 
+  // TODO: it's bad that the one can directly change filters state here
   public filters: Filter = {
     byAgeRelatedProcess: [],
     byDiseases: [],
@@ -56,7 +57,8 @@ export class FilterService {
   }
 
   // Filter
-  public onApplyFilter(filterType: string, filterValue: number | string): void {
+  // TODO: filter types typing problems
+  public applyFilter(filterType: string, filterValue: number | string): void {
     if (filterValue) {
       if (Array.isArray(this.filters[filterType])) {
         const arrayValues = filterValue.toString().split(',');
@@ -106,15 +108,15 @@ export class FilterService {
     const {
       disease,
       disease_categories,
-      functional_clusters,
+      age_related_processes,
       selection_criteria,
       expression_change,
       methylation_change,
       aging_mechanism,
       protein_classes,
-    } = FilterTypesEnum;
+    } = FilterTypesEnum; // TODO: this enum is excessive
     switch (filterName) {
-      case functional_clusters:
+      case age_related_processes:
         this.filters.byAgeRelatedProcess = [];
         break;
       case disease:

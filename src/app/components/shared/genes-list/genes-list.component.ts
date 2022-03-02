@@ -17,7 +17,7 @@ import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { FileExportService } from '../../../core/services/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
-import { Filter } from './services/filter.model';
+import { Filter } from '../../../core/models/filters/filter.model';
 import { SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { FavouritesService } from '../../../core/services/favourites.service';
@@ -116,7 +116,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
       if (Object.keys(params).length) {
         for (const key in params) {
           if (params[key] !== this.filterService.filters[key].toString()) {
-            this.filterService.onApplyFilter(key, params[key]);
+            this.filterService.applyFilter(key, params[key]);
           }
         }
       }
@@ -155,8 +155,10 @@ export class GenesListComponent implements OnInit, OnDestroy {
           if (this.currentPage == 1) {
             this.cachedData = [];
           }
-          this.cachedData.push(...res.items);
-          this.searchedData = [...this.cachedData];
+          if (res.items?.length) {
+            this.cachedData.push(...res.items);
+            this.searchedData = [...this.cachedData];
+          }
           this.downloadSearch(this.searchedData);
 
           this.pageOptions = res.options.pagination;
@@ -183,7 +185,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
       this.filterService.onLoadMoreGenes(this.pageOptions.pagesTotal);
       return;
     }
-
 
     if (this.genesFromInput?.length >= this.genesPerPage) {
       this.currentPage++;

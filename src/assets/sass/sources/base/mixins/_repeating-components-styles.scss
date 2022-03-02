@@ -6,6 +6,7 @@
   z-index: 6;
   transform: translateY(-50%);
   font-size: 20px;
+  color: $color-gray;
   transition: color .15s ease-in-out;
 
   .fa {
@@ -189,6 +190,22 @@
 
   .#{$class} + .#{$class} {
     margin-top: 15px;
+  }
+}
+
+@mixin material-sort-header-fix($class: '.filter') {
+  #{$class} {
+    padding-right: 8px;
+    max-width: 100%;
+
+    ::ng-deep .mat-sort-header-container {
+      opacity: .75;
+
+      &.mat-sort-header-sorted {
+        font-weight: $font-weight-medium;
+        opacity: 1;
+      }
+    }
   }
 }
 

@@ -1,0 +1,15 @@
+<button (click)="toggle($event)">
+  <span class="eye-checkbox"
+        [ngClass]="switch ? 'eye-checkbox--checked' : ''"
+        title="{{ (switch? 'filters_modal_hide' : 'filters_modal_show') | translate }}">
+    <span class="eye-checkbox__label">
+          <span [ngClass]="switch? 'fa-eye' : 'fa-eye-slash'"
+                class="icon far"
+          ></span>
+    </span>
+  </span>
+
+  <ng-content></ng-content>
+</button>
+
+

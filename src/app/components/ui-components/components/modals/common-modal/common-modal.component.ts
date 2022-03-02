@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, TemplateRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -7,11 +7,15 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./common-modal.component.scss'],
 })
 export class CommonModalComponent {
-
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<CommonModalComponent>,
-  ) { }
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      title: string;
+      body: any;
+      template: TemplateRef<any>;
+    },
+    private dialogRef: MatDialogRef<CommonModalComponent>
+  ) {}
 
   public closeCommentModal(): void {
     this.dialogRef.close();
