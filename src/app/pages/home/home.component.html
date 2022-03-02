@@ -29,8 +29,8 @@
             </div>
           </div>
 
-          <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2"
-               [ngClass]="isMobile? '__mb-btm' : ''">
+          <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 sidebar-column"
+               [ngClass]="isMobile? 'sidebar-column--mobile' : 'sidebar-column--desktop'">
             <app-sidebar>
               <app-sidebar-item *ngIf="!isMobile">
                 <div content class="wizard-banner-wrapper">

@@ -17,3 +17,13 @@
     max-width: 1185px;
   }
 }
+
+.sidebar-column {
+  &--mobile {
+    order: 2;
+  }
+
+  &--desktop {
+    padding-right: 0;
+  }
+}
