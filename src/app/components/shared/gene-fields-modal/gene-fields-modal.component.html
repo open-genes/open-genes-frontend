@@ -122,15 +122,17 @@
   <div class="body__row __mb-10">
     <app-eye-checkbox
       (changeEvent)="changeGenesListSettings('gene-age')"
-      [switch]="listSettings.ifShowAge"></app-eye-checkbox>
-    {{ "gene_list_evolutionary_age" | translate }}
+      [switch]="listSettings.ifShowAge">
+      {{ "gene_list_evolutionary_age" | translate }}
+    </app-eye-checkbox>
   </div>
 
   <div class="body__row __mb-10">
     <app-eye-checkbox
       (changeEvent)="changeGenesListSettings('classes')"
-      [switch]="listSettings.ifShowProteinClasses"></app-eye-checkbox>
-    {{ "gene_list_protein_classes" | translate }}
+      [switch]="listSettings.ifShowProteinClasses">
+      {{ "gene_list_protein_classes" | translate }}
+    </app-eye-checkbox>
   </div>
 
   <div class="separator"></div>
