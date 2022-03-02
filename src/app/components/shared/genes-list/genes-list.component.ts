@@ -24,11 +24,7 @@ import { FavouritesService } from '../../../core/services/favourites.service';
 import { ActivatedRoute } from '@angular/router';
 import { Sort } from '@angular/material/sort';
 import { ApiResponse } from '../../../core/models/api-response.model';
-
-interface FoundGenes {
-  foundGenes: string[];
-  notFoundGenes: string[];
-}
+import { SearchModel } from '../../../core/models/open-genes-api/search.model';
 
 @Component({
   selector: 'app-genes-list',
@@ -39,12 +35,7 @@ interface FoundGenes {
 export class GenesListComponent implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
-  @Input() set arrayOfWords(words: string[]) {
-    if (words) {
-      this.uniqWords = words;
-    }
-
-  }
+  @Input() foundAndNotFoundGenes: Omit<SearchModel, 'items'>;
 
   @Input() set setSearchMode(searchMode: SearchMode) {
     if (searchMode) {
@@ -74,9 +65,12 @@ export class GenesListComponent implements OnInit, OnDestroy {
 
       this.isGoSearchPerformed = this.isGoTermsMode;
     } else {
-      if (!this.isGoTermsMode) {
-        this.clearFilters();
+      if (this.isGoTermsMode) {
+        this.searchedData = [];
+        this.isGoSearchPerformed = false;
+        return;
       }
+      this.clearFilters();
     }
 
     this.downloadSearch(this.searchedData);
@@ -90,7 +84,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public filterTypes = FilterTypesEnum;
   public sortEnum = SortEnum;
   public searchMode: SearchMode;
-  public notFoundAndFoundGenes: FoundGenes;
   public isTableView: boolean;
   public isGoTermsMode: boolean;
   public isGoSearchPerformed: boolean;
@@ -100,7 +93,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public isLoading = false;
 
   private cachedData: Genes[] = [];
-  private uniqWords: string[] = [];
   private retrievedSettings: Settings;
   private searchModeEnum = SearchModeEnum;
   private subscription$ = new Subject();
@@ -166,7 +158,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.cachedData.push(...res.items);
           this.searchedData = [...this.cachedData];
           this.downloadSearch(this.searchedData);
-          this.setFoundAndNotfoundGenes(this.searchedData);
 
           this.pageOptions = res.options.pagination;
           this.isLoading = false;
@@ -308,33 +299,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
       },
       duration: 600,
     });
-  }
-
-  private setFoundAndNotfoundGenes(genes: Genes[]): void {
-    const notFoundGenes = [];
-    let foundGenes = [];
-
-    if (this.uniqWords.length > 1) {
-      foundGenes = this.uniqWords.filter((symbol) => {
-        const foundGene = genes.find((gene) => symbol === gene.symbol.toLowerCase());
-
-        if (!foundGene) {
-          notFoundGenes.push(symbol);
-        }
-
-        return !!foundGene;
-      });
-
-      this.notFoundAndFoundGenes = {
-        foundGenes: foundGenes,
-        notFoundGenes: notFoundGenes,
-      };
-    } else {
-      this.notFoundAndFoundGenes = {
-        foundGenes: [],
-        notFoundGenes: [],
-      };
-    }
   }
 
   ngOnDestroy(): void {

@@ -133,7 +133,7 @@
               (errorStatus)="errorStatus = $event"
               (genesLength)="genesLength = $event"
               [genesList]="searchMode !== searchModeEnum.searchByGoTerms ? confirmedGenesIds : confirmedGenesList"
-              [arrayOfWords]="arrayOfWords"
+              [foundAndNotFoundGenes]="foundAndNotFoundGenes"
               [isMobile]="isMobile"
               [setSearchMode]="searchMode"
               [showFiltersPanel]="searchMode !== searchModeEnum.searchByGoTerms">

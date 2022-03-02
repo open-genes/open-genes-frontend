@@ -6,7 +6,7 @@ import { WizardService } from '../../components/shared/wizard/wizard-service.ser
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
-import { SessionStorageService } from '../../core/services/session-storage.service';
+import { SearchModel } from '../../core/models/open-genes-api/search.model';
 
 @Component({
   selector: 'app-home',
@@ -15,10 +15,11 @@ import { SessionStorageService } from '../../core/services/session-storage.servi
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
-  public searchedGenes: Genes[] = [];
+  public searchedGenes: Pick<Genes, 'id' | 'name' | 'symbol' | 'aliases' | 'ensembl'>[] | Genes[] = [];
   public confirmedGenesList: Genes[];
   public confirmedGenesIds: number[];
-  public arrayOfWords: string[];
+  public foundAndNotFoundGenes: Omit<SearchModel, 'items'>;
+  public foundGenes: Omit<SearchModel, 'items'>;
   public genesLength: number;
   public errorStatus: string;
   public searchMode: SearchMode;
@@ -31,11 +32,9 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public showProgressBar = false;
   public queryLength: number;
 
-  private words: string[];
 
   constructor(
     public windowService: WindowService,
-    private sessionStorageService: SessionStorageService,
     private wizardService: WizardService,
     private readonly apiService: ApiService,
     private readonly cdRef: ChangeDetectorRef,
@@ -59,29 +58,17 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       this.searchGenesByGoTerm(query);
     } else {
       this.queryLength = query.split(',').length;
-      if (this.queryLength === 1) {
-        this.searchGenes(query);
-      } else {
-         this.words = query
-          .split(',')
-          .map((res) => res.trim())
-          .filter((res) => res);
-
-
-        const newQuery = query.split(',').join(' ');
-        this.searchGenes(newQuery);
-      }
+      this.searchGenes(query);
     }
   }
 
   public updateGenesList(query): void {
-    this.arrayOfWords = [];
     if (query) {
       if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
-        this.confirmedGenesList = this.searchedGenes;
+        this.confirmedGenesList = this.searchedGenes as Genes[];
       } else {
         this.confirmedGenesIds = this.searchedGenes.map((gene) => gene.id);
-        this.arrayOfWords = [...new Set(this.words)] as string[];
+        this.foundAndNotFoundGenes = this.foundGenes;
       }
     } else {
       this.confirmedGenesIds = null;
@@ -95,7 +82,10 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.searchMode = searchMode;
     this.confirmedGenesIds = null;
     this.confirmedGenesList = null;
-    this.arrayOfWords = [];
+    this.foundAndNotFoundGenes = {
+      found: [],
+      notFound: [],
+    };
   }
 
   public updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'news' | 'latest'): void {
@@ -133,8 +123,12 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
         .getGenesMatchByString(query)
         .pipe(takeUntil(this.subscription$))
         .subscribe(
-          (genes) => {
-            this.searchedGenes = genes; // If nothing found, will return empty array
+          (searchData) => {
+            this.searchedGenes = searchData.items; // If nothing found, will return empty array
+            this.foundGenes = {
+              found: this.queryLength > 1 ? searchData.found : [],
+              notFound: this.queryLength > 1 ? searchData.notFound : [],
+            };
             this.showProgressBar = false;
             this.cdRef.markForCheck();
           },
@@ -146,6 +140,10 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
         );
     } else {
       this.searchedGenes = [];
+      this.foundAndNotFoundGenes = {
+        found: [],
+        notFound: [],
+      };
     }
   }
 
@@ -166,7 +164,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
             console.log(error);
             this.showProgressBar = false;
             this.cdRef.markForCheck();
-          },
+          }
         );
     } else {
       this.searchedGenes = [];
@@ -174,7 +172,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   private mapTerms(): void {
-    this.searchedGenes.forEach((gene) => {
+    this.searchedGenes.forEach((gene: Genes) => {
       if (gene.terms) {
         Object.keys(gene.terms).forEach((key) => [
           gene.terms[key].map((term) => {

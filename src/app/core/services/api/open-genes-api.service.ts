@@ -8,6 +8,7 @@ import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with
 import { GenesInHorvathClock } from '../../models/open-genes-api/genes-in-horvath-clock.model';
 import { ApiResponse } from '../../models/api-response.model';
 import { shareReplay } from 'rxjs/operators';
+import { SearchModel } from '../../models/open-genes-api/search.model';
 
 @Injectable({
   providedIn: 'root',
@@ -43,8 +44,8 @@ export class ApiService {
     return this.http.get<Gene>(`/api/gene/${symbol}?lang=${this.currentLang}`);
   }
 
-  getGenesMatchByString(request: string): Observable<Partial<Genes[]>> {
-    return this.http.get<Partial<Genes[]>>(`https://test.open-genes.com/api/gene/suggestions?input=${request}`);
+  getGenesMatchByString(request: string): Observable<SearchModel> {
+    return this.http.get<SearchModel>(`https://test.open-genes.com/api/gene/suggestions?input=${request}`);
   }
 
   getGoTermMatchByString(request: string): Observable<Genes[]> {
