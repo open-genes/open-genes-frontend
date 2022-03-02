@@ -142,10 +142,12 @@
 
   <div class="separator"></div>
 
-  <button mat-flat-button
-          color="primary"
-          class="reset-button"
-          (click)="resetForm()">
-    {{ "filters_reset" | translate }}
-  </button>
+  <div class="reset-button-wrapper">
+    <button mat-flat-button
+            color="primary"
+            class="reset-button"
+            (click)="resetForm()">
+      {{ "filters_reset" | translate }}
+    </button>
+  </div>
 </form>

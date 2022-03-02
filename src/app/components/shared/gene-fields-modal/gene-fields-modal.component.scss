@@ -9,10 +9,10 @@
   position: relative;
   display: inline-block;
   width: 100%;
-  max-width: 220px;
   font-size: 12px; // regulates mat-select size
 
   mat-form-field {
+    width: 100%;
     max-width: 100%;
   }
 
@@ -39,9 +39,15 @@
   margin: 0 0 10px 0;
 }
 
-.reset-button {
+.reset-button-wrapper {
   width: 100%;
+
+  .reset-button {
+    width: 100%;
+    margin: 0 auto;
+  }
 }
+
 
 :host-context(.filters-modal) {
   .filters-modal__body {
@@ -55,7 +61,8 @@
     @include resolution_tablet-and-up {
       grid-template-columns: 1fr 1fr;
 
-      .separator {
+      .separator,
+      .reset-button-wrapper {
         grid-column-start: 1;
         grid-column-end: 3;
       }
@@ -64,7 +71,8 @@
     @include resolution_smartphone {
       grid-template-columns: 1fr;
 
-      .separator {
+      .separator,
+      .reset-button-wrapper {
         grid-column-start: 1;
         grid-column-end: 2;
       }
