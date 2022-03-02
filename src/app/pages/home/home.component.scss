@@ -1,9 +1,19 @@
+@import '../styles';
+
 .wizard-banner-wrapper {
   padding: 0 5px;
   margin-bottom: 5px;
 }
+
 .filters-wrapper {
   min-width: 0;
   padding: 0 5px;
   margin-bottom: 10px;
+}
+
+.home-container {
+  $bootstrap-widescreen: 1400px - .02px;
+  @media only screen and (min-width: $widescreen) and (max-width: $bootstrap-widescreen) {
+    max-width: 1185px;
+  }
 }
