@@ -3,7 +3,7 @@ export interface ApiResponse<T> {
   options: PageOptions;
 }
 
-interface PageOptions {
+export interface PageOptions {
   objTotal: number;
   pagination: {
     page: number;

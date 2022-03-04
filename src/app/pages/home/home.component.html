@@ -21,7 +21,7 @@
     </div>
     <div class="container-fluid home-container">
       <div class="row">
-        <ng-container *ngIf="isAvailable; else errorMessage">
+        <ng-container *ngIf="!errorStatus; else errorMessage">
           <div class="col-12">
             <div *ngIf="isMobile"
                  class="__mb-20">
@@ -54,7 +54,6 @@
                 </ng-container>
                 <ng-container content>
                   <app-mini-cards
-                    *ngIf="!genesListIsLoading"
                     (showSkeletonChange)="updateViewOnSkeletonChange($event, 'latest')"
                   ></app-mini-cards>
                   <app-skeleton
@@ -75,7 +74,6 @@
                 </ng-container>
                 <ng-container content>
                   <app-articles-list
-                    *ngIf="!genesListIsLoading"
                     class="__h-100"
                     [isMiniMode]="true"
                     [sliceTo]="1"
@@ -99,7 +97,7 @@
                   </a>
                 </ng-container>
                 <ng-container content>
-                  <app-news-list *ngIf="!genesListIsLoading"
+                  <app-news-list
                     class="__pl-5 __pr-5"
                     [isMiniMode]="true"
                     [loadTotal]="2"
@@ -127,7 +125,7 @@
             <app-search
               class="__mt-20 __mb-10"
               [showTitle]="true"
-              [genesLength]="genes?.length"
+              [genesLength]="genesLength"
               [genesList]="searchedGenes"
               [isDisabled]="genesListIsLoading"
               [setSearchMode]="searchMode"
@@ -137,19 +135,15 @@
             ></app-search>
 
             <app-genes-list
-              *ngIf="genes"
               (loading)="setLoader($event)"
-              [genesList]="confirmedGenesList"
-              [notFoundAndFoundGenes]="confirmedFoundGenes"
+              (errorStatus)="errorStatus = $event"
+              (genesLength)="genesLength = $event"
+              [genesList]="searchMode !== searchModeEnum.searchByGoTerms ? confirmedGenesIds : confirmedGenesList"
+              [foundAndNotFoundGenes]="foundAndNotFoundGenes"
               [isMobile]="isMobile"
               [setSearchMode]="searchMode"
               [showFiltersPanel]="searchMode !== searchModeEnum.searchByGoTerms">
             </app-genes-list>
-
-            <app-spinner *ngIf="!genes"
-                         class="__mb-20"
-                         description="{{ 'spinner_loading_genes' | translate }}"
-            ></app-spinner>
           </div>
         </ng-container>
       </div>

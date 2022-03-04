@@ -8,6 +8,7 @@ import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with
 import { GenesInHorvathClock } from '../../models/open-genes-api/genes-in-horvath-clock.model';
 import { ApiResponse } from '../../models/api-response.model';
 import { shareReplay } from 'rxjs/operators';
+import { SearchModel } from '../../models/open-genes-api/search.model';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +42,10 @@ export class ApiService {
 
   getGeneByHGNCsymbol(symbol: string): Observable<Gene> {
     return this.http.get<Gene>(`/api/gene/${symbol}?lang=${this.currentLang}`);
+  }
+
+  getGenesMatchByString(request: string): Observable<SearchModel> {
+    return this.http.get<SearchModel>(`https://test.open-genes.com/api/gene/suggestions?input=${request}`);
   }
 
   getGoTermMatchByString(request: string): Observable<Genes[]> {

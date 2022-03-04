@@ -17,21 +17,21 @@
 
 <div *ngIf="searchedData?.length"
      class="genes-info">
-  <div class="genes-info__found" *ngIf="notFoundAndFoundGenes?.foundGenes.length">
-    {{ 'items_found' | translate }} {{ notFoundAndFoundGenes?.foundGenes.length }}: <b>
+  <div class="genes-info__found" *ngIf="foundAndNotFoundGenes?.found.length">
+    {{ 'items_found' | translate }} {{ foundAndNotFoundGenes?.found.length }}: <b>
     <ng-container
-      *ngFor="let geneName of notFoundAndFoundGenes?.foundGenes; let last = last">
+      *ngFor="let geneName of foundAndNotFoundGenes?.found; let last = last">
       {{geneName}}
-      <ng-container *ngIf="notFoundAndFoundGenes?.foundGenes.length > 1 && !last">,&nbsp;</ng-container>
+      <ng-container *ngIf="foundAndNotFoundGenes?.found.length > 1 && !last">,&nbsp;</ng-container>
     </ng-container>
   </b>
   </div>
-  <div class="genes-info__found" *ngIf="notFoundAndFoundGenes?.notFoundGenes.length">
-    {{ 'items_not_found' | translate }} {{ notFoundAndFoundGenes?.notFoundGenes.length }}: <b>
+  <div class="genes-info__found" *ngIf="foundAndNotFoundGenes?.notFound.length">
+    {{ 'items_not_found' | translate }} {{ foundAndNotFoundGenes?.notFound.length }}: <b>
     <ng-container
-      *ngFor="let geneName of notFoundAndFoundGenes?.notFoundGenes;  let last = last">
+      *ngFor="let geneName of foundAndNotFoundGenes?.notFound;  let last = last">
       {{geneName}}
-      <ng-container *ngIf="notFoundAndFoundGenes?.notFoundGenes.length > 1 && !last">,&nbsp;</ng-container>
+      <ng-container *ngIf="foundAndNotFoundGenes?.notFound.length > 1 && !last">,&nbsp;</ng-container>
     </ng-container>
   </b>
   </div>

@@ -13,7 +13,6 @@ import { FilterTypesEnum } from '../../components/shared/genes-list/services/fil
 @Directive()
 export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
   @Input() item: Genes;
-  @Input() isGoTermsMode: boolean;
 
   public listSettings: GenesListSettings;
   public filters: Filter = this.filterService.filters;

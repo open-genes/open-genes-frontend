@@ -24,11 +24,7 @@ import { FavouritesService } from '../../../core/services/favourites.service';
 import { ActivatedRoute } from '@angular/router';
 import { Sort } from '@angular/material/sort';
 import { ApiResponse } from '../../../core/models/api-response.model';
-
-interface FoundGenes {
-  foundGenes: string[];
-  notFoundGenes: string[];
-}
+import { SearchModel } from '../../../core/models/open-genes-api/search.model';
 
 @Component({
   selector: 'app-genes-list',
@@ -39,7 +35,7 @@ interface FoundGenes {
 export class GenesListComponent implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
-  @Input() notFoundAndFoundGenes: FoundGenes;
+  @Input() foundAndNotFoundGenes: Omit<SearchModel, 'items'>;
 
   @Input() set setSearchMode(searchMode: SearchMode) {
     if (searchMode) {
@@ -50,31 +46,39 @@ export class GenesListComponent implements OnInit, OnDestroy {
     }
   }
 
-  @Input() set genesList(genes: Genes[]) {
+  @Input() set genesList(genes: Genes[] | number[]) {
     if (genes) {
-      if (genes.length) {
-        if (genes[0] === null) {
-          this.searchedData = [];
-          this.isGoSearchPerformed = this.isGoTermsMode;
-          return;
-        }
-
-        if (genes.length > this.genesPerPage) {
-          this.currentPage = 1;
-          this.genesFromInput = genes;
-          this.searchedData = genes.slice(0, this.genesPerPage);
-        } else {
-          this.searchedData = genes;
-        }
-        this.isGoSearchPerformed = this.isGoTermsMode;
-        this.openSnackBar();
+      if (this.isGoTermsMode) {
+        this.searchedData = genes as Genes[];
       } else {
-        this.clearFilters();
+        if (genes.length) {
+          this.filterService.filters.byGeneId = genes as number[];
+          this.filterService.updateList(this.filterService.filters);
+        } else {
+          this.searchedData = [];
+        }
       }
+
+      if (this.searchedData.length) {
+        this.openSnackBar();
+      }
+
+      this.isGoSearchPerformed = this.isGoTermsMode;
+    } else {
+      if (this.isGoTermsMode) {
+        this.searchedData = [];
+        this.isGoSearchPerformed = false;
+        return;
+      }
+      this.clearFilters();
     }
 
     this.downloadSearch(this.searchedData);
   }
+
+  @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() errorStatus: EventEmitter<string> = new EventEmitter<string>();
+  @Output() genesLength: EventEmitter<number> = new EventEmitter<number>();
 
   public searchedData: Genes[] = [];
   public filterTypes = FilterTypesEnum;
@@ -87,7 +91,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public currentPage: number;
   public pageOptions: any;
   public isLoading = false;
-  @Output() loading = new EventEmitter<boolean>();
 
   private cachedData: Genes[] = [];
   private retrievedSettings: Settings;
@@ -137,21 +140,18 @@ export class GenesListComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.subscription$),
         switchMap((filters: Filter) => {
-          if (this.isGoTermsMode) {
-            this.isLoading = false;
-            this.loading.emit(false);
-          } else {
-            this.isLoading = true;
-            this.loading.emit(true);
-          }
-          this.searchedData = [];
+          this.isLoading = !this.isGoTermsMode;
+          this.loading.emit(!this.isGoTermsMode);
           this.isGoSearchPerformed = !this.isGoTermsMode;
+          this.searchedData = [];
+
           return this.isGoTermsMode ? EMPTY : this.filterService.getSortedAndFilteredGenes();
         })
       )
       .subscribe(
         (res: ApiResponse<Genes>) => {
           this.currentPage = this.filterService.pagination.page;
+
           if (this.currentPage == 1) {
             this.cachedData = [];
           }
@@ -160,15 +160,18 @@ export class GenesListComponent implements OnInit, OnDestroy {
             this.searchedData = [...this.cachedData];
           }
           this.downloadSearch(this.searchedData);
+
           this.pageOptions = res.options.pagination;
           this.isLoading = false;
           this.loading.emit(false);
+          this.genesLength.emit(res.options.objTotal);
           this.cdRef.markForCheck();
         },
         (error) => {
           console.log(error);
           this.isLoading = false;
           this.loading.emit(false);
+          this.errorStatus.emit(error.statusText);
           this.cdRef.markForCheck();
         }
       );
@@ -192,16 +195,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private openSnackBar(): void {
-    this.snackBarRef = this.snackBar.openFromComponent(SnackBarComponent, {
-      data: {
-        title: 'items_found',
-        length: this.searchedData ? this.searchedData.length : 0,
-      },
-      duration: 600,
-    });
-  }
-
   /**
    * Change view
    */
@@ -220,6 +213,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
    * Filter reset
    */
   public clearFilters(filterName?: string): void {
+    delete this.filterService.filters.byGeneId;
     this.filterService.clearFilters(filterName ? filterName : null);
   }
 
@@ -257,24 +251,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.cdRef.markForCheck();
         });
     }
-
-
-  }
-
-  private compare(a: number | string, b: number | string, isAsc: boolean) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-  }
-
-  /**
-   * Error handling
-   */
-  private errorLogger(context: any, error: any) {
-    console.warn(context, error);
-  }
-
-  ngOnDestroy(): void {
-    this.subscription$.next();
-    this.subscription$.complete();
   }
 
   public isFaved(geneId: number): Observable<boolean> {
@@ -303,5 +279,31 @@ export class GenesListComponent implements OnInit, OnDestroy {
       duration: 600,
     });
     this.isFaved(geneId);
+  }
+
+  private compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  /**
+   * Error handling
+   */
+  private errorLogger(context: any, error: any) {
+    console.warn(context, error);
+  }
+
+  private openSnackBar(): void {
+    this.snackBarRef = this.snackBar.openFromComponent(SnackBarComponent, {
+      data: {
+        title: 'items_found',
+        length: this.searchedData ? this.searchedData.length : 0,
+      },
+      duration: 600,
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.next();
+    this.subscription$.complete();
   }
 }
