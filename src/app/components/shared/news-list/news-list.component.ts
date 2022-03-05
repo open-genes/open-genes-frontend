@@ -91,7 +91,6 @@ export class NewsListComponent implements OnInit, OnDestroy {
             this.sessionStorageService.setStorage('news', { news: this.newsList, total: this.newsTotal });
           }
 
-
           if (this.newsList?.length !== 0) {
             // Set page length after checking the length of the 1st page
             this.httpCallsCounter === 1 ? (this.responsePagePortion = this.newsList.length) : this.httpCallsCounter;

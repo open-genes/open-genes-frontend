@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  AfterViewChecked,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Genes } from '../../core/models';
 import { takeUntil } from 'rxjs/operators';
@@ -7,6 +15,7 @@ import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
 import { SearchModel } from '../../core/models/open-genes-api/search.model';
+import { GeneFieldsModalComponent } from '../../components/shared/gene-fields-modal/gene-fields-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +23,9 @@ import { SearchModel } from '../../core/models/open-genes-api/search.model';
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
+export class HomeComponent extends WindowWidth implements OnInit, AfterViewChecked, OnDestroy {
+  @ViewChild(GeneFieldsModalComponent) filterPanel!: GeneFieldsModalComponent;
+
   public searchedGenes: Pick<Genes, 'id' | 'name' | 'symbol' | 'aliases' | 'ensembl'>[] | Genes[] = [];
   public confirmedGenesList: Genes[];
   public confirmedQuery: string;
@@ -72,7 +83,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       this.confirmedQuery = null;
       this.confirmedGenesList = null;
     }
-
     this.cdRef.markForCheck();
   }
 
@@ -120,6 +130,9 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
           (searchData) => {
             this.searchedGenes = searchData.items; // If nothing found, will return empty array
             this.showProgressBar = false;
+            if (this.filterPanel) {
+              this.filterPanel.setInitialValues();
+            }
             this.cdRef.markForCheck();
           },
           (error) => {
@@ -173,9 +186,14 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.wizardService.openOnce();
   }
 
+  ngAfterViewChecked(): void {
+    if (this.filterPanel) {
+      this.filterPanel.setInitialValues();
+      console.log('setInitialValues');
+    }
+  }
+
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
   }
-
-
 }

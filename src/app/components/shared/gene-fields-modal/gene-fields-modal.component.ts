@@ -23,27 +23,31 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
   searchText: any;
 
   // Age-related processes
-  public processes: any[]; // TODO: typing
-  public predefinedProcesses: any[];
+  public processes: any[] = []; // TODO: typing
+  public predefinedProcesses: any[] = [];
   public processesModel: Observable<any[]>;
   // Expression
   public predefinedExpressionChanges: number;
   // Diseases
   public diseases: Map<number, any> = new Map();
-  public predefinedDiseases: any[];
+  public predefinedDiseases: any[] = [];
   public diseasesModel: Observable<any[]>;
   // Disease categories
   public diseaseCategories: Map<number, any> = new Map();
-  public predefinedDiseaseCategories: any[];
+  public predefinedDiseaseCategories: any[] = [];
   public diseaseCategoriesModel: Observable<any[]>;
   // Selection criteria
-  public selectionCriteria: any[];
-  public predefinedSelectionCriteria: any[];
+  public selectionCriteria: any[] = [];
+  public predefinedSelectionCriteria: any[] = [];
   public selectionCriteriaModel: Observable<any[]>;
   // Aging mechanisms
-  public agingMechanisms: any[];
-  public predefinedAgingMechanisms: any[];
+  public agingMechanisms: any[] = [];
+  public predefinedAgingMechanisms: any[] = [];
   private agingMechanismsModel: Observable<any[]>;
+  // Aging mechanisms
+  public proteinClasses: any[] = [];
+  public predefinedProteinClasses: any[] = [];
+  private proteinClassesModel: Observable<any[]>;
 
   public filtersForm: FormGroup;
   private subscription$ = new Subject();
@@ -56,12 +60,13 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
   ) {
     this.filtersForm = new FormGroup({
       ageRelatedProcessesSearchInput: new FormControl([[], null]),
-      ageRelatedProcessesSelect: new FormControl([[], [Validators.minLength(1)]]),
+      ageRelatedProcessesSelect: new FormControl([[], [null]]),
       expressionChangeSelect: new FormControl([[], null]),
-      diseasesSelect: new FormControl([[], [Validators.minLength(1)]]),
-      diseaseCategoriesSelect: new FormControl([[], [Validators.minLength(1)]]),
-      selectionCriteriaSelect: new FormControl([[], [Validators.minLength(1)]]),
-      agingMechanismsSelect: new FormControl([[], [Validators.minLength(1)]]),
+      diseasesSelect: new FormControl([[], [null]]),
+      diseaseCategoriesSelect: new FormControl([[], [null]]),
+      selectionCriteriaSelect: new FormControl([[], [null]]),
+      agingMechanismsSelect: new FormControl([[], [null]]),
+      proteinClassesSelect: new FormControl([[], [null]]),
     });
   }
 
@@ -74,7 +79,6 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     this.processesModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
       this.processes = data;
     });
-    this.predefinedProcesses = this.filterService.filters.byAgeRelatedProcess;
 
     // Diseases
     this.diseasesModel = this.getEntitiesList('diseases');
@@ -84,7 +88,6 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
         this.diseases.set(+key, value);
       }
     });
-    this.predefinedDiseases = this.filterService.filters.byDiseases;
 
     // Disease categories
     this.diseaseCategoriesModel = this.getEntitiesList('disease-categories');
@@ -94,24 +97,31 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
         this.diseaseCategories.set(+key, value);
       }
     });
-    this.predefinedDiseaseCategories = this.filterService.filters.byDiseaseCategories;
 
     // Selection criteria
     this.selectionCriteriaModel = this.getEntitiesList('criteria');
     this.selectionCriteriaModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
       this.selectionCriteria = data;
     });
-    this.predefinedSelectionCriteria = this.filterService.filters.bySelectionCriteria;
 
     // Aging mechanisms
     this.agingMechanismsModel = this.getEntitiesList('mechanisms');
     this.agingMechanismsModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
       this.agingMechanisms = data;
     });
-    this.predefinedAgingMechanisms = this.filterService.filters.byAgingMechanism;
 
     // Protein classes
-    // TODO: нет эндпоинта со списком
+    this.proteinClassesModel = this.getEntitiesList('classes');
+    this.proteinClassesModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
+      this.proteinClasses = data;
+    });
+
+    this.predefinedProcesses = this.filterService.filters.byAgeRelatedProcess;
+    this.predefinedDiseases = this.filterService.filters.byDiseases;
+    this.predefinedDiseaseCategories = this.filterService.filters.byDiseaseCategories;
+    this.predefinedSelectionCriteria = this.filterService.filters.bySelectionCriteria;
+    this.predefinedAgingMechanisms = this.filterService.filters.byAgingMechanism;
+    this.predefinedProteinClasses = this.filterService.filters.byProteinClass;
   }
 
   ngOnDestroy(): void {
@@ -147,10 +157,14 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
       case 'disease-categories':
         return this.apiService.getDiseaseCategories();
       case 'classes':
-        return this.apiService.getDiseaseCategories();
+        return this.apiService.getProteinClasses();
       default:
         return;
     }
+  }
+
+  public setInitialValues() {
+    this.cdRef.markForCheck();
   }
 
   public apply(filterType: FilterTypes, $event: MatSelectChange): void {
@@ -221,15 +235,12 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
       case 'mechanisms':
         this.listSettings.ifShowAgingMechanisms = !this.listSettings.ifShowAgingMechanisms;
         break;
+      case 'classes':
+        this.listSettings.ifShowProteinClasses = !this.listSettings.ifShowProteinClasses;
+        break;
       default:
         break;
     }
     this.filterService.updateFields(this.listSettings);
-  }
-
-  // TODO
-  public filterOptions(arr: any[], event) {
-    arr = arr.filter((item) => item?.name.includes(event.target.value));
-    console.log(arr);
   }
 }

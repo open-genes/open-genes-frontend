@@ -117,6 +117,30 @@
     </mat-form-field>
   </div>
 
+
+  <div *ngIf="proteinClasses?.length !== 0"
+       class="body__row">
+    <mat-form-field appearance="fill">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="changeGenesListSettings('classes')"
+        [switch]="listSettings.ifShowProteinClasses">
+      </app-eye-checkbox>
+
+      <mat-label>{{ "gene_list_protein_classes" | translate }}</mat-label>
+      <mat-select formControlName="proteinClassesSelect"
+                  multiple="true"
+                  [(ngModel)]="predefinedProteinClasses"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byProteinClass', $event)">
+        <mat-option (click)="resetForm('proteinClassesSelect')">
+          {{ 'nothing_selected' | translate }}
+        </mat-option>
+        <mat-option *ngFor="let i of proteinClasses" [value]="i.id">{{ i.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <div class="separator"></div>
 
   <div class="body__row __mb-10">
@@ -124,14 +148,6 @@
       (changeEvent)="changeGenesListSettings('gene-age')"
       [switch]="listSettings.ifShowAge">
       {{ "gene_list_evolutionary_age" | translate }}
-    </app-eye-checkbox>
-  </div>
-
-  <div class="body__row __mb-10">
-    <app-eye-checkbox
-      (changeEvent)="changeGenesListSettings('classes')"
-      [switch]="listSettings.ifShowProteinClasses">
-      {{ "gene_list_protein_classes" | translate }}
     </app-eye-checkbox>
   </div>
 
