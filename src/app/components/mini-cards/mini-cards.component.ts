@@ -42,7 +42,7 @@ export class MiniCardsComponent {
         (genes) => {
           this.lastGenes = genes;
           this.sessionStorageService.setStorage('byLatest', genes);
-          this.cdRef.markForCheck();
+          this.showSkeletonChange.emit(false);
         },
         (error) => {
           this.error = error;

@@ -39,11 +39,13 @@
                 </div>
               </app-sidebar-item>
 
-              <app-sidebar-item *ngIf="!isMobile && !genesListIsLoading">
-                <div content class="filters-wrapper">
-                  <app-gene-fields-modal></app-gene-fields-modal>
-                </div>
-              </app-sidebar-item>
+              <ng-container *ngIf="searchMode !== this.searchModeEnum.searchByGoTerms">
+                <app-sidebar-item *ngIf="!isMobile && !genesListIsLoading">
+                  <div content class="filters-wrapper">
+                    <app-gene-fields-modal></app-gene-fields-modal>
+                  </div>
+                </app-sidebar-item>
+              </ng-container>
 
               <app-sidebar-item>
                 <ng-container title>
