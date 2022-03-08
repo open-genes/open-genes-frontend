@@ -26,7 +26,7 @@
             <div *ngIf="gene.aliases.length !== 0"
                  class="title__vendors">
               <span *ngFor="let item of gene.aliases"
-                      class="alias">{{item}}</span>
+                    class="alias">{{item}}</span>
             </div>
 
             <time class="title__updated" dateTime="{{timestamp | unixTimeFormatter}}">
@@ -120,55 +120,93 @@
         <div class="col-12">
           <div class="page-wrapper">
             <section class="wrapper gene-page__annotation">
-                <div class="row no-gutters annotation__row row no-gutters annotation__row--emphasized">
-                  <div class="row__title col-xs-12 col-md-5">
-                    {{ 'gene_page_researches_processes' | translate }}:
-                  </div>
-
-                  <div class="row__value col">
-                    <ng-container *ngIf="gene.functionalClusters.length; else noData">
-                        <button *ngFor="let item of gene.functionalClusters"
-                                class="alias item__value" (click)="applyFilter(filterTypes.age_related_processes, item.id)">
-                          {{item.name}}
-                        </button>
-                    </ng-container>
-
-                    <ng-template #noData>
-                      {{'gene_page_no_data' | translate}}
-                    </ng-template>
-                  </div>
+              <div class="row no-gutters annotation__row row no-gutters annotation__row--emphasized">
+                <div class="row__title col-xs-12 col-md-5">
+                  {{ 'gene_page_researches_processes' | translate }}:
                 </div>
 
-                <div class="row no-gutters annotation__row">
-                  <div class="row__title col-xs-12 col-md-5">
-                    {{ 'gene_page_title_criteria' | translate }}:
-                  </div>
+                <div class="row__value col">
+                  <ng-container *ngIf="gene.functionalClusters.length; else noData">
+                    <button *ngFor="let item of gene.functionalClusters"
+                            class="alias item__value" (click)="applyFilter(filterTypes.age_related_processes, item.id)">
+                      {{item.name}}
+                    </button>
+                  </ng-container>
 
-                  <div class="row__value col">
-                    <ul *ngIf="gene.commentCause else noData"
-                        class="list list--bulletted">
-                      <!-- TODO: backend: return array of objects instead of object with objects -->
-                      <li *ngFor="let cause of gene.commentCause | keyvalue">
-                        {{cause.value}}
-                      </li>
-                    </ul>
+                  <ng-template #noData>
+                    {{'gene_page_no_data' | translate}}
+                  </ng-template>
+                </div>
+              </div>
 
-                    <ng-template #noData>
-                      {{'gene_page_no_data' | translate}}
-                    </ng-template>
-                  </div>
+              <div class="row no-gutters annotation__row">
+                <div class="row__title col-xs-12 col-md-5">
+                  {{ 'gene_page_title_criteria' | translate }}:
                 </div>
 
-                <div class="row no-gutters annotation__row">
-                  <div class="row__title col-xs-12 col-md-5">
-                    {{ 'gene_page_researches_age_related_changes_human' | translate }}:
-                  </div>
+                <div class="row__value col">
+                  <ul *ngIf="gene.commentCause else noData"
+                      class="list list--bulletted">
+                    <!-- TODO: backend: return array of objects instead of object with objects -->
+                    <li *ngFor="let cause of gene.commentCause | keyvalue">
+                      {{cause.value}}
+                    </li>
+                  </ul>
 
-                  <div class="row__value col">
-                    {{ getExpressionLocaleKey(gene.expressionChange) | translate }}
-                  </div>
+                  <ng-template #noData>
+                    {{'gene_page_no_data' | translate}}
+                  </ng-template>
                 </div>
-              </section>
+              </div>
+
+              <div class="row no-gutters annotation__row">
+                <div class="row__title col-xs-12 col-md-5">
+                  {{ 'gene_page_researches_age_related_changes_human' | translate }}:
+                </div>
+
+                <div class="row__value col">
+                  {{ getExpressionLocaleKey(gene.expressionChange) | translate }}
+                </div>
+              </div>
+
+              <div class="row no-gutters annotation__row">
+                <div class="row__title col-xs-12 col-md-5">
+                  {{ 'gene_list_diseases' | translate }}:
+                </div>
+
+                <div class="row__value col">
+                  <app-associated-diseases
+                    *ngIf="gene.diseases; else noData"
+                    [geneDiseases]="gene.diseases"
+                    [activeListItem]="filters.byDiseases"
+                    (clickEvent)="applyFilter(filterTypes.disease, $event)"
+                  ></app-associated-diseases>
+
+                  <ng-template #noData>
+                    {{'gene_page_no_data' | translate}}
+                  </ng-template>
+                </div>
+              </div>
+
+              <div class="row no-gutters annotation__row">
+                <div class="row__title col-xs-12 col-md-5">
+                  {{ 'gene_list_disease_categories' | translate }}:
+                </div>
+
+                <div class="row__value col">
+                  <app-associated-disease-categories
+                    *ngIf="gene.diseaseCategories; else noData"
+                    [geneDiseaseCategories] ="gene.diseaseCategories"
+                    [activeListItem]="filters.byDiseaseCategories"
+                    (clickEvent)="applyFilter(filterTypes.disease_categories, $event)"
+                  ></app-associated-disease-categories>
+
+                  <ng-template #noData>
+                    {{'gene_page_no_data' | translate}}
+                  </ng-template>
+                </div>
+              </div>
+            </section>
 
             <section class="wrapper gene-page__age">
               <div class="age__types">
@@ -211,7 +249,7 @@
                           <div class="ortholog__species">
                             <div *ngIf="item.species.latinName"
                                  class="latin-name"
-                                  [innerHTML]="item.species.latinName | orthologLinkWrapper: item:'link':null"
+                                 [innerHTML]="item.species.latinName | orthologLinkWrapper: item:'link':null"
                             ></div>
 
                             <div *ngIf="item.species.commonName && item.species.commonName !== item.species.latinName"
@@ -250,7 +288,7 @@
             <section *ngIf="isNcbiDescription || isLocationData">
               <article>
                 <ul *ngIf="isLocationData"
-                    class="list" >
+                    class="list">
                   <li
                     *ngIf="gene.band"
                   ><b>{{ 'gene_page_cytogenetic_band' | translate }}:</b> {{ gene.band }}</li>
