@@ -20,14 +20,14 @@ import { NoContentModule } from '../no-content/no-content.module';
 import { IconModule } from '../../ui-components/components/icon/app-icon.module';
 import { GeneCardComponent } from './components/gene/gene-card/gene-card.component';
 import { GeneTableRowComponent } from './components/gene/gene-table-row/gene-table-row.component';
-import { GeneFieldsModalComponent } from './components/gene-fields-modal/gene-fields-modal.component';
 import { FilterPanelComponent } from './components/filter-panel/filter-panel.component';
 import { GeneAnnotationsCardComponent } from './components/gene/gene-annotations-card/gene-annotations-card.component';
 import { GeneAnnotationsTableRowComponent } from './components/gene/gene-annotations-table-row/gene-annotations-table-row.component';
 import { GenesAnnotationsTableHeaderComponent } from './components/genes-annotations-table-header/genes-annotations-table-header.component';
 import { SearchViewPanelComponent } from './components/search-view-panel/search-view-panel.component';
-import { AgingMechanismsModule } from "../aging-mechanisms/aging-mechanisms.module";
+import { AgingMechanismsModule } from '../aging-mechanisms/aging-mechanisms.module';
 import { ProteinClassesModule } from '../protein-classes/protein-classes.module';
+import { GeneFieldsModalModule } from '../gene-fields-modal/gene-fields-modal.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,6 @@ import { ProteinClassesModule } from '../protein-classes/protein-classes.module'
     GenesAnnotationsTableHeaderComponent,
     GeneCardComponent,
     GeneTableRowComponent,
-    GeneFieldsModalComponent,
     FilterPanelComponent,
     GeneAnnotationsCardComponent,
     GeneAnnotationsTableRowComponent,
@@ -61,6 +60,7 @@ import { ProteinClassesModule } from '../protein-classes/protein-classes.module'
     IconModule,
     AgingMechanismsModule,
     ProteinClassesModule,
+    GeneFieldsModalModule,
   ],
   providers: [WindowService],
   exports: [GenesListComponent, SearchComponent, GeneCardComponent, GeneTableRowComponent],

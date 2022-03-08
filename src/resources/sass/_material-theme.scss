@@ -53,10 +53,12 @@ $open-genes-theme:   mat-light-theme($open-genes-primary, $open-genes-accent);
 // Include the theme styles for all Angular Material components:
 @include angular-material-theme($open-genes-theme);
 
-// Some custom design
+// CUSTOM DESIGN, GLOBAL OVERRIDES
+// TODO: move into assets folder
 // TODO: extend from material components and override styles inside a component
 
 // - Expansion-panel
+// Custom design
 .mat-expansion-panel {
   box-shadow: none !important;
   border: 1px solid $color-borders;
@@ -73,6 +75,7 @@ $open-genes-theme:   mat-light-theme($open-genes-primary, $open-genes-accent);
 }
 
 // - List
+// Better styles for multiline text in list items
 .mat-list-base {
   &,
   &[dense] {
@@ -89,6 +92,7 @@ $open-genes-theme:   mat-light-theme($open-genes-primary, $open-genes-accent);
 }
 
 // - Bottom sheet
+// Set paddings
 mat-bottom-sheet-container.mat-bottom-sheet-container {
   max-height: calc(100vh - #{$header-height});
   overflow: hidden;

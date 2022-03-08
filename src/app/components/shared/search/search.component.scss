@@ -1,6 +1,6 @@
 @import "../../styles";
 
-$search-input-height: 40px;
+$search-input-height: 50px;
 $search-switch-width: 50px;
 $mobile-container-vertical-padding: 5px;
 $input-border-radius: 5px;
@@ -184,7 +184,7 @@ $input-border-radius: 5px;
     max-height: (39px * 5) + 18px;
     width: 100%;
     overflow-y: scroll;
-    background: #fff;
+    background: $color-white;
     border-radius: 5px;
     z-index: 85;
 

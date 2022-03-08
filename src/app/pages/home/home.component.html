@@ -19,9 +19,9 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid home-container">
       <div class="row">
-        <ng-container *ngIf="isAvailable; else errorMessage">
+        <ng-container *ngIf="!errorStatus; else errorMessage">
           <div class="col-12">
             <div *ngIf="isMobile"
                  class="__mb-20">
@@ -29,13 +29,19 @@
             </div>
           </div>
 
-          <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2"
-               [ngClass]="isMobile? '__mb-btm' : ''">
+          <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 sidebar-column"
+               [ngClass]="isMobile? 'sidebar-column--mobile' : 'sidebar-column--desktop'">
             <app-sidebar>
               <app-sidebar-item *ngIf="!isMobile">
-                <div content class="__pl-5 __pr-5">
+                <div content class="wizard-banner-wrapper">
                   <ng-container [ngTemplateOutlet]="wizardBanner"
                   ></ng-container>
+                </div>
+              </app-sidebar-item>
+
+              <app-sidebar-item *ngIf="!isMobile && !genesListIsLoading">
+                <div content class="filters-wrapper">
+                  <app-gene-fields-modal></app-gene-fields-modal>
                 </div>
               </app-sidebar-item>
 
@@ -48,7 +54,6 @@
                 </ng-container>
                 <ng-container content>
                   <app-mini-cards
-                    *ngIf="!genesListIsLoading"
                     (showSkeletonChange)="updateViewOnSkeletonChange($event, 'latest')"
                   ></app-mini-cards>
                   <app-skeleton
@@ -69,7 +74,6 @@
                 </ng-container>
                 <ng-container content>
                   <app-articles-list
-                    *ngIf="!genesListIsLoading"
                     class="__h-100"
                     [isMiniMode]="true"
                     [sliceTo]="1"
@@ -93,7 +97,7 @@
                   </a>
                 </ng-container>
                 <ng-container content>
-                  <app-news-list *ngIf="!genesListIsLoading"
+                  <app-news-list
                     class="__pl-5 __pr-5"
                     [isMiniMode]="true"
                     [loadTotal]="2"
@@ -121,7 +125,7 @@
             <app-search
               class="__mt-20 __mb-10"
               [showTitle]="true"
-              [genesLength]="genes?.length"
+              [genesLength]="genesLength"
               [genesList]="searchedGenes"
               [isDisabled]="genesListIsLoading"
               [setSearchMode]="searchMode"
@@ -131,18 +135,15 @@
             ></app-search>
 
             <app-genes-list
-              *ngIf="genes"
               (loading)="setLoader($event)"
-              [genesList]="confirmedGenesList"
-              [notFoundAndFoundGenes]="confirmedFoundGenes"
+              (errorStatus)="errorStatus = $event"
+              (genesLength)="genesLength = $event"
+              [genesList]="searchMode !== searchModeEnum.searchByGoTerms ? confirmedGenesIds : confirmedGenesList"
+              [foundAndNotFoundGenes]="foundAndNotFoundGenes"
               [isMobile]="isMobile"
               [setSearchMode]="searchMode"
               [showFiltersPanel]="searchMode !== searchModeEnum.searchByGoTerms">
             </app-genes-list>
-
-            <app-spinner *ngIf="!genes"
-                         description="{{ 'spinner_loading_genes' | translate }}"
-            ></app-spinner>
           </div>
         </ng-container>
       </div>
@@ -187,7 +188,6 @@
         {{ 'wizard_where_to_start_button' | translate }}
       </button>
     </ng-container>
-
   </app-hint>
 </ng-template>
 

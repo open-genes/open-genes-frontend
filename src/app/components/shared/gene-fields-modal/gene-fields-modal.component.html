@@ -1,0 +1,148 @@
+<form class="filters-modal__body" [formGroup]="filtersForm">
+  <div *ngIf="processes?.length !== 0"
+       class="body__row">
+    <mat-form-field appearance="fill" color="primary">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="changeGenesListSettings('processes')"
+        [switch]="listSettings.ifShowFuncClusters"></app-eye-checkbox>
+      <mat-label>{{ "functional_classes" | translate }}</mat-label>
+      <mat-select formControlName="ageRelatedProcessesSelect"
+                  multiple="true"
+                  [(ngModel)]="predefinedProcesses"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byAgeRelatedProcess', $event)">
+        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
+        <mat-option *ngFor="let i of processes | searchFilter : searchText" [value]="i.id">{{ i.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <mat-form-field appearance="fill">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="changeGenesListSettings('expression')"
+        [switch]="listSettings.ifShowExpression"></app-eye-checkbox>
+      <mat-label>{{ "main_page_table_expression" | translate }}</mat-label>
+      <mat-select formControlName="expressionChangeSelect"
+                  [(ngModel)]="predefinedExpressionChanges"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byExpressionChange', $event)">
+        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
+        <mat-option [value]="1">{{ "expression_change_decreased" | translate }}</mat-option>
+        <mat-option [value]="2">{{ "expression_change_increased" | translate }}</mat-option>
+        <mat-option [value]="3">{{ "expression_change_mixed" | translate }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="diseases"
+       class="body__row">
+    <mat-form-field appearance="fill">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="changeGenesListSettings('diseases')"
+        [switch]="listSettings.ifShowDiseases"></app-eye-checkbox>
+      <mat-label>{{ "gene_list_diseases" | translate }}</mat-label>
+      <mat-select formControlName="diseasesSelect"
+                  multiple="true"
+                  [(ngModel)]="predefinedDiseases"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byDiseases', $event)">
+        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
+        <mat-option *ngFor="let i of diseases | keyvalue" [value]="i.key">{{ i?.value['name'] }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="diseaseCategories"
+       class="body__row">
+    <mat-form-field appearance="fill">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="changeGenesListSettings('disease-categories')"
+        [switch]="listSettings.ifShowDiseaseCategories"></app-eye-checkbox>
+      <mat-label>{{ "gene_list_disease_categories" | translate }}</mat-label>
+      <mat-select formControlName="diseaseCategoriesSelect"
+                  multiple="true"
+                  [(ngModel)]="predefinedDiseaseCategories"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byDiseaseCategories', $event)">
+        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
+        <mat-option *ngFor="let i of diseaseCategories | keyvalue"
+                    [value]="i.key">{{ i.value['icdCategoryName'] }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="selectionCriteria?.length !== 0"
+       class="body__row">
+    <mat-form-field appearance="fill">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="changeGenesListSettings('criteria')"
+        [switch]="listSettings.ifShowCriteria"></app-eye-checkbox>
+      <mat-label>{{ "main_page_table_criteria" | translate }}</mat-label>
+      <mat-select formControlName="selectionCriteriaSelect"
+                  multiple="true"
+                  [(ngModel)]="predefinedSelectionCriteria"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('bySelectionCriteria', $event)">
+        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
+        <mat-option *ngFor="let i of selectionCriteria" [value]="i.id">{{ i.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="agingMechanisms?.length !== 0"
+       class="body__row">
+    <mat-form-field appearance="fill">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="changeGenesListSettings('mechanisms')"
+        [switch]="listSettings.ifShowAgingMechanisms"></app-eye-checkbox>
+
+      <mat-label>{{ "gene_list_aging_mechanisms" | translate }}</mat-label>
+      <mat-select formControlName="agingMechanismsSelect"
+                  multiple="true"
+                  [(ngModel)]="predefinedAgingMechanisms"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byAgingMechanism', $event)">
+        <mat-option>
+          {{ 'nothing_selected' | translate }}
+        </mat-option>
+        <mat-option *ngFor="let i of agingMechanisms" [value]="i.id">{{ i.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="separator"></div>
+
+  <div class="body__row __mb-10">
+    <app-eye-checkbox
+      (changeEvent)="changeGenesListSettings('gene-age')"
+      [switch]="listSettings.ifShowAge">
+      {{ "gene_list_evolutionary_age" | translate }}
+    </app-eye-checkbox>
+  </div>
+
+  <div class="body__row __mb-10">
+    <app-eye-checkbox
+      (changeEvent)="changeGenesListSettings('classes')"
+      [switch]="listSettings.ifShowProteinClasses">
+      {{ "gene_list_protein_classes" | translate }}
+    </app-eye-checkbox>
+  </div>
+
+  <div class="separator"></div>
+
+  <div class="reset-button-wrapper">
+    <button mat-flat-button
+            color="primary"
+            class="reset-button"
+            (click)="resetForm()">
+      {{ "filters_reset" | translate }}
+    </button>
+  </div>
+</form>

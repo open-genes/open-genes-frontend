@@ -1,4 +1,4 @@
-<div class="comment-modal__header" mat-dialog-title>
+<div class="common-modal__header" mat-dialog-title>
   {{ data.title | translate }}
 
   <button mat-icon-button
@@ -9,7 +9,7 @@
   </button>
 </div>
 <mat-dialog-content>
-  <div class="comment-modal__body">
+  <div class="common-modal__body">
     <article>
       <ng-container *ngIf="!data.template">
         {{ data.body }}

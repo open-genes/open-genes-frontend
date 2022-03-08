@@ -8,6 +8,7 @@ import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with
 import { GenesInHorvathClock } from '../../models/open-genes-api/genes-in-horvath-clock.model';
 import { ApiResponse } from '../../models/api-response.model';
 import { shareReplay } from 'rxjs/operators';
+import { SearchModel } from '../../models/open-genes-api/search.model';
 import { Pagination } from '../../models/settings.model';
 import { Diet } from '../../models/open-genes-api/diet.model';
 
@@ -43,6 +44,10 @@ export class ApiService {
 
   getGeneByHGNCsymbol(symbol: string): Observable<Gene> {
     return this.http.get<Gene>(`/api/gene/${symbol}?lang=${this.currentLang}`);
+  }
+
+  getGenesMatchByString(request: string): Observable<SearchModel> {
+    return this.http.get<SearchModel>(`https://test.open-genes.com/api/gene/suggestions?input=${request}`);
   }
 
   getGoTermMatchByString(request: string): Observable<Genes[]> {
@@ -95,14 +100,14 @@ export class ApiService {
   }
 
   getSelectionCriteria(): Observable<SelectionCriteria[]> {
-    return this.http.get<SelectionCriteria[]>('/api/criteria');
+    return this.http.get<SelectionCriteria[]>(`/api/criteria?lang=${this.currentLang}`);
   }
 
   getAgeRelatedProcesses(): Observable<AgeRelatedProcesses[]> {
-    return this.http.get<AgeRelatedProcesses[]>('/api/age-related-processes');
+    return this.http.get<AgeRelatedProcesses[]>(`/api/age-related-processes?lang=${this.currentLang}`);
   }
 
   getAgingMechanisms(): Observable<AgingMechanisms[]> {
-    return this.http.get<AgingMechanisms[]>('/api/aging-mechanisms');
+    return this.http.get<AgingMechanisms[]>(`/api/aging-mechanisms?lang=${this.currentLang}`);
   }
 }

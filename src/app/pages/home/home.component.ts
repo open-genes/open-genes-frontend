@@ -6,7 +6,7 @@ import { WizardService } from '../../components/shared/wizard/wizard-service.ser
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
-import { SessionStorageService } from '../../core/services/session-storage.service';
+import { SearchModel } from '../../core/models/open-genes-api/search.model';
 
 @Component({
   selector: 'app-home',
@@ -15,36 +15,34 @@ import { SessionStorageService } from '../../core/services/session-storage.servi
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
-  public genes: Genes[];
-  public searchedGenes: Genes[] = [];
-  public confirmedGenesList: Genes[] | string;
-  public isAvailable = true;
+  public searchedGenes: Pick<Genes, 'id' | 'name' | 'symbol' | 'aliases' | 'ensembl'>[] | Genes[] = [];
+  public confirmedGenesList: Genes[];
+  public confirmedGenesIds: number[];
+  public foundAndNotFoundGenes: Omit<SearchModel, 'items'>;
+  public foundGenes: Omit<SearchModel, 'items'>;
+  public genesLength: number;
   public errorStatus: string;
   public searchMode: SearchMode;
   public searchModeEnum = SearchModeEnum;
-  public notFoundAndFoundGenes: any;
-  public confirmedFoundGenes: any;
+
+  public genesListIsLoading = true;
   public showLatestGenesSkeleton = true;
   public showArticlesSkeleton = true;
   public showPubmedFeedSkeleton = true;
   public showProgressBar = false;
-  public genesListIsLoading = true;
   public queryLength: number;
+
 
   constructor(
     public windowService: WindowService,
-    private sessionStorageService: SessionStorageService,
     private wizardService: WizardService,
     private readonly apiService: ApiService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
   ) {
     super(windowService);
   }
 
   ngOnInit(): void {
-    this.genesListIsLoading = true;
-    this.getGenes();
-
     this.initWindowWidth(() => {
       this.cdRef.markForCheck();
     });
@@ -55,120 +53,97 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.loadWizard();
   }
 
-  public getGenes(): void {
-    this.apiService
-      .getGenesV2()
-      .pipe(takeUntil(this.subscription$))
-      .subscribe(
-        (filteredGenes) => {
-          this.genes = filteredGenes.items;
-          // Make the genes property immutable after we set a value
-          Object.defineProperty(this.genes, 'genes', { writable: false });
-          this.cdRef.markForCheck();
-        },
-        (err) => {
-          this.isAvailable = false;
-          this.errorStatus = err.statusText;
-          this.cdRef.markForCheck();
-        }
-      );
-  }
-
   public setSearchQuery(query: string): void {
-    this.queryLength = query.split(',').length;
-    if (this.queryLength === 1) {
-      if (this.searchMode === this.searchModeEnum.searchByGenes) {
-        this.searchByGenes(query);
-      }
-
-      if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
-        this.searchGenesByGoTerm(query);
-      }
-
-      this.notFoundAndFoundGenes = {
-        foundGenes: [],
-        notFoundGenes: [],
-      };
+    if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
+      this.searchGenesByGoTerm(query);
     } else {
-      if (this.searchMode !== this.searchModeEnum.searchByGoTerms) {
-        this.searchByGenesList(query);
-      }
+      this.queryLength = query.split(',').length;
+      this.searchGenes(query);
     }
   }
 
   public updateGenesList(query): void {
-    if (query && this.searchedGenes.length) {
-      this.confirmedGenesList = [...this.searchedGenes];
+    if (query) {
+      if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
+        this.confirmedGenesList = this.searchedGenes as Genes[];
+      } else {
+        this.confirmedGenesIds = this.searchedGenes.map((gene) => gene.id);
+        this.foundAndNotFoundGenes = this.foundGenes;
+      }
+    } else {
+      this.confirmedGenesIds = null;
+      this.confirmedGenesList = null;
     }
 
-    if (query && this.searchedGenes.length === 0) {
-      this.confirmedGenesList = [null];
-    }
-
-    if (!query && this.searchedGenes.length === 0) {
-      this.confirmedGenesList = [];
-    }
-
-    this.confirmedFoundGenes = this.notFoundAndFoundGenes;
+    this.cdRef.markForCheck();
   }
 
   public setSearchMode(searchMode: SearchMode): void {
     this.searchMode = searchMode;
-    this.confirmedGenesList = '';
-    this.confirmedFoundGenes = {
-      foundGenes: [],
-      notFoundGenes: [],
+    this.confirmedGenesIds = null;
+    this.confirmedGenesList = null;
+    this.foundAndNotFoundGenes = {
+      found: [],
+      notFound: [],
     };
   }
 
-  private searchByGenes(query: string): void {
-    if (query && query.length > 2) {
-      this.searchedGenes = this.genes?.filter((gene) => {
-        // Fields always acquired in response
-        const searchedText = [
-          gene.id,
-          gene?.ensembl ? gene.ensembl : '',
-          gene.symbol,
-          gene.name,
-          gene?.aliases ? gene.aliases : '',
-        ]
-          .join(' ')
-          .toLowerCase();
-        return searchedText.includes(query);
-      });
-    } else {
-      this.searchedGenes = [];
+  public updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'news' | 'latest'): void {
+    if (name === 'articles') {
+      this.showArticlesSkeleton = event;
     }
+
+    if (name === 'news') {
+      this.showPubmedFeedSkeleton = event;
+    }
+
+    if (name === 'latest') {
+      this.showLatestGenesSkeleton = event;
+    }
+
+    this.cdRef.detectChanges();
   }
 
-  private searchByGenesList(query: string): void {
-    if (query) {
-      this.searchedGenes = [];
-      const notFoundGenes = [];
-      let foundGenes = [];
-      const arrayOfWords = query
-        .split(',')
-        .map((res) => res.trim())
-        .filter((res) => res);
+  public setLoader(event: boolean) {
+    this.genesListIsLoading = event;
+    this.cdRef.markForCheck();
+  }
 
-      const uniqWords = [...new Set(arrayOfWords)];
+  /**
+   * Wizard
+   */
+  public openWizard() {
+    this.wizardService.open();
+  }
 
-      if (uniqWords.length !== 0) {
-        foundGenes = uniqWords.filter((symbol) => {
-          const foundGene = this.genes.find((gene) => symbol === gene.symbol.toLowerCase());
-
-          foundGene ? this.searchedGenes.push(foundGene) : notFoundGenes.push(symbol);
-
-          return !!foundGene;
-        });
-      }
-
-      this.notFoundAndFoundGenes = {
-        foundGenes: foundGenes,
-        notFoundGenes: notFoundGenes,
-      };
+  private searchGenes(query: string): void {
+    if (query && query.length > 2) {
+      this.showProgressBar = true;
+      this.apiService
+        .getGenesMatchByString(query)
+        .pipe(takeUntil(this.subscription$))
+        .subscribe(
+          (searchData) => {
+            this.searchedGenes = searchData.items; // If nothing found, will return empty array
+            this.foundGenes = {
+              found: this.queryLength > 1 ? searchData.found : [],
+              notFound: this.queryLength > 1 ? searchData.notFound : [],
+            };
+            this.showProgressBar = false;
+            this.cdRef.markForCheck();
+          },
+          (error) => {
+            console.log(error);
+            this.showProgressBar = false;
+            this.cdRef.markForCheck();
+          }
+        );
     } else {
       this.searchedGenes = [];
+      this.foundAndNotFoundGenes = {
+        found: [],
+        notFound: [],
+      };
     }
   }
 
@@ -197,7 +172,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   private mapTerms(): void {
-    this.searchedGenes.forEach((gene) => {
+    this.searchedGenes.forEach((gene: Genes) => {
       if (gene.terms) {
         Object.keys(gene.terms).forEach((key) => [
           gene.terms[key].map((term) => {
@@ -208,18 +183,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     });
   }
 
-  setLoader(event: boolean) {
-    this.genesListIsLoading = event;
-    this.cdRef.markForCheck();
-  }
-
-  /**
-   * Wizard
-   */
-  public openWizard() {
-    this.wizardService.open();
-  }
-
   private loadWizard() {
     this.wizardService.openOnce();
   }
@@ -228,19 +191,5 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
-  updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'news' | 'latest'): void {
-    if (name === 'articles') {
-      this.showArticlesSkeleton = event;
-    }
 
-    if (name === 'news') {
-      this.showPubmedFeedSkeleton = event;
-    }
-
-    if (name === 'latest') {
-      this.showLatestGenesSkeleton = event;
-    }
-
-    this.cdRef.detectChanges();
-  }
 }

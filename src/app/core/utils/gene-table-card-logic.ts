@@ -7,13 +7,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
 import { Observable, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Filter } from '../../components/shared/genes-list/services/filter.model';
+import { Filter } from '../models/filters/filter.model';
 import { FilterTypesEnum } from '../../components/shared/genes-list/services/filter-types.enum';
 
 @Directive()
 export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
   @Input() item: Genes;
-  @Input() isGoTermsMode: boolean;
 
   public listSettings: GenesListSettings;
   public filters: Filter = this.filterService.filters;
@@ -62,8 +61,8 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
    * get item id and send this to app-genes-list  (for filtering)
    */
 
-  public onApplyFilter(filterType: string, filterValue: number | string): void {
-    this.filterService.onApplyFilter(filterType, filterValue);
+  public applyFilter(filterType: string, filterValue: number | string): void {
+    this.filterService.applyFilter(filterType, filterValue);
   }
 
   /**

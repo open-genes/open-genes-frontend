@@ -54,17 +54,16 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
-  @Output() confirmedQuery: EventEmitter<any> = new EventEmitter<any>();
+  @Output() confirmedQuery: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  public clearFieldButton: boolean;
-  public searchedData: Genes[];
+  public searchedData: Partial<Genes[]>;
   public searchForm: FormGroup;
   public searchMode: SearchMode;
   public formDisabled: boolean;
+  public clearFieldButton: boolean;
   public showSearchResult = false;
   public highlightText: string;
 
-  private searchModeEnum = SearchModeEnum;
   public inputData = [
     {
       searchMode: SearchModeEnum.searchByGenes,
@@ -120,19 +119,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
             this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
           }
 
-          if (this.searchMode === this.searchModeEnum.searchByGoTerms && this.showSearchResult) {
-            return true;
-          }
-
-          if (this.searchMode === this.searchModeEnum.searchByGenes) {
-            this.searchQuery.emit(query);
-          }
-
-          if (this.searchMode === this.searchModeEnum.searchByGenesList) {
-            this.searchQuery.emit(query);
-          }
-
-          return false;
+          return this.showSearchResult;
         }),
         debounceTime(500),
         distinctUntilChanged(),
@@ -145,7 +132,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public onSearch(): void {
-    this.confirmedQuery.emit(this.highlightText);
+    this.confirmedQuery.emit(!!this.highlightText);
   }
 
   public cancelSearch(event?): void {
@@ -158,7 +145,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchForm.get('searchField').setValue('');
     const query: string = this.searchForm.get('searchField').value;
     this.searchQuery.emit(query);
-    this.confirmedQuery.emit(query.toLowerCase());
+    this.confirmedQuery.emit(false);
     this.cancelSearch();
   }
 }
