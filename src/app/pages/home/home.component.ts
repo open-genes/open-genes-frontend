@@ -120,7 +120,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
     if (query && query.length > 2) {
       this.showProgressBar = true;
       this.apiService
-        .getGenesMatchByString(query)
+        .getGenesMatchByString(query, this.queryLength > 1 ? 'byGeneSmb' : undefined)
         .pipe(takeUntil(this.subscription$))
         .subscribe(
           (searchData) => {
