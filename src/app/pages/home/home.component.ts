@@ -17,9 +17,8 @@ import { SearchModel } from '../../core/models/open-genes-api/search.model';
 export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public searchedGenes: Pick<Genes, 'id' | 'name' | 'symbol' | 'aliases' | 'ensembl'>[] | Genes[] = [];
   public confirmedGenesList: Genes[];
-  public confirmedGenesIds: number[];
-  public foundAndNotFoundGenes: Omit<SearchModel, 'items'>;
-  public foundGenes: Omit<SearchModel, 'items'>;
+  public confirmedQuery: string;
+  public searchedQuery: string;
   public genesLength: number;
   public errorStatus: string;
   public searchMode: SearchMode;
@@ -32,12 +31,11 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public showProgressBar = false;
   public queryLength: number;
 
-
   constructor(
     public windowService: WindowService,
     private wizardService: WizardService,
     private readonly apiService: ApiService,
-    private readonly cdRef: ChangeDetectorRef,
+    private readonly cdRef: ChangeDetectorRef
   ) {
     super(windowService);
   }
@@ -58,6 +56,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       this.searchGenesByGoTerm(query);
     } else {
       this.queryLength = query.split(',').length;
+      this.searchedQuery = query;
       this.searchGenes(query);
     }
   }
@@ -67,11 +66,10 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
       if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
         this.confirmedGenesList = this.searchedGenes as Genes[];
       } else {
-        this.confirmedGenesIds = this.searchedGenes.map((gene) => gene.id);
-        this.foundAndNotFoundGenes = this.foundGenes;
+        this.confirmedQuery = this.searchedQuery;
       }
     } else {
-      this.confirmedGenesIds = null;
+      this.confirmedQuery = null;
       this.confirmedGenesList = null;
     }
 
@@ -80,12 +78,8 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
 
   public setSearchMode(searchMode: SearchMode): void {
     this.searchMode = searchMode;
-    this.confirmedGenesIds = null;
+    this.confirmedQuery = null;
     this.confirmedGenesList = null;
-    this.foundAndNotFoundGenes = {
-      found: [],
-      notFound: [],
-    };
   }
 
   public updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'news' | 'latest'): void {
@@ -125,10 +119,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
         .subscribe(
           (searchData) => {
             this.searchedGenes = searchData.items; // If nothing found, will return empty array
-            this.foundGenes = {
-              found: this.queryLength > 1 ? searchData.found : [],
-              notFound: this.queryLength > 1 ? searchData.notFound : [],
-            };
             this.showProgressBar = false;
             this.cdRef.markForCheck();
           },
@@ -140,10 +130,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
         );
     } else {
       this.searchedGenes = [];
-      this.foundAndNotFoundGenes = {
-        found: [],
-        notFound: [],
-      };
     }
   }
 
