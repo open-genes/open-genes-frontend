@@ -4,37 +4,45 @@
   </div>
 
   <div class="table-container __w-content-fluid">
-        <table class="table table--zebra "  matSort (matSortChange)="sortData($event)">
-          <thead>
-            <tr>
-              <th class="__cell-width-small" *ngFor="let head of displayedColumns" [mat-sort-header]="head">{{head | translate}}</th>
-            </tr>
-          </thead>
+    <table class="table table--zebra " matSort (matSortChange)="sortData($event)">
+      <thead>
+      <tr>
+        <th class="__cell-width-small" *ngFor="let head of displayedColumns"
+            [mat-sort-header]="head">{{head | translate}}</th>
+      </tr>
+      </thead>
 
-          <tbody *ngFor="let gene of genesList">
+      <tbody *ngFor="let gene of genesList">
 
-            <tr *ngFor="let data of gene.calorieRestrictionExperiments; let first=first">
-              <td *ngIf="first" class="gene-name" [attr.rowspan]="gene.calorieRestrictionExperiments.length +1">{{gene.name}}</td>
-              <td>{{data.lexpressionChangeLogFc}}</td>
-              <td>{{data.pValue}}</td>
-              <td>{{data.crResult}}</td>
-              <td>{{data.measurementMethod}}</td>
-              <td>{{data.measurementType}}</td>
-              <td>{{data.restrictionPercent}}</td>
-              <td>{{data.duration}} <span> ({{data.durationUnit}})</span></td>
-              <td>{{data.age}} <span> ({{data.ageUnit}})</span></td>
-              <td>{{data.organism}}</td>
-              <td>{{data.line}}</td>
-              <td>{{data.sex}}</td>
-              <td>{{data.tissue}}</td>
-              <td>{{data.experimentNumber}}</td>
-              <td>{{data.doi}}</td>
-              <td>{{data.expressionChangePercent}}</td>
-              <td>{{data.isoform}}</td>
-            </tr>
+      <tr *ngFor="let data of gene.calorieRestrictionExperiments; let first=first">
+        <td *ngIf="first" class="gene-name" [attr.rowspan]="gene.calorieRestrictionExperiments.length + 1">
+          <ng-container *ngIf="gene.isHidden">
+            <a [routerLink]="['/gene', gene.symbol]">{{gene.name}}</a>
+          </ng-container>
+          <ng-container *ngIf="!gene.isHidden">
+            <span>{{gene.name}}</span>
+          </ng-container>
+        </td>
+        <td>{{data.lexpressionChangeLogFc}}</td>
+        <td>{{data.pValue}}</td>
+        <td>{{data.crResult}}</td>
+        <td>{{data.measurementMethod}}</td>
+        <td>{{data.measurementType}}</td>
+        <td>{{data.restrictionPercent}}</td>
+        <td>{{data.duration}} <span> ({{data.durationUnit}})</span></td>
+        <td>{{data.age}} <span> ({{data.ageUnit}})</span></td>
+        <td>{{data.organism}}</td>
+        <td>{{data.line}}</td>
+        <td>{{data.sex}}</td>
+        <td>{{data.tissue}}</td>
+        <td>{{data.experimentNumber}}</td>
+        <td>{{data.doi}}</td>
+        <td>{{data.expressionChangePercent}}</td>
+        <td>{{data.isoform}}</td>
+      </tr>
 
-          </tbody>
-        </table>
+      </tbody>
+    </table>
   </div>
 
   <div class="paginator">

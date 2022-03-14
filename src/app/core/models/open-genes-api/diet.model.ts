@@ -5,6 +5,7 @@ export interface Diet {
   ncbiId: string;
   uniprot: string;
   ensembl: string;
+  isHidden: number;
   calorieRestrictionExperiments: Calorie[];
 }
 
