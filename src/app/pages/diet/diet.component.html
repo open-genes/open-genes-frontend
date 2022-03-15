@@ -1,0 +1,58 @@
+<div class="page main-page">
+  <div class="page__inner __pb-60">
+    <div class="page diet-page">
+      <div class="page__inner __pb-60">
+        <div class="text-page__header wrapper">
+          <div class="container">
+            <div class="col-12">
+              <div class="page__title">
+                <h1>{{ "diet_page_title" | translate }}</h1>
+              </div>
+              <div class="header__description"></div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <ng-container>
+              <div class="col-12">
+                <app-search [showTitle]="false"
+                            [genesList]="searchedGenesList"
+                            [setSearchMode]="searchMode"
+                            (confirmedQuery)="updateGenesList($event)"
+                            (searchQuery)="setSearchQuery($event)">
+                </app-search>
+
+                <app-diet-table
+                  *ngIf="confirmedGenesList?.length"
+                  [confirmedGenesList]="confirmedGenesList"
+                  [totalGenesLength]="totalGenesLength"
+                  [isLoading]="isLoading"
+                  [pagination]="pagination"
+                  (paginationChange)="onPaginationChange($event)"
+                  ></app-diet-table>
+
+                <!-- When content is loading -->
+                <app-spinner *ngIf="!confirmedGenesList?.length" class="__mt-10 __mb-10"></app-spinner>
+
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #errorMessage>
+  <section class="col-12">
+    <app-no-content size="small" [title]="'error_connection'">
+      <ng-container icon>
+        <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+      </ng-container>
+      <ng-container description>
+        <p>({{ errorStatus }})</p>
+      </ng-container>
+    </app-no-content>
+  </section>
+</ng-template>
