@@ -219,7 +219,8 @@
     background-color: lighten($color-hover, 3%);
     border: 1px solid $color-borders-active;
 
-    &:hover {
+    &:hover,
+    &:active {
       background-color: $color-hover;
     }
   }
