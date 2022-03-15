@@ -7,5 +7,6 @@ export interface GenesInHorvathClock {
   ncbiId: string;
   uniprot: string;
   ensembl: string;
+  isHidden: number;
   methylationCorrelation: MethylationCorrelation;
 }

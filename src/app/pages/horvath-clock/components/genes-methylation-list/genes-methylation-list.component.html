@@ -18,16 +18,16 @@
     </div>
       <div *ngFor="let gene of searchedData | slice: 0:loadedGenesQuantity"
            class="col-12 methylated-gene"
-           [ngClass]="compareWith.includes(gene.symbol) ? '' : 'methylated-gene--disabled'"
+           [ngClass]="gene.isHidden ? '' : 'methylated-gene--disabled'"
       >
         <div class="row no-gutters">
           <div class="col-xs-12 col-md-9 methylated-gene__title">
-            <ng-container *ngIf="compareWith.includes(gene.symbol)">
+            <ng-container *ngIf="gene.isHidden">
               <a [routerLink]="['/gene', gene.symbol]">
                 <span class="tag">{{gene.symbol}}</span> <span class="link link--gray">{{gene.name | trim }}</span>
               </a>
             </ng-container>
-            <ng-container *ngIf="!compareWith.includes(gene.symbol)">
+            <ng-container *ngIf="!gene.isHidden">
               <span class="tag">{{gene.symbol}}</span> {{gene.name | trim }}
             </ng-container>
           </div>
@@ -53,7 +53,7 @@
 </ng-container>
 
 <!-- No content error message -->
-<section *ngIf="!isLoading && searchedData?.length == 0">
+<section *ngIf="!isLoading && searchedData?.length === 0">
   <app-no-content [title]="'nothing_found'">
     <ng-container icon>
       <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>

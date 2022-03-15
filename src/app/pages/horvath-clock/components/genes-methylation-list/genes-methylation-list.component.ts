@@ -19,7 +19,6 @@ export class GenesMethylationListComponent implements OnInit {
       this.openSnackBar();
     }
   }
-  @Input() compareWith: string[] = [];
 
   @Output() loaded = new EventEmitter<boolean>();
 

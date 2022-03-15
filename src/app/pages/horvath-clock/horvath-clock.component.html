@@ -32,7 +32,6 @@
                 <app-genes-methylation-list
                   *ngIf="genes"
                   [genesList]="confirmedGenesList"
-                  [compareWith]="curatedGeneSymbolsArray"
                   (loaded)="setIsGenesListLoaded($event)">
                 </app-genes-methylation-list>
 

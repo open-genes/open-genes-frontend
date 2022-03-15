@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
-import { FilterService } from '../../components/shared/genes-list/services/filter.service';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { WizardService } from '../../components/shared/wizard/wizard-service.service';
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
@@ -29,7 +28,7 @@ export class HorvathClockComponent extends WindowWidth implements OnInit, OnDest
     public windowService: WindowService,
     private wizardService: WizardService,
     private readonly apiService: ApiService,
-    private readonly cdRef: ChangeDetectorRef,
+    private readonly cdRef: ChangeDetectorRef
   ) {
     super(windowService);
   }
@@ -51,16 +50,9 @@ export class HorvathClockComponent extends WindowWidth implements OnInit, OnDest
   }
 
   public getGenes(): void {
-    this.apiService.getGenesV2()
-      .pipe(
-        takeUntil(this.subscription$),
-        switchMap((filteredGenes) => {
-          filteredGenes.items.forEach((gene) => {
-            this.curatedGeneSymbolsArray.push(gene.symbol);
-          });
-          return this.apiService.getGenesInHorvathClock();
-        })
-      )
+    this.apiService
+      .getGenesInHorvathClock()
+      .pipe(takeUntil(this.subscription$))
       .subscribe(
         (genes) => {
           this.genes = genes;
@@ -70,7 +62,7 @@ export class HorvathClockComponent extends WindowWidth implements OnInit, OnDest
         (err) => {
           this.isAvailable = false;
           this.errorStatus = err.statusText;
-          this.cdRef.markForCheck()
+          this.cdRef.markForCheck();
         }
       );
   }
