@@ -177,6 +177,7 @@
                 <div class="row__value col">
                   <app-associated-diseases
                     *ngIf="gene.diseases; else noData"
+                    class="annotation__filters-list"
                     [geneDiseases]="gene.diseases"
                     [activeListItem]="filters.byDiseases"
                     (clickEvent)="applyFilter(filterTypes.disease, $event)"
@@ -196,6 +197,7 @@
                 <div class="row__value col">
                   <app-associated-disease-categories
                     *ngIf="gene.diseaseCategories; else noData"
+                    class="annotation__filters-list"
                     [geneDiseaseCategories] ="gene.diseaseCategories"
                     [activeListItem]="filters.byDiseaseCategories"
                     (clickEvent)="applyFilter(filterTypes.disease_categories, $event)"

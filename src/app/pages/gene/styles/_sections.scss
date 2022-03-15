@@ -1,19 +1,18 @@
 .gene-page { // .page
-  // ANNOTATION
-  &__annotation {
-    margin: 0 0 30px 0;
+  %gene-page-panels {
+    border: 1px solid $color-borders;
+    border-radius: $border-radius-medium;
   }
 
   // AGE
   &__age {
-    margin: 0 -5px 30px -5px;
-
     .age__types {
       display: flex;
       flex-flow: column wrap;
       justify-content: flex-start;
       align-items: stretch;
       font-size: $font-size;
+      margin: 0 -5px 30px -5px;
 
       .age__type {
         display: flex;
@@ -29,9 +28,8 @@
           min-width: 200px;
           min-height: 100px;
           padding: 10px;
-          border: 1px solid $color-borders;
-          border-radius: $border-radius-medium;
           margin: 5px;
+          @extend %gene-page-panels;
         }
 
         .type__title {
@@ -75,9 +73,11 @@
               display: inline-grid;
               grid-template-columns: auto 120px;
               grid-column-gap: 10px;
-              background-color: $color-gray-very-light;
+              min-height: 49px;
               padding: 5px 10px;
-              border-radius: $border-radius-medium;
+              background-color: $color-white;
+              box-shadow: $shadow-for-panel;
+              border-radius: $border-radius-regular;
 
               .ortholog__species {
                 .latin-name,
@@ -203,14 +203,15 @@
     }
   }
 
-  // GO ANNOTATION
+  // OPEN GENES ANNOTATION
   &__annotation {
     width: 100%;
     display: flex;
     flex-direction: column;
     background: $color-gray-very-light;
-    border-radius: 5px;
     padding: 5px 0;
+    margin: 0 0 30px 0;
+    @extend %gene-page-panels;
 
     .annotation__row {
       width: 100%;
@@ -230,11 +231,12 @@
           font-size: $font-size-big;
         }
       }
+    }
 
-      &--emphasized {
-        padding-top: 12px;
-        background-color: $color-general-light;
-      }
+    .annotation__filters-list {
+      // tiny typographic fix
+      left: -5px;
+      position: relative;
     }
 
     .annotation__row + .annotation__row {
