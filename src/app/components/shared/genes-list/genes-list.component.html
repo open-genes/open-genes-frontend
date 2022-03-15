@@ -138,5 +138,7 @@
   </app-no-content>
 </section>
 
-<app-spinner *ngIf="isLoading"></app-spinner>
+<app-spinner *ngIf="isLoading"
+             description="{{ 'spinner_loading_genes' | translate }}"
+></app-spinner>
 
