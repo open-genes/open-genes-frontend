@@ -138,8 +138,7 @@
               (loading)="setLoader($event)"
               (errorStatus)="errorStatus = $event"
               (genesLength)="genesLength = $event"
-              [genesList]="searchMode !== searchModeEnum.searchByGoTerms ? confirmedGenesIds : confirmedGenesList"
-              [foundAndNotFoundGenes]="foundAndNotFoundGenes"
+              [genesList]="searchMode !== searchModeEnum.searchByGoTerms ? confirmedQuery : confirmedGenesList"
               [isMobile]="isMobile"
               [setSearchMode]="searchMode"
               [showFiltersPanel]="searchMode !== searchModeEnum.searchByGoTerms">

@@ -121,7 +121,6 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
 
           return this.showSearchResult;
         }),
-        debounceTime(500),
         distinctUntilChanged(),
         takeUntil(this.subscription$)
       )

@@ -35,7 +35,6 @@ import { SearchModel } from '../../../core/models/open-genes-api/search.model';
 export class GenesListComponent implements OnInit, OnDestroy {
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
-  @Input() foundAndNotFoundGenes: Omit<SearchModel, 'items'>;
 
   @Input() set setSearchMode(searchMode: SearchMode) {
     if (searchMode) {
@@ -46,13 +45,26 @@ export class GenesListComponent implements OnInit, OnDestroy {
     }
   }
 
-  @Input() set genesList(genes: Genes[] | number[]) {
-    if (genes) {
+  @Input() set genesList(query: Genes[] | string) {
+    if (query) {
       if (this.isGoTermsMode) {
-        this.searchedData = genes as Genes[];
+        this.searchedData = query as Genes[];
       } else {
-        if (genes.length) {
-          this.filterService.filters.byGeneId = genes as number[];
+        if (query.length > 2) {
+          const length = (query as string).split(',').length;
+          if (length > 1) {
+            delete this.filterService.filters.bySuggestions;
+            this.arrayOfWords = (query as string)
+              .split(',')
+              .map((query) => query.trim())
+              .filter((q) => q);
+            this.filterService.filters.byGeneSymbol = this.arrayOfWords;
+          } else {
+            this.arrayOfWords = [];
+            delete this.filterService.filters.byGeneSymbol;
+            this.filterService.filters.bySuggestions = query as string;
+          }
+
           this.filterService.updateList(this.filterService.filters);
         } else {
           this.searchedData = [];
@@ -81,6 +93,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   @Output() genesLength: EventEmitter<number> = new EventEmitter<number>();
 
   public searchedData: Genes[] = [];
+  public foundAndNotFoundGenes: Omit<SearchModel, 'items'>;
   public filterTypes = FilterTypesEnum;
   public sortEnum = SortEnum;
   public searchMode: SearchMode;
@@ -93,6 +106,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public isLoading = false;
 
   private cachedData: Genes[] = [];
+  private arrayOfWords: string[] = [];
   private retrievedSettings: Settings;
   private searchModeEnum = SearchModeEnum;
   private subscription$ = new Subject();
@@ -107,7 +121,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
-    private aRoute: ActivatedRoute,
+    private aRoute: ActivatedRoute
   ) {
   }
 
@@ -160,6 +174,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
             this.searchedData = [...this.cachedData];
           }
           this.downloadSearch(this.searchedData);
+          this.setFoundAndNotFound();
 
           this.pageOptions = res.options.pagination;
           this.isLoading = false;
@@ -213,7 +228,8 @@ export class GenesListComponent implements OnInit, OnDestroy {
    * Filter reset
    */
   public clearFilters(filterName?: string): void {
-    delete this.filterService.filters.byGeneId;
+    delete this.filterService.filters.bySuggestions;
+    delete this.filterService.filters.byGeneSymbol;
     this.filterService.clearFilters(filterName ? filterName : null);
   }
 
@@ -300,6 +316,35 @@ export class GenesListComponent implements OnInit, OnDestroy {
       },
       duration: 600,
     });
+  }
+
+  private setFoundAndNotFound(): void {
+    if (this.arrayOfWords.length) {
+      const notFoundGenes = [];
+      let foundGenes = [];
+
+      const uniqWords = [...new Set(this.arrayOfWords)];
+
+      if (uniqWords.length !== 0) {
+        foundGenes = uniqWords.filter((symbol) => {
+          const foundGene = this.searchedData.find((gene) => symbol === gene.symbol.toLowerCase());
+
+          foundGene ? foundGenes.push(foundGene) : notFoundGenes.push(symbol);
+
+          return !!foundGene;
+        });
+      }
+
+      this.foundAndNotFoundGenes = {
+        found: foundGenes,
+        notFound: notFoundGenes,
+      };
+    } else {
+      this.foundAndNotFoundGenes = {
+        found: [],
+        notFound: [],
+      };
+    }
   }
 
   ngOnDestroy(): void {
