@@ -8,30 +8,20 @@ import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap
   styleUrls: ['./associated-diseases.component.scss'],
 })
 export class AssociatedDiseasesComponent extends WrapIntoAccordion implements OnInit {
-  @Input() geneDiseases: AssociatedDiseases;
-  @Input() activeListItem: string[];
-  @Output() clickEvent: EventEmitter<string> = new EventEmitter();
-
-  public mappedDiseases: Map<number, any> = new Map();
+  @Input() geneDiseases: AssociatedDiseases[];
+  @Input() activeListItem: number[];
+  @Output() clickEvent: EventEmitter<number> = new EventEmitter();
 
   constructor() {
     super();
   }
 
   ngOnInit(): void {
-    this.mapDiseases();
     this.setListLength(this.geneDiseases);
     this.putItemsIntoAccordion(this.geneDiseases);
   }
 
-  // TODO: OG-661. Это поменяется при переходе на новую версию api/gene/search (будет массивом объектов)
-  private mapDiseases(): void {
-    for (const [key, value] of Object.entries(this.geneDiseases)) {
-      this.mappedDiseases.set(+key, value);
-    }
-  }
-
-  public emitOnClick(diseaseKey: any): void {
-    this.clickEvent.emit(diseaseKey);
+  public emitOnClick(diseaseId: number): void {
+    this.clickEvent.emit(diseaseId);
   }
 }

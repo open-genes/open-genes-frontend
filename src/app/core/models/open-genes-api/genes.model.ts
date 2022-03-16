@@ -26,8 +26,8 @@ interface GeneralGeneInfo {
   agingMechanisms: AgingMechanisms[];
   aliases: string[];
   commentCause?: SelectionCriteria[];
-  diseaseCategories?: AssociatedDiseaseCategories;
-  diseases?: AssociatedDiseases;
+  diseaseCategories?: AssociatedDiseaseCategories[];
+  diseases?: AssociatedDiseases[];
   expressionChange?: number;
   functionalClusters: AgeRelatedProcesses[];
   proteinClasses: ProteinClasses[];

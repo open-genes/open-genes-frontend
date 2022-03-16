@@ -96,9 +96,12 @@ export class DiagramsComponent implements OnDestroy {
     });
   }
 
-  private filteringByDiseaseCategories(gene: AssociatedDiseaseCategories, res: AssociatedDiseaseCategories): boolean {
-    return Object.keys(gene).some((key) => {
-      return Object.prototype.hasOwnProperty.call(res, key);
+  private filteringByDiseaseCategories(
+    gene: AssociatedDiseaseCategories[],
+    res: AssociatedDiseaseCategories[]
+  ): boolean {
+    return gene.some((disease) => {
+      return res.some((res) => res.id === disease.id);
     });
   }
 
@@ -124,7 +127,7 @@ export class DiagramsComponent implements OnDestroy {
             source: gene.name,
             target: res.name,
             group: 0,
-            data: gene.diseaseCategories
+            data: gene.diseaseCategories,
           } as Link;
         });
 
@@ -143,7 +146,7 @@ export class DiagramsComponent implements OnDestroy {
             source: gene.name,
             target: res.name,
             group: 1,
-            data: gene.functionalClusters
+            data: gene.functionalClusters,
           } as Link;
         });
 
@@ -214,11 +217,15 @@ export class DiagramsComponent implements OnDestroy {
     this.nLinks = groupedFamOriginLinks.concat(groupedFuncClustLinks);
   }
 
-  private groupByDiseaseCategories(category: AssociatedDiseaseCategories, res: AssociatedDiseaseCategories): boolean {
-    const geneKeys = Object.keys(category);
-    const resKeys = Object.keys(res);
-
-    return geneKeys.length && geneKeys.length === resKeys.length && geneKeys.every((key) => resKeys.includes(key));
+  private groupByDiseaseCategories(
+    diseases: AssociatedDiseaseCategories[],
+    res: AssociatedDiseaseCategories[]
+  ): boolean {
+    return (
+      diseases.length &&
+      diseases.length === res.length &&
+      diseases.every((disease) => res.some((res) => res.id === disease.id))
+    );
   }
 
   private groupByFunctionalClusters(clusters: AgeRelatedProcesses[], res: AgeRelatedProcesses[]): boolean {

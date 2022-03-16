@@ -24,5 +24,5 @@ export interface DiagramGenes {
   familyOrigin: Origin;
   originId: number;
   functionalClusters: AgeRelatedProcesses[];
-  diseaseCategories: AssociatedDiseaseCategories;
+  diseaseCategories: AssociatedDiseaseCategories[];
 }
