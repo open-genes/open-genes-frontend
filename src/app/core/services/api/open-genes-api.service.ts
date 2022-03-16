@@ -49,7 +49,7 @@ export class ApiService {
   getGenesMatchByString(request: string, param: string = 'input'): Observable<SearchModel> {
     const params = new HttpParams().set(`${param}`, `${request}`);
 
-    return this.http.get<SearchModel>(`https://test.open-genes.com/api/gene/suggestions`, { params });
+    return this.http.get<SearchModel>(`/api/gene/suggestions`, { params });
   }
 
   getGoTermMatchByString(request: string): Observable<Genes[]> {

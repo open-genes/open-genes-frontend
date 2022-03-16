@@ -1,11 +1,11 @@
-<ng-container *ngIf="mappedDiseases && listLength !== 0; else noDisease">
+<ng-container *ngIf="geneDiseases && listLength !== 0; else noDisease">
 
   <ng-container *ngIf="!isAccordion; else accordion">
     <ul class="list list--bulletted">
-      <li *ngFor="let disease of mappedDiseases | keyvalue"
-          [class.__active]="activeListItem.includes(disease.key)"
-          (click)="emitOnClick(disease.key)">
-        {{ disease.value['name'] }}
+      <li *ngFor="let disease of geneDiseases"
+          [class.__active]="activeListItem.includes(disease.id)"
+          (click)="emitOnClick(disease.id)">
+        {{ disease?.name}}
       </li>
     </ul>
   </ng-container>
@@ -19,10 +19,10 @@
 
       <div class="diseases-accordion__header" accordion-header>
         <ul class="list list--bulletted">
-          <li *ngFor="let disease of mappedDiseases | keyvalue | slice: 0:maxItemsToShow"
-              [class.__active]="activeListItem.includes(disease.key)"
-              (click)="emitOnClick(disease.key)">
-            {{ disease?.value['name'] }}
+          <li *ngFor="let disease of geneDiseases | slice: 0:maxItemsToShow"
+              [class.__active]="activeListItem.includes(disease.id)"
+              (click)="emitOnClick(disease.id)">
+            {{ disease?.name}}
           </li>
         </ul>
 
@@ -34,10 +34,10 @@
 
       <div class="diseases-accordion__body" accordion-body>
         <ul class="list list--bulletted">
-          <li *ngFor="let disease of mappedDiseases | keyvalue | slice: maxItemsToShow"
-              [class.__active]="activeListItem.includes(disease.key)"
-              (click)="emitOnClick(disease.key)">
-            {{ disease.value['name'] }}
+          <li *ngFor="let disease of geneDiseases | slice: maxItemsToShow"
+              [class.__active]="activeListItem.includes(disease.id)"
+              (click)="emitOnClick(disease.id)">
+            {{ disease?.name}}
           </li>
         </ul>
       </div>

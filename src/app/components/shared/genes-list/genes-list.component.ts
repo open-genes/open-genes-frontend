@@ -82,6 +82,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
         this.isGoSearchPerformed = false;
         return;
       }
+      this.arrayOfWords = [];
       this.clearFilters();
     }
 
