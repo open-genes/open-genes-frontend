@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
 import { FilterTypesEnum } from '../../components/shared/genes-list/services/filter-types.enum';
 import { Gene } from '../../core/models';
+import { Filter } from '../../core/models/filters/filter.model';
 
 @Component({
   selector: 'app-gene',
@@ -45,6 +46,7 @@ export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDes
   public isUiHintsSettingOn: boolean;
   public isInFavourites: boolean;
   public filterTypes = FilterTypesEnum;
+  public filters: Filter = this.filterService.filters;
   public orthologsMaxItemsToShow = 9;
   public orthologsMaxItems: number = this.orthologsMaxItemsToShow;
 
@@ -213,7 +215,7 @@ export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDes
     this.bottomSheet.dismiss();
   }
 
-  public applyFilter(filterType: string, id: number): void {
+  public applyFilter(filterType: string, id: number | string): void {
     const queryParams = {};
     queryParams[filterType] = id;
 

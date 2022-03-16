@@ -23,6 +23,8 @@ import { NoContentModule } from '../../components/shared/no-content/no-content.m
 import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
 import { GeneReferenceModule } from '../../components/shared/gene-reference/gene-reference.module';
 import { PublicationInfoModule } from '../../components/shared/publication-info/publication-info.module';
+import { AssociatedDiseasesModule } from '../../components/shared/associated-diseases/associated-diseases.module';
+import { AssociatedDiseaseCategoriesModule } from '../../components/shared/associated-disease-categories/associated-disease-categories.module';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { PublicationInfoModule } from '../../components/shared/publication-info/
     IconModule,
     GeneReferenceModule,
     PublicationInfoModule,
+    AssociatedDiseasesModule,
+    AssociatedDiseaseCategoriesModule,
   ],
 })
 export class GeneModule {}

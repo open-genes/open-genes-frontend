@@ -46,8 +46,10 @@ export class ApiService {
     return this.http.get<Gene>(`/api/gene/${symbol}?lang=${this.currentLang}`);
   }
 
-  getGenesMatchByString(request: string): Observable<SearchModel> {
-    return this.http.get<SearchModel>(`https://test.open-genes.com/api/gene/suggestions?input=${request}`);
+  getGenesMatchByString(request: string, param: string = 'input'): Observable<SearchModel> {
+    const params = new HttpParams().set(`${param}`, `${request}`);
+
+    return this.http.get<SearchModel>(`https://test.open-genes.com/api/gene/suggestions`, { params });
   }
 
   getGoTermMatchByString(request: string): Observable<Genes[]> {
@@ -82,9 +84,7 @@ export class ApiService {
   // New API
   getGenesV2(): Observable<ApiResponse<Genes>> {
     if (this.genes$) {
-      this.genes$ = this.http
-        .get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`)
-        .pipe(shareReplay(1));
+      this.genes$ = this.http.get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`).pipe(shareReplay(1));
       return this.genes$;
     }
 

@@ -2,7 +2,8 @@
  * Model describing a common filters set for genes list
  */
 export interface Filter {
-  byGeneId?: number[];
+  bySuggestions?: string;
+  byGeneSymbol?: string[];
   byDiseases: number[]; // by the name of the associated disease
   byDiseaseCategories: number[]; // by the name of the associated disease category
   byAgeRelatedProcess: number[]; // by functional classes
