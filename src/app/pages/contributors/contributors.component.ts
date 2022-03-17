@@ -33,5 +33,7 @@ export class ContributorsComponent {
     'Anna Kalinina',
     'Olga Brovkina',
     'Anastasiya Poznyak',
+    'Julia Belova',
+    'Sergey Zheldokas',
   ];
 }
