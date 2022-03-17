@@ -26,7 +26,7 @@ export class DietTableComponent {
   public genesList: Diet[];
   public pageSizeOptions: number[] = [5, 10, 20];
   public displayedColumns: string[] = [
-    'name',
+    'main_page_table_name',
     'expression_change_log_fc',
     'p_value',
     'cr_result',

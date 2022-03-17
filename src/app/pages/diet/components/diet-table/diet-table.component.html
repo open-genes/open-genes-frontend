@@ -1,10 +1,11 @@
-<div class="main-container mat-elevation-z8">
+<div class="main-container">
   <div class="loading-shade" *ngIf="isLoading">
     <mat-spinner [diameter]="30"></mat-spinner>
   </div>
 
   <div class="table-container __w-content-fluid">
-    <table class="table table--zebra " matSort (matSortChange)="sortData($event)">
+    <table class="table table--zebra"
+           matSort (matSortChange)="sortData($event)">
       <thead>
       <tr>
         <th class="__cell-width-small" *ngFor="let head of displayedColumns"
@@ -13,46 +14,58 @@
       </thead>
 
       <tbody *ngFor="let gene of genesList">
-
       <tr *ngFor="let data of gene.calorieRestrictionExperiments; let first=first">
         <td *ngIf="first" class="gene-name" [attr.rowspan]="gene.calorieRestrictionExperiments.length + 1">
-          <ng-container *ngIf="gene.isHidden">
-            <a [routerLink]="['/gene', gene.symbol]">{{gene.name}}</a>
-          </ng-container>
-          <ng-container *ngIf="!gene.isHidden">
-            <span>{{gene.name}}</span>
+          <div class="title">
+            <a *ngIf="!gene.isHidden"
+               [routerLink]="['/gene', gene.symbol]" class="link link--gray"
+            ><b>{{ gene.symbol }}</b> {{ gene.name }}</a>
+            <ng-container *ngIf="gene.isHidden">
+              <b>{{ gene.symbol }}</b> {{ gene.name }}
+            </ng-container>
+          </div>
+        </td>
+        <td>{{ data.lexpressionChangeLogFc }}</td>
+        <td>{{ data.pValue }}</td>
+        <td>{{ data.crResult }}</td>
+        <td>{{ data.measurementMethod }}</td>
+        <td>{{ data.measurementType }}</td>
+        <td>{{ data.restrictionPercent }}</td>
+        <td>{{ data.duration }} ({{ data.durationUnit }})</td>
+        <td>{{ data.age }} ({{ data.ageUnit }})</td>
+        <td>{{ data.organism }}</td>
+        <td>{{ data.line }}</td>
+        <td>{{ data.sex }}</td>
+        <td>{{ data.tissue }}</td>
+        <td>
+          <ng-container *ngIf="data?.experimentGroupsQuantity; else dash">
+            {{ data?.experimentGroupsQuantity }}
           </ng-container>
         </td>
-        <td>{{data.lexpressionChangeLogFc}}</td>
-        <td>{{data.pValue}}</td>
-        <td>{{data.crResult}}</td>
-        <td>{{data.measurementMethod}}</td>
-        <td>{{data.measurementType}}</td>
-        <td>{{data.restrictionPercent}}</td>
-        <td>{{data.duration}} <span> ({{data.durationUnit}})</span></td>
-        <td>{{data.age}} <span> ({{data.ageUnit}})</span></td>
-        <td>{{data.organism}}</td>
-        <td>{{data.line}}</td>
-        <td>{{data.sex}}</td>
-        <td>{{data.tissue}}</td>
-        <td>{{data.experimentNumber}}</td>
-        <td>{{data.doi}}</td>
-        <td>{{data.expressionChangePercent}}</td>
-        <td>{{data.isoform}}</td>
+        <td>{{ data.doi }}</td>
+        <td>{{ data.expressionChangePercent }}</td>
+        <td>
+          <ng-container *ngIf="data.isoform; else dash">
+            {{ data.isoform }}
+          </ng-container>
+        </td>
       </tr>
-
       </tbody>
     </table>
   </div>
 
   <div class="paginator">
-    <mat-paginator [length]="totalGenesLength"
-                   [pageIndex]="pagination.page - 1"
-                   [pageSize]="pagination.pageSize"
-                   [pageSizeOptions]="pageSizeOptions"
-                   (page)="pageEventHandler($event)"
-                   aria-label="Select page">
+    <mat-paginator
+      [length]="totalGenesLength"
+      [pageIndex]="pagination.page - 1"
+      [pageSize]="pagination.pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="pageEventHandler($event)"
+      aria-label="Select page">
     </mat-paginator>
   </div>
-
 </div>
+
+<ng-template #dash>
+  <span class="table__dash"></span>
+</ng-template>

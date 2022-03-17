@@ -2,6 +2,7 @@
 
 .main-container {
   position: relative;
+  box-shadow: 0 0 2px .5px $color-borders;
 
   .loading-shade {
     position: absolute;
@@ -58,6 +59,39 @@
         }
       }
     }
+  }
+}
+
+// TODO: DRY
+.title {
+  font-size: $font-size-bigger;
+  font-weight: $font-weight-medium;
+  color: $color-gray;
+  min-width: 200px;
+  padding: 15px 0 5px 0;
+  line-height: 1;
+
+  .link {
+    vertical-align: middle;
+    margin-right: 5px;
+    text-decoration: underline;
+  }
+
+  b {
+    color: $color-black;
+    font-weight: bold;
+  }
+}
+
+.table__dash {
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+  text-align: center;
+  color: $color-gray;
+
+  &::before {
+    content: '—';
   }
 }
 
