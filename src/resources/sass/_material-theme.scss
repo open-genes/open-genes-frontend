@@ -103,3 +103,9 @@ mat-step-header.mat-step-header {
   padding-bottom: $ui-base-height / 2;
 }
 
+// - Button
+// mat-flat-button directive when it's on <a> element
+a.mat-flat-button {
+  line-height: 40px;
+}
+
