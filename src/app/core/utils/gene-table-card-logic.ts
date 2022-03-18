@@ -25,8 +25,7 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
     protected favouritesService: FavouritesService,
     protected snackBar: MatSnackBar,
     protected cdRef: ChangeDetectorRef
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.updateCurrentFields();
@@ -41,20 +40,16 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
    * Update list view on card or table
    */
   protected updateCurrentFields() {
-    this.filterService.currentFields
-      .pipe(
-        takeUntil(this.subscription$)
-      )
-      .subscribe(
+    this.filterService.currentFields.pipe(takeUntil(this.subscription$)).subscribe(
       (fields) => {
-          this.listSettings = fields;
-          this.cdRef.markForCheck();
-        },
-        (error) => {
-          console.log(error);
-          this.cdRef.markForCheck();
-        },
-      );
+        this.listSettings = fields;
+        this.cdRef.markForCheck();
+      },
+      (error) => {
+        console.warn(error);
+        this.cdRef.markForCheck();
+      }
+    );
   }
 
   /**

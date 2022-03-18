@@ -20,7 +20,6 @@ export class ArticleModalComponent {
     Object.values(data?.modalData?.description).forEach((item: any) => {
       this.article.push(item.content);
     });
-    console.log(this.article);
   }
 
   public closeArticleModal(): void {

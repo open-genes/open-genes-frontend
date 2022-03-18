@@ -55,7 +55,7 @@ export class PublicationInfoComponent implements OnInit, OnDestroy {
           this.isDataLoaded = true;
         },
         (error) => {
-          console.log(error);
+          console.warn(error);
           this.isLoading = false;
           this.isDataLoaded = false;
         }
