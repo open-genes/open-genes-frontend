@@ -1,6 +1,7 @@
 @import "../../../styles";
 
 $skeleton-line-height: ($ui-base-height / 2);
+$skeleton-field-height: 40px;
 
 @mixin skeleton-animation {
   content: ' ';
@@ -102,6 +103,39 @@ $skeleton-line-height: ($ui-base-height / 2);
         flex-wrap: wrap;
         flex: 0 0 100%;
       }
+    }
+  }
+
+  &__fields-row {
+    width: 100%;
+    display: inline-block;
+
+    .skeleton__field {
+      position: relative;
+      background-color: $color-gray-soft;
+      height: $skeleton-field-height;
+      border-radius: $border-radius-regular;
+      overflow: hidden;
+
+      &::after {
+        @include skeleton-animation;
+      }
+
+      &--1 {
+        width: 100%
+      }
+
+      &--2 {
+        width: 80%;
+      }
+
+      &:not(:last-of-type) {
+        margin-bottom: 10px;
+      }
+    }
+
+    & + & {
+      margin-top: 10px;
     }
   }
 }

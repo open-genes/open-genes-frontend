@@ -42,7 +42,16 @@
               <ng-container *ngIf="searchMode !== this.searchModeEnum.searchByGoTerms">
                 <app-sidebar-item *ngIf="!isMobile && !genesListIsLoading">
                   <div content class="filters-wrapper">
-                    <app-gene-fields-modal></app-gene-fields-modal>
+                    <app-gene-fields-modal
+                      (showSkeletonChange)="updateViewOnSkeletonChange($event, 'filters')"
+                    ></app-gene-fields-modal>
+                    <app-skeleton
+                      *ngIf="showFiltersSkeleton"
+                      class="skeleton"
+                      [view]="'field'"
+                      [itemsInRow]="1"
+                      [groups]="8"
+                    ></app-skeleton>
                   </div>
                 </app-sidebar-item>
               </ng-container>
@@ -61,7 +70,7 @@
                   <app-skeleton
                     *ngIf="showLatestGenesSkeleton"
                     [view]="'card'"
-                    [cardsInARow]="2"
+                    [itemsInRow]="2"
                     [groups]="1"
                   ></app-skeleton>
                 </ng-container>
@@ -85,7 +94,7 @@
                   <app-skeleton
                     *ngIf="showArticlesSkeleton"
                     [view]="'card'"
-                    [cardsInARow]="isTablet ? 2 : 1"
+                    [itemsInRow]="isTablet ? 2 : 1"
                     [groups]="1"
                   ></app-skeleton>
                 </ng-container>
@@ -102,9 +111,9 @@
                   <app-news-list
                     class="__pl-5 __pr-5"
                     [isMiniMode]="true"
-                    [loadTotal]="2"
+                    [loadTotal]="1"
                     [showSkeleton]="showPubmedFeedSkeleton"
-                    (showSkeletonChange)="updateViewOnSkeletonChange($event, 'news')"
+                    (showSkeletonChange)="updateViewOnSkeletonChange($event, 'pubmed')"
                   ></app-news-list>
 
                   <app-skeleton

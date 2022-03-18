@@ -1,21 +1,28 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import { GenesListSettings } from '../genes-list/genes-list-settings.model';
 import { FilterService } from '../genes-list/services/filter.service';
 import { takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { SettingsService } from '../../../core/services/settings.service';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { FilterTypes } from '../../../core/models/filters/filter-types.model';
 import { MatSelectChange } from '@angular/material/select';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-gene-fields-modal',
   templateUrl: './gene-fields-modal.component.html',
   styleUrls: ['./gene-fields-modal.component.scss'],
 })
-export class GeneFieldsModalComponent implements OnInit, OnDestroy {
+export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestroy {
   // FIELDS VISIBILITY
   public listSettings: GenesListSettings;
   // FILTERS
@@ -44,19 +51,23 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
   public agingMechanisms: any[] = [];
   public predefinedAgingMechanisms: any[] = [];
   private agingMechanismsModel: Observable<any[]>;
-  // Aging mechanisms
+  // Protein classes
+  private proteinClassesModel: Observable<any[]>;
   public proteinClasses: any[] = [];
   public predefinedProteinClasses: any[] = [];
-  private proteinClassesModel: Observable<any[]>;
 
   public filtersForm: FormGroup;
+  public isViewCheked = false;
+
   private subscription$ = new Subject();
+
+  @Output() showSkeletonChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private apiService: ApiService,
     private filterService: FilterService,
     private settingsService: SettingsService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
   ) {
     this.filtersForm = new FormGroup({
       ageRelatedProcessesSearchInput: new FormControl([[], null]),
@@ -124,6 +135,11 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     this.predefinedProteinClasses = this.filterService.filters.byProteinClass;
   }
 
+  ngAfterViewInit() {
+    this.isViewCheked = true;
+    this.showSkeletonChange.emit(false);
+  }
+
   ngOnDestroy(): void {
     this.subscription$.complete();
   }
@@ -163,10 +179,6 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  public setInitialValues() {
-    this.cdRef.markForCheck();
-  }
-
   public apply(filterType: FilterTypes, $event: MatSelectChange): void {
     // Check if event is emitted on select change
     if (Array.isArray($event.value) && $event.value.length === 0) {
@@ -180,10 +192,8 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     }
 
     this.filterService.applyFilter(filterType, $event.value);
-    this.cdRef.markForCheck();
   }
 
-  // TODO
   public resetForm(formControlName: string = null): void {
     if (formControlName) {
       this.filtersForm.reset(formControlName);
