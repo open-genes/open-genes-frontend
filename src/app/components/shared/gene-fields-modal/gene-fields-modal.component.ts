@@ -203,7 +203,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
         this.listSettings = fields;
       },
       (error) => {
-        console.log(error);
+        console.warn(error);
       }
     );
   }

@@ -79,7 +79,6 @@ export class TermInfoDirective implements AfterViewInit, OnDestroy {
       // eslint-disable-next-line no-prototype-builtins
       if (this.terms[term].hasOwnProperty('alias')) {
         description = Object.keys(this.terms).filter((item: any) => {
-          console.log(item.title === this.terms.alias);
           return item.title === this.terms.alias;
         });
       } else {

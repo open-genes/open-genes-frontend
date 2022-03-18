@@ -98,8 +98,8 @@ export class TimelinePageComponent implements OnInit, OnDestroy {
             }
           });
         },
-        (err) => {
-          console.log(err);
+        (error) => {
+          console.warn(error);
         }
       );
   }

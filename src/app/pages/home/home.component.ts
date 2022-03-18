@@ -146,7 +146,7 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewCheck
             this.cdRef.markForCheck();
           },
           (error) => {
-            console.log(error);
+            console.warn(error);
             this.showProgressBar = false;
             this.cdRef.markForCheck();
           }
@@ -174,7 +174,7 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewCheck
             this.cdRef.markForCheck();
           },
           (error) => {
-            console.log(error);
+            console.warn(error);
             this.showProgressBar = false;
             this.cdRef.markForCheck();
           }
@@ -203,7 +203,6 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewCheck
   ngAfterViewChecked(): void {
     if (this.filterPanel) {
       this.filterPanel.setInitialValues();
-      console.log('setInitialValues');
     }
   }
 
