@@ -69,6 +69,15 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewInit,
     } else {
       this.queryLength = query.split(',').length;
       this.searchedQuery = query;
+
+      if (this.queryLength > 1) {
+        query = query
+          .split(',')
+          .filter((q) => q)
+          .map((q) => q.trim())
+          .toString();
+      }
+
       this.searchGenes(query);
     }
   }
