@@ -7,8 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class SkeletonLoaderComponent {
   @Input() groups: number;
-  @Input() view?: 'line' | 'card' = 'line';
-  @Input() cardsInARow?: number = 3;
+  @Input() view?: 'line' | 'card' | 'field' = 'line';
+  @Input() itemsInRow?: number = 3;
 
   public row(n: number): Array<number> {
     return Array(n);

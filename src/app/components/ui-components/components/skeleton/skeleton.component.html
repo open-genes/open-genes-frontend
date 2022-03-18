@@ -8,8 +8,16 @@
 
   <ng-container *ngIf="view === 'card'">
     <div class="skeleton__cards-row" *ngFor="let r of row(groups)">
-      <div class="skeleton__card" *ngFor="let r of row(cardsInARow)">
+      <div class="skeleton__card" *ngFor="let r of row(itemsInRow)">
         <div class="card__inner"></div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="view === 'field'">
+    <div class="skeleton__fields-row" *ngFor="let r of row(groups)">
+      <div class="skeleton__field" *ngFor="let r of row(itemsInRow)">
+        <div class="field__inner"></div>
       </div>
     </div>
   </ng-container>

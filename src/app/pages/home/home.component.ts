@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   OnDestroy,
-  AfterViewChecked,
+  AfterViewInit,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -23,7 +23,7 @@ import { GeneFieldsModalComponent } from '../../components/shared/gene-fields-mo
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent extends WindowWidth implements OnInit, AfterViewChecked, OnDestroy {
+export class HomeComponent extends WindowWidth implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(GeneFieldsModalComponent) filterPanel!: GeneFieldsModalComponent;
 
   public searchedGenes: Pick<Genes, 'id' | 'name' | 'symbol' | 'aliases' | 'ensembl'>[] | Genes[] = [];
@@ -39,6 +39,7 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewCheck
   public showLatestGenesSkeleton = true;
   public showArticlesSkeleton = true;
   public showPubmedFeedSkeleton = true;
+  public showFiltersSkeleton = true;
   public showProgressBar = false;
   public queryLength: number;
 
@@ -92,17 +93,21 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewCheck
     this.confirmedGenesList = null;
   }
 
-  public updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'news' | 'latest'): void {
+  public updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'pubmed' | 'latest' | 'filters'): void {
     if (name === 'articles') {
       this.showArticlesSkeleton = event;
     }
 
-    if (name === 'news') {
+    if (name === 'pubmed') {
       this.showPubmedFeedSkeleton = event;
     }
 
     if (name === 'latest') {
       this.showLatestGenesSkeleton = event;
+    }
+
+    if (name === 'filters') {
+      this.showFiltersSkeleton = event;
     }
 
     this.cdRef.detectChanges();
@@ -130,9 +135,6 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewCheck
           (searchData) => {
             this.searchedGenes = searchData.items; // If nothing found, will return empty array
             this.showProgressBar = false;
-            if (this.filterPanel) {
-              this.filterPanel.setInitialValues();
-            }
             this.cdRef.markForCheck();
           },
           (error) => {
@@ -186,9 +188,9 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewCheck
     this.wizardService.openOnce();
   }
 
-  ngAfterViewChecked(): void {
+  ngAfterViewInit(): void {
     if (this.filterPanel) {
-      this.filterPanel.setInitialValues();
+      this.cdRef.detectChanges();
     }
   }
 
