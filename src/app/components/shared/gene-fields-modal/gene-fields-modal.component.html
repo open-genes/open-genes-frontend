@@ -12,7 +12,6 @@
                   [(ngModel)]="predefinedProcesses"
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('byAgeRelatedProcess', $event)">
-        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
         <mat-option *ngFor="let i of processes | searchFilter : searchText" [value]="i.id">{{ i.name }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -50,7 +49,6 @@
                   [(ngModel)]="predefinedDiseases"
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('byDiseases', $event)">
-        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
         <mat-option *ngFor="let i of diseases | keyvalue" [value]="i.key">{{ i?.value['name'] }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -69,7 +67,6 @@
                   [(ngModel)]="predefinedDiseaseCategories"
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('byDiseaseCategories', $event)">
-        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
         <mat-option *ngFor="let i of diseaseCategories | keyvalue"
                     [value]="i.key">{{ i.value['icdCategoryName'] }}</mat-option>
       </mat-select>
@@ -89,7 +86,6 @@
                   [(ngModel)]="predefinedSelectionCriteria"
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('bySelectionCriteria', $event)">
-        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
         <mat-option *ngFor="let i of selectionCriteria" [value]="i.id">{{ i.name }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -109,9 +105,6 @@
                   [(ngModel)]="predefinedAgingMechanisms"
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('byAgingMechanism', $event)">
-        <mat-option>
-          {{ 'nothing_selected' | translate }}
-        </mat-option>
         <mat-option *ngFor="let i of agingMechanisms" [value]="i.id">{{ i.name }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -133,9 +126,6 @@
                   [(ngModel)]="predefinedProteinClasses"
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('byProteinClass', $event)">
-        <mat-option (click)="resetForm('proteinClassesSelect')">
-          {{ 'nothing_selected' | translate }}
-        </mat-option>
         <mat-option *ngFor="let i of proteinClasses" [value]="i.id">{{ i.name }}</mat-option>
       </mat-select>
     </mat-form-field>
