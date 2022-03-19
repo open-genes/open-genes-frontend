@@ -4,10 +4,6 @@
   width: 100%;
 }
 
-mat-card {
-  color: $color-white;
-}
-
 .view-latest {
   width: 100%;
 
@@ -26,6 +22,7 @@ mat-card {
   &__card {
     color: $color-white;
     padding: 5px;
+    min-height: 75px;
     align-self: stretch;
 
     .card__inner {
@@ -55,7 +52,7 @@ mat-card {
     @include resolution_widescreen {
       flex: 0 0 50%;
       font-size: 16px;
-      min-height: 60px;
+      min-height: 70px;
 
       .card__mya {
         display: none;

@@ -7,13 +7,6 @@
     >
       <div class="card__inner">
         <div class="card__title">{{ item.symbol }}</div>
-        <ng-container *ngIf="item?.familyOrigin">
-          <div class="card__phylo">{{ item?.familyOrigin.phylum || 'gene_page_no_data' | translate }}</div>
-          <div *ngIf="item.familyOrigin?.age"
-               class="card__mya">
-            {{ item?.familyOrigin.age }} {{ "million_years" | translate }}
-          </div>
-        </ng-container>
       </div>
     </a>
   </div>

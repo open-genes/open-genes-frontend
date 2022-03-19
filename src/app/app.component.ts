@@ -1,19 +1,27 @@
-import { Component, AfterViewChecked, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
 import { DOCUMENT } from '@angular/common';
+import { NavigationEnd, RouteConfigLoadEnd, Router, RouterEvent } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
-export class AppComponent implements OnInit, AfterViewChecked {
+export class AppComponent implements OnInit {
+  public isFooterVisible = true;
+  private subscription$ = new Subject();
+  private currentRoute = '';
   private readonly lang: string;
 
   constructor(
+    @Inject(DOCUMENT) public document: Document,
     private translate: TranslateService,
-    @Inject(DOCUMENT) public document: Document
+    private router: Router
   ) {
+    // Set app language
     this.translate.addLangs(environment.languages);
     if (localStorage.getItem('lang')) {
       this.lang = localStorage.getItem('lang');
@@ -30,13 +38,25 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     console.log(`version: ${environment.version} \nbuild: ${environment.build}`);
+
+    // Handle router state
+    this.router.events
+      .pipe(takeUntil(this.subscription$))
+      .subscribe((event: RouterEvent) => {
+      if (event instanceof NavigationEnd || event instanceof RouteConfigLoadEnd) {
+        // Hide progress spinner or progress bar
+        this.currentRoute = event.url;
+        if (this.currentRoute === '/404') {
+          this.isFooterVisible = false;
+        }
+        setTimeout(() => {
+          this.document.body.classList.remove('body--loading');
+        }, 2000);
+      }
+    });
   }
 
-  ngAfterViewChecked(): void {
-
-    setTimeout(() => {
-      // TODO: find a proper way to wait for the full DOM loading considering all modules
-      this.document.body.classList.remove('body--loading');
-    }, 500);
+  ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
   }
 }
