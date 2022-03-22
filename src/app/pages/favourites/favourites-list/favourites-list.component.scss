@@ -42,3 +42,23 @@
 }
 
 @include simple-gene-list-item(faved-gene);
+
+.popover__header {
+  &.items {
+    display: flex;
+    width: 100%;
+    align-items: center;
+
+    input {
+      width: inherit;
+      cursor:inherit;
+    }
+
+    span {
+      font-size: 22px;
+      margin-left: 5px;
+      color: $color-purple;
+      cursor: pointer;
+    }
+  }
+}
