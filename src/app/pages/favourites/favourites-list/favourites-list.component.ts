@@ -21,6 +21,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class FavouritesListComponent {
   public favourites: Genes[] = [];
   public downloadLink: string | SafeResourceUrl = '#';
+  public link: string;
+  public isPopoverOpen = false;
 
   @Input() set favouriteGenes(_genes: Genes[]) {
     this.favourites = _genes;
@@ -52,14 +54,19 @@ export class FavouritesListComponent {
     this.cdRef.markForCheck();
   }
 
-  shareGene() {
+  shareGene(): void {
+    this.isPopoverOpen = !this.isPopoverOpen;
     const localStorageFavorites = localStorage.getItem('favourites').slice(1, -1);
     const textSplit = localStorageFavorites.split(',');
-    const link = location.href + '?selected=' + textSplit.join();
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    navigator.clipboard.writeText(link);
-    this._snackBar.open(this.linkCopied.nativeElement.textContent, '', {
-      duration: 600,
+    this.link = location.href + '?selected=' + textSplit.join();
+  }
+
+  copyLink(): void {
+    void navigator.clipboard.writeText(this.link).then(() => {
+      this._snackBar.open(this.linkCopied.nativeElement.textContent, '', {
+        duration: 600,
+      });
     });
+    this.isPopoverOpen = false;
   }
 }
