@@ -1,7 +1,6 @@
 <form class="filters-modal__body" [formGroup]="filtersForm">
-  <ng-container *ngIf="isViewCheked">
-    <div *ngIf="processes?.length !== 0"
-         class="body__row">
+  <ng-container *ngIf="isViewReady">
+    <div class="body__row">
       <mat-form-field appearance="fill" color="primary">
         <app-eye-checkbox
           matPrefix
@@ -10,10 +9,13 @@
         <mat-label>{{ "functional_classes" | translate }}</mat-label>
         <mat-select formControlName="ageRelatedProcessesSelect"
                     multiple="true"
+                    [disabled]="processes?.length === 0"
                     [(ngModel)]="predefinedProcesses"
                     [compareWith]="compareSelectValues"
                     (selectionChange)="apply('byAgeRelatedProcess', $event)">
-          <mat-option *ngFor="let i of processes | searchFilter : searchText" [value]="i.id">{{ i.name }}</mat-option>
+          <ng-container *ngIf="processes?.length !== 0">
+            <mat-option *ngFor="let i of processes | searchFilter : searchText" [value]="i.id">{{ i.name }}</mat-option>
+          </ng-container>
         </mat-select>
       </mat-form-field>
     </div>
@@ -37,8 +39,7 @@
       </mat-form-field>
     </div>
 
-    <div *ngIf="diseases"
-         class="body__row">
+    <div class="body__row">
       <mat-form-field appearance="fill">
         <app-eye-checkbox
           matPrefix
@@ -47,16 +48,18 @@
         <mat-label>{{ "gene_list_diseases" | translate }}</mat-label>
         <mat-select formControlName="diseasesSelect"
                     multiple="true"
+                    [disabled]="!diseases"
                     [(ngModel)]="predefinedDiseases"
                     [compareWith]="compareSelectValues"
                     (selectionChange)="apply('byDiseases', $event)">
-          <mat-option *ngFor="let i of diseases | keyvalue" [value]="i.key">{{ i?.value['name'] }}</mat-option>
+          <ng-container *ngIf="diseases">
+            <mat-option *ngFor="let i of diseases | keyvalue" [value]="i.key">{{ i?.value['name'] }}</mat-option>
+          </ng-container>
         </mat-select>
       </mat-form-field>
     </div>
 
-    <div *ngIf="diseaseCategories"
-         class="body__row">
+    <div class="body__row">
       <mat-form-field appearance="fill">
         <app-eye-checkbox
           matPrefix
@@ -65,17 +68,24 @@
         <mat-label>{{ "gene_list_disease_categories" | translate }}</mat-label>
         <mat-select formControlName="diseaseCategoriesSelect"
                     multiple="true"
+                    [disabled]="!diseaseCategories"
                     [(ngModel)]="predefinedDiseaseCategories"
                     [compareWith]="compareSelectValues"
                     (selectionChange)="apply('byDiseaseCategories', $event)">
-          <mat-option *ngFor="let i of diseaseCategories | keyvalue"
-                      [value]="i.key">{{ i.value['icdCategoryName'] }}</mat-option>
+          <ng-container *ngIf="diseaseCategories">
+            <mat-option *ngFor="let i of diseaseCategories | keyvalue"
+                        [value]="i.key">
+              <b>{{ ("icd" | translate) + ' ' + i.value['icdCode'] }}</b>
+              <ng-container *ngIf="i.value['icdCategoryName']?.length !== 0">
+                {{ i.value['icdCategoryName'] }}
+              </ng-container>
+            </mat-option>
+          </ng-container>
         </mat-select>
       </mat-form-field>
     </div>
 
-    <div *ngIf="selectionCriteria?.length !== 0"
-         class="body__row">
+    <div class="body__row">
       <mat-form-field appearance="fill">
         <app-eye-checkbox
           matPrefix
@@ -84,16 +94,18 @@
         <mat-label>{{ "main_page_table_criteria" | translate }}</mat-label>
         <mat-select formControlName="selectionCriteriaSelect"
                     multiple="true"
+                    [disabled]="selectionCriteria?.length === 0"
                     [(ngModel)]="predefinedSelectionCriteria"
                     [compareWith]="compareSelectValues"
                     (selectionChange)="apply('bySelectionCriteria', $event)">
-          <mat-option *ngFor="let i of selectionCriteria" [value]="i.id">{{ i.name }}</mat-option>
+          <ng-container *ngIf="selectionCriteria?.length !== 0">
+            <mat-option *ngFor="let i of selectionCriteria" [value]="i.id">{{ i.name }}</mat-option>
+          </ng-container>
         </mat-select>
       </mat-form-field>
     </div>
 
-    <div *ngIf="agingMechanisms?.length !== 0"
-         class="body__row">
+    <div class="body__row">
       <mat-form-field appearance="fill">
         <app-eye-checkbox
           matPrefix
@@ -103,16 +115,18 @@
         <mat-label>{{ "gene_list_aging_mechanisms" | translate }}</mat-label>
         <mat-select formControlName="agingMechanismsSelect"
                     multiple="true"
+                    [disabled]="agingMechanisms?.length === 0"
                     [(ngModel)]="predefinedAgingMechanisms"
                     [compareWith]="compareSelectValues"
                     (selectionChange)="apply('byAgingMechanism', $event)">
-          <mat-option *ngFor="let i of agingMechanisms" [value]="i.id">{{ i.name }}</mat-option>
+          <ng-container *ngIf="agingMechanisms?.length !== 0">
+            <mat-option *ngFor="let i of agingMechanisms" [value]="i.id">{{ i.name }}</mat-option>
+          </ng-container>
         </mat-select>
       </mat-form-field>
     </div>
 
-    <div *ngIf="proteinClasses?.length !== 0"
-         class="body__row">
+    <div class="body__row">
       <mat-form-field appearance="fill">
         <app-eye-checkbox
           matPrefix
@@ -123,10 +137,13 @@
         <mat-label>{{ "gene_list_protein_classes" | translate }}</mat-label>
         <mat-select formControlName="proteinClassesSelect"
                     multiple="true"
+                    [disabled]="proteinClasses?.length === 0"
                     [(ngModel)]="predefinedProteinClasses"
                     [compareWith]="compareSelectValues"
                     (selectionChange)="apply('byProteinClass', $event)">
-          <mat-option *ngFor="let i of proteinClasses" [value]="i.id">{{ i.name }}</mat-option>
+          <ng-container *ngIf="proteinClasses?.length !== 0">
+            <mat-option *ngFor="let i of proteinClasses" [value]="i.id">{{ i.name }}</mat-option>
+          </ng-container>
         </mat-select>
       </mat-form-field>
     </div>

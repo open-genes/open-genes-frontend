@@ -16,6 +16,7 @@ import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FilterTypes } from '../../../core/models/filters/filter-types.model';
 import { MatSelectChange } from '@angular/material/select';
+import { Filter } from '../../../core/models/filters/filter.model';
 
 @Component({
   selector: 'app-gene-fields-modal',
@@ -57,17 +58,18 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
   public predefinedProteinClasses: any[] = [];
 
   public filtersForm: FormGroup;
-  public isViewCheked = false;
+  public isViewReady = false;
 
   private subscription$ = new Subject();
 
   @Output() showSkeletonChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() filterLoaded: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     private apiService: ApiService,
     private filterService: FilterService,
     private settingsService: SettingsService,
-    private readonly cdRef: ChangeDetectorRef,
+    private readonly cdRef: ChangeDetectorRef
   ) {
     this.filtersForm = new FormGroup({
       ageRelatedProcessesSearchInput: new FormControl([[], null]),
@@ -94,18 +96,24 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
     // Diseases
     this.diseasesModel = this.getEntitiesList('diseases');
     this.diseasesModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
-      // TODO: OG-661. Это поменяется при переходе на новую версию api/gene/search (будет массивом объектов)
+      // TODO: В этом эндпоинте должен отдаваться массив объектов
       for (const [key, value] of Object.entries(data)) {
-        this.diseases.set(+key, value);
+        // TODO: remove this check when backend will be fixed up
+        if (value['name']) {
+          this.diseases.set(+key, value);
+        }
       }
     });
 
     // Disease categories
     this.diseaseCategoriesModel = this.getEntitiesList('disease-categories');
     this.diseaseCategoriesModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
-      // TODO: OG-661. Это поменяется при переходе на новую версию api/gene/search (будет массивом объектов)
+      // TODO: В этом эндпоинте должен отдаваться массив объектов
       for (const [key, value] of Object.entries(data)) {
-        this.diseaseCategories.set(+key, value);
+        // TODO: remove this check when backend will be fixed up
+        if (value['icdCode'].length !== 0) {
+          this.diseaseCategories.set(+key, value);
+        }
       }
     });
 
@@ -127,16 +135,25 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
       this.proteinClasses = data;
     });
 
-    this.predefinedProcesses = this.filterService.filters.byAgeRelatedProcess;
-    this.predefinedDiseases = this.filterService.filters.byDiseases;
-    this.predefinedDiseaseCategories = this.filterService.filters.byDiseaseCategories;
-    this.predefinedSelectionCriteria = this.filterService.filters.bySelectionCriteria;
-    this.predefinedAgingMechanisms = this.filterService.filters.byAgingMechanism;
-    this.predefinedProteinClasses = this.filterService.filters.byProteinClass;
+    // Set the values tha user has already selected in the genes list
+    this.filterService
+      .getFilterState()
+      .pipe(takeUntil(this.subscription$))
+      .subscribe((data: Filter) => {
+        this.predefinedProcesses = data.byAgeRelatedProcess;
+        this.predefinedExpressionChanges = data.byExpressionChange;
+        this.predefinedDiseases = data.byDiseases;
+        this.predefinedDiseaseCategories = data.byDiseaseCategories;
+        this.predefinedSelectionCriteria = data.bySelectionCriteria;
+        this.predefinedAgingMechanisms = data.byAgingMechanism;
+        this.predefinedProteinClasses = data.byProteinClass;
+
+        this.cdRef.detectChanges();
+      });
   }
 
   ngAfterViewInit() {
-    this.isViewCheked = true;
+    this.isViewReady = true;
     this.showSkeletonChange.emit(false);
   }
 
@@ -160,6 +177,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
    */
 
   private getEntitiesList(key): Observable<any[]> {
+    this.filterLoaded.emit(key);
     switch (key) {
       case 'processes':
         return this.apiService.getAgeRelatedProcesses();
@@ -180,26 +198,54 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   public apply(filterType: FilterTypes, $event: MatSelectChange): void {
+    this.filterService.clearFilters(filterType);
+
     // Check if event is emitted on select change
     if (Array.isArray($event.value) && $event.value.length === 0) {
       return;
     }
 
-    // If value is emited when user clicks empty option which is "Not selected"
+    // If value is emitted when user clicks empty option which is "Not selected"
     // There is no id 0, so we don't send this value
     if (Number($event.value) === 0) {
       return;
     }
 
     this.filterService.applyFilter(filterType, $event.value);
+    this.cdRef.detectChanges();
   }
 
   public resetForm(formControlName: string = null): void {
     if (formControlName) {
-      this.filtersForm.reset(formControlName);
+      switch (formControlName) {
+        case 'ageRelatedProcessesSelect':
+          this.filtersForm.reset('age_related_processes');
+          break;
+        case 'expressionChangeSelect':
+          this.filtersForm.reset('expression_change');
+          break;
+        case 'diseasesSelect':
+          this.filtersForm.reset('disease');
+          break;
+        case 'diseaseCategoriesSelect':
+          this.filtersForm.reset('disease_categories');
+          break;
+        case 'selectionCriteriaSelect':
+          this.filtersForm.reset('selection_criteria');
+          break;
+        case 'agingMechanismsSelect':
+          this.filtersForm.reset('aging_mechanism');
+          break;
+        case 'proteinClassesSelect':
+          this.filtersForm.reset('protein_classes');
+          break;
+      }
+      this.filterService.clearFilters();
     } else {
       this.filtersForm.reset();
+      this.filterService.clearFilters();
     }
+    this.cdRef.detectChanges();
   }
 
   /**
@@ -211,6 +257,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
       (fields) => {
         this.settingsService.setFieldsForShow(fields);
         this.listSettings = fields;
+        this.cdRef.detectChanges();
       },
       (error) => {
         console.warn(error);

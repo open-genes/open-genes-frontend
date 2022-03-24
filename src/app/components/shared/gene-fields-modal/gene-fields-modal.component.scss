@@ -80,14 +80,13 @@
   }
 }
 
-.mat-select__search {
-  box-sizing: border-box;
-  position: fixed;
-  z-index: 1;
-  line-height: 35px;
-  background-color: $color-white;
-  padding: 0 15px;
-  border-bottom: 1px solid $color-borders;
+// Multiline select option
+mat-option.mat-option {
+  align-items: flex-start;
+  height: auto;
+  white-space: normal;
+  line-height: normal;
+  padding: 1em;
 }
 
 

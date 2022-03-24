@@ -63,44 +63,9 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewInit,
     this.loadWizard();
   }
 
-  public setSearchQuery(query: string): void {
-    if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
-      this.searchGenesByGoTerm(query);
-    } else {
-      this.queryLength = query.split(',').length;
-      this.searchedQuery = query;
-
-      if (this.queryLength > 1) {
-        query = query
-          .split(',')
-          .filter((q) => q)
-          .map((q) => q.trim())
-          .toString();
-      }
-
-      this.searchGenes(query);
-    }
-  }
-
-  public updateGenesList(query): void {
-    if (query) {
-      if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
-        this.confirmedGenesList = this.searchedGenes as Genes[];
-      } else {
-        this.confirmedQuery = this.searchedQuery;
-      }
-    } else {
-      this.confirmedQuery = null;
-      this.confirmedGenesList = null;
-    }
-    this.cdRef.markForCheck();
-  }
-
-  public setSearchMode(searchMode: SearchMode): void {
-    this.searchMode = searchMode;
-    this.confirmedQuery = null;
-    this.confirmedGenesList = null;
-  }
+  /**
+   * View
+   */
 
   public updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'pubmed' | 'latest' | 'filters'): void {
     if (name === 'articles') {
@@ -127,11 +92,52 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewInit,
     this.cdRef.markForCheck();
   }
 
+  public forceUpdateView() {
+    this.cdRef.markForCheck();
+    this.cdRef.detectChanges();
+  }
+
   /**
-   * Wizard
+   * Search
    */
-  public openWizard() {
-    this.wizardService.open();
+
+  public updateGenesList(query): void {
+    if (query) {
+      if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
+        this.confirmedGenesList = this.searchedGenes as Genes[];
+      } else {
+        this.confirmedQuery = this.searchedQuery;
+      }
+    } else {
+      this.confirmedQuery = null;
+      this.confirmedGenesList = null;
+    }
+    this.cdRef.markForCheck();
+  }
+
+  public setSearchQuery(query: string): void {
+    if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
+      this.searchGenesByGoTerm(query);
+    } else {
+      this.queryLength = query.split(',').length;
+      this.searchedQuery = query;
+
+      if (this.queryLength > 1) {
+        query = query
+          .split(',')
+          .filter((q) => q)
+          .map((q) => q.trim())
+          .toString();
+      }
+
+      this.searchGenes(query);
+    }
+  }
+
+  public setSearchMode(searchMode: SearchMode): void {
+    this.searchMode = searchMode;
+    this.confirmedQuery = null;
+    this.confirmedGenesList = null;
   }
 
   private searchGenes(query: string): void {
@@ -181,6 +187,10 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewInit,
     }
   }
 
+  /**
+   * Map data
+   */
+
   private mapTerms(): void {
     this.searchedGenes.forEach((gene: Genes) => {
       if (gene.terms) {
@@ -191,6 +201,14 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewInit,
         ]);
       }
     });
+  }
+
+  /**
+   * Wizard
+   */
+
+  public openWizard() {
+    this.wizardService.open();
   }
 
   private loadWizard() {

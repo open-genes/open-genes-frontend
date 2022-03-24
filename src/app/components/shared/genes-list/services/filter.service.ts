@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Filter } from '../../../../core/models/filters/filter.model';
 import { FilterTypesEnum } from './filter-types.enum';
 import { GenesListSettings } from '../genes-list-settings.model';
@@ -54,6 +54,11 @@ export class FilterService {
 
   public updateFields(fields): void {
     this.listOfFields$.next(fields);
+  }
+
+  // Get state
+  getFilterState(): Observable<Filter> {
+    return of(this.filters);
   }
 
   // Filter

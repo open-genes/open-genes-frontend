@@ -44,6 +44,7 @@
                   <div content class="filters-wrapper">
                     <app-gene-fields-modal
                       (showSkeletonChange)="updateViewOnSkeletonChange($event, 'filters')"
+                      (filterLoaded)="forceUpdateView()"
                     ></app-gene-fields-modal>
                     <app-skeleton
                       *ngIf="showFiltersSkeleton"

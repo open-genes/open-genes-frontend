@@ -7,7 +7,6 @@ import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/op
 import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with-increase-lifespan-researches.model';
 import { GenesInHorvathClock } from '../../models/open-genes-api/genes-in-horvath-clock.model';
 import { ApiResponse } from '../../models/api-response.model';
-import { shareReplay } from 'rxjs/operators';
 import { SearchModel } from '../../models/open-genes-api/search.model';
 import { Pagination } from '../../models/settings.model';
 import { Diet } from '../../models/open-genes-api/diet.model';
@@ -83,11 +82,6 @@ export class ApiService {
 
   // New API
   getGenesV2(): Observable<ApiResponse<Genes>> {
-    if (this.genes$) {
-      this.genes$ = this.http.get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`).pipe(shareReplay(1));
-      return this.genes$;
-    }
-
     return this.http.get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`);
   }
 
