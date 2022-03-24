@@ -267,10 +267,13 @@
           <!-- There is only one condition of experiment -->
           <!-- if there is no additional intervention -->
           <ng-container *ngFor="let sample of r.interventions.experiment">
-            <h6>{{ "researches_l_experiment" | translate }}: </h6>
-            <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay }}</p>
-            <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod }}</p>
-            <p>{{ "researches_genotype" | translate }}:  {{ sample.genotype }}</p>
+            <!-- if there is no additional intervention on the other gene -->
+            <ng-container *ngIf="!sample.hasOwnProperty('gene')">
+              <h6>{{ "researches_l_experiment" | translate }}: </h6>
+              <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay }}</p>
+              <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod }}</p>
+              <p>{{ "researches_genotype" | translate }}:  {{ sample.genotype }}</p>
+            </ng-container>
           </ng-container>
         </td>
 
