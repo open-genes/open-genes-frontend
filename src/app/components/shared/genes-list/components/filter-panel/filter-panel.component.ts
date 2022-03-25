@@ -64,6 +64,7 @@ export class FilterPanelComponent implements OnChanges {
       panelClass: 'filters-modal',
       minWidth: '320px',
       maxWidth: '768px',
+      autoFocus: false,
     });
   }
 }

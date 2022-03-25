@@ -6,7 +6,7 @@
           matPrefix
           (changeEvent)="changeGenesListSettings('processes')"
           [switch]="listSettings.ifShowFuncClusters"></app-eye-checkbox>
-        <mat-label>{{ "functional_classes" | translate }}</mat-label>
+        <mat-label>{{ "filters_modal_placeholder_age_related_processes" | translate }}</mat-label>
         <mat-select formControlName="ageRelatedProcessesSelect"
                     multiple="true"
                     [disabled]="processes?.length === 0"
@@ -26,7 +26,7 @@
           matPrefix
           (changeEvent)="changeGenesListSettings('expression')"
           [switch]="listSettings.ifShowExpression"></app-eye-checkbox>
-        <mat-label>{{ "main_page_table_expression" | translate }}</mat-label>
+        <mat-label>{{ "filters_modal_placeholder_expression_change" | translate }}</mat-label>
         <mat-select formControlName="expressionChangeSelect"
                     [(ngModel)]="predefinedExpressionChanges"
                     [compareWith]="compareSelectValues"
@@ -45,7 +45,7 @@
           matPrefix
           (changeEvent)="changeGenesListSettings('diseases')"
           [switch]="listSettings.ifShowDiseases"></app-eye-checkbox>
-        <mat-label>{{ "gene_list_diseases" | translate }}</mat-label>
+        <mat-label>{{ "filters_modal_placeholder_diseases" | translate }}</mat-label>
         <mat-select formControlName="diseasesSelect"
                     multiple="true"
                     [disabled]="!diseases"
@@ -65,7 +65,7 @@
           matPrefix
           (changeEvent)="changeGenesListSettings('disease-categories')"
           [switch]="listSettings.ifShowDiseaseCategories"></app-eye-checkbox>
-        <mat-label>{{ "gene_list_disease_categories" | translate }}</mat-label>
+        <mat-label>{{ "filters_modal_placeholder_disease_categories" | translate }}</mat-label>
         <mat-select formControlName="diseaseCategoriesSelect"
                     multiple="true"
                     [disabled]="!diseaseCategories"
@@ -91,7 +91,7 @@
           matPrefix
           (changeEvent)="changeGenesListSettings('criteria')"
           [switch]="listSettings.ifShowCriteria"></app-eye-checkbox>
-        <mat-label>{{ "main_page_table_criteria" | translate }}</mat-label>
+        <mat-label>{{ "filters_modal_placeholder_criteria" | translate }}</mat-label>
         <mat-select formControlName="selectionCriteriaSelect"
                     multiple="true"
                     [disabled]="selectionCriteria?.length === 0"
@@ -112,7 +112,7 @@
           (changeEvent)="changeGenesListSettings('mechanisms')"
           [switch]="listSettings.ifShowAgingMechanisms"></app-eye-checkbox>
 
-        <mat-label>{{ "gene_list_aging_mechanisms" | translate }}</mat-label>
+        <mat-label>{{ "filters_modal_placeholder_aging_mechanisms" | translate }}</mat-label>
         <mat-select formControlName="agingMechanismsSelect"
                     multiple="true"
                     [disabled]="agingMechanisms?.length === 0"
@@ -134,7 +134,7 @@
           [switch]="listSettings.ifShowProteinClasses">
         </app-eye-checkbox>
 
-        <mat-label>{{ "gene_list_protein_classes" | translate }}</mat-label>
+        <mat-label>{{ "filters_modal_placeholder_protein_classes" | translate }}</mat-label>
         <mat-select formControlName="proteinClassesSelect"
                     multiple="true"
                     [disabled]="proteinClasses?.length === 0"
@@ -148,20 +148,16 @@
       </mat-form-field>
     </div>
 
-    <div class="separator"></div>
-
     <div class="body__row __mb-10">
       <app-eye-checkbox
         (changeEvent)="changeGenesListSettings('gene-age')"
         [switch]="listSettings.ifShowAge">
-        {{ "gene_list_evolutionary_age" | translate }}
+        <span class="inline-button">{{ "gene_list_evolutionary_age" | translate }}</span>
       </app-eye-checkbox>
     </div>
 
     <div class="reset-button-wrapper">
-      <button mat-flat-button
-              color="primary"
-              class="reset-button"
+      <button class="btn btn--fill btn--gray reset-button"
               (click)="resetForm()">
         {{ "filters_reset" | translate }}
       </button>

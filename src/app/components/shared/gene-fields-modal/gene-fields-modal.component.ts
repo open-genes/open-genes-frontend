@@ -219,28 +219,27 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
     if (formControlName) {
       switch (formControlName) {
         case 'ageRelatedProcessesSelect':
-          this.filtersForm.reset('age_related_processes');
+          this.filterService.clearFilters('age_related_processes');
           break;
         case 'expressionChangeSelect':
-          this.filtersForm.reset('expression_change');
+          this.filterService.clearFilters('expression_change');
           break;
         case 'diseasesSelect':
-          this.filtersForm.reset('disease');
+          this.filterService.clearFilters('disease');
           break;
         case 'diseaseCategoriesSelect':
-          this.filtersForm.reset('disease_categories');
+          this.filterService.clearFilters('disease_categories');
           break;
         case 'selectionCriteriaSelect':
-          this.filtersForm.reset('selection_criteria');
+          this.filterService.clearFilters('selection_criteria');
           break;
         case 'agingMechanismsSelect':
-          this.filtersForm.reset('aging_mechanism');
+          this.filterService.clearFilters('aging_mechanism');
           break;
         case 'proteinClassesSelect':
-          this.filtersForm.reset('protein_classes');
+          this.filterService.clearFilters('protein_classes');
           break;
       }
-      this.filterService.clearFilters();
     } else {
       this.filtersForm.reset();
       this.filterService.clearFilters();

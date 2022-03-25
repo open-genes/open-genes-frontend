@@ -9,7 +9,14 @@
   position: relative;
   display: inline-block;
   width: 100%;
-  font-size: 12px; // regulates mat-select size
+  font-size: 11px; // regulates mat-select size
+  margin-bottom: 10px;
+
+  .inline-button {
+    font-size: 1.2em;
+    color: $color-black-light;
+    line-height: 3.2em;
+  }
 
   mat-form-field {
     width: 100%;
@@ -17,8 +24,17 @@
   }
 
   ::ng-deep {
+    app-eye-checkbox {
+      margin-left: -2px;
+    }
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+
     .mat-form-field-prefix {
-      top: -0.5em;
+      top: -0.4em;
+      margin-left: -6px;
     }
 
     .mat-form-field-underline {
@@ -27,7 +43,11 @@
 
     .mat-form-field-flex {
       border-radius: $border-radius-regular;
-      background-color: rgba($color-general, .10);;
+      background-color: rgba($color-general, .10);
+    }
+
+    .mat-select-arrow-wrapper {
+      padding-top: 0.4em;
     }
   }
 }
@@ -48,7 +68,6 @@
   }
 }
 
-
 :host-context(.filters-modal) {
   .filters-modal__body {
     display: grid;
@@ -57,6 +76,10 @@
     justify-items: start;
     grid-gap: 10px;
     justify-content: center;
+
+    .body__row {
+      margin-bottom: 0;
+    }
 
     @include resolution_tablet-and-up {
       grid-template-columns: 1fr 1fr;

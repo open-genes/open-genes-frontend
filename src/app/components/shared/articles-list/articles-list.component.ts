@@ -171,6 +171,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
             panelClass: 'article-modal',
             minWidth: '320px',
             maxWidth: '768px', // TODO: make a global object with modal settings
+            autoFocus: false,
           });
         },
         () => {
@@ -180,6 +181,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
             panelClass: 'article-modal',
             minWidth: '320px',
             maxWidth: '768px',
+            autoFocus: false,
           });
         }
       );
