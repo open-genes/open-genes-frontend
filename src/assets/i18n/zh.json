@@ -204,7 +204,7 @@
   "main_page_table_expression": "年龄相关的表情变化",
   "main_page_table_methylation": "是否与甲基化变化有关",
   "main_page_table_name": "HGNC，基因名称",
-  "main_page_total": "🧬 搜索槽 {{number}} 个精选基因",
+  "main_page_total": "总数: {{number}}",
   "million_years": "m. 年",
   "ncbi_homologs": "保守派",
   "new_feature": "新功能",
