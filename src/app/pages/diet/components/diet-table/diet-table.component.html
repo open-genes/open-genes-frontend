@@ -38,8 +38,8 @@
         <td>{{ data.sex }}</td>
         <td>{{ data.tissue }}</td>
         <td>
-          <ng-container *ngIf="data?.experimentGroupsQuantity; else dash">
-            {{ data?.experimentGroupsQuantity }}
+          <ng-container *ngIf="data?.experimentGroupQuantity; else dash">
+            {{ data?.experimentGroupQuantity }}
           </ng-container>
         </td>
         <td>{{ data.doi }}</td>

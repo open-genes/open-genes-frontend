@@ -26,7 +26,7 @@ export interface Calorie {
   tissue: string;
   experimentNumber: string;
   doi: string;
-  experimentGroupsQuantity: string;
+  experimentGroupQuantity: string;
   expressionChangePercent: number;
   isoform: string;
 }
