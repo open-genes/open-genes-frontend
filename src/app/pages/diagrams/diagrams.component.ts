@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { map, takeUntil } from 'rxjs/operators';
-import { DiagramGenes, Link, Node } from './models/directed-graph';
+import { DiagramGenes, Link, Node } from './models/directed-graph.model';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Subject } from 'rxjs';
 import { AgeRelatedProcesses, Genes } from '../../core/models';
@@ -31,7 +31,7 @@ export class DiagramsComponent implements OnDestroy {
     private apiService: ApiService,
     private readonly cdRef: ChangeDetectorRef,
     private http: HttpClient,
-    private translate: TranslateService,
+    private translate: TranslateService
   ) {
     this.currentLang = this.translate.currentLang;
     this.getAllGenes();
@@ -50,7 +50,7 @@ export class DiagramsComponent implements OnDestroy {
           return filteredGenes.items.map((gene: Genes) => {
             const diagramGenes: DiagramGenes = {
               id: gene.id,
-              name: gene.name,
+              symbol: gene.symbol,
               expressionChange: gene.expressionChange,
               familyOrigin: gene.familyOrigin,
               originId: gene.origin?.id,
@@ -80,7 +80,7 @@ export class DiagramsComponent implements OnDestroy {
   private getNodesAndLinksFromGenes(genes: DiagramGenes[]): void {
     this.nodes = genes.map((gene) => {
       const node: Node = {
-        name: gene.name,
+        symbol: gene.symbol,
       };
       return node;
     });
@@ -98,8 +98,8 @@ export class DiagramsComponent implements OnDestroy {
         )
         .map((res) => {
           return {
-            source: gene.name,
-            target: res.name,
+            source: gene.symbol,
+            target: res.symbol,
           };
         });
       this.links.push(...links);
@@ -134,8 +134,8 @@ export class DiagramsComponent implements OnDestroy {
         .map((res) => {
           return {
             id: res.id,
-            source: gene.name,
-            target: res.name,
+            source: gene.symbol,
+            target: res.symbol,
             group: 0,
             data: gene.diseaseCategories,
           } as Link;
@@ -153,8 +153,8 @@ export class DiagramsComponent implements OnDestroy {
         .map((res) => {
           return {
             id: res.id,
-            source: gene.name,
-            target: res.name,
+            source: gene.symbol,
+            target: res.symbol,
             group: 1,
             data: gene.functionalClusters,
           } as Link;
@@ -171,10 +171,10 @@ export class DiagramsComponent implements OnDestroy {
         .map((res) => {
           return {
             id: res.id,
-            source: gene.name,
-            target: res.name,
+            source: gene.symbol,
+            target: res.symbol,
             group: 2,
-            data: [{ name: gene.familyOrigin?.phylum }],
+            data: [{ symbol: gene.familyOrigin?.phylum }],
           } as Link;
         });
 
@@ -190,7 +190,7 @@ export class DiagramsComponent implements OnDestroy {
       .map((res) => {
         return {
           id: res.id,
-          name: res.name,
+          symbol: res.symbol,
           group: 0,
         };
       });
@@ -201,7 +201,7 @@ export class DiagramsComponent implements OnDestroy {
       .map((res) => {
         return {
           id: res.id,
-          name: res.name,
+          symbol: res.symbol,
           group: 1,
         };
       });
@@ -211,7 +211,7 @@ export class DiagramsComponent implements OnDestroy {
       .map((res) => {
         return {
           id: res.id,
-          name: res.name,
+          symbol: res.symbol,
           group: 2,
         };
       });

@@ -4,7 +4,7 @@ import { Origin } from '../../../core/models/open-genes-api/origin.model';
 
 export interface Node {
   id?: number;
-  name: string;
+  symbol: string;
   group?: number;
 }
 
@@ -18,7 +18,7 @@ export interface Link {
 
 export interface DiagramGenes {
   id: number;
-  name: string;
+  symbol: string;
   expressionChange: number;
   homologueTaxon: string;
   familyOrigin: Origin;

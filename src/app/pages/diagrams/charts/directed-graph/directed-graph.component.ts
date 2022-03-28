@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Link, Node } from '../../models/directed-graph';
+import { Link, Node } from '../../models/directed-graph.model';
 import * as d3 from 'd3';
 
 @Component({
@@ -28,7 +28,7 @@ export class DirectedGraphComponent implements OnChanges {
 
     const simulation = d3
       .forceSimulation(nodes)
-      .force('link', d3.forceLink(links).id((d: any) => d.name))
+      .force('link', d3.forceLink(links).id((d: any) => d.symbol))
       .force('charge', d3.forceManyBody().distanceMax(80))
       .force('center', d3.forceCenter(1000 / 2, 500 / 2));
 
@@ -84,7 +84,7 @@ export class DirectedGraphComponent implements OnChanges {
       })
       .on('click', (d: any) => this.handleClick(d, tooltip));
 
-    node.append('title').text((d: any) => d.name);
+    node.append('title').text((d: any) => d.symbol);
 
     simulation.on('tick', () => {
       link
