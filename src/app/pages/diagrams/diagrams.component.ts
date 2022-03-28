@@ -5,6 +5,9 @@ import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Subject } from 'rxjs';
 import { AgeRelatedProcesses, Genes } from '../../core/models';
 import { AssociatedDiseaseCategories } from '../../core/models/open-genes-api/associated-diseases.model';
+import { ApiResponse } from '../../core/models/api-response.model';
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,9 +24,16 @@ export class DiagramsComponent implements OnDestroy {
   public nNodes: Node[];
   public nLinks: Link[];
 
+  private currentLang: string;
   private unsubscribe$ = new Subject();
 
-  constructor(private apiService: ApiService, private readonly cdRef: ChangeDetectorRef) {
+  constructor(
+    private apiService: ApiService,
+    private readonly cdRef: ChangeDetectorRef,
+    private http: HttpClient,
+    private translate: TranslateService,
+  ) {
+    this.currentLang = this.translate.currentLang;
     this.getAllGenes();
   }
 
@@ -33,8 +43,8 @@ export class DiagramsComponent implements OnDestroy {
   }
 
   private getAllGenes(): void {
-    this.apiService
-      .getGenesV2()
+    this.http
+      .get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}&pageSize=500`)
       .pipe(
         map((filteredGenes) => {
           return filteredGenes.items.map((gene: Genes) => {
