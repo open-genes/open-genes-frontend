@@ -180,7 +180,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.pageOptions = res.options.pagination;
           this.isLoading = false;
           this.loading.emit(false);
-          this.genesLength.emit(res.options.objTotal);
+          this.genesLength.emit(res.options.total);
           this.cdRef.markForCheck();
         },
         (error) => {

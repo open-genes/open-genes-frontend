@@ -5,6 +5,7 @@ export interface ApiResponse<T> {
 
 export interface PageOptions {
   objTotal: number;
+  total: number;
   pagination: {
     page: number;
     pageSize: number;
