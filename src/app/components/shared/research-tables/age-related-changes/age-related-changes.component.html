@@ -1,0 +1,126 @@
+<h4>{{ "gene_page_researches_age_related_changes" | translate }}</h4>
+<div class="table-section __mt-20 __w-content-fluid">
+  <table class="table table--zebra table--sticky table--age-related-change">
+    <thead>
+    <th class="__cell-width-small">
+      {{ "age_related_changes_type" | translate }}
+    </th>
+    <th>{{ "researches_object" | translate }}</th>
+    <th>{{ "researches_line" | translate }}</th>
+    <th>{{ "age_related_changes_sample" | translate }}</th>
+    <th>{{ "researches_age_from" | translate }}</th>
+    <th>{{ "researches_age_to" | translate }}</th>
+    <th>{{ "age_related_changes_measurement_method" | translate }}</th>
+    <th>
+      {{ "researches_change" | translate }}&nbsp;<span
+      class="fa fal fa-mars"
+    ></span>
+    </th>
+    <th>
+      {{ "researches_change" | translate }}&nbsp;<span
+      class="fa fal fa-venus"
+    ></span>
+    </th>
+    <th>
+      {{ "researches_change" | translate }}&nbsp;<span
+      class="fa fal fa-venus"
+    ></span
+    >&nbsp;<span class="fa fal fa-mars"></span>
+    </th>
+    <th>
+      {{ "researches_comment" | translate }}
+    </th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of items">
+      <td>
+        <ng-container *ngIf="item.changeType ; else dash">
+          {{ item.changeType }}
+        </ng-container>
+      </td>
+      <td class="__nowrap">
+        <ng-container *ngIf="item.modelOrganism ; else dash">
+          {{ item.modelOrganism }}
+        </ng-container>
+      </td>
+      <td class="__nowrap">
+        <ng-container *ngIf="item.organismLine ; else dash">
+          {{ item.organismLine }}
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="item.sample ; else dash">
+          {{ item.sample }}
+        </ng-container>
+      </td>
+      <td class="__nowrap">
+        <ng-container *ngIf="item.ageFrom ; else dash">
+          {{ item.ageFrom }}
+        </ng-container>
+      </td>
+      <td class="__nowrap">
+        <ng-container *ngIf="item.ageTo ; else dash">
+          {{ item.ageTo }}
+        </ng-container>
+      </td>
+      <td class="__nowrap">
+        <ng-container *ngIf="item.measurementType ; else dash">
+          {{ item.measurementType }}
+        </ng-container>
+      </td>
+      <td class="__nowrap">
+        <ng-container *ngIf="item.valueForMale ; else dash">
+          {{ item.valueForMale }}
+        </ng-container>
+      </td>
+      <td class="__nowrap">
+        <ng-container *ngIf="item.valueForFemale ; else dash">
+          {{ item.valueForFemale }}
+        </ng-container>
+      </td>
+      <td class="__nowrap">
+        <ng-container *ngIf="item.valueForAll ; else dash">
+          {{ item.valueForAll }}
+        </ng-container>
+      </td>
+      <td>
+        <button class="btn btn--small btn--purple btn--flat"
+                (click)="openCommentModal('researches_comment', item, links)"
+        >
+          {{ "researches_comment_button" | translate }}
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #dash>
+  <span class="table__dash"></span>
+</ng-template>
+
+<ng-template #links let-item="item">
+  <p *ngIf="item?.comment.length !== 0">
+    {{ item?.comment }}
+  </p>
+
+  <p *ngIf="item?.doi !== ''">
+    <a
+      href="https://doi.org/{{ item?.doi }}"
+      class="link"
+      target="_blank"
+    >{{ item?.doi }}</a>
+  </p>
+  <p *ngIf="item?.pmid !== ''">
+    <a
+      href="https://pubmed.ncbi.nlm.nih.gov/17170002/{{ item?.pmid }}"
+      class="link"
+      target="_blank"
+    >{{ item?.pmid }}</a>
+  </p>
+
+  <app-publication-info *ngIf="item?.doi"
+                        [doi]="item.doi"
+                        class="publication-info"
+  ></app-publication-info>
+</ng-template>

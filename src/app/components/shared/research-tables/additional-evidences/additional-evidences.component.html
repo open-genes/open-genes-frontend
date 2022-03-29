@@ -1,0 +1,36 @@
+<h4>{{ "gene_page_researches_additional_evidence" | translate }}</h4>
+<div class="table-section __mt-20 __w-content-fluid">
+  <table class="table table--zebra table--sticky table--gene-to-additional-evidence">
+    <thead>
+    <th>
+      {{ "researches_comment" | translate }}
+    </th>
+    <th>
+      {{ "researches_reference" | translate }}
+    </th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of items">
+      <td>
+        {{ item.comment }}
+      </td>
+      <td>
+        <a
+          *ngIf="item?.doi !== ''"
+          href="https://doi.org/{{ item?.doi }}"
+          class="link"
+          target="_blank"
+        >{{ item?.doi }}</a
+        ><br>
+
+        <a
+          *ngIf="item?.pmid !== ''"
+          href="https://pubmed.ncbi.nlm.nih.gov/17170002/{{ item?.pmid }}"
+          class="link"
+          target="_blank"
+        >{{ item?.pmid }}</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
