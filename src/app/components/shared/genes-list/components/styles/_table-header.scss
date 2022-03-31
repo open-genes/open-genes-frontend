@@ -37,6 +37,10 @@
     &--expression {
       .overflow {
         width: 100px;
+        span:hover {
+          cursor: pointer;
+          color: $color-base;
+        }
       }
     }
 

@@ -170,10 +170,16 @@ export class GenesListComponent implements OnInit, OnDestroy {
           if (this.currentPage == 1) {
             this.cachedData = [];
           }
+
           if (res.items?.length) {
             this.cachedData.push(...res.items);
             this.searchedData = [...this.cachedData];
           }
+
+          if (this.filterService.filters.byGeneSymbol || this.filterService.filters.bySuggestions) {
+            this.openSnackBar();
+          }
+
           this.downloadSearch(this.searchedData);
           this.setFoundAndNotFound();
 
