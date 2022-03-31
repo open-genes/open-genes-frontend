@@ -44,6 +44,10 @@
     class="table-header__cell table-header__cell--expression">
   <div class="overflow">
     {{ "main_page_table_expression" | translate }}
+    <span class="fa far fa-info-circle"
+          *ngIf="isUiHintsSettingOn"
+          (click)="openBottomSheet($event, expressionChangeHint)"
+    ></span>
   </div>
 </td>
 
@@ -64,3 +68,14 @@
 <td class="table-header__cell table-header__cell--actions">
   <div class="overflow"></div>
 </td>
+
+<ng-template #expressionChangeHint>
+  <div class="description">
+    <p>Этот фильтр не отражает результаты мета анализа и не основан на результатах
+      с непроверенной статистической значимостью.</p>
+
+    <h2>Что это?</h2>
+
+    <p>Это обобщенные выводы, взятые из исследований, описанных для каждого гена.</p>
+  </div>
+</ng-template>
