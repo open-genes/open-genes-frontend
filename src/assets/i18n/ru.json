@@ -329,6 +329,7 @@
   "search_for_go_terms": "Поиск по аннотациям Gene Ontology",
   "search_for_go_terms_desc": "Поиск генов по описаниям аннотаций Gene Ontology",
   "search_genes_in_horvath_clock": "Гены из часов метилирования Хорвата",
+  "share_genes_list": "Поделиться вашим списком генов",
   "screenshot": "Скриншот",
   "settings": "Настройки",
   "settings_educational_content_description": "Включает подсказки для терминов (доступно для языков: английский) и научно-популярный контент",

@@ -43,22 +43,60 @@
 
 @include simple-gene-list-item(faved-gene);
 
-.popover__header {
-  &.items {
+.share-popover {
+  &__header {
     display: flex;
     width: 100%;
     align-items: center;
+    font-size: $font-size-big;
+    color: $color-black;
+  }
+
+  &__content {
+
+  }
+
+  &__field {
+    $input-size: 40px;
+    position: relative;
+    width: 100%;
+    color: $color-general;
 
     input {
-      width: inherit;
-      cursor:inherit;
+      display: block;
+      appearance: none;
+      outline: none;
+      border: 1px solid transparent;
+      width: 100%;
+      height: $input-size;
+      background-color: $color-general-light;
+      border-radius: $input-size;
+      padding: 0 $input-size 0 $padding-medium;
+      color: inherit;
+      font-family: 'Roboto', 'sans-serif';
+      font-size: $font-size-smaller;
+
+      &:focus {
+        border-color: $color-general-200;
+      }
     }
 
-    span {
-      font-size: 22px;
-      margin-left: 5px;
-      color: $color-purple;
-      cursor: pointer;
+    button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
+      height: $input-size;
+      width: $input-size;
+      line-height: $input-size;
+      text-align: center;
+      color: inherit;
+
+      &:hover {
+        color: $color-general-dark;
+      }
+
+      @include ripple($input-size);
     }
   }
 }

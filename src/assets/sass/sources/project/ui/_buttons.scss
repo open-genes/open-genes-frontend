@@ -1,5 +1,7 @@
 .btn {
-  @include display(inline-block);
+  &:not(.hidden) {
+    display: inline-block;
+  }
   min-width: 80px;
   height: 33px;
   line-height: 33px;

@@ -10,21 +10,33 @@
           color="primary"
           (click)="shareGene()"
           matTooltip="{{ 'favourites_share' | translate }}">
-          <span class="fa far fa-share-alt"></span>
-
+          <mat-icon>share</mat-icon>
         </button>
         <ng-container *ngIf="isPopoverOpen">
           <app-popover
+            (closeEvent)="closeSharePopover()"
+            width="280px"
             top="34px"
+            right="0"
+            arrowPositionLeft="auto"
+            arrowPositionRight="10px"
             zIndex="100">
             <div popover-header
-                 class="popover__header items">
-              <input
-                class="btn btn--small btn--purple"
-                type="text"
-                readonly
-                [value]="link">
-              <span class="fa fal fa-copy" (click)="copyLink()"></span>
+                 class="share-popover__header">
+              {{ "share_genes_list" | translate }}
+            </div>
+            <div popover-content
+                 class="share-popover__content">
+              <div class="share-popover__field">
+                <input
+                  type="text"
+                  readonly
+                  [value]="link">
+                <button
+                  (click)="copyLink()">
+                  <span class="fa far fa-copy"></span>
+                </button>
+              </div>
             </div>
           </app-popover>
         </ng-container>
