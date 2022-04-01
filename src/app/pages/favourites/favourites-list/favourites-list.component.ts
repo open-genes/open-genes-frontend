@@ -54,19 +54,25 @@ export class FavouritesListComponent {
     this.cdRef.markForCheck();
   }
 
-  shareGene(): void {
+  public shareGene(): void {
     this.isPopoverOpen = !this.isPopoverOpen;
     const localStorageFavorites = localStorage.getItem('favourites').slice(1, -1);
     const textSplit = localStorageFavorites.split(',');
     this.link = location.href + '?selected=' + textSplit.join();
   }
 
-  copyLink(): void {
+  public copyLink(): void {
     void navigator.clipboard.writeText(this.link).then(() => {
       this._snackBar.open(this.linkCopied.nativeElement.textContent, '', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
         duration: 600,
       });
     });
+    this.isPopoverOpen = false;
+  }
+
+  public closeSharePopover(): void {
     this.isPopoverOpen = false;
   }
 }
