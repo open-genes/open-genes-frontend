@@ -1,3 +1,14 @@
+// Panel
+@mixin panel($display: 'block', $padding: '10px') {
+  display: $display;
+  width: 100%;
+  background-color: $color-white;
+  box-shadow: $shadow-for-panel;
+  border-radius: $border-radius-regular;
+  padding: unquote($padding);
+  position: relative;
+}
+
 // Close or menu button
 @mixin close-button($right: 10px, $top: 50%, $color: $color-general) {
   position: absolute;
@@ -209,5 +220,27 @@
   }
 }
 
+@mixin ripple($border-radius: $border-radius-medium) {
+  &:after {
+    content: ' ';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    border-radius: $border-radius;
+    background-color: rgba($color-base, .15);
+    opacity: 0;
+    transition: color, opacity, .15s ease-in-out;
+  }
+
+  &:hover {
+    &:after {
+      opacity: 1;
+    }
+  }
+}
 
 

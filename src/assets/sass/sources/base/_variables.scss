@@ -33,9 +33,11 @@ $font-weight-black: 900;
 //  $color-black: map-get($base-theme-colors, "color-black");
 
 // Base
-$color-base: #7673d1;
 $color-general-light: #f0f2fc;
+$color-general-200: #dbe0f8;
+$color-general-300: #c6cef4;
 $color-general-semi: #b7bcf1;
+$color-base: #7673d1;
 $color-general: #4d58dc;
 $color-general-dark: darken($color-general, 15%);
 $color-accent: #fe6231;

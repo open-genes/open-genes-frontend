@@ -337,6 +337,7 @@
   "search_for_go_terms": "Search by Gene Ontology annotations",
   "search_for_go_terms_desc": "Search genes by Gene Ontology annotations descriptions",
   "search_genes_in_horvath_clock": "Genes in Horvath methylation clock",
+  "share_genes_list": "Share your genes list",
   "screenshot": "Screenshot",
   "settings": "Settings",
   "settings_educational_content_description": "This setting turns on hints for terms and educational content",
