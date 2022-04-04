@@ -6,6 +6,7 @@ import { GeneFieldsModalComponent } from './gene-fields-modal.component';
 import { UiComponentsModule } from '../../ui-components/ui-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from '../../../modules/pipes/pipes.module';
+import { DirectivesModule } from "../../../directives/directives.module";
 
 @NgModule({
   declarations: [GeneFieldsModalComponent],
@@ -18,6 +19,7 @@ import { PipesModule } from '../../../modules/pipes/pipes.module';
     TranslateModule,
     PipesModule,
     FormsModule,
+    DirectivesModule
   ],
   exports: [GeneFieldsModalComponent],
 })
