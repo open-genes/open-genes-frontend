@@ -52,7 +52,13 @@
                     [(ngModel)]="predefinedDiseases"
                     [compareWith]="compareSelectValues"
                     (selectionChange)="apply('byDiseases', $event)">
-          <ng-container *ngIf="diseases">
+          <div class="search-bar">
+            <input class="search-bar__input"
+                   [placeholder]="'Search' | translate"
+                   (keydown)="filterDiseases($event)">
+          </div>
+
+          <ng-container *ngIf="diseases?.size; else notFound">
             <mat-option *ngFor="let i of diseases | keyvalue" [value]="i.key">{{ i?.value['name'] }}</mat-option>
           </ng-container>
         </mat-select>
@@ -164,3 +170,7 @@
     </div>
   </ng-container>
 </form>
+
+<ng-template #notFound>
+  <span>{{'items_not_found' | translate}}</span>
+</ng-template>
