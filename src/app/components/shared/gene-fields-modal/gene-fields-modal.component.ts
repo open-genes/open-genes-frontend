@@ -38,6 +38,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
   public predefinedExpressionChanges: number;
   // Diseases
   public diseases: Map<number, any> = new Map();
+  private cachedDisease: Map<number, any> = new Map();
   public predefinedDiseases: any[] = [];
   public diseasesModel: Observable<any[]>;
   // Disease categories
@@ -101,6 +102,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
         // TODO: remove this check when backend will be fixed up
         if (value['name']) {
           this.diseases.set(+key, value);
+          this.cachedDisease.set(+key, value);
         }
       }
     });
@@ -213,6 +215,14 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
 
     this.filterService.applyFilter(filterType, $event.value);
     this.cdRef.detectChanges();
+  }
+
+  public filterDiseases(event: KeyboardEvent): void {
+    const searchText = (event.target as HTMLInputElement).value.toLowerCase();
+    this.diseases = new Map(
+      [...this.cachedDisease].filter(([key, value]) => value.name.toLowerCase().includes(searchText))
+    );
+    event.stopPropagation();
   }
 
   public resetForm(formControlName: string = null): void {

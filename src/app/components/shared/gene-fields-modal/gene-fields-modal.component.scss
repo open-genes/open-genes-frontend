@@ -111,6 +111,20 @@ mat-option.mat-option {
   line-height: normal;
   padding: 1em;
 }
+.search-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 40px;
+  padding: 2px;
+  background-color: $color-general-200;
 
+  &__input {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    border: none;
+  }
+}
 
 
