@@ -86,6 +86,13 @@ table.table {
       width: 16em;
     }
   }
+
+  .__cell-width-very-large {
+    &:after {
+      display: block;
+      width: 32em;
+    }
+  }
 }
 
 .table-section {

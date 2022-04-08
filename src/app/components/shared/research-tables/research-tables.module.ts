@@ -10,6 +10,7 @@ import { ProteinRegulatesOtherGenesComponent } from './protein-regulates-other-g
 import { TranslateModule } from '@ngx-translate/core';
 import { PublicationInfoModule } from '../publication-info/publication-info.module';
 import { PipesModule } from '../../../modules/pipes/pipes.module';
+import { RouterModule } from "@angular/router";
 
 const components = [
   AdditionalEvidencesComponent,
@@ -23,7 +24,7 @@ const components = [
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, TranslateModule, PipesModule, PublicationInfoModule],
+  imports: [CommonModule, TranslateModule, PipesModule, PublicationInfoModule, RouterModule],
   exports: [...components],
 })
 export class ResearchTablesModule {}

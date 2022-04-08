@@ -12,27 +12,18 @@
           </div>
         </div>
         <div class="container">
-          <div class="row">
-            <ng-container *ngIf="isAvailable; else errorMessage">
-              <div class="col-12">
-                <app-search [showTitle]="false"
-                            [genesList]="searchedGenes"
-                            [setSearchMode]="searchMode"
-                            (confirmedQuery)="updateGenesList($event)"
-                            (searchQuery)="setSearchQuery($event)">
-                </app-search>
+          <app-increase-lifespan
+            [items]="researches"
+            [geneColumnOn]="true"
+          ></app-increase-lifespan>
+          <mat-paginator
+            *ngIf="researches.length !== 0"
+            [length]="options.objTotal"
+            [pageSize]="options?.pagination.pageSize"
+            (page)="pageEventHandler($event)"
+          ></mat-paginator>
 
-                <app-genes-research-list
-                  *ngIf="genes"
-                  [genesList]="confirmedGenesList"
-                  (loaded)="setIsGenesListLoaded($event)">
-                </app-genes-research-list>
-
-                <!-- When content is loading -->
-                <app-spinner *ngIf="!genesListIsLoaded" class="__mt-10 __mb-10"></app-spinner>
-              </div>
-            </ng-container>
-          </div>
+          <app-spinner *ngIf="!researches?.length" class="__mt-10 __mb-10"></app-spinner>
         </div>
       </div>
     </div>

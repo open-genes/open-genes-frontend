@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 @Directive()
 export abstract class ResearchTables {
   @Input() items: any;
+  @Input() geneColumnOn: boolean;
 
   protected constructor(protected dialog: MatDialog) {}
 

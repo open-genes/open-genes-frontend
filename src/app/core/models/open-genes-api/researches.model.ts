@@ -68,7 +68,7 @@ export interface PurpleTable extends Research {
   lifespanMeanExperiment: number; // ✅
   lifespanMedianExperiment: number; // ✅
   lifespanMaxExperiment: number; // ✅
-  lifespanTimeUnit: string; // ✅
+  lifespanTimeUnit: string | null; // ✅
   lifespanMinChangePercent: number; // ✅
   lMinChangeStatSignificance: boolean | null; // ✅
   lifespanMeanChangePercent: number; // ✅

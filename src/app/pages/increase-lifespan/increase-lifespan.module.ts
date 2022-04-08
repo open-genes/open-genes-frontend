@@ -14,6 +14,7 @@ import { IconModule } from '../../components/ui-components/components/icon/app-i
 import { GenesResearchListComponent } from './components/genes-research-list/genes-research-list.component';
 import { MaterialModule } from '../../modules/vendors/material.module';
 import { NgCapitalizePipeModule, NgTrimPipeModule } from 'angular-pipes';
+import { ResearchTablesModule } from '../../components/shared/research-tables/research-tables.module';
 
 @NgModule({
   declarations: [IncreaseLifespanComponent, GenesResearchListComponent],
@@ -31,6 +32,7 @@ import { NgCapitalizePipeModule, NgTrimPipeModule } from 'angular-pipes';
     MaterialModule,
     NgCapitalizePipeModule,
     NgTrimPipeModule,
+    ResearchTablesModule
   ],
   exports: [PipesModule],
 })

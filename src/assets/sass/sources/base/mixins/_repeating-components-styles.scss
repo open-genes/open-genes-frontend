@@ -243,4 +243,26 @@
   }
 }
 
+@mixin gene-name {
+  .title {
+    font-size: $font-size-bigger;
+    font-weight: $font-weight-medium;
+    color: $color-gray;
+    min-width: 200px;
+    padding: 15px 0 5px 0;
+    line-height: 1;
+
+    .link {
+      vertical-align: middle;
+      margin-right: 5px;
+      text-decoration: underline;
+    }
+
+    b {
+      color: $color-black;
+      font-weight: bold;
+    }
+  }
+}
+
 
