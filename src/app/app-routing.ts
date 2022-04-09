@@ -55,7 +55,7 @@ export const APP_ROUTES: Routes = [
   {
     path: 'researches',
     loadChildren: () =>
-      import('./pages/increase-lifespan/increase-lifespan.module').then((m) => m.IncreaseLifespanModule),
+      import('./pages/researches/increase-lifespan.module').then((m) => m.IncreaseLifespanModule),
   },
   {
     path: 'horvath-clock',

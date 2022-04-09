@@ -253,9 +253,18 @@
     line-height: 1;
 
     .link {
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      position: relative;
       vertical-align: middle;
       margin-right: 5px;
       text-decoration: underline;
+      color: mix($color-gray, $color-general, 90%);
+
+      &:hover,
+      &:active {
+        color: darken(mix($color-gray, $color-general, 90%), 10%);
+      }
     }
 
     b {

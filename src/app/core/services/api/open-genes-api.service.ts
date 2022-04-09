@@ -115,7 +115,7 @@ export class ApiService {
     const pagination = page ? page : 1;
     switch (research) {
       case 'lifespan-change':
-        return this.http.get<any[]>(`/api/lifespan-change?page=${pagination}`);
+        return this.http.get<any[]>(`/api/research/lifespan-change?page=${pagination}`);
     }
   }
 }

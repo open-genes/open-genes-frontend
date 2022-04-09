@@ -1,78 +1,71 @@
 .table {
-    border-collapse: collapse;
-    border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 
-    a {
-      font-weight: $font-weight-medium;
-      color: $color-general;
-
-      &:hover,
-      &:active {
-        color: lighten(mix($color-general, $color-blue, 5%), 3%);
-      }
-    }
-
+  & > thead  {
     th {
       position: relative;
+      background-color: $color-gray-soft;
     }
 
-    td {
-      @include lists;
+    tr:first-child th:first-child {
+      padding-left: 1em;
 
-      * + h6 {
-        margin-top: .8ex;
-      }
-    }
-
-    & > thead th {
-      &:first-child {
-        padding-left: 1em;
-
-        &::before {
-          content: ' ';
-          display: block;
-          width: .5em;
-          position: absolute;
-          top: -1px;
-          bottom: -1px;
-          left: -1px;
-          z-index: 0;
-          background: #cbcbef; // По умолчанию: Влияние модуляции активности гена на продолжительность жизни
-        }
-      }
-    }
-
-    @each $class, $color in $research-tables {
-      &--#{$class} > thead th:first-child::before {
-        background: $color;
-      }
-    }
-
-    @mixin placeholder {
-      display: inline-block;
-      vertical-align: middle;
-      width: 100%;
-      text-align: center;
-      color: $color-gray;
-
-      & + & {
-        display: none;
-      }
-    }
-
-    ::ng-deep {
-      .table__placeholder {
-        @include placeholder;
-      }
-
-      .table__dash {
-        @include placeholder;
-
-        &::before {
-          content: '—';
-        }
+      &::before {
+        content: ' ';
+        display: block;
+        width: .5em;
+        position: absolute;
+        top: -1px;
+        bottom: -1px;
+        left: -1px;
+        z-index: 0;
+        background: #cbcbef; // По умолчанию: Влияние модуляции активности гена на продолжительность жизни
       }
     }
   }
+
+  @each $class, $color in $research-tables {
+    &--#{$class} > thead tr:first-child th:first-child::before {
+      background: $color;
+    }
+  }
+
+  a {
+    font-weight: $font-weight-medium;
+    color: $color-general;
+
+    &:hover,
+    &:active {
+      color: lighten(mix($color-general, $color-blue, 5%), 3%);
+    }
+  }
+
+  @mixin placeholder {
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    text-align: center;
+    color: $color-gray;
+
+    & + & {
+      display: none;
+    }
+  }
+
+  ::ng-deep {
+    .table__placeholder {
+      @include placeholder;
+    }
+
+    .table__dash {
+      @include placeholder;
+
+      &::before {
+        content: '—';
+      }
+    }
+  }
+}
 
 
