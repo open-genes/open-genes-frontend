@@ -35,6 +35,9 @@ export class FilterService {
     byMethylationChange: '',
     byAgingMechanism: [],
     byProteinClass: [],
+    byOrigin: [],
+    byFamilyOrigin: [],
+    byConservativeIn: [],
   };
 
   public pagination: Pagination = {
@@ -70,10 +73,11 @@ export class FilterService {
         if (arrayValues.length > 1) {
           this.filters[filterType] = arrayValues.map(Number);
         } else {
-          if (!this.filters[filterType].includes(+filterValue)) {
-            this.filters[filterType].push(+filterValue);
+          debugger;
+          if (!this.filters[filterType].includes(filterValue)) {
+            this.filters[filterType].push(filterValue);
           } else {
-            this.filters[filterType] = this.filters[filterType].filter((item) => item !== +filterValue);
+            this.filters[filterType] = this.filters[filterType].filter((item) => item !== filterValue);
           }
         }
       } else if (typeof this.filters[filterType] === 'number') {
@@ -182,9 +186,7 @@ export class FilterService {
     }
 
     if (this.sortParams && this.sortParams.direction) {
-      params = params
-        .set('sortBy', this.sortParams.active)
-        .set('sortOrder', this.sortParams.direction.toUpperCase())
+      params = params.set('sortBy', this.sortParams.active).set('sortOrder', this.sortParams.direction.toUpperCase());
     }
 
     return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });

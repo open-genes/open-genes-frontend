@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AgeRelatedProcesses, AgingMechanisms, Gene, Genes, ProteinClasses, SelectionCriteria } from '../../models';
+import {
+  AgeRelatedProcesses,
+  AgingMechanisms,
+  Gene,
+  Genes,
+  Phylum,
+  ProteinClasses,
+  SelectionCriteria,
+} from '../../models';
 import { TranslateService } from '@ngx-translate/core';
 import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/open-genes-api/associated-diseases.model';
 import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with-increase-lifespan-researches.model';
@@ -107,5 +115,9 @@ export class ApiService {
 
   getProteinClasses(): Observable<ProteinClasses[]> {
     return this.http.get<ProteinClasses[]>(`/api/protein-class?lang=${this.currentLang}`);
+  }
+
+  getPhylum(): Observable<Phylum[]> {
+    return this.http.get<Phylum[]>(`/api/phylum?lang=${this.currentLang}`);
   }
 }

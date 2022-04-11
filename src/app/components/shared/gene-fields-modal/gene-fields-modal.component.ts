@@ -17,6 +17,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { FilterTypes } from '../../../core/models/filters/filter-types.model';
 import { MatSelectChange } from '@angular/material/select';
 import { Filter } from '../../../core/models/filters/filter.model';
+import { FilterTypesEnum } from '../genes-list/services/filter-types.enum';
 
 @Component({
   selector: 'app-gene-fields-modal',
@@ -54,11 +55,20 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
   public predefinedAgingMechanisms: any[] = [];
   private agingMechanismsModel: Observable<any[]>;
   // Protein classes
-  private proteinClassesModel: Observable<any[]>;
   public proteinClasses: any[] = [];
   public predefinedProteinClasses: any[] = [];
+  private proteinClassesModel: Observable<any[]>;
+
+  // Phylum
+  public phylum: any[] = [];
+  private phylumModel: Observable<any[]>;
+  public predefinedOrigin: any[] = [];
+  public predefinedFamilyOrigin: any[] = [];
+  public predefinedConservativeIn: any[] =[]
+
 
   public filtersForm: FormGroup;
+  public filterTypes = FilterTypesEnum;
   public isViewReady = false;
 
   private subscription$ = new Subject();
@@ -70,7 +80,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
     private apiService: ApiService,
     private filterService: FilterService,
     private settingsService: SettingsService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
   ) {
     this.filtersForm = new FormGroup({
       ageRelatedProcessesSearchInput: new FormControl([[], null]),
@@ -81,6 +91,9 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
       selectionCriteriaSelect: new FormControl([[], [null]]),
       agingMechanismsSelect: new FormControl([[], [null]]),
       proteinClassesSelect: new FormControl([[], [null]]),
+      originSelect: new FormControl([[], [null]]),
+      familyOriginSelect: new FormControl([[], [null]]),
+      conservativeInSelect: new FormControl([[], [null]]),
     });
   }
 
@@ -137,6 +150,11 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
       this.proteinClasses = data;
     });
 
+    this.phylumModel = this.getEntitiesList('phylum');
+    this.phylumModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
+      this.phylum = data;
+    });
+
     // Set the values tha user has already selected in the genes list
     this.filterService
       .getFilterState()
@@ -149,6 +167,9 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
         this.predefinedSelectionCriteria = data.bySelectionCriteria;
         this.predefinedAgingMechanisms = data.byAgingMechanism;
         this.predefinedProteinClasses = data.byProteinClass;
+        this.predefinedOrigin = data.byOrigin;
+        this.predefinedFamilyOrigin = data.byFamilyOrigin;
+        this.predefinedConservativeIn = data.byConservativeIn;
 
         this.cdRef.detectChanges();
       });
@@ -194,6 +215,8 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
         return this.apiService.getDiseaseCategories();
       case 'classes':
         return this.apiService.getProteinClasses();
+      case 'phylum':
+        return this.apiService.getPhylum();
       default:
         return;
     }
@@ -220,7 +243,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
   public filterDiseases(event: KeyboardEvent): void {
     const searchText = (event.target as HTMLInputElement).value.toLowerCase();
     this.diseases = new Map(
-      [...this.cachedDisease].filter(([key, value]) => value.name.toLowerCase().includes(searchText))
+      [...this.cachedDisease].filter(([key, value]) => value.name.toLowerCase().includes(searchText)),
     );
     event.stopPropagation();
   }
@@ -270,7 +293,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
       },
       (error) => {
         console.warn(error);
-      }
+      },
     );
   }
 

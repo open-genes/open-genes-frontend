@@ -12,6 +12,9 @@ export interface Filter {
   byExpressionChange: number; // by gene's age related expression change variant
   byAgingMechanism: number[]; // by aging mechanisms the gene involved in
   byProteinClass: number[]; // by special categories of protein functions/associations (Human Protein Atlas)
+  byOrigin: string[];
+  byFamilyOrigin: string[];
+  byConservativeIn: string[];
 }
 
 export interface ISort {
