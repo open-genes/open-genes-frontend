@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { GenesListSettings } from '../genes-list/genes-list-settings.model';
 import { FilterService } from '../genes-list/services/filter.service';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { SettingsService } from '../../../core/services/settings.service';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
@@ -151,9 +151,14 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
     });
 
     this.phylumModel = this.getEntitiesList('phylum');
-    this.phylumModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
-      this.phylum = data;
-    });
+    this.phylumModel
+      .pipe(
+        map((data: any) => data.sort((a, b) => a.order - b.order)),
+        takeUntil(this.subscription$)
+      )
+      .subscribe((data: any[]) => {
+        this.phylum = data;
+      });
 
     // Set the values tha user has already selected in the genes list
     this.filterService
@@ -271,6 +276,15 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
           break;
         case 'proteinClassesSelect':
           this.filterService.clearFilters('protein_classes');
+          break;
+        case 'originSelect':
+          this.filterService.clearFilters('origin');
+          break;
+        case 'familyOriginSelect':
+          this.filterService.clearFilters('family_origin');
+          break;
+        case 'conservativeInSelect':
+          this.filterService.clearFilters('conservative_in,');
           break;
       }
     } else {

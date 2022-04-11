@@ -51,8 +51,8 @@ export class GenesListComponent implements OnInit, OnDestroy {
         this.searchedData = query as Genes[];
       } else {
         if (query.length > 2) {
-          const length = (query as string).split(',').length;
-          if (length > 1) {
+          this.queryLength = (query as string).split(',').length;
+          if (this.queryLength > 1) {
             delete this.filterService.filters.bySuggestions;
             this.arrayOfWords = (query as string)
               .split(',')
@@ -68,6 +68,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.filterService.updateList(this.filterService.filters);
         } else {
           this.searchedData = [];
+          this.queryLength = 0;
         }
       }
 
@@ -83,6 +84,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
         return;
       }
       this.arrayOfWords = [];
+      this.queryLength = 0;
       this.clearFilters();
     }
 
@@ -108,6 +110,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
 
   private cachedData: Genes[] = [];
   private arrayOfWords: string[] = [];
+  private queryLength: number;
   private retrievedSettings: Settings;
   private searchModeEnum = SearchModeEnum;
   private subscription$ = new Subject();
@@ -176,6 +179,10 @@ export class GenesListComponent implements OnInit, OnDestroy {
           }
           this.downloadSearch(this.searchedData);
           this.setFoundAndNotFound();
+
+          if (this.queryLength) {
+            this.openSnackBar();
+          }
 
           this.pageOptions = res.options.pagination;
           this.isLoading = false;

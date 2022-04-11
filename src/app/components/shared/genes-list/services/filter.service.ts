@@ -66,14 +66,14 @@ export class FilterService {
 
   // Filter
   // TODO: filter types typing problems
-  public applyFilter(filterType: string, filterValue: number | string): void {
+  public applyFilter(filterType: string, filterValue: any): void {
     if (filterValue) {
       if (Array.isArray(this.filters[filterType])) {
         const arrayValues = filterValue.toString().split(',');
         if (arrayValues.length > 1) {
-          this.filters[filterType] = arrayValues.map(Number);
+          this.filters[filterType] = arrayValues.map((value: string | number) => (+value ? +value : value));
         } else {
-          debugger;
+          filterValue = +filterValue ? +filterValue : Array.isArray(filterValue) ? filterValue[0] : filterValue;
           if (!this.filters[filterType].includes(filterValue)) {
             this.filters[filterType].push(filterValue);
           } else {
@@ -125,7 +125,7 @@ export class FilterService {
       protein_classes,
       origin,
       family_origin,
-      conservative_in
+      conservative_in,
     } = FilterTypesEnum; // TODO: this enum is excessive
     switch (filterName) {
       case age_related_processes:
