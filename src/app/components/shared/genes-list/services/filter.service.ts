@@ -123,6 +123,9 @@ export class FilterService {
       methylation_change,
       aging_mechanism,
       protein_classes,
+      origin,
+      family_origin,
+      conservative_in
     } = FilterTypesEnum; // TODO: this enum is excessive
     switch (filterName) {
       case age_related_processes:
@@ -149,6 +152,15 @@ export class FilterService {
       case protein_classes:
         this.filters.byProteinClass = [];
         break;
+      case origin:
+        this.filters.byOrigin = [];
+        break;
+      case family_origin:
+        this.filters.byFamilyOrigin = [];
+        break;
+      case conservative_in:
+        this.filters.byConservativeIn = [];
+        break;
       default:
         this.filters.byAgeRelatedProcess = [];
         this.filters.byDiseases = [];
@@ -158,6 +170,9 @@ export class FilterService {
         this.filters.byMethylationChange = '';
         this.filters.byAgingMechanism = [];
         this.filters.byProteinClass = [];
+        this.filters.byOrigin = [];
+        this.filters.byFamilyOrigin = [];
+        this.filters.byConservativeIn = [];
     }
     this.pagination.page = 1;
 
