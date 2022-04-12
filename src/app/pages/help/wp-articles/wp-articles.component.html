@@ -1,0 +1,58 @@
+<ng-container *ngIf="articlesList.length">
+
+  <div *ngIf="articleTags.length"
+       class="tag-list col-12">
+    <ng-container *ngFor="let tag of articleTags">
+      <a *ngIf="tag.slug !== 'open-genes'"
+         target="_blank"
+         class="alias">
+        {{ tag.name }}
+        <span class="fa fal fa-external-link"></span>
+      </a>
+    </ng-container>
+  </div>
+
+  <ng-container *ngFor="let article of articlesList">
+    <div class="article col-xs-12 col-sm-6 col-lg-6 col-xl-4">
+      <div class="article__card" (click)="openNewBlank(article.link)">
+        <div class="article__cover">
+          <div class="article__top-group">
+
+            <div class="article__text">
+              <h3>
+                {{ article.title.rendered }}
+              </h3>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+
+<div *ngIf="showMoreButtonVisible"
+     class="__mt-5 btn-wrap show-more">
+  <button class="btn show-more__button"
+          (click)="showMore()">
+    {{ "show_more" | translate }}
+  </button>
+</div>
+
+<section *ngIf="articlesList.length === 0 && !showSkeleton"
+         class="no-articles">
+  <app-no-content
+    [size]="'medium'"
+    [title]="'news_page_no_articles'">
+    <ng-container icon>
+      <app-icon
+        icon="language"
+        size="custom"
+        customWidth="100%"
+        customHeight="100%"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
+</section>
+

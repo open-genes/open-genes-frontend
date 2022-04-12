@@ -7,14 +7,14 @@ import { Category } from '../../models/wordpress/category.model';
 import { Article } from '../../models/wordpress/article.model';
 import { environment } from '../../../../environments/environment';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class WordpressApiService {
   private url = environment.wordpressApiUrl;
 
-  constructor(private http: HttpClient, private translate: TranslateService) {}
+  constructor(private http: HttpClient, private translate: TranslateService) {
+  }
 
   getCategories(): Observable<Category[]> {
     const params = new HttpParams().set('slug', this.translate.currentLang);
@@ -22,8 +22,14 @@ export class WordpressApiService {
     return this.http.get<Category[]>(`${this.url}categories`, { params });
   }
 
-  getArticlesByCategoryId(categoryId: number): Observable<Article[]> {
-    const params = new HttpParams().set('categories', categoryId);
+  getArticlesByCategoryId(categoryId: number, pagination: Pagination): Observable<Article[]> {
+    let params = new HttpParams();
+
+    params = params
+      .set('categories', categoryId)
+      .set('page', pagination.page)
+      .set('per_page', pagination.pageSize);
+
     return this.http.get<Article[]>(`${this.url}posts`, { params });
   }
 }

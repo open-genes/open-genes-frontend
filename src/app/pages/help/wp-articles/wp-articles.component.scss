@@ -1,0 +1,149 @@
+@import "../../styles";
+
+$a: 'article';
+$articles-gap-s: 5px;
+$articles-gap-l: 10px;
+
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  justify-items: stretch;
+  min-width: 100%;
+
+  &:empty {
+    display: none; // фикс для момента во время подгрузки
+  }
+
+  .no-articles {
+    width: 100%;
+  }
+
+  .no-articles:not(.no-articles--mini),
+  .show-more {
+    padding-right: #{$articles-gap-l};
+    padding-left: #{$articles-gap-l};
+  }
+
+  .no-articles.no-articles--mini {
+    padding-right: #{$articles-gap-s};
+    padding-left: #{$articles-gap-s};
+    margin-top: 8px;
+  }
+}
+
+.tag-list {
+  margin: 0 -5px 20px -5px;
+}
+
+.skeleton {
+  min-width: 100%;
+}
+
+.article {
+  display: inline-flex;
+  cursor: pointer;
+
+  &__card,
+  &__cover {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__card {
+    flex-wrap: nowrap;
+  }
+
+  &__cover {
+    position: relative;
+    background-color: $color-gray-very-light;
+    border-radius: $border-radius-medium;
+    overflow: hidden;
+
+    .cover__backdrop {
+      $filter-depth: 150px;
+
+      position: absolute;
+      top: -#{$filter-depth};
+      right: -#{$filter-depth};
+      left: -#{$filter-depth};
+      bottom: -#{$filter-depth};
+      z-index: 0;
+      display: block;
+      background: center / cover no-repeat;
+      filter: blur($filter-depth);
+      border-radius: inherit;
+
+      &::after {
+        content: ' ';
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+        display: block;
+        background-color: rgba($color-white, .65);
+        border-radius: inherit;
+      }
+    }
+  }
+
+  &__top-group,
+  &__tags {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__image,
+  &__text {
+    display: block;
+    width: 100%;
+  }
+
+  &__text,
+  &__tags {
+    padding: 0 $padding-regular;
+  }
+
+  &__text {
+    margin-bottom: 10px;
+
+    h3 {
+      color: $color-black;
+      margin-bottom: .5em;
+    }
+
+    .truncated-text {
+      @include overflow-lines($font-size, 1.5, 3, 0);
+    }
+  }
+  
+
+  &__tags {
+    margin: 5px 0 10px;
+  }
+
+
+  &:not(.#{$a}--mini) {
+    padding: $articles-gap-l;
+
+    .article__card {
+      min-height: 300px;
+    }
+
+    .#{$a}__image img {
+      height: 118px;
+    }
+
+    .#{$a}__text {
+      h3 {
+        font-size: calc(0.2vw + 18px);
+      }
+    }
+  }
+}

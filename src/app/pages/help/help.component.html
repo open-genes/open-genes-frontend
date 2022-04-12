@@ -29,266 +29,286 @@
           </app-sidebar>
         </div>
 
-        <section class="col-xs-12 col-sm-12 col-lg-12 col-xl-8">
-          <h2>{{ 'help_page_title_faq' | translate }}</h2>
-          <p></p>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <ng-container *ngIf="translate.currentLang === 'ru'">
-                  Что такое Open Genes?
-                </ng-container>
-                <ng-container *ngIf="translate.currentLang !=='ru'">
-                  What is Open Genes?
-                </ng-container>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <article *ngIf="translate.currentLang === 'ru'">
-              <p>
-                Open Genes — это некоммерческая курируемая биологическая база данных генов человека, ассоциированных со
-                старением и
-                продолжительностью жизни.
-                Она представляет собой веб-приложение, хранящее данные о генах в СУБД.
-              </p>
-              <p>
-                Наша база данных призвана помочь исследователям в&nbsp;изучении генетики старения и&nbsp;связанных с&nbsp;ним
-                процессов. Мы&nbsp;вручную собираем информацию об&nbsp;эволюции гена. его функциях и&nbsp;методах
-                определения ассоциации гена со&nbsp;старением и&nbsp;продолжительностью жизни.
-              </p>
-            </article>
-            <article *ngIf="translate.currentLang !== 'ru'">
-              <p>
-                Open Genes is a non-profit curated biological database of human genes associated with aging and
-                longevity. It is a web
-                application that stores data about genes in a DB.
-              </p>
-              <p>
-                Our database is designed to help researchers study the genetics of aging and related processes. We
-                manually collect
-                information about the evolution of a gene. its functions and methods for determining the association of
-                a gene
-                with aging and longevity.
-              </p>
-            </article>
-          </mat-expansion-panel>
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-8">
+          <section class="row no-gutters">
+            <h1 class="col col-12">
+              {{ "news_page_articles_title" | translate }}
+            </h1>
+            <app-wp-articles
+              [showSkeleton] = 'showCardSkeleton'
+              (showSkeletonChange)='showCardSkeleton = $event'
+            ></app-wp-articles>
 
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <ng-container *ngIf="translate.currentLang === 'ru'">
-                  Какое место занимает Open Genes среди других баз генов?
-                </ng-container>
-                <ng-container *ngIf="translate.currentLang !== 'ru'">
-                  How do we position Open Genes among other gene databases?
-                </ng-container>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <article *ngIf="translate.currentLang === 'ru'">
-              <p>
-                База Open Genes — это вторичная курируемая биологическая база данных.
-                «Вторичная» — означает что мы не проводим исследования сами. Первичные базы данных хранят только
-                собственные данные, полученные в результате исследований.
-                Мы берем данные из научных публикаций, первичных баз данных и других вторичных баз данных.
-              </p>
-              <p>
-                Часть данных добавлена при помощи парсинга таких баз, как UniProt, GeneAge, EntrezGene, Ensembl, Human
-                Protein Atlas, Gene Ontology и eDGAR.
-                Другая часть собрана нашими биологами вручную.
-                Биологи проводят анализ публикаций и собирают информацию об эволюции гена, его функциях, а также методах
-                определения ассоциации гена со старением и продолжительностью жизни.
-                Собранные данные проверяются.
-              </p>
-            </article>
-            <article *ngIf="translate.currentLang !== 'ru'">
-              <p>The Open Genes database is a curated secondary biological database.
-                "Secondary" means that we do not conduct research ourselves.
-                Primary databases store only their own raw data obtained as a result of research or a calculation.
-                We take data from scientific publications and other databases.
-              </p>
-              <p>
-                One portion of the data is being added by parsing databases such as UniProt, GeneAge, EntrezGene,
-                Ensembl, Human Protein Atlas, Gene Ontology and eDGAR.
-                Another part is collected by our biologists by hand. Curating biologists verify every piece of data.
-                Biologists analyze publications and collect information about the evolution of a gene, its functions,
-                and methods for determining the association of a gene with aging and longevity.
-              </p>
-            </article>
-          </mat-expansion-panel>
+            <app-skeleton
+              *ngIf="showCardSkeleton"
+              [view]="'card'"
+              [groups]="3"
+            ></app-skeleton>
+          </section>
 
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <ng-container *ngIf="translate.currentLang === 'ru'">
-                  Что такое возрастозависимые процессы?
-                </ng-container>
-                <ng-container *ngIf="translate.currentLang !== 'ru'">
-                  What are the age-related processes?
-                </ng-container>
+          <section class="row no-gutters">
+            <h2>{{ 'help_page_title_faq' | translate }}</h2>
+            <p></p>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <ng-container *ngIf="translate.currentLang === 'ru'">
+                    Что такое Open Genes?
+                  </ng-container>
+                  <ng-container *ngIf="translate.currentLang !=='ru'">
+                    What is Open Genes?
+                  </ng-container>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <article *ngIf="translate.currentLang === 'ru'">
+                <p>
+                  Open Genes — это некоммерческая курируемая биологическая база данных генов человека, ассоциированных со
+                  старением и
+                  продолжительностью жизни.
+                  Она представляет собой веб-приложение, хранящее данные о генах в СУБД.
+                </p>
+                <p>
+                  Наша база данных призвана помочь исследователям в&nbsp;изучении генетики старения и&nbsp;связанных с&nbsp;ним
+                  процессов. Мы&nbsp;вручную собираем информацию об&nbsp;эволюции гена. его функциях и&nbsp;методах
+                  определения ассоциации гена со&nbsp;старением и&nbsp;продолжительностью жизни.
+                </p>
+              </article>
+              <article *ngIf="translate.currentLang !== 'ru'">
+                <p>
+                  Open Genes is a non-profit curated biological database of human genes associated with aging and
+                  longevity. It is a web
+                  application that stores data about genes in a DB.
+                </p>
+                <p>
+                  Our database is designed to help researchers study the genetics of aging and related processes. We
+                  manually collect
+                  information about the evolution of a gene. its functions and methods for determining the association of
+                  a gene
+                  with aging and longevity.
+                </p>
+              </article>
+            </mat-expansion-panel>
 
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <article *ngIf="translate.currentLang === 'ru'">
-              <p>
-                Для удобства мы разбили гены на условные группы. Мы указали связь генов с возростозависимыми процессами
-                и системами, в которых происходят нарушения.
-              </p>
-              <p>
-                <a [routerLink]="'age-related-processes'">
-                  см. «Возрастозависимые процессы»
-                </a>
-              </p>
-            </article>
-            <article *ngIf="translate.currentLang !== 'ru'">
-              <p>
-                For convenience, we have divided the genes into conditional groups. We have indicated the relationship
-                of genes with age-dependent processes
-                and systems in which violations occur.
-              </p>
-              <p>
-                <a [routerLink]="'age-related-processes'">
-                  see "Age-related processes"
-                </a>
-              </p>
-            </article>
-          </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <ng-container *ngIf="translate.currentLang === 'ru'">
+                    Какое место занимает Open Genes среди других баз генов?
+                  </ng-container>
+                  <ng-container *ngIf="translate.currentLang !== 'ru'">
+                    How do we position Open Genes among other gene databases?
+                  </ng-container>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <article *ngIf="translate.currentLang === 'ru'">
+                <p>
+                  База Open Genes — это вторичная курируемая биологическая база данных.
+                  «Вторичная» — означает что мы не проводим исследования сами. Первичные базы данных хранят только
+                  собственные данные, полученные в результате исследований.
+                  Мы берем данные из научных публикаций, первичных баз данных и других вторичных баз данных.
+                </p>
+                <p>
+                  Часть данных добавлена при помощи парсинга таких баз, как UniProt, GeneAge, EntrezGene, Ensembl, Human
+                  Protein Atlas, Gene Ontology и eDGAR.
+                  Другая часть собрана нашими биологами вручную.
+                  Биологи проводят анализ публикаций и собирают информацию об эволюции гена, его функциях, а также методах
+                  определения ассоциации гена со старением и продолжительностью жизни.
+                  Собранные данные проверяются.
+                </p>
+              </article>
+              <article *ngIf="translate.currentLang !== 'ru'">
+                <p>The Open Genes database is a curated secondary biological database.
+                  "Secondary" means that we do not conduct research ourselves.
+                  Primary databases store only their own raw data obtained as a result of research or a calculation.
+                  We take data from scientific publications and other databases.
+                </p>
+                <p>
+                  One portion of the data is being added by parsing databases such as UniProt, GeneAge, EntrezGene,
+                  Ensembl, Human Protein Atlas, Gene Ontology and eDGAR.
+                  Another part is collected by our biologists by hand. Curating biologists verify every piece of data.
+                  Biologists analyze publications and collect information about the evolution of a gene, its functions,
+                  and methods for determining the association of a gene with aging and longevity.
+                </p>
+              </article>
+            </mat-expansion-panel>
 
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <ng-container *ngIf="translate.currentLang === 'ru'">
-                  Что такое механизмы старения?
-                </ng-container>
-                <ng-container *ngIf="translate.currentLang !== 'ru'">
-                  What are the mechanisms of aging?
-                </ng-container>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <article *ngIf="translate.currentLang === 'ru'">
-              <p>
-                Механизмы старения — отличительные черты или признаки старения. Это биологические процессы, системы и
-                элементы биологических систем, нарушения в которых связаны с глобальными изменениями, происходящими при
-                старении.
-              </p>
-              <p>
-                Механизмы старения для каждого гена предсказаны на основании GO Terms, связанных с геном.
-              </p>
-              <p>
-                <a [routerLink]="'age-related-processes'">
-                  см. «Механизмы старения»
-                </a>
-              </p>
-            </article>
-            <article *ngIf="translate.currentLang !== 'ru'">
-              <p>
-                Aging mechanisms are the hallmarks or signs of aging. These are biological processes, systems and
-                elements of biological systems, violations in which are associated with global changes occurring during
-                aging.
-              </p>
-              <p>
-                The mechanisms of aging for each gene are predicted based on the GO Terms associated with the gene.
-              </p>
-              <p>
-                <a [routerLink]="'age-related-processes'">
-                  see "Aging mechanisms"
-                </a>
-              </p>
-            </article>
-          </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <ng-container *ngIf="translate.currentLang === 'ru'">
+                    Что такое возрастозависимые процессы?
+                  </ng-container>
+                  <ng-container *ngIf="translate.currentLang !== 'ru'">
+                    What are the age-related processes?
+                  </ng-container>
 
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <ng-container *ngIf="translate.currentLang === 'ru'">
-                  По каким критериям мы отбираем гены?
-                </ng-container>
-                <ng-container *ngIf="translate.currentLang !== 'ru'">
-                  By what criteria do we select genes?
-                </ng-container>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <article *ngIf="translate.currentLang === 'ru'">
-              <p>
-                Мы добавляем ген в базу данных, если проводились исследования, которые показали влияние этого гена на
-                продолжительность жизни у человека или модельных организмов. Мы выделили типы исследований на эту
-                тему, прямо или косвенно подтверждающих ассоциацию гена с продолжительностью жизни и старением. Если в
-                отношении гена проводилось хотя бы одно из этих исследований, он окажется в нашей базе данных.
-              </p>
-              <p>
-                <a [routerLink]="['selection-criteria']">
-                  см. «Критерии отбора генов»
-                </a>
-              </p>
-            </article>
-            <article *ngIf="translate.currentLang !== 'ru'">
-              <p>
-                We add a gene to the database if studies have shown a gene's effect on lifespan in humans or model
-                organisms. We have identified types of studies on this topic, directly or indirectly confirming the
-                association of the gene with life expectancy and aging. If at least one of these studies was done on a
-                gene, it would appear in our database.
-              </p>
-              <p>
-                <a [routerLink]="['selection-criteria']">
-                  see "Gene selection criteria"
-                </a>
-              </p>
-            </article>
-          </mat-expansion-panel>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <article *ngIf="translate.currentLang === 'ru'">
+                <p>
+                  Для удобства мы разбили гены на условные группы. Мы указали связь генов с возростозависимыми процессами
+                  и системами, в которых происходят нарушения.
+                </p>
+                <p>
+                  <a [routerLink]="'age-related-processes'">
+                    см. «Возрастозависимые процессы»
+                  </a>
+                </p>
+              </article>
+              <article *ngIf="translate.currentLang !== 'ru'">
+                <p>
+                  For convenience, we have divided the genes into conditional groups. We have indicated the relationship
+                  of genes with age-dependent processes
+                  and systems in which violations occur.
+                </p>
+                <p>
+                  <a [routerLink]="'age-related-processes'">
+                    see "Age-related processes"
+                  </a>
+                </p>
+              </article>
+            </mat-expansion-panel>
 
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <ng-container *ngIf="translate.currentLang === 'ru'">
-                  Каковы возможные области применения Open Genes?
-                </ng-container>
-                <ng-container *ngIf="translate.currentLang !== 'ru'">
-                  What is the possible usage of Open Genes?
-                </ng-container>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <article *ngIf="translate.currentLang === 'ru'">
-              <ul class="list list--bulletted">
-                <li>Поиск и выгрузка наиболее полных данных о человеческих генах, связанных со старением.</li>
-                <li>Использование в качестве источника в научных публикациях.</li>
-                <li>Разработка моделей машинного обучения на основе данных о генах.</li>
-                <li>Разработка генетических и диагностических панелей на основе представленных данных.</li>
-                <li>Поиск новых целевых биохимических способов продления жизни и прогнозирования эффективности терапий
-                  старения.
-                </li>
-              </ul>
-            </article>
-            <article *ngIf="translate.currentLang !== 'ru'">
-              <ul class="list list--bulletted">
-                <li>Search and download the dataset on human genes associated with aging.</li>
-                <li>Use as a source in scientific publications.</li>
-                <li>Development of machine learning models based on gene data.</li>
-                <li>Development of genetic and diagnostic panels based on the presented data.</li>
-                <li>Search for new targeted biochemical ways of life extension and prediction of the effectiveness of
-                  aging therapies.
-                </li>
-              </ul>
-            </article>
-          </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <ng-container *ngIf="translate.currentLang === 'ru'">
+                    Что такое механизмы старения?
+                  </ng-container>
+                  <ng-container *ngIf="translate.currentLang !== 'ru'">
+                    What are the mechanisms of aging?
+                  </ng-container>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <article *ngIf="translate.currentLang === 'ru'">
+                <p>
+                  Механизмы старения — отличительные черты или признаки старения. Это биологические процессы, системы и
+                  элементы биологических систем, нарушения в которых связаны с глобальными изменениями, происходящими при
+                  старении.
+                </p>
+                <p>
+                  Механизмы старения для каждого гена предсказаны на основании GO Terms, связанных с геном.
+                </p>
+                <p>
+                  <a [routerLink]="'age-related-processes'">
+                    см. «Механизмы старения»
+                  </a>
+                </p>
+              </article>
+              <article *ngIf="translate.currentLang !== 'ru'">
+                <p>
+                  Aging mechanisms are the hallmarks or signs of aging. These are biological processes, systems and
+                  elements of biological systems, violations in which are associated with global changes occurring during
+                  aging.
+                </p>
+                <p>
+                  The mechanisms of aging for each gene are predicted based on the GO Terms associated with the gene.
+                </p>
+                <p>
+                  <a [routerLink]="'age-related-processes'">
+                    see "Aging mechanisms"
+                  </a>
+                </p>
+              </article>
+            </mat-expansion-panel>
 
-          <h2>{{ 'help_page_title_entities' | translate }}</h2>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <ng-container *ngIf="translate.currentLang === 'ru'">
+                    По каким критериям мы отбираем гены?
+                  </ng-container>
+                  <ng-container *ngIf="translate.currentLang !== 'ru'">
+                    By what criteria do we select genes?
+                  </ng-container>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <article *ngIf="translate.currentLang === 'ru'">
+                <p>
+                  Мы добавляем ген в базу данных, если проводились исследования, которые показали влияние этого гена на
+                  продолжительность жизни у человека или модельных организмов. Мы выделили типы исследований на эту
+                  тему, прямо или косвенно подтверждающих ассоциацию гена с продолжительностью жизни и старением. Если в
+                  отношении гена проводилось хотя бы одно из этих исследований, он окажется в нашей базе данных.
+                </p>
+                <p>
+                  <a [routerLink]="['selection-criteria']">
+                    см. «Критерии отбора генов»
+                  </a>
+                </p>
+              </article>
+              <article *ngIf="translate.currentLang !== 'ru'">
+                <p>
+                  We add a gene to the database if studies have shown a gene's effect on lifespan in humans or model
+                  organisms. We have identified types of studies on this topic, directly or indirectly confirming the
+                  association of the gene with life expectancy and aging. If at least one of these studies was done on a
+                  gene, it would appear in our database.
+                </p>
+                <p>
+                  <a [routerLink]="['selection-criteria']">
+                    see "Gene selection criteria"
+                  </a>
+                </p>
+              </article>
+            </mat-expansion-panel>
 
-          <ul class="list">
-            <li>
-              <a [routerLink]="'age-related-processes'"
-                 class="link">
-                {{ 'entities_age_related_processes' | translate }}</a>
-            </li>
-            <li>
-              <a [routerLink]="'aging-mechanisms'"
-                 class="link">
-                {{ 'entities_aging_mechanisms' | translate }}</a>
-            </li>
-            <li>
-              <a [routerLink]="'selection-criteria'"
-                 class="link">
-                {{ 'entities_selection_criteria' | translate }}</a>
-            </li>
-          </ul>
-        </section>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <ng-container *ngIf="translate.currentLang === 'ru'">
+                    Каковы возможные области применения Open Genes?
+                  </ng-container>
+                  <ng-container *ngIf="translate.currentLang !== 'ru'">
+                    What is the possible usage of Open Genes?
+                  </ng-container>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <article *ngIf="translate.currentLang === 'ru'">
+                <ul class="list list--bulletted">
+                  <li>Поиск и выгрузка наиболее полных данных о человеческих генах, связанных со старением.</li>
+                  <li>Использование в качестве источника в научных публикациях.</li>
+                  <li>Разработка моделей машинного обучения на основе данных о генах.</li>
+                  <li>Разработка генетических и диагностических панелей на основе представленных данных.</li>
+                  <li>Поиск новых целевых биохимических способов продления жизни и прогнозирования эффективности терапий
+                    старения.
+                  </li>
+                </ul>
+              </article>
+              <article *ngIf="translate.currentLang !== 'ru'">
+                <ul class="list list--bulletted">
+                  <li>Search and download the dataset on human genes associated with aging.</li>
+                  <li>Use as a source in scientific publications.</li>
+                  <li>Development of machine learning models based on gene data.</li>
+                  <li>Development of genetic and diagnostic panels based on the presented data.</li>
+                  <li>Search for new targeted biochemical ways of life extension and prediction of the effectiveness of
+                    aging therapies.
+                  </li>
+                </ul>
+              </article>
+            </mat-expansion-panel>
+
+            <h2>{{ 'help_page_title_entities' | translate }}</h2>
+
+            <ul class="list">
+              <li>
+                <a [routerLink]="'age-related-processes'"
+                   class="link">
+                  {{ 'entities_age_related_processes' | translate }}</a>
+              </li>
+              <li>
+                <a [routerLink]="'aging-mechanisms'"
+                   class="link">
+                  {{ 'entities_aging_mechanisms' | translate }}</a>
+              </li>
+              <li>
+                <a [routerLink]="'selection-criteria'"
+                   class="link">
+                  {{ 'entities_selection_criteria' | translate }}</a>
+              </li>
+            </ul>
+          </section>
+        </div>
+
+
       </div>
     </div>
   </div>
