@@ -73,6 +73,7 @@
   "error_connection": "Some connection issues occurred",
   "error_page_404": "This page doesn't exist or something went wrong.",
   "error_page_soon": "This section will be updated soon.",
+  "expression_change_hint_text": "This filter does not reflect the results of a meta-analysis and is not based on results\\n with untested statistical significance. These are summarized findings drawn from the studies described for each gene.",
   "expression_change_decreased": "decreases",
   "expression_change_increased": "increases",
   "expression_change_mixed": "mixed",

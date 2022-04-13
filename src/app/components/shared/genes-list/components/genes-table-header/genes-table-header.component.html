@@ -70,12 +70,9 @@
 </td>
 
 <ng-template #expressionChangeHint>
-  <div class="description">
-    <p>Этот фильтр не отражает результаты мета анализа и не основан на результатах
-      с непроверенной статистической значимостью.</p>
-
-    <h2>Что это?</h2>
-
-    <p>Это обобщенные выводы, взятые из исследований, описанных для каждого гена.</p>
-  </div>
+  <article class="description">
+    <p>
+      {{ 'expression_change_hint_text' | translate }}
+    </p>
+  </article>
 </ng-template>
