@@ -1,3 +1,12 @@
+export type ResearchArguments =
+  | 'lifespan-change'
+  | 'age-related-changes'
+  | 'gene-activity-change-impact'
+  | 'gene-regulation'
+  | 'association-with-accelerated-aging'
+  | 'associations-with-lifespan'
+  | 'other-evidence';
+
 export interface Research {
   doi: string;
   pmid: string;
@@ -154,3 +163,4 @@ export interface Researches {
   geneAssociatedWithLongevityEffects: PinkTable[];
   additionalEvidences: GrayTable[];
 }
+

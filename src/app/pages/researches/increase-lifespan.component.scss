@@ -1,1 +1,9 @@
 @import '../styles';
+
+.tab {
+  @each $class, $color in $research-tables {
+    &--#{$class} > thead th:first-child::before {
+      background: $color;
+    }
+  }
+}

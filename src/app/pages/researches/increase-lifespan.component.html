@@ -4,26 +4,33 @@
       <div class="page__inner __pb-60">
         <div class="text-page__header wrapper">
           <div class="container">
-            <div class="col-12">
-              <div class="page__title">
-                <h1>{{ "search_by_researches" | translate }}</h1>
+            <div class="row no-gutters __mb-10">
+              <app-breadcrumbs></app-breadcrumbs>
+            </div>
+            <div class="row no-gutters">
+              <div class="col-12">
+                <div class="page__title">
+                  <h1>{{ "search_by_researches" | translate }}</h1>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="container">
-          <app-increase-lifespan
-            [items]="researches"
-            [geneColumnOn]="true"
-          ></app-increase-lifespan>
-          <mat-paginator
-            *ngIf="researches.length !== 0"
-            [length]="options.objTotal"
-            [pageSize]="options?.pagination.pageSize"
-            (page)="pageEventHandler($event)"
-          ></mat-paginator>
-
-          <app-spinner *ngIf="!researches?.length" class="__mt-10 __mb-10"></app-spinner>
+          <mat-tab-group
+            animationDuration="0ms"
+            class="__w-content-fluid"
+            (selectedTabChange)="setIsListLoaded(true)">
+            <mat-tab *ngFor="let tab of tabs"
+                     label="{{ tab.title | translate }}">
+              <ng-template matTabContent>
+                <app-research-tab
+                  [researchType]="tab.param"
+                  (dataLoaded)="setIsListLoaded($event)"
+                ></app-research-tab>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
         </div>
       </div>
     </div>
@@ -33,9 +40,6 @@
         <app-no-content size="small" [title]="'error_connection'">
           <ng-container icon>
             <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
-          </ng-container>
-          <ng-container description>
-            <p>({{ errorStatus }})</p>
           </ng-container>
         </app-no-content>
       </section>

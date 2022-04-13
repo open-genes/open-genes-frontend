@@ -10,8 +10,7 @@ import { ApiResponse } from '../../models/api-response.model';
 import { SearchModel } from '../../models/open-genes-api/search.model';
 import { Pagination } from '../../models/settings.model';
 import { Diet } from '../../models/open-genes-api/diet.model';
-
-type ResearchTypes = 'lifespan-change' | 'age-related-changes' | 'gene-activity-change-impact';
+import { ResearchArguments } from '../../models/open-genes-api/researches.model';
 
 @Injectable({
   providedIn: 'root',
@@ -111,7 +110,7 @@ export class ApiService {
     return this.http.get<ProteinClasses[]>(`/api/protein-class?lang=${this.currentLang}`);
   }
 
-  getResearches(research: ResearchTypes, page?: number): Observable<any> {
+  getResearches(research: ResearchArguments, page?: number): Observable<any> {
     const pagination = page ? page : 1;
     switch (research) {
       case 'lifespan-change':
