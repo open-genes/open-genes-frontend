@@ -18,7 +18,7 @@ import { FileExportService } from '../../../core/services/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
 import { Filter } from '../../../core/models/filters/filter.model';
-import { SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
+import { Pagination, SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { FavouritesService } from '../../../core/services/favourites.service';
 import { ActivatedRoute } from '@angular/router';
@@ -51,8 +51,8 @@ export class GenesListComponent implements OnInit, OnDestroy {
         this.searchedData = query as Genes[];
       } else {
         if (query.length > 2) {
-          this.queryLength = (query as string).split(',').length;
-          if (this.queryLength > 1) {
+          const length = (query as string).split(',').length;
+          if (length > 1) {
             delete this.filterService.filters.bySuggestions;
             this.arrayOfWords = (query as string)
               .split(',')
@@ -68,7 +68,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.filterService.updateList(this.filterService.filters);
         } else {
           this.searchedData = [];
-          this.queryLength = 0;
         }
       }
 
@@ -84,7 +83,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
         return;
       }
       this.arrayOfWords = [];
-      this.queryLength = 0;
       this.clearFilters();
     }
 
@@ -105,12 +103,11 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public isGoSearchPerformed: boolean;
   public downloadJsonLink: string | SafeResourceUrl = '#';
   public currentPage: number;
-  public pageOptions: any;
+  public pagination: Pagination;
   public isLoading = false;
 
   private cachedData: Genes[] = [];
   private arrayOfWords: string[] = [];
-  private queryLength: number;
   private retrievedSettings: Settings;
   private searchModeEnum = SearchModeEnum;
   private subscription$ = new Subject();
@@ -173,18 +170,20 @@ export class GenesListComponent implements OnInit, OnDestroy {
           if (this.currentPage == 1) {
             this.cachedData = [];
           }
+
           if (res.items?.length) {
             this.cachedData.push(...res.items);
             this.searchedData = [...this.cachedData];
           }
-          this.downloadSearch(this.searchedData);
-          this.setFoundAndNotFound();
 
-          if (this.queryLength) {
+          if (this.filterService.filters.byGeneSymbol || this.filterService.filters.bySuggestions) {
             this.openSnackBar();
           }
 
-          this.pageOptions = res.options.pagination;
+          this.downloadSearch(this.searchedData);
+          this.setFoundAndNotFound();
+
+          this.pagination = res.options.pagination;
           this.isLoading = false;
           this.loading.emit(false);
           this.genesLength.emit(res.options.objTotal);
@@ -205,7 +204,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
    */
   public loadMoreGenes(): void {
     if (!this.isGoTermsMode) {
-      this.filterService.onLoadMoreGenes(this.pageOptions.pagesTotal);
+      this.filterService.onLoadMoreGenes(this.pagination.pagesTotal);
       return;
     }
 

@@ -79,6 +79,16 @@
         <h4>{{ "footer_title_community" | translate }}</h4>
         <ul class="footer__links">
           <li>
+            <h6>{{ 'footer_donation_text' | translate }}</h6>
+            <div class="footer__donation-field">
+              <input type="text" readonly [value]="donationWallet">
+              <button
+                (click)="copyLink()">
+                <span class="fa far fa-copy"></span>
+              </button>
+            </div>
+          </li>
+          <li>
             <a [routerLink]="'/news'"
                routerLinkActive="current"
             >
@@ -130,5 +140,12 @@
       </div>
     </div>
   </div>
+
+  <div
+    #walletAddressCopied
+    class="hidden">
+    {{ 'footer_donation_copied' | translate }}
+  </div>
 </footer>
+
 

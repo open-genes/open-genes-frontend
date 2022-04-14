@@ -243,4 +243,52 @@
   }
 }
 
+@mixin copy-field(
+  $input-size: 40px,
+  $color: $color-general,
+  $text-color: $color-general,
+  $text-color-h: $color-general-dark) {
+  position: relative;
+  width: 100%;
+  color: $text-color;
+
+  input {
+    display: block;
+    appearance: none;
+    outline: none;
+    border: 1px solid transparent;
+    width: 100%;
+    height: $input-size;
+    background-color: rgba($color, .10);
+    border-radius: $input-size;
+    padding: 0 $input-size 0 $padding-medium;
+    color: inherit;
+    font-family: 'Roboto', 'sans-serif';
+    font-size: $font-size-smaller;
+
+    &:focus {
+      border-color: rgba($color, .25);
+    }
+  }
+
+  button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    height: $input-size;
+    width: $input-size;
+    line-height: $input-size;
+    text-align: center;
+    color: inherit;
+
+    &:hover {
+      color: $text-color-h;
+    }
+
+    @include ripple($input-size);
+  }
+}
+
+
 

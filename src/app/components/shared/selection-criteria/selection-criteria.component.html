@@ -4,7 +4,7 @@
     <ul class="list list--bulletted">
       <li *ngFor="let criteria of geneCriteria"
           [class.__active]="activeListItem.includes(+criteria.id)"
-          (click)="emitOnClick(criteria.key)">
+          (click)="emitOnClick(criteria.id)">
         {{ criteria.name }}
       </li>
     </ul>

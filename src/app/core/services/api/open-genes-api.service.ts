@@ -23,7 +23,6 @@ import { Diet } from '../../models/open-genes-api/diet.model';
   providedIn: 'root',
 })
 export class ApiService {
-  private genes$: Observable<ApiResponse<Genes>>;
   private readonly currentLang: string;
 
   constructor(private http: HttpClient, private translate: TranslateService) {
@@ -89,8 +88,16 @@ export class ApiService {
   }
 
   // New API
-  getGenesV2(): Observable<ApiResponse<Genes>> {
-    return this.http.get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`);
+  getGenesV2(pagination?: Pagination): Observable<ApiResponse<Genes>> {
+    let params = new HttpParams();
+
+    if (pagination) {
+      params = params
+        .set('lang', this.translate.currentLang)
+        .set('page', pagination?.page)
+        .set('pageSize', pagination?.pageSize);
+    }
+    return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });
   }
 
   getDiseases(): Observable<AssociatedDiseases[]> {
