@@ -17,6 +17,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { FilterTypes } from '../../../core/models/filters/filter-types.model';
 import { MatSelectChange } from '@angular/material/select';
 import { Filter } from '../../../core/models/filters/filter.model';
+import { ModelOrganism } from '../../../core/models';
 
 @Component({
   selector: 'app-gene-fields-modal',
@@ -58,6 +59,11 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
   public proteinClasses: any[] = [];
   public predefinedProteinClasses: any[] = [];
 
+  // Model organism
+  public modelOrganism: ModelOrganism[] = [];
+  public predefinedModelOrganism: any[] = [];
+  private modelOrganismModel: Observable<ModelOrganism[]>;
+
   public filtersForm: FormGroup;
   public isViewReady = false;
 
@@ -70,7 +76,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
     private apiService: ApiService,
     private filterService: FilterService,
     private settingsService: SettingsService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
   ) {
     this.filtersForm = new FormGroup({
       ageRelatedProcessesSearchInput: new FormControl([[], null]),
@@ -81,6 +87,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
       selectionCriteriaSelect: new FormControl([[], [null]]),
       agingMechanismsSelect: new FormControl([[], [null]]),
       proteinClassesSelect: new FormControl([[], [null]]),
+      modelOrganismSelect: new FormControl([[], [null]]),
     });
   }
 
@@ -90,13 +97,13 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
     // FILTERS
     // Age-related processes
     this.processesModel = this.getEntitiesList('processes');
-    this.processesModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
+    this.processesModel.pipe(takeUntil(this.subscription$)).subscribe((data) => {
       this.processes = data;
     });
 
     // Diseases
     this.diseasesModel = this.getEntitiesList('diseases');
-    this.diseasesModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
+    this.diseasesModel.pipe(takeUntil(this.subscription$)).subscribe((data) => {
       // TODO: В этом эндпоинте должен отдаваться массив объектов
       for (const [key, value] of Object.entries(data)) {
         // TODO: remove this check when backend will be fixed up
@@ -109,7 +116,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
 
     // Disease categories
     this.diseaseCategoriesModel = this.getEntitiesList('disease-categories');
-    this.diseaseCategoriesModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
+    this.diseaseCategoriesModel.pipe(takeUntil(this.subscription$)).subscribe((data) => {
       // TODO: В этом эндпоинте должен отдаваться массив объектов
       for (const [key, value] of Object.entries(data)) {
         // TODO: remove this check when backend will be fixed up
@@ -121,20 +128,26 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
 
     // Selection criteria
     this.selectionCriteriaModel = this.getEntitiesList('criteria');
-    this.selectionCriteriaModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
+    this.selectionCriteriaModel.pipe(takeUntil(this.subscription$)).subscribe((data) => {
       this.selectionCriteria = data;
     });
 
     // Aging mechanisms
     this.agingMechanismsModel = this.getEntitiesList('mechanisms');
-    this.agingMechanismsModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
+    this.agingMechanismsModel.pipe(takeUntil(this.subscription$)).subscribe((data) => {
       this.agingMechanisms = data;
     });
 
     // Protein classes
     this.proteinClassesModel = this.getEntitiesList('classes');
-    this.proteinClassesModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
+    this.proteinClassesModel.pipe(takeUntil(this.subscription$)).subscribe((data) => {
       this.proteinClasses = data;
+    });
+
+    // Protein classes
+    this.modelOrganismModel = this.getEntitiesList('organism');
+    this.modelOrganismModel.pipe(takeUntil(this.subscription$)).subscribe((data) => {
+      this.modelOrganism = data;
     });
 
     // Set the values tha user has already selected in the genes list
@@ -194,6 +207,8 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
         return this.apiService.getDiseaseCategories();
       case 'classes':
         return this.apiService.getProteinClasses();
+      case 'organism':
+        return this.apiService.getModelOrganism();
       default:
         return;
     }
@@ -220,7 +235,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
   public filterDiseases(event: KeyboardEvent): void {
     const searchText = (event.target as HTMLInputElement).value.toLowerCase();
     this.diseases = new Map(
-      [...this.cachedDisease].filter(([key, value]) => value.name.toLowerCase().includes(searchText))
+      [...this.cachedDisease].filter(([key, value]) => value.name.toLowerCase().includes(searchText)),
     );
     event.stopPropagation();
   }
@@ -249,6 +264,8 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
         case 'proteinClassesSelect':
           this.filterService.clearFilters('protein_classes');
           break;
+        case 'modelOrganismSelect':
+          this.filterService.clearFilters('model_organism');
       }
     } else {
       this.filtersForm.reset();
@@ -270,7 +287,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
       },
       (error) => {
         console.warn(error);
-      }
+      },
     );
   }
 
@@ -303,6 +320,9 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
         break;
       case 'classes':
         this.listSettings.ifShowProteinClasses = !this.listSettings.ifShowProteinClasses;
+        break;
+      case 'organism':
+        this.listSettings.ifShowModelOrganism = !this.listSettings.ifShowModelOrganism;
         break;
       default:
         break;

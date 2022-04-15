@@ -167,6 +167,29 @@
       </app-eye-checkbox>
     </div>
 
+    <div class="body__row __mb-10">
+      <app-eye-checkbox
+        (changeEvent)="changeGenesListSettings('organism')"
+        [switch]="listSettings.ifShowModelOrganism">
+        <span class="inline-button">{{ "gene_list_research_data" | translate }}</span>
+      </app-eye-checkbox>
+    </div>
+
+    <div class="body__row">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "filters_modal_placeholder_model_organism" | translate }}</mat-label>
+        <mat-select formControlName="modelOrganismSelect"
+                    multiple="true"
+                    [disabled]="modelOrganism?.length === 0"
+                    [(ngModel)]="predefinedModelOrganism"
+                    [compareWith]="compareSelectValues">
+          <ng-container *ngIf="modelOrganism?.length !== 0">
+            <mat-option *ngFor="let i of modelOrganism" [value]="i.latinName">{{ i.name }}</mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
     <div class="reset-button-wrapper">
       <button class="btn btn--fill btn--gray reset-button"
               (click)="resetForm()">

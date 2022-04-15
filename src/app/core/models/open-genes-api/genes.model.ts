@@ -15,10 +15,15 @@ interface GenericItem {
   name: string;
 }
 
+interface ModelOrganismProperties {
+  latinName: string;
+}
+
 export type AgingMechanisms = GenericItem;
 export type ProteinClasses = GenericItem;
 export type SelectionCriteria = GenericItem;
 export type AgeRelatedProcesses = GenericItem;
+export type ModelOrganism = GenericItem & ModelOrganismProperties;
 
 interface GeneralGeneInfo {
   id: number;
