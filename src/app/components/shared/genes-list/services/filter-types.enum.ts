@@ -8,6 +8,9 @@ export enum FilterTypesEnum {
   methylation_change = 'byMethylationChange',
   aging_mechanism = 'byAgingMechanism',
   protein_classes = 'byProteinClass',
+  origin = 'byOrigin',
+  family_origin = 'byFamilyOrigin',
+  conservative_in = 'byConservativeIn'
 }
 
 export enum SortEnum {

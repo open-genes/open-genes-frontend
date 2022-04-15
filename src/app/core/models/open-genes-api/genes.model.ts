@@ -19,6 +19,7 @@ export type AgingMechanisms = GenericItem;
 export type ProteinClasses = GenericItem;
 export type SelectionCriteria = GenericItem;
 export type AgeRelatedProcesses = GenericItem;
+export type Phylum = GenericItem;
 
 interface GeneralGeneInfo {
   id: number;

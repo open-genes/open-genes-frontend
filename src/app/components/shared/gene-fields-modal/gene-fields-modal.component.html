@@ -167,6 +167,54 @@
       </app-eye-checkbox>
     </div>
 
+    <div class="body__row">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "filters_modal_placeholder_origin" | translate }}</mat-label>
+        <mat-select formControlName="originSelect"
+                    multiple="true"
+                    [disabled]="phylum?.length === 0"
+                    [(ngModel)]="predefinedOrigin"
+                    [compareWith]="compareSelectValues"
+                    (selectionChange)="apply('byOrigin', $event)">
+          <ng-container *ngIf="phylum?.length !== 0">
+            <mat-option *ngFor="let i of phylum" [value]="i.name">{{ i.name }}</mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="body__row">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "filters_modal_placeholder_family_origin" | translate }}</mat-label>
+        <mat-select formControlName="familyOriginSelect"
+                    multiple="true"
+                    [disabled]="phylum?.length === 0"
+                    [(ngModel)]="predefinedFamilyOrigin"
+                    [compareWith]="compareSelectValues"
+                    (selectionChange)="apply('byFamilyOrigin', $event)">
+          <ng-container *ngIf="phylum?.length !== 0">
+            <mat-option *ngFor="let i of phylum" [value]="i.name">{{ i.name }}</mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="body__row">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "filters_modal_placeholder_conservative" | translate }}</mat-label>
+        <mat-select formControlName="conservativeInSelect"
+                    multiple="true"
+                    [disabled]="phylum?.length === 0"
+                    [(ngModel)]="predefinedConservativeIn"
+                    [compareWith]="compareSelectValues"
+                    (selectionChange)="apply('byConservativeIn', $event)">
+          <ng-container *ngIf="phylum?.length !== 0">
+            <mat-option *ngFor="let i of phylum" [value]="i.name">{{ i.name }}</mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
     <div class="reset-button-wrapper">
       <button class="btn btn--fill btn--gray reset-button"
               (click)="resetForm()">
