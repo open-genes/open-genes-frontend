@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Genes } from '../../../core/models';
+import { Gene } from '../../../core/models';
 import { GenePhylaClass } from './gene-phyla.class';
 import { Phylum } from './phylum.model';
 import { ShowOptionsEnum } from './show-options.enum';
@@ -14,7 +14,7 @@ export class GeneAgeComponent extends GenePhylaClass implements OnInit {
   public phylumHomolog: Phylum;
   public isShowOnlyOrigin = false;
   public isShowOnlyHomologs = false;
-  @Input() gene: Genes;
+  @Input() gene: Gene;
   @Input() show: ShowOptionsEnum;
 
   constructor() {

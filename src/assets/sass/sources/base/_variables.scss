@@ -72,12 +72,13 @@ $color-red: #FF4E1A;
 $color-red-dark: darken($color-red, 5%);
 
 $research-tables: (
-  age-related-change: #c8e5fd, // Возрастные изменения экспрессии гена или активности белка
-  gene-intervention-to-vital-processes: #c1e2aa, // Влияние модуляции активности гена на возрастной процесс
-  protein-to-gene: #fbea95, // Участие продукта гена в регуляции генов, связанных со старением
-  gene-to-progeria: #ffd8a9, // Ассоциация гена с ускоренным старением у человека
-  gene-to-longevity-effect: #f5c3c2, // Геномные, транскриптомные и протеомные ассоциации с продолжительностью жизни/возрастным фенотипом
-  gene-to-additional-evidence: #cacaca // Другие подтверждения ассоциации гена со старением
+        increase-lifespan: #7673d1, //
+        age-related-change: #c8e5fd, // Возрастные изменения экспрессии гена или активности белка
+        gene-intervention-to-vital-processes: #c1e2aa, // Влияние модуляции активности гена на возрастной процесс
+        protein-to-gene: #fbea95, // Участие продукта гена в регуляции генов, связанных со старением
+        gene-to-progeria: #ffd8a9, // Ассоциация гена с ускоренным старением у человека
+        gene-to-longevity-effect: #f5c3c2, // Геномные, транскриптомные и протеомные ассоциации с продолжительностью жизни/возрастным фенотипом
+        gene-to-additional-evidence: #cacaca // Другие подтверждения ассоциации гена со старением
 );
 
 // Gradients

@@ -65,6 +65,13 @@
   </div>
 </td>
 
+<td *ngIf="listSettings.ifShowResearchesNumber"
+    class="table-header__cell table-header__cell--methylation">
+  <div class="overflow">
+    {{ "gene_list_researches_number" | translate }}
+  </div>
+</td>
+
 <td class="table-header__cell table-header__cell--actions">
   <div class="overflow"></div>
 </td>

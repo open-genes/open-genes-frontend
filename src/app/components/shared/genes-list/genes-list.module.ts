@@ -28,7 +28,7 @@ import { SearchViewPanelComponent } from './components/search-view-panel/search-
 import { AgingMechanismsModule } from '../aging-mechanisms/aging-mechanisms.module';
 import { ProteinClassesModule } from '../protein-classes/protein-classes.module';
 import { GeneFieldsModalModule } from '../gene-fields-modal/gene-fields-modal.module';
-
+import { ResearchesNumberComponent } from '../researches-number/researches-number.component';
 @NgModule({
   declarations: [
     GenesListComponent,
@@ -42,6 +42,7 @@ import { GeneFieldsModalModule } from '../gene-fields-modal/gene-fields-modal.mo
     GeneAnnotationsCardComponent,
     GeneAnnotationsTableRowComponent,
     SearchViewPanelComponent,
+    ResearchesNumberComponent
   ],
   imports: [
     CommonModule,

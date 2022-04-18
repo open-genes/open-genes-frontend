@@ -1,0 +1,61 @@
+<div class="researches" *ngIf="researches">
+
+  <ng-container *ngIf="researches.increaseLifespan.length">
+    <div class="researches__increase-lifespan">
+      <span class="color" (click)="openBottomSheet($event)"></span>
+      <span>{{researches.increaseLifespan.length}}</span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="researches.ageRelatedChangesOfGene.length">
+    <div class="researches__age-related-changes">
+      <span class="color" (click)="openBottomSheet($event)"></span>
+      <span>{{researches.ageRelatedChangesOfGene.length}}</span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="researches.interventionToGeneImprovesVitalProcesses.length">
+    <div class="researches__intervention-to-gene">
+      <span class="color" (click)="openBottomSheet($event)"></span>
+      <span>{{researches.interventionToGeneImprovesVitalProcesses.length}}</span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="researches.proteinRegulatesOtherGenes.length">
+    <div class="researches__protein-regulates">
+      <span class="color" (click)="openBottomSheet($event)"></span>
+      <span>{{researches.proteinRegulatesOtherGenes.length}}</span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="researches.geneAssociatedWithProgeriaSyndromes.length">
+    <div class="researches__progeria-syndromes">
+      <span class="color" (click)="openBottomSheet($event)"></span>
+      <span>{{researches.geneAssociatedWithProgeriaSyndromes.length}}</span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="researches.geneAssociatedWithLongevityEffects.length">
+    <div class="researches__longevity-effects">
+      <span class="color" (click)="openBottomSheet($event)"></span>
+      <span>{{researches.geneAssociatedWithLongevityEffects.length}}</span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="researches.additionalEvidences.length">
+    <div class="researches__additional-evidences">
+      <span class="color" (click)="openBottomSheet($event)"></span>
+      <span>{{researches.additionalEvidences.length}}</span>
+    </div>
+  </ng-container>
+
+</div>
+
+<ng-template #expressionChangeHint>
+  <article class="description">
+    <p>
+      {{ 'expression_change_hint_text' | translate }}
+    </p>
+  </article>
+</ng-template>
+

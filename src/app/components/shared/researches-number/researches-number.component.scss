@@ -1,0 +1,71 @@
+@use "sass:map";
+@import "../../styles";
+
+.researches {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__increase-lifespan,
+  &__age-related-changes,
+  &__intervention-to-gene,
+  &__protein-regulates,
+  &__progeria-syndromes,
+  &__longevity-effects,
+  &__additional-evidences {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    min-width: 60px;
+
+    .color {
+      width: 100%;
+      min-width: 50px;
+      border-radius: 4px;
+      margin-right: 4px;
+      cursor: pointer;
+    }
+  }
+
+  &__increase-lifespan {
+    .color {
+      background-color: map.get($research-tables, increase-lifespan);
+    }
+  }
+
+  &__age-related-changes {
+    .color {
+      background-color: map.get($research-tables, age-related-change);
+    }
+  }
+
+  &__intervention-to-gene {
+    .color {
+      background-color: map.get($research-tables, gene-intervention-to-vital-processes);
+    }
+  }
+
+  &__protein-regulates {
+    .color {
+      background-color: map.get($research-tables, protein-to-gene);
+    }
+  }
+
+  &__progeria-syndromes {
+    .color {
+      background-color: map.get($research-tables, gene-to-progeria);
+    }
+  }
+
+  &__longevity-effects {
+    .color {
+      background-color: map.get($research-tables, gene-to-longevity-effect);
+    }
+  }
+
+  &__additional-evidences {
+    .color {
+      background-color: map.get($research-tables, gene-to-additional-evidence);
+    }
+  }
+}

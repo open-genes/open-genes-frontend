@@ -23,6 +23,7 @@ export class SettingsService {
     ifShowMethylation: false,
     ifShowAgingMechanisms: true,
     ifShowProteinClasses: true,
+    ifShowResearchesNumber: true
   };
 
   constructor() {

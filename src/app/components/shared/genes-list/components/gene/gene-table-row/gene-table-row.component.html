@@ -115,6 +115,13 @@
     </div>
   </td>
 
+  <td *ngIf="listSettings.ifShowResearchesNumber"
+      class="cell">
+    <div class="overflow">
+      <app-researches-number
+      [researches]="item.researches"></app-researches-number>
+    </div>
+  </td>
 
   <td class="cell cell--actions">
     <div class="overflow">
