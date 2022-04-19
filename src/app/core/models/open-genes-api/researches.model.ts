@@ -96,16 +96,28 @@ export interface PurpleTable extends Research {
 
 // blue form
 export interface BlueTable extends Research {
-  changeType: string;
-  sample: string;
-  modelOrganism: string; // TODO: backend: rename to 'object'
+  modelOrganism: string;
   organismLine: string;
-  ageFrom: string;
-  ageTo: string;
-  valueForMale: string;
-  valueForFemale: string;
-  valueForAll: string;
-  measurementType: string;
+  sample: string;
+  maxAgeOfControls: number | null;
+  maxAgeOfExperiment: number | null;
+  meanAgeOfControls: number | null;
+  meanAgeOfExperiment: number | null;
+  minAgeOfControls: number | null;
+  minAgeOfExperiment: number | null;
+  pValue: number | null; // new
+  changeType: string; // new
+  ageUnit: string; // new
+  controlCohortSize: string | null; // new
+  experimentCohortSize: string | null; // new
+  ageFrom: string; // TODO: backend should remove this old field
+  ageTo: string; // TODO: backend should remove this old field
+  sex: string;
+  value: string; // new // TODO: backend should rename 'percentChange'
+  statisticalMethod: string | null; // new
+  expressionEvaluationBy: string; // new // example: белок // new
+  measurementMethod: string | null; // new
+  measurementType: string | null; // TODO: backend should remove this old field
 }
 
 //  green form
@@ -163,4 +175,3 @@ export interface Researches {
   geneAssociatedWithLongevityEffects: PinkTable[];
   additionalEvidences: GrayTable[];
 }
-
