@@ -13,7 +13,7 @@ export interface Calorie {
   lexpressionChangeLogFc: number;
   pValue: string;
   crResult: string;
-  measurementMethod: string;
+  expressionEvaluationBy: string;
   measurementType: string;
   restrictionPercent: number;
   age: string;

@@ -6,28 +6,19 @@
       <th class="__cell-width-small">
         {{ "age_related_changes_type" | translate }}
       </th>
-      <th>{{ "researches_object" | translate }}</th>
-      <th>{{ "researches_line" | translate }}</th>
+      <th>{{ "researches_object" | translate }},
+        {{ "researches_line" | translate | lowercase }},
+        {{ "researches_sex" | translate | lowercase }}
+      </th>
+      <th>{{ "researches_change" | translate }}</th>
+      <th>{{ "researches_significance_title" | translate }}</th>
       <th>{{ "age_related_changes_sample" | translate }}</th>
-      <th>{{ "researches_age_from" | translate }}</th>
-      <th>{{ "researches_age_to" | translate }}</th>
+      <th>{{ "researches_l_cohort_size" | translate }}</th>
+      <th>{{ "researches_age_of_control" | translate }}</th>
+      <th>{{ "researches_age_of_experiment" | translate }}</th>
       <th>{{ "age_related_changes_measurement_method" | translate }}</th>
-      <th>
-        {{ "researches_change" | translate }}&nbsp;<span
-        class="fa fal fa-mars"
-      ></span>
-      </th>
-      <th>
-        {{ "researches_change" | translate }}&nbsp;<span
-        class="fa fal fa-venus"
-      ></span>
-      </th>
-      <th>
-        {{ "researches_change" | translate }}&nbsp;<span
-        class="fa fal fa-venus"
-      ></span
-      >&nbsp;<span class="fa fal fa-mars"></span>
-      </th>
+      <th>{{ "researches_expression_evaluation" | translate }}</th>
+      <th>{{ "age_related_changes_statical_method" | translate }}</th>
       <th>
         {{ "researches_comment" | translate }}
       </th>
@@ -35,54 +26,80 @@
       <tbody>
       <tr *ngFor="let item of researches.ageRelatedChangesOfGene">
         <td>
-          <ng-container *ngIf="item.changeType ; else dash">
+          <p *ngIf="item.changeType; else dash">
             {{ item.changeType }}
-          </ng-container>
+          </p>
         </td>
         <td class="__nowrap">
-          <ng-container *ngIf="item.modelOrganism ; else dash">
+          <p *ngIf="item.modelOrganism; else dash">
             {{ item.modelOrganism }}
-          </ng-container>
+          </p>
+          <p *ngIf="item.organismLine; else dash">
+            {{ item.organismLine }}
+          </p>
+          <p *ngIf="item.sex; else dash">
+            {{ item.sex }}
+          </p>
         </td>
         <td class="__nowrap">
-          <ng-container *ngIf="item.organismLine ; else dash">
-            {{ item.organismLine }}
+          <p *ngIf="item.value; else dash">
+            {{ item.value }}
+          </p>
+        </td>
+        <td class="__nowrap">
+          <p *ngIf="item.pValue; else dash">
+            {{ "researches_pvalue" | translate: { data: item.pValue } }}
+          </p>
+        </td>
+        <td>
+          <p *ngIf="item.sample; else dash">
+            {{ item.sample }}
+          </p>
+        </td>
+        <td class="__nowrap">
+          <p *ngIf="item.controlCohortSize; else dash">
+            {{ "researches_l_control" | translate: { data: item.controlCohortSize } }}
+          </p>
+          <p *ngIf="item.experimentCohortSize; else dash">
+            {{ "researches_l_experiment" | translate: { data: item.experimentCohortSize } }}
+          </p>
+        </td>
+        <td>
+          <p *ngIf="item.minAgeOfControls; else dash">
+            {{ "researches_l_min" | translate: { data: item.minAgeOfControls, unit: item.ageUnit } }}
+          </p>
+          <p *ngIf="item.meanAgeOfControls; else dash">
+            {{ "researches_l_mean" | translate: { data: item.meanAgeOfControls, unit: item.ageUnit } }}
+          </p>
+          <p *ngIf="item.maxAgeOfControls; else dash">
+            {{ "researches_l_max" | translate: { data: item.maxAgeOfControls, unit: item.ageUnit } }}
+          </p>
+        </td>
+        <td>
+          <p *ngIf="item.minAgeOfExperiment; else dash">
+            {{ "researches_l_min" | translate: { data: item.minAgeOfExperiment, unit: item.ageUnit } }}
+          </p>
+          <p *ngIf="item.meanAgeOfExperiment; else dash">
+            {{ "researches_l_mean" | translate: { data: item.meanAgeOfExperiment, unit: item.ageUnit } }}
+          </p>
+          <p *ngIf="item.maxAgeOfExperiment; else dash">
+            {{ "researches_l_max" | translate: { data: item.maxAgeOfExperiment, unit: item.ageUnit } }}
+          </p>
+        </td>
+        <td>
+          <ng-container *ngIf="item.measurementMethod; else dash">
+            {{ item.measurementMethod }}
           </ng-container>
         </td>
         <td>
-          <ng-container *ngIf="item.sample ; else dash">
-            {{ item.sample }}
-          </ng-container>
+          <p *ngIf="item.measurementMethod; else dash">
+            {{ item.expressionEvaluationBy }}
+          </p>
         </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.ageFrom ; else dash">
-            {{ item.ageFrom }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.ageTo ; else dash">
-            {{ item.ageTo }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.measurementType ; else dash">
-            {{ item.measurementType }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.valueForMale ; else dash">
-            {{ item.valueForMale }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.valueForFemale ; else dash">
-            {{ item.valueForFemale }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.valueForAll ; else dash">
-            {{ item.valueForAll }}
-          </ng-container>
+        <td>
+          <p *ngIf="item.measurementMethod; else dash">
+            {{ item.statisticalMethod }}
+          </p>
         </td>
         <td>
           <button class="btn btn--small btn--purple btn--flat"
@@ -158,7 +175,7 @@
               {{ "researches_l_control" | translate: { data: r.controlCohortSize } }}
             </p>
             <p *ngIf="r.experimentCohortSize">
-              {{ "researches_l_experiment" | translate }}: {{ r.experimentCohortSize }}
+              {{ "researches_l_experiment" | translate: { data: r.experimentCohortSize } }}
             </p>
           </ng-container>
         </td>
@@ -269,7 +286,7 @@
           <ng-container *ngFor="let sample of r.interventions.experiment">
             <!-- if there is no additional intervention on the other gene -->
             <ng-container *ngIf="!sample.hasOwnProperty('gene')">
-              <h6>{{ "researches_l_experiment" | translate }}: </h6>
+              <h6>{{ "researches_l_experiment_title" | translate }}: </h6>
               <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay }}</p>
               <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod }}</p>
               <p>{{ "researches_genotype" | translate }}:  {{ sample.genotype }}</p>
