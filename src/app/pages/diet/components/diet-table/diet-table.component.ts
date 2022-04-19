@@ -31,7 +31,7 @@ export class DietTableComponent {
     'p_value',
     'cr_result',
     'measurement_method',
-    'measurement_type',
+    'researches_expression_evaluation',
     'restriction_percent',
     'restriction_time',
     'age',

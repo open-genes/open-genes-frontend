@@ -1,0 +1,19 @@
+<div class="bottom-sheet">
+  <div class="bottom-sheet__header">
+    <button mat-icon-button
+            class="bottom-sheet__close-button"
+            (click)="closeBottomSheet()"
+            aria-label="Закрыть">
+      <span class="fa fal fa-times"></span>
+    </button>
+  </div>
+
+  <div class="bottom-sheet__description">
+    <article>
+      <ng-container
+        [ngTemplateOutlet]="data.template"
+      ></ng-container>
+    </article>
+  </div>
+
+</div>

@@ -149,10 +149,9 @@
                       class="list list--bulletted">
                     <!-- TODO: backend: return array of objects instead of object with objects -->
                     <li *ngFor="let cause of gene.commentCause">
-                      {{ cause.name }}
+                      {{cause.name}}
                     </li>
                   </ul>
-
                   <ng-template #noData>
                     {{'gene_page_no_data' | translate}}
                   </ng-template>

@@ -44,6 +44,10 @@
     class="table-header__cell table-header__cell--expression">
   <div class="overflow">
     {{ "main_page_table_expression" | translate }}
+    <span class="fa far fa-info-circle"
+          *ngIf="isUiHintsSettingOn"
+          (click)="openBottomSheet($event, expressionChangeHint)"
+    ></span>
   </div>
 </td>
 
@@ -64,3 +68,11 @@
 <td class="table-header__cell table-header__cell--actions">
   <div class="overflow"></div>
 </td>
+
+<ng-template #expressionChangeHint>
+  <article class="description">
+    <p>
+      {{ 'expression_change_hint_text' | translate }}
+    </p>
+  </article>
+</ng-template>

@@ -6,15 +6,15 @@ export interface Diet {
   uniprot: string;
   ensembl: string;
   isHidden: number;
-  calorieRestrictionExperiments: Calorie[];
+  calorieRestrictionExperiments: CalorieRestrictionDiet[];
 }
 
-export interface Calorie {
+export interface CalorieRestrictionDiet {
   lexpressionChangeLogFc: number;
   pValue: string;
-  crResult: string;
+  result: string;
+  expressionEvaluationBy: string;
   measurementMethod: string;
-  measurementType: string;
   restrictionPercent: number;
   age: string;
   ageUnit: string;

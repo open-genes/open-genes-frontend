@@ -56,9 +56,8 @@ export class FavouritesListComponent {
 
   public shareGene(): void {
     this.isPopoverOpen = !this.isPopoverOpen;
-    const localStorageFavorites = localStorage.getItem('favourites').slice(1, -1);
-    const textSplit = localStorageFavorites.split(',');
-    this.link = location.href + '?selected=' + textSplit.join();
+    const favouriteIds = this.favourites.map((gene) => gene.id).join();
+    this.link = location.href.split('?')[0] + '?selected=' + favouriteIds;
   }
 
   public copyLink(): void {

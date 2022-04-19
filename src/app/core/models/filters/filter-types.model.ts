@@ -6,4 +6,7 @@ export type FilterTypes =
   | 'byExpressionChange'
   | 'byMethylationChange'
   | 'byAgingMechanism'
-  | 'byProteinClass';
+  | 'byProteinClass'
+  | 'byOrigin'
+  | 'byFamilyOrigin'
+  | 'byConservativeIn';
