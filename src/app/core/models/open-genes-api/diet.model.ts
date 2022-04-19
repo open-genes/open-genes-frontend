@@ -12,7 +12,7 @@ export interface Diet {
 export interface Calorie {
   lexpressionChangeLogFc: number;
   pValue: string;
-  crResult: string;
+  result: string;
   expressionEvaluationBy: string;
   measurementType: string;
   restrictionPercent: number;
