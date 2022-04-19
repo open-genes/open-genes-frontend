@@ -108,7 +108,7 @@ export interface BlueTable extends Research {
   statisticalMethod: string | null; // new
   expressionEvaluationBy: string; // new // example: белок // new
   measurementMethod: string | null; // new
-  measurementType: string | null; // TODO: backend should remove this field
+  measurementType: string | null; // TODO: backend should remove this old field
 }
 
 //  green form
