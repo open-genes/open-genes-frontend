@@ -20,6 +20,7 @@ import { RouterModule } from '@angular/router';
 import { SwitchComponent } from './components/switch/switch.component';
 import { EyeCheckboxComponent } from './components/eye-checkbox/eye-checkbox.component';
 import { CommonBottomSheetComponent } from './components/modals/common-bottom-sheet/common-bottom-sheet.component';
+import { InfoButtonComponent } from './components/info-button/info-button.component';
 
 const modules = [
   AccordionComponent,
@@ -36,7 +37,8 @@ const modules = [
   BreadcrumbsComponent,
   SwitchComponent,
   EyeCheckboxComponent,
-  CommonBottomSheetComponent
+  CommonBottomSheetComponent,
+  InfoButtonComponent
 ];
 
 @NgModule({
