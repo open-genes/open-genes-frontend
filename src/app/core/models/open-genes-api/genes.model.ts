@@ -4,6 +4,7 @@ import { Terms } from './gene-ontology.model';
 import { HumanProteinAtlas } from './human-protein-atlas.model';
 import { AssociatedDiseases, AssociatedDiseaseCategories } from './associated-diseases.model';
 import { MethylationCorrelation } from './methylation-correlation.model';
+import { GeneLocation } from './gene-location.model';
 
 interface TimestampObject {
   changed: string;
@@ -50,6 +51,7 @@ export interface Genes extends GeneralGeneInfo {
 export interface Gene extends GeneralGeneInfo {
   why: string;
   band: string;
+  location: GeneLocation;
   locationStart: number;
   locationEnd: number;
   orientation: number;

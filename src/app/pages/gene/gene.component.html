@@ -213,6 +213,14 @@
               <div class="age__types">
                 <div class="age__type age__phylogeny">
                   <div class="type__inner">
+                    <div class="type__value">
+                      <app-gene-location
+                      [item]="gene.location"
+                      [geneSymbol]="gene.symbol"></app-gene-location>
+                    </div>
+                  </div>
+
+                  <div class="type__inner">
                     <div class="type__title">
                       {{ 'phylogeny' | translate }}, {{ 'origin' | translate | lowercase }}:
                       <span class="fa far fa-info-circle"

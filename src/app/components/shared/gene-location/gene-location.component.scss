@@ -1,0 +1,73 @@
+@import "../../styles";
+
+.chromosome-location {
+  &__title {
+    margin-bottom: 16px;
+    font-weight: $font-weight-bold;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 16px;
+
+    .description {
+      display: flex;
+      margin-right: 50px;
+      min-width: 130px;
+      font-size: $font-size;
+      color: $color-purple;
+
+      &__svg {
+        max-width: 36px;
+        margin-right: 15px;
+        svg {
+          height: 100%;
+        }
+      }
+
+      &__info{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        span {
+          margin-bottom: 10px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+    .info {
+      ul {
+        li {
+          display: block;
+          font-size: $font-size-smaller;
+          margin-bottom: 12px;
+
+          span {
+            &:first-child {
+              margin-right: 2px;
+              color: $color-gray;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    margin: 5px 0;
+    justify-content: space-around;
+     span {
+       cursor: pointer;
+       color: $color-purple;
+       font-size: $font-size;
+       font-weight: $font-weight-bold;
+     }
+  }
+}
