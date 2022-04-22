@@ -10,7 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PipesModule } from '../../modules/pipes/pipes.module';
 import { MaterialModule } from '../../modules/vendors/material.module';
-import { NgToArrayPipeModule } from 'angular-pipes';
+import { NgSplitPipeModule, NgToArrayPipeModule } from 'angular-pipes';
 import { ResearchesComponent } from './researches/researches.component';
 import { GeneOntologyComponent } from './gene-ontology/gene-ontology.component';
 import { HumanProteinAtlasComponent } from './human-protein-atlas/human-protein-atlas.component';
@@ -57,6 +57,7 @@ import { GeneLocationComponent } from '../../components/shared/gene-location/gen
     PublicationInfoModule,
     AssociatedDiseasesModule,
     AssociatedDiseaseCategoriesModule,
-  ],
+    NgSplitPipeModule
+  ]
 })
 export class GeneModule {}

@@ -26,6 +26,7 @@
       <ul>
         <li>
           <span>{{'gene_page_chromosome_location_gene_length' | translate}}</span>
+          <span>{{(lengthText | split: ' ')[0] }}</span>
           <span>
             <app-info-button (click)="showMoreDetails('Gene length', null, geneLengthTempl)"></app-info-button>
           </span>
