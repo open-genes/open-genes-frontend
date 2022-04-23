@@ -2,7 +2,7 @@
   <div class="chromosome-location__title">
     {{ "gene_page_chromosome_location_title" | translate }}
     {{location.band}}&nbsp;<app-info-button
-    (click)="showMoreDetails('Gene location', null, geneLocationTempl)"></app-info-button>
+    (click)="showMoreDetails('gene_page_gene_location_modal_title', null, geneLocationTempl)"></app-info-button>
   </div>
   <div class="chromosome-location__body">
     <div class="description">
@@ -17,16 +17,15 @@
           <g mask="url(#mask0_3_17)">
             <rect width="27" height="7"
                   fill="#4d58dc"
-                  [attr.y]="bandTranscript.position"
-            />
+                  [attr.y]="bandTranscript.position" />
           </g>
         </svg>
       </div>
 
       <ul class="description__info">
-        <li>p short arm</li>
-        <li>c centromere</li>
-        <li>q long arm</li>
+        <li>{{ "gene_page_chromosome_p" | translate }}</li>
+        <li>{{ "gene_page_chromosome_c" | translate }}</li>
+        <li>{{ "gene_page_chromosome_q" | translate }}</li>
       </ul>
     </div>
 
@@ -34,7 +33,7 @@
       <li>
         <span>{{"gene_page_chromosome_location_gene_length" | translate}}</span>
         <span>{{(lengthText | split: " ")[0] }}&nbsp;</span>
-        <app-info-button (click)="showMoreDetails('Gene length', null, geneLengthTempl)"></app-info-button>
+        <app-info-button (click)="showMoreDetails('gene_page_gene_length_modal_title', null, geneLengthTempl)"></app-info-button>
       </li>
       <li>
         <span>{{"gene_page_chromosome_location_start" | translate}}&nbsp;</span>
@@ -61,18 +60,43 @@
     </a>
     <button mat-button
             color="primary"
+            class="hidden"
     >{{ "gene_page_chromosome_location_show_transcripts" | translate | uppercase }}
     </button>
   </div>
 </div>
 
 <ng-template #geneLocationTempl>
-  <p>{{geneSymbol}} is {{geneLength}}kb length. It is located on {{bandTranscript.arm}} of {{bandTranscript.chromosome}}
-    th chromosome</p>
+  <p>
+    {{ "gene_page_chromosome_location_paragraph" | translate:
+    {
+      symbol: geneSymbol,
+      length: geneLength,
+      arm: bandTranscript.arm,
+      chromosome: bandTranscript.chromosome
+      }
+    }}
+  </p>
 </ng-template>
 
 <ng-template #geneLengthTempl>
-  <p>{{geneSymbol}} is {{geneLength}}kb length. Genes are divided into short, midlength, and long groups.</p>
-  <p>The length of short, midlength, and long genes are <15kb, 15kb-100kb, and >100kb, respectively.</p>
-  <p>{{geneSymbol}} is classified as {{lengthText}}</p>
+  <p>
+    {{ "gene_page_chromosome_length_paragraph1" | translate:
+    {
+      symbol: geneSymbol,
+      length: geneLength
+    }
+    }}
+  </p>
+  <p>
+    {{ "gene_page_chromosome_length_paragraph2" | translate }}
+  </p>
+  <p>
+    {{ "gene_page_chromosome_length_paragraph3" | translate:
+    {
+      symbol: geneSymbol,
+      lengthType: lengthText
+    }
+    }}
+  </p>
 </ng-template>

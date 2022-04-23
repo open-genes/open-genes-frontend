@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { GeneLocation } from '../../../core/models/open-genes-api/gene-location.model';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModalComponent } from '../../ui-components/components/modals/common-modal/common-modal.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-gene-location',
@@ -27,22 +28,26 @@ export class GeneLocationComponent {
     arm: '',
     position: 50,
   };
-  constructor(private dialog: MatDialog) {}
+
+  constructor(private translate: TranslateService, private dialog: MatDialog) {}
 
   setGeneLength(): void {
     this.lengthText = '';
     this.geneLength = Math.round((this.location.locationEnd - this.location.locationStart) / 1000);
 
     if (this.geneLength < 15) {
-      this.lengthText = `short (${this.geneLength}kb < 15kb)`;
+      this.lengthText = this.translate.currentLang === 'ru' ?
+        'короткий' : 'short' + `(${this.geneLength}kb < 15kb)`;
     }
 
     if (this.geneLength > 15 && this.geneLength < 100) {
-      this.lengthText = `midlength (15kb < ${this.geneLength}kb < 100kb)`;
+      this.lengthText = this.translate.currentLang === 'ru' ?
+        'средний' : 'midlength' + `(15kb < ${this.geneLength}kb < 100kb)`;
     }
 
     if (this.geneLength > 100) {
-      this.lengthText = `long (${this.geneLength}kb > 100kb)`;
+      this.lengthText = this.translate.currentLang === 'ru' ?
+        'длинный' : 'long' + `(${this.geneLength}kb > 100kb)`;
     }
   }
 
@@ -52,19 +57,27 @@ export class GeneLocationComponent {
       const chromosome = shortBand.split('p');
       this.bandTranscript = {
         chromosome: chromosome[0],
-        arm: 'short (p) arm',
+        arm: this.translate.currentLang === 'ru' ? 'коротком (p) плече' : 'short (p) arm',
         position: 50 - Number(chromosome[1]),
-      }
+      };
+    }
+
+    if (shortBand.includes('с')) {
+      const chromosome = shortBand.split('c');
+      this.bandTranscript = {
+        chromosome: chromosome[0],
+        arm: this.translate.currentLang === 'ru' ? 'центромере' : 'centromere (с)',
+        position: Number(chromosome[1]),
+      };
     }
 
     if (shortBand.includes('q')) {
       const chromosome = shortBand.split('q');
-
       this.bandTranscript = {
         chromosome: chromosome[0],
-        arm: 'long (q) arm',
+        arm: this.translate.currentLang === 'ru' ? 'длинном (q) плече' : 'long (q) arm',
         position: 50 + Number(chromosome[1]),
-      }
+      };
     }
   }
 
