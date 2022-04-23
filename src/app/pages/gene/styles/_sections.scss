@@ -130,7 +130,7 @@
             }
 
             .type__title {
-              color: #fff;
+              color: $color-white;
             }
 
             .badge {
@@ -140,7 +140,7 @@
           }
         }
 
-        @include resolution_smartphone {
+        @include resolution_smartphone_and-tablet {
           flex: 0 0 100%;
           flex-wrap: wrap;
         }

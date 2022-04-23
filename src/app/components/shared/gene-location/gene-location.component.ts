@@ -10,6 +10,7 @@ import { CommonModalComponent } from '../../ui-components/components/modals/comm
 })
 export class GeneLocationComponent {
   @Input() geneSymbol: string;
+  @Input() ensemblId: string;
 
   @Input() set item(location: GeneLocation) {
     this.location = location;

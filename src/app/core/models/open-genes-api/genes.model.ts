@@ -25,6 +25,7 @@ export type Phylum = GenericItem;
 interface GeneralGeneInfo {
   id: number;
   symbol: string;
+  ensembl: string;
   agingMechanisms: AgingMechanisms[];
   aliases: string[];
   commentCause?: SelectionCriteria[];
@@ -44,17 +45,10 @@ interface GeneralGeneInfo {
   methylationCorrelation: MethylationCorrelation;
 }
 
-export interface Genes extends GeneralGeneInfo {
-  ensembl?: string;
-}
+export type Genes = GeneralGeneInfo;
 
 export interface Gene extends GeneralGeneInfo {
-  why: string;
-  band: string;
   location: GeneLocation;
-  locationStart: number;
-  locationEnd: number;
-  orientation: number;
   accPromoter: any;
   accOrf: string;
   accCds: string;
@@ -80,8 +74,10 @@ export interface Gene extends GeneralGeneInfo {
   proteinDescriptionOpenGenes: string;
   commentAgingEN: string;
   researches: Researches;
-  expression: Array<any>;
-  expressionEN: string;
+  expression: {
+    name: string;
+    exp_rpkm: number;
+  }[];
   terms?: Terms;
   commentsReferenceLinks: { [n: number]: string };
   humanProteinAtlas: HumanProteinAtlas | '';

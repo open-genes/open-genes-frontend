@@ -1,11 +1,35 @@
 @import "../../../styles";
 
-span {
-  margin-left: 4px;
-  font-size: 16px;
+:host {
+  display: inline-block;
+  vertical-align: middle;
 
-  &:hover {
+  .info-icon {
+    $icon-size: 14px;
+    display: block;
+    width: $icon-size;
+    height: $icon-size;
+    background-color: $color-general-200;
+    transition: background-color .15s linear;
+    border-radius: 50%;
+    line-height: $icon-size - 2;
+    text-align: center;
+    color: $color-general;
+    font-weight: bold;
+    font-size: 8px;
     cursor: pointer;
-    color: $color-base;
+
+    .fa {
+      vertical-align: middle;
+    }
+
+    &:hover {
+      background-color: $color-general-300;
+    }
+
+    &:active {
+      background-color: $color-general-semi;
+    }
   }
 }
+

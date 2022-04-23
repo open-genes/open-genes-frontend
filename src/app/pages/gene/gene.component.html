@@ -1,40 +1,41 @@
-<div class="page gene-page" *ngIf="gene">
+<div class="page gene-page">
   <div class="page__inner __pb-60">
-    <section class="wrapper gene-page__header">
-      <div class="container-fluid">
-        <div class="row no-gutters __mb-10">
-          <app-breadcrumbs></app-breadcrumbs>
-        </div>
-        <div class="row no-gutters">
-          <div class="col col-12 header__title">
-            <div class="title__caption">
-              <div class="add-to-favorites">
-                <button mat-icon-button>
+    <ng-container *ngIf="gene">
+      <section class="wrapper gene-page__header">
+        <div class="container-fluid">
+          <div class="row no-gutters __mb-10">
+            <app-breadcrumbs></app-breadcrumbs>
+          </div>
+          <div class="row no-gutters">
+            <div class="col col-12 header__title">
+              <div class="title__caption">
+                <div class="add-to-favorites">
+                  <button mat-icon-button>
                 <span
                   [ngClass]="isInFavourites ? 'fas fa-star' : 'far fa-star'"
                   (click)="toggleFavourites(gene.id)"
                   class="icon"
                   aria-hidden="true"
                 ></span>
-                </button>
+                  </button>
+                </div>
+                <div class="caption__inner">
+                  {{gene.symbol}}
+                </div>
               </div>
-              <div class="caption__inner">
-                {{gene.symbol}}
-              </div>
-            </div>
 
-            <div *ngIf="gene.aliases.length !== 0"
-                 class="title__vendors">
+              <div *ngIf="gene.aliases.length !== 0"
+                   class="title__vendors">
               <span *ngFor="let item of gene.aliases"
                     class="alias">{{item}}</span>
+              </div>
+
+              <time class="title__updated" dateTime="{{timestamp | unixTimeFormatter}}">
+                {{ timestamp | unixTimeFormatter | localizedDate:'d MMMM yyyy'}}
+              </time>
+
             </div>
-
-            <time class="title__updated" dateTime="{{timestamp | unixTimeFormatter}}">
-              {{ timestamp | unixTimeFormatter | localizedDate:'d MMMM yyyy'}}
-            </time>
-
-          </div>
-          <div class="col col-12 header__short-comment">
+            <div class="col col-12 header__short-comment">
             <span class="str_source-GeneAge">
               {{gene.name}}
               <span *ngIf="isGeneCandidate"
@@ -42,404 +43,377 @@
                 {{ "gene_candidate" | translate }}
               </span>
             </span>
-          </div>
-          <div class="col col-12 header__protein-classes">
-            <ng-container *ngIf="gene.proteinClasses; else tagSkeletal">
-              <button *ngFor="let item of gene.proteinClasses"
-                      matTooltip="{{ item.name }}"
-                      class="alias"
-                      (click)="applyFilter(filterTypes.protein_classes, item.id)">
-                <div class="alias__overflow">{{item.name}}</div>
-              </button>
-            </ng-container>
+            </div>
+            <div class="col col-12 header__protein-classes">
+              <ng-container *ngIf="gene.proteinClasses; else tagSkeletal">
+                <button *ngFor="let item of gene.proteinClasses"
+                        matTooltip="{{ item.name }}"
+                        class="alias"
+                        (click)="applyFilter(filterTypes.protein_classes, item.id)">
+                  <div class="alias__overflow">{{item.name}}</div>
+                </button>
+              </ng-container>
 
-            <ng-template #tagSkeletal>
-              <span class="alias __skeletal"></span>
-              <span class="alias __skeletal"></span>
-              <span class="alias __skeletal"></span>
-              <span class="alias __skeletal"></span>
-            </ng-template>
+              <ng-template #tagSkeletal>
+                <span class="alias __skeletal"></span>
+                <span class="alias __skeletal"></span>
+                <span class="alias __skeletal"></span>
+                <span class="alias __skeletal"></span>
+              </ng-template>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12 __mb-30">
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{ 'gene_page_title_contents' | translate }}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 __mb-30">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ 'gene_page_title_contents' | translate }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
 
-            <mat-nav-list *ngIf="isAnyContent">
-              <a mat-list-item
-                 *ngIf="gene.commentEvolution"
-                 [routerLink]="['/gene', symbol]" fragment="evolution">
-                {{ 'gene_page_title_evolution' | translate }}
-              </a>
+              <mat-nav-list *ngIf="isAnyContent">
+                <a mat-list-item
+                   *ngIf="gene.commentEvolution"
+                   [routerLink]="['/gene', symbol]" fragment="evolution">
+                  {{ 'gene_page_title_evolution' | translate }}
+                </a>
 
-              <a mat-list-item
-                 *ngIf="gene.proteinDescriptionOpenGenes?.length !== 0"
-                 [routerLink]="['/gene', symbol]" fragment="description-open-genes">
-                {{ 'gene_page_title_protein_description_og' | translate }}
-              </a>
+                <a mat-list-item
+                   *ngIf="gene.proteinDescriptionOpenGenes?.length !== 0"
+                   [routerLink]="['/gene', symbol]" fragment="description-open-genes">
+                  {{ 'gene_page_title_protein_description_og' | translate }}
+                </a>
 
-              <a mat-list-item
-                 *ngIf="gene.proteinDescriptionUniProt?.length !== 0"
-                 [routerLink]="['/gene', symbol]" fragment="description-uniprot">
-                {{ 'gene_page_title_protein_description_uniprot' | translate }}
-              </a>
+                <a mat-list-item
+                   *ngIf="gene.proteinDescriptionUniProt?.length !== 0"
+                   [routerLink]="['/gene', symbol]" fragment="description-uniprot">
+                  {{ 'gene_page_title_protein_description_uniprot' | translate }}
+                </a>
 
-              <a mat-list-item
-                 *ngIf="gene.expression.length !== 0"
-                 [routerLink]="['/gene', symbol]" fragment="expression">
-                {{ 'gene_page_title_expression' | translate }}
-              </a>
+                <a mat-list-item
+                   *ngIf="gene.expression.length !== 0"
+                   [routerLink]="['/gene', symbol]" fragment="expression">
+                  {{ 'gene_page_title_expression' | translate }}
+                </a>
 
-              <a mat-list-item
-                 *ngIf="
+                <a mat-list-item
+                   *ngIf="
                   gene.terms.biological_process.length >= 1 ||
                   gene.terms.cellular_component.length >= 1 ||
                   gene.terms.molecular_activity.length >= 1"
-                 [routerLink]="['/gene', symbol]" fragment="terms">
-                Gene Ontology
-              </a>
+                   [routerLink]="['/gene', symbol]" fragment="terms">
+                  Gene Ontology
+                </a>
 
-              <a mat-list-item
-                 *ngIf="isHpa"
-                 [routerLink]="['/gene', symbol]" fragment="human-protein-atlas">
-                Human Protein Atlas
-              </a>
-            </mat-nav-list>
-          </mat-expansion-panel>
-        </div>
+                <a mat-list-item
+                   *ngIf="isHpa"
+                   [routerLink]="['/gene', symbol]" fragment="human-protein-atlas">
+                  Human Protein Atlas
+                </a>
+              </mat-nav-list>
+            </mat-expansion-panel>
+          </div>
 
-        <div class="col-12">
-          <div class="page-wrapper">
-            <section class="wrapper gene-page__annotation">
-              <div class="row no-gutters annotation__row row no-gutters annotation__row--emphasized">
-                <div class="row__title col-xs-12 col-md-5">
-                  {{ 'gene_page_researches_processes' | translate }}:
-                </div>
-
-                <div class="row__value col">
-                  <ng-container *ngIf="gene.functionalClusters.length; else noData">
-                    <button *ngFor="let item of gene.functionalClusters"
-                            class="alias item__value" (click)="applyFilter(filterTypes.age_related_processes, item.id)">
-                      {{item.name}}
-                    </button>
-                  </ng-container>
-
-                  <ng-template #noData>
-                    {{'gene_page_no_data' | translate}}
-                  </ng-template>
-                </div>
-              </div>
-
-              <div class="row no-gutters annotation__row">
-                <div class="row__title col-xs-12 col-md-5">
-                  {{ 'gene_page_title_criteria' | translate }}:
-                </div>
-
-                <div class="row__value col">
-                  <ul *ngIf="gene.commentCause else noData"
-                      class="list list--bulletted">
-                    <!-- TODO: backend: return array of objects instead of object with objects -->
-                    <li *ngFor="let cause of gene.commentCause">
-                      {{cause.name}}
-                    </li>
-                  </ul>
-                  <ng-template #noData>
-                    {{'gene_page_no_data' | translate}}
-                  </ng-template>
-                </div>
-              </div>
-
-              <div class="row no-gutters annotation__row">
-                <div class="row__title col-xs-12 col-md-5">
-                  {{ 'gene_page_researches_age_related_changes_human' | translate }}:
-                </div>
-
-                <div class="row__value col">
-                  {{ getExpressionLocaleKey(gene.expressionChange) | translate }}
-                </div>
-              </div>
-
-              <div class="row no-gutters annotation__row">
-                <div class="row__title col-xs-12 col-md-5">
-                  {{ 'gene_list_diseases' | translate }}:
-                </div>
-
-                <div class="row__value col">
-                  <app-associated-diseases
-                    *ngIf="gene.diseases; else noData"
-                    class="annotation__filters-list"
-                    [geneDiseases]="gene.diseases"
-                    [activeListItem]="filters.byDiseases"
-                    (clickEvent)="applyFilter(filterTypes.disease, $event)"
-                  ></app-associated-diseases>
-
-                  <ng-template #noData>
-                    {{'gene_page_no_data' | translate}}
-                  </ng-template>
-                </div>
-              </div>
-
-              <div class="row no-gutters annotation__row">
-                <div class="row__title col-xs-12 col-md-5">
-                  {{ 'gene_list_disease_categories' | translate }}:
-                </div>
-
-                <div class="row__value col">
-                  <app-associated-disease-categories
-                    *ngIf="gene.diseaseCategories; else noData"
-                    class="annotation__filters-list"
-                    [geneDiseaseCategories] ="gene.diseaseCategories"
-                    [activeListItem]="filters.byDiseaseCategories"
-                    (clickEvent)="applyFilter(filterTypes.disease_categories, $event)"
-                  ></app-associated-disease-categories>
-
-                  <ng-template #noData>
-                    {{'gene_page_no_data' | translate}}
-                  </ng-template>
-                </div>
-              </div>
-            </section>
-
-            <section class="wrapper gene-page__age">
-              <div class="age__types">
-                <div class="age__type age__phylogeny">
-                  <div class="type__inner">
-                    <div class="type__value">
-                      <app-gene-location
-                      [item]="gene.location"
-                      [geneSymbol]="gene.symbol"></app-gene-location>
-                    </div>
+          <div class="col-12">
+            <div class="page-wrapper">
+              <section class="wrapper gene-page__annotation">
+                <div class="row no-gutters annotation__row row no-gutters annotation__row--emphasized">
+                  <div class="row__title col-xs-12 col-md-5">
+                    {{ 'gene_page_researches_processes' | translate }}:
                   </div>
 
-                  <div class="type__inner">
-                    <div class="type__title">
-                      {{ 'phylogeny' | translate }}, {{ 'origin' | translate | lowercase }}:
-                      <span class="fa far fa-info-circle"
-                            *ngIf="isUiHintsSettingOn"
-                            (click)="onShowUiHints($event)"
-                      ></span>
-                    </div>
-                    <div class="type__value">
-                      <app-gene-age [gene]="gene" show="origin"></app-gene-age>
-                    </div>
-                  </div>
+                  <div class="row__value col">
+                    <ng-container *ngIf="gene.functionalClusters.length; else noData">
+                      <button *ngFor="let item of gene.functionalClusters"
+                              class="alias item__value" (click)="applyFilter(filterTypes.age_related_processes, item.id)">
+                        {{item.name}}
+                      </button>
+                    </ng-container>
 
-                  <div class="type__inner">
-                    <div class="type__title">
-                      {{ 'ncbi_homologs' | translate }}
-                    </div>
-                    <div class="type__value">
-                      <app-gene-age [gene]="gene" show="homologs"></app-gene-age>
-                    </div>
+                    <ng-template #noData>
+                      {{'gene_page_no_data' | translate}}
+                    </ng-template>
                   </div>
                 </div>
 
-                <div
-                  *ngIf="isAnyOrtholog"
-                  class="age__type age__orthologs">
-                  <div class="type__inner">
-                    <div class="type__title">
-                      {{ "gene_page_title_orthologs" | translate }}
-                    </div>
+                <div class="row no-gutters annotation__row">
+                  <div class="row__title col-xs-12 col-md-5">
+                    {{ 'gene_page_title_criteria' | translate }}:
+                  </div>
 
-                    <ul class="orthologs">
-                      <ng-container *ngFor="let item of gene.ortholog | slice: 0:orthologsMaxItems">
-                        <li *ngIf="item.species?.commonName || item.species?.latinName"
-                            class="ortholog">
-                          <div class="ortholog__species">
-                            <div *ngIf="item.species.latinName"
-                                 class="latin-name"
-                                 [innerHTML]="item.species.latinName | orthologLinkWrapper: item:'link':null"
-                            ></div>
-
-                            <div *ngIf="item.species.commonName && item.species.commonName !== item.species.latinName"
-                                 class="common-name">
-                              {{ item.species.commonName }}
-                            </div>
-                          </div>
-
-                          <div class="ortholog__gene"
-                               [innerHTML]="item.symbol | orthologLinkWrapper: item:'alias':{el: 'span', className: 'alias'}">
-                          </div>
-                        </li>
-                      </ng-container>
+                  <div class="row__value col">
+                    <ul *ngIf="gene.commentCause else noData"
+                        class="list list--bulletted">
+                      <!-- TODO: backend: return array of objects instead of object with objects -->
+                      <li *ngFor="let cause of gene.commentCause">
+                        {{cause.name}}
+                      </li>
                     </ul>
+                    <ng-template #noData>
+                      {{'gene_page_no_data' | translate}}
+                    </ng-template>
+                  </div>
+                </div>
 
-                    <div *ngIf="gene.ortholog.length > orthologsMaxItemsToShow"
-                         class="show-more __mt-10">
-                      <button *ngIf="orthologsMaxItems !== orthologsMaxItemsToShow"
-                              class="btn show-more__button"
-                              (click)="orthologsMaxItems = orthologsMaxItemsToShow">
-                        {{ "show_less" | translate }}
-                      </button>
+                <div class="row no-gutters annotation__row">
+                  <div class="row__title col-xs-12 col-md-5">
+                    {{ 'gene_page_researches_age_related_changes_human' | translate }}:
+                  </div>
 
-                      <button *ngIf="orthologsMaxItems == orthologsMaxItemsToShow"
-                              class="btn show-more__button"
-                              (click)="orthologsMaxItems = gene.ortholog.length">
-                        {{ "show_more" | translate }}
-                      </button>
+                  <div class="row__value col">
+                    {{ getExpressionLocaleKey(gene.expressionChange) | translate }}
+                  </div>
+                </div>
+
+                <div class="row no-gutters annotation__row">
+                  <div class="row__title col-xs-12 col-md-5">
+                    {{ 'gene_list_diseases' | translate }}:
+                  </div>
+
+                  <div class="row__value col">
+                    <app-associated-diseases
+                      *ngIf="gene.diseases; else noData"
+                      class="annotation__filters-list"
+                      [geneDiseases]="gene.diseases"
+                      [activeListItem]="filters.byDiseases"
+                      (clickEvent)="applyFilter(filterTypes.disease, $event)"
+                    ></app-associated-diseases>
+
+                    <ng-template #noData>
+                      {{'gene_page_no_data' | translate}}
+                    </ng-template>
+                  </div>
+                </div>
+
+                <div class="row no-gutters annotation__row">
+                  <div class="row__title col-xs-12 col-md-5">
+                    {{ 'gene_list_disease_categories' | translate }}:
+                  </div>
+
+                  <div class="row__value col">
+                    <app-associated-disease-categories
+                      *ngIf="gene.diseaseCategories; else noData"
+                      class="annotation__filters-list"
+                      [geneDiseaseCategories] ="gene.diseaseCategories"
+                      [activeListItem]="filters.byDiseaseCategories"
+                      (clickEvent)="applyFilter(filterTypes.disease_categories, $event)"
+                    ></app-associated-disease-categories>
+
+                    <ng-template #noData>
+                      {{'gene_page_no_data' | translate}}
+                    </ng-template>
+                  </div>
+                </div>
+              </section>
+
+              <section class="wrapper gene-page__age">
+                <div class="age__types">
+                  <div class="age__type">
+                    <div class="type__inner">
+                      <div class="type__value">
+                        <app-gene-location
+                          [item]="gene.location"
+                          [ensemblId]="gene.ensembl"
+                          [geneSymbol]="gene.symbol"></app-gene-location>
+                      </div>
+                    </div>
+
+                    <div class="type__inner">
+                      <div class="type__title">
+                        {{ 'phylogeny' | translate }}, {{ 'origin' | translate | lowercase }}:&nbsp;
+                        <app-info-button
+                              *ngIf="isUiHintsSettingOn"
+                              (click)="onShowUiHints($event)"
+                        ></app-info-button>
+                      </div>
+                      <div class="type__value">
+                        <app-gene-age [gene]="gene" show="origin"></app-gene-age>
+                      </div>
+                    </div>
+
+                    <div class="type__inner">
+                      <div class="type__title">
+                        {{ 'ncbi_homologs' | translate }}
+                      </div>
+                      <div class="type__value">
+                        <app-gene-age [gene]="gene" show="homologs"></app-gene-age>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    *ngIf="isAnyOrtholog"
+                    class="age__type age__orthologs">
+                    <div class="type__inner">
+                      <div class="type__title">
+                        {{ "gene_page_title_orthologs" | translate }}
+                      </div>
+
+                      <ul class="orthologs">
+                        <ng-container *ngFor="let item of gene.ortholog | slice: 0:orthologsMaxItems">
+                          <li *ngIf="item.species?.commonName || item.species?.latinName"
+                              class="ortholog">
+                            <div class="ortholog__species">
+                              <div *ngIf="item.species.latinName"
+                                   class="latin-name"
+                                   [innerHTML]="item.species.latinName | orthologLinkWrapper: item:'link':null"
+                              ></div>
+
+                              <div *ngIf="item.species.commonName && item.species.commonName !== item.species.latinName"
+                                   class="common-name">
+                                {{ item.species.commonName }}
+                              </div>
+                            </div>
+
+                            <div class="ortholog__gene"
+                                 [innerHTML]="item.symbol | orthologLinkWrapper: item:'alias':{el: 'span', className: 'alias'}">
+                            </div>
+                          </li>
+                        </ng-container>
+                      </ul>
+
+                      <div *ngIf="gene.ortholog.length > orthologsMaxItemsToShow"
+                           class="show-more __mt-10">
+                        <button *ngIf="orthologsMaxItems !== orthologsMaxItemsToShow"
+                                class="btn show-more__button"
+                                (click)="orthologsMaxItems = orthologsMaxItemsToShow">
+                          {{ "show_less" | translate }}
+                        </button>
+
+                        <button *ngIf="orthologsMaxItems == orthologsMaxItemsToShow"
+                                class="btn show-more__button"
+                                (click)="orthologsMaxItems = gene.ortholog.length">
+                          {{ "show_more" | translate }}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
-
-            <section *ngIf="isNcbiDescription || isLocationData">
-              <article>
-                <ul *ngIf="isLocationData"
-                    class="list">
-                  <li
-                    *ngIf="gene.band"
-                  ><b>{{ 'gene_page_cytogenetic_band' | translate }}:</b> {{ gene.band }}</li>
-
-                  <li
-                    *ngIf="gene.locationStart"
-                  ><b>{{ 'gene_page_location_start' | translate }}:</b> {{ gene.locationStart }}</li>
-
-                  <li
-                    *ngIf="gene.locationEnd"
-                  ><b>{{ 'gene_page_location_end' | translate }}:</b> {{ gene.locationEnd }}</li>
-
-                  <li
-                    *ngIf="gene.orientation"
-                  ><b>{{ 'gene_page_orientation' | translate }}:</b>
-
-                    <ng-container
-                      *ngIf="gene.orientation === 1; then plusStrand; else minusStrand"
-                    ></ng-container>
-
-                    <ng-template #plusStrand>
-                      {{ 'gene_page_orientation_plus_strand' | translate }}
-                    </ng-template>
-
-                    <ng-template #minusStrand>
-                      {{ 'gene_page_orientation_minus_strand' | translate }}
-                    </ng-template>
-                  </li>
-                </ul>
-              </article>
-            </section>
-
-            <section class="wrapper gene-page__articles">
-              <div class="__w-content-fluid articles__content"
-                   *ngIf="isAnyContent;
+              <section class="wrapper gene-page__articles">
+                <div class="__w-content-fluid articles__content"
+                     *ngIf="isAnyContent;
                       else noContent">
 
-                <section *ngIf="isAnyResearchFilled">
-                  <h2 class="__mb-15">{{ 'gene_page_title_researches' | translate }}</h2>
-                  <app-researches [researches]="gene.researches"></app-researches>
-                </section>
+                  <section *ngIf="isAnyResearchFilled">
+                    <h2 class="__mb-15">{{ 'gene_page_title_researches' | translate }}</h2>
+                    <app-researches [researches]="gene.researches"></app-researches>
+                  </section>
 
-                <section>
-                  <h2 *ngIf="gene.commentEvolution || gene.proteinDescriptionUniProt"
-                      class="__mb-15"
-                  >{{ 'gene_page_title_summary' | translate }}</h2>
+                  <section>
+                    <h2 *ngIf="gene.commentEvolution || gene.proteinDescriptionUniProt"
+                        class="__mb-15"
+                    >{{ 'gene_page_title_summary' | translate }}</h2>
 
-                  <ng-container *ngIf="gene.commentEvolution">
-                    <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
-                    <article
-                      appTermInfo
-                      id="evolution"
-                      [innerHTML]="gene.commentEvolution | publicationLinksWrap: 'link'"
-                    ></article>
-                  </ng-container>
-
-                  <ng-container *ngIf="isNcbiDescription">
-                    <h3>{{ 'gene_page_title_description' | translate }}</h3>
-                    <article
-                      appTermInfo
-                      [innerHTML]="gene.descriptionNCBI"
-                    ></article>
-                  </ng-container>
-
-                  <ng-container *ngIf="gene.proteinDescriptionOpenGenes?.length !== 0">
-                    <h3>{{ 'gene_page_title_protein_description_og' | translate }}</h3>
-                    <article
-                      appTermInfo
-                      id="description-open-genes"
-                      [innerHTML]="gene.proteinDescriptionOpenGenes | publicationLinksWrap: 'link'"
-                    ></article>
-                  </ng-container>
-
-                  <ng-container *ngIf="gene.proteinDescriptionUniProt?.length !== 0">
-                    <h3>{{ 'gene_page_title_protein_description_uniprot' | translate }}</h3>
-                    <article
-                      appTermInfo
-                      id="description-uniprot"
-                      [innerHTML]="gene.proteinDescriptionUniProt"
-                    ></article>
-                  </ng-container>
-                </section>
-
-                <section
-                  *ngIf="isAnyGoCategory"
-                  id="terms"
-                >
-                  <h3 class="notranslate">Gene Ontology</h3>
-                  <app-gene-ontology
-                    [gene]="gene"
-                    [process]="geneOntologyProcessMap"
-                    [component]="geneOntologyComponentMap"
-                    [activity]="geneOntologyActivityMap"
-                  ></app-gene-ontology>
-                </section>
-
-                <section class="wrapper gene-page__expression"
-                         *ngIf="gene.expression.length !== 0"
-                         id="expression">
-                  <app-expression
-                    [gene]="gene"
-                    [max]="expressionMaxValue"
-                  ></app-expression>
-                </section>
-
-                <section class="wrapper" id="human-protein-atlas"
-                         *ngIf="isHpa">
-                  <h3 class="notranslate __mb-20">
-                    {{'human_protein_atlas' | translate}}
-                  </h3>
-                  <app-human-protein-atlas
-                    [gene]="gene"
-                    [hpa]="gene.humanProteinAtlas"
-                  ></app-human-protein-atlas>
-                </section>
-              </div>
-
-              <ng-template #noContent>
-                <section class="col-12">
-                  <app-no-content
-                    [title]="'gene_page_error_no_article_yet'">
-                    <ng-container icon>
-                      <app-icon
-                        icon="default"
-                        size="custom"
-                        customWidth="100%"
-                        customHeight="100%"
-                      ></app-icon>
+                    <ng-container *ngIf="gene.commentEvolution">
+                      <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
+                      <article
+                        appTermInfo
+                        id="evolution"
+                        [innerHTML]="gene.commentEvolution | publicationLinksWrap: 'link'"
+                      ></article>
                     </ng-container>
-                  </app-no-content>
-                </section>
-              </ng-template>
-            </section>
+
+                    <ng-container *ngIf="isNcbiDescription">
+                      <h3>{{ 'gene_page_title_description' | translate }}</h3>
+                      <article
+                        appTermInfo
+                        [innerHTML]="gene.descriptionNCBI"
+                      ></article>
+                    </ng-container>
+
+                    <ng-container *ngIf="gene.proteinDescriptionOpenGenes?.length !== 0">
+                      <h3>{{ 'gene_page_title_protein_description_og' | translate }}</h3>
+                      <article
+                        appTermInfo
+                        id="description-open-genes"
+                        [innerHTML]="gene.proteinDescriptionOpenGenes | publicationLinksWrap: 'link'"
+                      ></article>
+                    </ng-container>
+
+                    <ng-container *ngIf="gene.proteinDescriptionUniProt?.length !== 0">
+                      <h3>{{ 'gene_page_title_protein_description_uniprot' | translate }}</h3>
+                      <article
+                        appTermInfo
+                        id="description-uniprot"
+                        [innerHTML]="gene.proteinDescriptionUniProt"
+                      ></article>
+                    </ng-container>
+                  </section>
+
+                  <section
+                    *ngIf="isAnyGoCategory"
+                    id="terms"
+                  >
+                    <h3 class="notranslate">Gene Ontology</h3>
+                    <app-gene-ontology
+                      [gene]="gene"
+                      [process]="geneOntologyProcessMap"
+                      [component]="geneOntologyComponentMap"
+                      [activity]="geneOntologyActivityMap"
+                    ></app-gene-ontology>
+                  </section>
+
+                  <section class="wrapper gene-page__expression"
+                           *ngIf="gene.expression.length !== 0"
+                           id="expression">
+                    <app-expression
+                      [gene]="gene"
+                      [max]="expressionMaxValue"
+                    ></app-expression>
+                  </section>
+
+                  <section class="wrapper" id="human-protein-atlas"
+                           *ngIf="isHpa">
+                    <h3 class="notranslate __mb-20">
+                      {{'human_protein_atlas' | translate}}
+                    </h3>
+                    <app-human-protein-atlas
+                      [gene]="gene"
+                      [hpa]="gene.humanProteinAtlas"
+                    ></app-human-protein-atlas>
+                  </section>
+                </div>
+
+                <ng-template #noContent>
+                  <section class="col-12">
+                    <app-no-content
+                      [title]="'gene_page_error_no_article_yet'">
+                      <ng-container icon>
+                        <app-icon
+                          icon="default"
+                          size="custom"
+                          customWidth="100%"
+                          customHeight="100%"
+                        ></app-icon>
+                      </ng-container>
+                    </app-no-content>
+                  </section>
+                </ng-template>
+              </section>
+            </div>
           </div>
         </div>
       </div>
+
+      <app-gene-reference *ngIf="isPageLoaded"
+                          class="__mt-30"
+                          [gene]="gene"
+      ></app-gene-reference>
+    </ng-container>
+
+    <div *ngIf="!gene"
+         class="container-fluid __mt-80">
+      <app-skeleton [view]="'line'"
+                    [groups]="5"
+      ></app-skeleton>
     </div>
 
-    <app-gene-reference *ngIf="isPageLoaded"
-                        class="__mt-30"
-                        [gene]="gene"
-    ></app-gene-reference>
   </div>
 </div>
 
