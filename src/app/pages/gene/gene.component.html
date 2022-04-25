@@ -101,10 +101,7 @@
                 </a>
 
                 <a mat-list-item
-                   *ngIf="
-                  gene.terms.biological_process.length >= 1 ||
-                  gene.terms.cellular_component.length >= 1 ||
-                  gene.terms.molecular_activity.length >= 1"
+                   *ngIf="isAnyGoCategory"
                    [routerLink]="['/gene', symbol]" fragment="terms">
                   Gene Ontology
                 </a>
@@ -210,36 +207,38 @@
                 </div>
               </section>
 
-              <section class="wrapper gene-page__age">
-                <div class="age__types">
-                  <div class="age__type">
-                    <div class="type__inner">
-                      <div class="type__value">
+              <section class="wrapper gene-page__general-info">
+                <div class="panes">
+                  <div class="pane pane--location">
+                    <div class="pane__inner">
+                      <div class="pane__value">
                         <app-gene-location
                           [item]="gene.location"
                           [ensemblId]="gene.ensembl"
                           [geneSymbol]="gene.symbol"></app-gene-location>
                       </div>
                     </div>
+                  </div>
 
-                    <div class="type__inner">
-                      <div class="type__title">
+                  <div class="pane pan--stacked">
+                    <div class="pane__inner">
+                      <div class="pane__title">
                         {{ 'phylogeny' | translate }}, {{ 'origin' | translate | lowercase }}:&nbsp;
                         <app-info-button
-                              *ngIf="isUiHintsSettingOn"
-                              (click)="onShowUiHints($event)"
+                          *ngIf="isUiHintsSettingOn"
+                          (click)="onShowUiHints($event)"
                         ></app-info-button>
                       </div>
-                      <div class="type__value">
+                      <div class="pane__value">
                         <app-gene-age [gene]="gene" show="origin"></app-gene-age>
                       </div>
                     </div>
 
-                    <div class="type__inner">
-                      <div class="type__title">
+                    <div class="pane__inner">
+                      <div class="pane__title">
                         {{ 'ncbi_homologs' | translate }}
                       </div>
-                      <div class="type__value">
+                      <div class="pane__value">
                         <app-gene-age [gene]="gene" show="homologs"></app-gene-age>
                       </div>
                     </div>
@@ -247,9 +246,9 @@
 
                   <div
                     *ngIf="isAnyOrtholog"
-                    class="age__type age__orthologs">
-                    <div class="type__inner">
-                      <div class="type__title">
+                    class="pane pane--orthologs">
+                    <div class="pane__inner">
+                      <div class="pane__title">
                         {{ "gene_page_title_orthologs" | translate }}
                       </div>
 
@@ -408,7 +407,7 @@
     </ng-container>
 
     <div *ngIf="!gene"
-         class="container-fluid __mt-80">
+         class="container-fluid __mt-60">
       <app-skeleton [view]="'line'"
                     [groups]="5"
       ></app-skeleton>

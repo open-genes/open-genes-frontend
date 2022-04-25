@@ -9,16 +9,20 @@
 
   &__body {
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
     justify-content: center;
     align-content: center;
     align-items: center;
     margin-bottom: 16px;
 
-    .description {
+    .scheme,
+    .info {
       display: flex;
-      margin-right: 50px;
+    }
+
+    .scheme {
       min-width: 130px;
+      padding-right: 30px;
       font-size: $font-size;
       color: $color-purple;
 
@@ -50,9 +54,7 @@
     }
 
     .info {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      display: inline-block;
 
       li {
         display: block;
@@ -61,6 +63,7 @@
 
         span {
           &:first-child {
+            white-space: nowrap;
             margin-right: 2px;
             color: $color-gray;
           }
