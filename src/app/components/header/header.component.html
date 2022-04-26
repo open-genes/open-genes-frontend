@@ -1,5 +1,5 @@
 <header class="header">
-  <div *ngIf="showAnnouncement"
+  <div *ngIf="showAnnouncement && region !== 'Russian Federation'"
      target="_blank"
      class="header__announcement header__announcement--no-war">
     <b>{{ "no_war_in_ukraine" | translate }}</b>
