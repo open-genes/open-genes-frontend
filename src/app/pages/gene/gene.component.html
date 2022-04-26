@@ -209,7 +209,8 @@
 
               <section class="wrapper gene-page__general-info">
                 <div class="panes">
-                  <div class="pane pane--location">
+                  <div *ngIf="gene.location.band"
+                       class="pane pane--location">
                     <div class="pane__inner">
                       <div class="pane__value">
                         <app-gene-location
