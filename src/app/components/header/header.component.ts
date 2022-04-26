@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnDestroy {
   @Input() region: string;
-  public showAnnouncement = true;
+  public showAnnouncement = false;
   private favouritesSubscription: Subscription;
 
   constructor(
