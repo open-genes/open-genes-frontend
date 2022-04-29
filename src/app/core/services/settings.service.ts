@@ -10,6 +10,7 @@ export class SettingsService {
     showUiHints: false,
     searchMode: SearchModeEnum.searchByGenes,
     isTableView: true,
+    showCookieBanner: true,
   };
 
   public genesListSettings: GenesListSettings = {

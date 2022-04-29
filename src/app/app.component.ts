@@ -6,6 +6,8 @@ import { NavigationEnd, RouteConfigLoadEnd, Router, RouterEvent } from '@angular
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { IpRegistryService } from './core/services/api/ipregistry.service';
+import { Settings, SettingsEnum } from './core/models/settings.model';
+import { SettingsService } from './core/services/settings.service';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +16,9 @@ import { IpRegistryService } from './core/services/api/ipregistry.service';
 export class AppComponent implements OnInit {
   public region: string;
   public isFooterVisible = true;
+  public retrievedSettings: Settings;
+
+  private settingsKey = SettingsEnum;
   private subscription$ = new Subject();
   private currentRoute = '';
   private readonly lang: string;
@@ -21,6 +26,7 @@ export class AppComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) public document: Document,
     private readonly ipRegistryService: IpRegistryService,
+    private settingsService: SettingsService,
     private translate: TranslateService,
     private router: Router
   ) {
@@ -37,6 +43,7 @@ export class AppComponent implements OnInit {
       this.lang = environment.languages[1];
     }
     this.translate.use(this.lang);
+    this.retrievedSettings = this.settingsService.getSettings();
   }
 
   ngOnInit(): void {
@@ -71,6 +78,11 @@ export class AppComponent implements OnInit {
     } else {
       this.region = localStorage.getItem('region');
     }
+  }
+
+  acceptCookies(): void {
+    this.retrievedSettings.showCookieBanner = false;
+    this.settingsService.setSettings(this.settingsKey.showCookieBanner, false);
   }
 
   ngOnDestroy(): void {
