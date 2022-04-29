@@ -57,7 +57,7 @@
     margin-bottom: 10px;
   }
 
-  .genes-info__found {
+  &__found, &__p-value {
     display: inline-block;
     margin-right: 20px;
     margin-top: .5em;

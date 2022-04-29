@@ -35,6 +35,13 @@
     </ng-container>
   </b>
   </div>
+
+  <ng-container *ngIf="pValue">
+    <div class="genes-info__p-value">
+      {{ 'p_value' | translate }} : <b>{{pValue}}</b>
+    </div>
+  </ng-container>
+
 </div>
 
 <!-- Content -->

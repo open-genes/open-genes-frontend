@@ -25,6 +25,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Sort } from '@angular/material/sort';
 import { ApiResponse } from '../../../core/models/api-response.model';
 import { SearchModel } from '../../../core/models/open-genes-api/search.model';
+import * as fishersExactTest from 'fishers-exact-test';
 
 @Component({
   selector: 'app-genes-list',
@@ -95,6 +96,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
 
   public searchedData: Genes[] = [];
   public foundAndNotFoundGenes: Omit<SearchModel, 'items'>;
+  public pValue: any;
   public filterTypes = FilterTypesEnum;
   public sortEnum = SortEnum;
   public searchMode: SearchMode;
@@ -113,6 +115,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   private subscription$ = new Subject();
   private genesFromInput: Genes[];
   private genesPerPage = 20;
+  private humanGenesQuantity = 15;
   private snackBarRef: MatSnackBarRef<SnackBarComponent>;
 
   constructor(
@@ -181,7 +184,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
           }
 
           this.downloadSearch(this.searchedData);
-          this.setFoundAndNotFound();
+          this.setFoundAndNotFound(res);
 
           this.pagination = res.options.pagination;
           this.isLoading = false;
@@ -325,7 +328,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
     });
   }
 
-  private setFoundAndNotFound(): void {
+  private setFoundAndNotFound(data): void {
     if (this.arrayOfWords.length) {
       const notFoundGenes = [];
       let foundGenes = [];
@@ -346,11 +349,19 @@ export class GenesListComponent implements OnInit, OnDestroy {
         found: foundGenes,
         notFound: notFoundGenes,
       };
+
+      this.pValue = fishersExactTest(
+        this.arrayOfWords.length,
+        data.options.total,
+        this.humanGenesQuantity,
+        this.searchedData.length
+      );
     } else {
       this.foundAndNotFoundGenes = {
         found: [],
         notFound: [],
       };
+      this.pValue = null;
     }
   }
 
