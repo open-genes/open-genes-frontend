@@ -15,6 +15,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 })
 export class DownloadComponent {
   public currentDownloadLink: string | SafeResourceUrl = '#';
+  public currentDatasetName = 'export';
 
   @ViewChild('downLoadLinkTemplate') downLoadLinkTemplate: TemplateRef<any>;
 
@@ -39,8 +40,17 @@ export class DownloadComponent {
     const res = await this.csvExportService.generateGenesDiseasesTable();
     if (res.length !== 0) {
       this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+      this.currentDatasetName = 'genes-diseases';
       this.openBottomSheet();
     }
-    // this.currentDownloadLink = this.sanitizer.bypassSecurityTrustResourceUrl(link as string);
+  }
+
+  public async downloadAgingMechanismsCsv() {
+    const res = await this.csvExportService.generateGenesAgingMechanismsTable();
+    if (res.length !== 0) {
+      this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+      this.currentDatasetName = 'genes-aging-mechanisms';
+      this.openBottomSheet();
+    }
   }
 }

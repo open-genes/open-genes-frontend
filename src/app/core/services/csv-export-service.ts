@@ -1,30 +1,24 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api/open-genes-api.service';
-import { of, Subject } from 'rxjs';
+import { of } from 'rxjs';
 import { Genes } from '../models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CsvExportService {
-  constructor(private apiService: ApiService) {}
-
-  private subscription$ = new Subject();
   private genes: Genes[];
 
   static wait(delay) {
     return new Promise((resolve) => setTimeout(resolve, delay));
   }
 
-  static async FetchResource(url, delay, tries, fetchOptions) {
+  static async FetchData(url, delay, tries, fetchOptions) {
     function onError(err) {
       const triesLeft = tries - 1;
       if (!triesLeft) {
         console.log(err);
       }
-      return CsvExportService.wait(delay).then(() =>
-        CsvExportService.FetchResource(url, delay, triesLeft, fetchOptions)
-      );
+      return CsvExportService.wait(delay).then(() => CsvExportService.FetchData(url, delay, triesLeft, fetchOptions));
     }
 
     return fetch(url, fetchOptions).catch(onError);
@@ -45,50 +39,38 @@ export class CsvExportService {
     }
   }
 
-  public async generateGenesDiseasesTable() {
+  private async generateSimplePairCsv(csvHeader, field) {
     let resultingString = '';
-    const response = await CsvExportService.FetchResource(
-      `https://open-genes.com/api/gene/search?pageSize=600`,
-      0,
-      1,
-      {}
-    );
-
+    // TODO: cache after once made and invalidate on the next session
+    const response = await CsvExportService.FetchData(`https://open-genes.com/api/gene/search?pageSize=600`, 0, 1, {});
     if (response) {
       const resJson = await response.json();
       const genes = resJson.items;
       if (genes) {
-        console.log('genes:', genes);
-        const csvHeader = '"HGNC", "diseases"\n';
-        resultingString = resultingString + csvHeader;
+        resultingString = resultingString + String(csvHeader);
         for (const gene of genes) {
-          const diseases = gene.diseases.map((d) => `'${d.name}'`);
-          const csvRow = `"${gene.symbol}", "${diseases}"\n`;
+          const items = gene[field].map((d) => `'${d.name}'`);
+          const csvRow = `"${gene.symbol}", "${items}"\n`;
           resultingString = resultingString + csvRow;
         }
         return resultingString;
       }
     }
-
     return null;
   }
 
-  public generateGenesAgingMechanismsTable() {
-    let resulingString = '';
-    const csvHeader = '"HGNC", "diseases"\n';
-    resulingString = resulingString + csvHeader;
-    for (const gene of this.genes) {
-      const mechanisms = gene.agingMechanisms.map((d) => `'${d.name}'`);
-      const csvRow = `"${gene.symbol}", "${mechanisms}"\n`;
-      resulingString = resulingString + csvRow;
-    }
-    return of(resulingString);
+  public async generateGenesDiseasesTable() {
+    return await this.generateSimplePairCsv('"HGNC", "diseases"\n', 'diseases');
+  }
+
+  public async generateGenesAgingMechanismsTable() {
+    return await this.generateSimplePairCsv('"HGNC", "aging mechanisms"\n', 'agingMechanisms');
   }
 
   public generateYellowTable() {
-    let resulingString = '';
+    let resultingString = '';
     const csvHeader = '"HGNC", "comment", "doi", "pmid", "proteinActivity", "regulatedGene", "regulationType"\n';
-    resulingString = resulingString + csvHeader;
+    resultingString = resultingString + csvHeader;
     for (const gene of this.genes) {
       const yellowFormsData = gene.researches?.proteinRegulatesOtherGenes;
 
@@ -102,12 +84,12 @@ export class CsvExportService {
           const regulationType = this.checkBlankValues(form?.regulationType);
           const regulatedGene = form?.regulatedGene.symbol;
 
-          resulingString =
-            resulingString +
+          resultingString =
+            resultingString +
             `"${gene.symbol}", "${comment}", "${doi}", "${pmid}", "${proteinActivity}",  "${regulatedGene}", "${regulationType}"\n`;
         }
       });
     }
-    return of(resulingString);
+    return of(resultingString);
   }
 }

@@ -2,6 +2,8 @@
 
 .download-page {
   &__variants {
+    margin-top: -4ch;
+
     .variant {
       display: flex;
       flex-wrap: nowrap;
@@ -9,7 +11,7 @@
       justify-content: space-between;
       align-items: flex-start;
       align-content: flex-start;
-      margin-top: 20px;
+      margin-top: 6ch;
 
       p {
         color: $color-gray;
@@ -22,4 +24,12 @@
       }
     }
   }
+}
+
+.file-download-sheet {
+  width: 100%;
+  box-sizing: border-box;
+  padding: $padding-large;
+  font-family: sans-serif;
+  text-align: center;
 }
