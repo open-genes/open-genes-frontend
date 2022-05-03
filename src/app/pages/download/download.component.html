@@ -47,6 +47,25 @@
           </a>
         </section>
       </div>
+      <div class="row">
+        <section class="col-xs-12 col-md-4 variant">
+          <h3>Download separate datasets</h3>
+          <p>Download datasets as csv files</p>
+          <p>
+            <button class="link link--blue link--underline"
+                    (click)="downloadDiseaseCsv()"
+            >Genes to diseases</button>
+          </p>
+        </section>
+      </div>
     </div>
   </div>
 </div>
+
+<ng-template #downLoadLinkTemplate>
+  <a class="link link--blue link--underline"
+     [href]="currentDownloadLink"
+     target="_blank"
+     download="export.csv"
+  >Genes to diseases</a>
+</ng-template>

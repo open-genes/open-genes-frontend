@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class FileExportService {
   constructor(private sanitizer: DomSanitizer) {}
 
-  public downloadJson(data) {
+  public downloadJson(data): SafeResourceUrl {
     if (data?.length === 0) {
       return '';
     }
@@ -16,8 +16,18 @@ export class FileExportService {
       type: 'text/json;charset=utf-8',
     });
 
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-      URL.createObjectURL(blob)
-    );
+    return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+  }
+
+  public downloadCsv(data): SafeResourceUrl {
+    if (data?.length === 0) {
+      return '';
+    }
+
+    const blob = new Blob([data], {
+      type: 'text/csv;charset=utf-8',
+    });
+
+    return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
   }
 }
