@@ -34,6 +34,7 @@ export class DownloadComponent {
         template: this.downLoadLinkTemplate,
       },
     });
+    // TODO: Add error handling if data has failed to load
   }
 
   public async downloadDiseaseCsv() {
@@ -41,6 +42,7 @@ export class DownloadComponent {
     if (res.length !== 0) {
       this.currentDownloadLink = this.fileExportService.downloadCsv(res);
       this.currentDatasetName = 'genes-diseases';
+      // TODO: Show spinner
       this.openBottomSheet();
     }
   }
@@ -50,6 +52,24 @@ export class DownloadComponent {
     if (res.length !== 0) {
       this.currentDownloadLink = this.fileExportService.downloadCsv(res);
       this.currentDatasetName = 'genes-aging-mechanisms';
+      this.openBottomSheet();
+    }
+  }
+
+  public async downloadGoTermsCsv() {
+    const res = await this.csvExportService.generateGeneAndGoTermsTable();
+    if (res.length !== 0) {
+      this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+      this.currentDatasetName = 'genes-go-terms';
+      this.openBottomSheet();
+    }
+  }
+
+  public async downloadYellowTablesCsv() {
+    const res = await this.csvExportService.generateYellowTable();
+    if (res.length !== 0) {
+      this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+      this.currentDatasetName = 'gene-product-involvement-in-regulation-of-genes-associated-with-aging';
       this.openBottomSheet();
     }
   }

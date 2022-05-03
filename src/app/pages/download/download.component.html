@@ -51,16 +51,34 @@
         <section class="col-xs-12 col-md-4 variant">
           <h3>Download separate datasets</h3>
           <p>Download datasets as separate .csv files</p>
-          <p>
-            <button class="link link--blue link--underline"
-                    (click)="downloadDiseaseCsv()"
-            >Genes and diseases</button>
-          </p>
-          <p>
-            <button class="link link--blue link--underline"
-                    (click)="downloadAgingMechanismsCsv()"
-            >Genes and aging mechanisms</button>
-          </p>
+
+          <h4>General data</h4>
+          <ul class="list">
+            <li>
+              <button class="link link--blue link--underline link-button"
+                      (click)="downloadDiseaseCsv()"
+              >Genes and diseases</button>
+            </li>
+            <li>
+              <button class="link link--blue link--underline link-button"
+                      (click)="downloadAgingMechanismsCsv()"
+              >Genes and aging mechanisms</button>
+            </li>
+            <li>
+              <button class="link link--blue link--underline link-button"
+                      (click)="downloadGoTermsCsv()"
+              >Genes and GO Terms</button>
+            </li>
+          </ul>
+
+          <h4>Research data</h4>
+          <ul class="list">
+            <li>
+              <button class="link link--blue link--underline link-button"
+                      (click)="downloadYellowTablesCsv()"
+              >{{ "gene_page_researches_protein_regulates_genes" | translate }}</button>
+            </li>
+          </ul>
         </section>
       </div>
     </div>
