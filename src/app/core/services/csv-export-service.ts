@@ -16,7 +16,7 @@ export class CsvExportService {
     function onError(err) {
       const triesLeft = tries - 1;
       if (!triesLeft) {
-        console.log(err);
+        console.warn(err);
       }
       return CsvExportService.wait(delay).then(() => CsvExportService.FetchData(url, delay, triesLeft, fetchOptions));
     }
@@ -600,7 +600,6 @@ export class CsvExportService {
     if (response) {
       const resJson = await response.json();
       const genes = resJson.items;
-      console.log('genes', genes);
       if (genes) {
         for (const gene of genes) {
           const symbol = gene.symbol;
