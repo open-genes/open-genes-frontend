@@ -8,10 +8,18 @@
       display: flex;
       flex-wrap: nowrap;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: flex-start;
       align-content: flex-start;
-      margin-top: 6ch;
+      margin-top: 7ch;
+
+      h3 {
+        .alias {
+          width: 40px;
+          vertical-align: middle;
+          margin-bottom: 0;
+        }
+      }
 
       p {
         color: $color-gray;
@@ -25,6 +33,20 @@
 
       .link-button {
         text-align: left;
+      }
+
+      .link {
+        font-weight: normal;
+      }
+
+      &--w-button {
+        justify-content: space-between;
+      }
+    }
+
+    .row {
+      &.csv-datasets {
+        margin-top: -4ch;
       }
     }
   }

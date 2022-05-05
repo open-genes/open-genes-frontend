@@ -59,7 +59,8 @@ export class DownloadComponent {
     try {
       this.isProcessing = true;
       const res = await this.csvExportService.generateGenesDiseasesTable();
-      if (res.length !== 0) { // TODO: if status ok
+      if (res.length !== 0) {
+        // TODO: pass status, and handle if status ok
         this.currentDownloadLink = this.fileExportService.downloadCsv(res);
         this.currentDatasetName = 'genes-diseases';
         this.openDownloadModal(this.downLoadLinkTemplate);
@@ -76,6 +77,20 @@ export class DownloadComponent {
       if (res.length !== 0) {
         this.currentDownloadLink = this.fileExportService.downloadCsv(res);
         this.currentDatasetName = 'genes-aging-mechanisms';
+        this.openDownloadModal(this.downLoadLinkTemplate);
+      }
+    } catch {
+      this.openDownloadModal(this.errorTemplate);
+    }
+  }
+
+  public async generateGeneTissueRpkmCsv() {
+    try {
+      this.isProcessing = true;
+      const res = await this.csvExportService.generateGeneTissueRpkmTable();
+      if (res.length !== 0) {
+        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+        this.currentDatasetName = 'genes-tissue-rpkm';
         this.openDownloadModal(this.downLoadLinkTemplate);
       }
     } catch {
@@ -137,5 +152,45 @@ export class DownloadComponent {
     } catch {
       this.openDownloadModal(this.errorTemplate);
     }
+  }
+
+  public async generateGreenTableCsv() {
+    try {
+      this.isProcessing = true;
+      const res = await this.csvExportService.generateGreenTable();
+      if (res.length !== 0) {
+        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+        this.currentDatasetName = 'gene-activity-change-impact';
+        this.openDownloadModal(this.downLoadLinkTemplate);
+      }
+    } catch {
+      this.openDownloadModal(this.errorTemplate);
+    }
+  }
+
+  public async generateBlueTableCsv() {
+    try {
+      this.isProcessing = true;
+      const res = await this.csvExportService.generateBlueTable();
+      if (res.length !== 0) {
+        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+        this.currentDatasetName = 'age-related-changes';
+        this.openDownloadModal(this.downLoadLinkTemplate);
+      }
+    } catch {
+      this.openDownloadModal(this.errorTemplate);
+    }
+  }
+
+  public async generateSummarizedResearchResultsCsv() {
+
+      this.isProcessing = true;
+      const res = await this.csvExportService.generateSummarizedResearchResults();
+      if (res.length !== 0) {
+        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+        this.currentDatasetName = 'summarized-research-criteria';
+        this.openDownloadModal(this.downLoadLinkTemplate);
+      }
+
   }
 }

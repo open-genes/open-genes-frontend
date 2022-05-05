@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Genes } from '../models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CsvExportService {
-  private genes: Genes[]; // TODO: save cached response here
-  private researches: any[]; // TODO: add typing from OG-724
+  // private genes: Genes[]; // TODO: save cached response here
+  // private researches: any[]; // TODO: add typing from OG-724
   private maxPageSize = 1; // when 1 is passed, API gives all existing elements
 
   static wait(delay) {
@@ -68,7 +67,38 @@ export class CsvExportService {
     return await this.generateSimplePairCsv('"HGNC", "aging mechanisms"\n', 'agingMechanisms');
   }
 
+  public async generateGeneTissueRpkmTable() {
+    let items = [];
+    let resultingString = '';
+    const fetchedItems = await CsvExportService.FetchData('https://open-genes.com/api/gene/symbols', 0, 1, {});
+    const resItems = await fetchedItems.json();
+    items = resItems.items;
+    const csvHeader = '"HGNC", "tissue or organ", "rpkm"\n';
+    resultingString = resultingString + csvHeader;
+
+    if (items.length !== 0) {
+      for (const hgnc of items) {
+        const response = await CsvExportService.FetchData(`https://open-genes.com/api/gene/${hgnc}`, 1000, 3, {});
+        const res = await response;
+
+        const resJson = await res.json();
+        if (resJson.expression.length !== 0) {
+          for (const i of resJson.expression) {
+            const arrRow = `"${hgnc}", "${i.name}", "${i.exp_rpkm}"\n`;
+            resultingString = resultingString + arrRow;
+          }
+        } else {
+          const arrRow = `"${hgnc}", "", ""\n`;
+          resultingString = resultingString + arrRow;
+        }
+      }
+      return resultingString;
+    }
+    return null;
+  }
+
   public async generateGeneAndGoTermsTable() {
+    // TODO: DRY
     let items = [];
     let resultingString = '';
     const fetchedItems = await CsvExportService.FetchData('https://open-genes.com/api/gene/symbols', 0, 1, {});
@@ -105,8 +135,8 @@ export class CsvExportService {
           // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           resultingString = resultingString + csvRow;
         }
-        return resultingString;
       }
+      return resultingString;
     }
     return null;
   }
@@ -128,7 +158,6 @@ export class CsvExportService {
       const researches = resJson.items;
       if (researches) {
         for (const form of researches) {
-          console.log(form);
           if (typeof form !== undefined) {
             let comment = this.sanitize(form?.comment);
             comment = this.checkBlankValues(comment);
@@ -144,7 +173,8 @@ export class CsvExportService {
             const sex = this.checkBlankValues(form?.sex);
             resultingString =
               resultingString +
-              `${geneSymbol}, "${comment}", ${doi}, ${pmid}, "${dataType}", "${changeType}", "${modelOrganism}", "${allelicVariant}", "${allelicPolymorphism}", "${longevityEffect}", "${sex}"\n`;
+              `${geneSymbol}, "${comment}", ${doi}, ${pmid}, "${dataType}", "${changeType}", "${modelOrganism}", ` +
+              `"${allelicVariant}", "${allelicPolymorphism}", "${longevityEffect}", "${sex}"\n`;
           }
         }
         return resultingString;
@@ -415,6 +445,305 @@ export class CsvExportService {
 
               resultingString = resultingString + csvRow;
             }
+          }
+        }
+        return resultingString;
+      }
+    }
+    return null;
+  }
+
+  public async generateGreenTable() {
+    let resultingString = '';
+    const csvHeader =
+      '"HGNC", "comment", "doi", "pmid", "intervention", "model organism", "line", "intervention deteriorates", ' +
+      '"intervention improves", "intervention result", "process", "age", "genotype", "sex"\n';
+    resultingString = resultingString + csvHeader;
+
+    const response = await CsvExportService.FetchData(
+      `https://open-genes.com/api/research/gene-activity-change-impact?pageSize=${this.maxPageSize}`,
+      0,
+      1,
+      {}
+    );
+    if (response) {
+      const resJson = await response.json();
+      const researches = resJson.items;
+      if (researches) {
+        for (const form of researches) {
+          if (typeof form !== undefined) {
+            const geneSymbol = this.sanitize(form?.geneSymbol);
+            let comment = this.sanitize(form?.comment);
+            comment = this.checkBlankValues(comment);
+            const doi = this.checkBlankValues(form?.doi);
+            const pmid = this.checkBlankValues(form?.pmid);
+            const geneIntervention = this.checkBlankValues(form?.geneIntervention);
+            const modelOrganism = this.checkBlankValues(form?.modelOrganism);
+            const organismLine = this.checkBlankValues(form?.organismLine);
+            const interventionResult = this.checkBlankValues(form?.interventionResult);
+            const vitalProcess = this.checkBlankValues(form?.vitalProcess);
+            const age = this.checkBlankValues(form?.age);
+            const genotype = this.checkBlankValues(form?.genotype);
+            const sex = this.checkBlankValues(form?.sex);
+            let interventionDeteriorates: string[] | any = [];
+            let interventionImproves: string[] | any = [];
+
+            if (form?.interventionImproves !== undefined && form?.interventionImproves?.length !== 0) {
+              for (const i of form.interventionImproves) {
+                interventionImproves.push(i.name);
+              }
+            } else {
+              interventionImproves = this.checkBlankValues(form?.interventionImproves);
+            }
+
+            if (form?.interventionDeteriorates !== undefined && form?.interventionDeteriorates?.length !== 0) {
+              for (const i of form.interventionDeteriorates) {
+                interventionDeteriorates.push(i.name);
+              }
+            } else {
+              interventionDeteriorates = this.checkBlankValues(form?.interventionDeteriorates);
+            }
+
+            const csvRow =
+              `"${geneSymbol}", "${comment}", "${doi}", "${pmid}", "${geneIntervention}",  "${modelOrganism}", ` +
+              `"${organismLine}", "${interventionDeteriorates}", "${interventionImproves}", "${interventionResult}", ` +
+              `"${vitalProcess}", "${age}", "${genotype}", "${sex}"\n`;
+            resultingString = resultingString + csvRow;
+          }
+        }
+        return resultingString;
+      }
+    }
+    return null;
+  }
+
+  public async generateBlueTable() {
+    let resultingString = '';
+    const csvHeader =
+      '"HGNC", "model organism", line", "sex", "change percentage", "p value", "sample", "age of control - max",' +
+      ' "age of experiment - max", "age of control - mean", "age of experiment - mean", "age of control - max", ' +
+      '"age of experiment - max", "age unit", "change type", "control cohort size", "experiment cohort size", ' +
+      '"statistical method", "expression evaluation by", "measurement method", "comment", "doi", "pmid"\n';
+    resultingString = resultingString + csvHeader;
+
+    const response = await CsvExportService.FetchData(
+      `https://open-genes.com/api/research/age-related-changes?pageSize=${this.maxPageSize}`,
+      0,
+      1,
+      {}
+    );
+    if (response) {
+      const resJson = await response.json();
+      const researches = resJson.items;
+      if (researches) {
+        for (const form of researches) {
+          if (typeof form !== undefined) {
+            const geneSymbol = this.sanitize(form?.geneSymbol);
+            let comment = this.sanitize(form?.comment);
+            comment = this.checkBlankValues(comment);
+            const doi = this.checkBlankValues(form?.doi);
+            const pmid = this.checkBlankValues(form?.pmid);
+            const modelOrganism = this.checkBlankValues(form?.modelOrganism);
+            const organismLine = this.checkBlankValues(form?.organismLine);
+            const sample = this.checkBlankValues(form?.sample);
+            const maxAgeOfControls = this.checkBlankValues(form?.maxAgeOfControls);
+            const maxAgeOfExperiment = this.checkBlankValues(form?.maxAgeOfExperiment);
+            const meanAgeOfControls = this.checkBlankValues(form?.meanAgeOfControls);
+            const meanAgeOfExperiment = this.checkBlankValues(form?.meanAgeOfExperiment);
+            const minAgeOfControls = this.checkBlankValues(form?.minAgeOfControls);
+            const minAgeOfExperiment = this.checkBlankValues(form?.minAgeOfExperiment);
+            const pValue = this.checkBlankValues(form?.pValue);
+            const changeType = this.checkBlankValues(form?.changeType);
+            const ageUnit = this.checkBlankValues(form?.ageUnit);
+            const controlCohortSize = this.checkBlankValues(form?.controlCohortSize);
+            const experimentCohortSize = this.checkBlankValues(form?.experimentCohortSize);
+            const sex = this.checkBlankValues(form?.sex);
+            const value = this.checkBlankValues(form?.value);
+            const statisticalMethod = this.checkBlankValues(form?.statisticalMethod);
+            const expressionEvaluationBy = this.checkBlankValues(form?.expressionEvaluationBy);
+            const measurementMethod = this.checkBlankValues(form?.measurementMethod);
+            const csvRow =
+              `"${geneSymbol}", ${modelOrganism}", "${organismLine}", "${sex}", "${value}", "${pValue}", ` +
+              `"${sample}", "${maxAgeOfControls}", "${maxAgeOfExperiment}", "${meanAgeOfControls}", "${meanAgeOfExperiment}", ` +
+              `"${minAgeOfControls}", "${minAgeOfExperiment}", "${ageUnit}", "${changeType}", "${controlCohortSize}", ` +
+              `"${experimentCohortSize}", "${statisticalMethod}", "${expressionEvaluationBy}", "${measurementMethod}", "${comment}", "${doi}", "${pmid}"\n`;
+            resultingString = resultingString + csvRow;
+          }
+        }
+        return resultingString;
+      }
+    }
+    return null;
+  }
+
+  public async generateSummarizedResearchResults() {
+    let resultingString = '';
+    const csvHeader = `"HGNC",
+    "research", 
+    "criteria",
+    "model organism",
+    "sex",
+    "line",
+    "tissue",
+    "doi",
+    "pmid"\n`;
+
+    resultingString = resultingString + csvHeader;
+
+    const response = await CsvExportService.FetchData(
+      // TODO: API should give all elements in response with pageSize=1 parameter set
+      `https://open-genes.com/api/gene/search?researches=1&pageSize=1000`,
+      0,
+      1,
+      {}
+    );
+    if (response) {
+      const resJson = await response.json();
+      const genes = resJson.items;
+      console.log('genes', genes);
+      if (genes) {
+        for (const gene of genes) {
+          const symbol = gene.symbol;
+
+          const purple = gene.researches?.increaseLifespan;
+          if (purple) {
+            purple?.forEach((form) => {
+              // if there is more than one intervention, it's an additional intervention
+              let isNoAdditionalIntervention = true;
+
+              // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+              if (form.interventions.controlAndExperiment.length + form.interventions.experiment.length > 1) {
+                isNoAdditionalIntervention = false;
+              }
+              if (form.interventions.controlAndExperiment.length > 0) {
+                isNoAdditionalIntervention = false;
+              }
+              if (form.interventions.experiment.length > 1) {
+                isNoAdditionalIntervention = false;
+              } else if (form.interventions.experiment.length === 1) {
+                // временный костыль
+                if (form.interventions.experiment[0]?.gene !== gene.id) {
+                  isNoAdditionalIntervention = false;
+                }
+              }
+
+              if (isNoAdditionalIntervention === true) {
+                const doi = this.checkBlankValues(form?.doi);
+                const pmid = this.checkBlankValues(form?.pmid);
+                const modelOrganism = this.checkBlankValues(form?.modelOrganism);
+                const sex = this.checkBlankValues(form?.sex);
+                const line = this.checkBlankValues(form?.organismLine);
+                const interventionResultForLifespan = this.checkBlankValues(form?.interventionResultForLifespan);
+                let experimentMainEffect = '';
+                let interventionMethod = '';
+                const tissues = [];
+                const generateIntervention = (sample) => {
+                  experimentMainEffect = this.checkBlankValues(sample.experimentMainEffect);
+                  interventionMethod = this.checkBlankValues(sample.interventionMethod);
+
+                  if (!!sample.tissueSpecific && Array.isArray(sample.tissues)) {
+                    for (const tissue of sample.tissues) {
+                      tissues.push(tissue.name);
+                    }
+                  }
+                };
+
+                if (form?.interventions) {
+                  for (const sample of form.interventions?.controlAndExperiment) {
+                    generateIntervention(sample);
+                  }
+
+                  for (const sample of form.interventions?.experiment) {
+                    generateIntervention(sample);
+                  }
+                }
+
+                const csvRow =
+                  `"${symbol}", "Effect of gene activity modulation on lifespan in ${modelOrganism}", ` +
+                  `"${experimentMainEffect} (${interventionMethod}) ${interventionResultForLifespan}", ` +
+                  `"${modelOrganism}", "${sex}", "${line}", "${tissues}", "${doi}", "${pmid}"\n`;
+                resultingString = resultingString + csvRow;
+              }
+            });
+          }
+
+          const blue = gene.researches?.ageRelatedChangesOfGene;
+          if (blue) {
+            blue?.forEach((form) => {
+              if (typeof form !== undefined) {
+                const doi = this.checkBlankValues(form?.doi);
+                const pmid = this.checkBlankValues(form?.pmid);
+                const modelOrganism = this.checkBlankValues(form?.modelOrganism);
+                const line = this.checkBlankValues(form?.organismLine);
+                const sex = this.checkBlankValues(form?.sex);
+                const sample = this.checkBlankValues(form?.sample);
+                const changeType = this.checkBlankValues(form?.changeType);
+                const expressionEvaluationBy = this.checkBlankValues(form?.expressionEvaluationBy);
+
+                const csvRow =
+                  `"${symbol}", "Age-related changes in gene expression or protein activity in ${modelOrganism}", ` +
+                  `"${changeType} (expression evaluated by ${expressionEvaluationBy})", "${modelOrganism}", "${sex}", "${line}", "${sample}", "${doi}", "${pmid}"\n`;
+                resultingString = resultingString + csvRow;
+              }
+            });
+          }
+
+          // TODO: DRY
+          const green = gene.researches?.interventionToGeneImprovesVitalProcesses;
+          if (green) {
+            green?.forEach((form) => {
+              if (typeof form !== undefined) {
+                const doi = this.checkBlankValues(form?.doi);
+                const pmid = this.checkBlankValues(form?.pmid);
+                const modelOrganism = this.checkBlankValues(form?.modelOrganism);
+                const sex = this.checkBlankValues(form?.sex);
+                const line = this.checkBlankValues(form?.organismLine);
+                const geneIntervention = this.checkBlankValues(form?.geneIntervention);
+                const result = this.checkBlankValues(form?.result);
+                const vitalProcess = this.checkBlankValues(form?.vitalProcess);
+
+                const csvRow =
+                  `"${symbol}", "Effect of gene activity modulation on the age-related process in ${modelOrganism}", ` +
+                  `"${geneIntervention} caused ${result} in ${vitalProcess}", "${modelOrganism}", "${sex}", "${line}", " ", "${doi}", "${pmid}"\n`;
+                resultingString = resultingString + csvRow;
+              }
+            });
+          }
+
+          // TODO: DRY
+          const pink = gene.researches?.geneAssociatedWithLongevityEffects;
+          if (pink) {
+            pink?.forEach((form) => {
+              // розовая форма — фенотип + аллельный полиморфизм
+              const doi = this.checkBlankValues(form?.doi);
+              const pmid = this.checkBlankValues(form?.pmid);
+              const longevityEffect = this.checkBlankValues(form?.longevityEffect);
+              const modelOrganism = this.checkBlankValues(form?.modelOrganism);
+              const allelicPolymorphism = this.checkBlankValues(form?.allelicPolymorphism);
+              const sex = this.checkBlankValues(form?.sex);
+
+              const csvRow =
+                `"${symbol}", "Genomic, transcriptomic, and proteomic associations with lifespan/age-related phenotype in ${modelOrganism}", ` +
+                `"${longevityEffect} of ${allelicPolymorphism}", "${modelOrganism}", "${sex}", " ", " ", "${doi}", "${pmid}"\n`;
+              resultingString = resultingString + csvRow;
+            });
+          }
+
+          // TODO: DRY
+          const yellow = gene.researches?.proteinRegulatesOtherGenes;
+          if (yellow) {
+            yellow?.forEach((form) => {
+              const doi = this.checkBlankValues(form?.doi);
+              const pmid = this.checkBlankValues(form?.pmid);
+              const proteinActivity = this.checkBlankValues(form?.proteinActivity);
+              const regulationType = this.checkBlankValues(form?.regulationType);
+              const regulatedGene = form?.regulatedGene.symbol;
+
+              const csvRow =
+                `"${symbol}", "Involvement of a gene product in the regulation of genes associated with aging", ` +
+                `"${proteinActivity} ${regulationType} of ${regulatedGene}", " ", " ", " ", " ", "${doi}", "${pmid}"\n`;
+              resultingString = resultingString + csvRow;
+            });
           }
         }
         return resultingString;
