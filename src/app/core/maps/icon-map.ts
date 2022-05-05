@@ -9,5 +9,6 @@ export const icons: { [id: string]: string } = {
   // No content - icons
   404: urlNoContent,
   default: urlNoContent,
+  file: urlNoContent,
   language: urlNoContent,
 };
