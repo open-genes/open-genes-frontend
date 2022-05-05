@@ -48,6 +48,7 @@
   "criteriaQuantity": "Критерии отбора",
   "cr_result": "Результат",
   "download": "Скачать",
+  "download_error": "Произошла ошибка",
   "download_page_title": "Скачать данные Open Genes",
   "download_page_variant_1_description": "Дамп БД, MySQL 8 \nopen_genes_sql_dump.zip",
   "download_page_variant_1_title": "Дамп базы Open Genes",

@@ -1,12 +1,13 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CsvExportService } from '../../core/services/csv-export-service';
-import { FileExportService } from 'src/app/core/services/file-export.service';
+import { FileExportService } from 'src/app/core/services/browser/file-export.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { CommonModalComponent } from 'src/app/components/ui-components/components/modals/common-modal/common-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { CommonBottomSheetComponent } from '../../components/ui-components/components/modals/common-bottom-sheet/common-bottom-sheet.component';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-api-reference',
@@ -14,63 +15,127 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
   styleUrls: ['./download.component.scss'],
 })
 export class DownloadComponent {
-  public currentDownloadLink: string | SafeResourceUrl = '#';
-  public currentDatasetName = 'export';
+  private subscription$ = new Subject();
+  private initialDownloadLinkVal = '#';
+  private initialDatasetName = 'export';
+
+  public currentDownloadLink: string | SafeResourceUrl = this.initialDownloadLinkVal;
+  public currentDatasetName = this.initialDatasetName;
+  public isProcessing = false;
 
   @ViewChild('downLoadLinkTemplate') downLoadLinkTemplate: TemplateRef<any>;
+  @ViewChild('errorTemplate') errorTemplate: TemplateRef<any>;
 
   constructor(
     public translate: TranslateService,
     private sanitizer: DomSanitizer,
     private router: Router,
-    private bottomSheet: MatBottomSheet,
+    private matDialog: MatDialog,
     private csvExportService: CsvExportService,
-    private fileExportService: FileExportService
+    private fileExportService: FileExportService,
   ) {}
 
-  public openBottomSheet(): void {
-    this.bottomSheet.open(CommonBottomSheetComponent, {
+  public openDownloadModal(template): void {
+    this.matDialog.open(CommonModalComponent, {
       data: {
-        template: this.downLoadLinkTemplate,
+        title: 'download',
+        body: null,
+        template: template,
       },
+      panelClass: 'download-modal',
+      minWidth: '280px',
+      maxWidth: '280px',
+      autoFocus: false,
     });
-    // TODO: Add error handling if data has failed to load
+    this.isProcessing = false;
+
+    this.matDialog.afterAllClosed.pipe(takeUntil(this.subscription$)).subscribe(() => {
+      this.currentDownloadLink = this.initialDownloadLinkVal;
+      this.currentDatasetName = this.initialDatasetName;
+    });
   }
 
   public async downloadDiseaseCsv() {
-    const res = await this.csvExportService.generateGenesDiseasesTable();
-    if (res.length !== 0) {
-      this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-      this.currentDatasetName = 'genes-diseases';
-      // TODO: Show spinner
-      this.openBottomSheet();
+    try {
+      this.isProcessing = true;
+      const res = await this.csvExportService.generateGenesDiseasesTable();
+      if (res.length !== 0) { // TODO: if status ok
+        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+        this.currentDatasetName = 'genes-diseases';
+        this.openDownloadModal(this.downLoadLinkTemplate);
+      }
+    } catch {
+      this.openDownloadModal(this.errorTemplate);
     }
   }
 
   public async downloadAgingMechanismsCsv() {
-    const res = await this.csvExportService.generateGenesAgingMechanismsTable();
-    if (res.length !== 0) {
-      this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-      this.currentDatasetName = 'genes-aging-mechanisms';
-      this.openBottomSheet();
+    try {
+      this.isProcessing = true;
+      const res = await this.csvExportService.generateGenesAgingMechanismsTable();
+      if (res.length !== 0) {
+        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+        this.currentDatasetName = 'genes-aging-mechanisms';
+        this.openDownloadModal(this.downLoadLinkTemplate);
+      }
+    } catch {
+      this.openDownloadModal(this.errorTemplate);
     }
   }
 
   public async downloadGoTermsCsv() {
-    const res = await this.csvExportService.generateGeneAndGoTermsTable();
-    if (res.length !== 0) {
-      this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-      this.currentDatasetName = 'genes-go-terms';
-      this.openBottomSheet();
+    try {
+      this.isProcessing = true;
+      const res = await this.csvExportService.generateGeneAndGoTermsTable();
+      if (res.length !== 0) {
+        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+        this.currentDatasetName = 'genes-go-terms';
+        this.openDownloadModal(this.downLoadLinkTemplate);
+      }
+    } catch {
+      this.openDownloadModal(this.errorTemplate);
     }
   }
 
   public async downloadYellowTablesCsv() {
-    const res = await this.csvExportService.generateYellowTable();
-    if (res.length !== 0) {
-      this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-      this.currentDatasetName = 'gene-product-involvement-in-regulation-of-genes-associated-with-aging';
-      this.openBottomSheet();
+    try {
+      this.isProcessing = true;
+      const res = await this.csvExportService.generateYellowTable();
+      if (res.length !== 0) {
+        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+        this.currentDatasetName = 'gene-regulation';
+        this.openDownloadModal(this.downLoadLinkTemplate);
+      }
+    } catch {
+      this.openDownloadModal(this.errorTemplate);
+    }
+  }
+
+  public async downloadPinkTablesCsv() {
+    try {
+      this.isProcessing = true;
+      const res = await this.csvExportService.generatePinkTable();
+      if (res.length !== 0) {
+        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+        this.currentDatasetName = 'associations-with-lifespan';
+        this.openDownloadModal(this.downLoadLinkTemplate);
+      }
+    } catch {
+      this.openDownloadModal(this.errorTemplate);
+    }
+  }
+
+  public async downloadPurpleTablesCsv() {
+    try {
+      this.isProcessing = true;
+      const res = await this.csvExportService.generatePurpleTable();
+      if (res.length !== 0) {
+        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+        this.currentDatasetName = 'lifespan-change';
+        this.openDownloadModal(this.downLoadLinkTemplate);
+      }
+    } catch {
+      this.openDownloadModal(this.errorTemplate);
     }
   }
 }

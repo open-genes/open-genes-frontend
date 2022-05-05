@@ -13,87 +13,117 @@
     </div>
 
     <div class="container download-page__variants">
-      <div class="row">
-        <section class="col-xs-12 col-md-4 variant">
-          <h3>{{ "download_page_variant_1_title" | translate }}</h3>
-          <p>
-            {{ "download_page_variant_1_description" | translate }}
-          </p>
-          <a href="/open_genes_sql_dump.zip"
-             target="_blank"
-             class="btn btn--fill btn--big btn--purple"
+      <ng-container *ngIf="!isProcessing">
+        <div class="row">
+          <section class="col-xs-12 col-md-4 variant">
+            <h3>{{ "download_page_variant_1_title" | translate }}</h3>
+            <p>
+              {{ "download_page_variant_1_description" | translate }}
+            </p>
+            <a href="/open_genes_sql_dump.zip"
+               target="_blank"
+               class="btn btn--fill btn--big btn--purple"
             ><span class="fa far fa-download"></span>&nbsp;{{ "download_page_variant_button_download" | translate }}</a
-          >
-        </section>
-        <section class="col-xs-12 col-md-4 variant">
-          <h3>{{ "download_page_variant_2_title" | translate }}</h3>
-          <p>
-            {{ "download_page_variant_2_description" | translate }}
-          </p>
-          <a href="/api/docs"
-             target="_blank"
-             class="btn btn--big btn--purple"
+            >
+          </section>
+          <section class="col-xs-12 col-md-4 variant">
+            <h3>{{ "download_page_variant_2_title" | translate }}</h3>
+            <p>
+              {{ "download_page_variant_2_description" | translate }}
+            </p>
+            <a href="/api/docs"
+               target="_blank"
+               class="btn btn--big btn--purple"
             >{{ "download_page_variant_button_go" | translate }}&nbsp;<span class="fa far fa-external-link"></span
-          ></a>
-        </section>
-        <section class="col-xs-12 col-md-4 variant">
-          <h3>{{ "download_page_variant_3_title" | translate }}</h3>
-          <p>
-            {{ "download_page_variant_3_description" | translate }}
-          </p>
-          <a routerLink="/favourites"
-             class="btn btn--big btn--purple"
+            ></a>
+          </section>
+          <section class="col-xs-12 col-md-4 variant">
+            <h3>{{ "download_page_variant_3_title" | translate }}</h3>
+            <p>
+              {{ "download_page_variant_3_description" | translate }}
+            </p>
+            <a routerLink="/favourites"
+               class="btn btn--big btn--purple"
             >{{ "download_page_variant_button_go" | translate }}
-          </a>
-        </section>
-      </div>
-      <div class="row">
-        <section class="col-xs-12 col-md-4 variant">
-          <h3>Download separate datasets</h3>
-          <p>Download datasets as separate .csv files</p>
+            </a>
+          </section>
+        </div>
+        <div class="row">
+          <section class="col-xs-12 col-md-4 variant">
+            <h3>Download separate datasets</h3>
+            <p>Download datasets as separate .csv files</p>
 
-          <h4>General data</h4>
-          <ul class="list">
-            <li>
-              <button class="link link--blue link--underline link-button"
-                      (click)="downloadDiseaseCsv()"
-              >Genes and diseases</button>
-            </li>
-            <li>
-              <button class="link link--blue link--underline link-button"
-                      (click)="downloadAgingMechanismsCsv()"
-              >Genes and aging mechanisms</button>
-            </li>
-            <li>
-              <button class="link link--blue link--underline link-button"
-                      (click)="downloadGoTermsCsv()"
-              >Genes and GO Terms</button>
-            </li>
-          </ul>
+            <h4>General data</h4>
+            <ul class="list">
+              <li>
+                <button class="link link--blue link--underline link-button"
+                        (click)="downloadDiseaseCsv()"
+                >Genes and diseases</button>
+              </li>
+              <li>
+                <button class="link link--blue link--underline link-button"
+                        (click)="downloadAgingMechanismsCsv()"
+                >Genes and aging mechanisms</button>
+              </li>
+              <li>
+                <button class="link link--blue link--underline link-button"
+                        (click)="downloadGoTermsCsv()"
+                >Genes and GO Terms</button>
+              </li>
+            </ul>
 
-          <h4>Research data</h4>
-          <ul class="list">
-            <li>
-              <button class="link link--blue link--underline link-button"
-                      (click)="downloadYellowTablesCsv()"
-              >{{ "gene_page_researches_protein_regulates_genes" | translate }}</button>
-            </li>
-          </ul>
-        </section>
-      </div>
+            <h4>Research data</h4>
+            <ul class="list">
+              <li>
+                <button class="link link--blue link--underline link-button"
+                        (click)="downloadYellowTablesCsv()"
+                >{{ "gene_page_researches_protein_regulates_genes" | translate }}</button>
+              </li>
+              <li>
+                <button class="link link--blue link--underline link-button"
+                        (click)="downloadPinkTablesCsv()"
+                >{{ "gene_page_researches_longevity_effects" | translate }}</button>
+              </li>
+              <li>
+                <button class="link link--blue link--underline link-button"
+                        (click)="downloadPurpleTablesCsv()"
+                >{{ "gene_page_researches_lifespan" | translate }}</button>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </ng-container>
+      <app-spinner *ngIf="isProcessing"
+                   description="Please wait until the file would be generated">
+      </app-spinner>
     </div>
   </div>
 </div>
 
 <ng-template #downLoadLinkTemplate>
   <section class="file-download-sheet">
-    <p>Your file is ready </p>
     <p>
-      <a class="link link--blue link--underline"
-         [href]="currentDownloadLink"
-         target="_blank"
-         [download]="currentDatasetName + '.csv'"
-      >{{ currentDatasetName }}.csv</a>
+      {{ currentDatasetName }}.csv
     </p>
+    <a class="btn btn--big btn--fill btn--purple"
+       [href]="currentDownloadLink"
+       target="_blank"
+       [download]="currentDatasetName + '.csv'"
+    ><span class="fa far fa-download"></span> {{ "download" | translate }}</a>
   </section>
+</ng-template>
+
+<ng-template #errorTemplate>
+  <app-no-content
+    [title]="'download_error'"
+    [isPanel]="false">
+    <ng-container icon>
+      <app-icon
+        icon="file"
+        size="custom"
+        customWidth="100%"
+        customHeight="100%"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
 </ng-template>

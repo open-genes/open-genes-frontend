@@ -48,6 +48,7 @@
   "criteriaQuantity": "Criteria quantity",
   "cr_result": "Result",
   "download": "Download",
+  "download_error": "Error acquired",
   "download_page_title": "Download Open Genes data",
   "download_page_variant_1_description": "DB dump, MySQL 8 \nopen_genes_sql_dump.zip",
   "download_page_variant_1_title": "Open Genes database dump",

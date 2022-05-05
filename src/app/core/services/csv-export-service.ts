@@ -6,7 +6,8 @@ import { Genes } from '../models';
 })
 export class CsvExportService {
   private genes: Genes[]; // TODO: save cached response here
-  private maxPageSize = 50000;
+  private researches: any[]; // TODO: add typing from OG-724
+  private maxPageSize = 1; // when 1 is passed, API gives all existing elements
 
   static wait(delay) {
     return new Promise((resolve) => setTimeout(resolve, delay));
@@ -78,22 +79,73 @@ export class CsvExportService {
 
     if (items.length !== 0) {
       for (const hgnc of items) {
-        const n = items.indexOf(hgnc);
         const response = await CsvExportService.FetchData(`https://open-genes.com/api/gene/${hgnc}`, 1000, 3, {});
         const res = await response;
 
         const resJson = await res.json();
         if (resJson.terms !== undefined && resJson.terms !== null && Object.keys(resJson.terms).length !== 0) {
-          const goProcess = this.checkBlankValues(resJson.terms.biological_process);
-          const goActivity = this.checkBlankValues(resJson.term.molecular_activity);
-          const goComponent = this.checkBlankValues(resJson.term.cellular_component);
-          const csvRow = document.createTextNode(`"${hgnc}", "${goProcess}", "${goActivity}", "${goComponent}"\n`);
+          let goProcess = [];
+          if (resJson.terms.biological_process?.length !== 0) {
+            goProcess = resJson.terms?.biological_process.flatMap((e) => Object.values(e));
+          }
+          let goActivity = [];
+          if (resJson.terms.molecular_activity?.length !== 0) {
+            goActivity = resJson.term?.molecular_activity.flatMap((e) => Object.values(e));
+          }
+          let goComponent = [];
+          if (resJson.terms.cellular_component?.length !== 0) {
+            goComponent = resJson.terms?.cellular_component.flatMap((e) => Object.values(e));
+          }
+
+          const csvRow = `"${hgnc}", "${goProcess}", "${goActivity}", "${goComponent}"\n`;
           // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           resultingString = resultingString + csvRow;
         } else {
           const csvRow = document.createTextNode(`"${hgnc}", "", "", ""\n`);
           // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           resultingString = resultingString + csvRow;
+        }
+        return resultingString;
+      }
+    }
+    return null;
+  }
+
+  public async generatePinkTable() {
+    let resultingString = '';
+    const csvHeader =
+      '"HGNC", "comment", "doi", "pmid", "dataType", "changeType", "modelOrganism", "allelicVariant", "allelicPolymorphism", "longevityEffect", "sex"\n';
+    resultingString = resultingString + csvHeader;
+
+    const response = await CsvExportService.FetchData(
+      `https://open-genes.com/api/research/associations-with-lifespan?pageSize=${this.maxPageSize}`,
+      0,
+      1,
+      {}
+    );
+    if (response) {
+      const resJson = await response.json();
+      const researches = resJson.items;
+      if (researches) {
+        for (const form of researches) {
+          console.log(form);
+          if (typeof form !== undefined) {
+            let comment = this.sanitize(form?.comment);
+            comment = this.checkBlankValues(comment);
+            const doi = this.checkBlankValues(form?.doi);
+            const pmid = this.checkBlankValues(form?.pmid);
+            const geneSymbol = this.checkBlankValues(form?.geneSymbol);
+            const dataType = this.checkBlankValues(form?.dataType);
+            const changeType = this.checkBlankValues(form?.changeType);
+            const modelOrganism = this.checkBlankValues(form?.modelOrganism);
+            const allelicVariant = this.checkBlankValues(form?.allelicVariant);
+            const allelicPolymorphism = this.checkBlankValues(form?.allelicPolymorphism);
+            const longevityEffect = this.checkBlankValues(form?.longevityEffect);
+            const sex = this.checkBlankValues(form?.sex);
+            resultingString =
+              resultingString +
+              `${geneSymbol}, "${comment}", ${doi}, ${pmid}, "${dataType}", "${changeType}", "${modelOrganism}", "${allelicVariant}", "${allelicPolymorphism}", "${longevityEffect}", "${sex}"\n`;
+          }
         }
         return resultingString;
       }
@@ -129,6 +181,240 @@ export class CsvExportService {
             resultingString =
               resultingString +
               `"${geneSymbol}", "${comment}", "${doi}", "${pmid}", "${proteinActivity}",  "${regulatedGene}", "${regulationType}"\n`;
+          }
+        }
+        return resultingString;
+      }
+    }
+    return null;
+  }
+
+  public async generatePurpleTable() {
+    let resultingString = '';
+    const csvHeader = `"HGNC",
+    "model organism",
+    "sex",
+    "line",
+    "effect on lifespan",
+    "control cohort size",
+    "experiment cohort size",
+    "quantity of animals in a cage or container",
+    "containment temperature (Celcius)",
+    "diet",
+    "target gene expression change",
+    "control lifespan - min",
+    "control lifespan - mean",
+    "control lifespan - median",
+    "control lifespan - max",
+    "experiment lifespan - min",
+    "experiment lifespan - mean",
+    "experiment lifespan - median",
+    "experiment lifespan - max",
+    "lifespan time unit",
+    "lifespan % change - min", 
+    "significance",
+    "lifespan % change - mean", 
+    "significance",
+    "lifespan % change - median", 
+    "significance",
+    "lifespan % change - max", 
+    "significance",
+    "intervention deteriorates",
+    "intervention improves",
+    "main effect on lifespan",
+    "intervention way",
+    "intervention method",
+    "genotype",
+    "tissue",
+    "tissue specific promoter",
+    "induction by drug withdrawal",
+    "drug",
+    "treatment start",
+    "treatment end",
+    "doi",
+    "pmid"\n`;
+    resultingString = resultingString + csvHeader;
+
+    // TODO: OG-811
+    const response = await CsvExportService.FetchData(
+      `https://open-genes.com/api/research/lifespan-change?pageSize=1000`,
+      0,
+      1,
+      {}
+    );
+    if (response) {
+      const resJson = await response.json();
+      const researches = resJson.items;
+      if (researches) {
+        for (const form of researches) {
+          if (typeof form !== undefined) {
+            // if there is more than one intervention, it's an additional intervention
+            let isNoAdditionalIntervention = true;
+
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+            if (form.interventions.controlAndExperiment.length + form.interventions.experiment.length > 1) {
+              isNoAdditionalIntervention = false;
+            }
+            if (form.interventions.controlAndExperiment.length > 0) {
+              isNoAdditionalIntervention = false;
+            }
+            if (form.interventions.experiment.length > 1) {
+              isNoAdditionalIntervention = false;
+            } else if (form.interventions.experiment.length === 1) {
+              // временный костыль
+              if (form.interventions.experiment[0]?.gene !== form.geneId) {
+                isNoAdditionalIntervention = false;
+              }
+            }
+
+            if (isNoAdditionalIntervention === true) {
+              const geneSymbol = this.checkBlankValues(form?.geneSymbol);
+              const modelOrganism = this.checkBlankValues(form?.modelOrganism);
+              const sex = this.checkBlankValues(form?.sex);
+              const organismLine = this.checkBlankValues(form?.organismLine);
+              const interventionResultForLifespan = this.checkBlankValues(form?.interventionResultForLifespan);
+              const controlCohortSize = this.checkBlankValues(form?.controlCohortSize);
+              const experimentCohortSize = this.checkBlankValues(form?.experimentCohortSize);
+              const populationDensity = this.checkBlankValues(form?.populationDensity);
+              const temperatureFrom = this.checkBlankValues(form?.temperatureTo);
+              const temperatureTo =
+                form?.temperatureTo > form?.temperatureFrom ? this.checkBlankValues(form?.temperatureTo, '–') : '';
+
+              const diet = this.checkBlankValues(form?.diet);
+              const expressionChangePercent = this.checkBlankValues(form?.expressionChangePercent);
+
+              const lifespanMinControl = this.checkBlankValues(form?.lifespanMinControl);
+              const lifespanMeanControl = this.checkBlankValues(form?.lifespanMeanControl);
+              const lifespanMedianControl = this.checkBlankValues(form?.lifespanMedianControl);
+              const lifespanMaxControl = this.checkBlankValues(form?.lifespanMaxControl);
+
+              const lifespanMinExperiment = this.checkBlankValues(form?.lifespanMinExperiment);
+              const lifespanMeanExperiment = this.checkBlankValues(form?.lifespanMeanExperiment);
+              const lifespanMedianExperiment = this.checkBlankValues(form?.lifespanMedianExperiment);
+              const lifespanMaxExperiment = this.checkBlankValues(form?.lifespanMaxExperiment);
+
+              const lifespanTimeUnit = this.checkBlankValues(form?.lifespanTimeUnit);
+
+              const lifespanMinChangePercent = this.checkBlankValues(form?.lifespanMinChangePercent);
+              const minChangePercentSignificance = this.checkBlankValues(form?.lMinChangeStatSignificance);
+              const lifespanMeanChangePercent = this.checkBlankValues(form?.lifespanMeanChangePercent);
+              const meanChangePercentSignificance = this.checkBlankValues(form?.lMeanChangeStatSignificance);
+              const lifespanMedianChangePercent = this.checkBlankValues(form?.lifespanMedianChangePercent);
+              const medianChangePercentSignificance = this.checkBlankValues(form?.lMedianChangeStatSignificance);
+              const lifespanMaxChangePercent = this.checkBlankValues(form?.lifespanMaxChangePercent);
+              const maxChangePercentSignificance = this.checkBlankValues(form?.lMaxChangeStatSignificance);
+              let interventionDeteriorates: string[] | string = [];
+              let interventionImproves: string[] | string = [];
+              let experimentMainEffect = '';
+              let interventionWay = '';
+              let interventionMethod = '';
+              let genotype = '';
+              let inductionByDrugWithdrawal = '';
+              const tissues = [];
+              const tissueSpecificPromoter = '';
+              // Therapy
+              let drug = '';
+              let treatmentStart = '';
+              let treatmentEnd = '';
+              let startTimeUnit = '';
+              let endTimeUnit = '';
+
+              const generateIntervention = (sample) => {
+                experimentMainEffect = this.checkBlankValues(sample.experimentMainEffect);
+                interventionWay = this.checkBlankValues(sample.interventionWay);
+                interventionMethod = this.checkBlankValues(sample.interventionMethod);
+                genotype = this.checkBlankValues(sample.genotype);
+
+                inductionByDrugWithdrawal = this.checkBlankValues(!!sample.inductionByDrugWithdrawal);
+
+                drug = this.checkBlankValues(sample.drug);
+                startTimeUnit = this.checkBlankValues(sample.startTimeUnit, '', '', false);
+                endTimeUnit = this.checkBlankValues(sample.endTimeUnit, '', '', false);
+                treatmentStart = this.checkBlankValues(sample.treatmentStart, '', startTimeUnit);
+                treatmentEnd = this.checkBlankValues(sample.treatmentEnd, '', endTimeUnit);
+
+                if (!!sample.tissueSpecific && Array.isArray(sample.tissues)) {
+                  for (const tissue of sample.tissues) {
+                    tissues.push(tissue.name);
+                  }
+                }
+              };
+
+              if (form?.interventions) {
+                for (const sample of form.interventions?.controlAndExperiment) {
+                  generateIntervention(sample);
+                }
+
+                for (const sample of form.interventions?.experiment) {
+                  generateIntervention(sample);
+                }
+              }
+
+              if (form?.interventionDeteriorates !== undefined && form?.interventionDeteriorates?.length !== 0) {
+                for (const i of form.interventionDeteriorates) {
+                  interventionDeteriorates.push(i.name);
+                }
+              } else {
+                interventionDeteriorates = this.checkBlankValues(form?.interventionDeteriorates);
+              }
+
+              if (form?.interventionImproves !== undefined && form?.interventionImproves?.length !== 0) {
+                for (const i of form.interventionImproves) {
+                  interventionImproves.push(i.name);
+                }
+              } else {
+                interventionImproves = this.checkBlankValues(form?.interventionImproves);
+              }
+
+              // let comment = sanitize(form?.comment);
+              // comment = this.checkBlankValues(comment);
+              const doi = this.checkBlankValues(form?.doi);
+              const pmid = this.checkBlankValues(form?.pmid);
+              const csvRow = `"${geneSymbol}", 
+            "${modelOrganism}", 
+            "${sex}", 
+            "${organismLine}", 
+            "${interventionResultForLifespan}",  
+            "${controlCohortSize}", 
+            "${experimentCohortSize}",  
+            "${populationDensity}", 
+            "${temperatureFrom}${temperatureTo}", 
+            "${diet}", 
+            "${expressionChangePercent}", 
+            "${lifespanMinControl}", 
+            "${lifespanMeanControl}", 
+            "${lifespanMedianControl}", 
+            "${lifespanMaxControl}", 
+            "${lifespanMinExperiment}", 
+            "${lifespanMeanExperiment}", 
+            "${lifespanMedianExperiment}", 
+            "${lifespanMaxExperiment}", 
+            "${lifespanTimeUnit}",
+            "${lifespanMinChangePercent}",
+            "${minChangePercentSignificance}",
+            "${lifespanMeanChangePercent}",
+            "${meanChangePercentSignificance}",
+            "${lifespanMedianChangePercent}",
+            "${medianChangePercentSignificance}",
+            "${lifespanMaxChangePercent}",
+            "${maxChangePercentSignificance}",
+            "${interventionDeteriorates}", 
+            "${interventionImproves}",
+            "${experimentMainEffect}",
+            "${interventionWay}",
+            "${interventionMethod}",
+            "${genotype}",
+            "${tissues}",
+            "${tissueSpecificPromoter}",
+            "${inductionByDrugWithdrawal}",
+            "${drug}",
+            "${treatmentStart}",
+            "${treatmentEnd}",
+            "${doi}", 
+            "${pmid}"\n`;
+
+              resultingString = resultingString + csvRow;
+            }
           }
         }
         return resultingString;

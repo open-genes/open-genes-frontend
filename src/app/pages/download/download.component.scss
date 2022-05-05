@@ -33,7 +33,15 @@
 .file-download-sheet {
   width: 100%;
   box-sizing: border-box;
-  padding: $padding-large;
+  padding: 10px 0 30px 0;
   font-family: sans-serif;
   text-align: center;
+
+  p {
+    color: $color-gray;
+  }
+
+  .btn {
+    margin-top: 1em;
+  }
 }

@@ -15,7 +15,6 @@ export class FileExportService {
     const blob = new Blob([JSON.stringify(data)], {
       type: 'text/json;charset=utf-8',
     });
-
     return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
   }
 
