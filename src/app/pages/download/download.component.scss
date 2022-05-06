@@ -2,14 +2,24 @@
 
 .download-page {
   &__variants {
+    margin-top: -4ch;
+
     .variant {
       display: flex;
       flex-wrap: nowrap;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: flex-start;
       align-content: flex-start;
-      margin-top: 20px;
+      margin-top: 7ch;
+
+      h3 {
+        .alias {
+          width: 40px;
+          vertical-align: middle;
+          margin-bottom: 0;
+        }
+      }
 
       p {
         color: $color-gray;
@@ -20,6 +30,40 @@
         margin-top: 10px;
         min-width: 120px;
       }
+
+      .link-button {
+        text-align: left;
+      }
+
+      .link {
+        font-weight: normal;
+      }
+
+      &--w-button {
+        justify-content: space-between;
+      }
     }
+
+    .row {
+      &.csv-datasets {
+        margin-top: -4ch;
+      }
+    }
+  }
+}
+
+.file-download-sheet {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 0 30px 0;
+  font-family: sans-serif;
+  text-align: center;
+
+  p {
+    color: $color-gray;
+  }
+
+  .btn {
+    margin-top: 1em;
   }
 }

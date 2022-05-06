@@ -1,7 +1,7 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
+  Component, Input,
   OnDestroy,
 } from '@angular/core';
 import { FilterService } from '../shared/genes-list/services/filter.service';
@@ -14,7 +14,8 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnDestroy {
-  public showAnnouncement = true;
+  @Input() region: string;
+  public showAnnouncement = false;
   private favouritesSubscription: Subscription;
 
   constructor(

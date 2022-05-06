@@ -5,12 +5,14 @@ import { DOCUMENT } from '@angular/common';
 import { NavigationEnd, RouteConfigLoadEnd, Router, RouterEvent } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { IpRegistryService } from './core/services/api/ipregistry.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
+  public region: string;
   public isFooterVisible = true;
   private subscription$ = new Subject();
   private currentRoute = '';
@@ -18,6 +20,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     @Inject(DOCUMENT) public document: Document,
+    private readonly ipRegistryService: IpRegistryService,
     private translate: TranslateService,
     private router: Router
   ) {
@@ -54,6 +57,20 @@ export class AppComponent implements OnInit {
         }, 2000);
       }
     });
+
+    if (!localStorage.getItem('region')) {
+      this.ipRegistryService
+        .getIpData()
+        .pipe(takeUntil(this.subscription$))
+        .subscribe((data) => {
+          if (data) {
+            this.region = data.location?.country?.name;
+            localStorage.setItem('region', this.region);
+          }
+        });
+    } else {
+      this.region = localStorage.getItem('region');
+    }
   }
 
   ngOnDestroy(): void {

@@ -4,6 +4,7 @@ import { Terms } from './gene-ontology.model';
 import { HumanProteinAtlas } from './human-protein-atlas.model';
 import { AssociatedDiseases, AssociatedDiseaseCategories } from './associated-diseases.model';
 import { MethylationCorrelation } from './methylation-correlation.model';
+import { GeneLocation } from './gene-location.model';
 
 interface TimestampObject {
   changed: string;
@@ -24,6 +25,7 @@ export type Phylum = GenericItem;
 interface GeneralGeneInfo {
   id: number;
   symbol: string;
+  ensembl: string;
   agingMechanisms: AgingMechanisms[];
   aliases: string[];
   commentCause?: SelectionCriteria[];
@@ -44,15 +46,11 @@ interface GeneralGeneInfo {
 }
 
 export interface Genes extends GeneralGeneInfo {
-  ensembl?: string;
+  researches?: Researches; // if `researches=1` query parameter passed
 }
 
 export interface Gene extends GeneralGeneInfo {
-  why: string;
-  band: string;
-  locationStart: number;
-  locationEnd: number;
-  orientation: number;
+  location: GeneLocation;
   accPromoter: any;
   accOrf: string;
   accCds: string;
@@ -78,8 +76,10 @@ export interface Gene extends GeneralGeneInfo {
   proteinDescriptionOpenGenes: string;
   commentAgingEN: string;
   researches: Researches;
-  expression: Array<any>;
-  expressionEN: string;
+  expression: {
+    name: string;
+    exp_rpkm: number;
+  }[];
   terms?: Terms;
   commentsReferenceLinks: { [n: number]: string };
   humanProteinAtlas: HumanProteinAtlas | '';

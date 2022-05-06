@@ -155,8 +155,7 @@ export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDes
 
           this.isNcbiDescription = this.gene?.descriptionNCBI.length !== 0;
 
-          this.isLocationData =
-            !!this.gene?.band?.length || !!this.gene?.locationStart  || !!this.gene?.locationEnd ;
+          this.isLocationData = !!this.gene?.location.band;
 
           this.isInFavourites = this.favouritesService.isInFavourites(this.gene.id);
 

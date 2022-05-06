@@ -39,7 +39,7 @@
 
 .menu__panel {
   height: 100%;
-  padding: #{($header-height - $header-announcement-height) + 15px} 0;
+  padding: #{$header-height + 15px} 0;
   position: absolute;
   top: 0;
   right: 0;
@@ -136,7 +136,7 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: center;
-    height: $header-height - $header-announcement-height;
+    height: $header-height;
     bottom: 0;
     background-color: $color-black;
     font-size: $font-size-bigger;

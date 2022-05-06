@@ -10,7 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PipesModule } from '../../modules/pipes/pipes.module';
 import { MaterialModule } from '../../modules/vendors/material.module';
-import { NgToArrayPipeModule } from 'angular-pipes';
+import { NgSplitPipeModule, NgToArrayPipeModule } from 'angular-pipes';
 import { ResearchesComponent } from './researches/researches.component';
 import { GeneOntologyComponent } from './gene-ontology/gene-ontology.component';
 import { HumanProteinAtlasComponent } from './human-protein-atlas/human-protein-atlas.component';
@@ -26,6 +26,7 @@ import { PublicationInfoModule } from '../../components/shared/publication-info/
 import { AssociatedDiseasesModule } from '../../components/shared/associated-diseases/associated-diseases.module';
 import { AssociatedDiseaseCategoriesModule } from '../../components/shared/associated-disease-categories/associated-disease-categories.module';
 import { ResearchTablesModule } from '../../components/shared/research-tables/research-tables.module';
+import { GeneLocationComponent } from '../../components/shared/gene-location/gene-location.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ResearchTablesModule } from '../../components/shared/research-tables/re
     HumanProteinAtlasComponent,
     ExpressionComponent,
     DynamicContentAnchorsDirective,
+    GeneLocationComponent
   ],
   imports: [
     CommonModule,
@@ -56,6 +58,7 @@ import { ResearchTablesModule } from '../../components/shared/research-tables/re
     PublicationInfoModule,
     AssociatedDiseasesModule,
     AssociatedDiseaseCategoriesModule,
+    NgSplitPipeModule,
     ResearchTablesModule,
   ],
 })
