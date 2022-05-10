@@ -20,7 +20,7 @@ export class IncreaseLifespanComponent {
   public tabs: Tab[] = [
     {
       title: 'gene_page_researches_lifespan',
-      cssClass: 'tab--age-related-change',
+      cssClass: 'tab--increase-lifespan',
       param: 'lifespan-change',
     },
     {

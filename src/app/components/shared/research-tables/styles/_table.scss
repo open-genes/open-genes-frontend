@@ -8,7 +8,7 @@
       background-color: $color-gray-soft;
     }
 
-    tr:first-child th:first-child {
+    tr th:first-child {
       padding-left: 1em;
 
       &::before {

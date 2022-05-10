@@ -1,16 +1,16 @@
 <div [ngSwitch]="researchType"
      class="research">
   <ng-container *ngIf="researches?.length !== 0">
+    <section *ngSwitchCase="'lifespan-change'">
+      <app-increase-lifespan
+        [geneColumnOn]="true"
+        [items]="researches"></app-increase-lifespan>
+    </section>
+
     <section *ngSwitchCase="'age-related-changes'">
       <app-age-related-changes
         [geneColumnOn]="true"
         [items]="researches"></app-age-related-changes>
-    </section>
-
-    <section *ngSwitchCase="'lifespan-change'">
-    <app-increase-lifespan
-      [geneColumnOn]="true"
-      [items]="researches"></app-increase-lifespan>
     </section>
 
     <section *ngSwitchCase="'gene-activity-change-impact'">
@@ -43,12 +43,13 @@
         [items]="researches"></app-additional-evidences>
     </section>
 
-    <mat-paginator
-      *ngIf="researches.length !== 0"
-      [length]="options.objTotal"
-      [pageSize]="pageSize"
-      (page)="pageEventHandler(researchType, $event)"
-    ></mat-paginator>
+    <div *ngIf="researches.length < options.objTotal || page < options.pagination.pagesTotal"
+         class="btn-wrap show-more __mt-20">
+      <button (click)="showMore(researchType)"
+              class="btn show-more__button">
+        {{ "show_more" | translate }}
+      </button>
+    </div>
   </ng-container>
 </div>
 

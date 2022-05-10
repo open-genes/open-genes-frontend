@@ -4,8 +4,7 @@
   <div class="table-section __mt-20 __w-content-fluid">
     <table class="table table--zebra">
       <thead>
-      <th *ngIf="geneColumnOn"
-          rowspan="2">
+      <th *ngIf="geneColumnOn">
         {{ "main_page_table_name" | translate }}
       </th>
       <!-- General data columns -->
@@ -34,7 +33,7 @@
       </th>
       </thead>
       <tbody>
-      <ng-container *ngFor="let r of items; let i = index">
+      <ng-container *ngFor="let r of items | slice: 0:slice">
         <tr *ngIf="isNoAdditionalIntervention(r)">
           <td *ngIf="geneColumnOn"
               class="__cell-width-medium">
@@ -234,6 +233,7 @@
     </table>
   </div>
 </section>
+
 <ng-template #dash>
   <span class="table__dash"></span>
 </ng-template>

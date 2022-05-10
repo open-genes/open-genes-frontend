@@ -7,6 +7,7 @@ import { AdditionalInterventionResolver } from '../../../core/utils/additional-i
 export abstract class ResearchTables extends AdditionalInterventionResolver {
   @Input() items: any;
   @Input() geneColumnOn: boolean;
+  @Input() slice = 20;
 
   protected constructor(protected dialog: MatDialog) {
     super();

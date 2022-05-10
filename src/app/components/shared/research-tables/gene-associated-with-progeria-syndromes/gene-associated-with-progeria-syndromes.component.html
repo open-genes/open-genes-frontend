@@ -1,14 +1,27 @@
-<h4>{{ "gene_page_researches_progeria" | translate }}</h4>
-<div class="table-section __mt-20 __w-content-fluid">
+<section>
+  <h4>{{ "gene_page_researches_progeria" | translate }}</h4>
+  <div class="table-section __mt-20 __w-content-fluid">
   <table class="table table--zebra table--sticky table--gene-to-progeria">
     <thead>
+    <th *ngIf="geneColumnOn">
+      {{ "main_page_table_name" | translate }}
+    </th>
     <th>{{ "progeria_syndrome" | translate }}</th>
     <th>
       {{ "researches_comment" | translate }}
     </th>
     </thead>
     <tbody>
-    <tr *ngFor="let item of items">
+    <tr *ngFor="let item of items | slice: 0:slice">
+      <td *ngIf="geneColumnOn"
+          class="__cell-width-medium">
+        <div *ngIf="item.hasOwnProperty('geneSymbol')"
+             class="title">
+          <a [routerLink]="['/gene', item.geneSymbol]" class="link link--gray">
+            <b>{{ item.geneSymbol }}</b> {{ item.geneName }}
+          </a>
+        </div>
+      </td>
       <td>
         <ng-container *ngIf="item.progeriaSyndrome ; else dash">
           {{ item.progeriaSyndrome }}
@@ -25,6 +38,7 @@
     </tbody>
   </table>
 </div>
+</section>
 
 <ng-template #dash>
   <span class="table__dash"></span>

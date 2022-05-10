@@ -130,7 +130,6 @@ export class ApiService {
   }
 
   getResearches(research: ResearchArguments, page: number, pageSize?: number): Observable<any> {
-    const size = pageSize ? pageSize : 20;
-    return this.http.get<any[]>(`/api/research/${research}?page=${page}&pageSize=${size}`);
+    return this.http.get<any[]>(`/api/research/${research}?page=${page}`);
   }
 }

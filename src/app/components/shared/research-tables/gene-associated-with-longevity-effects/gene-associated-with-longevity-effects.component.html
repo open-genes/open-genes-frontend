@@ -1,72 +1,86 @@
-<h4>{{ "gene_page_researches_longevity_effects" | translate }}</h4>
-<div class="table-section __mt-20 __w-content-fluid">
-  <table class="table table--zebra table--dark table--sticky table--gene-to-longevity-effect">
-    <thead>
-    <th>{{ "researches_data_type" | translate }}</th>
-    <th class="__cell-width-small">
-      {{ "researches_phenotype" | translate }}
-    </th>
-    <th class="__cell-width-small">
-      {{ "gene_page_allelic_polymorphism" | translate }}
-    </th>
-    <th class="__cell-width-small">
-      {{ "researches_allelic_variant" | translate }}
-    </th>
-    <th>{{ "gene_page_researches_transcriptome_proteome" | translate }}</th>
-    <th>{{ "researches_model_organism" | translate }}</th>
-    <th>{{ "researches_sex" | translate }}</th>
-    <th>
-      {{ "researches_comment" | translate }}
-    </th>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of items">
-      <td>
-        <ng-container *ngIf="item.dataType ; else dash">
-          {{ item.dataType }}
-        </ng-container>
-      </td>
-      <td>
-        <ng-container *ngIf="item.longevityEffect ; else dash">
-          {{ item.longevityEffect }}
-        </ng-container>
-      </td>
-      <td>
-        <ng-container *ngIf="item.allelicPolymorphism ; else dash">
-          {{ item.allelicPolymorphism }}
-        </ng-container>
-      </td>
-      <td>
-        <ng-container *ngIf="item.allelicVariant ; else dash">
-          {{ item.allelicVariant }}
-        </ng-container>
-      </td>
-      <td>
-        <ng-container *ngIf="item.changeType ; else dash">
-          {{ item.changeType }}
-        </ng-container>
-      </td>
-      <td class="__nowrap">
-        <ng-container *ngIf="item.modelOrganism ; else dash">
-          {{ item.modelOrganism }}
-        </ng-container>
-      </td>
-      <td>
-        <ng-container *ngIf="item.sex ; else dash">
-          {{ item.sex }}
-        </ng-container>
-      </td>
-      <td>
-        <button class="btn btn--small btn--purple btn--flat"
-                (click)="openCommentModal('researches_comment', item, links)"
-        >
-          {{ "researches_comment_button" | translate }}
-        </button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+<section>
+  <h4>{{ "gene_page_researches_longevity_effects" | translate }}</h4>
+  <div class="table-section __mt-20 __w-content-fluid">
+    <table class="table table--zebra table--dark table--sticky table--gene-to-longevity-effect">
+      <thead>
+      <th *ngIf="geneColumnOn">
+        {{ "main_page_table_name" | translate }}
+      </th>
+      <th>{{ "researches_data_type" | translate }}</th>
+      <th class="__cell-width-small">
+        {{ "researches_phenotype" | translate }}
+      </th>
+      <th class="__cell-width-small">
+        {{ "gene_page_allelic_polymorphism" | translate }}
+      </th>
+      <th class="__cell-width-small">
+        {{ "researches_allelic_variant" | translate }}
+      </th>
+      <th>{{ "gene_page_researches_transcriptome_proteome" | translate }}</th>
+      <th>{{ "researches_model_organism" | translate }}</th>
+      <th>{{ "researches_sex" | translate }}</th>
+      <th>
+        {{ "researches_comment" | translate }}
+      </th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of items | slice: 0:slice">
+        <td *ngIf="geneColumnOn"
+            class="__cell-width-medium">
+          <div *ngIf="item.hasOwnProperty('geneSymbol')"
+               class="title">
+            <a [routerLink]="['/gene', item.geneSymbol]" class="link link--gray">
+              <b>{{ item.geneSymbol }}</b> {{ item.geneName }}
+            </a>
+          </div>
+        </td>
+        <td>
+          <ng-container *ngIf="item.dataType ; else dash">
+            {{ item.dataType }}
+          </ng-container>
+        </td>
+        <td>
+          <ng-container *ngIf="item.longevityEffect ; else dash">
+            {{ item.longevityEffect }}
+          </ng-container>
+        </td>
+        <td>
+          <ng-container *ngIf="item.allelicPolymorphism ; else dash">
+            {{ item.allelicPolymorphism }}
+          </ng-container>
+        </td>
+        <td>
+          <ng-container *ngIf="item.allelicVariant ; else dash">
+            {{ item.allelicVariant }}
+          </ng-container>
+        </td>
+        <td>
+          <ng-container *ngIf="item.changeType ; else dash">
+            {{ item.changeType }}
+          </ng-container>
+        </td>
+        <td class="__nowrap">
+          <ng-container *ngIf="item.modelOrganism ; else dash">
+            {{ item.modelOrganism }}
+          </ng-container>
+        </td>
+        <td>
+          <ng-container *ngIf="item.sex ; else dash">
+            {{ item.sex }}
+          </ng-container>
+        </td>
+        <td>
+          <button class="btn btn--small btn--purple btn--flat"
+                  (click)="openCommentModal('researches_comment', item, links)"
+          >
+            {{ "researches_comment_button" | translate }}
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
 <ng-template #dash>
   <span class="table__dash"></span>

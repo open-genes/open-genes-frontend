@@ -1,44 +1,58 @@
-<h4>{{ "gene_page_researches_protein_regulates_genes" | translate }}</h4>
-<div class="table-section __mt-20 __w-content-fluid">
-  <table class="table table--zebra table--sticky table--protein-to-gene">
-    <thead>
-    <th class="__cell-width-small">
-      {{ "protein_regulates_genes_activity" | translate }}
-    </th>
-    <th>{{ "gene" | translate }}</th>
-    <th>{{ "researches_regulation_type" | translate }}</th>
-    <th>
-      {{ "researches_comment" | translate }}
-    </th>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of items">
-      <td>
-        <ng-container *ngIf="item.proteinActivity ; else dash">
-          {{ item.proteinActivity }}
-        </ng-container>
-      </td>
-      <td>
-        <a href="gene/{{ item.regulatedGene.symbol }}" class="link">{{
-          item.regulatedGene.symbol
-          }}</a>
-      </td>
-      <td>
-        <ng-container *ngIf="item.regulationType ; else dash">
-          {{ item.regulationType }}
-        </ng-container>
-      </td>
-      <td>
-        <button class="btn btn--small btn--purple btn--flat"
-                (click)="openCommentModal('researches_comment', item, links)"
-        >
-          {{ "researches_comment_button" | translate }}
-        </button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+<section>
+  <h4>{{ "gene_page_researches_protein_regulates_genes" | translate }}</h4>
+  <div class="table-section __mt-20 __w-content-fluid">
+    <table class="table table--zebra table--sticky table--protein-to-gene">
+      <thead>
+      <th *ngIf="geneColumnOn">
+        {{ "main_page_table_name" | translate }}
+      </th>
+      <th class="__cell-width-small">
+        {{ "protein_regulates_genes_activity" | translate }}
+      </th>
+      <th>{{ "gene" | translate }}</th>
+      <th>{{ "researches_regulation_type" | translate }}</th>
+      <th>
+        {{ "researches_comment" | translate }}
+      </th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of items | slice: 0:slice">
+        <td *ngIf="geneColumnOn"
+            class="__cell-width-medium">
+          <div *ngIf="item.hasOwnProperty('geneSymbol')"
+               class="title">
+            <a [routerLink]="['/gene', item.geneSymbol]" class="link link--gray">
+              <b>{{ item.geneSymbol }}</b> {{ item.geneName }}
+            </a>
+          </div>
+        </td>
+        <td>
+          <ng-container *ngIf="item.proteinActivity ; else dash">
+            {{ item.proteinActivity }}
+          </ng-container>
+        </td>
+        <td>
+          <a href="gene/{{ item.regulatedGene.symbol }}" class="link">{{
+            item.regulatedGene.symbol
+            }}</a>
+        </td>
+        <td>
+          <ng-container *ngIf="item.regulationType ; else dash">
+            {{ item.regulationType }}
+          </ng-container>
+        </td>
+        <td>
+          <button class="btn btn--small btn--purple btn--flat"
+                  (click)="openCommentModal('researches_comment', item, links)"
+          >
+            {{ "researches_comment_button" | translate }}
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
 <ng-template #dash>
   <span class="table__dash"></span>

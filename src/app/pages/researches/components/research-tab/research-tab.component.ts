@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { ResearchArguments, ResearchTypes } from '../../../../core/models/open-genes-api/researches.model';
 import { map, takeUntil } from 'rxjs/operators';
 import { ApiResponse, PageOptions } from '../../../../core/models/api-response.model';
-import { PageEvent } from '@angular/material/paginator';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
 import { AdditionalInterventionResolver } from 'src/app/core/utils/additional-intervention-resolver';
 
@@ -19,8 +18,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public researches: any[] = [];
   public options: PageOptions;
   public page = 1;
-  public pageSize = 20;
-  public paginatorPagesTotal: Observable<number>;
+  public slice = 20;
   public errorStatus: string;
 
   private subscription$ = new Subject();
@@ -40,7 +38,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public getResearches(researchType: ResearchArguments): void {
     console.log('researchType', researchType);
     this.apiService
-      .getResearches(researchType, this.page, this.pageSize)
+      .getResearches(researchType, this.page)
       .pipe(
         takeUntil(this.subscription$),
         map((r: ApiResponse<ResearchTypes>) => {
@@ -52,6 +50,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
       )
       .subscribe(
         (researches) => {
+          console.log(researches.items);
           this.researches = researches.items;
           this.options = researches.options;
           this.dataLoaded.emit(true);
@@ -62,9 +61,10 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
       );
   }
 
-  public pageEventHandler(researchType: ResearchArguments, event: PageEvent): void {
-    if (this.page < event.length) {
+  public showMore(researchType: ResearchArguments): void {
+    if (this.page) {
       this.page = this.page + 1;
+      this.slice = this.page * 20;
       this.researches = [];
       this.getResearches(researchType);
     }

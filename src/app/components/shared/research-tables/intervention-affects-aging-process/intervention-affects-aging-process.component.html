@@ -1,94 +1,108 @@
-<h4>{{ "gene_page_intervention_moderates_aging" | translate }}</h4>
-<div class="table-section __mt-20 __w-content-fluid">
-  <table class="table table--zebra table--sticky table--gene-intervention-to-vital-processes">
-    <thead>
-    <th class="__cell-width-small">
-      {{ "gene_intervention_type" | translate }}
-    </th>
-    <th class="__cell-width-small">
-      {{ "gene_intervention_result" | translate }}
-    </th>
-    <th>{{ "researches_object" | translate }}</th>
-    <th>{{ "researches_age" | translate }}<sup>*</sup></th>
-    <th>{{ "researches_sex" | translate }}</th>
-    <th>{{ "researches_line" | translate }}</th>
-    <th>{{ "researches_genotype" | translate }}</th>
-    <th>
-      {{ "researches_comment" | translate }}
-    </th>
-    </thead>
-    <tbody>
-    <tr
-      *ngFor="let item of items"
-    >
-      <td>
-        <ng-container *ngIf="item.geneIntervention; else dash">
-          {{ item.geneIntervention }}
-        </ng-container>
-      </td>
-      <td>
-        <ng-container
-          *ngIf="item?.interventionDeteriorates.length !== 0 || item?.interventionImproves.length !== 0;
-            else dash">
-          <ng-container *ngIf="item?.interventionDeteriorates.length !== 0">
-            <h6>{{ "researches_deteriorates" | translate }}</h6>
-            <ul class="list list--bulletted __mt-0">
-              <li *ngFor="let result of item.interventionDeteriorates">
-                {{ result.name }}
-              </li>
-            </ul>
+<section>
+  <h4>{{ "gene_page_intervention_moderates_aging" | translate }}</h4>
+  <div class="table-section __mt-20 __w-content-fluid">
+    <table class="table table--zebra table--sticky table--gene-intervention-to-vital-processes">
+      <thead>
+      <th *ngIf="geneColumnOn">
+        {{ "main_page_table_name" | translate }}
+      </th>
+      <th class="__cell-width-small">
+        {{ "gene_intervention_type" | translate }}
+      </th>
+      <th class="__cell-width-small">
+        {{ "gene_intervention_result" | translate }}
+      </th>
+      <th>{{ "researches_object" | translate }}</th>
+      <th>{{ "researches_age" | translate }}<sup>*</sup></th>
+      <th>{{ "researches_sex" | translate }}</th>
+      <th>{{ "researches_line" | translate }}</th>
+      <th>{{ "researches_genotype" | translate }}</th>
+      <th>
+        {{ "researches_comment" | translate }}
+      </th>
+      </thead>
+      <tbody>
+      <tr
+        *ngFor="let item of items | slice: 0:slice"
+      >
+        <td *ngIf="geneColumnOn"
+            class="__cell-width-medium">
+          <div *ngIf="item.hasOwnProperty('geneSymbol')"
+               class="title">
+            <a [routerLink]="['/gene', item.geneSymbol]" class="link link--gray">
+              <b>{{ item.geneSymbol }}</b> {{ item.geneName }}
+            </a>
+          </div>
+        </td>
+        <td>
+          <ng-container *ngIf="item.geneIntervention; else dash">
+            {{ item.geneIntervention }}
           </ng-container>
+        </td>
+        <td>
+          <ng-container
+            *ngIf="item?.interventionDeteriorates.length !== 0 || item?.interventionImproves.length !== 0;
+              else dash">
+            <ng-container *ngIf="item?.interventionDeteriorates.length !== 0">
+              <h6>{{ "researches_deteriorates" | translate }}</h6>
+              <ul class="list list--bulletted __mt-0">
+                <li *ngFor="let result of item.interventionDeteriorates">
+                  {{ result.name }}
+                </li>
+              </ul>
+            </ng-container>
 
-          <ng-container *ngIf="item?.interventionImproves.length !== 0">
-            <h6>{{ "researches_improves" | translate }}</h6>
-            <ul class="list list--bulletted __mt-0">
-              <li *ngFor="let result of item.interventionImproves">
-                {{ result.name }}
-              </li>
-            </ul>
+            <ng-container *ngIf="item?.interventionImproves.length !== 0">
+              <h6>{{ "researches_improves" | translate }}</h6>
+              <ul class="list list--bulletted __mt-0">
+                <li *ngFor="let result of item.interventionImproves">
+                  {{ result.name }}
+                </li>
+              </ul>
+            </ng-container>
           </ng-container>
-        </ng-container>
-      </td>
+        </td>
 
-      <td class="__nowrap">
-        <ng-container *ngIf="item.modelOrganism ; else dash">
-          {{ item.modelOrganism }}
-        </ng-container>
-      </td>
-      <td class="__nowrap">
-        <ng-container *ngIf="item.age ; else dash">
-          {{ item.age }}
-        </ng-container>
-      </td>
-      <td class="__nowrap">
-        <ng-container *ngIf="item.sex ; else dash">
-          {{ item.sex }}
-        </ng-container>
-      </td>
-      <td>
-        <ng-container *ngIf="item.organismLine ; else dash">
-          {{ item.organismLine }}
-        </ng-container>
-      </td>
-      <td class="__nowrap">
-        <ng-container *ngIf="item.genotype ; else dash">
-          {{ item.genotype }}
-        </ng-container>
-      </td>
-      <td>
-        <button class="btn btn--small btn--purple btn--flat"
-                (click)="openCommentModal('researches_comment', item, links)"
-        >
-          {{ "researches_comment_button" | translate }}
-        </button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
-<legend class="reference">
-  <sup>*</sup>{{ "gene_page_researches_lifespan_hint1" | translate }}
-</legend>
+        <td class="__nowrap">
+          <ng-container *ngIf="item.modelOrganism ; else dash">
+            {{ item.modelOrganism }}
+          </ng-container>
+        </td>
+        <td class="__nowrap">
+          <ng-container *ngIf="item.age ; else dash">
+            {{ item.age }}
+          </ng-container>
+        </td>
+        <td class="__nowrap">
+          <ng-container *ngIf="item.sex ; else dash">
+            {{ item.sex }}
+          </ng-container>
+        </td>
+        <td>
+          <ng-container *ngIf="item.organismLine ; else dash">
+            {{ item.organismLine }}
+          </ng-container>
+        </td>
+        <td class="__nowrap">
+          <ng-container *ngIf="item.genotype ; else dash">
+            {{ item.genotype }}
+          </ng-container>
+        </td>
+        <td>
+          <button class="btn btn--small btn--purple btn--flat"
+                  (click)="openCommentModal('researches_comment', item, links)"
+          >
+            {{ "researches_comment_button" | translate }}
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <legend class="reference">
+    <sup>*</sup>{{ "gene_page_researches_lifespan_hint1" | translate }}
+  </legend>
+</section>
 
 <ng-template #dash>
   <span class="table__dash"></span>
