@@ -35,7 +35,7 @@
       </thead>
       <tbody>
       <ng-container *ngFor="let r of items; let i = index">
-        <tr *ngIf="!hasAdditionalInterventions(r)">
+        <tr *ngIf="isNoAdditionalIntervention(r)">
           <td *ngIf="geneColumnOn"
               class="__cell-width-medium">
             <div *ngIf="r.hasOwnProperty('geneSymbol')"

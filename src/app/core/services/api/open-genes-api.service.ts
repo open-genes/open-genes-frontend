@@ -129,11 +129,8 @@ export class ApiService {
     return this.http.get<Phylum[]>(`/api/phylum?lang=${this.currentLang}`);
   }
 
-  getResearches(research: ResearchArguments, page?: number): Observable<any> {
-    const pagination = page ? page : 1;
-    switch (research) {
-      case 'lifespan-change':
-        return this.http.get<any[]>(`/api/research/lifespan-change?page=${pagination}`);
-    }
+  getResearches(research: ResearchArguments, page: number, pageSize?: number): Observable<any> {
+    const size = pageSize ? pageSize : 20;
+    return this.http.get<any[]>(`/api/research/${research}?page=${page}&pageSize=${size}`);
   }
 }

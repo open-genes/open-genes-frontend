@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ResearchTables } from '../research-tables';
 import { MatDialog } from '@angular/material/dialog';
-import { PurpleTable } from '../../../../core/models/open-genes-api/researches.model';
 
 @Component({
   selector: 'app-increase-lifespan',
@@ -13,10 +12,7 @@ export class IncreaseLifespanComponent extends ResearchTables {
     super(dialog);
   }
 
-  public hasAdditionalInterventions(research: PurpleTable): boolean {
-    if (!research.interventions.controlAndExperiment || !research.interventions.experiment.length) {
-      return;
-    }
-    return research.interventions.controlAndExperiment.length > 1 || research.interventions.experiment.length > 1;
+  public isNoAdditionalIntervention(r: any) {
+    return this.resolveAdditionalIntervention(r);
   }
 }

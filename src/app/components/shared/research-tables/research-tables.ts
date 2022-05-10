@@ -1,13 +1,16 @@
 import { Directive, Input } from '@angular/core';
 import { CommonModalComponent } from '../../ui-components/components/modals/common-modal/common-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AdditionalInterventionResolver } from '../../../core/utils/additional-intervention-resolver';
 
 @Directive()
-export abstract class ResearchTables {
+export abstract class ResearchTables extends AdditionalInterventionResolver {
   @Input() items: any;
   @Input() geneColumnOn: boolean;
 
-  protected constructor(protected dialog: MatDialog) {}
+  protected constructor(protected dialog: MatDialog) {
+    super();
+  }
 
   public openCommentModal(title, body, template = null): void {
     this.dialog.open(CommonModalComponent, {

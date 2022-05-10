@@ -1,28 +1,33 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { ResearchArguments } from '../../../../core/models/open-genes-api/researches.model';
-import { takeUntil } from 'rxjs/operators';
-import { PageOptions } from '../../../../core/models/api-response.model';
+import { ResearchArguments, ResearchTypes } from '../../../../core/models/open-genes-api/researches.model';
+import { map, takeUntil } from 'rxjs/operators';
+import { ApiResponse, PageOptions } from '../../../../core/models/api-response.model';
 import { PageEvent } from '@angular/material/paginator';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
+import { AdditionalInterventionResolver } from 'src/app/core/utils/additional-intervention-resolver';
 
 @Component({
   selector: 'app-research-tab',
   templateUrl: './research-tab.component.html',
   styleUrls: ['./research-tab.component.scss'],
 })
-export class ResearchTabComponent implements OnInit, OnDestroy {
+export class ResearchTabComponent extends AdditionalInterventionResolver implements OnInit, OnDestroy {
   @Input() researchType: ResearchArguments;
   @Output() dataLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  public researches: any[] = []; // TODO: typing
+  public researches: any[] = [];
   public options: PageOptions;
   public page = 1;
+  public pageSize = 20;
+  public paginatorPagesTotal: Observable<number>;
   public errorStatus: string;
 
   private subscription$ = new Subject();
 
-  constructor(private readonly apiService: ApiService) {}
+  constructor(private readonly apiService: ApiService) {
+    super();
+  }
 
   ngOnInit(): void {
     this.getResearches(this.researchType);
@@ -33,9 +38,18 @@ export class ResearchTabComponent implements OnInit, OnDestroy {
   }
 
   public getResearches(researchType: ResearchArguments): void {
+    console.log('researchType', researchType);
     this.apiService
-      .getResearches(researchType, this.page)
-      .pipe(takeUntil(this.subscription$))
+      .getResearches(researchType, this.page, this.pageSize)
+      .pipe(
+        takeUntil(this.subscription$),
+        map((r: ApiResponse<ResearchTypes>) => {
+          if (researchType === 'lifespan-change') {
+            r.items = r.items.filter((r: any) => this.resolveAdditionalIntervention(r));
+          }
+          return r;
+        })
+      )
       .subscribe(
         (researches) => {
           this.researches = researches.items;

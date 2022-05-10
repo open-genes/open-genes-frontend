@@ -7,7 +7,16 @@ export type ResearchArguments =
   | 'associations-with-lifespan'
   | 'other-evidence';
 
-export interface Research {
+// Fields that present in the request in api/research endpoints
+interface ResearchOptionalFields {
+  geneId?: number;
+  geneNcbiId?: number;
+  geneName?: string;
+  geneSymbol?: string;
+  geneAliases?: string[];
+}
+
+export interface Research extends ResearchOptionalFields {
   doi: string;
   pmid: string;
   comment: string;
@@ -15,19 +24,19 @@ export interface Research {
 
 // purple form
 interface PurpleTableExperimentConditions {
-  experimentMainEffect: string; // ✅
-  interventionWay: string; // ✅
-  interventionMethod: string; // ✅
-  genotype: string; // ✅
+  experimentMainEffect: string;
+  interventionWay: string;
+  interventionMethod: string;
+  genotype: string;
   // The tissue specificity fields:
-  tissueSpecific: boolean; // ✅
-  tissueSpecificPromoter: string; // ✅
+  tissueSpecific: boolean;
+  tissueSpecificPromoter: string;
   tissues:
     | {
         id: number;
         name: string;
       }[]
-    | []; // ✅
+    | [];
   // The drug therapy fields:
   inductionByDrugWithdrawal: boolean;
   drug: string;
@@ -40,14 +49,7 @@ interface PurpleTableExperimentConditions {
   treatmentEnd: number;
   endStageOfDevelopment: string;
   endTimeUnit: string;
-  // Intervention with an impact on another gene
-  // (exists if there is an additional intervention)
-  gene?: {
-    id: number;
-    symbol: string;
-    name: string;
-    ncbiId: string;
-  };
+  gene: number;
 }
 
 interface InterventionResult {
@@ -56,38 +58,38 @@ interface InterventionResult {
 }
 
 export interface PurpleTable extends Research {
-  modelOrganism: string; // ✅
-  organismLine: string; // ✅
-  sex: string; // ✅
-  controlCohortSize: number; // ✅
-  experimentCohortSize: number; // ✅
-  populationDensity: string; // ✅
-  temperatureFrom: number; // ✅
-  temperatureTo: number; // ✅
-  diet: string; // ✅
-  interventionResultForLifespan: string; // ✅
-  expressionChangePercent: number; // ✅
+  modelOrganism: string;
+  organismLine: string;
+  sex: string;
+  controlCohortSize: number;
+  experimentCohortSize: number;
+  populationDensity: string;
+  temperatureFrom: number;
+  temperatureTo: number;
+  diet: string;
+  interventionResultForLifespan: string;
+  expressionChangePercent: number;
   expressionMeasurementType: string;
   expressionChangeTissue: string;
-  lifespanMinControl: number; // ✅
-  lifespanMeanControl: number; // ✅
-  lifespanMedianControl: number; // ✅
-  lifespanMaxControl: number; // ✅
-  lifespanMinExperiment: number; // ✅
-  lifespanMeanExperiment: number; // ✅
-  lifespanMedianExperiment: number; // ✅
-  lifespanMaxExperiment: number; // ✅
-  lifespanTimeUnit: string | null; // ✅
-  lifespanMinChangePercent: number; // ✅
-  lMinChangeStatSignificance: boolean | null; // ✅
-  lifespanMeanChangePercent: number; // ✅
-  lMeanChangeStatSignificance: boolean | null; // ✅
-  lifespanMedianChangePercent: number; // ✅
+  lifespanMinControl: number;
+  lifespanMeanControl: number;
+  lifespanMedianControl: number;
+  lifespanMaxControl: number;
+  lifespanMinExperiment: number;
+  lifespanMeanExperiment: number;
+  lifespanMedianExperiment: number;
+  lifespanMaxExperiment: number;
+  lifespanTimeUnit: string | null;
+  lifespanMinChangePercent: number;
+  lMinChangeStatSignificance: boolean | null;
+  lifespanMeanChangePercent: number;
+  lMeanChangeStatSignificance: boolean | null;
+  lifespanMedianChangePercent: number;
   lMedianChangeStatSignificance: boolean | null;
-  lifespanMaxChangePercent: number; // ✅
-  lMaxChangeStatSignificance: boolean | null; // ✅
-  interventionImproves: InterventionResult[] | []; // ✅
-  interventionDeteriorates: InterventionResult[] | []; // ✅
+  lifespanMaxChangePercent: number;
+  lMaxChangeStatSignificance: boolean | null;
+  interventionImproves: InterventionResult[] | [];
+  interventionDeteriorates: InterventionResult[] | [];
   interventions: {
     controlAndExperiment: PurpleTableExperimentConditions[];
     experiment: PurpleTableExperimentConditions[];
@@ -175,3 +177,12 @@ export interface Researches {
   geneAssociatedWithLongevityEffects: PinkTable[];
   additionalEvidences: GrayTable[];
 }
+
+export type ResearchTypes =
+  | PurpleTable[]
+  | BlueTable[]
+  | GreenTable[]
+  | YellowTable[]
+  | OrangeTable[]
+  | PinkTable[]
+  | GrayTable[];

@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { SearchModeEnum } from '../../core/models/settings.model';
+import { ResearchArguments } from '../../core/models/open-genes-api/researches.model';
+
+interface Tab {
+  title: string;
+  cssClass: string;
+  param: ResearchArguments;
+}
 
 @Component({
   selector: 'app-lifespan-research-page',
@@ -11,7 +17,7 @@ export class IncreaseLifespanComponent {
   public showLoader = false;
 
   return;
-  public tabs = [
+  public tabs: Tab[] = [
     {
       title: 'gene_page_researches_lifespan',
       cssClass: 'tab--age-related-change',

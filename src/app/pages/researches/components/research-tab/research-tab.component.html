@@ -46,7 +46,7 @@
     <mat-paginator
       *ngIf="researches.length !== 0"
       [length]="options.objTotal"
-      [pageSize]="options?.pagination.pageSize"
+      [pageSize]="pageSize"
       (page)="pageEventHandler(researchType, $event)"
     ></mat-paginator>
   </ng-container>

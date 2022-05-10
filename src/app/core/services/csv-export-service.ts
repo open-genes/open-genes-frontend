@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
+import { AdditionalInterventionResolver } from '../utils/additional-intervention-resolver';
+import { PurpleTable } from '../models/open-genes-api/researches.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CsvExportService {
+export class CsvExportService extends AdditionalInterventionResolver {
   // private genes: Genes[]; // TODO: save cached response here
   // private researches: any[]; // TODO: add typing from OG-724
   private maxPageSize = 1; // when 1 is passed, API gives all existing elements
+  private maxPageSizeLegacy = 99999;
+  constructor() {
+    super();
+  }
 
   static wait(delay) {
     return new Promise((resolve) => setTimeout(resolve, delay));
@@ -42,7 +48,7 @@ export class CsvExportService {
   private async generateSimplePairCsv(csvHeader, field) {
     let resultingString = '';
     // TODO: cache after once made and invalidate on the next session
-    const response = await CsvExportService.FetchData(`https://open-genes.com/api/gene/search?pageSize=600`, 0, 1, {});
+    const response = await CsvExportService.FetchData(`https://open-genes.com/api/gene/search?pageSize=${this.maxPageSizeLegacy}`, 0, 1, {});
     if (response) {
       const resJson = await response.json();
       const genes = resJson.items;
@@ -267,35 +273,18 @@ export class CsvExportService {
 
     // TODO: OG-811
     const response = await CsvExportService.FetchData(
-      `https://open-genes.com/api/research/lifespan-change?pageSize=1000`,
+      `https://open-genes.com/api/research/lifespan-change?pageSize=${this.maxPageSizeLegacy}`,
       0,
       1,
       {}
     );
     if (response) {
       const resJson = await response.json();
-      const researches = resJson.items;
+      const researches: PurpleTable[] = resJson.items;
       if (researches) {
         for (const form of researches) {
           if (typeof form !== undefined) {
-            // if there is more than one intervention, it's an additional intervention
-            let isNoAdditionalIntervention = true;
-
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-            if (form.interventions.controlAndExperiment.length + form.interventions.experiment.length > 1) {
-              isNoAdditionalIntervention = false;
-            }
-            if (form.interventions.controlAndExperiment.length > 0) {
-              isNoAdditionalIntervention = false;
-            }
-            if (form.interventions.experiment.length > 1) {
-              isNoAdditionalIntervention = false;
-            } else if (form.interventions.experiment.length === 1) {
-              // временный костыль
-              if (form.interventions.experiment[0]?.gene !== form.geneId) {
-                isNoAdditionalIntervention = false;
-              }
-            }
+            const isNoAdditionalIntervention = this.resolveAdditionalIntervention(form);
 
             if (isNoAdditionalIntervention === true) {
               const geneSymbol = this.checkBlankValues(form?.geneSymbol);
@@ -592,7 +581,7 @@ export class CsvExportService {
 
     const response = await CsvExportService.FetchData(
       // TODO: API should give all elements in response with pageSize=1 parameter set
-      `https://open-genes.com/api/gene/search?researches=1&pageSize=1000`,
+      `https://open-genes.com/api/gene/search?researches=1&pageSize=${this.maxPageSizeLegacy}`,
       0,
       1,
       {}
@@ -608,23 +597,7 @@ export class CsvExportService {
           if (purple) {
             purple?.forEach((form) => {
               // if there is more than one intervention, it's an additional intervention
-              let isNoAdditionalIntervention = true;
-
-              // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-              if (form.interventions.controlAndExperiment.length + form.interventions.experiment.length > 1) {
-                isNoAdditionalIntervention = false;
-              }
-              if (form.interventions.controlAndExperiment.length > 0) {
-                isNoAdditionalIntervention = false;
-              }
-              if (form.interventions.experiment.length > 1) {
-                isNoAdditionalIntervention = false;
-              } else if (form.interventions.experiment.length === 1) {
-                // временный костыль
-                if (form.interventions.experiment[0]?.gene !== gene.id) {
-                  isNoAdditionalIntervention = false;
-                }
-              }
+              const isNoAdditionalIntervention = this.resolveAdditionalIntervention(form);
 
               if (isNoAdditionalIntervention === true) {
                 const doi = this.checkBlankValues(form?.doi);
