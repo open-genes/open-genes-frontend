@@ -21,10 +21,17 @@
             animationDuration="0ms"
             class="__w-content-fluid"
             (selectedTabChange)="setIsListLoaded(true)">
-            <mat-tab *ngFor="let tab of tabs"
-                     label="{{ tab.title | translate }}">
+            <mat-tab *ngFor="let tab of tabs">
+              <ng-template mat-tab-label>
+                <div
+                  class="tab"
+                  [class]="tab.cssClass">
+                {{ tab.title | translate }}
+                </div>
+              </ng-template>
               <ng-template matTabContent>
                 <app-research-tab
+                  class="tab__content"
                   [researchType]="tab.param"
                   (dataLoaded)="setIsListLoaded($event)"
                 ></app-research-tab>

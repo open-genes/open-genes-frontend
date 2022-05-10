@@ -1,9 +1,56 @@
 @import '../styles';
 
-.tab {
+::ng-deep .tab {
+  position: relative;
+
+  &::before {
+    content: ' ';
+    display: inline-block;
+    vertical-align: middle;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
   @each $class, $color in $research-tables {
-    &--#{$class} > thead th:first-child::before {
+    &--#{$class}::before {
       background: $color;
     }
+  }
+
+  &__content {
+    display: block;
+    margin-top: 20px;
+  }
+}
+
+::ng-deep .mat-tab-label-container > div > mat-ink-bar {
+  display: none;
+}
+
+::ng-deep .mat-tab-labels {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  .mat-tab-label {
+    width: 100%;
+    padding: 0;
+    justify-content: flex-start;
+
+    .mat-tab-label-content {
+      border: none;
+      white-space: normal;
+      text-align: left;
+      font-weight: normal;
+    }
+  }
+
+  .mat-tab-label + .mat-tab-label {
+    border-top: 1px solid $color-borders;
   }
 }
