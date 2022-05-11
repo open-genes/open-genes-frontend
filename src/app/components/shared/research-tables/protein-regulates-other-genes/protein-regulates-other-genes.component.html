@@ -3,6 +3,9 @@
   <div class="table-section __mt-20 __w-content-fluid">
     <table class="table table--zebra table--sticky table--protein-to-gene">
       <thead>
+      <th *ngIf="numberColumn">
+        #
+      </th>
       <th *ngIf="geneColumnOn">
         {{ "main_page_table_name" | translate }}
       </th>
@@ -16,7 +19,11 @@
       </th>
       </thead>
       <tbody>
-      <tr *ngFor="let item of items | slice: 0:slice">
+      <tr *ngFor="let item of items | slice: 0:slice let i = index">
+        <td *ngIf="numberColumn"
+            class="number-column">
+          <div class="number-column__inner">{{ i + 1 }}</div>
+        </td>
         <td *ngIf="geneColumnOn"
             class="__cell-width-medium">
           <div *ngIf="item.hasOwnProperty('geneSymbol')"

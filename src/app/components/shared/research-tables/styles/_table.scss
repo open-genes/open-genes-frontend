@@ -68,4 +68,12 @@
   }
 }
 
+::ng-deep .number-column {
+  color: $color-gray;
+  font-size: $font-size-small;
+
+  &__inner {
+    width: 2ch;
+  }
+}
 

@@ -6,6 +6,7 @@ import { AdditionalInterventionResolver } from '../../../core/utils/additional-i
 @Directive()
 export abstract class ResearchTables extends AdditionalInterventionResolver {
   @Input() items: any;
+  @Input() numberColumn: boolean;
   @Input() geneColumnOn: boolean;
   @Input() slice = 20;
 

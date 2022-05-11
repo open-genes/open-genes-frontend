@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./additional-evidences.component.scss'],
 })
 export class AdditionalEvidencesComponent extends ResearchTables {
-
   constructor(protected dialog: MatDialog) {
     super(dialog);
   }

@@ -4,6 +4,9 @@
   <div class="table-section __mt-20 __w-content-fluid">
     <table class="table table--zebra">
       <thead>
+      <th *ngIf="numberColumn">
+        #
+      </th>
       <th *ngIf="geneColumnOn">
         {{ "main_page_table_name" | translate }}
       </th>
@@ -33,8 +36,12 @@
       </th>
       </thead>
       <tbody>
-      <ng-container *ngFor="let r of items | slice: 0:slice">
+      <ng-container *ngFor="let r of items | slice: 0:slice let i = index">
         <tr *ngIf="isNoAdditionalIntervention(r)">
+          <td *ngIf="numberColumn"
+              class="number-column">
+            <div class="number-column__inner">{{ i + 1 }}</div>
+          </td>
           <td *ngIf="geneColumnOn"
               class="__cell-width-medium">
             <div *ngIf="r.hasOwnProperty('geneSymbol')"
@@ -163,39 +170,25 @@
           </td>
 
           <td>
-            <!-- Control & experiment data -->
             <ng-container *ngFor="let sample of r.interventions.controlAndExperiment">
-              <h6>{{ "researches_l_control_and_experiment" | translate }}: </h6>
-              <ng-container *ngIf="!sample.hasOwnProperty('gene')">
-                <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay }}</p>
-                <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod }}</p>
-                <p>{{ "researches_genotype" | translate }}: {{ sample.genotype }}</p>
-              </ng-container>
+              <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay }}</p>
+              <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod }}</p>
+              <p>{{ "researches_genotype" | translate }}: {{ sample.genotype }}</p>
             </ng-container>
 
-            <!-- Experiment data -->
-
-            <!-- There is only one condition of experiment -->
-            <!-- if there is no additional intervention -->
             <ng-container *ngFor="let sample of r.interventions.experiment">
-              <!-- if there is no additional intervention on the other gene -->
-              <ng-container *ngIf="!sample.hasOwnProperty('gene')">
-                <h6>{{ "researches_l_experiment" | translate }}: </h6>
-                <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay }}</p>
-                <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod }}</p>
-                <p>{{ "researches_genotype" | translate }}:  {{ sample.genotype }}</p>
-              </ng-container>
+              <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay }}</p>
+              <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod }}</p>
+              <p>{{ "researches_genotype" | translate }}:  {{ sample.genotype }}</p>
             </ng-container>
           </td>
 
           <td>
             <ng-container *ngFor="let sample of r.interventions.experiment">
-              <!-- Experiment main effect can only be in experiment group if  -->
-              <!-- there is no any additional intervention -->
-              <ng-container *ngIf="!sample.hasOwnProperty('gene')">
-                <ng-container *ngIf="sample.experimentMainEffect; else dash">
-                  <p>{{ sample.experimentMainEffect }}</p>
-                </ng-container>
+            <!-- Experiment main effect can only be in experiment group if  -->
+            <!-- there is no any additional intervention -->
+              <ng-container *ngIf="sample.experimentMainEffect; else dash">
+                <p>{{ sample.experimentMainEffect }}</p>
               </ng-container>
             </ng-container>
           </td>
@@ -204,17 +197,15 @@
             <ng-container *ngFor="let sample of r.interventions.experiment">
               <!-- Tissue specificity can only be in experiment group if  -->
               <!-- there is no any additional intervention -->
-              <ng-container *ngIf="!sample.hasOwnProperty('gene')">
-                <ng-container *ngIf="sample.tissueSpecific; else notTissueSpecific">
-                  <p>{{ "researches_promoter" | translate }}: {{ sample.tissueSpecificPromoter }}</p>
+              <ng-container *ngIf="sample.tissueSpecific; else notTissueSpecific">
+                <p>{{ "researches_promoter" | translate }}: {{ sample.tissueSpecificPromoter }}</p>
 
-                  <ul *ngIf="sample.tissues.length !== 0"
-                      class="list">
-                    <li *ngFor="let tissue of sample.tissues">
-                      {{ tissue.name }}
-                    </li>
-                  </ul>
-                </ng-container>
+                <ul *ngIf="sample.tissues.length !== 0"
+                    class="list">
+                  <li *ngFor="let tissue of sample.tissues">
+                    {{ tissue.name }}
+                  </li>
+                </ul>
               </ng-container>
             </ng-container>
           </td>

@@ -4,50 +4,71 @@
     <section *ngSwitchCase="'lifespan-change'">
       <app-increase-lifespan
         [geneColumnOn]="true"
-        [items]="researches"></app-increase-lifespan>
+        [numberColumn]="true"
+        [items]="researches"
+        [slice]="slice | async"
+      ></app-increase-lifespan>
     </section>
 
     <section *ngSwitchCase="'age-related-changes'">
       <app-age-related-changes
         [geneColumnOn]="true"
-        [items]="researches"></app-age-related-changes>
+        [numberColumn]="true"
+        [items]="researches"
+        [slice]="slice | async"
+      ></app-age-related-changes>
     </section>
 
     <section *ngSwitchCase="'gene-activity-change-impact'">
       <app-intervention-affects-aging-process
         [geneColumnOn]="true"
-        [items]="researches"></app-intervention-affects-aging-process>
+        [numberColumn]="true"
+        [items]="researches"
+        [slice]="slice | async"
+      ></app-intervention-affects-aging-process>
     </section>
 
     <section *ngSwitchCase="'gene-regulation'">
       <app-protein-regulates-other-genes
         [geneColumnOn]="true"
-        [items]="researches"></app-protein-regulates-other-genes>
+        [numberColumn]="true"
+        [items]="researches"
+        [slice]="slice | async"
+      ></app-protein-regulates-other-genes>
     </section>
 
     <section *ngSwitchCase="'association-with-accelerated-aging'">
       <app-gene-associated-with-progeria-syndromes
         [geneColumnOn]="true"
-        [items]="researches"></app-gene-associated-with-progeria-syndromes>
+        [numberColumn]="true"
+        [items]="researches"
+        [slice]="slice | async"
+      ></app-gene-associated-with-progeria-syndromes>
     </section>
 
     <section *ngSwitchCase="'associations-with-lifespan'">
       <app-gene-associated-with-longevity-effects
         [geneColumnOn]="true"
-        [items]="researches"></app-gene-associated-with-longevity-effects>
+        [numberColumn]="true"
+        [items]="researches"
+        [slice]="slice | async"
+      ></app-gene-associated-with-longevity-effects>
     </section>
 
     <section *ngSwitchCase="'other-evidence'">
       <app-additional-evidences
         [geneColumnOn]="true"
-        [items]="researches"></app-additional-evidences>
+        [numberColumn]="true"
+        [items]="researches"
+        [slice]="slice | async"
+      ></app-additional-evidences>
     </section>
 
     <div *ngIf="researches.length < options.objTotal || page < options.pagination.pagesTotal"
          class="btn-wrap show-more __mt-20">
-      <button (click)="showMore(researchType)"
+      <button (click)="showMore($event, researchType)"
               class="btn show-more__button">
-        {{ "show_more" | translate }}
+        {{ "show_more" | translate }} <span class="spinner fas fa-circle-notch fa-spin"></span>
       </button>
     </div>
   </ng-container>

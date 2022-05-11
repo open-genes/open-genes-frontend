@@ -54,6 +54,11 @@
       font-weight: normal;
     }
 
+    &:hover {
+      opacity: .8;
+      background-color: $color-gray-very-light;
+    }
+
     &.mat-tab-label-active {
       opacity: 1;
 
