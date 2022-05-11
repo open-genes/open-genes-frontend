@@ -8,8 +8,7 @@ import { PurpleTable } from '../models/open-genes-api/researches.model';
 export class CsvExportService extends AdditionalInterventionResolver {
   // private genes: Genes[]; // TODO: save cached response here
   // private researches: any[]; // TODO: add typing from OG-724
-  private maxPageSize = 1; // when 1 is passed, API gives all existing elements
-  private maxPageSizeLegacy = 99999;
+  private maxPageSize = 99999;
   constructor() {
     super();
   }
@@ -48,7 +47,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
   private async generateSimplePairCsv(csvHeader, field) {
     let resultingString = '';
     // TODO: cache after once made and invalidate on the next session
-    const response = await CsvExportService.FetchData(`https://open-genes.com/api/gene/search?pageSize=${this.maxPageSizeLegacy}`, 0, 1, {});
+    const response = await CsvExportService.FetchData(`https://open-genes.com/api/gene/search?pageSize=${this.maxPageSize}`, 0, 1, {});
     if (response) {
       const resJson = await response.json();
       const genes = resJson.items;
@@ -273,7 +272,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
 
     // TODO: OG-811
     const response = await CsvExportService.FetchData(
-      `https://open-genes.com/api/research/lifespan-change?pageSize=${this.maxPageSizeLegacy}`,
+      `https://open-genes.com/api/research/lifespan-change?pageSize=${this.maxPageSize}`,
       0,
       1,
       {}
@@ -581,7 +580,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
 
     const response = await CsvExportService.FetchData(
       // TODO: API should give all elements in response with pageSize=1 parameter set
-      `https://open-genes.com/api/gene/search?researches=1&pageSize=${this.maxPageSizeLegacy}`,
+      `https://open-genes.com/api/gene/search?researches=1&pageSize=${this.maxPageSize}`,
       0,
       1,
       {}
