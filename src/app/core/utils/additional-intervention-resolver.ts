@@ -1,7 +1,7 @@
 import { PurpleTable } from '../models/open-genes-api/researches.model';
 
 export abstract class AdditionalInterventionResolver {
-  resolveAdditionalIntervention(research: PurpleTable) {
+  resolveAdditionalIntervention(research: PurpleTable, targetGene = research.geneId) {
     if (typeof research !== undefined) {
       // if there is more than one intervention, it's an additional intervention
       let isNoAdditionalIntervention = true;
@@ -16,7 +16,7 @@ export abstract class AdditionalInterventionResolver {
         isNoAdditionalIntervention = false;
       } else if (research.interventions.experiment.length === 1) {
         // временный костыль
-        if (research.interventions.experiment[0]?.gene !== research.geneId) {
+        if (research.interventions.experiment[0]?.gene !== targetGene) {
           isNoAdditionalIntervention = false;
         }
       }

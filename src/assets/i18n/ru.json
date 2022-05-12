@@ -344,7 +344,7 @@
   "researches_l_control_and_experiment": "Контроль и эксперимент",
   "researches_l_experiment_title": "Эксперимент:",
   "researches_l_experiment": "Эксперимент",
-  "researches_l_density": "Индекс плотности содержания",
+  "researches_l_density": "Кол-во животных в контейнере",
   "researches_l_temperature_title": "t°",
   "researches_l_temperature": "t°: {{from}}—{{to}}",
   "researches_l_diet": "Диета",

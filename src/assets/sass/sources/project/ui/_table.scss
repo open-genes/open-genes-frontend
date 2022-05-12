@@ -83,14 +83,14 @@ table.table {
   .__cell-width-large {
     &:after {
       display: block;
-      width: 16em;
+      width: 14em;
     }
   }
 
   .__cell-width-very-large {
     &:after {
       display: block;
-      width: 32em;
+      width: 24em;
     }
   }
 }

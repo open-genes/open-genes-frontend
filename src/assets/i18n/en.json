@@ -344,7 +344,7 @@
   "researches_l_control_and_experiment": "Control and experiment",
   "researches_l_experiment": "Experiment {{data}}",
   "researches_l_experiment_title": "Experiment:",
-  "researches_l_density": "Containment density index",
+  "researches_l_density": "Quantity of animals in a container",
   "researches_l_temperature_title": "t°",
   "researches_l_temperature": "t°: {{from}}—{{to}}",
   "researches_l_diet": "Diet",

@@ -4,7 +4,6 @@ import { Subject, Subscription } from 'rxjs';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
-import { ToMap } from '../../core/utils/to-map';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { SettingsService } from '../../core/services/settings.service';
@@ -16,13 +15,14 @@ import { FilterService } from '../../components/shared/genes-list/services/filte
 import { FilterTypesEnum } from '../../components/shared/genes-list/services/filter-types.enum';
 import { Gene } from '../../core/models';
 import { Filter } from '../../core/models/filters/filter.model';
+import { Utils } from '../../core/utils/utils.mixin';
 
 @Component({
   selector: 'app-gene',
   templateUrl: './gene.component.html',
   styleUrls: ['./gene.component.scss'],
 })
-export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDestroy {
+export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('UiHints') UiHints: TemplateRef<any>;
 
   public isPageLoaded = false;
@@ -171,7 +171,12 @@ export class GeneComponent extends ToMap implements OnInit, AfterViewInit, OnDes
           }
           this.timestamp = !isNaN(this.dateChanged) && this.dateChanged !== 0 ? this.dateChanged : this.timestamp;
 
-          // TODO: Set properties which values depend on a selected language
+          // TODO: tech debt: remove this workaround for displaying only researches without additional interventions
+          if (this.gene.researches?.increaseLifespan) {
+            this.gene.researches.increaseLifespan = this.gene.researches?.increaseLifespan.filter((item) =>
+              this.resolveAdditionalIntervention(item, this.gene.id)
+            );
+          }
         },
         (error: HttpErrorResponse) => {
           void this.router.navigate(['/404']);

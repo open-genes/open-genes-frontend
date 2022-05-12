@@ -21,7 +21,7 @@
       <th>{{ "researches_l_control_lifespan" | translate }}</th>
       <th>{{ "researches_l_experiment_lifespan" | translate }}</th>
       <th class="__cell-width-medium">{{ "researches_l_lifespan_percent" | translate }}</th>
-      <th>{{ "researches_l_other_results" | translate }} </th>
+      <th class="__cell-width-large">{{ "researches_l_other_results" | translate }}</th>
       <!-- Control & experiment data columns -->
       <th class="__cell-width-medium">
         {{ "researches_l_intervention_way" | translate }},
@@ -37,7 +37,7 @@
       </thead>
       <tbody>
       <ng-container *ngFor="let r of items | slice: 0:slice let i = index">
-        <tr *ngIf="isNoAdditionalIntervention(r)">
+        <tr>
           <td *ngIf="numberColumn"
               class="number-column">
             <div class="number-column__inner">{{ i + 1 }}</div>
@@ -171,15 +171,15 @@
 
           <td>
             <ng-container *ngFor="let sample of r.interventions.controlAndExperiment">
-              <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay }}</p>
-              <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod }}</p>
-              <p>{{ "researches_genotype" | translate }}: {{ sample.genotype }}</p>
+              <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay | checkBlankValue }}</p>
+              <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod | checkBlankValue }}</p>
+              <p>{{ "researches_genotype" | translate }}: {{ sample.genotype | checkBlankValue }}</p>
             </ng-container>
 
             <ng-container *ngFor="let sample of r.interventions.experiment">
-              <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay }}</p>
-              <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod }}</p>
-              <p>{{ "researches_genotype" | translate }}:  {{ sample.genotype }}</p>
+              <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay | checkBlankValue }}</p>
+              <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod | checkBlankValue }}</p>
+              <p>{{ "researches_genotype" | translate }}:  {{ sample.genotype | checkBlankValue }}</p>
             </ng-container>
           </td>
 

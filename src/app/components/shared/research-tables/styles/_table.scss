@@ -31,6 +31,10 @@
     }
   }
 
+  th, td {
+    vertical-align: top;
+  }
+
   a {
     font-weight: $font-weight-medium;
     color: $color-general;
