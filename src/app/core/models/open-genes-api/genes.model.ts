@@ -45,7 +45,9 @@ interface GeneralGeneInfo {
   methylationCorrelation: MethylationCorrelation;
 }
 
-export type Genes = GeneralGeneInfo;
+export interface Genes extends GeneralGeneInfo {
+  researches?: Researches; // if `researches=1` query parameter passed
+}
 
 export interface Gene extends GeneralGeneInfo {
   location: GeneLocation;

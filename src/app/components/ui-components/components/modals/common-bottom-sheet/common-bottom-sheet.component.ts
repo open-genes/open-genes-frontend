@@ -10,6 +10,7 @@ export class CommonBottomSheetComponent {
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA)
     public data: {
+      title?: string;
       template: TemplateRef<any>;
     },
     private bottomSheetRef: MatBottomSheetRef<CommonBottomSheetComponent>

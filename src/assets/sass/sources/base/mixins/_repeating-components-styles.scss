@@ -290,5 +290,59 @@
   }
 }
 
+@mixin ripple($border-radius: $border-radius-medium) {
+  &:after {
+    content: ' ';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    border-radius: $border-radius;
+    background-color: rgba($color-base, .15);
+    opacity: 0;
+    transition: color, opacity, .15s ease-in-out;
+  }
+
+  &:hover {
+    &:after {
+      opacity: 1;
+    }
+  }
+}
+
+@mixin gene-name {
+  .title {
+    font-size: $font-size-bigger;
+    font-weight: $font-weight-medium;
+    color: $color-gray;
+    min-width: 200px;
+    padding: 15px 0 5px 0;
+    line-height: 1;
+
+    .link {
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      position: relative;
+      vertical-align: middle;
+      margin-right: 5px;
+      text-decoration: underline;
+      color: mix($color-gray, $color-general, 90%);
+
+      &:hover,
+      &:active {
+        color: darken(mix($color-gray, $color-general, 90%), 10%);
+      }
+    }
+
+    b {
+      color: $color-black;
+      font-weight: bold;
+    }
+  }
+}
+
 
 

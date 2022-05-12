@@ -1,0 +1,92 @@
+<section>
+  <h4>{{ "gene_page_researches_protein_regulates_genes" | translate }}</h4>
+  <div class="table-section __mt-20 __w-content-fluid">
+    <table class="table table--zebra table--sticky table--protein-to-gene">
+      <thead>
+      <th *ngIf="numberColumn">
+        #
+      </th>
+      <th *ngIf="geneColumnOn">
+        {{ "main_page_table_name" | translate }}
+      </th>
+      <th class="__cell-width-small">
+        {{ "protein_regulates_genes_activity" | translate }}
+      </th>
+      <th>{{ "gene" | translate }}</th>
+      <th>{{ "researches_regulation_type" | translate }}</th>
+      <th>
+        {{ "researches_comment" | translate }}
+      </th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of items | slice: 0:slice let i = index">
+        <td *ngIf="numberColumn"
+            class="number-column">
+          <div class="number-column__inner">{{ i + 1 }}</div>
+        </td>
+        <td *ngIf="geneColumnOn"
+            class="__cell-width-medium">
+          <div *ngIf="item.hasOwnProperty('geneSymbol')"
+               class="title">
+            <a [routerLink]="['/gene', item.geneSymbol]" class="link link--gray">
+              <b>{{ item.geneSymbol }}</b> {{ item.geneName }}
+            </a>
+          </div>
+        </td>
+        <td>
+          <ng-container *ngIf="item.proteinActivity ; else dash">
+            {{ item.proteinActivity }}
+          </ng-container>
+        </td>
+        <td>
+          <a href="gene/{{ item.regulatedGene.symbol }}" class="link">{{
+            item.regulatedGene.symbol
+            }}</a>
+        </td>
+        <td>
+          <ng-container *ngIf="item.regulationType ; else dash">
+            {{ item.regulationType }}
+          </ng-container>
+        </td>
+        <td>
+          <button class="btn btn--small btn--purple btn--flat"
+                  (click)="openCommentModal('researches_comment', item, links)"
+          >
+            {{ "researches_comment_button" | translate }}
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<ng-template #dash>
+  <span class="table__dash"></span>
+</ng-template>
+
+<ng-template #links let-item="item">
+  <p *ngIf="item?.comment.length !== 0">
+    {{ item?.comment }}
+  </p>
+
+  <p *ngIf="item?.doi !== ''">
+    <a
+      href="https://doi.org/{{ item?.doi }}"
+      class="link"
+      target="_blank"
+    >{{ item?.doi }}</a>
+  </p>
+  <p *ngIf="item?.pmid !== ''">
+    <a
+      href="https://pubmed.ncbi.nlm.nih.gov/17170002/{{ item?.pmid }}"
+      class="link"
+      target="_blank"
+    >{{ item?.pmid }}</a>
+  </p>
+
+  <app-publication-info *ngIf="item?.doi"
+                        [doi]="item.doi"
+                        class="publication-info"
+  ></app-publication-info>
+</ng-template>
