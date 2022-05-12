@@ -55,7 +55,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
       .subscribe(
         (researches) => {
           this.researches = [...this.researches, ...(researches.items as any)];
-          console.log(this.researches);
+          // console.log(this.researches);
           this.options = researches.options;
           this.dataLoaded.emit(true);
         },
