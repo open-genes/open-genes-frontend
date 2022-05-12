@@ -2,14 +2,21 @@
 <router-outlet></router-outlet>
 <app-footer *ngIf="isFooterVisible"></app-footer>
 
-<ng-container *ngIf="retrievedSettings.showCookieBanner">
-  <app-cookie-banner>
+<ng-container *ngIf="retrievedSettings.showCookieBanner === undefined || retrievedSettings.showCookieBanner === true">
+  <app-banner>
     <ng-container text>
-      <p class="cookie__text">Сайт использует cookie/This web site uses cookies. Подробности - в
-        <a routerLink="/cookie-policy" target="_blank">«Использование cookie/Cookie policy»</a></p>
+        {{ "cookie_banner_text" | translate }}
+      <a routerLink="/cookie-policy"
+         target="_blank"
+      >{{ "cookie_banner_link" | translate }}</a>
     </ng-container>
     <ng-container button>
-      <button (click)="acceptCookies()">OK</button>
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="acceptCookies()">
+        {{ "cookie_banner_button" | translate }}
+      </button>
     </ng-container>
-  </app-cookie-banner>
+  </app-banner>
 </ng-container>

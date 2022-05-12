@@ -32,7 +32,7 @@ import { SnackBarModule } from './components/shared/snack-bar/snack-bar.module';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomMatPaginatorIntl } from './core/services/custom-mat-paginator-int';
 import { HttpReqInterceptor } from './core/utils/http-req.interceptor';
-import { CookieBannerComponent } from './components/shared/cookies-banner/cookie-banner.component';
+import { UiComponentsModule } from './components/ui-components/ui-components.module';
 
 // required for AOT compilation
 // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
@@ -46,7 +46,6 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     FooterComponent,
     LanguageComponent,
     BurgerMenuComponent,
-    CookieBannerComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +66,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     DirectivesModule,
     TermHintModule,
     SnackBarModule,
+    UiComponentsModule,
   ],
   providers: [
     TranslateService,

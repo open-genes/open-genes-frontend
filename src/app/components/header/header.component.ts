@@ -21,9 +21,7 @@ export class HeaderComponent implements OnDestroy {
   constructor(
     private readonly filterService: FilterService,
     private readonly cdRef: ChangeDetectorRef
-  ) {
-    console.log(this.region);
-  }
+  ) {}
 
   ngOnDestroy(): void {
     this.favouritesSubscription.unsubscribe();
