@@ -13,6 +13,7 @@ import { AnchorLinksPipe } from './specific/anchor-links.pipe';
 import { OrthologLinkWrapperPipe } from './specific/ortholog-links.pipe';
 import { TrueFalseNullPipe } from './specific/true-false-null';
 import { SearchFilterPipe } from './general/search-filter.pipe';
+import { CheckBlankValuePipe } from './general/check-blank-value';
 
 const GENERAL_PIPES = [
   SafePipe,
@@ -22,6 +23,7 @@ const GENERAL_PIPES = [
   UnixTimeFormatterPipe,
   ReplacePipe,
   SearchFilterPipe,
+  CheckBlankValuePipe,
 ];
 
 const SPECIFIC_PIPES = [

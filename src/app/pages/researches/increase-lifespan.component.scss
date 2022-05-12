@@ -1,0 +1,75 @@
+@import '../styles';
+
+::ng-deep .tab {
+  position: relative;
+  padding-left: 24px;
+
+  &::before {
+    content: ' ';
+    display: block;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background: #cbcbef;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+  }
+
+  @each $class, $color in $research-tables {
+    &--#{$class}::before {
+      background: $color;
+    }
+  }
+
+  &__content {
+    display: block;
+    margin-top: 20px;
+  }
+}
+
+::ng-deep .mat-tab-label-container > div > mat-ink-bar {
+  display: none;
+}
+
+::ng-deep .mat-tab-labels {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  .mat-tab-label {
+    width: 100%;
+    height: auto;
+    padding: $padding-regular 0;
+    justify-content: flex-start;
+
+    .mat-tab-label-content {
+      border: none;
+      white-space: normal;
+      text-align: left;
+      font-weight: normal;
+    }
+
+    &:hover {
+      opacity: .8;
+      background-color: $color-gray-very-light;
+    }
+
+    &.mat-tab-label-active {
+      opacity: 1;
+
+      .mat-tab-label-content {
+        color: $color-black;
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+
+  .mat-tab-label + .mat-tab-label {
+    border-top: 1px solid $color-borders;
+  }
+}

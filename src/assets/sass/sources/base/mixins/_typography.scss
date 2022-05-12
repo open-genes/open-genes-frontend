@@ -68,6 +68,21 @@
       }
     }
   }
+
+  dl.list {
+    display: inline-block;
+    width: 100%;
+  }
+
+  dt, dd {
+    float: left;
+  }
+
+  dt {
+    clear: left;
+    margin-right: 1ch;
+    font-weight: $font-weight-medium;
+  }
 }
 
 @mixin typography {
@@ -129,15 +144,19 @@
 
     * + h3,
     * + h4,
+    * + h5,
+    * + h6,
     * + p,
     * + .list,
     * + app-code-block {
-      margin-top: 2ex;
+      margin-top: .8ex;
     }
 
     h3 + *,
-    h4 + * {
-      margin-top: .8ex;
+    h4 + *,
+    h5 + *,
+    h6 + * {
+      margin-top: 2ex;
     }
 
     // It's made in order to not affect styled links.
