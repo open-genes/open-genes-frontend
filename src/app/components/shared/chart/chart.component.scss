@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.chart {
+  width: 100%;
+}
+
+::ng-deep .plotly svg {
+  display: initial;
+  width: initial;
+  height: initial;
+}

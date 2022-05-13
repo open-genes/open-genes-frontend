@@ -47,6 +47,9 @@ export class GenesListComponent implements OnInit, OnDestroy {
 
   @Input() set genesList(query: Genes[] | string) {
     if (query) {
+      if (this.searchedData.length !== 0) {
+        this.previousSearchedData = [...this.searchedData];
+      }
       if (this.isGoTermsMode) {
         this.searchedData = query as Genes[];
       } else {
@@ -94,6 +97,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   @Output() genesLength: EventEmitter<number> = new EventEmitter<number>();
 
   public searchedData: Genes[] = [];
+  public previousSearchedData: Genes[] = [];
   public foundAndNotFoundGenes: Omit<SearchModel, 'items'>;
   public filterTypes = FilterTypesEnum;
   public sortEnum = SortEnum;
@@ -269,10 +273,10 @@ export class GenesListComponent implements OnInit, OnDestroy {
       this.filterService
         .getSortedAndFilteredGenes()
         .subscribe((sortedGenes) => {
-          this.searchedData = sortedGenes.items;
-          this.isLoading = false;
-          this.cdRef.markForCheck();
-        });
+        this.searchedData = sortedGenes.items;
+        this.isLoading = false;
+        this.cdRef.markForCheck();
+      });
     }
   }
 

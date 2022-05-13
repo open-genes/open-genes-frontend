@@ -37,6 +37,11 @@
   </div>
 </div>
 
+<app-chart
+  [x]="previousSearchedData"
+  [y]="searchedData"
+></app-chart>
+
 <!-- Content -->
 <section
   *ngIf="searchedData?.length"
