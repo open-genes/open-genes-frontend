@@ -8,7 +8,7 @@ import { PurpleTable } from '../../../../core/models/open-genes-api/researches.m
   templateUrl: './increase-lifespan.component.html',
   styleUrls: ['./increase-lifespan.component.scss'],
 })
-export class IncreaseLifespanComponent extends ResearchTables {
+export class ResearchesPageComponent extends ResearchTables {
   public researches: PurpleTable[] = [];
 
   constructor(protected dialog: MatDialog) {

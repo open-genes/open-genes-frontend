@@ -8,12 +8,12 @@ interface Tab {
 }
 
 @Component({
-  selector: 'app-lifespan-research-page',
-  templateUrl: './increase-lifespan.component.html',
-  styleUrls: ['./increase-lifespan.component.scss'],
+  selector: 'app-researches-page',
+  templateUrl: './researches-page.component.html',
+  styleUrls: ['./researches-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IncreaseLifespanComponent {
+export class ResearchesPageComponent {
   public showLoader = false;
 
   return;

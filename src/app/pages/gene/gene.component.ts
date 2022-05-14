@@ -18,7 +18,7 @@ import { Filter } from '../../core/models/filters/filter.model';
 import { Utils } from '../../core/utils/utils.mixin';
 
 @Component({
-  selector: 'app-gene',
+  selector: 'app-gene-page',
   templateUrl: './gene.component.html',
   styleUrls: ['./gene.component.scss'],
 })

@@ -8,7 +8,7 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-favourites',
+  selector: 'app-favourites-page',
   templateUrl: './favourites.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

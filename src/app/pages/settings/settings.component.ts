@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Settings, SettingsEnum } from '../../core/models/settings.model';
 
 @Component({
-  selector: 'app-settings',
+  selector: 'app-settings-page',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
 })
