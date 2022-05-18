@@ -1,5 +1,7 @@
 # Open Genes — Frontend
 
+# Start locally
+
 ## Before you start
 
 Don't forget to install Angular CLI first
@@ -7,9 +9,7 @@ Don't forget to install Angular CLI first
 ```
 npm install -g @angular/cli
 ```
-For more information please visit [https://angular.io/guide/setup-local](Angular official guide)
-
-# Start locally
+For more information please visit [Angular official guide](https://angular.io/guide/setup-local)
 
 ```
 npm i
