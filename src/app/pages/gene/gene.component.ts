@@ -13,16 +13,10 @@ import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.c
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FilterService } from '../../components/shared/genes-list/services/filter.service';
 import { FilterTypesEnum } from '../../components/shared/genes-list/services/filter-types.enum';
-import { Gene } from '../../core/models';
+import { Gene, Ortholog } from '../../core/models';
 import { Filter } from '../../core/models/filters/filter.model';
 import { Utils } from '../../core/utils/utils.mixin';
-import {
-  BlueTable, GrayTable,
-  GreenTable, OrangeTable, PinkTable,
-  PurpleTable,
-  Researches,
-  YellowTable,
-} from 'src/app/core/models/open-genes-api/researches.model';
+import { Researches } from 'src/app/core/models/open-genes-api/researches.model';
 
 @Component({
   selector: 'app-gene',
@@ -40,6 +34,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
   public geneOntologyComponentMap: Map<string, string> = new Map<string, string>();
   public geneOntologyActivityMap: Map<string, string> = new Map<string, string>();
   public commentsReferenceLinksMap: Map<string, string>;
+  public ortholog: Ortholog[] = [];
   public expressionMaxValue: number;
   public isAnyContent: boolean;
   public isAnyOrtholog: boolean;
@@ -118,7 +113,9 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
           const compoundResearches = {
             increaseLifespan: increaseLifespan,
             ageRelatedChangesOfGene: [...this.gene.researches?.ageRelatedChangesOfGene],
-            interventionToGeneImprovesVitalProcesses: [...this.gene.researches?.interventionToGeneImprovesVitalProcesses],
+            interventionToGeneImprovesVitalProcesses: [
+              ...this.gene.researches?.interventionToGeneImprovesVitalProcesses,
+            ],
             proteinRegulatesOtherGenes: [...this.gene.researches?.proteinRegulatesOtherGenes],
             geneAssociatedWithProgeriaSyndromes: [...this.gene.researches?.geneAssociatedWithProgeriaSyndromes],
             geneAssociatedWithLongevityEffects: [...this.gene.researches?.geneAssociatedWithLongevityEffects],
@@ -160,6 +157,14 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
           ) {
             this.isGeneCandidate = true;
           }
+
+          // TODO: Sort orthologs until OG-651 is done
+          this.ortholog = this.gene.ortholog.sort((a, b) => {
+            return (
+              (a.species.latinName > b.species.latinName ? 1 : -1) &&
+              (a.species.latinName.includes('Drosophila') ? -1 : 1)
+            );
+          });
 
           this.isAnyOrtholog = this.gene.ortholog.length !== 0;
           this.isHpa = this.gene.humanProteinAtlas !== '';

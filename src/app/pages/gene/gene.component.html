@@ -254,7 +254,7 @@
                       </div>
 
                       <ul class="orthologs">
-                        <ng-container *ngFor="let item of gene.ortholog | slice: 0:orthologsMaxItems">
+                        <ng-container *ngFor="let item of ortholog | slice: 0:orthologsMaxItems">
                           <li *ngIf="item.species?.commonName || item.species?.latinName"
                               class="ortholog">
                             <div class="ortholog__species">

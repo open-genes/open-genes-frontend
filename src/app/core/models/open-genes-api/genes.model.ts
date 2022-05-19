@@ -49,6 +49,17 @@ export interface Genes extends GeneralGeneInfo {
   terms?: TermsLegacy;
 }
 
+export interface Ortholog {
+  id: number;
+  species: {
+    commonName: string;
+    latinName: string;
+  };
+  symbol: string;
+  externalBaseId: number;
+  externalBaseName: string;
+}
+
 export interface Gene extends GeneralGeneInfo {
   location: GeneLocation;
   accPromoter: any;
@@ -56,16 +67,7 @@ export interface Gene extends GeneralGeneInfo {
   accCds: string;
   descriptionNCBI: string;
   references: string;
-  ortholog: {
-    id: number;
-    species: {
-      commonName: string;
-      latinName: string;
-    };
-    symbol: string;
-    externalBaseId: number;
-    externalBaseName: string;
-  }[];
+  ortholog: Ortholog[];
   orthologs: {
     [n: string]: string;
   };
