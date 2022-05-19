@@ -1,5 +1,13 @@
 <div [ngSwitch]="researchType"
      class="research">
+  <app-search [showTitle]="false"
+              [genesList]="researches"
+              [setSearchMode]="searchMode"
+              (confirmedQuery)="updateGenesList($event)"
+              (searchQuery)="setSearchQuery($event)"
+              class="__mb-30">
+  </app-search>
+
   <ng-container *ngIf="researches?.length !== 0">
     <section *ngSwitchCase="'lifespan-change'">
       <app-increase-lifespan
@@ -72,8 +80,17 @@
       </button>
     </div>
   </ng-container>
-</div>
 
-<app-spinner *ngIf="researches?.length === 0"
-             class="__mt-10 __mb-10"
-></app-spinner>
+  <app-spinner *ngIf="isLoading"
+               class="__mt-10 __mb-10"
+  ></app-spinner>
+
+  <section
+    *ngIf="query?.length > 0 && researches.length === 0">
+    <app-no-content [title]="'nothing_found'">
+      <ng-container icon>
+        <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+      </ng-container>
+    </app-no-content>
+  </section>
+</div>
