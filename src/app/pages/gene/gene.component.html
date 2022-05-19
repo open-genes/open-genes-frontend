@@ -307,7 +307,7 @@
                     ></app-researches>
                   </section>
 
-                  <section>
+                  <section appTermInfo>
                     <h2 *ngIf="gene.commentEvolution || gene.proteinDescriptionUniProt"
                         class="__mb-15"
                     >{{ 'gene_page_title_summary' | translate }}</h2>
@@ -315,7 +315,6 @@
                     <ng-container *ngIf="gene.commentEvolution">
                       <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
                       <article
-                        appTermInfo
                         id="evolution"
                         [innerHTML]="gene.commentEvolution | publicationLinksWrap: 'link'"
                       ></article>
@@ -324,7 +323,6 @@
                     <ng-container *ngIf="isNcbiDescription">
                       <h3>{{ 'gene_page_title_description' | translate }}</h3>
                       <article
-                        appTermInfo
                         [innerHTML]="gene.descriptionNCBI"
                       ></article>
                     </ng-container>
@@ -332,7 +330,6 @@
                     <ng-container *ngIf="gene.proteinDescriptionOpenGenes?.length !== 0">
                       <h3>{{ 'gene_page_title_protein_description_og' | translate }}</h3>
                       <article
-                        appTermInfo
                         id="description-open-genes"
                         [innerHTML]="gene.proteinDescriptionOpenGenes | publicationLinksWrap: 'link'"
                       ></article>
@@ -341,7 +338,6 @@
                     <ng-container *ngIf="gene.proteinDescriptionUniProt?.length !== 0">
                       <h3>{{ 'gene_page_title_protein_description_uniprot' | translate }}</h3>
                       <article
-                        appTermInfo
                         id="description-uniprot"
                         [innerHTML]="gene.proteinDescriptionUniProt"
                       ></article>
