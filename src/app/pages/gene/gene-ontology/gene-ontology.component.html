@@ -11,7 +11,7 @@
     <article class="__mt-15">
       <ul class="list">
         <li *ngFor="let term of process | keyvalue | slice: 0:biologicalProcessMaxItems">
-          <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+          <a href="https://www.ebi.ac.uk/QuickGO/term/{{ term.key | zero }}"
              title="QuickGO"
              class="alias">{{ term.key | zero }}</a> {{ term.value }}
         </li>
@@ -25,7 +25,7 @@
         {{ "show_less" | translate }}
       </button>
 
-      <button *ngIf="biologicalProcessMaxItems == maxItemsToShow"
+      <button *ngIf="biologicalProcessMaxItems === maxItemsToShow"
               class="btn show-more__button"
               (click)="biologicalProcessMaxItems = gene.terms.biological_process.length">
         {{ "show_more" | translate }}
@@ -43,7 +43,7 @@
     <article class="__mt-15">
       <ul class="list">
         <li *ngFor="let term of component | keyvalue | slice: 0:cellularComponentMaxItems">
-          <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+          <a href="https://www.ebi.ac.uk/QuickGO/term/{{ term.key | zero }}"
              title="QuickGO"
              class="alias">{{ term.key | zero }}</a> {{ term.value }}
         </li>
@@ -57,7 +57,7 @@
           {{ "show_less" | translate }}
         </button>
 
-        <button *ngIf="cellularComponentMaxItems == maxItemsToShow"
+        <button *ngIf="cellularComponentMaxItems === maxItemsToShow"
                 class="btn show-more__button"
                 (click)="cellularComponentMaxItems = gene.terms.cellular_component.length">
           {{ "show_more" | translate }}
@@ -75,7 +75,7 @@
     <article class="__mt-15">
       <ul class="list">
         <li *ngFor="let term of activity | keyvalue | slice: 0:molecularActivityMaxItems">
-          <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
+          <a href="https://www.ebi.ac.uk/QuickGO/term/{{ term.key | zero }}"
              title="QuickGO"
              class="alias">{{ term.key | zero }}</a> {{ term.value }}
         </li>
@@ -89,7 +89,7 @@
           {{ "show_less" | translate }}
         </button>
 
-        <button *ngIf="molecularActivityMaxItems == maxItemsToShow"
+        <button *ngIf="molecularActivityMaxItems === maxItemsToShow"
                 class="btn show-more__button"
                 (click)="molecularActivityMaxItems = gene.terms.molecular_activity.length">
           {{ "show_more" | translate }}

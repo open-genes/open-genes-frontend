@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
+import { Observable, of, Subject, Subscription } from 'rxjs';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
@@ -16,6 +16,13 @@ import { FilterTypesEnum } from '../../components/shared/genes-list/services/fil
 import { Gene } from '../../core/models';
 import { Filter } from '../../core/models/filters/filter.model';
 import { Utils } from '../../core/utils/utils.mixin';
+import {
+  BlueTable, GrayTable,
+  GreenTable, OrangeTable, PinkTable,
+  PurpleTable,
+  Researches,
+  YellowTable,
+} from 'src/app/core/models/open-genes-api/researches.model';
 
 @Component({
   selector: 'app-gene',
@@ -29,9 +36,9 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
   public gene: Gene;
   public symbol: string;
   public timestamp = 1562960035; // July 12 2019 - date when the first data was added
-  public geneOntologyProcessMap: Map<string, string>;
-  public geneOntologyComponentMap: Map<string, string>;
-  public geneOntologyActivityMap: Map<string, string>;
+  public geneOntologyProcessMap: Map<string, string> = new Map<string, string>();
+  public geneOntologyComponentMap: Map<string, string> = new Map<string, string>();
+  public geneOntologyActivityMap: Map<string, string> = new Map<string, string>();
   public commentsReferenceLinksMap: Map<string, string>;
   public expressionMaxValue: number;
   public isAnyContent: boolean;
@@ -49,6 +56,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
   public filters: Filter = this.filterService.filters;
   public orthologsMaxItemsToShow = 9;
   public orthologsMaxItems: number = this.orthologsMaxItemsToShow;
+  public researches: Observable<Researches>;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
@@ -94,25 +102,43 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
           this.gene = response;
 
           // Map fields
-          this.geneOntologyProcessMap = this.toMap(this.gene.terms.biological_process);
-          this.geneOntologyComponentMap = this.toMap(this.gene.terms.cellular_component);
-          this.geneOntologyActivityMap = this.toMap(this.gene.terms.molecular_activity);
+          this.gene.terms.biological_process.map((t) => this.geneOntologyProcessMap.set(t.GOId, t.term));
+          this.gene.terms.cellular_component.map((t) => this.geneOntologyComponentMap.set(t.GOId, t.term));
+          this.gene.terms.molecular_activity.map((t) => this.geneOntologyActivityMap.set(t.GOId, t.term));
           this.expressionMaxValue = GeneComponent.chartMaxValue(this.gene.expression);
           this.commentsReferenceLinksMap = this.toMap(this.gene.commentsReferenceLinks);
 
+          // Filter researches
+          // TODO: tech debt: remove this workaround for displaying only researches without additional interventions
+          let increaseLifespan = [];
+          increaseLifespan = this.gene.researches.increaseLifespan.filter((item) =>
+            this.resolveAdditionalIntervention(item, this.gene.id)
+          );
+
+          const compoundResearches = {
+            increaseLifespan: increaseLifespan,
+            ageRelatedChangesOfGene: [...this.gene.researches?.ageRelatedChangesOfGene],
+            interventionToGeneImprovesVitalProcesses: [...this.gene.researches?.interventionToGeneImprovesVitalProcesses],
+            proteinRegulatesOtherGenes: [...this.gene.researches?.proteinRegulatesOtherGenes],
+            geneAssociatedWithProgeriaSyndromes: [...this.gene.researches?.geneAssociatedWithProgeriaSyndromes],
+            geneAssociatedWithLongevityEffects: [...this.gene.researches?.geneAssociatedWithLongevityEffects],
+            additionalEvidences: [...this.gene.researches?.additionalEvidences],
+          };
+          this.researches = of(compoundResearches);
+
           // Traits to define if content exists
           const researchesLengths = [];
-          Object.values(this.gene.researches).forEach((value) => {
+          Object.values(compoundResearches).forEach((value) => {
             researchesLengths.push(Number(Object.entries(value).length));
           });
           this.isAnyResearchFilled = Math.max(...researchesLengths) !== 0;
 
           const strongResearches = [
-            ...this.gene.researches?.increaseLifespan,
-            ...this.gene.researches?.ageRelatedChangesOfGene,
-            ...this.gene.researches?.interventionToGeneImprovesVitalProcesses,
-            ...this.gene.researches?.geneAssociatedWithProgeriaSyndromes,
-            ...this.gene.researches?.geneAssociatedWithLongevityEffects,
+            compoundResearches.increaseLifespan,
+            compoundResearches.ageRelatedChangesOfGene,
+            compoundResearches.interventionToGeneImprovesVitalProcesses,
+            compoundResearches.geneAssociatedWithProgeriaSyndromes,
+            compoundResearches.geneAssociatedWithLongevityEffects,
           ];
 
           if (strongResearches.length !== 0) {
@@ -170,13 +196,6 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
             this.dateChanged = Number(this.gene.timestamp);
           }
           this.timestamp = !isNaN(this.dateChanged) && this.dateChanged !== 0 ? this.dateChanged : this.timestamp;
-
-          // TODO: tech debt: remove this workaround for displaying only researches without additional interventions
-          if (this.gene.researches?.increaseLifespan) {
-            this.gene.researches.increaseLifespan = this.gene.researches?.increaseLifespan.filter((item) =>
-              this.resolveAdditionalIntervention(item, this.gene.id)
-            );
-          }
         },
         (error: HttpErrorResponse) => {
           void this.router.navigate(['/404']);
