@@ -3,17 +3,6 @@
 :host {
   width: 100%;
   display: inline-block;
-}
-
-.view-panel {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  align-items: start;
-  align-content: flex-start;
-  justify-items: flex-start;
-  justify-content: flex-start;
 
   a,
   button {
@@ -25,10 +14,14 @@
   }
 
 
-  button.view-panel__modal-button {
+  button.modal-button {
     margin-right: 10px;
   }
+
+  // - Sort header fix
+  @include material-sort-header-fix;
 }
 
-// - Sort header fix
-@include material-sort-header-fix;
+
+
+
