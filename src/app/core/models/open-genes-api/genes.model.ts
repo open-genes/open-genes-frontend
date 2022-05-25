@@ -1,6 +1,6 @@
 import { Researches } from './researches.model';
 import { Origin } from './origin.model';
-import { Terms } from './gene-ontology.model';
+import { Terms, TermsLegacy } from './gene-ontology.model';
 import { HumanProteinAtlas } from './human-protein-atlas.model';
 import { AssociatedDiseases, AssociatedDiseaseCategories } from './associated-diseases.model';
 import { MethylationCorrelation } from './methylation-correlation.model';
@@ -34,7 +34,6 @@ interface GeneralGeneInfo {
   expressionChange?: number;
   functionalClusters: AgeRelatedProcesses[];
   proteinClasses: ProteinClasses[];
-  terms?: Terms;
   name: string;
   familyOrigin?: Origin;
   origin?: Origin;
@@ -47,6 +46,18 @@ interface GeneralGeneInfo {
 
 export interface Genes extends GeneralGeneInfo {
   researches?: Researches; // if `researches=1` query parameter passed
+  terms?: TermsLegacy;
+}
+
+export interface Ortholog {
+  id: number;
+  species: {
+    commonName: string;
+    latinName: string;
+  };
+  symbol: string;
+  externalBaseId: number;
+  externalBaseName: string;
 }
 
 export interface Gene extends GeneralGeneInfo {
@@ -56,16 +67,7 @@ export interface Gene extends GeneralGeneInfo {
   accCds: string;
   descriptionNCBI: string;
   references: string;
-  ortholog: {
-    id: number;
-    species: {
-      commonName: string;
-      latinName: string;
-    };
-    symbol: string;
-    externalBaseId: number;
-    externalBaseName: string;
-  }[];
+  ortholog: Ortholog[];
   orthologs: {
     [n: string]: string;
   };
