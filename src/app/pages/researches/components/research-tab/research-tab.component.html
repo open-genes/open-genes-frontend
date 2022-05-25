@@ -7,6 +7,7 @@
               (confirmedQuery)="updateGenesList($event)"
               (searchQuery)="setSearchQuery($event)"
               (cancel)="setInitialState()"
+              [isDisabled]="error.isError"
               class="__mb-30">
   </app-search>
 
@@ -97,10 +98,13 @@
   </section>
 
   <section
-    *ngIf="errorStatus">
+    *ngIf="error.isError">
     <app-no-content [title]="'error_page_500'">
       <ng-container icon>
         <app-icon icon="error" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+      </ng-container>
+      <ng-container description>
+        {{ error.errorStatus }}
       </ng-container>
     </app-no-content>
   </section>

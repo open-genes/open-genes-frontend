@@ -9,6 +9,7 @@
       (clearFilterItem)="clearFilters($event)"
     ></app-filter-panel>
     <app-search-view-panel
+      [ngClass]="isGoTermsMode && searchedData?.length === 0 ? 'hidden' : ''"
       [isMobile]="isMobile"
       [downloadJsonLink]="downloadJsonLink"
       (tableView)="toggleGenesView($event)"

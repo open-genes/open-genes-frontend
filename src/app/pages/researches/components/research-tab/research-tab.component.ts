@@ -38,8 +38,10 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public page = 1;
   public isLoading = false;
   public slice: Observable<number>;
-  public errorStatus: string;
-
+  public error = {
+    isError: false,
+    errorStatus: '',
+  };
   private arrayOfWords: string[] = [];
   private subscription$ = new Subject();
 
@@ -64,7 +66,8 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public setInitialState(): void {
     this.researches = [];
     this.page = 1;
-    this.errorStatus = undefined;
+    this.error.isError = false;
+    this.error.errorStatus = undefined;
     this.getResearches(this.researchType);
   }
 
@@ -161,7 +164,8 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
         },
         (err) => {
           // TODO: error output
-          this.errorStatus = err.statusText;
+          this.error.isError = true;
+          this.error.errorStatus = err.statusText;
           this.cdRef.markForCheck();
         }
       );
