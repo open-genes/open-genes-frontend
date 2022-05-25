@@ -61,6 +61,13 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.subscription$.unsubscribe();
   }
 
+  public setInitialState(): void {
+    this.researches = [];
+    this.page = 1;
+    this.errorStatus = undefined;
+    this.getResearches(this.researchType);
+  }
+
   public setGenesList(query: Genes[] | string) {
     if (query) {
       if (query.length > 2) {
@@ -130,7 +137,6 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   }
 
   public getResearches(researchType: ResearchArguments): void {
-    console.log('getResearches');
     this.isLoading = true;
     this.cdRef.markForCheck();
     if (!this.slice) {
@@ -151,7 +157,6 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
         (researches) => {
           this.researches = [...this.researches, ...researches.items] as any;
           this.options = researches.options;
-          this.dataLoaded.emit(true);
           this.cdRef.markForCheck();
         },
         (err) => {

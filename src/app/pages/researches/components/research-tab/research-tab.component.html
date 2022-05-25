@@ -3,8 +3,10 @@
   <app-search [showTitle]="false"
               [genesList]="researches"
               [setSearchMode]="searchMode"
+              [fixOnTopOnMobile]="false"
               (confirmedQuery)="updateGenesList($event)"
               (searchQuery)="setSearchQuery($event)"
+              (cancel)="setInitialState()"
               class="__mb-30">
   </app-search>
 

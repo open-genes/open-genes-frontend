@@ -53,8 +53,11 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     }
   }
 
+  @Input() fixOnTopOnMobile = true; // TODO: move it out of component and activate in parent component on event
+
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
   @Output() confirmedQuery: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public searchedData: Partial<Genes[]>;
   public searchForm: FormGroup;
@@ -113,7 +116,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
           this.highlightText = query;
           this.showSearchResult = query?.length >= 2;
 
-          if (this.showSearchResult) {
+          if (this.showSearchResult && this.fixOnTopOnMobile) {
             this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
           } else {
             this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
@@ -135,9 +138,12 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public cancelSearch(event?): void {
-    this.showSearchResult = false;
-    this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
     event?.stopPropagation();
+    this.showSearchResult = false;
+    this.cancel.emit(true);
+    if (this.fixOnTopOnMobile) {
+      this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
+    }
   }
 
   public clearSearch(): void {

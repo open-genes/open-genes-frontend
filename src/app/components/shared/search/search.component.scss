@@ -16,12 +16,14 @@ $input-border-radius: 5px;
 
 .cancel-search-button {
   position: absolute;
-  top: #{$mobile-container-vertical-padding};
+  top: 10px;
   left: 0;
   z-index: 1;
-  width: $search-input-height;
-  height: $search-input-height;
   display: none;
+
+  mat-icon {
+    font-size: 30px;
+  }
 }
 
 .search-form {
@@ -240,7 +242,7 @@ $input-border-radius: 5px;
 
   // TODO: refactor without redefinition
   @include resolution_smartphone-and-tablet {
-    &--active {
+    &--active.search-form--fix-on-top {
       position: fixed;
       top: 0;
       right: 0;
