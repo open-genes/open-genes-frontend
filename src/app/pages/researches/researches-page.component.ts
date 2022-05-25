@@ -48,11 +48,11 @@ export class ResearchesPageComponent {
       cssClass: 'tab--gene-to-longevity-effect',
       param: 'associations-with-lifespan',
     },
-    {
-      title: 'gene_page_researches_additional_evidence',
-      cssClass: 'tab--gene-to-additional-evidence',
-      param: 'other-evidence',
-    },
+    // {
+    //   title: 'gene_page_researches_additional_evidence',
+    //   cssClass: 'tab--gene-to-additional-evidence',
+    //   param: 'other-evidence',
+    // },
   ];
 
   constructor(private readonly cdRef: ChangeDetectorRef) {}
