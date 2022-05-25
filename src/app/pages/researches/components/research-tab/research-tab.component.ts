@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
+import {
+  ChangeDetectionStrategy, ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2,
+} from '@angular/core';
 import { Research, ResearchArguments, ResearchTypes } from '../../../../core/models/open-genes-api/researches.model';
 import { map, takeUntil } from 'rxjs/operators';
 import { ApiResponse, PageOptions } from '../../../../core/models/api-response.model';
@@ -12,6 +21,7 @@ import { Genes } from '../../../../core/models';
 import { FilterService } from '../../../../components/shared/genes-list/services/filter.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-research-tab',
   templateUrl: './research-tab.component.html',
   styleUrls: ['./research-tab.component.scss'],
@@ -35,9 +45,11 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
 
   constructor(
     private readonly apiService: ApiService,
+    private readonly cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
     private filterService: FilterService,
-    private renderer: Renderer2) {
+    private renderer: Renderer2
+  ) {
     super();
   }
 
@@ -75,7 +87,6 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
       }
     } else {
       this.arrayOfWords = [];
-      this.clearFilters();
     }
   }
 
@@ -121,6 +132,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public getResearches(researchType: ResearchArguments): void {
     console.log('getResearches');
     this.isLoading = true;
+    this.cdRef.markForCheck();
     if (!this.slice) {
       this.slice = of(20);
     }
@@ -140,10 +152,12 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
           this.researches = [...this.researches, ...researches.items] as any;
           this.options = researches.options;
           this.dataLoaded.emit(true);
+          this.cdRef.markForCheck();
         },
         (err) => {
           // TODO: error output
           this.errorStatus = err.statusText;
+          this.cdRef.markForCheck();
         }
       );
     this.isLoading = false;
@@ -155,11 +169,6 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.getResearches(researchType);
     this.slice = of(this.researches.length);
     this.renderer.removeClass(event.target, 'show-more__button--active');
-  }
-
-  public clearFilters(filterName?: string): void {
-    delete this.filterService.filters.bySuggestions;
-    delete this.filterService.filters.byGeneSymbol;
-    this.filterService.clearFilters(filterName ? filterName : null);
+    this.cdRef.markForCheck();
   }
 }

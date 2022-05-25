@@ -93,4 +93,13 @@
       </ng-container>
     </app-no-content>
   </section>
+
+  <section
+    *ngIf="errorStatus">
+    <app-no-content [title]="'error_page_500'">
+      <ng-container icon>
+        <app-icon icon="error" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+      </ng-container>
+    </app-no-content>
+  </section>
 </div>
