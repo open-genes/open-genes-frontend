@@ -8,7 +8,7 @@ import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.c
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-diet',
+  selector: 'app-diet-page',
   templateUrl: './diet.component.html',
   styleUrls: ['./diet.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

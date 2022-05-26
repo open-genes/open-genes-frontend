@@ -7,7 +7,7 @@ export const icons: { [id: string]: string } = {
   cross: urlGeneral,
   delete: urlGeneral,
   // No content - icons
-  404: urlNoContent,
+  error: urlNoContent,
   default: urlNoContent,
   file: urlNoContent,
   language: urlNoContent,
