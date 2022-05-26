@@ -5,7 +5,9 @@
         class="toggle-content__button"
         [class.toggle-content__button--active]="searchMode === item.searchMode"
         (click)="setSearchMode(item.searchMode)">
-          <span class="fa {{item.icon}}"></span>
+          <app-icon class="icon"
+                    [icon]="item.icon"
+          ></app-icon>
           <span class="text">{{ item.toggleTitle | translate }}</span>
       </mat-button-toggle>
     </ng-container>
@@ -14,7 +16,9 @@
     <mat-button-toggle
       [routerLink]="'/researches'"
       class="toggle-content__button">
-      <span class="fa fa-book"></span>
+      <app-icon class="icon"
+                icon="book"
+      ></app-icon>
       <span class="text">{{ "toggler_researches" | translate }}</span>
     </mat-button-toggle>
   </mat-button-toggle-group>

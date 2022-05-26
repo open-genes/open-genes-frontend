@@ -17,12 +17,12 @@ export class ToggleSearchModeComponent implements OnInit {
     {
       searchMode: SearchModeEnum.searchByGenes,
       toggleTitle: 'toggler_genes',
-      icon: 'fa-dna',
+      icon: 'dna',
     },
     {
       searchMode: SearchModeEnum.searchByGoTerms,
       toggleTitle: 'toggler_annotations',
-      icon: 'fa-book',
+      icon: 'gene-ontology',
     },
   ];
 
