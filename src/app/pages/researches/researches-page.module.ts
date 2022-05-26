@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IncreaseLifespanComponent } from './increase-lifespan.component';
+import { ResearchesPageComponent } from './researches-page.component';
 import { RouterModule } from '@angular/router';
-import { RESEARCHES_ROUTES } from './increase-lifespan-routing';
+import { RESEARCHES_ROUTES } from './researches-page-routing';
 import { GenesListModule } from '../../components/shared/genes-list/genes-list.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '../../modules/pipes/pipes.module';
@@ -17,7 +17,7 @@ import { ResearchTablesModule } from '../../components/shared/research-tables/re
 import { ResearchTabComponent } from './components/research-tab/research-tab.component';
 
 @NgModule({
-  declarations: [IncreaseLifespanComponent, ResearchTabComponent],
+  declarations: [ResearchesPageComponent, ResearchTabComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(RESEARCHES_ROUTES),
@@ -36,4 +36,4 @@ import { ResearchTabComponent } from './components/research-tab/research-tab.com
   ],
   exports: [PipesModule],
 })
-export class IncreaseLifespanModule {}
+export class ResearchesPageModule {}

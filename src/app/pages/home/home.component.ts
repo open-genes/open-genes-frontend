@@ -14,11 +14,10 @@ import { WizardService } from '../../components/shared/wizard/wizard-service.ser
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
-import { SearchModel } from '../../core/models/open-genes-api/search.model';
 import { GeneFieldsModalComponent } from '../../components/shared/gene-fields-modal/gene-fields-modal.component';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-home-page',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

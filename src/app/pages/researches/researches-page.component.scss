@@ -15,6 +15,7 @@
     position: absolute;
     top: 2px;
     left: 2px;
+    border: .5px solid rgba($color-black, .15);
   }
 
   @each $class, $color in $research-tables {
@@ -35,16 +36,20 @@
 
 ::ng-deep .mat-tab-labels {
   display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
+  flex-flow: row wrap;
   align-content: center;
   justify-content: flex-start;
   align-items: flex-start;
+  margin-left: -10px;
+  margin-right: -10px;
 
   .mat-tab-label {
-    width: 100%;
+    flex: 1 1 33%;
+    width: auto;
+    flex-flow: row nowrap;
+    min-width: 200px;
     height: auto;
-    padding: $padding-regular 0;
+    padding: $padding-regular;
     justify-content: flex-start;
 
     .mat-tab-label-content {
@@ -52,11 +57,18 @@
       white-space: normal;
       text-align: left;
       font-weight: normal;
+      background: $color-gray-very-light;
+      padding: 5px;
+      border-radius: 10px;
+      transition: background .15s ease-in-out;
     }
 
     &:hover {
       opacity: .8;
-      background-color: $color-gray-very-light;
+
+      .mat-tab-label-content {
+        background-color: $color-hover;
+      }
     }
 
     &.mat-tab-label-active {
@@ -67,9 +79,5 @@
         font-weight: $font-weight-medium;
       }
     }
-  }
-
-  .mat-tab-label + .mat-tab-label {
-    border-top: 1px solid $color-borders;
   }
 }

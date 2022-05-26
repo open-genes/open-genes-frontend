@@ -159,6 +159,10 @@
       margin-top: 2ex;
     }
 
+    article + h3 {
+      margin-top: 3ex;
+    }
+
     // It's made in order to not affect styled links.
     // Links in the text received from endpoint don't have classes
     & > a:not(.btn),

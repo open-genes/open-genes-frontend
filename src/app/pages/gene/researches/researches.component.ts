@@ -8,6 +8,7 @@ import { Researches } from '../../../core/models/open-genes-api/researches.model
 })
 export class ResearchesComponent implements OnInit {
   @Input() researches: Researches;
+  @Input() slice = 20;
 
   public isIncreaseLifespan: boolean;
   public isAgeRelatedChanges: boolean;

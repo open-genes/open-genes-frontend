@@ -76,7 +76,7 @@
                 {{ "researches_l_control" | translate: { data: r.controlCohortSize } }}
               </p>
               <p *ngIf="r.experimentCohortSize">
-                {{ "researches_l_experiment" | translate }}: {{ r.experimentCohortSize }}
+                {{ "researches_l_experiment" | translate: { data: r.experimentCohortSize } }}
               </p>
             </ng-container>
           </td>

@@ -8,12 +8,12 @@ interface Tab {
 }
 
 @Component({
-  selector: 'app-lifespan-research-page',
-  templateUrl: './increase-lifespan.component.html',
-  styleUrls: ['./increase-lifespan.component.scss'],
+  selector: 'app-researches-page',
+  templateUrl: './researches-page.component.html',
+  styleUrls: ['./researches-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IncreaseLifespanComponent {
+export class ResearchesPageComponent {
   public showLoader = false;
 
   return;
@@ -48,11 +48,11 @@ export class IncreaseLifespanComponent {
       cssClass: 'tab--gene-to-longevity-effect',
       param: 'associations-with-lifespan',
     },
-    {
-      title: 'gene_page_researches_additional_evidence',
-      cssClass: 'tab--gene-to-additional-evidence',
-      param: 'other-evidence',
-    },
+    // {
+    //   title: 'gene_page_researches_additional_evidence',
+    //   cssClass: 'tab--gene-to-additional-evidence',
+    //   param: 'other-evidence',
+    // },
   ];
 
   constructor(private readonly cdRef: ChangeDetectorRef) {}
