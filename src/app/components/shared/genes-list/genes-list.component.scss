@@ -47,6 +47,22 @@
   }
 }
 
+.filters {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: start;
+  align-content: flex-start;
+  justify-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+
+  & > * {
+    display: contents;
+  }
+}
+
 .genes-info {
   font-size: $font-size;
   color: $color-gray;

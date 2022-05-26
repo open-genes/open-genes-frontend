@@ -23,7 +23,7 @@
             <ng-container *ngIf="isAvailable; else errorMessage">
               <div class="col-12">
                 <app-search [showTitle]="false"
-                            [genesList]="searchedGenes"
+                            [searchHintsList]="searchedGenes"
                             [setSearchMode]="searchMode"
                             (confirmedQuery)="updateGenesList($event)"
                             (searchQuery)="setSearchQuery($event)">

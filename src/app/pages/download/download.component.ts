@@ -10,7 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-api-reference',
+  selector: 'app-download-page',
   templateUrl: './download.component.html',
   styleUrls: ['./download.component.scss'],
 })

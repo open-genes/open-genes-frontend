@@ -19,7 +19,7 @@ import { Utils } from '../../core/utils/utils.mixin';
 import { Researches } from 'src/app/core/models/open-genes-api/researches.model';
 
 @Component({
-  selector: 'app-gene',
+  selector: 'app-gene-page',
   templateUrl: './gene.component.html',
   styleUrls: ['./gene.component.scss'],
 })
