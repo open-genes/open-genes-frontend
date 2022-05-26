@@ -17,7 +17,7 @@ import { AdditionalInterventionResolver } from 'src/app/core/utils/additional-in
 import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SearchMode } from '../../../../core/models/settings.model';
-import { Genes } from '../../../../core/models';
+import { Gene, Genes } from '../../../../core/models';
 import { FilterService } from '../../../../components/shared/genes-list/services/filter.service';
 
 @Component({
@@ -44,13 +44,14 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   };
   private arrayOfWords: string[] = [];
   private subscription$ = new Subject();
+  public genesList: Pick<Gene, 'id' | 'symbol'>[] = [];
 
   constructor(
     private readonly apiService: ApiService,
     private readonly cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
     private filterService: FilterService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
   ) {
     super();
   }
@@ -71,7 +72,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.getResearches(this.researchType);
   }
 
-  public setGenesList(query: Genes[] | string) {
+  public setResearchesList(query: Genes[] | string) {
     if (query) {
       if (query.length > 2) {
         const length = (query as string).split(',').length;
@@ -104,7 +105,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.searchByGenes(query);
   }
 
-  public updateGenesList(query): void {
+  public updateResearchesList(query): void {
     if (query && this.searchedGenesList.length) {
       this.researches = [...this.searchedGenesList];
       this.openSnackBar();
@@ -139,7 +140,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     });
   }
 
-  public getResearches(researchType: ResearchArguments): void {
+  public getResearches(researchType: ResearchArguments, callback?: () => void): void {
     this.isLoading = true;
     this.cdRef.markForCheck();
     if (!this.slice) {
@@ -154,12 +155,16 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
             r.items = r.items.filter((r: any) => this.resolveAdditionalIntervention(r));
           }
           return r;
-        })
+        }),
       )
       .subscribe(
         (researches) => {
           this.researches = [...this.researches, ...researches.items] as any;
           this.options = researches.options;
+          this.genesList = this.researches.map((r) => {
+            return { id: r.geneId, symbol: r.geneSymbol };
+          });
+          this.genesList = this.genesList.filter((r) => this.genesList.map((r) => r.id).includes(r.id));
           this.cdRef.markForCheck();
         },
         (err) => {
@@ -167,17 +172,23 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
           this.error.isError = true;
           this.error.errorStatus = err.statusText;
           this.cdRef.markForCheck();
-        }
+        },
       );
     this.isLoading = false;
+
+    if (callback) {
+      callback();
+    }
   }
 
   public showMore(event: any, researchType: ResearchArguments): void {
     this.renderer.addClass(event.target, 'show-more__button--active');
     this.page = this.page + 1;
-    this.getResearches(researchType);
-    this.slice = of(this.researches.length);
-    this.renderer.removeClass(event.target, 'show-more__button--active');
-    this.cdRef.markForCheck();
+    this.getResearches(researchType, () => {
+      console.log('click', this.page);
+      this.slice = of(this.researches.length);
+      this.renderer.removeClass(event.target, 'show-more__button--active');
+      this.cdRef.markForCheck();
+    });
   }
 }
