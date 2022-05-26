@@ -13,13 +13,13 @@
     min-width: 80px;
     font-size: $font-size-smaller;
 
-    .fa {
+    .icon {
       color: $color-general;
     }
   }
 
   @include resolution_tablet-and-up {
-    .fa {
+    .icon {
       margin-right: .4em;
     }
   }
