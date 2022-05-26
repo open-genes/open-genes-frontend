@@ -88,8 +88,7 @@
                class="__mt-10 __mb-10"
   ></app-spinner>
 
-  <section
-    *ngIf="query?.length > 0 && researches.length === 0">
+  <section *ngIf="!isLoading && researches.length === 0">
     <app-no-content [title]="'nothing_found'">
       <ng-container icon>
         <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
@@ -97,8 +96,7 @@
     </app-no-content>
   </section>
 
-  <section
-    *ngIf="error.isError">
+  <section *ngIf="error.isError">
     <app-no-content [title]="'error_page_500'">
       <ng-container icon>
         <app-icon icon="error" size="custom" customWidth="100%" customHeight="100%"></app-icon>
