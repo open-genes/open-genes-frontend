@@ -39,7 +39,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     }
   }
 
-  @Input() set genesList(genes: any) {
+  @Input() set searchHintsList(genes: any) {
     if (genes) {
       this.searchedData = genes;
     }
