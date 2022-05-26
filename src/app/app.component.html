@@ -2,7 +2,7 @@
 <router-outlet></router-outlet>
 <app-footer *ngIf="isFooterVisible"></app-footer>
 
-<ng-container *ngIf="retrievedSettings.showCookieBanner === undefined || retrievedSettings.showCookieBanner === true">
+<ng-container *ngIf="showCookieBanner">
   <app-banner>
     <ng-container text>
         {{ "cookie_banner_text" | translate }}
