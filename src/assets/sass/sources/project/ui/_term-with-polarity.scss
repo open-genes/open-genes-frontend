@@ -1,10 +1,15 @@
 // Term with polarity
 .term-w-p {
+  &::before {
+    font-size: 8px;
+    margin-right: 1ch;
+    vertical-align: middle;
+  }
+
   &--positive {
     &::before {
       content: '\25B2';
       color: $color-green-medium;
-      margin-right: .5ch;
     }
   }
 
@@ -12,7 +17,6 @@
     &::before {
       content: '\25BC';
       color: $color-red-medium;
-      margin-right: .5ch;
     }
   }
 }

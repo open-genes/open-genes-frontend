@@ -4,9 +4,18 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'polarityArrows',
 })
 export class PolarityArrowsPipe implements PipeTransform {
-  private positiveWords = ['improves', 'increases', 'улучшает', 'повышает'];
-  private negativeWords = ['decreases', 'deteriorates', 'ухудшает', 'снижает'];
-  private neutralWords = ['no change', 'нет изменений'];
+  private positiveWords = ['improves', 'increases', 'gain', 'улучшает', 'улучшение', 'усиление', 'повышает'];
+  private negativeWords = [
+    'decreases',
+    'deteriorates',
+    'loss',
+    'ухудшает',
+    'ухудшение',
+    'снижает',
+    'снижение',
+    'ослабление',
+  ];
+  private neutralWords = ['no change', 'нет изменений', 'переключение'];
 
   transform(text: string) {
     return this.wrapText(text);
@@ -14,18 +23,18 @@ export class PolarityArrowsPipe implements PipeTransform {
 
   private wrapText(text: string) {
     const str = text.split(' ');
-    let className = 'term-w-p';
+    let classNameModifier = '';
 
     str.forEach((s) => {
       if (this.positiveWords.some((s) => this.positiveWords.includes(s))) {
-        className += ' term-w-p--positive';
-      } else if (this.negativeWords.some((s) => this.positiveWords.includes(s))) {
-        className += ' term-w-p--negative';
-      } else if (this.neutralWords.some((s) => this.positiveWords.includes(s))) {
-        className += ' term-w-p--neutral';
+        classNameModifier = 'term-w-p--positive';
+      } else if (this.negativeWords.some((s) => this.negativeWords.includes(s))) {
+        classNameModifier = 'term-w-p--negative';
+      } else if (this.neutralWords.some((s) => this.neutralWords.includes(s))) {
+        classNameModifier = 'term-w-p--neutral';
       }
     });
 
-    return `<span class='${className}'>${text}</span>`;
+    return `<span class='term-w-p ${classNameModifier}'>${text}</span>`;
   }
 }

@@ -10,8 +10,9 @@ import { ProteinRegulatesOtherGenesComponent } from './protein-regulates-other-g
 import { TranslateModule } from '@ngx-translate/core';
 import { PublicationInfoModule } from '../publication-info/publication-info.module';
 import { PipesModule } from '../../../modules/pipes/pipes.module';
-import { RouterModule } from "@angular/router";
-import { UiComponentsModule } from "../../ui-components/ui-components.module";
+import { RouterModule } from '@angular/router';
+import { UiComponentsModule } from '../../ui-components/ui-components.module';
+import { MaterialModule } from 'src/app/modules/vendors/material.module';
 
 const components = [
   AdditionalEvidencesComponent,
@@ -25,7 +26,15 @@ const components = [
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, TranslateModule, PipesModule, PublicationInfoModule, RouterModule, UiComponentsModule],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    PipesModule,
+    PublicationInfoModule,
+    RouterModule,
+    UiComponentsModule,
+    MaterialModule,
+  ],
   exports: [...components],
 })
 export class ResearchTablesModule {}
