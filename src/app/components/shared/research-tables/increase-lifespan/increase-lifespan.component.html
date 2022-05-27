@@ -14,8 +14,12 @@
       <th>{{ "researches_model_organism" | translate }},
         {{ "researches_sex" | translate | lowercase }},
         {{ "researches_line" | translate | lowercase }}</th>
-      <th>{{ "researches_result" | translate }}</th>
-      <th>{{ "researches_l_cohort_size" | translate }}</th>
+      <th>{{ "researches_result" | translate }}
+        <app-info-button
+          (click)="openCommentModal('clarification', null, researchesResultHint)"
+        ></app-info-button>
+      </th>
+      <th class="__cell-width-medium">{{ "researches_l_cohort_size" | translate }}</th>
       <th>{{ "researches_l_containment_conditions" | translate }}</th>
       <th>{{ "researches_l_target_gene_expression" | translate }}</th>
       <th>{{ "researches_l_control_lifespan" | translate }}</th>
@@ -53,32 +57,42 @@
           </td>
           <!-- General data columns -->
           <td class="__cell-width-medium">
-            <ng-container *ngIf="r.modelOrganism || r.sex || r.organismLine; else dash">
-              <p *ngIf="r.modelOrganism">
-                {{ "researches_model_organism" | translate }}: {{ r.modelOrganism }}
-              </p>
-              <p *ngIf="r.sex">
-                {{ "researches_sex" | translate }}: {{ r.sex }}
-              </p>
-              <p *ngIf="r.organismLine">
-                {{ "researches_line" | translate }}: {{ r.organismLine }}
-              </p>
-            </ng-container>
+            <dl *ngIf="r.modelOrganism || r.sex || r.organismLine"
+                class="list">
+              <ng-container *ngIf="r.modelOrganism">
+                <dt>{{ "researches_model_organism" | translate }}:&nbsp;</dt>
+                <dd>{{ r.modelOrganism }}</dd>
+              </ng-container>
+              <ng-container *ngIf="r.sex">
+                <dt>{{ "researches_sex" | translate }}:&nbsp;</dt>
+                <dd>{{ r.sex }}</dd>
+              </ng-container>
+              <ng-container *ngIf="r.organismLine">
+                <dt>{{ "researches_line" | translate }}:&nbsp;</dt>
+                <dd>{{ r.organismLine }}</dd>
+              </ng-container>
+            </dl>
           </td>
+
+          <!-- -------------------------------------- -->
+
           <td>
             <ng-container *ngIf="r.interventionResultForLifespan; else dash">
-              {{ r.interventionResultForLifespan }}
+              <p [innerHTML]="r.interventionResultForLifespan | polarityArrows"></p>
             </ng-container>
           </td>
           <td>
-            <ng-container *ngIf="r.controlCohortSize || r.experimentCohortSize else dash">
-              <p *ngIf="r.controlCohortSize">
-                {{ "researches_l_control" | translate: { data: r.controlCohortSize } }}
-              </p>
-              <p *ngIf="r.experimentCohortSize">
-                {{ "researches_l_experiment" | translate: { data: r.experimentCohortSize } }}
-              </p>
-            </ng-container>
+            <dl *ngIf="r.controlCohortSize || r.experimentCohortSize"
+                class="list">
+              <ng-container *ngIf="r.controlCohortSize">
+                <dt>{{ "researches_l_control" | translate }}:&nbsp;</dt>
+                <dd>{{ r.controlCohortSize }}</dd>
+              </ng-container>
+              <ng-container *ngIf="r.experimentCohortSize">
+                <dt>{{ "researches_l_experiment" | translate }}:&nbsp;</dt>
+                <dd>{{ r.experimentCohortSize }}</dd>
+              </ng-container>
+            </dl>
           </td>
           <td>
             <ng-container *ngIf="r.populationDensity || r.temperature || r.diet; else dash">
@@ -257,4 +271,8 @@
                         [doi]="item.doi"
                         class="publication-info"
   ></app-publication-info>
+</ng-template>
+
+<ng-template #researchesResultHint>
+  {{ 'researches_purple_form_result_hint' | translate }}
 </ng-template>

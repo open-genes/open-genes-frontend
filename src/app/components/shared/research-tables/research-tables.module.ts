@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PublicationInfoModule } from '../publication-info/publication-info.module';
 import { PipesModule } from '../../../modules/pipes/pipes.module';
 import { RouterModule } from "@angular/router";
+import { UiComponentsModule } from "../../ui-components/ui-components.module";
 
 const components = [
   AdditionalEvidencesComponent,
@@ -24,7 +25,7 @@ const components = [
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, TranslateModule, PipesModule, PublicationInfoModule, RouterModule],
+  imports: [CommonModule, TranslateModule, PipesModule, PublicationInfoModule, RouterModule, UiComponentsModule],
   exports: [...components],
 })
 export class ResearchTablesModule {}
