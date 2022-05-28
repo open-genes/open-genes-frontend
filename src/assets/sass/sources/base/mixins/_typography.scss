@@ -81,6 +81,10 @@
       clear: left;
       margin-right: 1ch;
       font-weight: $font-weight-medium;
+
+      span {
+        font-weight: $font-weight-regular;
+      }
     }
 
     dt:not(:first-of-type),

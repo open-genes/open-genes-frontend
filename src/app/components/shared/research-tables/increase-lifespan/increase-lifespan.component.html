@@ -14,7 +14,7 @@
       <th>{{ "researches_model_organism" | translate }},
         {{ "researches_sex" | translate | lowercase }},
         {{ "researches_line" | translate | lowercase }}</th>
-      <th>{{ "researches_result" | translate }}
+      <th class="__cell-width-medium">{{ "researches_result" | translate }}
         <app-info-button
           (click)="openCommentModal('clarification', null, researchesResultHint)"
         ></app-info-button>
@@ -22,13 +22,17 @@
       <th class="__cell-width-medium">{{ "researches_l_cohort_size" | translate }}</th>
       <th class="__cell-width-medium">{{ "researches_l_containment_conditions" | translate }}</th>
       <th>{{ "researches_l_target_gene_expression" | translate }}</th>
-      <th>{{ "researches_l_control_lifespan" | translate }}</th>
-      <th>{{ "researches_l_experiment_lifespan" | translate }}</th>
-      <th class="__cell-width-medium">{{ "researches_l_lifespan_percent" | translate }}</th>
+      <th class="__cell-width-medium">
+        {{ "researches_l_control_lifespan" | translate }}</th>
+      <th class="__cell-width-medium">
+        {{ "researches_l_experiment_lifespan" | translate }}</th>
       <th class="__cell-width-medium">
         {{ "researches_l_lifespan_percent" | translate }}</th>
       <th class="__cell-width-large">
-        {{ "researches_l_other_results" | translate }} — {{ "researches_l_significance" | translate | lowercase }}
+        {{ "researches_l_lifespan_percent" | translate }} — {{ "researches_l_significance" | translate | lowercase }}
+      </th>
+      <th class="__cell-width-large">
+        {{ "researches_l_other_results" | translate }}
       </th>
       <!-- Control & experiment data columns -->
       <th class="__cell-width-medium">
@@ -64,44 +68,38 @@
           <td class="__cell-width-medium">
             <dl class="list">
               <dt>{{ "researches_model_organism" | translate }}:&nbsp;</dt>
-              <dd>{{ r.modelOrganism ? r.modelOrganism : '—' }}</dd>
+              <dd>{{ r.modelOrganism | checkBlankValue }}</dd>
               <dt>{{ "researches_sex" | translate }}:&nbsp;</dt>
-              <dd>{{ r.sex ? r.sex : '—' }}</dd>
+              <dd>{{ r.sex | checkBlankValue }}</dd>
               <dt>{{ "researches_line" | translate }}:&nbsp;</dt>
-              <dd>{{ r.organismLine ? r.organismLine : '—' }}</dd>
+              <dd>{{ r.organismLine | checkBlankValue }}</dd>
             </dl>
           </td>
 
           <td>
             <ng-container *ngIf="r.interventionResultForLifespan; else dash">
-              <p [innerHTML]="r.interventionResultForLifespan | polarityArrows"></p>
+              <p class="__nowrap"
+                 [innerHTML]="r.interventionResultForLifespan | polarityArrows"></p>
             </ng-container>
           </td>
           <td>
             <dl class="list">
               <dt>{{ "researches_l_control" | translate }}:&nbsp;</dt>
-              <dd>{{ r.controlCohortSize ? r.controlCohortSize : '—' }}</dd>
+              <dd>{{ r.controlCohortSize | checkBlankValue }}</dd>
               <dt>{{ "researches_l_experiment" | translate }}:&nbsp;</dt>
-              <dd>{{ r.experimentCohortSize ? r.experimentCohortSize : '—' }}</dd>
+              <dd>{{ r.experimentCohortSize | checkBlankValue }}</dd>
             </dl>
           </td>
 
           <td>
             <dl class="list">
-              <dt>
-                {{ "researches_l_density" | translate }}
-              </dt>
-              <dd>
-                {{ r.populationDensity && r.populationDensity !== 0 ? r.populationDensity : '—' }}
-              </dd>
-              <dt>
-                {{ "researches_l_temperature_title" | translate }}
-              </dt>
+              <dt>{{ "researches_l_density" | translate }}:
+                <span>{{ r.populationDensity && r.populationDensity !== 0 ? r.populationDensity : '—' }}</span></dt>
+              <dd></dd>
+              <dt>{{ "researches_l_temperature_title" | translate }}:&nbsp;</dt>
               <dd [innerHTML]="r.temperatureFrom !== null ? outputTemperaturesRange(r.temperatureFrom, r.temperatureTo) : '—'">
               </dd>
-              <dt>
-                {{ "researches_l_diet" | translate }}
-              </dt>
+              <dt>{{ "researches_l_diet" | translate }}:&nbsp;</dt>
               <dd>{{ r.diet?.length !== 0 ? r.diet : '—' }}</dd>
             </dl>
           </td>
@@ -201,19 +199,19 @@
               *ngIf="r?.interventionDeteriorates?.length !== 0 || r?.interventionImproves?.length !== 0;
               else dash">
               <ng-container *ngIf="r?.interventionImproves.length !== 0">
-                <ul class="list"
-                    matTooltip="{{ 'researches_improves' | translate }}">
-                  <li *ngFor="let result of r.interventionImproves">
-                    <span class="term-w-p term-w-p--positive">{{ result.name }}</span>
+                <ul class="list list--terms-w-p">
+                  <li *ngFor="let result of r.interventionImproves"
+                      class="term-w-p term-w-p--positive">
+                    {{ 'researches_improves' | translate }} {{ result.name }}
                   </li>
                 </ul>
               </ng-container>
 
               <ng-container *ngIf="r?.interventionDeteriorates.length !== 0">
-                <ul class="list"
-                    matTooltip="{{ 'researches_deteriorates' | translate }}">
-                  <li *ngFor="let result of r.interventionDeteriorates">
-                    <span class="term-w-p term-w-p--negative">{{ result.name }}</span>
+                <ul class="list list--terms-w-p">
+                  <li *ngFor="let result of r.interventionDeteriorates"
+                      class="term-w-p term-w-p--negative">
+                    {{ 'researches_deteriorates' | translate }} {{ result.name }}
                   </li>
                 </ul>
               </ng-container>
@@ -223,17 +221,25 @@
           <!-- -------------------------------------- -->
 
           <td>
-            <ng-container *ngFor="let sample of r.interventions.controlAndExperiment">
-              <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay | checkBlankValue }}</p>
-              <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod | checkBlankValue }}</p>
-              <p>{{ "researches_genotype" | translate }}: {{ sample.genotype | checkBlankValue }}</p>
-            </ng-container>
+            <dl *ngFor="let sample of r.interventions.controlAndExperiment"
+                class="list">
+              <dt>{{ "researches_l_intervention_way" | translate }}:&nbsp;</dt>
+              <dd>{{ sample.interventionWay | checkBlankValue }}</dd>
+              <dt>{{ "researches_l_intervention_method" | translate }}:&nbsp;</dt>
+              <dd>{{ sample.interventionMethod | checkBlankValue }}</dd>
+              <dt>{{ "researches_genotype" | translate }}:&nbsp;</dt>
+              <dd>{{ sample.genotype | checkBlankValue }}</dd>
+            </dl>
 
-            <ng-container *ngFor="let sample of r.interventions.experiment">
-              <p>{{ "researches_l_intervention_way" | translate }}: {{ sample.interventionWay | checkBlankValue }}</p>
-              <p>{{ "researches_l_intervention_method" | translate }}: {{ sample.interventionMethod | checkBlankValue }}</p>
-              <p>{{ "researches_genotype" | translate }}:  {{ sample.genotype | checkBlankValue }}</p>
-            </ng-container>
+            <dl *ngFor="let sample of r.interventions.experiment"
+                class="list">
+              <dt>{{ "researches_l_intervention_way" | translate }}:&nbsp;</dt>
+              <dd>{{ sample.interventionWay | checkBlankValue }}</dd>
+              <dt>{{ "researches_l_intervention_method" | translate }}:&nbsp;</dt>
+              <dd>{{ sample.interventionMethod | checkBlankValue }}</dd>
+              <dt>{{ "researches_genotype" | translate }}:&nbsp;</dt>
+              <dd>{{ sample.genotype | checkBlankValue }}</dd>
+            </dl>
           </td>
 
           <td>
@@ -265,7 +271,9 @@
 
           <td>
             <ng-container *ngFor="let sample of r.interventions.experiment">
-              {{ sample.tissueSpecificPromoter }}
+              <p *ngIf="sample.tissueSpecificPromoter.length !== 0; else dash">
+                {{ sample.tissueSpecificPromoter }}
+              </p>
             </ng-container>
           </td>
 

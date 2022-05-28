@@ -1,8 +1,8 @@
 // Term with polarity
 .term-w-p {
   &::before {
-    font-size: 8px;
-    margin-right: 1ch;
+    font-size: .6em;
+    margin-right: 3px;
     vertical-align: middle;
   }
 
@@ -17,6 +17,18 @@
     &::before {
       content: '\25BC';
       color: $color-red-medium;
+    }
+  }
+}
+
+.list.list--terms-w-p {
+  li.term-w-p {
+    padding-left: 1.8ex;
+
+    &::before {
+      position: absolute;
+      left: 0;
+      top: .6em;
     }
   }
 }

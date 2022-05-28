@@ -4,7 +4,16 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'polarityArrows',
 })
 export class PolarityArrowsPipe implements PipeTransform {
-  private positiveWords = ['improves', 'increases', 'gain', 'улучшает', 'улучшение', 'усиление', 'повышает'];
+  private positiveWords = [
+    'improves',
+    'increases',
+    'gain',
+    'улучшает',
+    'улучшение',
+    'усиление',
+    'повышает',
+    'увеличивает',
+  ];
   private negativeWords = [
     'decreases',
     'deteriorates',
@@ -14,6 +23,7 @@ export class PolarityArrowsPipe implements PipeTransform {
     'снижает',
     'снижение',
     'ослабление',
+    'уменьшает',
   ];
   private neutralWords = ['no change', 'нет изменений', 'переключение'];
 
@@ -26,11 +36,11 @@ export class PolarityArrowsPipe implements PipeTransform {
     let classNameModifier = '';
 
     str.forEach((s) => {
-      if (this.positiveWords.some((s) => this.positiveWords.includes(s))) {
+      if (this.positiveWords.some((s) => str.includes(s))) {
         classNameModifier = 'term-w-p--positive';
-      } else if (this.negativeWords.some((s) => this.negativeWords.includes(s))) {
+      } else if (this.negativeWords.some((s) => str.includes(s))) {
         classNameModifier = 'term-w-p--negative';
-      } else if (this.neutralWords.some((s) => this.neutralWords.includes(s))) {
+      } else if (this.neutralWords.some((s) => str.includes(s))) {
         classNameModifier = 'term-w-p--neutral';
       }
     });
