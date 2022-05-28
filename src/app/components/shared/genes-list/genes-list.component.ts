@@ -14,7 +14,7 @@ import { Genes } from '../../../core/models';
 import { FilterService } from './services/filter.service';
 import { FilterTypesEnum, SortEnum } from './services/filter-types.enum';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
-import { FileExportService } from '../../../core/services/file-export.service';
+import { FileExportService } from '../../../core/services/browser/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
 import { Filter } from '../../../core/models/filters/filter.model';

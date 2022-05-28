@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Genes } from '../../../core/models';
 import { FavouritesService } from '../../../core/services/favourites.service';
-import { FileExportService } from '../../../core/services/file-export.service';
+import { FileExportService } from '../../../core/services/browser/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

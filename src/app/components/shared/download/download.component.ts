@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnDestroy, SecurityContext, ViewEncapsulation } from '@angular/core';
-import { FileExportService } from '../../../core/services/file-export.service';
+import { FileExportService } from '../../../core/services/browser/file-export.service';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';

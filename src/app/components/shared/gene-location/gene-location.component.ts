@@ -35,19 +35,23 @@ export class GeneLocationComponent {
     this.lengthText = '';
     this.geneLength = Math.round((this.location.locationEnd - this.location.locationStart) / 1000);
 
-    if (this.geneLength < 15) {
-      this.lengthText = this.translate.currentLang === 'ru' ?
-        'короткий' : 'short' + `(${this.geneLength}kb < 15kb)`;
+    if (this.geneLength === 0) {
+      return;
+    }
+
+    if (this.geneLength < 15 && this.geneLength !== 0) {
+      const l = ` (${this.geneLength}kb < 15kb)`;
+      this.lengthText = this.translate.currentLang === 'ru' ? 'короткий' + l : 'short' + l;
     }
 
     if (this.geneLength > 15 && this.geneLength < 100) {
-      this.lengthText = this.translate.currentLang === 'ru' ?
-        'средний' : 'midlength' + `(15kb < ${this.geneLength}kb < 100kb)`;
+      const l = ` (15kb < ${this.geneLength}kb < 100kb)`;
+      this.lengthText = this.translate.currentLang === 'ru' ? 'средний' + l : 'midlength' + l;
     }
 
     if (this.geneLength > 100) {
-      this.lengthText = this.translate.currentLang === 'ru' ?
-        'длинный' : 'long' + `(${this.geneLength}kb > 100kb)`;
+      const l = ` (${this.geneLength}kb > 100kb)`;
+      this.lengthText = this.translate.currentLang === 'ru' ? this.lengthText = 'длинный' + l : 'long' + l;
     }
   }
 

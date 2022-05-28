@@ -2,12 +2,14 @@ export interface Settings {
   showUiHints: boolean;
   searchMode: SearchMode;
   isTableView: boolean;
+  showCookieBanner: boolean;
 }
 
 export enum SettingsEnum {
   showUiHints = 'showUiHints',
   searchMode = 'searchMode',
   isTableView = 'isTableView',
+  showCookieBanner = 'showCookieBanner',
 }
 
 export enum SearchModeEnum {

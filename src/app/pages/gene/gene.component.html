@@ -209,7 +209,8 @@
 
               <section class="wrapper gene-page__general-info">
                 <div class="panes">
-                  <div class="pane pane--location">
+                  <div *ngIf="gene.location.band"
+                       class="pane pane--location">
                     <div class="pane__inner">
                       <div class="pane__value">
                         <app-gene-location
@@ -253,7 +254,7 @@
                       </div>
 
                       <ul class="orthologs">
-                        <ng-container *ngFor="let item of gene.ortholog | slice: 0:orthologsMaxItems">
+                        <ng-container *ngFor="let item of ortholog | slice: 0:orthologsMaxItems">
                           <li *ngIf="item.species?.commonName || item.species?.latinName"
                               class="ortholog">
                             <div class="ortholog__species">
@@ -301,10 +302,12 @@
 
                   <section *ngIf="isAnyResearchFilled">
                     <h2 class="__mb-15">{{ 'gene_page_title_researches' | translate }}</h2>
-                    <app-researches [researches]="gene.researches"></app-researches>
+                    <app-researches [researches]="researches | async"
+                                    [slice]="undefined"
+                    ></app-researches>
                   </section>
 
-                  <section>
+                  <section appTermInfo>
                     <h2 *ngIf="gene.commentEvolution || gene.proteinDescriptionUniProt"
                         class="__mb-15"
                     >{{ 'gene_page_title_summary' | translate }}</h2>
@@ -312,7 +315,6 @@
                     <ng-container *ngIf="gene.commentEvolution">
                       <h3>{{ 'gene_page_title_evolution' | translate }}</h3>
                       <article
-                        appTermInfo
                         id="evolution"
                         [innerHTML]="gene.commentEvolution | publicationLinksWrap: 'link'"
                       ></article>
@@ -321,7 +323,6 @@
                     <ng-container *ngIf="isNcbiDescription">
                       <h3>{{ 'gene_page_title_description' | translate }}</h3>
                       <article
-                        appTermInfo
                         [innerHTML]="gene.descriptionNCBI"
                       ></article>
                     </ng-container>
@@ -329,7 +330,6 @@
                     <ng-container *ngIf="gene.proteinDescriptionOpenGenes?.length !== 0">
                       <h3>{{ 'gene_page_title_protein_description_og' | translate }}</h3>
                       <article
-                        appTermInfo
                         id="description-open-genes"
                         [innerHTML]="gene.proteinDescriptionOpenGenes | publicationLinksWrap: 'link'"
                       ></article>
@@ -338,7 +338,6 @@
                     <ng-container *ngIf="gene.proteinDescriptionUniProt?.length !== 0">
                       <h3>{{ 'gene_page_title_protein_description_uniprot' | translate }}</h3>
                       <article
-                        appTermInfo
                         id="description-uniprot"
                         [innerHTML]="gene.proteinDescriptionUniProt"
                       ></article>
@@ -382,7 +381,8 @@
                 <ng-template #noContent>
                   <section class="col-12">
                     <app-no-content
-                      [title]="'gene_page_error_no_article_yet'">
+                      [title]="'gene_page_error_no_article_yet'"
+                      [isPanel]="false">
                       <ng-container icon>
                         <app-icon
                           icon="default"

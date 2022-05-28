@@ -30,10 +30,6 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/settings/settings.module').then((m) => m.SettingsModule),
   },
   {
-    path: 'diagrams',
-    loadChildren: () => import('./pages/diagrams/diagrams.module').then((m) => m.DiagramsModule),
-  },
-  {
     path: 'help',
     loadChildren: () => import('./pages/help/help.module').then((m) => m.HelpModule),
     data: {
@@ -53,9 +49,9 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/download/download.module').then((m) => m.DownloadModule),
   },
   {
-    path: 'by-researches',
+    path: 'researches',
     loadChildren: () =>
-      import('./pages/increase-lifespan/increase-lifespan.module').then((m) => m.IncreaseLifespanModule),
+      import('./pages/researches/researches-page.module').then((m) => m.ResearchesPageModule),
   },
   {
     path: 'horvath-clock',
@@ -73,7 +69,6 @@ export const APP_ROUTES: Routes = [
     path: '**',
     redirectTo: '/404',
   },
-
 ];
 
 export const ROUTER_OPTIONS: ExtraOptions = {

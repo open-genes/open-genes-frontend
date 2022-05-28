@@ -2,10 +2,10 @@
 
 .header {
   width: 100%;
-  min-height: $header-height - $header-announcement-height;
   color: $color-base;
   background-color: $color-white;
   box-shadow: $box-shadow;
+  min-height: $header-height;
 
   &__announcement {
     display: flex;
@@ -58,7 +58,7 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
-    height: $header-height - $header-announcement-height;
+    height: $header-height;
     width: 100%;
     padding: 0 5px;
     margin: 0 auto;
@@ -93,12 +93,24 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    height: $header-height - $header-announcement-height;
+    height: $header-height;
     position: relative;
 
     app-burger-menu {
       position: relative;
       width: 55px;
+    }
+  }
+
+  &--w-announcement {
+    min-height: $header-height + $header-announcement-height;
+
+    .header__centering {
+      height: $header-height + $header-announcement-height;
+    }
+
+    .header__right {
+      height: $header-height + $header-announcement-height;
     }
   }
 }
