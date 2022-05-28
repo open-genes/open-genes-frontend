@@ -38,6 +38,7 @@
     "angular-pipes": "^10.0.0",
     "bootstrap": "^4.4.1",
     "d3": "^7.0.1",
+    "fishers-exact-test": "^1.0.5",
     "font-awesome": "^4.7.0",
     "ngx-google-analytics": "^11.2.1",
     "rxjs": "^6.6.2",
