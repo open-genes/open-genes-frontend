@@ -259,7 +259,7 @@
               <!-- Tissue specificity can only be in experiment group if  -->
               <!-- there is no any additional intervention -->
               <ng-container *ngIf="sample.tissueSpecific; else notTissueSpecific">
-                <ul *ngIf="sample.tissues.length !== 0"
+                <ul *ngIf="sample.tissues?.length !== 0"
                     class="list">
                   <li *ngFor="let tissue of sample.tissues">
                     {{ tissue.name }}
@@ -271,7 +271,7 @@
 
           <td>
             <ng-container *ngFor="let sample of r.interventions.experiment">
-              <p *ngIf="sample.tissueSpecificPromoter.length !== 0; else dash">
+              <p *ngIf="sample.tissueSpecificPromoter?.length !== 0; else dash">
                 {{ sample.tissueSpecificPromoter }}
               </p>
             </ng-container>
