@@ -34,6 +34,12 @@
     vertical-align: top;
   }
 
+  td {
+    .btn.btn--flat {
+      width: 100%;
+    }
+  }
+
   a {
     font-weight: $font-weight-medium;
     color: $color-general;

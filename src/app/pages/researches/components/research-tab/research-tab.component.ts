@@ -37,6 +37,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public researches: ResearchTypes = [];
   public options: PageOptions;
   public page = 1;
+  public isNotFound = false;
   public isLoading = false;
   public slice = new BehaviorSubject(20);
   public error = {
@@ -110,6 +111,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public updateResearchesList(query): void {
     if (query && this.searchedGenesList.length) {
       this.researches = [...this.searchedGenesList];
+      this.isNotFound = this.researches.length === 0;
       this.openSnackBar();
     }
 

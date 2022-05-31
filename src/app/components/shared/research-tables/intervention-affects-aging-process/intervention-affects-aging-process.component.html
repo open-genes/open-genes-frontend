@@ -47,22 +47,22 @@
         </td>
         <td>
           <ng-container
-            *ngIf="item?.interventionDeteriorates.length !== 0 || item?.interventionImproves.length !== 0;
+            *ngIf="item?.interventionDeteriorates?.length !== 0 || item?.interventionImproves?.length !== 0;
               else dash">
-            <ng-container *ngIf="item?.interventionDeteriorates.length !== 0">
-              <h6>{{ "researches_deteriorates" | translate }}</h6>
-              <ul class="list list--bulletted __mt-0">
-                <li *ngFor="let result of item.interventionDeteriorates">
-                  {{ result.name }}
+            <ng-container *ngIf="item?.interventionImproves.length !== 0">
+              <ul class="list list--terms-w-p">
+                <li *ngFor="let result of item.interventionImproves"
+                    class="term-w-p term-w-p--positive">
+                  {{ 'researches_improves' | translate }} {{ result.name }}
                 </li>
               </ul>
             </ng-container>
 
-            <ng-container *ngIf="item?.interventionImproves.length !== 0">
-              <h6>{{ "researches_improves" | translate }}</h6>
-              <ul class="list list--bulletted __mt-0">
-                <li *ngFor="let result of item.interventionImproves">
-                  {{ result.name }}
+            <ng-container *ngIf="item?.interventionDeteriorates.length !== 0">
+              <ul class="list list--terms-w-p">
+                <li *ngFor="let result of item.interventionDeteriorates"
+                    class="term-w-p term-w-p--negative">
+                  {{ 'researches_deteriorates' | translate }} {{ result.name }}
                 </li>
               </ul>
             </ng-container>
