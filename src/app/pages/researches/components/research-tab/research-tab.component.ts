@@ -12,7 +12,7 @@ import {
 import { Research, ResearchArguments, ResearchTypes } from '../../../../core/models/open-genes-api/researches.model';
 import { map, takeUntil } from 'rxjs/operators';
 import { ApiResponse, PageOptions } from '../../../../core/models/api-response.model';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
 import { AdditionalInterventionResolver } from 'src/app/core/utils/additional-intervention-resolver';
 import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack-bar.component';
@@ -38,7 +38,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public options: PageOptions;
   public page = 1;
   public isNotFound = false;
-  public isLoading = false;
+  public isLoading = true;
   public slice = new BehaviorSubject(20);
   public error = {
     isError: false,
@@ -173,16 +173,17 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
         (researches) => {
           this.researches = [...this.researches, ...researches.items] as any;
           this.options = researches.options;
+          this.isLoading = false;
           this.cdRef.markForCheck();
         },
         (err) => {
           // TODO: error output
           this.error.isError = true;
           this.error.errorStatus = err.statusText;
+          this.isLoading = false;
           this.cdRef.markForCheck();
         }
       );
-    this.isLoading = false;
     this.dataLoaded.emit(true);
 
     if (callback) {

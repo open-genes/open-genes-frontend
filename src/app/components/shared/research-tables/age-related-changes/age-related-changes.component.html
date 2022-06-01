@@ -16,15 +16,14 @@
         {{ "researches_line" | translate | lowercase }},
         {{ "researches_sex" | translate | lowercase }}
       </th>
-      <th>{{ "researches_change" | translate }}</th>
-      <th>{{ "researches_significance_title" | translate }}</th>
+
       <th>{{ "age_related_changes_sample" | translate }}</th>
       <th class="__cell-width-medium">{{ "researches_l_cohort_size" | translate }}</th>
       <th class="__cell-width-medium">{{ "researches_age_of_control" | translate }}</th>
       <th class="__cell-width-medium">{{ "researches_age_of_experiment" | translate }}</th>
       <th>{{ "age_related_changes_measurement_method" | translate }}</th>
-      <th>{{ "researches_expression_evaluation" | translate }}</th>
       <th>{{ "age_related_changes_statical_method" | translate }}</th>
+      <th class="__nowrap">{{ "researches_pvalue" | translate }}</th>
       <th>
         {{ "researches_comment" | translate }}
       </th>
@@ -47,8 +46,10 @@
         </td>
 
         <td>
-          <p *ngIf="r.changeType; else dash">
-            {{ r.changeType }}
+          <p *ngIf="r.changeType || r.expressionEvaluationBy || r.value; else dash">
+            <span [innerHTML]="r.changeType + ' ' | polarityArrows"></span>
+            {{ r.expressionEvaluationBy ? ("substitute_braces" | translate: { data: r.expressionEvaluationBy }) : '' }}
+            {{ r.value ? ("substitute_on_percent" | translate: { data: r.value }) : '' }}
           </p>
         </td>
 
@@ -61,18 +62,6 @@
             <dt>{{ "researches_line" | translate }}:&nbsp;</dt>
             <dd>{{ r.organismLine | checkBlankValue }}</dd>
           </dl>
-        </td>
-
-        <td class="__nowrap">
-          <p *ngIf="r.value; else dash">
-            {{ r.value }}
-          </p>
-        </td>
-
-        <td class="__nowrap">
-          <p *ngIf="r.pValue; else dash">
-            {{ "researches_pvalue" | translate: { data: r.pValue } }}
-          </p>
         </td>
 
         <td>
@@ -93,41 +82,59 @@
 
         <td>
           <dl class="list">
-            <dt>
-              {{ "researches_l_min" | translate}}
-            </dt>
-            <dd
-              [innerHTML]="r.minAgeOfControls? outputValueWithUnit(r.minAgeOfControls, formatUnitGrammaticalCase(r.minAgeOfControls, r.ageUnit)) : '—'"></dd>
-            <dt>
-              {{ "researches_l_mean" | translate}}
-            </dt>
-            <dd
-              [innerHTML]="r.meanAgeOfControls? outputValueWithUnit(r.meanAgeOfControls, formatUnitGrammaticalCase(r.meanAgeOfControls, r.ageUnit)) : '—'"></dd>
-            <dt>
-              {{ "researches_l_max" | translate}}
-            </dt>
-            <dd
-              [innerHTML]="r.maxAgeOfControls? outputValueWithUnit(r.maxAgeOfControls, formatUnitGrammaticalCase(r.maxAgeOfControls, r.ageUnit)) : '—'"></dd>
+            <ng-container *ngIf="r.minAgeOfControls">
+              <dt>
+                {{ "researches_l_min" | translate}}
+              </dt>
+              <dd
+                [innerHTML]=" outputValueWithUnit(r.minAgeOfControls, formatUnitGrammaticalCase(r.minAgeOfControls, r.ageUnit))"
+              ></dd>
+            </ng-container>
+            <ng-container *ngIf="r.meanAgeOfControls">
+              <dt>
+                {{ "researches_l_mean" | translate}}
+              </dt>
+              <dd
+                [innerHTML]="outputValueWithUnit(r.meanAgeOfControls, formatUnitGrammaticalCase(r.meanAgeOfControls, r.ageUnit))"
+              ></dd>
+            </ng-container>
+            <ng-container *ngIf="r.maxAgeOfControls">
+              <dt>
+                {{ "researches_l_max" | translate}}
+              </dt>
+              <dd
+                [innerHTML]="outputValueWithUnit(r.maxAgeOfControls, formatUnitGrammaticalCase(r.maxAgeOfControls, r.ageUnit))"
+              ></dd>
+            </ng-container>
           </dl>
         </td>
 
         <td>
           <dl class="list">
-            <dt>
-              {{ "researches_l_min" | translate}}
-            </dt>
-            <dd
-              [innerHTML]="r.minAgeOfExperiment? outputValueWithUnit(r.minAgeOfExperiment, formatUnitGrammaticalCase(r.minAgeOfExperiment, r.ageUnit)) : '—'"></dd>
-            <dt>
-              {{ "researches_l_mean" | translate}}
-            </dt>
-            <dd
-              [innerHTML]="r.meanAgeOfExperiment? outputValueWithUnit(r.meanAgeOfExperiment, formatUnitGrammaticalCase(r.meanAgeOfExperiment, r.ageUnit)) : '—'"></dd>
-            <dt>
-              {{ "researches_l_max" | translate}}
-            </dt>
-            <dd
-              [innerHTML]="r.maxAgeOfExperiment? outputValueWithUnit(r.maxAgeOfExperiment, formatUnitGrammaticalCase(r.maxAgeOfExperiment, r.ageUnit)) : '—'"></dd>
+            <ng-container *ngIf="r.minAgeOfExperiment">
+              <dt>
+                {{ "researches_l_min" | translate}}
+              </dt>
+              <dd
+                [innerHTML]="outputValueWithUnit(r.minAgeOfExperiment, formatUnitGrammaticalCase(r.minAgeOfExperiment, r.ageUnit))"
+              ></dd>
+            </ng-container>
+            <ng-container *ngIf="r.meanAgeOfExperiment">
+              <dt>
+                {{ "researches_l_mean" | translate}}
+              </dt>
+              <dd
+                [innerHTML]="outputValueWithUnit(r.meanAgeOfExperiment, formatUnitGrammaticalCase(r.meanAgeOfExperiment, r.ageUnit))"
+              ></dd>
+            </ng-container>
+            <ng-container *ngIf="r.maxAgeOfExperiment">
+              <dt>
+                {{ "researches_l_max" | translate}}
+              </dt>
+              <dd
+                [innerHTML]="outputValueWithUnit(r.maxAgeOfExperiment, formatUnitGrammaticalCase(r.maxAgeOfExperiment, r.ageUnit))"
+              ></dd>
+            </ng-container>
           </dl>
         </td>
 
@@ -138,14 +145,14 @@
         </td>
 
         <td>
-          <p *ngIf="r.expressionEvaluationBy; else dash">
-            {{ r.expressionEvaluationBy }}
+          <p *ngIf="r.statisticalMethod; else dash">
+            {{ r.statisticalMethod }}
           </p>
         </td>
 
-        <td>
-          <p *ngIf="r.statisticalMethod; else dash">
-            {{ r.statisticalMethod }}
+        <td class="__nowrap">
+          <p *ngIf="r.pValue; else dash">
+            {{ r.pValue }}
           </p>
         </td>
 
