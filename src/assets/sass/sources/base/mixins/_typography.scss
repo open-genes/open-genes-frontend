@@ -72,16 +72,25 @@
   dl.list {
     display: inline-block;
     width: 100%;
-  }
 
-  dt, dd {
-    float: left;
-  }
+    dt, dd {
+      float: left;
+    }
 
-  dt {
-    clear: left;
-    margin-right: 1ch;
-    font-weight: $font-weight-medium;
+    dt {
+      clear: left;
+      margin-right: 1ch;
+      font-weight: $font-weight-medium;
+
+      span {
+        font-weight: $font-weight-regular;
+      }
+    }
+
+    dt:not(:first-of-type),
+    dd:not(:first-of-type) {
+      margin-top: .8ex;
+    }
   }
 }
 

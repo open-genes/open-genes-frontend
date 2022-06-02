@@ -44,6 +44,10 @@
     }
   }
 
+  .title {
+    padding-top: 0;
+  }
+
   @mixin placeholder {
     display: inline-block;
     vertical-align: middle;
