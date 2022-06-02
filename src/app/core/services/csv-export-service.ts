@@ -329,7 +329,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
               let genotype = '';
               let inductionByDrugWithdrawal = '';
               const tissues = [];
-              const tissueSpecificPromoter = '';
+              let tissueSpecificPromoter = '';
               // Therapy
               let drug = '';
               let treatmentStart = '';
@@ -350,6 +350,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
                 endTimeUnit = this.checkBlankValues(sample.endTimeUnit, '', '', false);
                 treatmentStart = this.checkBlankValues(sample.treatmentStart, '', startTimeUnit);
                 treatmentEnd = this.checkBlankValues(sample.treatmentEnd, '', endTimeUnit);
+                tissueSpecificPromoter = this.checkBlankValues(sample.tissueSpecificPromoter);
 
                 if (!!sample.tissueSpecific && Array.isArray(sample.tissues)) {
                   for (const tissue of sample.tissues) {

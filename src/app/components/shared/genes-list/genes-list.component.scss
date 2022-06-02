@@ -73,9 +73,15 @@
     margin-bottom: 10px;
   }
 
-  .genes-info__found {
+  &__group {
     display: inline-block;
     margin-right: 20px;
     margin-top: .5em;
+  }
+
+  &__title {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
   }
 }

@@ -5,6 +5,12 @@
   display: block;
 }
 
+.disabled {
+  pointer-events: none;
+  user-select: none;
+  opacity: .85;
+}
+
 .body__row {
   position: relative;
   display: inline-block;

@@ -18,23 +18,23 @@
 
 <div *ngIf="searchedData?.length"
      class="genes-info">
-  <div class="genes-info__found" *ngIf="foundAndNotFoundGenes?.found.length">
-    {{ 'items_found' | translate }} {{ foundAndNotFoundGenes?.found.length }}: <b>
+  <div class="genes-info__group" *ngIf="foundAndNotFoundGenes?.found.length">
+    <div class="genes-info__title">
+      {{ 'items_found' | translate }} {{ foundAndNotFoundGenes?.found.length }}:
+    </div>
     <ng-container
       *ngFor="let geneName of foundAndNotFoundGenes?.found; let last = last">
-      {{geneName}}
-      <ng-container *ngIf="foundAndNotFoundGenes?.found.length > 1 && !last">,&nbsp;</ng-container>
+      <span class="alias">{{geneName}}</span>
     </ng-container>
-  </b>
   </div>
-  <div class="genes-info__found" *ngIf="foundAndNotFoundGenes?.notFound.length">
-    {{ 'items_not_found' | translate }} {{ foundAndNotFoundGenes?.notFound.length }}: <b>
+  <div class="genes-info__group" *ngIf="foundAndNotFoundGenes?.notFound.length">
+    <div class="genes-info__title">
+      {{ 'items_found' | translate }} {{ foundAndNotFoundGenes?.notFound.length }}:
+    </div>
     <ng-container
       *ngFor="let geneName of foundAndNotFoundGenes?.notFound;  let last = last">
-      {{geneName}}
-      <ng-container *ngIf="foundAndNotFoundGenes?.notFound.length > 1 && !last">,&nbsp;</ng-container>
+      <span class="alias">{{geneName}}</span>
     </ng-container>
-  </b>
   </div>
 </div>
 
