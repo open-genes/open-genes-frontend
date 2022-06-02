@@ -1,12 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  OnInit,
-  AfterViewInit,
-  OnDestroy,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { GenesListSettings } from '../genes-list/genes-list-settings.model';
 import { FilterService } from '../genes-list/services/filter.service';
 import { map, takeUntil } from 'rxjs/operators';
@@ -24,7 +16,7 @@ import { FilterTypesEnum } from '../genes-list/services/filter-types.enum';
   templateUrl: './gene-fields-modal.component.html',
   styleUrls: ['./gene-fields-modal.component.scss'],
 })
-export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestroy {
+export class GeneFieldsModalComponent implements OnInit, OnDestroy {
   // FIELDS VISIBILITY
   public listSettings: GenesListSettings;
   // FILTERS
@@ -59,17 +51,17 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
   public predefinedProteinClasses: any[] = [];
   private proteinClassesModel: Observable<any[]>;
 
+  public hash = new Subject();
+
   // Phylum
   public phylum: any[] = [];
   private phylumModel: Observable<any[]>;
   public predefinedOrigin: any[] = [];
   public predefinedFamilyOrigin: any[] = [];
-  public predefinedConservativeIn: any[] =[]
-
+  public predefinedConservativeIn: any[] = [];
 
   public filtersForm: FormGroup;
   public filterTypes = FilterTypesEnum;
-  public isViewReady = false;
 
   private subscription$ = new Subject();
 
@@ -79,8 +71,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
   constructor(
     private apiService: ApiService,
     private filterService: FilterService,
-    private settingsService: SettingsService,
-    private readonly cdRef: ChangeDetectorRef,
+    private settingsService: SettingsService
   ) {
     this.filtersForm = new FormGroup({
       ageRelatedProcessesSearchInput: new FormControl([[], null]),
@@ -161,6 +152,10 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
       });
 
     // Set the values tha user has already selected in the genes list
+    this.getState();
+  }
+
+  private getState(): void {
     this.filterService
       .getFilterState()
       .pipe(takeUntil(this.subscription$))
@@ -175,14 +170,9 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
         this.predefinedOrigin = data.byOrigin;
         this.predefinedFamilyOrigin = data.byFamilyOrigin;
         this.predefinedConservativeIn = data.byConservativeIn;
-
-        this.cdRef.detectChanges();
+        this.showSkeletonChange.emit(false);
+        this.hash.next(Object.values(data).join(''));
       });
-  }
-
-  ngAfterViewInit() {
-    this.isViewReady = true;
-    this.showSkeletonChange.emit(false);
   }
 
   ngOnDestroy(): void {
@@ -240,15 +230,15 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
     if (Number($event.value) === 0) {
       return;
     }
-
+    this.showSkeletonChange.emit(true);
     this.filterService.applyFilter(filterType, $event.value);
-    this.cdRef.detectChanges();
+    this.getState();
   }
 
   public filterDiseases(event: KeyboardEvent): void {
     const searchText = (event.target as HTMLInputElement).value.toLowerCase();
     this.diseases = new Map(
-      [...this.cachedDisease].filter(([key, value]) => value.name.toLowerCase().includes(searchText)),
+      [...this.cachedDisease].filter(([key, value]) => value.name.toLowerCase().includes(searchText))
     );
     event.stopPropagation();
   }
@@ -291,7 +281,6 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
       this.filtersForm.reset();
       this.filterService.clearFilters();
     }
-    this.cdRef.detectChanges();
   }
 
   /**
@@ -303,11 +292,10 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
       (fields) => {
         this.settingsService.setFieldsForShow(fields);
         this.listSettings = fields;
-        this.cdRef.detectChanges();
       },
       (error) => {
         console.warn(error);
-      },
+      }
     );
   }
 
