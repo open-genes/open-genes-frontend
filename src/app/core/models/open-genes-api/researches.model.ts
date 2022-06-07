@@ -28,7 +28,6 @@ interface PurpleTableExperimentConditions {
   interventionWay: string;
   interventionMethod: string;
   genotype: string;
-  // The tissue specificity fields:
   tissueSpecific: boolean;
   tissueSpecificPromoter: string;
   tissues:

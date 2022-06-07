@@ -18,9 +18,11 @@
         </div>
         <div class="container">
           <mat-tab-group
+            [disablePagination]="true"
+            [selectedIndex]="activeTabIndex"
+            (selectedTabChange)="setActiveTab($event)"
             animationDuration="0ms"
-            class="__w-content-fluid"
-            (selectedTabChange)="setIsListLoaded(true)">
+            class="__w-content-fluid">
             <mat-tab *ngFor="let tab of tabs">
               <ng-template mat-tab-label>
                 <div

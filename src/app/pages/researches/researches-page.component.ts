@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ResearchArguments } from '../../core/models/open-genes-api/researches.model';
 
 interface Tab {
@@ -8,15 +8,12 @@ interface Tab {
 }
 
 @Component({
-  selector: 'app-lifespan-research-page',
-  templateUrl: './increase-lifespan.component.html',
-  styleUrls: ['./increase-lifespan.component.scss'],
+  selector: 'app-researches-page',
+  templateUrl: './researches-page.component.html',
+  styleUrls: ['./researches-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IncreaseLifespanComponent {
-  public showLoader = false;
-
-  return;
+export class ResearchesPageComponent implements OnInit {
   public tabs: Tab[] = [
     {
       title: 'gene_page_researches_lifespan',
@@ -48,18 +45,29 @@ export class IncreaseLifespanComponent {
       cssClass: 'tab--gene-to-longevity-effect',
       param: 'associations-with-lifespan',
     },
-    {
-      title: 'gene_page_researches_additional_evidence',
-      cssClass: 'tab--gene-to-additional-evidence',
-      param: 'other-evidence',
-    },
+    // {
+    //   title: 'gene_page_researches_additional_evidence',
+    //   cssClass: 'tab--gene-to-additional-evidence',
+    //   param: 'other-evidence',
+    // },
   ];
+  public activeTabIndex: number;
 
   constructor(private readonly cdRef: ChangeDetectorRef) {}
 
-  public setIsListLoaded(event: boolean): void {
-    this.showLoader = event;
+  ngOnInit(): void {
+    if (localStorage.getItem('researchesActiveTab')) {
+      this.activeTabIndex = Number(localStorage.getItem('researchesActiveTab'));
+    }
+  }
+
+  public setIsListLoaded(event): void {
     this.cdRef.markForCheck();
     this.cdRef.detectChanges();
+  }
+
+  public setActiveTab($event: any): void {
+    this.activeTabIndex = $event.index;
+    localStorage.setItem('researchesActiveTab', JSON.stringify(this.activeTabIndex));
   }
 }

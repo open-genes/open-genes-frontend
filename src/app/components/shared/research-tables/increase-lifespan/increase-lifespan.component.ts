@@ -8,10 +8,20 @@ import { PurpleTable } from '../../../../core/models/open-genes-api/researches.m
   templateUrl: './increase-lifespan.component.html',
   styleUrls: ['./increase-lifespan.component.scss'],
 })
-export class IncreaseLifespanComponent extends ResearchTables {
+export class ResearchesPageComponent extends ResearchTables {
   public researches: PurpleTable[] = [];
 
   constructor(protected dialog: MatDialog) {
     super(dialog);
+  }
+
+  public setIfAnyTherapyField(sample) {
+    return (
+      sample.drug ||
+      sample.treatmentStart ||
+      sample.treatmentPeriod ||
+      sample.inductionByDrugWithdrawal ||
+      sample.treatmentDescription
+    );
   }
 }

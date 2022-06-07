@@ -1,39 +1,40 @@
 <!-- Filters Panel -->
-<app-filter-panel
-  *ngIf="showFiltersPanel"
-  class="__mb-10"
-  [isMobile]="isMobile"
-  [isGoTermsMode]="isGoTermsMode"
-  (sortItem)="sortBy($event)"
-  (clearFilterItem)="clearFilters($event)"
->
-  <app-search-view-panel
-    buttons
-    [isMobile]="isMobile"
-    [downloadJsonLink]="downloadJsonLink"
-    (tableView)="toggleGenesView($event)"
-  ></app-search-view-panel>
-</app-filter-panel>
+<div class="filters">
+    <app-filter-panel
+      *ngIf="showFiltersPanel"
+      class="__mb-10"
+      [isMobile]="isMobile"
+      [isGoTermsMode]="isGoTermsMode"
+      (sortItem)="sortBy($event)"
+      (clearFilterItem)="clearFilters($event)"
+    ></app-filter-panel>
+    <app-search-view-panel
+      [ngClass]="isGoTermsMode && searchedData?.length === 0 ? 'hidden' : ''"
+      [isMobile]="isMobile"
+      [downloadJsonLink]="downloadJsonLink"
+      (tableView)="toggleGenesView($event)"
+    ></app-search-view-panel>
+</div>
 
 <div *ngIf="searchedData?.length"
      class="genes-info">
-  <div class="genes-info__found" *ngIf="foundAndNotFoundGenes?.found.length">
-    {{ 'items_found' | translate }} {{ foundAndNotFoundGenes?.found.length }}: <b>
+  <div class="genes-info__group" *ngIf="foundAndNotFoundGenes?.found.length">
+    <div class="genes-info__title">
+      {{ 'items_found' | translate }} {{ foundAndNotFoundGenes?.found.length }}:
+    </div>
     <ng-container
       *ngFor="let geneName of foundAndNotFoundGenes?.found; let last = last">
-      {{geneName}}
-      <ng-container *ngIf="foundAndNotFoundGenes?.found.length > 1 && !last">,&nbsp;</ng-container>
+      <span class="alias">{{geneName}}</span>
     </ng-container>
-  </b>
   </div>
-  <div class="genes-info__found" *ngIf="foundAndNotFoundGenes?.notFound.length">
-    {{ 'items_not_found' | translate }} {{ foundAndNotFoundGenes?.notFound.length }}: <b>
+  <div class="genes-info__group" *ngIf="foundAndNotFoundGenes?.notFound.length">
+    <div class="genes-info__title">
+      {{ 'items_found' | translate }} {{ foundAndNotFoundGenes?.notFound.length }}:
+    </div>
     <ng-container
       *ngFor="let geneName of foundAndNotFoundGenes?.notFound;  let last = last">
-      {{geneName}}
-      <ng-container *ngIf="foundAndNotFoundGenes?.notFound.length > 1 && !last">,&nbsp;</ng-container>
+      <span class="alias">{{geneName}}</span>
     </ng-container>
-  </b>
   </div>
 </div>
 
@@ -119,29 +120,40 @@
   </button>
 </div>
 
-<!-- No content error message -->
-<section
-  *ngIf="
-    (isGoTermsMode && isGoSearchPerformed && !isLoading && searchedData?.length == 0) ||
-    (!isGoTermsMode && !isLoading && searchedData?.length == 0)">
-  <app-no-content [title]="'nothing_found'">
-    <ng-container icon>
-      <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+<ng-container *ngIf="isGoTermsMode; else geneSearchMode">
+  <ng-container *ngIf="isGoSearchPerformed">
+    <!-- GO search mode no content error message -->
+    <ng-container *ngIf="!isLoading && searchedData?.length === 0">
+      <app-no-content [title]="'nothing_found'">
+        <ng-container icon>
+          <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+        </ng-container>
+      </app-no-content>
     </ng-container>
-  </app-no-content>
-</section>
+  </ng-container>
 
-<!-- GO search mode start message -->
-<section *ngIf="isGoTermsMode && !isGoSearchPerformed && !isLoading">
-  <app-no-content [title]="'go_results_start_title'">
-    <ng-container icon>
-      <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
-    </ng-container>
-    <ng-container description>
-      <p>{{ "go_results_start_description" | translate }}</p>
-    </ng-container>
-  </app-no-content>
-</section>
+  <!-- GO search mode start message -->
+  <section *ngIf="!isGoSearchPerformed && !isLoading">
+    <app-no-content [title]="'go_results_start_title'">
+      <ng-container icon>
+        <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+      </ng-container>
+      <ng-container description>
+        <p>{{ "go_results_start_description" | translate }}</p>
+      </ng-container>
+    </app-no-content>
+  </section>
+</ng-container>
+
+<ng-template #geneSearchMode>
+  <ng-container *ngIf="!isLoading && searchedData?.length === 0">
+    <app-no-content [title]="'nothing_found'">
+      <ng-container icon>
+        <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+      </ng-container>
+    </app-no-content>
+  </ng-container>
+</ng-template>
 
 <app-spinner *ngIf="isLoading"
              description="{{ 'spinner_loading_genes' | translate }}"

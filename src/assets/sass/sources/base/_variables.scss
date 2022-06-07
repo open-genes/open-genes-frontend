@@ -7,6 +7,8 @@ $padding-large: 25px;
 $border-radius-regular: 5px;
 $border-radius-medium: 10px;
 $box-shadow: 0 1px 4px 0 rgba(5, 5, 5, .14);
+$box-shadow-to-bottom: $box-shadow;
+$box-shadow-to-top: 0 -1px 4px 0 rgba(5, 5, 5, .14);
 
 // Fonts
 // TODO: replace with atomic values like: font-size-100, font-size-200, etc.
@@ -72,7 +74,7 @@ $color-red: #FF4E1A;
 $color-red-dark: darken($color-red, 5%);
 
 $research-tables: (
-  increase-lifespann: #cbcbef,
+  increase-lifespan: #cbcbef,
   age-related-change: #c8e5fd, // Возрастные изменения экспрессии гена или активности белка
   gene-intervention-to-vital-processes: #c1e2aa, // Влияние модуляции активности гена на возрастной процесс
   protein-to-gene: #fbea95, // Участие продукта гена в регуляции генов, связанных со старением

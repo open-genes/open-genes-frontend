@@ -51,7 +51,7 @@ export const APP_ROUTES: Routes = [
   {
     path: 'researches',
     loadChildren: () =>
-      import('./pages/researches/increase-lifespan.module').then((m) => m.IncreaseLifespanModule),
+      import('./pages/researches/researches-page.module').then((m) => m.ResearchesPageModule),
   },
   {
     path: 'horvath-clock',
@@ -69,7 +69,6 @@ export const APP_ROUTES: Routes = [
     path: '**',
     redirectTo: '/404',
   },
-
 ];
 
 export const ROUTER_OPTIONS: ExtraOptions = {

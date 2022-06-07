@@ -24,7 +24,7 @@ const HOME_ROUTES: Routes = [{ path: '', component: DietComponent }];
     NoContentModule,
     UiComponentsModule,
     GenesListModule,
-    MaterialModule
+    MaterialModule,
   ],
 })
 export class DietModule {}

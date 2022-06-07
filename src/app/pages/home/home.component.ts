@@ -1,9 +1,7 @@
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   OnDestroy,
-  AfterViewInit,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -17,12 +15,11 @@ import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
 import { GeneFieldsModalComponent } from '../../components/shared/gene-fields-modal/gene-fields-modal.component';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-home-page',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent extends WindowWidth implements OnInit, AfterViewInit, OnDestroy {
+export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   @ViewChild(GeneFieldsModalComponent) filterPanel!: GeneFieldsModalComponent;
 
   public searchedGenes: Pick<Genes, 'id' | 'name' | 'symbol' | 'aliases' | 'ensembl'>[] | Genes[] = [];
@@ -66,6 +63,7 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewInit,
    */
 
   public updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'pubmed' | 'latest' | 'filters'): void {
+    console.log('updateViewOnSkeletonChange', name);
     if (name === 'articles') {
       this.showArticlesSkeleton = event;
     }
@@ -81,18 +79,10 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewInit,
     if (name === 'filters') {
       this.showFiltersSkeleton = event;
     }
-
-    this.cdRef.detectChanges();
   }
 
   public setLoader(event: boolean) {
     this.genesListIsLoading = event;
-    this.cdRef.markForCheck();
-  }
-
-  public forceUpdateView() {
-    this.cdRef.markForCheck();
-    this.cdRef.detectChanges();
   }
 
   /**
@@ -110,7 +100,6 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewInit,
       this.confirmedQuery = null;
       this.confirmedGenesList = null;
     }
-    this.cdRef.markForCheck();
   }
 
   public setSearchQuery(query: string): void {
@@ -148,12 +137,10 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewInit,
           (searchData) => {
             this.searchedGenes = searchData.items; // If nothing found, will return empty array
             this.showProgressBar = false;
-            this.cdRef.markForCheck();
           },
           (error) => {
             console.warn(error);
             this.showProgressBar = false;
-            this.cdRef.markForCheck();
           }
         );
     } else {
@@ -172,12 +159,10 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewInit,
             this.searchedGenes = genes; // If nothing found, will return empty array
             this.mapTerms();
             this.showProgressBar = false;
-            this.cdRef.markForCheck();
           },
           (error) => {
             console.warn(error);
             this.showProgressBar = false;
-            this.cdRef.markForCheck();
           }
         );
     } else {
@@ -211,12 +196,6 @@ export class HomeComponent extends WindowWidth implements OnInit, AfterViewInit,
 
   private loadWizard() {
     this.wizardService.openOnce();
-  }
-
-  ngAfterViewInit(): void {
-    if (this.filterPanel) {
-      this.cdRef.detectChanges();
-    }
   }
 
   ngOnDestroy(): void {
