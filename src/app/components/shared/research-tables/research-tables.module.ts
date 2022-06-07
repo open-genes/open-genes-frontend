@@ -13,6 +13,7 @@ import { PipesModule } from '../../../modules/pipes/pipes.module';
 import { RouterModule } from '@angular/router';
 import { UiComponentsModule } from '../../ui-components/ui-components.module';
 import { MaterialModule } from 'src/app/modules/vendors/material.module';
+import { NgCapitalizePipeModule } from "angular-pipes";
 
 const components = [
   AdditionalEvidencesComponent,
@@ -34,6 +35,7 @@ const components = [
     RouterModule,
     UiComponentsModule,
     MaterialModule,
+    NgCapitalizePipeModule
   ],
   exports: [...components],
 })

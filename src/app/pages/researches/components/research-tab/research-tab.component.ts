@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
@@ -11,7 +12,7 @@ import {
 import { Research, ResearchArguments, ResearchTypes } from '../../../../core/models/open-genes-api/researches.model';
 import { map, takeUntil } from 'rxjs/operators';
 import { ApiResponse, PageOptions } from '../../../../core/models/api-response.model';
-import { Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
 import { AdditionalInterventionResolver } from 'src/app/core/utils/additional-intervention-resolver';
 import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack-bar.component';
@@ -21,6 +22,7 @@ import { Genes } from '../../../../core/models';
 import { FilterService } from '../../../../components/shared/genes-list/services/filter.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-research-tab',
   templateUrl: './research-tab.component.html',
   styleUrls: ['./research-tab.component.scss'],
@@ -35,8 +37,9 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public researches: ResearchTypes = [];
   public options: PageOptions;
   public page = 1;
-  public isLoading = false;
-  public slice: Observable<number>;
+  public isNotFound = false;
+  public isLoading = true;
+  public slice = new BehaviorSubject(20);
   public error = {
     isError: false,
     errorStatus: '',
@@ -108,6 +111,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public updateResearchesList(query): void {
     if (query && this.searchedGenesList.length) {
       this.researches = [...this.searchedGenesList];
+      this.isNotFound = this.researches.length === 0;
       this.openSnackBar();
     }
 
@@ -154,9 +158,6 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public getResearches(researchType: ResearchArguments, callback?: () => void): void {
     this.isLoading = true;
     this.cdRef.markForCheck();
-    if (!this.slice) {
-      this.slice = of(20);
-    }
     this.apiService
       .getResearches(researchType, this.page)
       .pipe(
@@ -172,16 +173,18 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
         (researches) => {
           this.researches = [...this.researches, ...researches.items] as any;
           this.options = researches.options;
+          this.isLoading = false;
           this.cdRef.markForCheck();
         },
         (err) => {
           // TODO: error output
           this.error.isError = true;
           this.error.errorStatus = err.statusText;
+          this.isLoading = false;
           this.cdRef.markForCheck();
         }
       );
-    this.isLoading = false;
+    this.dataLoaded.emit(true);
 
     if (callback) {
       callback();
@@ -192,7 +195,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.renderer.addClass(event.target, 'show-more__button--active');
     this.page = this.page + 1;
     this.getResearches(researchType, () => {
-      this.slice = of(this.researches.length);
+      this.slice.next(this.researches.length);
       this.renderer.removeClass(event.target, 'show-more__button--active');
       this.cdRef.markForCheck();
     });

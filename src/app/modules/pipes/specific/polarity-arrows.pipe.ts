@@ -11,6 +11,7 @@ export class PolarityArrowsPipe implements PipeTransform {
     'улучшает',
     'улучшение',
     'усиление',
+    'повышение',
     'повышает',
     'увеличивает',
   ];

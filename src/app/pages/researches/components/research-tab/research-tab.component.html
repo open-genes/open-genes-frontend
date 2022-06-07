@@ -12,6 +12,7 @@
   </app-search>
 
   <ng-container *ngIf="researches?.length !== 0">
+    <!-- Purple -->
     <section *ngSwitchCase="'lifespan-change'">
       <app-increase-lifespan
         [geneColumnOn]="true"
@@ -21,6 +22,7 @@
       ></app-increase-lifespan>
     </section>
 
+    <!-- Blue -->
     <section *ngSwitchCase="'age-related-changes'">
       <app-age-related-changes
         [geneColumnOn]="true"
@@ -74,21 +76,21 @@
         [slice]="slice | async"
       ></app-additional-evidences>
     </section>
-
-    <div *ngIf="researches.length < options.objTotal || page < options.pagination.pagesTotal"
-         class="btn-wrap show-more __mt-20">
-      <button (click)="showMore($event, researchType)"
-              class="btn show-more__button">
-        {{ "show_more" | translate }} <span class="spinner fas fa-circle-notch fa-spin"></span>
-      </button>
-    </div>
   </ng-container>
 
   <app-spinner *ngIf="isLoading"
                class="__mt-10 __mb-10"
   ></app-spinner>
 
-  <section *ngIf="!isLoading && researches.length === 0">
+  <div *ngIf="researches?.length < options?.objTotal || page < options?.pagination.pagesTotal"
+       class="btn-wrap show-more __mt-20">
+    <button (click)="showMore($event, researchType)"
+            class="btn show-more__button">
+      {{ "show_more" | translate }} <span class="spinner fas fa-circle-notch fa-spin"></span>
+    </button>
+  </div>
+
+  <section *ngIf="isNotFound">
     <app-no-content [title]="'nothing_found'">
       <ng-container icon>
         <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>

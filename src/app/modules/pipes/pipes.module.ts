@@ -15,6 +15,7 @@ import { TrueFalseNullPipe } from './specific/true-false-null';
 import { SearchFilterPipe } from './general/search-filter.pipe';
 import { CheckBlankValuePipe } from './general/check-blank-value';
 import { PolarityArrowsPipe } from './specific/polarity-arrows.pipe';
+import { CapitalizeFirstLetter } from './general/capitalize-first-letter.pipe';
 
 const GENERAL_PIPES = [
   SafePipe,
@@ -25,6 +26,7 @@ const GENERAL_PIPES = [
   ReplacePipe,
   SearchFilterPipe,
   CheckBlankValuePipe,
+  CapitalizeFirstLetter,
 ];
 
 const SPECIFIC_PIPES = [
