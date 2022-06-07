@@ -24,6 +24,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
 
   public searchedGenes: Pick<Genes, 'id' | 'name' | 'symbol' | 'aliases' | 'ensembl'>[] | Genes[] = [];
   public confirmedGenesList: Genes[];
+  public confirmed = false;
   public confirmedQuery: string;
   public searchedQuery: string;
   public genesLength: number;
@@ -90,14 +91,11 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
    * Search
    */
 
-  public updateGenesList(query): void {
+  public updateGenesList(query: boolean): void {
     if (query) {
-      if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
-        this.confirmedGenesList = this.searchedGenes as Genes[];
-      } else {
-        this.confirmedQuery = this.searchedQuery;
-      }
+      this.confirmed = true;
     } else {
+      this.confirmed = false;
       this.confirmedQuery = null;
       this.confirmedGenesList = null;
     }
@@ -138,6 +136,9 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
           (searchData) => {
             this.searchedGenes = searchData.items; // If nothing found, will return empty array
             this.showProgressBar = false;
+            if (this.confirmed) {
+              this.setGenesList();
+            }
           },
           (error) => {
             console.warn(error);
@@ -160,6 +161,9 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
             this.searchedGenes = genes; // If nothing found, will return empty array
             this.mapTerms();
             this.showProgressBar = false;
+            if (this.confirmed) {
+              this.setGenesList();
+            }
           },
           (error) => {
             console.warn(error);
@@ -185,6 +189,15 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
         ]);
       }
     });
+  }
+
+  setGenesList() {
+    if (this.searchMode === this.searchModeEnum.searchByGoTerms) {
+      this.confirmedGenesList = this.searchedGenes as Genes[];
+    } else {
+      this.confirmedQuery = this.searchedQuery;
+    }
+    this.confirmed = false;
   }
 
   /**

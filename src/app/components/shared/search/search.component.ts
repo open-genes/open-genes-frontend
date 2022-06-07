@@ -137,6 +137,12 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.confirmedQuery.emit(!!this.highlightText);
   }
 
+  public keyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.confirmedQuery.emit(!!this.highlightText);
+    }
+  }
+
   public cancelSearch(event?): void {
     event?.stopPropagation();
     this.showSearchResult = false;
