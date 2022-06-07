@@ -53,7 +53,7 @@
           type="text"
           placeholder="{{ item.placeholder | translate }}"
           class="field search-form__field"
-          (keyup.enter)="onSearch()"
+          (keydown)="keyDown($event)"
         >
       </ng-container>
       <mat-progress-bar
