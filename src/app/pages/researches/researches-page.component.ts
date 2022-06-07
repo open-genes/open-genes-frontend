@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ResearchArguments } from '../../core/models/open-genes-api/researches.model';
 
 interface Tab {
@@ -13,10 +13,7 @@ interface Tab {
   styleUrls: ['./researches-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResearchesPageComponent {
-  public showLoader = false;
-
-  return;
+export class ResearchesPageComponent implements OnInit {
   public tabs: Tab[] = [
     {
       title: 'gene_page_researches_lifespan',
@@ -54,12 +51,23 @@ export class ResearchesPageComponent {
     //   param: 'other-evidence',
     // },
   ];
+  public activeTabIndex: number;
 
   constructor(private readonly cdRef: ChangeDetectorRef) {}
 
-  public setIsListLoaded(event: boolean): void {
-    this.showLoader = event;
+  ngOnInit(): void {
+    if (localStorage.getItem('researchesActiveTab')) {
+      this.activeTabIndex = Number(localStorage.getItem('researchesActiveTab'));
+    }
+  }
+
+  public setIsListLoaded(event): void {
     this.cdRef.markForCheck();
     this.cdRef.detectChanges();
+  }
+
+  public setActiveTab($event: any): void {
+    this.activeTabIndex = $event.index;
+    localStorage.setItem('researchesActiveTab', JSON.stringify(this.activeTabIndex));
   }
 }

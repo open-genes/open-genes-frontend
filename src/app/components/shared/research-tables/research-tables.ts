@@ -201,7 +201,6 @@ export abstract class ResearchTables extends AdditionalInterventionResolver {
       }
     }
 
-
     if (unitStr === 'weeks') {
       if (preLastDigit == 1) {
         return 'weeks';
