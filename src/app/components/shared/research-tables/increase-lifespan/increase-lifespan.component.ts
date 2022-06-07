@@ -14,4 +14,14 @@ export class ResearchesPageComponent extends ResearchTables {
   constructor(protected dialog: MatDialog) {
     super(dialog);
   }
+
+  public setIfAnyTherapyField(sample) {
+    return (
+      sample.drug ||
+      sample.treatmentStart ||
+      sample.treatmentPeriod ||
+      sample.inductionByDrugWithdrawal ||
+      sample.treatmentDescription
+    );
+  }
 }

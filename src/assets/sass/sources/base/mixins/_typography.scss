@@ -91,6 +91,13 @@
     dd:not(:first-of-type) {
       margin-top: .8ex;
     }
+
+    &--stacked {
+      dt,
+      dd {
+        width: 100%;
+      }
+    }
   }
 }
 

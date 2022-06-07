@@ -2,30 +2,28 @@
   border-collapse: collapse;
   border-spacing: 0;
 
-  & > thead  {
-    th {
-      position: relative;
+  th {
+    position: relative;
+  }
 
-      &:first-child {
-        padding-left: 1em;
-
-        &::before {
-          content: ' ';
-          display: block;
-          width: .5em;
-          position: absolute;
-          top: -1px;
-          bottom: -1px;
-          left: -1px;
-          z-index: 0;
-          background: #cbcbef; // По умолчанию: Влияние модуляции активности гена на продолжительность жизни
-        }
-      }
+  & > thead > th:first-child,
+  & > thead tr:first-child > th:first-child {
+    &::before {
+      content: ' ';
+      display: block;
+      width: .5em;
+      position: absolute;
+      top: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 0;
+      background: #cbcbef; // По умолчанию: Влияние модуляции активности гена на продолжительность жизни
     }
   }
 
   @each $class, $color in $research-tables {
-    &--#{$class} > thead th:first-child::before {
+    &--#{$class} > thead > th:first-child::before,
+    &--#{$class} > thead tr:first-child > th:first-child::before {
       background: $color;
     }
   }
@@ -35,7 +33,7 @@
   }
 
   td {
-    .btn.btn--flat {
+    .btn.btn--flat:not(.__w-auto) {
       width: 100%;
     }
   }
