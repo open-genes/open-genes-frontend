@@ -32,7 +32,7 @@ export class DownloadComponent {
     private router: Router,
     private matDialog: MatDialog,
     private csvExportService: CsvExportService,
-    private fileExportService: FileExportService,
+    private fileExportService: FileExportService
   ) {}
 
   public openDownloadModal(template): void {
@@ -62,7 +62,7 @@ export class DownloadComponent {
       if (res.length !== 0) {
         // TODO: pass status, and handle if status ok
         this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'genes-diseases';
+        this.currentDatasetName = 'gene-diseases';
         this.openDownloadModal(this.downLoadLinkTemplate);
       }
     } catch {
@@ -76,7 +76,7 @@ export class DownloadComponent {
       const res = await this.csvExportService.generateGenesAgingMechanismsTable();
       if (res.length !== 0) {
         this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'genes-aging-mechanisms';
+        this.currentDatasetName = 'gene-aging-mechanisms';
         this.openDownloadModal(this.downLoadLinkTemplate);
       }
     } catch {
@@ -90,7 +90,7 @@ export class DownloadComponent {
       const res = await this.csvExportService.generateGeneTissueRpkmTable();
       if (res.length !== 0) {
         this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'genes-tissue-rpkm';
+        this.currentDatasetName = 'gene-tissue-rpkm';
         this.openDownloadModal(this.downLoadLinkTemplate);
       }
     } catch {
@@ -104,7 +104,7 @@ export class DownloadComponent {
       const res = await this.csvExportService.generateGeneAndGoTermsTable();
       if (res.length !== 0) {
         this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'genes-go-terms';
+        this.currentDatasetName = 'gene-go-terms';
         this.openDownloadModal(this.downLoadLinkTemplate);
       }
     } catch {
@@ -183,14 +183,12 @@ export class DownloadComponent {
   }
 
   public async generateSummarizedResearchResultsCsv() {
-
-      this.isProcessing = true;
-      const res = await this.csvExportService.generateSummarizedResearchResults();
-      if (res.length !== 0) {
-        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'summarized-research-criteria';
-        this.openDownloadModal(this.downLoadLinkTemplate);
-      }
-
+    this.isProcessing = true;
+    const res = await this.csvExportService.generateSummarizedResearchResults();
+    if (res.length !== 0) {
+      this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+      this.currentDatasetName = 'summarized-research-criteria';
+      this.openDownloadModal(this.downLoadLinkTemplate);
+    }
   }
 }
