@@ -46,7 +46,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
     }
   }
 
-  private async generateSimplePairCsv(csvHeader, field) {
+  private async generateSimplePairCsv(csvHeader: string, field: any, filterFn?: (gene: any) => any) {
     let resultingString = '';
     // TODO: cache after once made and invalidate on the next session
     const response = await CsvExportService.FetchData(
@@ -60,8 +60,13 @@ export class CsvExportService extends AdditionalInterventionResolver {
       const genes = resJson.items;
       if (genes) {
         resultingString = resultingString + String(csvHeader);
+        let items;
         for (const gene of genes) {
-          const items = gene[field].map((d) => `'${d.name}'`);
+          if (filterFn) {
+            items = filterFn(gene);
+          } else {
+            items = gene[field].map((d) => `'${d.name}'`);
+          }
           const csvRow = `"${gene.symbol}", "${items}"\n`;
           resultingString = resultingString + csvRow;
         }
@@ -76,7 +81,14 @@ export class CsvExportService extends AdditionalInterventionResolver {
   }
 
   public async generateGenesAgingMechanismsTable() {
-    return await this.generateSimplePairCsv('"HGNC", "aging mechanisms"\n', 'agingMechanisms');
+    return await this.generateSimplePairCsv('"HGNC", "aging mechanisms"\n', 'agingMechanisms', (g) => {
+      // Filter duplicates from backend
+      const mappedMechanisms = new Map();
+      g.agingMechanisms.forEach((e) => {
+        mappedMechanisms.set(e.id, e.name);
+      });
+      return Array.from(mappedMechanisms).map((i) => `'${i[1]}'`);
+    });
   }
 
   public async generateGeneTissueRpkmTable() {
