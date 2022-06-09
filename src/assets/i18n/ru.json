@@ -64,7 +64,7 @@
   "download_page_variant_button_go": "Перейти",
   "download_page_summarized_research_results": "Обобщенные результаты исследований",
   "download_page_datasets_title": "Скачать отдельные датасеты",
-  "download_page_datasets_description": "Скачайте датасеты в виде отдельных файлов .csv",
+  "download_page_datasets_description": "Скачайте датасеты в виде отдельных файлов .tsv",
   "download_page_datasets_general": "Общие данные",
   "download_page_datasets_general_1": "Гены и болезни",
   "download_page_datasets_general_2": "Гены и механизмы старения",

@@ -50,7 +50,7 @@
 
         <div class="row">
           <section class="col-12 variant">
-            <h3>{{ "download_page_datasets_title" | translate }} <span class="alias alias--small">CSV</span></h3>
+            <h3>{{ "download_page_datasets_title" | translate }} <span class="alias alias--small">TSV</span></h3>
             <p>{{ "download_page_datasets_description" | translate }}</p>
           </section>
         </div>
@@ -135,12 +135,12 @@
 <ng-template #downLoadLinkTemplate>
   <section class="file-download-sheet">
     <p>
-      {{ currentDatasetName }}.csv
+      {{ currentDatasetName }}.tsv
     </p>
     <a class="btn btn--big btn--fill btn--purple"
        [href]="currentDownloadLink"
        target="_blank"
-       [download]="currentDatasetName + '.csv'"
+       [download]="currentDatasetName + '.tsv'"
     ><span class="fa far fa-download"></span> {{ "download" | translate }}</a>
   </section>
 </ng-template>
