@@ -18,7 +18,7 @@
   border-radius: $border-radius-regular;
   background-color: $color-general-light;
   font-size: $font-size;
-  color: $color-gray-500;
+  color: adjust-hue($color-general, 10);
 
   &__text {
     display: flex;
@@ -75,7 +75,6 @@
     font-size: .8em;
     line-height: 1.5;
     white-space: normal;
-    margin-top: 1ex;
 
     &::ng-deep {
       span {
@@ -86,6 +85,10 @@
     &:empty {
       display: none;
     }
+  }
+
+  .hint__title:not(:empty) + .hint__description {
+    margin-top: 1ex;
   }
 
   &--emphasized {
