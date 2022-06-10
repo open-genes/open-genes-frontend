@@ -84,7 +84,8 @@
   font-size: $font-size-small;
 
   &__inner {
-    width: 2ch;
+    min-width: 3ch;
+    white-space: nowrap;
   }
 }
 

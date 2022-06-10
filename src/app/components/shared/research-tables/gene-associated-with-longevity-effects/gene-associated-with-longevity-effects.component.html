@@ -1,5 +1,13 @@
 <section>
   <h4>{{ "gene_page_researches_longevity_effects" | translate }}</h4>
+
+  <app-hint>
+    <ng-container description>
+      <span class="fa far fa-exclamation-triangle __mr-5"></span>
+      {{ "disclaimer" | translate }}
+    </ng-container>
+  </app-hint>
+
   <div class="table-section __mt-20 __w-content-fluid">
     <table class="table table--zebra table--dark table--sticky table--gene-to-longevity-effect">
       <thead>
@@ -9,23 +17,57 @@
       <th *ngIf="geneColumnOn">
         {{ "main_page_table_name" | translate }}
       </th>
-      <th>{{ "researches_data_type" | translate }}</th>
-      <th class="__cell-width-small">
-        {{ "researches_phenotype" | translate }}
-      </th>
-      <th class="__cell-width-small">
+      <th class="__cell-width-medium">
         {{ "gene_page_allelic_polymorphism" | translate }}
       </th>
-      <th class="__cell-width-small">
-        {{ "researches_allelic_variant" | translate }}
+      <th class="hidden">
+        {{ "researches_chromosome_location" | translate }}
       </th>
-      <th>{{ "gene_page_researches_transcriptome_proteome" | translate }}</th>
-      <th>{{ "researches_model_organism" | translate }}</th>
-      <th>{{ "researches_sex" | translate }}</th>
+      <th>
+        {{ "researches_position_in_gene" | translate }}
+      </th>
+      <th class="__cell-width-small">
+        {{ "researches_association_type" | translate }}
+      </th>
+      <th>
+        {{ "researches_significance_title" | translate }}
+      </th>
+      <th class="__cell-width-medium">
+        {{ "gene_page_researches_transcriptome_proteome" | translate }}
+      </th>
+      <th class="__cell-width-medium">
+        {{ "researches_n_of_control_and_experiment" | translate }}
+      </th>
+      <th class="__cell-width-medium">
+        {{ "researches_age_of_control" | translate }}
+        <app-info-button
+          (click)="openCommentModal('clarification', null, ageOfControlHint)"
+        ></app-info-button>
+      </th>
+      <th class="__cell-width-medium">
+        {{ "researches_age_of_experiment" | translate }} {{ "researches_age_centenarians" | translate }}
+        <app-info-button
+          (click)="openCommentModal('clarification', null, ageOfExperimentHint)"
+        ></app-info-button>
+      </th>
+      <th>
+        {{ "researches_ethnicity" | translate }}
+      </th>
+      <th class="__cell-width-large">
+        {{ "researches_associated_and_non_associated" | translate }}
+      </th>
+      <th class="__cell-width-large">
+        {{ "researches_associated_and_non_associated_percent" | translate }}
+      </th>
+      <th>
+        {{ "researches_research_type" | translate }}
+      </th>
+      <th class="__cell-width-medium">{{ "researches_sex" | translate }}</th>
       <th>
         {{ "researches_comment" | translate }}
       </th>
       </thead>
+
       <tbody>
       <tr *ngFor="let item of items | slice: 0:slice let i = index">
         <td *ngIf="numberColumn"
@@ -41,41 +83,205 @@
             </a>
           </div>
         </td>
+
         <td>
-          <ng-container *ngIf="item.dataType ; else dash">
-            {{ item.dataType }}
+          <dl class="list">
+            <dt>
+              {{ "researches_polymorphism_type" | translate }}:
+            </dt>
+            <dd>
+              {{ item.polymorphismType | checkBlankValue }}
+            </dd>
+            <dt>
+              {{ "researches_polymorphism" | translate }}:
+            </dt>
+            <dd>
+              {{ item.polymorphismId | checkBlankValue }}
+            </dd>
+            <dt>
+              {{ "researches_amino_acid_substitution" | translate }}:
+            </dt>
+            <dd>
+              {{ item.nucleotideChange | checkBlankValue }}
+            </dd>
+            <dt>
+              {{ "researches_amino_acid_substitution" | translate }}:
+            </dt>
+            <dd>
+              {{ item.aminoAcidChange | checkBlankValue }}
+            </dd>
+          </dl>
+
+          <p *ngIf="item?.polymorphismOther">
+            {{ item.polymorphismOther }}
+          </p>
+        </td>
+
+        <td class="hidden">
+          <ng-container *ngIf="item?.location; else dash">
+            {{ item.location }}
           </ng-container>
         </td>
+
         <td>
-          <ng-container *ngIf="item.longevityEffect ; else dash">
-            {{ item.longevityEffect }}
+          <ng-container *ngIf="item.position; else dash">
+            {{ item.position }}
           </ng-container>
         </td>
+
         <td>
-          <ng-container *ngIf="item.allelicPolymorphism ; else dash">
-            {{ item.allelicPolymorphism }}
+          <ng-container *ngIf="item.dataType || item.longevityEffect; else dash">
+            {{ item.dataType? (fixDataTypeResponse(item.dataType) | capitalizeFirstLetter) : '' }}
+            {{ item.longevityEffect? item.longevityEffect: '' }}
           </ng-container>
         </td>
+
         <td>
-          <ng-container *ngIf="item.allelicVariant ; else dash">
-            {{ item.allelicVariant }}
+          <ng-container *ngIf="item?.significance; else dash">
+            {{ item.significance }}
           </ng-container>
         </td>
+
         <td>
-          <ng-container *ngIf="item.changeType ; else dash">
+          <ng-container *ngIf="item?.changeType; else dash">
             {{ item.changeType }}
           </ng-container>
         </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.modelOrganism ; else dash">
-            {{ item.modelOrganism }}
+
+        <td>
+          <dl class="list">
+            <dt>
+              {{ "researches_l_control" | translate }}
+            </dt>
+            <dd>
+              {{ item.nOfControls | checkBlankValue }}
+            </dd>
+            <dt>
+              {{ "researches_l_experiment" | translate }}
+            </dt>
+            <dd>
+              {{ item.nOfExperiment | checkBlankValue }}
+            </dd>
+          </dl>
+        </td>
+
+        <td>
+          <dl
+            *ngIf="item.minAgeOfControls || item.meanAgeOfControls || item.maxAgeOfControls; else dash"
+            class="list">
+            <ng-container *ngIf="item.minAgeOfControls">
+              <dt>
+                {{ "researches_l_min" | translate}}
+              </dt>
+              <dd
+                [innerHTML]="outputValueWithUnit(item.minAgeOfControls, formatUnitGrammaticalCase(item.minAgeOfControls, ('years' | translate)))"
+              ></dd>
+            </ng-container>
+
+            <ng-container *ngIf="item.meanAgeOfControls">
+              <dt>
+                {{ "researches_l_mean" | translate}}
+              </dt>
+              <dd
+                [innerHTML]="outputValueWithUnit(item.meanAgeOfControls, formatUnitGrammaticalCase(item.meanAgeOfControls, ('years' | translate)))"
+              ></dd>
+            </ng-container>
+
+            <ng-container *ngIf="item.maxAgeOfExperiment">
+              <dt>
+                {{ "researches_l_max" | translate}}
+              </dt>
+              <dd
+                [innerHTML]="outputValueWithUnit(item.maxAgeOfControls, formatUnitGrammaticalCase(item.maxAgeOfControls, ('years' | translate)))"
+              ></dd>
+            </ng-container>
+          </dl>
+        </td>
+
+        <td>
+          <dl
+            *ngIf="item.minAgeOfExperiment || item.meanAgeOfExperiment || item.maxAgeOfExperiment; else dash"
+            class="list">
+            <ng-container *ngIf="item.minAgeOfExperiment">
+              <dt>
+                {{ "researches_l_min" | translate}}
+              </dt>
+              <dd
+                [innerHTML]="outputValueWithUnit(item.minAgeOfExperiment, formatUnitGrammaticalCase(item.minAgeOfExperiment, ('years' | translate)))"
+              ></dd>
+            </ng-container>
+
+            <ng-container *ngIf="item.meanAgeOfExperiment">
+              <dt>
+                {{ "researches_l_mean" | translate}}
+              </dt>
+              <dd
+                [innerHTML]="outputValueWithUnit(item.meanAgeOfExperiment, formatUnitGrammaticalCase(item.meanAgeOfExperiment, ('years' | translate)))"
+              ></dd>
+            </ng-container>
+
+            <ng-container *ngIf="item.maxAgeOfExperiment">
+              <dt>
+                {{ "researches_l_max" | translate}}
+              </dt>
+              <dd
+                [innerHTML]="outputValueWithUnit(item.maxAgeOfExperiment, formatUnitGrammaticalCase(item.maxAgeOfExperiment, ('years' | translate)))"
+              ></dd>
+            </ng-container>
+          </dl>
+        </td>
+
+        <td>
+          <ng-container *ngIf="item?.ethnicity; else dash">
+            {{ item.ethnicity }}
           </ng-container>
         </td>
+        <td>
+          <dl class="list">
+            <dt>
+              {{ "researches_associtated_allele" | translate }}
+            </dt>
+            <dd>
+              {{ item.associatedAllele | checkBlankValue }}
+            </dd>
+            <dt>
+              {{ "researches_non_associtated_allele" | translate }}
+            </dt>
+            <dd>
+              {{ item.nonAssociatedAllele | checkBlankValue }}
+            </dd>
+          </dl>
+        </td>
+
+        <td>
+          <dl class="list">
+            <dt>
+              {{ "researches_l_control" | translate }}
+            </dt>
+            <dd>
+              {{ item.frequencyControls | checkBlankValue: '':'%'}}
+            </dd>
+            <dt>
+              {{ "researches_l_experiment" | translate }}
+            </dt>
+            <dd>
+              {{ item.frequencyExperiment | checkBlankValue: '':'%'}}
+            </dd>
+          </dl>
+        </td>
+
+        <td>
+          <ng-container *ngIf="item?.studyType; else dash">
+            {{ item.studyType }}
+          </ng-container>
+        </td>
+
         <td>
           <ng-container *ngIf="item.sex ; else dash">
             {{ item.sex }}
           </ng-container>
         </td>
+
         <td>
           <button class="btn btn--small btn--purple btn--flat"
                   (click)="openCommentModal('researches_comment', item, links)"
@@ -117,4 +323,12 @@
                         [doi]="item.doi"
                         class="publication-info"
   ></app-publication-info>
+</ng-template>
+
+<ng-template #ageOfControlHint>
+  {{ "age_of_control_hint" | translate }}
+</ng-template>
+
+<ng-template #ageOfExperimentHint>
+  {{ "age_of_experiment_hint" | translate }}
 </ng-template>
