@@ -155,13 +155,12 @@ export interface OrangeTable extends Research {
 // pink form
 export interface PinkTable extends Research {
   polymorphismId: string | null; // example: 'rs4130113'
-  allelicVariant: string | null;
-  changeType: string | null; // TODO: backend: rename to 'charsOfTranscriptomeOrProteome'
-  dataType: string | null;
+  associatedAllele: string | null; // example: 'AA, GG'
+  changeType: string | null; // example: decreased gene expression
+  dataType: string | null; // example: 1en TODO: this is wrong, should be: 'genomic'
   longevityEffect: string | null; // TODO: backend: rename to 'phenotype'
-  modelOrganism: string | null;
+  modelOrganism: string | null; // always human
   sex: string | null;
-  associatedAllele: string; // example: 'AA, GG'
   nucleotideChange: string | null;
   aminoAcidChange: string | null;
   polymorphismOther: string | null;
@@ -176,10 +175,11 @@ export interface PinkTable extends Research {
   meanAgeOfExperiment: string | null;
   nOfControls: string | null;
   nOfExperiment: string | null;
-  position: string | null;
+  position: string | null; // example: exon, missens
   polymorphismType: string | null;
   ethnicity: string | null;
   studyType: string | null;
+  location?: string | null; // TODO: Will be added according to OG-809
 }
 
 // gray form
