@@ -39,7 +39,7 @@ interface PurpleTableExperimentConditions {
   // The drug therapy fields:
   inductionByDrugWithdrawal: boolean;
   drug: string;
-  treatmentPeriod: string;
+  treatmentPeriod: string; // TODO: misleading name, rename to 'treatmentPeriodicity'
   treatmentDescription: string;
   drugDeliveryWay: string;
   treatmentStart: number;
@@ -106,18 +106,18 @@ export interface BlueTable extends Research {
   meanAgeOfExperiment: number | null;
   minAgeOfControls: number | null;
   minAgeOfExperiment: number | null;
-  pValue: number | null; // new
-  changeType: string; // new
-  ageUnit: string; // new
-  controlCohortSize: string | null; // new
-  experimentCohortSize: string | null; // new
+  pValue: number | null;
+  changeType: string;
+  ageUnit: string;
+  controlCohortSize: string | null;
+  experimentCohortSize: string | null;
   ageFrom: string; // TODO: backend should remove this old field
   ageTo: string; // TODO: backend should remove this old field
   sex: string;
-  value: string; // new // TODO: backend should rename 'percentChange'
-  statisticalMethod: string | null; // new
-  expressionEvaluationBy: string; // new // example: белок // new
-  measurementMethod: string | null; // new
+  value: string; // TODO: backend should rename 'percentChange'
+  statisticalMethod: string | null;
+  expressionEvaluationBy: string; // example: белок
+  measurementMethod: string | null;
   measurementType: string | null; // TODO: backend should remove this old field
 }
 
@@ -131,7 +131,7 @@ export interface GreenTable extends Research {
   interventionResult: string; // TODO: misleading name, rename
   vitalProcess: string;
   age: string;
-  genotype: '+-' | '--';
+  genotype: string; // example: '+-', '--'
   sex: string;
 }
 
@@ -154,13 +154,32 @@ export interface OrangeTable extends Research {
 
 // pink form
 export interface PinkTable extends Research {
-  allelicPolymorphism: string;
-  allelicVariant: string;
-  changeType: string; // TODO: backend: rename to 'charsOfTranscriptomeOrProteome'
-  dataType: string;
-  longevityEffect: string; // TODO: backend: rename to 'phenotype'
-  modelOrganism: string;
-  sex: string;
+  polymorphismId: string | null; // example: 'rs4130113'
+  associatedAllele: string | null; // example: 'AA, GG'
+  changeType: string | null; // example: decreased gene expression
+  dataType: string | null; // example: 1en TODO: this is wrong, should be: 'genomic'
+  longevityEffect: string | null; // TODO: backend: rename to 'phenotype'
+  modelOrganism: string | null; // always human
+  sex: string | null;
+  nucleotideChange: string | null;
+  aminoAcidChange: string | null;
+  polymorphismOther: string | null;
+  nonAssociatedAllele: string | null;
+  frequencyControls: string | null;
+  frequencyExperiment: string | null;
+  minAgeOfControls: string | null;
+  maxAgeOfControls: string | null;
+  meanAgeOfControls: string | null;
+  minAgeOfExperiment: string | null;
+  maxAgeOfExperiment: string | null;
+  meanAgeOfExperiment: string | null;
+  nOfControls: string | null;
+  nOfExperiment: string | null;
+  position: string | null; // example: exon, missens
+  polymorphismType: string | null;
+  ethnicity: string | null;
+  studyType: string | null;
+  location?: string | null; // TODO: Will be added according to OG-809
 }
 
 // gray form
