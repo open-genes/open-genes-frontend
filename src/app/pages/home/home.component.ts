@@ -30,6 +30,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   public errorStatus: string;
   public searchMode: SearchMode;
   public searchModeEnum = SearchModeEnum;
+
   public genesListIsLoading = true;
   public showLatestGenesSkeleton = true;
   public showArticlesSkeleton = true;
