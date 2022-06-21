@@ -10,6 +10,7 @@ export class SettingsService {
     showUiHints: false,
     searchMode: SearchModeEnum.searchByGenes,
     isTableView: true,
+    showCookieBanner: false, // TODO: when OG-772 is ready and GDPR text is on the website, set to true
   };
 
   public genesListSettings: GenesListSettings = {

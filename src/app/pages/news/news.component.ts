@@ -13,7 +13,7 @@ import { Subject } from 'rxjs';
 import { EightyLevelService } from '../../core/services/api/80level-api-service/80level-api.service';
 
 @Component({
-  selector: 'app-news',
+  selector: 'app-news-page',
   templateUrl: './news.component.html',
   styleUrls: ['news.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

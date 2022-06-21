@@ -5,25 +5,27 @@
   }
 
   // AGE
-  &__age {
-    .age__types {
+  &__general-info {
+    .panes {
       display: flex;
-      flex-flow: column wrap;
-      justify-content: flex-start;
-      align-items: stretch;
       font-size: $font-size;
       margin: 0 -5px 30px -5px;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      justify-content: flex-start;
+      align-items: stretch;
 
-      .age__type {
+      .pane {
         display: flex;
         flex-flow: row wrap;
         align-items: stretch;
         justify-content: flex-start;
-        flex: 1 1 20%;
+        flex: 1 1 50%;
         align-content: stretch;
         flex-wrap: nowrap;
 
-        .type__inner {
+        &__inner {
           width: 100%;
           min-width: 200px;
           min-height: 100px;
@@ -32,19 +34,14 @@
           @extend %gene-page-panels;
         }
 
-        .type__title {
+        &__title {
           flex: 0 0 100%;
           font-size: $font-size-smaller;
           color: $color-gray;
           margin-bottom: 5px;
-
-          span:hover {
-            cursor: pointer;
-            color: $color-base;
-          }
         }
 
-        .type__value {
+        &__value {
           flex: 1 1 auto;
           font-size: 20px;
           color: $color-black;
@@ -54,13 +51,17 @@
           }
         }
 
-        .type__description { // необязательный блок
-          flex: 1 1 80%;
-          font-size: $font-size-smaller;
-          padding-left: 10px;
+        &--location {
+          @include resolution_desktop-and-up {
+            max-width: 450px;
+          }
         }
 
-        &.age__orthologs {
+        &--stacked {
+          flex-flow: row wrap;
+        }
+
+        &--orthologs {
           flex: 0 0 100%;
 
           .orthologs {
@@ -130,7 +131,7 @@
             }
 
             .type__title {
-              color: #fff;
+              color: $color-white;
             }
 
             .badge {
@@ -140,7 +141,7 @@
           }
         }
 
-        @include resolution_smartphone {
+        @include resolution_smartphone_and-tablet {
           flex: 0 0 100%;
           flex-wrap: wrap;
         }

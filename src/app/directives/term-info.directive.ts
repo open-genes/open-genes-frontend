@@ -33,7 +33,7 @@ export class TermInfoDirective implements AfterViewInit, OnDestroy {
     if (!this.isApplicable) {
       return;
     }
-    this.content = this.elementRef.nativeElement.innerText;
+    this.content = this.elementRef.nativeElement.innerHTML;
     this.getTermsByLang();
   }
 

@@ -4,10 +4,15 @@ const urlNoContent = `${urlRoot}no-content.sprite.svg`;
 
 export const icons: { [id: string]: string } = {
   // General - icons
-  cross: urlGeneral,
-  delete: urlGeneral,
+  'cross': urlGeneral,
+  'book': urlGeneral,
+  'delete': urlGeneral,
+  'dna': urlGeneral,
+  'gene-ontology': urlGeneral,
+
   // No content - icons
-  404: urlNoContent,
-  default: urlNoContent,
-  language: urlNoContent,
+  'error': urlNoContent,
+  'default': urlNoContent,
+  'file': urlNoContent,
+  'language': urlNoContent,
 };

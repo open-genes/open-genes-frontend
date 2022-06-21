@@ -32,6 +32,7 @@ import { SnackBarModule } from './components/shared/snack-bar/snack-bar.module';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomMatPaginatorIntl } from './core/services/custom-mat-paginator-int';
 import { HttpReqInterceptor } from './core/utils/http-req.interceptor';
+import { UiComponentsModule } from './components/ui-components/ui-components.module';
 
 // required for AOT compilation
 // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
@@ -39,7 +40,13 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
   new TranslateHttpLoader(http, '/assets/i18n/', `.json?v=${new Date().getTime()}`);
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent, LanguageComponent, BurgerMenuComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    LanguageComponent,
+    BurgerMenuComponent,
+  ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(APP_ROUTES, ROUTER_OPTIONS),
@@ -59,6 +66,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     DirectivesModule,
     TermHintModule,
     SnackBarModule,
+    UiComponentsModule,
   ],
   providers: [
     TranslateService,

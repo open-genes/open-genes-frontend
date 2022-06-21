@@ -18,6 +18,7 @@ import { ApiResponse } from '../../models/api-response.model';
 import { SearchModel } from '../../models/open-genes-api/search.model';
 import { Pagination } from '../../models/settings.model';
 import { Diet } from '../../models/open-genes-api/diet.model';
+import { ResearchArguments } from '../../models/open-genes-api/researches.model';
 
 @Injectable({
   providedIn: 'root',
@@ -126,5 +127,9 @@ export class ApiService {
 
   getPhylum(): Observable<Phylum[]> {
     return this.http.get<Phylum[]>(`/api/phylum?lang=${this.currentLang}`);
+  }
+
+  getResearches(research: ResearchArguments, page: number, pageSize?: number): Observable<any> {
+    return this.http.get<any[]>(`/api/research/${research}?lang=${this.currentLang}&page=${page}`);
   }
 }

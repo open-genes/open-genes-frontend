@@ -1,5 +1,8 @@
 <div class="bottom-sheet">
   <div class="bottom-sheet__header">
+    <ng-container *ngIf="data.title">
+      {{ data.title | translate }}
+    </ng-container>
     <button mat-icon-button
             class="bottom-sheet__close-button"
             (click)="closeBottomSheet()"

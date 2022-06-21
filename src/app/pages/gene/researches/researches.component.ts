@@ -1,14 +1,5 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Researches } from '../../../core/models/open-genes-api/researches.model';
-import { MatDialog } from '@angular/material/dialog';
-import { CommonModalComponent } from '../../../components/ui-components/components/modals/common-modal/common-modal.component';
 
 @Component({
   selector: 'app-researches',
@@ -17,6 +8,7 @@ import { CommonModalComponent } from '../../../components/ui-components/componen
 })
 export class ResearchesComponent implements OnInit {
   @Input() researches: Researches;
+  @Input() slice = 20;
 
   public isIncreaseLifespan: boolean;
   public isAgeRelatedChanges: boolean;
@@ -26,9 +18,7 @@ export class ResearchesComponent implements OnInit {
   public isGeneAssociatedWithLongevityEffects: boolean;
   public isAdditionalEvidences: boolean;
 
-  @ViewChild('commentModalBody') dialogRef: TemplateRef<any>;
-
-  constructor(public translate: TranslateService, private dialog: MatDialog) {}
+  constructor() {}
 
   ngOnInit() {
     this.isIncreaseLifespan =
@@ -56,21 +46,6 @@ export class ResearchesComponent implements OnInit {
       this.researches?.geneAssociatedWithLongevityEffects.length !== 0;
 
     this.isAdditionalEvidences =
-      this.researches?.additionalEvidences &&
-      this.researches?.additionalEvidences.length !== 0;
-  }
-
-  // TODO: DRY
-  public openCommentModal(title, body, template = null): void {
-    this.dialog.open(CommonModalComponent, {
-      data: { title: title, body: body, template: template },
-      panelClass: 'comment-modal',
-      minWidth: '320px',
-      maxWidth: '768px',
-      autoFocus: false,
-    });
-  }
-  public closeCommentModal(): void {
-    this.dialog.closeAll();
+      this.researches?.additionalEvidences && this.researches?.additionalEvidences.length !== 0;
   }
 }

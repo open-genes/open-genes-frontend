@@ -1,11 +1,10 @@
 @import "../../../../styles";
 
 :host {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  display: contents;
 }
 
+a,
 button {
   vertical-align: middle;
 }

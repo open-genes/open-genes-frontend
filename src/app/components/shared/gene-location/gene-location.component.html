@@ -1,0 +1,102 @@
+<div class="chromosome-location">
+  <div class="chromosome-location__title">
+    {{ "gene_page_chromosome_location_title" | translate }}
+    {{location.band}}&nbsp;<app-info-button
+    (click)="showMoreDetails('gene_page_gene_location_modal_title', null, geneLocationTempl)"></app-info-button>
+  </div>
+  <div class="chromosome-location__body">
+    <div class="scheme">
+      <div class="scheme__svg">
+        <svg width="27" height="114" viewBox="0 0 27 114" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M0 10C0 4.47715 4.47715 0 10 0H17C22.5228 0 27 4.47715 27 10V42C27 45.2716 25.4289 48.1763 23 50.0007V55.7993C25.4289 57.6237 27 60.5284 27 63.8V104C27 109.523 22.5228 114 17 114H10C4.47715 114 0 109.523 0 104V63.8C0 60.0986 2.01099 56.8669 5 55.1378V50.6622C2.01099 48.9331 0 45.7014 0 42V10Z"
+                fill="#f0f2fc" />
+          <mask id="mask0_3_17" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="27" height="114">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 10C0 4.47715 4.47715 0 10 0H17C22.5228 0 27 4.47715 27 10V42C27 45.2716 25.4289 48.1763 23 50.0007V55.7993C25.4289 57.6237 27 60.5284 27 63.8V104C27 109.523 22.5228 114 17 114H10C4.47715 114 0 109.523 0 104V63.8C0 60.0986 2.01099 56.8669 5 55.1378V50.6622C2.01099 48.9331 0 45.7014 0 42V10Z" fill="#EEEFFC"/>
+          </mask>
+          <g mask="url(#mask0_3_17)">
+            <rect width="27" height="7"
+                  fill="#4d58dc"
+                  [attr.y]="bandTranscript.position" />
+          </g>
+        </svg>
+      </div>
+
+      <ul class="scheme__info">
+        <li>{{ "gene_page_chromosome_p" | translate }}</li>
+        <li>{{ "gene_page_chromosome_c" | translate }}</li>
+        <li>{{ "gene_page_chromosome_q" | translate }}</li>
+      </ul>
+    </div>
+
+    <ul class="info">
+      <li>
+        <span>{{"gene_page_chromosome_location_gene_length" | translate}}&nbsp;</span>
+        <span>{{(lengthText | split: " ")[0] }}&nbsp;</span>
+        <app-info-button (click)="showMoreDetails('gene_page_gene_length_modal_title', null, geneLengthTempl)"></app-info-button>
+      </li>
+      <li>
+        <span>{{"gene_page_chromosome_location_start" | translate}}&nbsp;</span>
+        <span>{{location.locationStart}}</span>
+      </li>
+      <li>
+        <span>{{"gene_page_chromosome_location_end" | translate}}&nbsp;</span>
+        <span>{{location.locationEnd}}</span>
+      </li>
+      <li>
+        <span>{{"gene_page_chromosome_location_orientation" | translate}}&nbsp;</span>
+        <span>{{(+location.orientation === 1 ? "gene_page_orientation_plus_strand" : "gene_page_orientation_minus_strand") | translate }}</span>
+      </li>
+    </ul>
+
+  </div>
+  <div class="chromosome-location__buttons">
+    <a mat-button
+       color="primary"
+       href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ ensemblId }}"
+       target="_blank"
+       matTooltip="{{ 'link_ensembl' | translate }}"
+    >{{ "gene_page_chromosome_location_ensembl" | translate | uppercase }}
+    </a>
+    <button mat-button
+            color="primary"
+            class="hidden"
+    >{{ "gene_page_chromosome_location_show_transcripts" | translate | uppercase }}
+    </button>
+  </div>
+</div>
+
+<ng-template #geneLocationTempl>
+  <p>
+    {{ "gene_page_chromosome_location_paragraph" | translate:
+    {
+      symbol: geneSymbol,
+      length: geneLength,
+      arm: bandTranscript.arm,
+      chromosome: bandTranscript.chromosome
+      }
+    }}
+  </p>
+</ng-template>
+
+<ng-template #geneLengthTempl>
+  <p>
+    {{ "gene_page_chromosome_length_paragraph1" | translate:
+    {
+      symbol: geneSymbol,
+      length: geneLength
+    }
+    }}
+  </p>
+  <p>
+    {{ "gene_page_chromosome_length_paragraph2" | translate }}
+  </p>
+  <p>
+    {{ "gene_page_chromosome_length_paragraph3" | translate:
+    {
+      symbol: geneSymbol,
+      lengthType: lengthText
+    }
+    }}
+  </p>
+</ng-template>
