@@ -6,10 +6,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./intersections.component.scss'],
 })
 export class IntersectionPageComponent implements OnInit {
-  public dataGroup1 = [1, 3, 4, 9];
-  public dataGroup2 = [1, 2, 3, 5];
+  public data = [
+    {
+      label: 'GHR',
+      values: ['glucose metabolism', 'lipid metabolism', 'insulin sensitivity'],
+    },
+    {
+      label: 'GHRH',
+      values: ['glucose metabolism', 'stress response', 'inflamation'],
+    },
+    {
+      label: 'AGTR1',
+      values: ['insulin sensitivity', 'cognitive function', 'inflamation'],
+    },
+    {
+      label: 'SIRT',
+      values: ['insulin sensitivity', 'cognitive function', 'inflamation', 'stress response',],
+    },
+    {
+      label: 'SIRT1',
+      values: ['insulin sensitivity', 'cognitive function', 'inflamation', 'stress response',],
+    },
+  ];
+  public label = 'Genes intersection';
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 }
