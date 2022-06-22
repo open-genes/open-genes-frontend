@@ -10,6 +10,7 @@ import { FilterTypes } from '../../../core/models/filters/filter-types.model';
 import { MatSelectChange } from '@angular/material/select';
 import { Filter } from '../../../core/models/filters/filter.model';
 import { FilterTypesEnum } from '../genes-list/services/filter-types.enum';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-gene-fields-modal',
@@ -51,8 +52,6 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
   public predefinedProteinClasses: any[] = [];
   private proteinClassesModel: Observable<any[]>;
 
-  public hash = new Subject();
-
   // Phylum
   public phylum: any[] = [];
   private phylumModel: Observable<any[]>;
@@ -85,6 +84,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
       originSelect: new FormControl([[], [null]]),
       familyOriginSelect: new FormControl([[], [null]]),
       conservativeInSelect: new FormControl([[], [null]]),
+      toggleResearchesStats: new FormControl([false, null]),
     });
   }
 
@@ -141,6 +141,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
       this.proteinClasses = data;
     });
 
+    // Gene origin and homology
     this.phylumModel = this.getEntitiesList('phylum');
     this.phylumModel
       .pipe(
@@ -171,7 +172,6 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
         this.predefinedFamilyOrigin = data.byFamilyOrigin;
         this.predefinedConservativeIn = data.byConservativeIn;
         this.showSkeletonChange.emit(false);
-        this.hash.next(Object.values(data).join(''));
       });
   }
 
@@ -217,21 +217,27 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  public apply(filterType: FilterTypes, $event: MatSelectChange): void {
+  public apply(filterType: FilterTypes, $event: MatSelectChange | MatCheckboxChange): void {
+    let value;
+    if ($event instanceof MatCheckboxChange) {
+      value = $event.checked;
+    } else if ($event instanceof MatSelectChange) {
+      value = $event.value;
+    }
     this.filterService.clearFilters(filterType);
 
     // Check if event is emitted on select change
-    if (Array.isArray($event.value) && $event.value.length === 0) {
+    if (Array.isArray(value) && value.length === 0) {
       return;
     }
 
     // If value is emitted when user clicks empty option which is "Not selected"
     // There is no id 0, so we don't send this value
-    if (Number($event.value) === 0) {
+    if (Number(value) === 0) {
       return;
     }
     this.showSkeletonChange.emit(true);
-    this.filterService.applyFilter(filterType, $event.value);
+    this.filterService.applyFilter(filterType, value);
     this.getState();
   }
 
@@ -274,7 +280,10 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
           this.filterService.clearFilters('family_origin');
           break;
         case 'conservativeInSelect':
-          this.filterService.clearFilters('conservative_in,');
+          this.filterService.clearFilters('conservative_in');
+          break;
+        case 'researches':
+          this.filterService.clearFilters('researches');
           break;
       }
     } else {
@@ -328,6 +337,9 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
         break;
       case 'classes':
         this.listSettings.ifShowProteinClasses = !this.listSettings.ifShowProteinClasses;
+        break;
+      case 'researches':
+        this.listSettings.ifShowResearches = !this.listSettings.ifShowResearches;
         break;
       default:
         break;

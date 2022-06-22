@@ -2,70 +2,77 @@
 @import "../../styles";
 
 .researches {
-  display: flex;
-  flex-wrap: wrap;
+  position: relative;
 
-  &__increase-lifespan,
-  &__age-related-changes,
-  &__intervention-to-gene,
-  &__protein-regulates,
-  &__progeria-syndromes,
-  &__longevity-effects,
-  &__additional-evidences {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+  .research {
+    position: relative;
+    display: block;
     margin-right: 5px;
-    min-width: 60px;
+    width: 20px;
+    height: 50px;
+    float: left;
 
-    .color {
+    &__scale {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      z-index: 0;
       width: 100%;
-      min-width: 50px;
       border-radius: 4px;
       margin-right: 4px;
       cursor: pointer;
     }
-  }
 
-  &__increase-lifespan {
-    .color {
-      background-color: map.get($research-tables, increase-lifespan);
+    &__value {
+      position: absolute;
+      left: 0;
+      bottom: 4px;
+      width: 100%;
+      text-align: center;
+      font-size: $font-size-small;
+      text-shadow: rgba($color-white, .25) 1px 0,
     }
-  }
 
-  &__age-related-changes {
-    .color {
-      background-color: map.get($research-tables, age-related-change);
+    &--increase-lifespan {
+      .research__scale {
+        background-color: map.get($research-tables, increase-lifespan);
+      }
     }
-  }
 
-  &__intervention-to-gene {
-    .color {
-      background-color: map.get($research-tables, gene-intervention-to-vital-processes);
+    &--age-related-changes {
+      .research__scale {
+        background-color: map.get($research-tables, age-related-change);
+      }
     }
-  }
 
-  &__protein-regulates {
-    .color {
-      background-color: map.get($research-tables, protein-to-gene);
+    &--intervention-to-gene {
+      .research__scale {
+        background-color: map.get($research-tables, gene-intervention-to-vital-processes);
+      }
     }
-  }
 
-  &__progeria-syndromes {
-    .color {
-      background-color: map.get($research-tables, gene-to-progeria);
+    &--protein-regulates {
+      .research__scale {
+        background-color: map.get($research-tables, protein-to-gene);
+      }
     }
-  }
 
-  &__longevity-effects {
-    .color {
-      background-color: map.get($research-tables, gene-to-longevity-effect);
+    &--progeria-syndromes {
+      .research__scale {
+        background-color: map.get($research-tables, gene-to-progeria);
+      }
     }
-  }
 
-  &__additional-evidences {
-    .color {
-      background-color: map.get($research-tables, gene-to-additional-evidence);
+    &--longevity-effects {
+      .research__scale {
+        background-color: map.get($research-tables, gene-to-longevity-effect);
+      }
+    }
+
+    &--additional-evidences {
+      .research__scale {
+        background-color: map.get($research-tables, gene-to-additional-evidence);
+      }
     }
   }
 }

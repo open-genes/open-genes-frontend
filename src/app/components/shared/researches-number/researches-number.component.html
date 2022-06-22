@@ -1,61 +1,78 @@
 <div class="researches" *ngIf="researches">
-
   <ng-container *ngIf="researches.increaseLifespan.length">
-    <div class="researches__increase-lifespan">
-      <span class="color" (click)="openBottomSheet($event)"></span>
-      <span>{{researches.increaseLifespan.length}}</span>
+    <div class="research research--increase-lifespan">
+      <span class="research__scale"
+            (click)="openBottomSheet($event, researchStatsHint)"
+            [style.height.%]="(researches.increaseLifespan.length * 100) / maxValue"
+      ></span>
+      <span class="research__value">{{researches.increaseLifespan.length}}</span>
     </div>
   </ng-container>
 
   <ng-container *ngIf="researches.ageRelatedChangesOfGene.length">
-    <div class="researches__age-related-changes">
-      <span class="color" (click)="openBottomSheet($event)"></span>
-      <span>{{researches.ageRelatedChangesOfGene.length}}</span>
+    <div class="research research--age-related-changes">
+      <span class="research__scale"
+            (click)="openBottomSheet($event, researchStatsHint)"
+            [style.height.%]="(researches.ageRelatedChangesOfGene.length * 100) / maxValue"
+      ></span>
+      <span class="research__value">{{researches.ageRelatedChangesOfGene.length}}</span>
     </div>
   </ng-container>
 
   <ng-container *ngIf="researches.interventionToGeneImprovesVitalProcesses.length">
-    <div class="researches__intervention-to-gene">
-      <span class="color" (click)="openBottomSheet($event)"></span>
-      <span>{{researches.interventionToGeneImprovesVitalProcesses.length}}</span>
+    <div class="research research--intervention-to-gene">
+      <span class="research__scale"
+            (click)="openBottomSheet($event, researchStatsHint)"
+            [style.height.%]="(researches.interventionToGeneImprovesVitalProcesses.length * 100) / maxValue"
+      ></span>
+      <span class="research__value">{{researches.interventionToGeneImprovesVitalProcesses.length}}</span>
     </div>
   </ng-container>
 
   <ng-container *ngIf="researches.proteinRegulatesOtherGenes.length">
-    <div class="researches__protein-regulates">
-      <span class="color" (click)="openBottomSheet($event)"></span>
-      <span>{{researches.proteinRegulatesOtherGenes.length}}</span>
+    <div class="research research--protein-regulates">
+      <span class="research__scale"
+            (click)="openBottomSheet($event, researchStatsHint)"
+            [style.height.%]="(researches.proteinRegulatesOtherGenes.length * 100) / maxValue"
+      ></span>
+      <span class="research__value">{{researches.proteinRegulatesOtherGenes.length}}</span>
     </div>
   </ng-container>
 
   <ng-container *ngIf="researches.geneAssociatedWithProgeriaSyndromes.length">
-    <div class="researches__progeria-syndromes">
-      <span class="color" (click)="openBottomSheet($event)"></span>
-      <span>{{researches.geneAssociatedWithProgeriaSyndromes.length}}</span>
+    <div class="research research--progeria-syndromes">
+      <span class="research__scale"
+            (click)="openBottomSheet($event, researchStatsHint)"
+            [style.height.%]="(researches.geneAssociatedWithProgeriaSyndromes.length * 100) / maxValue"
+      ></span>
+      <span class="research__value">{{researches.geneAssociatedWithProgeriaSyndromes.length}}</span>
     </div>
   </ng-container>
 
   <ng-container *ngIf="researches.geneAssociatedWithLongevityEffects.length">
-    <div class="researches__longevity-effects">
-      <span class="color" (click)="openBottomSheet($event)"></span>
-      <span>{{researches.geneAssociatedWithLongevityEffects.length}}</span>
+    <div class="research research--longevity-effects">
+      <span class="research__scale"
+            (click)="openBottomSheet($event, researchStatsHint)"
+            [style.height.%]="(researches.geneAssociatedWithLongevityEffects.length * 100) / maxValue"
+      ></span>
+      <span class="research__value">{{researches.geneAssociatedWithLongevityEffects.length}}</span>
     </div>
   </ng-container>
 
   <ng-container *ngIf="researches.additionalEvidences.length">
-    <div class="researches__additional-evidences">
-      <span class="color" (click)="openBottomSheet($event)"></span>
-      <span>{{researches.additionalEvidences.length}}</span>
+    <div class="research research--additional-evidences">
+      <span class="research__scale"
+            (click)="openBottomSheet($event, researchStatsHint)"
+            [style.height.%]="(researches.additionalEvidences.length * 100) / maxValue"
+      ></span>
+      <span class="research__value">{{researches.additionalEvidences.length}}</span>
     </div>
   </ng-container>
-
 </div>
 
-<ng-template #expressionChangeHint>
+<ng-template #researchStatsHint>
   <article class="description">
-    <p>
-      {{ 'expression_change_hint_text' | translate }}
-    </p>
+    <p></p>
   </article>
 </ng-template>
 

@@ -7,15 +7,15 @@ import { CommonBottomSheetComponent } from '../../ui-components/components/modal
   selector: 'app-researches-number',
   templateUrl: './researches-number.component.html',
   styleUrls: ['./researches-number.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResearchesNumberComponent implements OnInit {
   @Input() researches: Researches;
+  public maxValue: number;
+
   constructor(
     private bottomSheet: MatBottomSheet
   ) {}
-
-  ngOnInit(): void {}
 
   public openBottomSheet(ev: MouseEvent, template: TemplateRef<any> = null): void {
     this.bottomSheet.open(CommonBottomSheetComponent, {
@@ -24,5 +24,20 @@ export class ResearchesNumberComponent implements OnInit {
       },
     });
     ev.preventDefault();
+  }
+
+  private findMaxValue(): number {
+    if (this.researches) {
+      const arr: number[] = Object.values(this.researches).map((entry) => entry.length);
+      const max = Math.max(...arr);
+      console.log(max);
+      return max <= 0 ? 1 : max;
+    }
+
+    return 1;
+  }
+
+  ngOnInit(): void {
+    this.maxValue = this.findMaxValue();
   }
 }

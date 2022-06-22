@@ -10,7 +10,8 @@ export enum FilterTypesEnum {
   protein_classes = 'byProteinClass',
   origin = 'byOrigin',
   family_origin = 'byFamilyOrigin',
-  conservative_in = 'byConservativeIn'
+  conservative_in = 'byConservativeIn',
+  researches = 'researches',
 }
 
 export enum SortEnum {

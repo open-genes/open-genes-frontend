@@ -215,6 +215,18 @@
     </mat-form-field>
   </div>
 
+
+  <div class="body__row __mb-10">
+    <mat-checkbox
+      formControlName="toggleResearchesStats"
+      color="primary"
+      (change)="apply('researches', $event)"
+      (click)="changeGenesListSettings('researches')"
+      [(ngModel)]="listSettings.ifShowResearches">
+      <span class="inline-button">{{ "filters_modal_placeholder_show_researches" | translate }}</span>
+    </mat-checkbox>
+  </div>
+
   <div class="reset-button-wrapper">
     <button class="btn btn--fill btn--gray reset-button"
             (click)="resetForm()">

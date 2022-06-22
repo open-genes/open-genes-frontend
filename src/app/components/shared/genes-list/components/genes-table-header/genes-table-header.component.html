@@ -44,10 +44,10 @@
     class="table-header__cell table-header__cell--expression">
   <div class="overflow">
     {{ "main_page_table_expression" | translate }}
-    <span class="fa far fa-info-circle"
+    <app-info-button
           *ngIf="isUiHintsSettingOn"
           (click)="openBottomSheet($event, expressionChangeHint)"
-    ></span>
+    ></app-info-button>
   </div>
 </td>
 
@@ -65,7 +65,7 @@
   </div>
 </td>
 
-<td *ngIf="listSettings.ifShowResearchesNumber"
+<td *ngIf="listSettings.ifShowResearches"
     class="table-header__cell table-header__cell--methylation">
   <div class="overflow">
     {{ "gene_list_researches_number" | translate }}

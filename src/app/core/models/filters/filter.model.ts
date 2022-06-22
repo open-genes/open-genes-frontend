@@ -15,6 +15,7 @@ export interface Filter {
   byOrigin: string[];
   byFamilyOrigin: string[];
   byConservativeIn: string[];
+  researches: boolean | number; // send researches in response, params true/false, 1/0
 }
 
 export interface ISort {

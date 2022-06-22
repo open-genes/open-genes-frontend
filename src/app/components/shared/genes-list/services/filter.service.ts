@@ -38,6 +38,7 @@ export class FilterService {
     byOrigin: [],
     byFamilyOrigin: [],
     byConservativeIn: [],
+    researches: 0,
   };
 
   public pagination: Pagination = {
@@ -56,6 +57,7 @@ export class FilterService {
   }
 
   public updateFields(fields): void {
+    console.log(fields);
     this.listOfFields$.next(fields);
   }
 
@@ -126,6 +128,7 @@ export class FilterService {
       origin,
       family_origin,
       conservative_in,
+      researches,
     } = FilterTypesEnum; // TODO: this enum is excessive
     switch (filterName) {
       case age_related_processes:
@@ -160,6 +163,9 @@ export class FilterService {
         break;
       case conservative_in:
         this.filters.byConservativeIn = [];
+        break;
+      case researches:
+        this.filters.researches = 0;
         break;
       default:
         this.filters.byAgeRelatedProcess = [];
