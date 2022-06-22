@@ -1,10 +1,8 @@
 import {
+  AfterViewInit,
   Component,
   Input,
   NgZone,
-  OnInit,
-  ViewChild,
-  ViewContainerRef,
 } from '@angular/core';
 import { Chart, LinearScale } from 'chart.js';
 import { VennDiagramController, ArcSlice } from 'chartjs-chart-venn';
@@ -21,17 +19,15 @@ interface ChartCircle {
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements AfterViewInit {
   @Input() data: ChartCircle[];
   @Input() label: string;
-  @ViewChild('canvas', { read: ViewContainerRef, static: true })
-  whateverViewContainer: ViewContainerRef;
 
   constructor(
     private zone: NgZone,
   ) {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.zone.run(() => {
       new Chart('chart', {
         type: 'venn',
@@ -64,11 +60,6 @@ export class ChartComponent implements OnInit {
           legend: {},
         },
       });
-      setTimeout(() => this.triggerChange(), 100);
     });
-  }
-
-  public triggerChange(): void {
-    console.log('triggerChange()');
   }
 }
