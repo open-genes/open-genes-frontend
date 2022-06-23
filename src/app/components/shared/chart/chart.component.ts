@@ -2,9 +2,9 @@ import {
   AfterViewInit,
   Component,
   Input,
-  NgZone,
+  NgZone, OnInit,
 } from '@angular/core';
-import { Chart, LinearScale } from 'chart.js';
+import { Chart, LinearScale, Tooltip } from 'chart.js';
 import { VennDiagramController, ArcSlice } from 'chartjs-chart-venn';
 import * as ChartVenn from 'chartjs-chart-venn/build/index.umd.js';
 Chart.register(VennDiagramController, ArcSlice, LinearScale);
@@ -19,13 +19,17 @@ interface ChartCircle {
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
 })
-export class ChartComponent implements AfterViewInit {
+export class ChartComponent implements OnInit, AfterViewInit {
   @Input() data: ChartCircle[];
   @Input() label: string;
 
   constructor(
     private zone: NgZone,
   ) {}
+
+  ngOnInit() {
+    Chart.register([Tooltip]);
+  }
 
   ngAfterViewInit(): void {
     this.zone.run(() => {
