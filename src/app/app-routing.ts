@@ -62,6 +62,10 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/diet/diet.module').then((m) => m.DietModule),
   },
   {
+    path: 'intersections',
+    loadChildren: () => import('./pages/intersections/intersections.module').then((m) => m.IntersectionsPageModule),
+  },
+  {
     path: '404',
     loadChildren: () => import('./pages/404/404.module').then((m) => m.Error404Module),
   },
