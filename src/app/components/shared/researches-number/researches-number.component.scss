@@ -15,9 +15,10 @@
     &__scale {
       position: absolute;
       left: 0;
-      bottom: 0;
+      bottom: -1px;
       z-index: 0;
       width: 100%;
+      min-height: 1px;
       border-radius: 4px;
       margin-right: 4px;
       cursor: pointer;
@@ -30,7 +31,8 @@
       width: 100%;
       text-align: center;
       font-size: $font-size-small;
-      text-shadow: rgba($color-white, .25) 1px 0,
+      white-space: nowrap;
+      text-shadow: 0 0 1px $color-white, 0 0 1px $color-white, 0 0 1px $color-white, 0 0 1px $color-white;
     }
 
     &--increase-lifespan {

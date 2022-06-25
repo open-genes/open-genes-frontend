@@ -84,7 +84,6 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
       originSelect: new FormControl([[], [null]]),
       familyOriginSelect: new FormControl([[], [null]]),
       conservativeInSelect: new FormControl([[], [null]]),
-      toggleResearchesStats: new FormControl([false, null]),
     });
   }
 
@@ -236,8 +235,16 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     if (Number(value) === 0) {
       return;
     }
+
     this.showSkeletonChange.emit(true);
     this.filterService.applyFilter(filterType, value);
+    this.getState();
+  }
+
+  public applyFieldAndFilter(filterType: FilterTypes, $event): void {
+    console.log('applyCheckbox', $event);
+    this.filterService.applyFilter(filterType, $event);
+    this.changeGenesListSettings(filterType);
     this.getState();
   }
 
@@ -301,6 +308,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
       (fields) => {
         this.settingsService.setFieldsForShow(fields);
         this.listSettings = fields;
+        console.log(this.listSettings);
       },
       (error) => {
         console.warn(error);
@@ -312,7 +320,8 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
    * List view settings
    */
 
-  public changeGenesListSettings(param: string): void {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  public changeGenesListSettings(param: string, callback?: void | ((...args: any[]) => void)): void {
     switch (param) {
       case 'gene-age':
         this.listSettings.ifShowAge = !this.listSettings.ifShowAge;
@@ -345,5 +354,10 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
         break;
     }
     this.filterService.updateFields(this.listSettings);
+
+    if (callback instanceof Function) {
+      console.log('args: ', ...callback.arguments);
+      callback(...callback.arguments);
+    }
   }
 }

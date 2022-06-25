@@ -57,7 +57,6 @@ export class FilterService {
   }
 
   public updateFields(fields): void {
-    console.log(fields);
     this.listOfFields$.next(fields);
   }
 

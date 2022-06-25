@@ -30,7 +30,6 @@ export class ResearchesNumberComponent implements OnInit {
     if (this.researches) {
       const arr: number[] = Object.values(this.researches).map((entry) => entry.length);
       const max = Math.max(...arr);
-      console.log(max);
       return max <= 0 ? 1 : max;
     }
 

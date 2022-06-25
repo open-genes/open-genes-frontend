@@ -64,7 +64,6 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
    */
 
   public updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'pubmed' | 'latest' | 'filters'): void {
-    console.log('updateViewOnSkeletonChange', name);
     if (name === 'articles') {
       this.showArticlesSkeleton = event;
     }
