@@ -35,6 +35,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public query: string;
   public searchMode: SearchMode = 'searchByGenes';
   public researches: ResearchTypes = [];
+  public statResearches: ResearchTypes = []; // TODO: for static
   public options: PageOptions;
   public page = 1;
   public isNotFound = false;
@@ -116,18 +117,20 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     }
 
     if (query && this.searchedGenesList.length === 0) {
+      this.isNotFound = true;
       this.researches = [];
       this.openSnackBar();
     }
   }
 
   private searchByGenes(query: string): void {
+    this.researches = this.statResearches;
     if (query && query.length > 2) {
-      this.query = query;
+      this.query = query.toLocaleLowerCase().trim();
       this.searchedGenesList = this.researches?.filter((research) => {
         // Fields always acquired in response
-        const searchedText = [research.geneId, research.geneSymbol, research.geneName].join(' ').toLowerCase();
-        return searchedText.includes(query);
+        const searchedText = `${research.geneId}${research.geneSymbol}${research.geneName}`.trim().toLocaleLowerCase();
+        return searchedText.indexOf(this.query) > -1;
       });
     } else {
       this.searchedGenesList = [];
@@ -172,6 +175,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
       .subscribe(
         (researches) => {
           this.researches = [...this.researches, ...researches.items] as any;
+          this.statResearches = this.researches;
           this.options = researches.options;
           this.isLoading = false;
           this.cdRef.markForCheck();
