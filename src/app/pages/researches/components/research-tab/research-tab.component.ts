@@ -77,7 +77,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
 
   public setResearchesList(query: Genes[] | string) {
     if (query) {
-      if (query.length > 2) {
+      if (query.length > 1) {
         const length = (query as string).split(',').length;
         if (length > 1) {
           delete this.filterService.filters.bySuggestions;
@@ -122,7 +122,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   }
 
   private searchByGenes(query: string): void {
-    if (query && query.length > 2) {
+    if (query && query.length > 1) {
       this.query = query;
       this.searchedGenesList = this.researches?.filter((research) => {
         // Fields always acquired in response
