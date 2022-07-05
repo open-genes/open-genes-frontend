@@ -30,7 +30,6 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Input() genesLength: number;
   @Input() showTitle: boolean;
   @Input() showProgressBar: boolean;
-  @Input() typeSearch: string;
   @Input() set isDisabled(value: boolean) {
     this.formDisabled = value;
     if (value) {
@@ -141,9 +140,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   public cancelSearch(event?): void {
     event?.stopPropagation();
     this.showSearchResult = false;
-    if (this.typeSearch !== 'gene-regulation') {
-      this.cancel.emit(true);
-    }
+    this.cancel.emit(true);
     if (this.fixOnTopOnMobile) {
       this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
     }
@@ -155,8 +152,5 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchQuery.emit(query);
     this.confirmedQuery.emit(false);
     this.cancelSearch();
-    if (this.typeSearch === 'gene-regulation') {
-      this.cancel.emit(true);
-    }
   }
 }
