@@ -103,7 +103,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription$.next();
     this.subscription$.complete();
-    this.cancelSearch();
+    this.closeSearchTipsDropdown();
   }
 
   private subsToSearchFieldChanges(): void {
@@ -114,7 +114,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
         filter((query: string) => {
           this.clearFieldButton = !!query;
           this.highlightText = query;
-          this.showSearchResult = query?.length >= 2;
+          this.showSearchResult = query?.length > 1;
 
           if (this.showSearchResult && this.fixOnTopOnMobile) {
             this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
@@ -137,10 +137,9 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.confirmedQuery.emit(!!this.highlightText);
   }
 
-  public cancelSearch(event?): void {
+  public closeSearchTipsDropdown(event?): void {
     event?.stopPropagation();
     this.showSearchResult = false;
-    this.cancel.emit(true);
     if (this.fixOnTopOnMobile) {
       this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
     }
@@ -151,6 +150,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     const query: string = this.searchForm.get('searchField').value;
     this.searchQuery.emit(query);
     this.confirmedQuery.emit(false);
-    this.cancelSearch();
+    this.cancel.emit(true);
+    this.closeSearchTipsDropdown();
   }
 }
