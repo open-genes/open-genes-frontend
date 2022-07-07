@@ -97,7 +97,7 @@ export class DietComponent implements OnInit, OnDestroy {
   }
 
   private searchByGenes(query: string): void {
-    if (query && query.length > 2) {
+    if (query && query.length > 1) {
       this.searchedGenesList = this.genes?.filter((gene) => {
         // Fields always acquired in response
         const searchedText = [gene.id, gene?.ensembl ? gene.ensembl : '', gene.symbol, gene.name]

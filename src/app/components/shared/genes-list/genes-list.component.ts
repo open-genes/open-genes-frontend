@@ -50,7 +50,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
       if (this.isGoTermsMode) {
         this.searchedData = query as Genes[];
       } else {
-        if (query.length > 2) {
+        if (query.length > 1) {
           const length = (query as string).split(',').length;
           if (length > 1) {
             delete this.filterService.filters.bySuggestions;
