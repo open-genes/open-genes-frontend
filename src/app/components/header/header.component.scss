@@ -60,12 +60,11 @@
     align-items: center;
     height: $header-height;
     width: 100%;
-    padding: 0 5px;
     margin: 0 auto;
     position: relative;
 
-    @media screen and (min-width: 1600px) {
-      padding: 0 calc(50% - 800px);
+    @include resolution_tablet-and-up {
+      padding: 0 10px;
     }
   }
 
