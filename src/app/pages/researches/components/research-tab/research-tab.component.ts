@@ -73,6 +73,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.page = 1;
     this.error.isError = false;
     this.error.errorStatus = undefined;
+    this.isNotFound = false;
     this.getResearches(this.researchType);
   }
 
@@ -110,17 +111,13 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   }
 
   public updateResearchesList(query): void {
-    if (query && this.searchedGenesList.length) {
+    if (query && this.searchedGenesList.length !== 0) {
       this.researches = [...this.searchedGenesList];
-      this.isNotFound = this.researches.length === 0;
-      this.openSnackBar();
-    }
-
-    if (query && this.searchedGenesList.length === 0) {
-      this.isNotFound = true;
+    } else {
       this.researches = [];
-      this.openSnackBar();
     }
+    this.isNotFound = this.searchedGenesList.length === 0;
+    this.openSnackBar();
   }
 
   private searchByGenes(query: string): void {

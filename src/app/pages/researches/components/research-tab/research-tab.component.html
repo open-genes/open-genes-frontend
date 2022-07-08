@@ -11,7 +11,7 @@
               class="__mb-30">
   </app-search>
 
-  <ng-container *ngIf="!isNotFound && researches?.length !== 0">
+  <ng-container *ngIf="!isNotFound">
     <!-- Purple -->
     <section *ngSwitchCase="'lifespan-change'">
       <app-increase-lifespan
