@@ -141,9 +141,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   public cancelSearch(event?): void {
     event?.stopPropagation();
     this.showSearchResult = false;
-    if (this.typeSearch !== 'gene-regulation') {
-      this.cancel.emit(true);
-    }
+    this.cancel.emit(true);
     if (this.fixOnTopOnMobile) {
       this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
     }
