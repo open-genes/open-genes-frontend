@@ -16,17 +16,14 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2">
           <app-sidebar>
-            <div class="__not-flex __w-100">
-              <b>{{ "gene_page_title_contents" | translate }}</b>
-              <mat-nav-list>
-                <a mat-list-item [routerLink]="['/news']" fragment="articles">
-                  {{ "news_page_articles_title" | translate }}
-                </a>
-                <a mat-list-item [routerLink]="['/news']" fragment="pubmed">
-                  {{ "news_page_pubmed_title" | translate }}
-                </a>
-              </mat-nav-list>
-            </div>
+            <mat-nav-list>
+              <a mat-list-item [routerLink]="['/news']" fragment="articles">
+                {{ "news_page_articles_title" | translate }}
+              </a>
+              <a mat-list-item [routerLink]="['/news']" fragment="pubmed">
+                {{ "news_page_pubmed_title" | translate }}
+              </a>
+            </mat-nav-list>
           </app-sidebar>
         </div>
 
