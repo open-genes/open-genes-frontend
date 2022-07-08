@@ -35,45 +35,11 @@
       text-shadow: 0 0 1px $color-white, 0 0 1px $color-white, 0 0 1px $color-white, 0 0 1px $color-white;
     }
 
-    &--increase-lifespan {
-      .research__scale {
-        background-color: map.get($research-tables, increase-lifespan);
-      }
-    }
-
-    &--age-related-changes {
-      .research__scale {
-        background-color: map.get($research-tables, age-related-change);
-      }
-    }
-
-    &--intervention-to-gene {
-      .research__scale {
-        background-color: map.get($research-tables, gene-intervention-to-vital-processes);
-      }
-    }
-
-    &--protein-regulates {
-      .research__scale {
-        background-color: map.get($research-tables, protein-to-gene);
-      }
-    }
-
-    &--progeria-syndromes {
-      .research__scale {
-        background-color: map.get($research-tables, gene-to-progeria);
-      }
-    }
-
-    &--longevity-effects {
-      .research__scale {
-        background-color: map.get($research-tables, gene-to-longevity-effect);
-      }
-    }
-
-    &--additional-evidences {
-      .research__scale {
-        background-color: map.get($research-tables, gene-to-additional-evidence);
+    @each $name, $color in $research-tables {
+      &--#{$name} {
+        .research__scale {
+          background-color: map.get($research-tables, $name);
+        }
       }
     }
   }

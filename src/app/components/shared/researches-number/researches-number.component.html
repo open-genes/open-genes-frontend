@@ -1,64 +1,21 @@
 <div class="researches" *ngIf="researches">
-  <div class="research research--increase-lifespan">
-    <span class="research__scale"
-          (click)="openBottomSheet($event, researchStatsHint)"
-          [style.height.%]="(researches.increaseLifespan.length * 100) / maxValue"
-    ></span>
-    <span class="research__value">{{researches.increaseLifespan.length}}</span>
-  </div>
-
-
-
-  <div class="research research--age-related-changes">
-    <span class="research__scale"
-          (click)="openBottomSheet($event, researchStatsHint)"
-          [style.height.%]="(researches.ageRelatedChangesOfGene.length * 100) / maxValue"
-    ></span>
-    <span class="research__value">{{researches.ageRelatedChangesOfGene.length}}</span>
-  </div>
-
-
-
-  <div class="research research--intervention-to-gene">
-    <span class="research__scale"
-          (click)="openBottomSheet($event, researchStatsHint)"
-          [style.height.%]="(researches.interventionToGeneImprovesVitalProcesses.length * 100) / maxValue"
-    ></span>
-    <span class="research__value">{{researches.interventionToGeneImprovesVitalProcesses.length}}</span>
-  </div>
-
-  <div class="research research--protein-regulates">
-    <span class="research__scale"
-          (click)="openBottomSheet($event, researchStatsHint)"
-          [style.height.%]="(researches.proteinRegulatesOtherGenes.length * 100) / maxValue"
-    ></span>
-    <span class="research__value">{{researches.proteinRegulatesOtherGenes.length}}</span>
-  </div>
-
-  <div class="research research--progeria-syndromes">
-    <span class="research__scale"
-          (click)="openBottomSheet($event, researchStatsHint)"
-          [style.height.%]="(researches.geneAssociatedWithProgeriaSyndromes.length * 100) / maxValue"
-    ></span>
-    <span class="research__value">{{researches.geneAssociatedWithProgeriaSyndromes.length}}</span>
-  </div>
-
-  <div class="research research--longevity-effects">
-    <span class="research__scale"
-          (click)="openBottomSheet($event, researchStatsHint)"
-          [style.height.%]="(researches.geneAssociatedWithLongevityEffects.length * 100) / maxValue"
-    ></span>
-    <span class="research__value">{{researches.geneAssociatedWithLongevityEffects.length}}</span>
-  </div>
-
-  <div class="research research--additional-evidences">
-    <span class="research__scale"
-          (click)="openBottomSheet($event, researchStatsHint)"
-          [style.height.%]="(researches.additionalEvidences.length * 100) / maxValue"
-    ></span>
-    <span class="research__value">{{researches.additionalEvidences.length}}</span>
-  </div>
+  <ng-container
+    *ngFor="let research of researches | keyvalue"
+    [ngTemplateOutlet]="bar"
+    [ngTemplateOutletContext]="{ research: research.key }"
+  ></ng-container>
 </div>
+
+<ng-template #bar let-research="research">
+  <div class="research"
+       [ngClass]="research | setClassName">
+      <span class="research__scale"
+            (click)="openBottomSheet($event, researchStatsHint)"
+            [style.height.%]="(researches[research]?.length * 100) / maxValue"
+      ></span>
+    <span class="research__value">{{researches[research]?.length}}</span>
+  </div>
+</ng-template>
 
 <ng-template #researchStatsHint>
   <article class="description">

@@ -28,7 +28,8 @@ import { SearchViewPanelComponent } from './components/search-view-panel/search-
 import { AgingMechanismsModule } from '../aging-mechanisms/aging-mechanisms.module';
 import { ProteinClassesModule } from '../protein-classes/protein-classes.module';
 import { GeneFieldsModalModule } from '../gene-fields-modal/gene-fields-modal.module';
-import { ResearchesNumberComponent } from '../researches-number/researches-number.component';
+import { ResearchNumberModule } from '../researches-number/researches-number.module';
+
 @NgModule({
   declarations: [
     GenesListComponent,
@@ -42,7 +43,6 @@ import { ResearchesNumberComponent } from '../researches-number/researches-numbe
     GeneAnnotationsCardComponent,
     GeneAnnotationsTableRowComponent,
     SearchViewPanelComponent,
-    ResearchesNumberComponent
   ],
   imports: [
     CommonModule,
@@ -62,6 +62,7 @@ import { ResearchesNumberComponent } from '../researches-number/researches-numbe
     AgingMechanismsModule,
     ProteinClassesModule,
     GeneFieldsModalModule,
+    ResearchNumberModule,
   ],
   providers: [WindowService],
   exports: [GenesListComponent, SearchComponent, GeneCardComponent, GeneTableRowComponent],

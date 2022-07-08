@@ -13,9 +13,7 @@ export class ResearchesNumberComponent implements OnInit {
   @Input() researches: Researches;
   public maxValue: number;
 
-  constructor(
-    private bottomSheet: MatBottomSheet
-  ) {}
+  constructor(private bottomSheet: MatBottomSheet) {}
 
   public openBottomSheet(ev: MouseEvent, template: TemplateRef<any> = null): void {
     this.bottomSheet.open(CommonBottomSheetComponent, {
