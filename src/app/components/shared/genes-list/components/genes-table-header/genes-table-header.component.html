@@ -44,9 +44,8 @@
     class="table-header__cell table-header__cell--expression">
   <div class="overflow">
     {{ "main_page_table_expression" | translate }}
-    <app-info-button
-          *ngIf="isUiHintsSettingOn"
-          (click)="openBottomSheet($event, expressionChangeHint)"
+    <app-info-button *ngIf="isUiHintsSettingOn"
+                     (click)="openBottomSheet($event, expressionChangeHint)"
     ></app-info-button>
   </div>
 </td>

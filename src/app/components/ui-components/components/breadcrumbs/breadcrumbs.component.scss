@@ -1,6 +1,12 @@
 @import "../../../../../assets/sass/dependencies";
 
-.breadcrumb {
+:host {
+  display: block;
+}
+
+.breadcrumbs {
+  display: inline-block;
+  width: 100%;
   font-size: $font-size;
 
   a,
@@ -14,13 +20,21 @@
     }
   }
 
-  li {
+  .breadcrumb {
     list-style: none;
+    display: block;
     float: left;
+    min-height: 2em;
+    line-height: 2em;
 
-    &:not(:last-child)::after {
-      content: "/";
-      color: $color-gray;
+    a,
+    &__arrow {
+      vertical-align: middle;
+    }
+
+    &__arrow {
+      display: inline-block;
+      color: $color-base;
     }
   }
 }

@@ -11,7 +11,7 @@
               class="__mb-30">
   </app-search>
 
-  <ng-container *ngIf="researches?.length !== 0">
+  <ng-container *ngIf="!isNotFound">
     <!-- Purple -->
     <section *ngSwitchCase="'lifespan-change'">
       <app-increase-lifespan
@@ -82,7 +82,7 @@
                class="__mt-10 __mb-10"
   ></app-spinner>
 
-  <div *ngIf="researches?.length < options?.objTotal || page < options?.pagination.pagesTotal"
+  <div *ngIf="!isNotFound && (researches?.length < options?.objTotal || page < options?.pagination.pagesTotal)"
        class="btn-wrap show-more __mt-20">
     <button (click)="showMore($event, researchType)"
             class="btn show-more__button">

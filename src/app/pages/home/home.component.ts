@@ -128,7 +128,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   private searchGenes(query: string): void {
-    if (query && query.length > 2) {
+    if (query && query.length > 1) {
       this.showProgressBar = true;
       this.apiService
         .getGenesMatchByString(query, this.queryLength > 1 ? 'byGeneSymbol' : undefined)
@@ -149,7 +149,7 @@ export class HomeComponent extends WindowWidth implements OnInit, OnDestroy {
   }
 
   private searchGenesByGoTerm(query: string): void {
-    if (query && query.length > 2) {
+    if (query && query.length > 1) {
       this.showProgressBar = true;
       this.apiService
         .getGoTermMatchByString(query)
