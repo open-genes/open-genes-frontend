@@ -18,9 +18,10 @@ export class DietComponent implements OnInit, OnDestroy {
   public searchedGenesList: Diet[] = [];
   public confirmedGenesList: Diet[];
   public totalGenesLength: number;
-  public isLoading = false;
+  public isPageDataLoading = false;
   public errorStatus: string;
   public searchMode: SearchMode = 'searchByGenes';
+  public isNotFound = false;
 
   public pagination: Pagination = {
     page: 1,
@@ -35,7 +36,7 @@ export class DietComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.initData();
+    this.setInitialState();
   }
 
   public setSearchQuery(query: string): void {
@@ -45,12 +46,10 @@ export class DietComponent implements OnInit, OnDestroy {
   public updateGenesList(query): void {
     if (query && this.searchedGenesList.length) {
       this.confirmedGenesList = [...this.searchedGenesList];
-      this.openSnackBar();
     }
 
     if (query && this.searchedGenesList.length === 0) {
       this.confirmedGenesList = [];
-      this.openSnackBar();
     }
 
     if (!query && this.searchedGenesList.length === 0) {
@@ -58,9 +57,12 @@ export class DietComponent implements OnInit, OnDestroy {
       this.pagination.pageSize = 20;
       this.onPaginationChange(this.pagination);
     }
+
+    this.isNotFound = this.searchedGenesList.length === 0;
+    this.openSnackBar();
   }
 
-  private initData(): void {
+  private setInitialState(): void {
     forkJoin([this.apiService.getGenesForDiet(), this.apiService.getGenesForDiet(this.pagination)])
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
@@ -78,7 +80,7 @@ export class DietComponent implements OnInit, OnDestroy {
   }
 
   public onPaginationChange(event: Pagination): void {
-    this.isLoading = true;
+    this.isPageDataLoading = true;
     this.apiService
       .getGenesForDiet(event)
       .pipe(takeUntil(this.unsubscribe$))
@@ -86,11 +88,13 @@ export class DietComponent implements OnInit, OnDestroy {
         (res) => {
           this.confirmedGenesList = res.items;
           this.totalGenesLength = res.options.objTotal;
-          this.isLoading = false;
+          this.isPageDataLoading = false;
+          this.isNotFound = res.items?.length === 0;
           this.cdRef.markForCheck();
         },
         (error) => {
-          this.isLoading = false;
+          this.isPageDataLoading = false;
+          this.isNotFound = false;
           this.cdRef.markForCheck();
         }
       );
