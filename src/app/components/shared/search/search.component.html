@@ -11,12 +11,12 @@
 
   <div *ngIf="showSearchResult"
        class="search-backdrop"
-       (click)="cancelSearch($event)">
+       (click)="closeSearchTipsDropdown($event)">
   </div>
 
   <div class="search-form__panel">
     <button
-      (click)="cancelSearch($event)"
+      (click)="closeSearchTipsDropdown($event)"
       mat-icon-button
       color="primary"
       type="button"

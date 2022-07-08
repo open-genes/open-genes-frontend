@@ -35,6 +35,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public query: string;
   public searchMode: SearchMode = 'searchByGenes';
   public researches: ResearchTypes = [];
+  public statResearches: ResearchTypes = []; // TODO: for static
   public options: PageOptions;
   public page = 1;
   public isNotFound = false;
@@ -72,12 +73,13 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.page = 1;
     this.error.isError = false;
     this.error.errorStatus = undefined;
+    this.isNotFound = false;
     this.getResearches(this.researchType);
   }
 
   public setResearchesList(query: Genes[] | string) {
     if (query) {
-      if (query.length > 2) {
+      if (query.length > 1) {
         const length = (query as string).split(',').length;
         if (length > 1) {
           delete this.filterService.filters.bySuggestions;
@@ -109,25 +111,23 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   }
 
   public updateResearchesList(query): void {
-    if (query && this.searchedGenesList.length) {
+    if (query && this.searchedGenesList.length !== 0) {
       this.researches = [...this.searchedGenesList];
-      this.isNotFound = this.researches.length === 0;
-      this.openSnackBar();
-    }
-
-    if (query && this.searchedGenesList.length === 0) {
+    } else {
       this.researches = [];
-      this.openSnackBar();
     }
+    this.isNotFound = this.searchedGenesList.length === 0;
+    this.openSnackBar();
   }
 
   private searchByGenes(query: string): void {
-    if (query && query.length > 2) {
-      this.query = query;
+    this.researches = this.statResearches;
+    if (query && query.length > 1) {
+      this.query = query.toLocaleLowerCase().trim();
       this.searchedGenesList = this.researches?.filter((research) => {
         // Fields always acquired in response
-        const searchedText = [research.geneId, research.geneSymbol, research.geneName].join(' ').toLowerCase();
-        return searchedText.includes(query);
+        const searchedText = `${research.geneId}${research.geneSymbol}${research.geneName}`.trim().toLocaleLowerCase();
+        return searchedText.indexOf(this.query) > -1;
       });
     } else {
       this.searchedGenesList = [];
@@ -172,6 +172,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
       .subscribe(
         (researches) => {
           this.researches = [...this.researches, ...researches.items] as any;
+          this.statResearches = this.researches;
           this.options = researches.options;
           this.isLoading = false;
           this.cdRef.markForCheck();
