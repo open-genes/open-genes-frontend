@@ -1,3 +1,37 @@
+// Ripple effect
+@mixin ripple(
+  $border-radius: $border-radius-medium,
+  $color: $color-base,
+) {
+  &:after {
+    content: ' ';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    border-radius: $border-radius;
+    background-color: rgba($color, .15);
+    transition: color, opacity, .15s ease-in-out;
+    opacity: 0;
+  }
+
+  &:hover,
+  &:focus {
+    &:after {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    &:after {
+      opacity: .85;
+    }
+  }
+}
+
 // Panel
 @mixin panel($display: 'block', $padding: '10px') {
   display: $display;
@@ -220,29 +254,6 @@
   }
 }
 
-@mixin ripple($border-radius: $border-radius-medium) {
-  &:after {
-    content: ' ';
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    border-radius: $border-radius;
-    background-color: rgba($color-base, .15);
-    opacity: 0;
-    transition: color, opacity, .15s ease-in-out;
-  }
-
-  &:hover {
-    &:after {
-      opacity: 1;
-    }
-  }
-}
-
 @mixin copy-field(
   $input-size: 40px,
   $color: $color-general,
@@ -287,29 +298,6 @@
     }
 
     @include ripple($input-size);
-  }
-}
-
-@mixin ripple($border-radius: $border-radius-medium) {
-  &:after {
-    content: ' ';
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    border-radius: $border-radius;
-    background-color: rgba($color-base, .15);
-    opacity: 0;
-    transition: color, opacity, .15s ease-in-out;
-  }
-
-  &:hover {
-    &:after {
-      opacity: 1;
-    }
   }
 }
 

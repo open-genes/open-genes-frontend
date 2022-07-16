@@ -15,9 +15,40 @@
         customHeight="35px"
       ></app-icon>
     </a>
-    <div class="header__right">
+
+    <nav class="header__middle">
+      <ul class="navigation-list">
+        <li
+          class="navigation-list__item">
+          <a class="item__link"
+             routerLinkActive="active"
+             [routerLink]="'/'"
+             [routerLinkActiveOptions]="{ exact: true }"
+          >{{ "toggler_genes" | translate }}</a>
+        </li>
+
+        <li
+          class="navigation-list__item">
+          <a class="item__link"
+             routerLinkActive="active"
+             [routerLink]="'/researches'"
+          >{{ "toggler_researches" | translate }}</a>
+        </li>
+
+        <li
+          class="navigation-list__item">
+          <a class="item__link item__link--dropdown"
+                [routerLink]="'/datasets'"
+                routerLinkActive="active"
+          >{{ "toggler_datasets" | translate }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <nav class="header__right">
       <app-language theme="light"></app-language>
       <app-burger-menu (favsCounterUpdate)="updateView()"></app-burger-menu>
-    </div>
+    </nav>
   </div>
 </header>

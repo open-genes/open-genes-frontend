@@ -1,0 +1,19 @@
+<div *ngIf="isParentRoute"
+     class="wrapper">
+  <div class="container">
+    <div class="row">
+      <mat-nav-list>
+        <a mat-list-item
+           routerLink="horvath-clock">
+          {{ "horvath_clock_page_title" | translate }}
+        </a>
+        <a mat-list-item
+           routerLink="calorie-restriction">
+          {{ "diet_page_title" | translate }}
+        </a>
+      </mat-nav-list>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

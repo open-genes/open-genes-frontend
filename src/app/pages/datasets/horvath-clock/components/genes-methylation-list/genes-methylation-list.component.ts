@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Settings } from '../../../../core/models/settings.model';
-import { SettingsService } from '../../../../core/services/settings.service';
+import { Settings } from '../../../../../core/models/settings.model';
+import { SettingsService } from '../../../../../core/services/settings.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack-bar.component';
-import { GenesInHorvathClock } from '../../../../core/models/open-genes-api/genes-in-horvath-clock.model';
+import { SnackBarComponent } from '../../../../../components/shared/snack-bar/snack-bar.component';
+import { GenesInHorvathClock } from '../../../../../core/models/open-genes-api/genes-in-horvath-clock.model';
 import { Sort } from '@angular/material/sort';
 
 @Component({
