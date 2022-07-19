@@ -38,7 +38,7 @@
         color: $color-general-dark;
       }
 
-      &.active {
+      &.__current {
         @include ripple($border-radius-medium, $color-gray-halfing);
 
         &::after {

@@ -6,6 +6,9 @@ export const DATASETS_PAGE_ROUTES: Routes = [
   {
     path: '',
     component: DatasetsPageComponent,
+    data: {
+      breadcrumb: '',
+    },
     children: [
       {
         path: 'calorie-restriction',
