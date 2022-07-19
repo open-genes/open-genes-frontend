@@ -1,0 +1,79 @@
+@import "src/assets/sass/dependencies";
+
+.custom-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-width: $smartphone;
+
+  &__abstract,
+  &__menu {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__abstract {
+    padding-top: calc(30px + 5vh);
+    padding-bottom: calc(30px + 5vh);
+    background: $pink-blue-gradient;
+    color: $color-white;
+    text-align: left;
+
+    h1,
+    p {
+      width: 100%;
+      padding-right: 10%;
+    }
+
+    h1 {
+      font-size: 1em;
+      margin-bottom: .5em;
+      font-weight: $font-weight-bold;
+    }
+
+    p {
+      font-size: .8em;
+    }
+  }
+
+  &__menu {
+    .menu {
+      width: 100%;
+      max-width: 600px;
+    }
+  }
+
+  @include resolution_tablet-and-up {
+    flex-direction: row;
+    font-size: clamp(20px, 24px, 50px);
+
+    &__abstract,
+    &__menu {
+      padding-left: $padding-large;
+      padding-right: $padding-large;
+    }
+
+    &__abstract {
+      width: 55%;
+    }
+
+    &__menu {
+      width: 45%;
+    }
+  }
+
+  @include resolution_smartphone {
+    flex-direction: column;
+    font-size: 20px;
+
+    &__abstract,
+    &__menu {
+      width: 100%;
+      padding-left: $padding-medium;
+      padding-right: $padding-medium;
+    }
+  }
+}

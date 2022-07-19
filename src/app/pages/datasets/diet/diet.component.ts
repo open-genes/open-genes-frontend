@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ApiService } from '../../core/services/api/open-genes-api.service';
-import { Pagination, SearchMode } from '../../core/models/settings.model';
-import { Diet } from '../../core/models/open-genes-api/diet.model';
+import { ApiService } from '../../../core/services/api/open-genes-api.service';
+import { Pagination, SearchMode } from '../../../core/models/settings.model';
+import { Diet } from '../../../core/models/open-genes-api/diet.model';
 import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
+import { SnackBarComponent } from '../../../components/shared/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ApiService } from '../../core/services/api/open-genes-api.service';
+import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { takeUntil } from 'rxjs/operators';
-import { WizardService } from '../../components/shared/wizard/wizard-service.service';
-import { WindowWidth } from '../../core/utils/window-width';
-import { WindowService } from '../../core/services/browser/window.service';
-import { SearchMode } from '../../core/models/settings.model';
-import { GenesInHorvathClock } from '../../core/models/open-genes-api/genes-in-horvath-clock.model';
+import { WizardService } from '../../../components/shared/wizard/wizard-service.service';
+import { WindowWidth } from '../../../core/utils/window-width';
+import { WindowService } from '../../../core/services/browser/window.service';
+import { SearchMode } from '../../../core/models/settings.model';
+import { GenesInHorvathClock } from '../../../core/models/open-genes-api/genes-in-horvath-clock.model';
 
 @Component({
   selector: 'app-horvath-clock-page',
