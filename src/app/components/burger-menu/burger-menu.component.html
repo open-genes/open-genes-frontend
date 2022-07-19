@@ -27,22 +27,23 @@
       <li class="panel__link">
         <a [routerLink]="'/'"
            routerLinkActive="/"
-           [routerLinkActiveOptions]="{ exact: true }"
-        >
+           [routerLinkActiveOptions]="{ exact: true }">
           <span class="fa far fa-dna"></span>
           {{ "toggler_genes" | translate }}</a>
       </li>
       <li
         class="panel__link">
         <a [routerLink]="'/researches'"
-           routerLinkActive="__current"
-        >{{ "toggler_researches" | translate }}</a>
+           routerLinkActive="__current">
+          <span class="fa far fa-book"></span>
+          {{ "toggler_researches" | translate }}</a>
       </li>
       <li
         class="panel__link">
         <a [routerLink]="'/datasets'"
-           routerLinkActive="__current"
-        >{{ "toggler_datasets" | translate }}
+           routerLinkActive="__current">
+          <span class="fa far fa-database"></span>
+          {{ "toggler_datasets" | translate }}
         </a>
       </li>
 
@@ -62,7 +63,7 @@
         <a [routerLink]="'/about'"
            routerLinkActive="__current"
         >
-          <span class="fa far fa-dna"></span>
+          <span class="fa far fa-info-circle"></span>
           {{ 'header_menu_about' | translate }}</a>
       </li>
       <li class="panel__link">
@@ -89,13 +90,13 @@
         <a [routerLink]="'/news'"
            routerLinkActive="__current"
         >
-          <span class="fa far fa-book"></span>
+          <span class="fa far fa-newspaper"></span>
           {{ 'header_menu_news' | translate }}</a>
       </li>
       <li class="panel__link">
         <a href="/api/docs"
            target="_blank">
-          <span class="fa far fa-database">
+          <span class="fa far fa-terminal">
           </span> {{ 'header_menu_api' | translate }}&nbsp;<span class="fa far fa-external-link"></span>
         </a>
       </li>
