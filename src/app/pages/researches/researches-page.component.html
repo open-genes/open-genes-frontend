@@ -1,0 +1,55 @@
+<div class="page main-page">
+  <div class="page__inner __pb-60">
+    <div class="page favourites-page">
+      <div class="page__inner __pb-60">
+        <div class="text-page__header wrapper">
+          <div class="container">
+            <div class="row no-gutters">
+              <div class="col-12">
+                <div class="page__title">
+                  <h1>{{ "search_by_researches" | translate }}</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <mat-tab-group
+            [disablePagination]="true"
+            [selectedIndex]="activeTabIndex"
+            (selectedTabChange)="setActiveTab($event)"
+            animationDuration="0ms"
+            class="__w-content-fluid">
+            <mat-tab *ngFor="let tab of tabs">
+              <ng-template mat-tab-label>
+                <div
+                  class="tab"
+                  [class]="tab.cssClass">
+                {{ tab.title | translate }}
+                </div>
+              </ng-template>
+              <ng-template matTabContent>
+                <app-research-tab
+                  class="tab__content"
+                  [researchType]="tab.param"
+                  (dataLoaded)="setIsListLoaded($event)"
+                ></app-research-tab>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #errorMessage>
+      <section class="col-12">
+        <app-no-content size="small" [title]="'error_connection'">
+          <ng-container icon>
+            <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+          </ng-container>
+        </app-no-content>
+      </section>
+    </ng-template>
+  </div>
+</div>
+

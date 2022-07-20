@@ -1,0 +1,7 @@
+@import "../../../styles";
+@include typography;
+@include gene-name;
+@include modal-window('comment');
+@import "../styles/table";
+@import "../styles/publication-info-modal";
+

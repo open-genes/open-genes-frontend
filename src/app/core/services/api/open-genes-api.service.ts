@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AgeRelatedProcesses, AgingMechanisms, Gene, Genes, ProteinClasses, SelectionCriteria } from '../../models';
+import {
+  AgeRelatedProcesses,
+  AgingMechanisms,
+  Gene,
+  Genes,
+  Phylum,
+  ProteinClasses,
+  SelectionCriteria,
+} from '../../models';
 import { TranslateService } from '@ngx-translate/core';
 import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/open-genes-api/associated-diseases.model';
 import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with-increase-lifespan-researches.model';
@@ -10,12 +18,12 @@ import { ApiResponse } from '../../models/api-response.model';
 import { SearchModel } from '../../models/open-genes-api/search.model';
 import { Pagination } from '../../models/settings.model';
 import { Diet } from '../../models/open-genes-api/diet.model';
+import { ResearchArguments } from '../../models/open-genes-api/researches.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  private genes$: Observable<ApiResponse<Genes>>;
   private readonly currentLang: string;
 
   constructor(private http: HttpClient, private translate: TranslateService) {
@@ -81,8 +89,16 @@ export class ApiService {
   }
 
   // New API
-  getGenesV2(): Observable<ApiResponse<Genes>> {
-    return this.http.get<ApiResponse<Genes>>(`/api/gene/search?lang=${this.currentLang}`);
+  getGenesV2(pagination?: Pagination): Observable<ApiResponse<Genes>> {
+    let params = new HttpParams();
+
+    if (pagination) {
+      params = params
+        .set('lang', this.translate.currentLang)
+        .set('page', pagination?.page)
+        .set('pageSize', pagination?.pageSize);
+    }
+    return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });
   }
 
   getDiseases(): Observable<AssociatedDiseases[]> {
@@ -107,5 +123,13 @@ export class ApiService {
 
   getProteinClasses(): Observable<ProteinClasses[]> {
     return this.http.get<ProteinClasses[]>(`/api/protein-class?lang=${this.currentLang}`);
+  }
+
+  getPhylum(): Observable<Phylum[]> {
+    return this.http.get<Phylum[]>(`/api/phylum?lang=${this.currentLang}`);
+  }
+
+  getResearches(research: ResearchArguments, page: number, pageSize?: number): Observable<any> {
+    return this.http.get<any[]>(`/api/research/${research}?lang=${this.currentLang}&page=${page}`);
   }
 }

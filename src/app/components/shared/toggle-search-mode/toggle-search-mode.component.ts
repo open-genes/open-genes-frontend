@@ -9,18 +9,20 @@ import { SettingsService } from '../../../core/services/settings.service';
 })
 export class ToggleSearchModeComponent implements OnInit {
   @Input() queryLength: number;
+  @Input() isMobile: boolean;
+
   public searchMode: SearchMode;
   public searchModeEnum = SearchModeEnum;
   public toggleData = [
     {
       searchMode: SearchModeEnum.searchByGenes,
-      toggleTitle: 'search_for_genes',
-      icon: 'fa-dna',
+      toggleTitle: 'search_by_genes',
+      icon: 'dna',
     },
     {
       searchMode: SearchModeEnum.searchByGoTerms,
-      toggleTitle: 'search_for_go_terms',
-      icon: 'fa-book',
+      toggleTitle: 'search_by_annotations',
+      icon: 'gene-ontology',
     },
   ];
 

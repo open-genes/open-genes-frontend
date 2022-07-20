@@ -25,36 +25,57 @@
 
     <ul class="panel__links">
       <li class="panel__link">
-        <a [routerLink]="'/about'"
-           routerLinkActive="current"
-        >
+        <a [routerLink]="'/'"
+           routerLinkActive="/"
+           [routerLinkActiveOptions]="{ exact: true }">
           <span class="fa far fa-dna"></span>
+          {{ "toggler_genes" | translate }}</a>
+      </li>
+      <li
+        class="panel__link">
+        <a [routerLink]="'/researches'"
+           routerLinkActive="__current">
+          <span class="fa far fa-book"></span>
+          {{ "toggler_researches" | translate }}</a>
+      </li>
+      <li
+        class="panel__link">
+        <a [routerLink]="'/datasets'"
+           routerLinkActive="__current">
+          <span class="fa far fa-database"></span>
+          {{ "toggler_datasets" | translate }}
+        </a>
+      </li>
+
+      <li class="panel__separator"></li>
+
+      <li class="panel__link">
+        <a [routerLink]="'/download'"
+           routerLinkActive="__current">
+          <span class="fa far fa-download">
+          </span> {{ 'header_menu_download' | translate }}
+        </a>
+      </li>
+
+      <li class="panel__separator"></li>
+
+      <li class="panel__link">
+        <a [routerLink]="'/about'"
+           routerLinkActive="__current"
+        >
+          <span class="fa far fa-info-circle"></span>
           {{ 'header_menu_about' | translate }}</a>
       </li>
       <li class="panel__link">
         <a [routerLink]="'/help'"
-           routerLinkActive="current"
+           routerLinkActive="__current"
         >
           <span class="fa far fa-question-circle"></span>
           {{ 'header_menu_help' | translate }}</a>
       </li>
       <li class="panel__link">
-        <a [routerLink]="'/horvath-clock'"
-           routerLinkActive="current"
-        >
-          <span class="fa far fa-search"></span>
-          {{ 'search_genes_in_horvath_clock' | translate }}</a>
-      </li>
-      <li class="panel__link">
-        <a [routerLink]="'/diet'"
-           routerLinkActive="current"
-        >
-          <span class="fa far fa-search"></span>
-          {{ 'diet_page_title' | translate }}</a>
-      </li>
-      <li class="panel__link">
         <a [routerLink]="'/favourites'"
-           routerLinkActive="current"
+           routerLinkActive="__current"
         >
           <span class="fa far fa-star"></span>
           <span
@@ -67,49 +88,35 @@
       </li>
       <li class="panel__link">
         <a [routerLink]="'/news'"
-           routerLinkActive="current"
+           routerLinkActive="__current"
         >
-          <span class="fa far fa-book"></span>
+          <span class="fa far fa-newspaper"></span>
           {{ 'header_menu_news' | translate }}</a>
       </li>
       <li class="panel__link">
         <a href="/api/docs"
            target="_blank">
-          <span class="fa far fa-database">
+          <span class="fa far fa-terminal">
           </span> {{ 'header_menu_api' | translate }}&nbsp;<span class="fa far fa-external-link"></span>
         </a>
       </li>
       <li class="panel__link">
-        <a [routerLink]="'/download'"
-           routerLinkActive="current">
-          <span class="fa far fa-download">
-          </span> {{ 'header_menu_download' | translate }}
-        </a>
-      </li>
-      <li class="panel__link">
         <a [routerLink]="'/settings'"
-           routerLinkActive="current"
+           routerLinkActive="__current"
         >
           <span class="fa far fa-cog"></span>
           {{ 'header_menu_settings' | translate }}</a>
       </li>
       <li class="panel__link">
         <a [routerLink]="'/contributors'"
-           routerLinkActive="current"
+           routerLinkActive="__current"
         >
           <span class="fa far fa-users"></span>
           {{ 'header_menu_contributors' | translate }}</a>
       </li>
       <li class="panel__link">
-        <a [routerLink]="'/diagrams'"
-           routerLinkActive="current"
-        >
-          <span class="fa far fa-chart-network"></span>
-          {{ 'header_menu_diagrams' | translate }}</a>
-      </li>
-      <li class="panel__link">
         <a [routerLink]="'/timeline'"
-           routerLinkActive="current"
+           routerLinkActive="__current"
         >
           <span class="fa far fa-clock"></span>
           {{ 'header_menu_timeline' | translate }}</a>

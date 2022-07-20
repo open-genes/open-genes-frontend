@@ -35,6 +35,10 @@ export class FilterService {
     byMethylationChange: '',
     byAgingMechanism: [],
     byProteinClass: [],
+    byOrigin: [],
+    byFamilyOrigin: [],
+    byConservativeIn: [],
+    researches: 0,
   };
 
   public pagination: Pagination = {
@@ -62,18 +66,19 @@ export class FilterService {
   }
 
   // Filter
-  // TODO: filter types typing problems
-  public applyFilter(filterType: string, filterValue: number | string): void {
+  public applyFilter(filterType: string, filterValue: any): void {
+    console.log('applyFilter', filterValue);
     if (filterValue) {
       if (Array.isArray(this.filters[filterType])) {
         const arrayValues = filterValue.toString().split(',');
         if (arrayValues.length > 1) {
-          this.filters[filterType] = arrayValues.map(Number);
+          this.filters[filterType] = arrayValues.map((value: string | number) => (+value ? +value : value));
         } else {
-          if (!this.filters[filterType].includes(+filterValue)) {
-            this.filters[filterType].push(+filterValue);
+          filterValue = +filterValue ? +filterValue : Array.isArray(filterValue) ? filterValue[0] : filterValue;
+          if (!this.filters[filterType].includes(filterValue)) {
+            this.filters[filterType].push(filterValue);
           } else {
-            this.filters[filterType] = this.filters[filterType].filter((item) => item !== +filterValue);
+            this.filters[filterType] = this.filters[filterType].filter((item) => item !== filterValue);
           }
         }
       } else if (typeof this.filters[filterType] === 'number') {
@@ -119,6 +124,10 @@ export class FilterService {
       methylation_change,
       aging_mechanism,
       protein_classes,
+      origin,
+      family_origin,
+      conservative_in,
+      researches,
     } = FilterTypesEnum; // TODO: this enum is excessive
     switch (filterName) {
       case age_related_processes:
@@ -145,6 +154,18 @@ export class FilterService {
       case protein_classes:
         this.filters.byProteinClass = [];
         break;
+      case origin:
+        this.filters.byOrigin = [];
+        break;
+      case family_origin:
+        this.filters.byFamilyOrigin = [];
+        break;
+      case conservative_in:
+        this.filters.byConservativeIn = [];
+        break;
+      case researches:
+        this.filters.researches = 0;
+        break;
       default:
         this.filters.byAgeRelatedProcess = [];
         this.filters.byDiseases = [];
@@ -154,6 +175,9 @@ export class FilterService {
         this.filters.byMethylationChange = '';
         this.filters.byAgingMechanism = [];
         this.filters.byProteinClass = [];
+        this.filters.byOrigin = [];
+        this.filters.byFamilyOrigin = [];
+        this.filters.byConservativeIn = [];
     }
     this.pagination.page = 1;
 
@@ -182,9 +206,7 @@ export class FilterService {
     }
 
     if (this.sortParams && this.sortParams.direction) {
-      params = params
-        .set('sortBy', this.sortParams.active)
-        .set('sortOrder', this.sortParams.direction.toUpperCase())
+      params = params.set('sortBy', this.sortParams.active).set('sortOrder', this.sortParams.direction.toUpperCase());
     }
 
     return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });
@@ -200,7 +222,6 @@ export class FilterService {
     this.isClearFiltersBtnShown.next(sum.length >= 2);
 
     this.updateList(this.filters);
-
     this.setQueryParams(this.filters);
   }
 
@@ -218,7 +239,7 @@ export class FilterService {
       }
     }
 
-    this.router.navigate([''], {
+    void this.router.navigate([''], {
       queryParams: queryParams,
     });
   }

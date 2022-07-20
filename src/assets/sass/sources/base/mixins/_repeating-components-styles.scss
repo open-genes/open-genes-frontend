@@ -1,3 +1,37 @@
+// Ripple effect
+@mixin ripple(
+  $border-radius: $border-radius-medium,
+  $color: $color-base,
+) {
+  &:after {
+    content: ' ';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    border-radius: $border-radius;
+    background-color: rgba($color, .15);
+    transition: color, opacity, .15s ease-in-out;
+    opacity: 0;
+  }
+
+  &:hover,
+  &:focus {
+    &:after {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    &:after {
+      opacity: .85;
+    }
+  }
+}
+
 // Panel
 @mixin panel($display: 'block', $padding: '10px') {
   display: $display;
@@ -220,27 +254,83 @@
   }
 }
 
-@mixin ripple($border-radius: $border-radius-medium) {
-  &:after {
-    content: ' ';
+@mixin copy-field(
+  $input-size: 40px,
+  $color: $color-general,
+  $text-color: $color-general,
+  $text-color-h: $color-general-dark) {
+  position: relative;
+  width: 100%;
+  color: $text-color;
+
+  input {
     display: block;
+    appearance: none;
+    outline: none;
+    border: 1px solid transparent;
     width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    border-radius: $border-radius;
-    background-color: rgba($color-base, .15);
-    opacity: 0;
-    transition: color, opacity, .15s ease-in-out;
+    height: $input-size;
+    background-color: rgba($color, .10);
+    border-radius: $input-size;
+    padding: 0 $input-size 0 $padding-medium;
+    color: inherit;
+    font-family: 'Roboto', 'sans-serif';
+    font-size: $font-size-smaller;
+
+    &:focus {
+      border-color: rgba($color, .25);
+    }
   }
 
-  &:hover {
-    &:after {
-      opacity: 1;
+  button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    height: $input-size;
+    width: $input-size;
+    line-height: $input-size;
+    text-align: center;
+    color: inherit;
+
+    &:hover {
+      color: $text-color-h;
+    }
+
+    @include ripple($input-size);
+  }
+}
+
+@mixin gene-name {
+  .title {
+    font-size: $font-size-bigger;
+    font-weight: $font-weight-medium;
+    color: $color-gray;
+    min-width: 200px;
+    padding: 15px 0 5px 0;
+    line-height: 1;
+
+    .link {
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      position: relative;
+      vertical-align: middle;
+      margin-right: 5px;
+      text-decoration: underline;
+      color: mix($color-gray, $color-general, 90%);
+
+      &:hover,
+      &:active {
+        color: darken(mix($color-gray, $color-general, 90%), 10%);
+      }
+    }
+
+    b {
+      color: $color-black;
+      font-weight: bold;
     }
   }
 }
+
 
 

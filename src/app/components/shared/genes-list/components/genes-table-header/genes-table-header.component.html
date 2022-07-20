@@ -44,6 +44,9 @@
     class="table-header__cell table-header__cell--expression">
   <div class="overflow">
     {{ "main_page_table_expression" | translate }}
+    <app-info-button *ngIf="isUiHintsSettingOn"
+                     (click)="openBottomSheet($event, expressionChangeHint)"
+    ></app-info-button>
   </div>
 </td>
 
@@ -61,6 +64,21 @@
   </div>
 </td>
 
+<td *ngIf="listSettings.ifShowResearches"
+    class="table-header__cell table-header__cell--methylation">
+  <div class="overflow">
+    {{ "gene_list_researches_number" | translate }}
+  </div>
+</td>
+
 <td class="table-header__cell table-header__cell--actions">
   <div class="overflow"></div>
 </td>
+
+<ng-template #expressionChangeHint>
+  <article class="description">
+    <p>
+      {{ 'expression_change_hint_text' | translate }}
+    </p>
+  </article>
+</ng-template>

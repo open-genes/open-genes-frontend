@@ -1,0 +1,37 @@
+@import "../../../styles";
+:host{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba($color-white, .95);
+  box-shadow: $box-shadow-to-top;
+  z-index: z('alert');
+}
+
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $padding-regular $padding-medium;
+  min-width: $smartphone;
+  font-size: $font-size-small;
+  color: $color-black;
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+
+    ::ng-deep a {
+      @include base-link;
+      @include blue-link;
+    }
+  }
+
+  &__button { }
+}

@@ -21,17 +21,9 @@ export const APP_ROUTES: Routes = [
     path: 'favourites',
     loadChildren: () => import('./pages/favourites/favourites.module').then((m) => m.FavouritesModule),
   },
-  // {
-  //   path: 'developers',
-  //   loadChildren: () => import('./pages/api-reference/api-reference.module').then((m) => m.ApiReferenceModule),
-  // },
   {
     path: 'settings',
     loadChildren: () => import('./pages/settings/settings.module').then((m) => m.SettingsModule),
-  },
-  {
-    path: 'diagrams',
-    loadChildren: () => import('./pages/diagrams/diagrams.module').then((m) => m.DiagramsModule),
   },
   {
     path: 'help',
@@ -53,17 +45,15 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/download/download.module').then((m) => m.DownloadModule),
   },
   {
-    path: 'by-researches',
-    loadChildren: () =>
-      import('./pages/increase-lifespan/increase-lifespan.module').then((m) => m.IncreaseLifespanModule),
+    path: 'researches',
+    loadChildren: () => import('./pages/researches/researches-page.module').then((m) => m.ResearchesPageModule),
   },
   {
-    path: 'horvath-clock',
-    loadChildren: () => import('./pages/horvath-clock/horvath-clock.module').then((m) => m.HorvathClockModule),
-  },
-  {
-    path: 'diet',
-    loadChildren: () => import('./pages/diet/diet.module').then((m) => m.DietModule),
+    path: 'datasets',
+    loadChildren: () => import('./pages/datasets/datasets-page.module').then((m) => m.DatasetsPageModule),
+    data: {
+      breadcrumb: 'header_menu_datasets',
+    },
   },
   {
     path: '404',
@@ -73,7 +63,6 @@ export const APP_ROUTES: Routes = [
     path: '**',
     redirectTo: '/404',
   },
-
 ];
 
 export const ROUTER_OPTIONS: ExtraOptions = {

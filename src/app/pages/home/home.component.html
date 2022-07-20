@@ -40,11 +40,10 @@
               </app-sidebar-item>
 
               <ng-container *ngIf="searchMode !== this.searchModeEnum.searchByGoTerms">
-                <app-sidebar-item *ngIf="!isMobile && !genesListIsLoading">
+                <app-sidebar-item *ngIf="!isMobile">
                   <div content class="filters-wrapper">
                     <app-gene-fields-modal
                       (showSkeletonChange)="updateViewOnSkeletonChange($event, 'filters')"
-                      (filterLoaded)="forceUpdateView()"
                     ></app-gene-fields-modal>
                     <app-skeleton
                       *ngIf="showFiltersSkeleton"
@@ -137,7 +136,7 @@
               class="__mt-20 __mb-10"
               [showTitle]="true"
               [genesLength]="genesLength"
-              [genesList]="searchedGenes"
+              [searchHintsList]="searchedGenes"
               [isDisabled]="genesListIsLoading"
               [setSearchMode]="searchMode"
               [showProgressBar]="showProgressBar"

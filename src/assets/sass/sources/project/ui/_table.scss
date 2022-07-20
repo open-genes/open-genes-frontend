@@ -31,12 +31,9 @@ table.table {
     }
   }
 
-  th {
-    padding: .5em;
-  }
-
+  th,
   td {
-    padding: .2em .5em;
+    padding: .5em;
   }
 
   @mixin sticky {
@@ -83,7 +80,14 @@ table.table {
   .__cell-width-large {
     &:after {
       display: block;
-      width: 16em;
+      width: 14em;
+    }
+  }
+
+  .__cell-width-very-large {
+    &:after {
+      display: block;
+      width: 24em;
     }
   }
 }

@@ -73,67 +73,6 @@ body {
   }
 }
 
-// TODO: Transfer to mixins folder
-@mixin base-link {
-  font-weight: $font-weight-medium;
-  cursor: pointer;
-  position: relative;
-}
-
-@mixin blue-link {
-  color: $color-general;
-
-  &:hover,
-  &:active {
-    color: lighten(mix($color-general, $color-blue, 5%), 3%);
-  }
-}
-
-@mixin gray-link {
-  color: mix($color-gray, $color-general, 90%);
-
-  &:hover,
-  &:active {
-    color: darken(mix($color-gray, $color-general, 90%), 10%);
-  }
-}
-
-@mixin white-link {
-  color: $color-white;
-
-  &:hover,
-  &:active {
-    color: darken($color-white, 10%);
-  }
-}
-
-.link {
-  @include base-link;
-  @include blue-link;
-
-  &--gray {
-    @include gray-link;
-  }
-
-  &--white {
-    @include white-link;
-  }
-
-  &--underline {
-    text-decoration: underline;
-  }
-
-  &--anchor,
-  &--term {
-    @include gray-link;
-    border-bottom: 1px dashed currentColor;
-  }
-
-  &--term {
-    font-style: italic;
-  }
-}
-
 app-header,
 .app-header { // the class is used on static pages
   display: block;

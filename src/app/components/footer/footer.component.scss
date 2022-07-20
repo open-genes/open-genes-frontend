@@ -78,6 +78,11 @@ footer.wrapper {
     }
   }
 
+  &__donation-field {
+    margin-top: 10px;
+    @include copy-field(30px, $color-gray, $color-white, $color-gray-very-light);
+  }
+
   &__language {
     margin-top: -.8em;
   }

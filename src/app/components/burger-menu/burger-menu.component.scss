@@ -9,6 +9,7 @@
 
   .fa {
     position: relative;
+    color: $color-general;
   }
 
   &__update-marker {
@@ -39,7 +40,7 @@
 
 .menu__panel {
   height: 100%;
-  padding: #{($header-height - $header-announcement-height) + 15px} 0;
+  padding: #{$header-height + 15px} 0;
   position: absolute;
   top: 0;
   right: 0;
@@ -77,9 +78,19 @@
     padding: 0 15px 0 10px;
     overflow: auto;
 
+    .panel__separator,
     .panel__link {
       display: block;
       width: 100%;
+    }
+
+    .panel__separator {
+      height: 1px;
+      background-color: $color-borders;
+      margin: 8px 0;
+    }
+
+    .panel__link {
       font-size: $font-size;
       font-weight: $font-weight-medium;
       margin: 2px 0;
@@ -110,7 +121,7 @@
           background: rgba($color-general, 0.15);
         }
 
-        &.current {
+        &.__current {
           color: $color-general;
           background: rgba($color-general, 0.15);
         }
@@ -118,16 +129,12 @@
 
       &--emphasized {
         a {
-          &:not(:hover, :active, .current) {
+          &:not(:hover, :active, .__current) {
             color: $color-orange-400;
             background-color: $color-orange-100;
           }
         }
       }
-    }
-
-    .menu__link + .menu__link {
-      margin-top: 4px;
     }
   }
 
@@ -136,7 +143,7 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: center;
-    height: $header-height - $header-announcement-height;
+    height: $header-height;
     bottom: 0;
     background-color: $color-black;
     font-size: $font-size-bigger;

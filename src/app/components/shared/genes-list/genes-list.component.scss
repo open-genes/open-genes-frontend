@@ -47,6 +47,22 @@
   }
 }
 
+.filters {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: start;
+  align-content: flex-start;
+  justify-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+
+  & > * {
+    display: contents;
+  }
+}
+
 .genes-info {
   font-size: $font-size;
   color: $color-gray;
@@ -57,9 +73,15 @@
     margin-bottom: 10px;
   }
 
-  .genes-info__found {
+  &__group {
     display: inline-block;
     margin-right: 20px;
     margin-top: .5em;
+  }
+
+  &__title {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
   }
 }

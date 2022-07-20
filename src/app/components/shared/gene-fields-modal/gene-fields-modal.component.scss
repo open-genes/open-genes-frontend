@@ -5,6 +5,12 @@
   display: block;
 }
 
+.disabled {
+  pointer-events: none;
+  user-select: none;
+  opacity: .85;
+}
+
 .body__row {
   position: relative;
   display: inline-block;
@@ -16,6 +22,10 @@
     font-size: 1.2em;
     color: $color-black-light;
     line-height: 3.2em;
+  }
+
+  .checkbox {
+    font-size: 1.2em;
   }
 
   mat-form-field {

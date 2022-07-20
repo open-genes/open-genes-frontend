@@ -1,15 +1,7 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  OnInit,
-  AfterViewInit,
-  OnDestroy,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { GenesListSettings } from '../genes-list/genes-list-settings.model';
 import { FilterService } from '../genes-list/services/filter.service';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { SettingsService } from '../../../core/services/settings.service';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
@@ -17,13 +9,15 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { FilterTypes } from '../../../core/models/filters/filter-types.model';
 import { MatSelectChange } from '@angular/material/select';
 import { Filter } from '../../../core/models/filters/filter.model';
+import { FilterTypesEnum } from '../genes-list/services/filter-types.enum';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-gene-fields-modal',
   templateUrl: './gene-fields-modal.component.html',
   styleUrls: ['./gene-fields-modal.component.scss'],
 })
-export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestroy {
+export class GeneFieldsModalComponent implements OnInit, OnDestroy {
   // FIELDS VISIBILITY
   public listSettings: GenesListSettings;
   // FILTERS
@@ -54,12 +48,20 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
   public predefinedAgingMechanisms: any[] = [];
   private agingMechanismsModel: Observable<any[]>;
   // Protein classes
-  private proteinClassesModel: Observable<any[]>;
   public proteinClasses: any[] = [];
   public predefinedProteinClasses: any[] = [];
+  private proteinClassesModel: Observable<any[]>;
 
+  // Phylum
+  public phylum: any[] = [];
+  private phylumModel: Observable<any[]>;
+  public predefinedOrigin: any[] = [];
+  public predefinedFamilyOrigin: any[] = [];
+  public predefinedConservativeIn: any[] = [];
+
+  // Researches
   public filtersForm: FormGroup;
-  public isViewReady = false;
+  public filterTypes = FilterTypesEnum;
 
   private subscription$ = new Subject();
 
@@ -69,8 +71,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
   constructor(
     private apiService: ApiService,
     private filterService: FilterService,
-    private settingsService: SettingsService,
-    private readonly cdRef: ChangeDetectorRef
+    private settingsService: SettingsService
   ) {
     this.filtersForm = new FormGroup({
       ageRelatedProcessesSearchInput: new FormControl([[], null]),
@@ -81,6 +82,10 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
       selectionCriteriaSelect: new FormControl([[], [null]]),
       agingMechanismsSelect: new FormControl([[], [null]]),
       proteinClassesSelect: new FormControl([[], [null]]),
+      originSelect: new FormControl([[], [null]]),
+      familyOriginSelect: new FormControl([[], [null]]),
+      conservativeInSelect: new FormControl([[], [null]]),
+      researchesCheckbox: new FormControl([false, [null]]),
     });
   }
 
@@ -137,7 +142,22 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
       this.proteinClasses = data;
     });
 
+    // Gene origin and homology
+    this.phylumModel = this.getEntitiesList('phylum');
+    this.phylumModel
+      .pipe(
+        map((data: any) => data.sort((a, b) => a.order - b.order)),
+        takeUntil(this.subscription$)
+      )
+      .subscribe((data: any[]) => {
+        this.phylum = data;
+      });
+
     // Set the values tha user has already selected in the genes list
+    this.getState();
+  }
+
+  private getState(): void {
     this.filterService
       .getFilterState()
       .pipe(takeUntil(this.subscription$))
@@ -149,14 +169,13 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
         this.predefinedSelectionCriteria = data.bySelectionCriteria;
         this.predefinedAgingMechanisms = data.byAgingMechanism;
         this.predefinedProteinClasses = data.byProteinClass;
-
-        this.cdRef.detectChanges();
+        this.predefinedOrigin = data.byOrigin;
+        this.predefinedFamilyOrigin = data.byFamilyOrigin;
+        this.predefinedConservativeIn = data.byConservativeIn;
+        this.showSkeletonChange.emit(false);
+        console.log(this.listSettings.ifShowResearches);
+        this.listSettings.ifShowResearches = !!data.researches;
       });
-  }
-
-  ngAfterViewInit() {
-    this.isViewReady = true;
-    this.showSkeletonChange.emit(false);
   }
 
   ngOnDestroy(): void {
@@ -194,27 +213,42 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
         return this.apiService.getDiseaseCategories();
       case 'classes':
         return this.apiService.getProteinClasses();
+      case 'phylum':
+        return this.apiService.getPhylum();
       default:
         return;
     }
   }
 
-  public apply(filterType: FilterTypes, $event: MatSelectChange): void {
+  public apply(filterType: FilterTypes, $event: MatSelectChange | MatCheckboxChange): void {
+    let value;
+    if ($event instanceof MatCheckboxChange) {
+      value = $event.checked;
+    } else if ($event instanceof MatSelectChange) {
+      value = $event.value;
+    }
     this.filterService.clearFilters(filterType);
 
     // Check if event is emitted on select change
-    if (Array.isArray($event.value) && $event.value.length === 0) {
+    if (Array.isArray(value) && value.length === 0) {
       return;
     }
 
     // If value is emitted when user clicks empty option which is "Not selected"
     // There is no id 0, so we don't send this value
-    if (Number($event.value) === 0) {
+    if (Number(value) === 0) {
       return;
     }
 
-    this.filterService.applyFilter(filterType, $event.value);
-    this.cdRef.detectChanges();
+    this.showSkeletonChange.emit(true);
+    this.filterService.applyFilter(filterType, value);
+    this.getState();
+  }
+
+  public toggleSwitchAndFilter(filterType: FilterTypes, $event): void {
+    this.listSettings.ifShowResearches = !$event.checked;
+    this.filterService.applyFilter(filterType, Number(this.listSettings.ifShowResearches));
+    this.getState();
   }
 
   public filterDiseases(event: KeyboardEvent): void {
@@ -249,12 +283,20 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
         case 'proteinClassesSelect':
           this.filterService.clearFilters('protein_classes');
           break;
+        case 'originSelect':
+          this.filterService.clearFilters('origin');
+          break;
+        case 'familyOriginSelect':
+          this.filterService.clearFilters('family_origin');
+          break;
+        case 'conservativeInSelect':
+          this.filterService.clearFilters('conservative_in');
+          break;
       }
     } else {
       this.filtersForm.reset();
       this.filterService.clearFilters();
     }
-    this.cdRef.detectChanges();
   }
 
   /**
@@ -266,7 +308,7 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
       (fields) => {
         this.settingsService.setFieldsForShow(fields);
         this.listSettings = fields;
-        this.cdRef.detectChanges();
+        console.log(this.listSettings);
       },
       (error) => {
         console.warn(error);
@@ -278,7 +320,8 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
    * List view settings
    */
 
-  public changeGenesListSettings(param: string): void {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  public toggleGenesListSettings(param: string, callback?: void | ((...args: any[]) => void)): void {
     switch (param) {
       case 'gene-age':
         this.listSettings.ifShowAge = !this.listSettings.ifShowAge;
@@ -308,5 +351,10 @@ export class GeneFieldsModalComponent implements OnInit, AfterViewInit, OnDestro
         break;
     }
     this.filterService.updateFields(this.listSettings);
+
+    if (callback instanceof Function) {
+      console.log('args: ', ...callback.arguments);
+      callback(...callback.arguments);
+    }
   }
 }

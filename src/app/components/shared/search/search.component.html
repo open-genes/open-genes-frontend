@@ -2,7 +2,8 @@
       class="search-form"
       [ngClass]="
       {'search-form--disabled': formDisabled,
-      'search-form--active': showSearchResult}">
+      'search-form--active': showSearchResult,
+      'search-form--fix-on-top': fixOnTopOnMobile}">
   <div *ngIf="showTitle"
        class="search-form__quantity">
     <span *ngIf="genesLength">{{ 'main_page_total' | translate: { number: genesLength } }}</span>
@@ -10,22 +11,30 @@
 
   <div *ngIf="showSearchResult"
        class="search-backdrop"
-       (click)="cancelSearch($event)">
+       (click)="closeSearchTipsDropdown($event)">
   </div>
 
   <div class="search-form__panel">
     <button
-      (click)="cancelSearch($event)"
-      class="btn btn--purple btn--icon-only cancel-search-button">
-      <span class="fa fal fa-arrow-left"></span>
+      (click)="closeSearchTipsDropdown($event)"
+      mat-icon-button
+      color="primary"
+      type="button"
+      class="cancel-search-button">
+      <mat-icon>
+        keyboard_backspace
+      </mat-icon>
     </button>
 
     <div class="search-form__wrapper">
       <button *ngIf="clearFieldButton"
               mat-icon-button
+              type="button"
               class="clear-search-button"
               (click)="clearSearch()">
-        <span class="fa fal fa-times"></span>
+        <mat-icon>
+          close
+        </mat-icon>
       </button>
 
       <button
