@@ -9,4 +9,5 @@ export type FilterTypes =
   | 'byProteinClass'
   | 'byOrigin'
   | 'byFamilyOrigin'
-  | 'byConservativeIn';
+  | 'byConservativeIn'
+  | 'researches';
