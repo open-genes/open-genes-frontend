@@ -66,8 +66,8 @@ export class FilterService {
   }
 
   // Filter
-  // TODO: filter types typing problems
   public applyFilter(filterType: string, filterValue: any): void {
+    console.log('applyFilter', filterValue);
     if (filterValue) {
       if (Array.isArray(this.filters[filterType])) {
         const arrayValues = filterValue.toString().split(',');
@@ -222,7 +222,6 @@ export class FilterService {
     this.isClearFiltersBtnShown.next(sum.length >= 2);
 
     this.updateList(this.filters);
-
     this.setQueryParams(this.filters);
   }
 
@@ -240,7 +239,7 @@ export class FilterService {
       }
     }
 
-    this.router.navigate([''], {
+    void this.router.navigate([''], {
       queryParams: queryParams,
     });
   }

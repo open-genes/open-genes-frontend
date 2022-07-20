@@ -4,7 +4,7 @@
     <mat-form-field appearance="fill" color="primary">
       <app-eye-checkbox
         matPrefix
-        (changeEvent)="changeGenesListSettings('processes')"
+        (changeEvent)="toggleGenesListSettings('processes')"
         [switch]="listSettings.ifShowFuncClusters"></app-eye-checkbox>
       <mat-label>{{ "filters_modal_placeholder_age_related_processes" | translate }}</mat-label>
       <mat-select formControlName="ageRelatedProcessesSelect"
@@ -24,7 +24,7 @@
     <mat-form-field appearance="fill">
       <app-eye-checkbox
         matPrefix
-        (changeEvent)="changeGenesListSettings('expression')"
+        (changeEvent)="toggleGenesListSettings('expression')"
         [switch]="listSettings.ifShowExpression"></app-eye-checkbox>
       <mat-label>{{ "filters_modal_placeholder_expression_change" | translate }}</mat-label>
       <mat-select formControlName="expressionChangeSelect"
@@ -43,7 +43,7 @@
     <mat-form-field appearance="fill">
       <app-eye-checkbox
         matPrefix
-        (changeEvent)="changeGenesListSettings('diseases')"
+        (changeEvent)="toggleGenesListSettings('diseases')"
         [switch]="listSettings.ifShowDiseases"></app-eye-checkbox>
       <mat-label>{{ "filters_modal_placeholder_diseases" | translate }}</mat-label>
       <mat-select formControlName="diseasesSelect"
@@ -74,7 +74,7 @@
     <mat-form-field appearance="fill">
       <app-eye-checkbox
         matPrefix
-        (changeEvent)="changeGenesListSettings('disease-categories')"
+        (changeEvent)="toggleGenesListSettings('disease-categories')"
         [switch]="listSettings.ifShowDiseaseCategories"></app-eye-checkbox>
       <mat-label>{{ "filters_modal_placeholder_disease_categories" | translate }}</mat-label>
       <mat-select formControlName="diseaseCategoriesSelect"
@@ -100,7 +100,7 @@
     <mat-form-field appearance="fill">
       <app-eye-checkbox
         matPrefix
-        (changeEvent)="changeGenesListSettings('criteria')"
+        (changeEvent)="toggleGenesListSettings('criteria')"
         [switch]="listSettings.ifShowCriteria"></app-eye-checkbox>
       <mat-label>{{ "filters_modal_placeholder_criteria" | translate }}</mat-label>
       <mat-select formControlName="selectionCriteriaSelect"
@@ -120,7 +120,7 @@
     <mat-form-field appearance="fill">
       <app-eye-checkbox
         matPrefix
-        (changeEvent)="changeGenesListSettings('mechanisms')"
+        (changeEvent)="toggleGenesListSettings('mechanisms')"
         [switch]="listSettings.ifShowAgingMechanisms"></app-eye-checkbox>
 
       <mat-label>{{ "filters_modal_placeholder_aging_mechanisms" | translate }}</mat-label>
@@ -141,7 +141,7 @@
     <mat-form-field appearance="fill">
       <app-eye-checkbox
         matPrefix
-        (changeEvent)="changeGenesListSettings('classes')"
+        (changeEvent)="toggleGenesListSettings('classes')"
         [switch]="listSettings.ifShowProteinClasses">
       </app-eye-checkbox>
 
@@ -160,11 +160,13 @@
   </div>
 
   <div class="body__row __mb-10">
-    <app-eye-checkbox
-      (changeEvent)="changeGenesListSettings('gene-age')"
-      [switch]="listSettings.ifShowAge">
-      <span class="inline-button">{{ "gene_list_evolutionary_age" | translate }}</span>
-    </app-eye-checkbox>
+    <mat-checkbox
+      color="primary"
+      class="checkbox"
+      [checked]="listSettings.ifShowAge"
+      (change)="toggleGenesListSettings('gene-age')">
+      {{ "gene_list_evolutionary_age" | translate }}
+    </mat-checkbox>
   </div>
 
   <div class="body__row">
@@ -216,11 +218,14 @@
   </div>
 
   <div class="body__row __mb-10">
-    <app-eye-checkbox
-      (changeEvent)="applyFieldAndFilter('researches', $event)"
-      [switch]="listSettings.ifShowResearches">
-      <span class="inline-button">{{ "filters_modal_placeholder_show_researches" | translate }}</span>
-    </app-eye-checkbox>
+    <mat-checkbox
+      color="primary"
+      formControlName="researchesCheckbox"
+      class="checkbox"
+      [(ngModel)]="listSettings.ifShowResearches"
+      (change)="toggleSwitchAndFilter('researches', $event)">
+      {{ "filters_modal_placeholder_show_researches" | translate }}
+    </mat-checkbox>
   </div>
 
   <div class="reset-button-wrapper">

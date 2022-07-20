@@ -59,6 +59,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
   public predefinedFamilyOrigin: any[] = [];
   public predefinedConservativeIn: any[] = [];
 
+  // Researches
   public filtersForm: FormGroup;
   public filterTypes = FilterTypesEnum;
 
@@ -84,6 +85,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
       originSelect: new FormControl([[], [null]]),
       familyOriginSelect: new FormControl([[], [null]]),
       conservativeInSelect: new FormControl([[], [null]]),
+      researchesCheckbox: new FormControl([false, [null]]),
     });
   }
 
@@ -171,6 +173,8 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
         this.predefinedFamilyOrigin = data.byFamilyOrigin;
         this.predefinedConservativeIn = data.byConservativeIn;
         this.showSkeletonChange.emit(false);
+        console.log(this.listSettings.ifShowResearches);
+        this.listSettings.ifShowResearches = !!data.researches;
       });
   }
 
@@ -241,10 +245,9 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     this.getState();
   }
 
-  public applyFieldAndFilter(filterType: FilterTypes, $event): void {
-    console.log('applyCheckbox', $event);
-    this.filterService.applyFilter(filterType, $event);
-    this.changeGenesListSettings(filterType);
+  public toggleSwitchAndFilter(filterType: FilterTypes, $event): void {
+    this.listSettings.ifShowResearches = !$event.checked;
+    this.filterService.applyFilter(filterType, Number(this.listSettings.ifShowResearches));
     this.getState();
   }
 
@@ -289,9 +292,6 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
         case 'conservativeInSelect':
           this.filterService.clearFilters('conservative_in');
           break;
-        case 'researches':
-          this.filterService.clearFilters('researches');
-          break;
       }
     } else {
       this.filtersForm.reset();
@@ -321,7 +321,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
    */
 
   // eslint-disable-next-line @typescript-eslint/ban-types
-  public changeGenesListSettings(param: string, callback?: void | ((...args: any[]) => void)): void {
+  public toggleGenesListSettings(param: string, callback?: void | ((...args: any[]) => void)): void {
     switch (param) {
       case 'gene-age':
         this.listSettings.ifShowAge = !this.listSettings.ifShowAge;
@@ -346,9 +346,6 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
         break;
       case 'classes':
         this.listSettings.ifShowProteinClasses = !this.listSettings.ifShowProteinClasses;
-        break;
-      case 'researches':
-        this.listSettings.ifShowResearches = !this.listSettings.ifShowResearches;
         break;
       default:
         break;

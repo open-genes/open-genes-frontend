@@ -1,4 +1,5 @@
-<div class="researches" *ngIf="researches">
+<div class="researches" *ngIf="researches"
+     (click)="openBottomSheet($event, researchStatsHint)">
   <ng-container
     *ngFor="let research of researches | keyvalue"
     [ngTemplateOutlet]="bar"
@@ -7,10 +8,10 @@
 </div>
 
 <ng-template #bar let-research="research">
-  <div class="research"
+  <div *ngIf="research !== 'additionalEvidences'"
+       class="research"
        [ngClass]="research | setClassName">
       <span class="research__scale"
-            (click)="openBottomSheet($event, researchStatsHint)"
             [style.height.%]="(researches[research]?.length * 100) / maxValue"
       ></span>
     <span class="research__value">{{researches[research]?.length}}</span>
@@ -18,8 +19,12 @@
 </ng-template>
 
 <ng-template #researchStatsHint>
-  <article class="description">
-    <p></p>
-  </article>
+  <div class="legend-container">
+    <div *ngFor="let item of legend"
+         class="legend-container__item"
+         [ngClass]="item.cssClass">
+      {{ item.title | translate }}
+    </div>
+  </div>
 </ng-template>
 

@@ -14,7 +14,6 @@ export class SetClassNamePipe implements PipeTransform {
       ['geneAssociatedWithLongevityEffects', 'research--gene-to-longevity-effect'],
       ['additionalEvidences', 'research--gene-to-additional-evidence'],
     ]);
-    console.log(classNames.get(researchName));
     return classNames.get(researchName);
   }
 }

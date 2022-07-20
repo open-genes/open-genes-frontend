@@ -1,8 +1,15 @@
 @use "sass:map";
 @import "../../styles";
 
+:host {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
 .researches {
   position: relative;
+  display: inline-block;
 
   .research {
     position: relative;
@@ -40,6 +47,35 @@
         .research__scale {
           background-color: map.get($research-tables, $name);
         }
+      }
+    }
+  }
+}
+
+.legend-container {
+  position: relative;
+  padding-left: 24px;
+
+  &__item {
+    position: relative;
+
+    &::before {
+      content: ' ';
+      display: block;
+      height: 12px;
+      width: 12px;
+      border-radius: 50%;
+      margin-right: 10px;
+      background: #cbcbef;
+      position: absolute;
+      top: 6px;
+      left: -22px;
+      border: .5px solid rgba($color-black, .15);
+    }
+
+    @each $class, $color in $research-tables {
+      &--#{$class}::before {
+        background: $color;
       }
     }
   }

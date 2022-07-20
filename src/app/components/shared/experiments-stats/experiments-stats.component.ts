@@ -4,14 +4,40 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CommonBottomSheetComponent } from '../../ui-components/components/modals/common-bottom-sheet/common-bottom-sheet.component';
 
 @Component({
-  selector: 'app-researches-number',
-  templateUrl: './researches-number.component.html',
-  styleUrls: ['./researches-number.component.scss'],
+  selector: 'app-experiments-stats',
+  templateUrl: './experiments-stats.component.html',
+  styleUrls: ['./experiments-stats.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResearchesNumberComponent implements OnInit {
+export class ExperimentsStatsComponent implements OnInit {
   @Input() researches: Researches;
   public maxValue: number;
+  public legend = [
+    {
+      title: 'gene_page_researches_lifespan',
+      cssClass: 'legend-container__item--increase-lifespan',
+    },
+    {
+      title: 'gene_page_researches_age_related_changes',
+      cssClass: 'legend-container__item--age-related-change',
+    },
+    {
+      title: 'gene_page_researches_lifespan',
+      cssClass: 'legend-container__item--gene-intervention-to-vital-processes',
+    },
+    {
+      title: 'gene_page_researches_protein_regulates_genes',
+      cssClass: 'legend-container__item--protein-to-gene',
+    },
+    {
+      title: 'gene_page_researches_progeria',
+      cssClass: 'legend-container__item--gene-to-progeria',
+    },
+    {
+      title: 'gene_page_researches_longevity_effects',
+      cssClass: 'legend-container__item--gene-to-longevity-effect',
+    },
+  ];
 
   constructor(private bottomSheet: MatBottomSheet) {}
 
