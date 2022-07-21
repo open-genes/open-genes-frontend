@@ -21,10 +21,17 @@
         <li
           class="navigation-list__item">
           <a class="item__link"
-             [routerLink]="'/'"
+             [routerLink]="'/genes'"
              routerLinkActive="__current"
-             [routerLinkActiveOptions]="{ exact: true }"
           >{{ "toggler_genes" | translate }}</a>
+        </li>
+
+        <li
+          class="navigation-list__item">
+          <a class="item__link"
+             [routerLink]="'/annotations'"
+             routerLinkActive="__current"
+          >{{ "toggler_annotations" | translate }}</a>
         </li>
 
         <li

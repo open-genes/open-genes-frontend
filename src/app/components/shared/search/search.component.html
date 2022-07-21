@@ -4,10 +4,6 @@
       {'search-form--disabled': formDisabled,
       'search-form--active': showSearchResult,
       'search-form--fix-on-top': fixOnTopOnMobile}">
-  <div *ngIf="showTitle"
-       class="search-form__quantity">
-    <span *ngIf="genesLength">{{ 'main_page_total' | translate: { number: genesLength } }}</span>
-  </div>
 
   <div *ngIf="showSearchResult"
        class="search-backdrop"
@@ -45,17 +41,13 @@
         <span class="fa fal fa-search"></span>
       </button>
 
-      <!-- TODO: Use matNativeControl -->
-      <ng-container *ngFor="let item of inputData">
-        <input
-          *ngIf="searchMode === item.searchMode"
-          formControlName="searchField"
-          type="text"
-          placeholder="{{ item.placeholder | translate }}"
-          class="field search-form__field"
-          (keyup.enter)="onSearch()"
-        >
-      </ng-container>
+      <input
+        formControlName="searchField"
+        type="text"
+        placeholder="{{ placeholder | translate }}"
+        class="field search-form__field"
+        (keyup.enter)="onSearch()"
+      >
       <mat-progress-bar
         *ngIf="showProgressBar"
         mode="indeterminate"

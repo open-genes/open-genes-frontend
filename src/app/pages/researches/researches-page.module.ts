@@ -15,6 +15,7 @@ import { MaterialModule } from '../../modules/vendors/material.module';
 import { NgCapitalizePipeModule, NgTrimPipeModule } from 'angular-pipes';
 import { ResearchTablesModule } from '../../components/shared/research-tables/research-tables.module';
 import { ResearchTabComponent } from './components/research-tab/research-tab.component';
+import { SearchModule } from "../../components/shared/search/search.module";
 
 @NgModule({
   declarations: [ResearchesPageComponent, ResearchTabComponent],
@@ -33,6 +34,7 @@ import { ResearchTabComponent } from './components/research-tab/research-tab.com
     NgCapitalizePipeModule,
     NgTrimPipeModule,
     ResearchTablesModule,
+    SearchModule
   ],
   exports: [PipesModule],
 })

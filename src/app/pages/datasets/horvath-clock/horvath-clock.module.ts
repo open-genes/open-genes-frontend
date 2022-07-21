@@ -14,6 +14,7 @@ import { IconModule } from '../../../components/ui-components/components/icon/ap
 import { GenesMethylationListComponent } from './components/genes-methylation-list/genes-methylation-list.component';
 import { MaterialModule } from '../../../modules/vendors/material.module';
 import { NgCapitalizePipeModule, NgTrimPipeModule } from 'angular-pipes';
+import { SearchModule } from '../../../components/shared/search/search.module';
 
 @NgModule({
   declarations: [HorvathClockComponent, GenesMethylationListComponent],
@@ -31,6 +32,7 @@ import { NgCapitalizePipeModule, NgTrimPipeModule } from 'angular-pipes';
     MaterialModule,
     NgCapitalizePipeModule,
     NgTrimPipeModule,
+    SearchModule
   ],
   exports: [PipesModule],
 })

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GenesListComponent } from './genes-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SearchComponent } from '../search/search.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { SearchModule } from '../search/search.module';
@@ -33,7 +32,6 @@ import { ExperimentsStatsModule } from '../experiments-stats/experiments-stats.m
 @NgModule({
   declarations: [
     GenesListComponent,
-    SearchComponent,
     GeneMenuComponent,
     GenesTableHeaderComponent,
     GenesAnnotationsTableHeaderComponent,
@@ -65,6 +63,6 @@ import { ExperimentsStatsModule } from '../experiments-stats/experiments-stats.m
     ExperimentsStatsModule,
   ],
   providers: [WindowService],
-  exports: [GenesListComponent, SearchComponent, GeneCardComponent, GeneTableRowComponent],
+  exports: [GenesListComponent, GeneCardComponent, GeneTableRowComponent],
 })
 export class GenesListModule {}

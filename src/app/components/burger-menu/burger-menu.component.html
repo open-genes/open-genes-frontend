@@ -26,10 +26,17 @@
     <ul class="panel__links">
       <li class="panel__link">
         <a [routerLink]="'/'"
-           routerLinkActive="/"
-           [routerLinkActiveOptions]="{ exact: true }">
+           routerLinkActive="/">
           <span class="fa far fa-dna"></span>
           {{ "toggler_genes" | translate }}</a>
+      </li>
+      <li
+        class="panel__link">
+        <a [routerLink]="'/annotations'"
+           routerLinkActive="__current"
+        >
+          <span class="fa far fa-dna"></span>
+          {{ "toggler_annotations" | translate }}</a>
       </li>
       <li
         class="panel__link">

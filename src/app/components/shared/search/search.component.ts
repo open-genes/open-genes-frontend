@@ -17,7 +17,7 @@ import { Subject } from 'rxjs';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { ToMap } from '../../../core/utils/to-map';
 import { SettingsService } from '../../../core/services/settings.service';
-import { SearchMode, SearchModeEnum } from '../../../core/models/settings.model';
+import { SearchMode } from '../../../core/models/settings.model';
 
 @Component({
   selector: 'app-search',
@@ -27,8 +27,6 @@ import { SearchMode, SearchModeEnum } from '../../../core/models/settings.model'
 })
 export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Inject(Document) public document: Document;
-  @Input() genesLength: number;
-  @Input() showTitle: boolean;
   @Input() showProgressBar: boolean;
   @Input() set isDisabled(value: boolean) {
     this.formDisabled = value;
@@ -54,9 +52,9 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   @Input() fixOnTopOnMobile = true; // TODO: move it out of component and activate in parent component on event
-
+  @Input() placeholder: string;
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
-  @Output() confirmedQuery: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() isAnyToSubmit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public searchedData: Partial<Genes[]>;
@@ -66,21 +64,6 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   public clearFieldButton: boolean;
   public showSearchResult = false;
   public highlightText: string;
-
-  public inputData = [
-    {
-      searchMode: SearchModeEnum.searchByGenes,
-      placeholder: 'search_field_start_typing',
-    },
-    {
-      searchMode: SearchModeEnum.searchByGoTerms,
-      placeholder: 'search_field_tap_search',
-    },
-    {
-      searchMode: SearchModeEnum.searchByGenesList,
-      placeholder: 'search_field_by_comma',
-    },
-  ];
 
   private subscription$ = new Subject();
 
@@ -134,7 +117,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public onSearch(): void {
-    this.confirmedQuery.emit(!!this.highlightText);
+    this.isAnyToSubmit.emit(!!this.highlightText);
   }
 
   public closeSearchTipsDropdown(event?): void {
@@ -149,7 +132,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchForm.get('searchField').setValue('');
     const query: string = this.searchForm.get('searchField').value;
     this.searchQuery.emit(query);
-    this.confirmedQuery.emit(false);
+    this.isAnyToSubmit.emit(false);
     this.cancel.emit(true);
     this.closeSearchTipsDropdown();
   }

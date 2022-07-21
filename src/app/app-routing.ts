@@ -49,6 +49,15 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/researches/researches-page.module').then((m) => m.ResearchesPageModule),
   },
   {
+    path: 'genes',
+    loadChildren: () =>
+      import('./pages/genes-search-page/genes-search-page.module').then((m) => m.GenesSearchPageModule),
+  },
+  {
+    path: 'annotations',
+    loadChildren: () => import('./pages/go-search-page/go-search-page.module').then((m) => m.GoSearchPageModule),
+  },
+  {
     path: 'datasets',
     loadChildren: () => import('./pages/datasets/datasets-page.module').then((m) => m.DatasetsPageModule),
     data: {

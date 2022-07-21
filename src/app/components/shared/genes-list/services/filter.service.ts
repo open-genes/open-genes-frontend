@@ -239,7 +239,13 @@ export class FilterService {
       }
     }
 
-    void this.router.navigate([''], {
+    const urlTree = this.router.parseUrl(this.router.url);
+    let urlWithoutParams = '/';
+    if (Object.keys(urlTree.root.children).length !== 0) {
+      urlWithoutParams = urlTree.root.children?.primary.segments.map((it) => it.path).join('/');
+    }
+
+    void this.router.navigate([urlWithoutParams], {
       queryParams: queryParams,
     });
   }

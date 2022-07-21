@@ -32,7 +32,6 @@ $input-border-radius: 5px;
 
   &,
   &__panel,
-  &__quantity,
   &__wrapper {
     width: 100%;
     flex: 0 0 100%;
@@ -44,13 +43,6 @@ $input-border-radius: 5px;
     align-items: flex-start;
     justify-content: center;
     position: relative;
-  }
-
-  &__quantity {
-    display: flex;
-    font-size: $font-size-smaller;
-    color: $color-gray;
-    margin-bottom: 8px;
   }
 
   &__wrapper {

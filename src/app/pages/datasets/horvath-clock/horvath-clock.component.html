@@ -24,10 +24,9 @@
           <div class="row">
             <ng-container *ngIf="isAvailable; else errorMessage">
               <div class="col-12">
-                <app-search [showTitle]="false"
-                            [searchHintsList]="searchedGenes"
-                            [setSearchMode]="searchMode"
-                            (confirmedQuery)="updateGenesList($event)"
+                <app-search [searchHintsList]="searchedGenes"
+                            placeholder="search_field_start_typing"
+                            (isAnyToSubmit)="updateGenesList($event)"
                             (searchQuery)="setSearchQuery($event)">
                 </app-search>
 

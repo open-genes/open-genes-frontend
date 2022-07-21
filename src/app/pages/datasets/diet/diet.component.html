@@ -18,10 +18,9 @@
           <div class="row">
             <ng-container>
               <div class="col-12">
-                <app-search [showTitle]="false"
-                            [searchHintsList]="searchedGenesList"
-                            [setSearchMode]="searchMode"
-                            (confirmedQuery)="updateGenesList($event)"
+                <app-search [searchHintsList]="searchedGenesList"
+                            placeholder="search_field_start_typing"
+                            (isAnyToSubmit)="updateGenesList($event)"
                             (searchQuery)="setSearchQuery($event)"
                             class="__mb-30">
                 </app-search>

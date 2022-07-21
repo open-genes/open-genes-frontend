@@ -91,7 +91,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
 
   @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() errorStatus: EventEmitter<string> = new EventEmitter<string>();
-  @Output() genesLength: EventEmitter<number> = new EventEmitter<number>();
+  @Output() genesQuantity: EventEmitter<number> = new EventEmitter<number>();
 
   public searchedData: Genes[] = [];
   public foundAndNotFoundGenes: Omit<SearchModel, 'items'>;
@@ -123,8 +123,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
     private aRoute: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.aRoute.queryParams.subscribe((params) => {
@@ -186,7 +185,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
           this.pagination = res.options.pagination;
           this.isLoading = false;
           this.loading.emit(false);
-          this.genesLength.emit(res.options.objTotal);
+          this.genesQuantity.emit(res.options.objTotal);
           this.cdRef.markForCheck();
         },
         (error) => {
@@ -266,13 +265,11 @@ export class GenesListComponent implements OnInit, OnDestroy {
       this.filterService.sortParams = sort;
       this.isLoading = true;
       this.searchedData = [];
-      this.filterService
-        .getSortedAndFilteredGenes()
-        .subscribe((sortedGenes) => {
-          this.searchedData = sortedGenes.items;
-          this.isLoading = false;
-          this.cdRef.markForCheck();
-        });
+      this.filterService.getSortedAndFilteredGenes().subscribe((sortedGenes) => {
+        this.searchedData = sortedGenes.items;
+        this.isLoading = false;
+        this.cdRef.markForCheck();
+      });
     }
   }
 

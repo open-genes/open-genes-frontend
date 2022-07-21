@@ -1,10 +1,9 @@
 <div [ngSwitch]="researchType"
      class="research">
-  <app-search [showTitle]="false"
-              [searchHintsList]="genesList"
-              [setSearchMode]="searchMode"
+  <app-search [searchHintsList]="genesList"
+              placeholder="search_field_start_typing"
               [fixOnTopOnMobile]="false"
-              (confirmedQuery)="updateResearchesList($event)"
+              (isAnyToSubmit)="updateResearchesList($event)"
               (searchQuery)="setSearchQuery($event)"
               (cancel)="setInitialState()"
               [isDisabled]="error.isError"

@@ -1,0 +1,131 @@
+<div class="page main-page">
+  <div class="page__inner __pt-30 __pb-60">
+    <div class="container-fluid home-container">
+      <div class="row">
+        <ng-container *ngIf="!errorStatus; else errorMessage">
+          <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 sidebar-column"
+               [ngClass]="isMobile? 'sidebar-column--mobile' : 'sidebar-column--desktop'">
+            <app-sidebar>
+              <app-sidebar-item>
+                <ng-container title>
+                  {{ "main_page_last" | translate }}
+                  <a class="link link--gray" href="/timeline">
+                    {{ "show_more_short" | translate }}
+                  </a>
+                </ng-container>
+                <ng-container content>
+                  <app-mini-cards
+                    (showSkeletonChange)="updateViewOnSkeletonChange($event, 'latest')"
+                  ></app-mini-cards>
+                  <app-skeleton
+                    *ngIf="showLatestGenesSkeleton"
+                    [view]="'card'"
+                    [itemsInRow]="2"
+                    [groups]="1"
+                  ></app-skeleton>
+                </ng-container>
+              </app-sidebar-item>
+
+              <app-sidebar-item>
+                <ng-container title>
+                  {{ "articles_list_title" | translate }}
+                  <a href="/news" class="link link--gray __ml-10">
+                    {{ "show_more_short" | translate }}
+                  </a>
+                </ng-container>
+                <ng-container content>
+                  <app-articles-list
+                    [isMiniMode]="true"
+                    [sliceTo]="1"
+                    [showSkeleton]="showArticlesSkeleton"
+                    (showSkeletonChange)="updateViewOnSkeletonChange($event, 'articles')"
+                  ></app-articles-list>
+                  <app-skeleton
+                    *ngIf="showArticlesSkeleton"
+                    [view]="'card'"
+                    [itemsInRow]="isTablet ? 2 : 1"
+                    [groups]="1"
+                  ></app-skeleton>
+                </ng-container>
+              </app-sidebar-item>
+
+              <app-sidebar-item>
+                <ng-container title>
+                  {{ "news_list_title" | translate }}
+                  <a href="/news" class="link link--gray __ml-10">
+                    {{ "show_more_short" | translate }}
+                  </a>
+                </ng-container>
+                <ng-container content>
+                  <app-news-list
+                    class="__pl-5 __pr-5"
+                    [isMiniMode]="true"
+                    [loadTotal]="1"
+                    [showSkeleton]="showPubmedFeedSkeleton"
+                    (showSkeletonChange)="updateViewOnSkeletonChange($event, 'pubmed')"
+                  ></app-news-list>
+
+                  <app-skeleton
+                    *ngIf="showPubmedFeedSkeleton"
+                    class="__mt-5"
+                    [view]="'line'"
+                    [groups]="2"
+                  ></app-skeleton>
+                </ng-container>
+              </app-sidebar-item>
+            </app-sidebar>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
+            <app-search-counter
+              [quantity]="itemsQuantity"
+              [title]="'main_page_total'"
+            ></app-search-counter>
+
+            <app-search
+              class="__mt-20 __mb-10"
+              [searchHintsList]="searchedGenes"
+              [isDisabled]="genesListIsLoading"
+              placeholder="search_field_tap_search"
+              [showProgressBar]="showProgressBar"
+              (isAnyToSubmit)="updateGenesList($event)"
+              (searchQuery)="setSearchQuery($event)"
+            ></app-search>
+
+            <app-genes-list
+              [setSearchMode]="'searchByGoTerms'"
+              (loading)="setLoader($event)"
+              (errorStatus)="errorStatus = $event"
+              (genesQuantity)="itemsQuantity = $event"
+              [genesList]="confirmedGenesList"
+              [isMobile]="isMobile"
+              [showFiltersPanel]="false">
+            </app-genes-list>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #errorMessage>
+  <section class="col-12">
+    <app-no-content
+      size="small"
+      [title]="'error_connection'">
+      <ng-container icon>
+        <app-icon
+          icon="default"
+          size="custom"
+          customWidth="100%"
+          customHeight="100%"
+        ></app-icon>
+      </ng-container>
+      <ng-container description>
+        <p>({{ errorStatus }})</p>
+      </ng-container>
+    </app-no-content>
+  </section>
+</ng-template>
+
+
