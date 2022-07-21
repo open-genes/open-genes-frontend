@@ -37,13 +37,11 @@
   }
 
   &--dummy {
+  // TODO: remove this crutch solution and refactor base blocks styles
+  min-height: calc(80vh - #{$header-height});
+
     .page__inner {
       vertical-align: middle;
-
-      .no-content {
-        border: 0;
-        margin-top: -100px;
-      }
     }
   }
 
@@ -63,6 +61,4 @@
 // TODO: Move into separate components styles
 @import "pages/main-page";
 @import "pages/text-page";
-@import "pages/gene-page";
 @import "pages/news-page";
-@import "pages/favourites-page";

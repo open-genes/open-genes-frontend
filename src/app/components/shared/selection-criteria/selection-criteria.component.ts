@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SelectionCriteria } from '../../../core/models/openGenesApi/selection-criteria.model';
-import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrapIntoAccordion';
+import { SelectionCriteria } from '../../../core/models/open-genes-api/genes.model';
+import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap-into-accordion';
 
 @Component({
   selector: 'app-selection-criteria',
@@ -8,8 +8,8 @@ import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap
   styleUrls: ['./selection-criteria.component.scss'],
 })
 export class SelectionCriteriaComponent extends WrapIntoAccordion implements OnInit {
-  @Input() geneCriteria: SelectionCriteria;
-  @Input() activeListItem: any;
+  @Input() geneCriteria: SelectionCriteria[];
+  @Input() activeListItem: number[];
   @Output() clickEvent: EventEmitter<string> = new EventEmitter();
 
   constructor() {
@@ -21,7 +21,7 @@ export class SelectionCriteriaComponent extends WrapIntoAccordion implements OnI
     this.putItemsIntoAccordion(this.geneCriteria);
   }
 
-  public emitOnClick(criteriaName: any): void {
-    this.clickEvent.emit(criteriaName);
+  public emitOnClick(criteriaKey: string): void {
+    this.clickEvent.emit(criteriaKey);
   }
 }

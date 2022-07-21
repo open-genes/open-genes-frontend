@@ -1,0 +1,71 @@
+@import '../../styles';
+
+:host {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+}
+
+// TODO: DRY
+.term {
+  width: 100%;
+  max-height: 100%;
+  position: relative;
+
+  &, * {
+    box-sizing: border-box;
+  }
+
+  &__header {
+    position: relative;
+    padding: 12px 40px 12px 0;
+    font-weight: $font-weight-medium;
+    color: $color-base;
+  }
+
+  &__title {
+    margin: 0 8px;
+  }
+
+  @include typography;
+
+  &__description {
+    font-family: serif;
+    margin: 1em 0 2em;
+
+    p {
+      font-size: 120%;
+    }
+  }
+
+  &__drag-button {
+    $button-width: $ui-base-height * 1.5;
+    $button-height: 4px;
+
+    position: absolute;
+    top: $button-height;
+    left: 50%;
+    z-index: 1;
+    margin-left: -#{$button-width / 2};
+    display: block;
+    width: $button-width;
+    height: $button-height;
+    border-radius: 3px;
+    background-color: $color-gray-light;
+  }
+
+  &__close-button {
+    color: $color-gray;
+    @include close-button(0, 20px);
+  }
+
+  &__not-found {
+    display: flex;
+    justify-content: center;
+    margin: 1em 0 2em;
+    color: $color-gray;
+  }
+}
+
+
+

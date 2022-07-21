@@ -1,78 +1,33 @@
-import {
-  AfterViewInit,
-  Directive,
-  ElementRef,
-  Input,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Directive, ElementRef, HostBinding, Input, OnChanges, SecurityContext, SimpleChanges } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Directive({
   selector: '[appHighlight]',
 })
-export class HighlightDirective implements OnChanges, AfterViewInit {
-  @Input() highlightText: string; // Фрагмент текста, который необходимо выделить
-  @Input() highlightMinLength = 3; // Минимальное количество символов для выделения
+export class HighlightDirective implements OnChanges {
+  @Input('highlightText') searchTerm: string;
+  @Input() caseSensitive = false;
+  @Input() customClasses = '';
 
-  constructor(private readonly element: ElementRef) {}
+  @HostBinding('innerHtml')
+  content: string;
+  constructor(private el: ElementRef, private sanitizer: DomSanitizer) {}
 
-  ngAfterViewInit(): void {
-    this.highlightTextFragment();
-  }
-
-  /**
-   * Очистка элемента от блоков выделения
-   */
-  clearHighlight() {
-    const wrappers = this.element.nativeElement.querySelector(
-      '.text-highlight-wrapper'
-    );
-    if (wrappers) {
-      const parent = wrappers.parentNode;
-      const text = parent.textContent;
-      while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-      }
-      const textNode = document.createTextNode(text);
-      parent.appendChild(textNode);
-    }
-  }
-
-  /**
-   * Выделение фрагментов текста внутри элемента
-   */
-  highlightTextFragment() {
-    if (this.highlightText.length >= this.highlightMinLength) {
-      const index: number = this.element.nativeElement.textContent
-        .toLowerCase()
-        .indexOf(this.highlightText.toLowerCase());
-      if (index !== -1) {
-        try {
-          const range = new Range();
-          range.setStart(this.element.nativeElement.childNodes[0], index);
-          range.setEnd(
-            this.element.nativeElement.childNodes[0],
-            index + this.highlightText.length
-          );
-          const wrapper = document.createElement('mark');
-          wrapper.classList.add('text-highlight');
-          range.surroundContents(wrapper);
-        } catch (e) {
-          // catch exception
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.el?.nativeElement) {
+      if ('searchTerm' in changes || 'caseSensitive' in changes) {
+        const text = (this.el.nativeElement as HTMLElement).textContent;
+        if (this.searchTerm === '') {
+          this.content = text;
+        } else {
+          const regex = new RegExp(this.searchTerm, this.caseSensitive ? 'g' : 'gi');
+          const newText = text.replace(regex, (match: string) => {
+            return `<mark class="text-highlight">${match}</mark>`;
+          });
+          const sanitzed = this.sanitizer.sanitize(SecurityContext.HTML, newText);
+          this.content = sanitzed;
         }
       }
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes.highlightText.currentValue &&
-      changes.highlightTextcurrentValue !== changes.highlightText.previousValue
-    ) {
-      this.clearHighlight();
-      this.highlightTextFragment();
-    } else {
-      this.clearHighlight();
     }
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
-import { I80levelArticleQueryParams } from '../../../models/vendorsApi/80level/80level.model';
+import { I80levelArticleQueryParams } from '../../../models/vendors-api/80level/80level.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,7 @@ export class EightyLevelService {
     return this.http.get(this.url + (params ? `?${querySelectors}` : ''));
   }
 
-  public getArticle(id: number): Observable<any> {
+  public getArticle(id: string): Observable<any> {
     return this.http.get(`${this.url}/${id}`);
   }
 }

@@ -1,18 +1,16 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: "app-skeleton",
-  templateUrl: "./skeleton.component.html",
-  styleUrls: ["./skeleton.component.scss"],
+  selector: 'app-skeleton',
+  templateUrl: './skeleton.component.html',
+  styleUrls: ['./skeleton.component.scss'],
 })
 export class SkeletonLoaderComponent {
-  @Input()
-  groups: number;
-  @Input()
-  rows?: number = 3;
-  quantity = Array;
+  @Input() groups: number;
+  @Input() view?: 'line' | 'card' | 'field' = 'line';
+  @Input() itemsInRow?: number = 3;
 
-  row(n: number): Array<number> {
-    return Array(n)
+  public row(n: number): Array<number> {
+    return Array(n);
   }
 }

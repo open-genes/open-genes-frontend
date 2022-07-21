@@ -1,17 +1,28 @@
 # Open Genes — Frontend
 
-## Start locally
+# Start locally
+
+## Before you start
+
+Don't forget to install Angular CLI first
+
+```
+npm install -g @angular/cli
+```
+For more information please visit [Angular official guide](https://angular.io/guide/setup-local)
 
 ```
 npm i
 ```
+
+## Frontend
+
 ```
 npm run start
 ```
 
 [https://localhost:3000/](https://localhost:3000/)
 
----
 
 ## Storybook
 
@@ -21,19 +32,31 @@ npm run storybook
 
 [https://localhost:6006/](https://localhost:6006/)
 
+## IDE settings for development
+Please install and set up the following plugins:
+- ESLint
+- Prettier
+- REST Client to support *.http* file extension which is used in a *models* folder ([IDEA](https://plugins.jetbrains.com/plugin/13121-http-client), [VSCode](https://marketplace.visualstudio.com/items?itemName=humao.rest-client))
 
----
-## Build for different environments
 
-Dev. stand test build: `npm run build`
+# Build and deploy
 
-Staging stand build: `npm run build-staging`
+## Build frontend 
 
-Prod. AOT build: `npm run build-prod`
+- Developers stand test build: `npm run build-dev`
+- Demo stand build: `npm run build-demo`
+- Production AOT build: `npm run build-prod`
 
----
+The bundle is being deployed with GitHub Actions. 
+Workflow configs for each environment are here:
+```
+.github/workflows
+```
 
-All builds include the Angular app bundle and static pages.
+## Build storybook
 
-Static pages are located in `/assets/static` folder and use the same basic styles and resources 
-in `/assets` folder.
+```
+npm run build-storybook
+```
+Storybook is being deployed with a special GitHub action you can enable in your repository settings.
+

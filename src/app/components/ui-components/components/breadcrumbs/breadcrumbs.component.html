@@ -1,0 +1,13 @@
+<ul class="breadcrumbs">
+  <li *ngFor="let breadcrumb of breadcrumbs; let i = index"
+      class="breadcrumb">
+    <a [routerLink]="breadcrumb.url" routerLinkActive="router-link-active"
+    >{{ breadcrumb.label | translate}}</a>
+    <mat-icon
+      *ngIf="i + 1 < breadcrumbs.length"
+      class="breadcrumb__arrow"
+    >
+      keyboard_arrow_right
+    </mat-icon>
+  </li>
+</ul>

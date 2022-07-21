@@ -11,10 +11,12 @@ export const environment = {
   proteinAtlasUrl: 'https://www.proteinatlas.org/',
   openLongevity80LevelCMS: 'https://openlongevity.com/',
   debugMode: true,
-  languages: ['ru', 'en'],
+  languages: ['ru', 'en', 'zh'],
   mockJsonUrl: ['data/articles-1.json', 'data/articles-2.json'],
-  termsJsonUrl: ['assets/i18n/terms_en.json', 'assets/i18n/terms_ru.json'],
+  termsJsonUrl: ['assets/i18n/terms-en.json', 'assets/i18n/terms-ru.json'],
   gaTrackingCode: 'G-825YYNSJFC',
+  version: '{{VERSION}}',
+  build: '{{BUILD_NUMBER}}',
 };
 
 /*
@@ -24,4 +26,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

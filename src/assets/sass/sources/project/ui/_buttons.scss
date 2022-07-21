@@ -1,5 +1,7 @@
 .btn {
-  @include display(inline-block);
+  &:not(.hidden) {
+    display: inline-block;
+  }
   min-width: 80px;
   height: 33px;
   line-height: 33px;
@@ -88,7 +90,7 @@
 
     &.btn--fill {
       background: $color;
-      $color2: lighten(adjust-hue($color, 10deg), 5%);
+      $color2: lighten(adjust-hue($color, 15deg), 2%);
       background: linear-gradient(135deg, $color 0%, $color2 100%);
       color: $text-color;
 
@@ -116,7 +118,7 @@
 @include btn-color('red', $color-red-medium);
 @include btn-color('green', $color-green-medium);
 @include btn-color('purple', $color-purple);
-@include btn-color('gray', $color-gray);
+@include btn-color('gray', $color-general-light, $color-general);
 @include btn-color('white', $color-white, $color-orange-300);
 // TODO: make it possible to construct gradient buttons
 // @include btn-color('orange-gradient', $orange-gradient1, $color-white);
@@ -149,7 +151,7 @@
   padding: 0 15px;
   font-size: $font-size;
   font-weight: $font-weight-bold;
-  border-radius: 4px;
+  border-radius: $border-radius-regular;
   &.btn--fill {
     line-height: ($btn-height - 2px);
   }
@@ -160,8 +162,8 @@
 }
 
 @mixin btn--icon-only {
-  width: auto;
-  height: auto;
+  width: 1em;
+  height: 1em;
   min-width: auto;
   font-size: 22px; // default
   padding: .05em;
@@ -219,7 +221,8 @@
     background-color: lighten($color-hover, 3%);
     border: 1px solid $color-borders-active;
 
-    &:hover {
+    &:hover,
+    &:active {
       background-color: $color-hover;
     }
   }

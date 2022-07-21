@@ -19,8 +19,9 @@ code {
   font-family: monospace sans-serif;
   background-color: $color-black;
   color: #fff;
-  white-space: normal; // вместо pre/pre-wrap оборачиваем строки в div'ы
-  padding: 10px 20px 10px 0;
+  white-space: normal;
+  padding: 25px 20px 25px 0;
+  line-height: 1.5;
   font-size: .9em;
   border-radius: 5px;
   word-wrap: normal;
@@ -28,18 +29,24 @@ code {
   counter-reset: code-lines;
   counter-set: code-lines;
 
-  ::ng-deep var { // Чтобы применить стили к innerHTML
-    color: $color-general-semi;
+  ::ng-deep { // Чтобы применить стили к innerHTML
+    .value {
+      color: $color-gray-light;
+    }
 
-    &.number {
+    .number {
       color: $color-red-medium;
     }
 
-    &.null {
+    .null {
       color: $color-gray-halfing;
     }
 
-    &.mark {
+    .verb {
+      color: $color-clickable-300;
+    }
+
+    .mark {
       background-color: $color-black-light;
       padding: 0 .5em;
       border-radius: 3px;
@@ -47,6 +54,8 @@ code {
   }
 
   ::ng-deep div {
+    display: inline-block;
+    width: 100%;
     position: relative;
     padding-left: 4em;
 
@@ -61,6 +70,10 @@ code {
       padding-left: 1em;
       color: rgba($color-white, .3);
       box-sizing: border-box;
+    }
+
+    span {
+      margin-right: 1ch;
     }
   }
 }

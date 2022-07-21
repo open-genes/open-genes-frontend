@@ -1,0 +1,150 @@
+<tr class="item">
+  <td class="cell cell--name">
+    <div class="title overflow">
+      <div class="add-to-favorites">
+        <button *ngIf="!(this.isAdded | async)"
+                (click)="favItem(item['id'])"
+                mat-icon-button>
+          <span
+            class="icon far fa-star"
+            aria-hidden="true"
+          ></span>
+        </button>
+        <button *ngIf="this.isAdded | async"
+                (click)="unFavItem(item['id'])"
+                mat-icon-button>
+          <span
+            class="icon fas fa-star"
+            aria-hidden="true"
+          ></span>
+        </button>
+      </div>
+      <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
+        <b>{{ item.symbol }}</b> {{ item.name }}
+      </a>
+    </div>
+  </td>
+
+  <td *ngIf="listSettings.ifShowAge"
+      class="cell cell--age">
+    <div class="overflow">
+      <app-gene-age [gene]="item"></app-gene-age>
+    </div>
+  </td>
+
+  <td *ngIf="listSettings.ifShowDiseases"
+      class="cell">
+    <div class="overflow">
+      <app-associated-diseases
+        [geneDiseases]="item.diseases"
+        [activeListItem]="filters.byDiseases"
+        (clickEvent)="applyFilter(filterTypes.disease, $event)"
+      ></app-associated-diseases>
+    </div>
+  </td>
+
+  <td *ngIf="listSettings.ifShowDiseaseCategories"
+      class="cell">
+    <div class="overflow">
+      <app-associated-disease-categories
+        [geneDiseaseCategories]="item.diseaseCategories"
+        [activeListItem]="filters.byDiseaseCategories"
+        (clickEvent)="applyFilter(filterTypes.disease_categories, $event)"
+      ></app-associated-disease-categories>
+    </div>
+  </td>
+
+  <ng-container *ngIf="listSettings.ifShowAgingMechanisms">
+    <td class="cell cell--mechanisms">
+      <div class="overflow">
+        <app-aging-mechanisms
+          [geneAgingMechanisms]="item.agingMechanisms"
+          [activeListItem]="filters.byAgingMechanism"
+          (clickEvent)="applyFilter(filterTypes.aging_mechanism, $event)"
+        ></app-aging-mechanisms>
+      </div>
+    </td>
+  </ng-container>
+
+  <td *ngIf="listSettings.ifShowProteinClasses"
+       class="cell cell--classes">
+    <div class="overflow">
+      <app-protein-classes
+        *ngIf="item?.proteinClasses"
+        [geneProteinClasses]="item.proteinClasses"
+        [activeListItem]="filters.byProteinClass"
+        (clickEvent)="applyFilter(filterTypes.protein_classes, $event)"
+      ></app-protein-classes>
+    </div>
+  </td>
+
+  <td *ngIf="listSettings.ifShowExpression"
+      class="cell cell--expression">
+    <div class="overflow">
+      <app-tag
+        (click)="applyFilter(filterTypes.expression_change, item.expressionChange)"
+        [isDisabled]="item.expressionChange === 0"
+        [isActive]="
+            filters.byExpressionChange === item.expressionChange &&
+            item.expressionChange !== 0"
+      >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
+      </app-tag>
+    </div>
+  </td>
+
+  <td *ngIf="listSettings.ifShowCriteria"
+      class="cell cell--criteria">
+    <div class="overflow">
+      <app-selection-criteria
+        [geneCriteria]="item.commentCause"
+        [activeListItem]="filters.bySelectionCriteria"
+        (clickEvent)="applyFilter(filterTypes.selection_criteria, $event)"
+      ></app-selection-criteria>
+    </div>
+  </td>
+
+  <td *ngIf="listSettings.ifShowMethylation"
+      class="cell cell--methylation">
+    <div class="overflow">
+      <app-tag
+        *ngIf="item.methylationCorrelation !== ''"
+        (click)="applyFilter(filterTypes.methylation_change, item.methylationCorrelation)"
+        [isActive]="filters.byMethylationChange === item.methylationCorrelation"
+      >{{ item.methylationCorrelation }}
+      </app-tag>
+    </div>
+  </td>
+
+  <td *ngIf="listSettings.ifShowResearches"
+      class="cell">
+    <div class="overflow">
+      <app-experiments-stats
+      [researches]="item.researches"></app-experiments-stats>
+    </div>
+  </td>
+
+  <td class="cell cell--actions">
+    <div class="overflow">
+      <app-gene-menu
+        [gene]="item"
+        [isAdded]="isFaved(item.id)"
+        (unFav)="unFavItem($event)"
+        (fav)="favItem($event)"
+      ></app-gene-menu>
+    </div>
+  </td>
+
+</tr>
+
+<tr class="item">
+  <td *ngIf="item.functionalClusters.length !== 0 && listSettings.ifShowFuncClusters"
+      colspan="100%"
+      class="cell cell--functions">
+    <app-tag
+      *ngFor="let item of item.functionalClusters"
+      (click)="applyFilter(filterTypes.age_related_processes, item.id)"
+      [isActive]="filters.byAgeRelatedProcess.includes(item.id)">
+      {{ item.name }}
+    </app-tag>
+  </td>
+</tr>

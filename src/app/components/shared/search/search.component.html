@@ -1,87 +1,99 @@
 <form [formGroup]="searchForm"
       class="search-form"
-      [class.search-form--active]="showResult"
->
-  <div class="search-form__quantity">
-      {{ 'main_page_total' | translate: { number: dataSource.length } }}
+      [ngClass]="
+      {'search-form--disabled': formDisabled,
+      'search-form--active': showSearchResult,
+      'search-form--fix-on-top': fixOnTopOnMobile}">
+  <div *ngIf="showTitle"
+       class="search-form__quantity">
+    <span *ngIf="genesLength">{{ 'main_page_total' | translate: { number: genesLength } }}</span>
   </div>
 
-  <div *ngIf="showResult"
+  <div *ngIf="showSearchResult"
        class="search-backdrop"
-       (click)="cancel($event)"
-  ></div>
+       (click)="closeSearchTipsDropdown($event)">
+  </div>
 
   <div class="search-form__panel">
     <button
-      (click)="cancel($event)"
-      class="btn btn--purple btn--icon-only cancel-search-button">
-      <span class="fa fal fa-arrow-left"></span>
+      (click)="closeSearchTipsDropdown($event)"
+      mat-icon-button
+      color="primary"
+      type="button"
+      class="cancel-search-button">
+      <mat-icon>
+        keyboard_backspace
+      </mat-icon>
     </button>
 
     <div class="search-form__wrapper">
+      <button *ngIf="clearFieldButton"
+              mat-icon-button
+              type="button"
+              class="clear-search-button"
+              (click)="clearSearch()">
+        <mat-icon>
+          close
+        </mat-icon>
+      </button>
+
       <button
         mat-icon-button
         class="search-form__submit search-form__submit--active"
         type="submit"
-        (click)="search()"
-      ><span class="fa fal fa-search"></span>
-      </button>
-
-      <button
-        [matMenuTriggerFor]="searchMenu"
-        class="search-form__switch"
-        [matTooltip]="(isGoSearchMode ? 'search_for_go_terms' : 'search_for_functions') | translate"
-      >
-        <span
-          [ngClass]="isGoSearchMode ? 'fa-book' : 'fa-dna'"
-          class="fa far"></span>
-        <span class="fa far fa-sort-down"></span>
+        (click)="onSearch()">
+        <span class="fa fal fa-search"></span>
       </button>
 
       <!-- TODO: Use matNativeControl -->
-      <input
-        formControlName="searchField"
-        type="text"
-        placeholder="{{ (isGoSearchMode ? 'search_field_tap_search' : 'search_field_start_typing') | translate }}"
-        class="field search-form__field"
-        (focusin)="search()"
-        (keyup)="isGoSearchMode ? debounce(subscribeToGo, 2000) : subscribeToGenes()"
-        (keydown.enter)="search()"
-        #searchQuery
-      >
-      <mat-menu #searchMenu>
-        <button mat-menu-item
-                (click)="setGoSearchMode(false)"
-                [disabled]="!isGoSearchMode"
-        ><span class="fa fal fa-dna __mr-5"></span> {{ 'search_for_functions' | translate }}
-        </button>
-        <button mat-menu-item
-                (click)="setGoSearchMode(true)"
-                [disabled]="isGoSearchMode"
-        ><span class="fa fal fa-book __mr-5"></span> {{ 'search_for_go_terms' | translate }}
-        </button>
-      </mat-menu>
+      <ng-container *ngFor="let item of inputData">
+        <input
+          *ngIf="searchMode === item.searchMode"
+          formControlName="searchField"
+          type="text"
+          placeholder="{{ item.placeholder | translate }}"
+          class="field search-form__field"
+          (keyup.enter)="onSearch()"
+        >
+      </ng-container>
+      <mat-progress-bar
+        *ngIf="showProgressBar"
+        mode="indeterminate"
+        class="search-form__progress"
+      ></mat-progress-bar>
     </div>
 
-    <div class="search-form__autocomplete-list"
-         *ngIf="showResult && !isGoSearchMode">
-      <ng-container *ngFor="let data of searchedData; let i = index">
+    <div *ngIf="showSearchResult && clearFieldButton"
+         class="search-form__autocomplete-list">
+      <ng-container *ngFor="let gene of searchedData; let i = index">
         <button
-          *ngIf="i < 3"
+          *ngIf="i < 5"
           class="search-form__autocomplete-item"
           tabindex="0"
-          [routerLink]="['/gene', data.symbol]"
-        >
+          [routerLink]="['/gene', gene.symbol]">
+
           <span class="item__symbol"
                 appHighlight
-                [highlightText]="searchQuery.value"
-                [innerHTML]="data.symbol">
+                [highlightText]="highlightText"
+                [innerHTML]="gene.symbol">
           </span>&nbsp;
-          <span class="item__name"
+
+          <span *ngIf="!gene?.terms"
+                class="item__name"
                 appHighlight
-                [highlightText]="searchQuery.value"
-                [innerHTML]="data.name">
-          </span>
+                [highlightText]="highlightText"
+                [innerHTML]="gene.name">
+          </span>&nbsp;
+
+          <ng-container *ngFor="let term of gene?.terms | keyvalue">
+            <span *ngFor="let item of term?.value | keyvalue"
+                  class="item__name"
+                  appHighlight
+                  [highlightText]="highlightText"
+                  [innerHTML]="item.value">
+            </span>
+          </ng-container>
+
         </button>
       </ng-container>
     </div>

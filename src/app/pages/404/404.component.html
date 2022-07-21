@@ -2,15 +2,19 @@
   <div class="page__inner">
     <div class="container">
       <div class="row no-gutters">
-        <section class="col-12 no-content">
-          <div class="no-content__inner">
-            <div class="no-content__icon no-content__icon-404"></div>
-            <div class="no-content__title">
-              <div class="title__center">
-                {{ 'error_page_404' | translate }}
-              </div>
-            </div>
-          </div>
+        <section class="col-12">
+          <app-no-content
+            [isPanel]="false"
+            [title]="'error_page_404'">
+            <ng-container icon>
+              <app-icon
+                icon="error"
+                size="custom"
+                customWidth="100%"
+                customHeight="100%"
+              ></app-icon>
+            </ng-container>
+          </app-no-content>
         </section>
       </div>
     </div>

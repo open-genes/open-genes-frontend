@@ -6,14 +6,17 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Output,
-  EventEmitter,
+  EventEmitter, AfterViewInit,
 } from '@angular/core';
 import { PubmedApiService } from '../../../core/services/api/pubmed-api.service';
-import { IPublication } from '../../../core/models/vendorsApi/pubMed/news.model';
-import { Gene, Genes } from '../../../core/models';
+import {
+  Publication,
+  PublicationsList,
+} from '../../../core/models/vendors-api/publications-search-api/pubmed-feed.model';
 import { takeUntil } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
+import { SessionStorageService } from '../../../core/services/session-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-news-list',
@@ -22,102 +25,95 @@ import { Subject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewsListComponent implements OnInit, OnDestroy {
-  @Input() genesList: Genes[];
+  @Input() genesList: string[] = [];
+
   @Input() showDates = false;
   @Input() loadTotal: number;
   @Input() itemsForPage: number;
-  @Input() isShowMoreButton = true;
+  @Input() isMiniMode = false;
 
-  @Output()
-  newItemsLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() showSkeleton: boolean;
+  @Output() showSkeletonChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  public isLoading = true;
   public error: number;
-  public newsList: IPublication[] = [];
-  public pageIndex = 1;
+  public newsList: Publication[] = [];
+  private pageIndex = 1;
   public showMoreButtonVisible = false;
   public newsTotal: number;
-  public responsePagePortion: number;
 
-  private minGeneFunctionsCriteria = 3;
-  private subscription$ = new Subject();
+  private responsePagePortion: number;
   private httpCallsCounter = 0;
+  private subscription$ = new Subject();
 
   constructor(
-    public translate: TranslateService,
     private pubmedApiService: PubmedApiService,
+    private readonly sessionStorageService: SessionStorageService,
+    private readonly router: Router,
     private readonly cdRef: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
-    this.makeNewsList();
-  }
-
-  public showMore(): void {
-    // console.log('showMore()');
-    // console.log(
-    //   this.newsTotal / this.responsePagePortion > this.pageIndex,
-    //   `page ${this.pageIndex} of ${this.newsTotal / this.responsePagePortion}`
-    // );
-
-    if (this.newsTotal / this.responsePagePortion > this.pageIndex) {
-      ++this.pageIndex;
-      this.isLoading = true;
-      this.cdRef.markForCheck();
-      this.makeNewsList();
+  ngOnInit(): void {
+    if (this.router.url === '/') {
+      if (this.sessionStorageService.getStorageValue('news')) {
+        const storageData = this.sessionStorageService.getStorageValue('news');
+        this.newsList = storageData.news;
+        this.newsTotal = storageData.total;
+        this.showSkeletonChange.emit(false);
+      } else {
+        this.getNewsList();
+      }
+    } else {
+      this.getNewsList();
     }
   }
 
-  private makeNewsList(): void {
+  public showMore(): void {
+    if (this.newsTotal / this.responsePagePortion > this.pageIndex) {
+      ++this.pageIndex;
+      this.showSkeletonChange.emit(true);
+      this.getNewsList();
+    }
+  }
+
+  private getNewsList(): void {
     this.httpCallsCounter++;
-
-    // 1. Form a request for all genes in the database that meet the minimal number of gene functions
-    const symbolsQuery = [];
-    const filteredGenes = this.genesList.filter(
-      (gene: Genes) =>
-        gene.functionalClusters.length > this.minGeneFunctionsCriteria
-    );
-    filteredGenes.forEach((gene: Gene) => {
-      symbolsQuery.push(gene.symbol);
-    });
-
     // 2. Make a long query string for all genes at once, but ask to return only n news in the response
     this.pubmedApiService
-      .getNewsList(symbolsQuery, this.loadTotal, this.pageIndex)
+      .getNewsList(this.genesList, this.loadTotal, this.pageIndex)
       .pipe(takeUntil(this.subscription$))
       .subscribe(
-        (response) => {
+        (response: PublicationsList) => {
           // Get data
-          this.newsTotal = response.total;
           this.newsList.push(...response.items);
+          this.newsTotal = response.total;
+
+          if (this.router.url === '/') {
+            this.sessionStorageService.setStorage('news', { news: this.newsList, total: this.newsTotal });
+          }
 
           if (this.newsList?.length !== 0) {
             // Set page length after checking the length of the 1st page
-            this.httpCallsCounter === 1
-              ? (this.responsePagePortion = this.newsList.length)
-              : this.httpCallsCounter;
+            this.httpCallsCounter === 1 ? (this.responsePagePortion = this.newsList.length) : this.httpCallsCounter;
 
             // Emit event to update view
-            this.newItemsLoaded.emit(true);
+            this.showSkeletonChange.emit(false);
 
             // Check if there is more content to show
             // and show/hide 'Show more' button
-            if (this.newsTotal / this.responsePagePortion > this.pageIndex) {
-              this.showMoreButtonVisible = true;
-            } else {
-              this.showMoreButtonVisible = false;
-            }
+            this.showMoreButtonVisible = this.newsTotal / this.responsePagePortion > this.pageIndex;
           }
 
-          // All content is loaded
-          this.isLoading = false;
           this.cdRef.markForCheck();
         },
-        (error) => (this.error = error)
+        (error) => {
+          this.error = error;
+          this.showSkeletonChange.emit(false);
+          this.cdRef.markForCheck();
+        }
       );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription$.unsubscribe();
   }
 }

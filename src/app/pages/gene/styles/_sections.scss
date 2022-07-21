@@ -1,0 +1,248 @@
+.gene-page { // .page
+  %gene-page-panels {
+    border: 1px solid $color-borders;
+    border-radius: $border-radius-medium;
+  }
+
+  // AGE
+  &__general-info {
+    .panes {
+      display: flex;
+      font-size: $font-size;
+      margin: 0 -5px 30px -5px;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      justify-content: flex-start;
+      align-items: stretch;
+
+      .pane {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: stretch;
+        justify-content: flex-start;
+        flex: 1 1 50%;
+        align-content: stretch;
+        flex-wrap: nowrap;
+
+        &__inner {
+          width: 100%;
+          min-width: 200px;
+          min-height: 100px;
+          padding: 10px;
+          margin: 5px;
+          @extend %gene-page-panels;
+        }
+
+        &__title {
+          flex: 0 0 100%;
+          font-size: $font-size-smaller;
+          color: $color-gray;
+          margin-bottom: 5px;
+        }
+
+        &__value {
+          flex: 1 1 auto;
+          font-size: 20px;
+          color: $color-black;
+
+          small {
+            font-size: $font-size-big;
+          }
+        }
+
+        &--location {
+          @include resolution_desktop-and-up {
+            max-width: 450px;
+          }
+        }
+
+        &--stacked {
+          flex-flow: row wrap;
+        }
+
+        &--orthologs {
+          flex: 0 0 100%;
+
+          .orthologs {
+            display: grid;
+            grid-column-gap: 10px;
+            grid-row-gap: 10px;
+            margin-top: 20px;
+
+            li.ortholog {
+              display: inline-grid;
+              grid-template-columns: auto 120px;
+              grid-column-gap: 10px;
+              min-height: 49px;
+              padding: 5px 10px;
+              background-color: $color-white;
+              box-shadow: $shadow-for-panel;
+              border-radius: $border-radius-regular;
+
+              .ortholog__species {
+                .latin-name,
+                .common-name {
+                  font-weight: $font-weight-medium;
+                  color: $color-black;
+
+                  &:first-letter {
+                    text-transform: capitalize;
+                  }
+                }
+
+                .latin-name + .common-name {
+                  margin-top: .2em;
+                  font-size: .8em;
+                  color: $color-gray;
+                  font-style: italic;
+                  font-weight: $font-weight-regular;
+                }
+              }
+              .ortholog__gene {
+                text-align: right;
+
+                ::ng-deep .alias {
+                  margin-right: 0;
+                }
+              }
+            }
+
+            @include resolution_desktop-and-up {
+              grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            @include resolution_phablet-and-tablet {
+              grid-template-columns: 1fr 1fr
+            }
+
+            @include resolution_phone {
+              grid-template-columns: 1fr
+            }
+          }
+        }
+
+        &.age__diseases,
+        &.age__interactions {
+          &:hover,
+          &:active {
+            .badge {
+              transition: all .15s ease-in
+            }
+
+            .type__title {
+              color: $color-white;
+            }
+
+            .badge {
+              padding-left: 0;
+              padding-right: 16px;
+            }
+          }
+        }
+
+        @include resolution_smartphone_and-tablet {
+          flex: 0 0 100%;
+          flex-wrap: wrap;
+        }
+      }
+    }
+  }
+
+  // TEXT CONTENT
+  &__articles {
+    .articles__content + .articles__content {
+      margin-top: 30px;
+    }
+
+    .articles__content + app-no-content {
+      margin-top: 30px;
+    }
+
+    .contents-list {
+      margin-bottom: 30px;
+
+      .mat-nav-list {
+        [mat-list-item] {
+          &:hover,
+          &:active {
+            .mat-list-item-content {
+              background-color: lighten($color-hover, 2%);
+            }
+          }
+
+          &:nth-child(even) {
+            .mat-list-item-content {
+              background-color: lighten($color-hover, 5%);
+
+              &:hover,
+              &:active {
+                background-color: lighten($color-hover, 3%);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .reference-list {
+      position: relative;
+      margin-top: 10px;
+      padding-top: 12px;
+      font-size: 80%;
+      color: $color-gray;
+
+      &:before {
+        content: " ";
+        display: block;
+        width: 30%;
+        height: 1px;
+        background-color: $color-borders;
+        position: relative;
+        top: -10px;
+      }
+    }
+  }
+
+  // OPEN GENES ANNOTATION
+  &__annotation {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: $color-gray-very-light;
+    padding: 5px 0;
+    margin: 0 0 30px 0;
+    @extend %gene-page-panels;
+
+    .annotation__row {
+      width: 100%;
+      padding: 5px 20px;
+
+      .row__title {
+        font-size: $font-size-bigger;
+        color: $color-gray;
+        padding: 0 0 8px 0;
+      }
+
+      .row__value {
+        font-size: $font-size-bigger;
+        color: $color-black;
+
+        small {
+          font-size: $font-size-big;
+        }
+      }
+    }
+
+    .annotation__filters-list {
+      // tiny typographic fix
+      left: -5px;
+      position: relative;
+    }
+
+    .annotation__row + .annotation__row {
+      margin-top: 8px;
+    }
+  }
+}
+

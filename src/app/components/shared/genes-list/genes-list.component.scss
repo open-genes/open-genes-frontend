@@ -1,8 +1,7 @@
 @import "../../styles";
 @import "styles/variables";
-@import "styles/item";
+@import "components/gene/styles/item";
 @import "styles/table";
-@import "styles/cards";
 
 :host {
   display: block;
@@ -14,11 +13,10 @@
   max-width: 100%;
   margin-right: auto;
   margin-left: auto;
-  margin-bottom: 10px; // для кнопки подгрузки
+  margin-bottom: 20px; // для кнопки подгрузки
 
   @include item;
   @include table;
-  @include cards;
 
   &--as-table {
     display: block;
@@ -29,99 +27,61 @@
   }
 
   &--as-cards {
+    $card-spacing: 20px;
+
     display: flex;
     flex-flow: row wrap;
     align-items: stretch;
     justify-content: space-between;
-    margin-top: -10px;
+    margin-top: -#{$card-spacing};
   }
 }
 
 .view-panel {
-  position: relative;
-  display: grid;
-  grid-auto-flow: column;
-  align-items: start;
-  margin-bottom: 20px;
-
-  &__filters {
-    padding-right: 5px;
-  }
-
   // You can switch the view only on the desktop.
   // On mobile, content always looks like cards.
-  &__buttons {
-    position: relative;
-    padding-left: 5px;
-    display: flex;
-    align-items: center;
-    flex-flow: row nowrap;
-    justify-content: flex-end;
-
-    button + button {
-      margin-left: 10px;
-    }
-
-    @include resolution_smartphone-and-tablet {
-      .toggler {
-        display: none;
-      }
+  @include resolution_smartphone-and-tablet {
+    .toggler {
+      display: none;
     }
   }
 }
 
-.filters-modal {
-  &__header,
-  &__cover,
-  &__body {
+.filters {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: start;
+  align-content: flex-start;
+  justify-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+
+  & > * {
+    display: contents;
+  }
+}
+
+.genes-info {
+  font-size: $font-size;
+  color: $color-gray;
+  display: block;
+  width: 100%;
+
+  &:not(:empty) {
+    margin-bottom: 10px;
+  }
+
+  &__group {
+    display: inline-block;
+    margin-right: 20px;
+    margin-top: .5em;
+  }
+
+  &__title {
+    display: block;
     width: 100%;
-    box-sizing: border-box;
-  }
-
-  &__header {
-    position: relative;
-    padding-right: 40px;
-    margin-bottom: 15px;
-
-    .close-button {
-      @include close-button(-10px, 15px);
-    }
-  }
-
-  &__cover {
-    background-color: $color-gray-light;
-    min-height: 200px;
-
-    img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-  }
-
-  &__body {
-    mat-checkbox {
-      display: flex;
-      width: 100%;
-
-      &::ng-deep {
-        .mat-checkbox-inner-container {
-          vertical-align: top;
-          margin-top: 2px;
-        }
-
-        .mat-checkbox-layout,
-        .mat-checkbox-label {
-          line-height: 1.5;
-          white-space: normal;
-        }
-      }
-    }
-
-    mat-checkbox + mat-checkbox {
-      margin-top: 8px;
-    }
+    margin-bottom: 5px;
   }
 }
-
-

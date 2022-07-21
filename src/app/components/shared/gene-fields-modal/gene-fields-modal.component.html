@@ -1,0 +1,241 @@
+<form class="filters-modal__body"
+      [formGroup]="filtersForm">
+  <div class="body__row">
+    <mat-form-field appearance="fill" color="primary">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="toggleGenesListSettings('processes')"
+        [switch]="listSettings.ifShowFuncClusters"></app-eye-checkbox>
+      <mat-label>{{ "filters_modal_placeholder_age_related_processes" | translate }}</mat-label>
+      <mat-select formControlName="ageRelatedProcessesSelect"
+                  multiple="true"
+                  [disabled]="processes?.length === 0"
+                  [(ngModel)]="predefinedProcesses"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byAgeRelatedProcess', $event)">
+        <ng-container *ngIf="processes?.length !== 0">
+          <mat-option *ngFor="let i of processes | searchFilter : searchText" [value]="i.id">{{ i.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <mat-form-field appearance="fill">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="toggleGenesListSettings('expression')"
+        [switch]="listSettings.ifShowExpression"></app-eye-checkbox>
+      <mat-label>{{ "filters_modal_placeholder_expression_change" | translate }}</mat-label>
+      <mat-select formControlName="expressionChangeSelect"
+                  [(ngModel)]="predefinedExpressionChanges"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byExpressionChange', $event)">
+        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
+        <mat-option [value]="1">{{ "expression_change_decreased" | translate }}</mat-option>
+        <mat-option [value]="2">{{ "expression_change_increased" | translate }}</mat-option>
+        <mat-option [value]="3">{{ "expression_change_mixed" | translate }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <mat-form-field appearance="fill">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="toggleGenesListSettings('diseases')"
+        [switch]="listSettings.ifShowDiseases"></app-eye-checkbox>
+      <mat-label>{{ "filters_modal_placeholder_diseases" | translate }}</mat-label>
+      <mat-select formControlName="diseasesSelect"
+                  multiple="true"
+                  [disabled]="!diseases"
+                  [(ngModel)]="predefinedDiseases"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byDiseases', $event)">
+        <div class="search-bar">
+          <input class="search-bar__input"
+                 #input
+                 [placeholder]="'search' | translate"
+                 (keydown)="filterDiseases($event)">
+        </div>
+
+        <ng-container *ngIf="diseases?.size; else notFound">
+          <mat-option *ngFor="let i of diseases | keyvalue" [value]="i.key">
+            <span appHighlight
+                  [highlightText]="input.value"
+                  [innerHTML]="i?.value['name']"></span>
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <mat-form-field appearance="fill">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="toggleGenesListSettings('disease-categories')"
+        [switch]="listSettings.ifShowDiseaseCategories"></app-eye-checkbox>
+      <mat-label>{{ "filters_modal_placeholder_disease_categories" | translate }}</mat-label>
+      <mat-select formControlName="diseaseCategoriesSelect"
+                  multiple="true"
+                  [disabled]="!diseaseCategories"
+                  [(ngModel)]="predefinedDiseaseCategories"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byDiseaseCategories', $event)">
+        <ng-container *ngIf="diseaseCategories">
+          <mat-option *ngFor="let i of diseaseCategories | keyvalue"
+                      [value]="i.key">
+            <b>{{ ("icd" | translate) + ' ' + i.value['icdCode'] }}</b>
+            <ng-container *ngIf="i.value['icdCategoryName']?.length !== 0">
+              {{ i.value['icdCategoryName'] }}
+            </ng-container>
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <mat-form-field appearance="fill">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="toggleGenesListSettings('criteria')"
+        [switch]="listSettings.ifShowCriteria"></app-eye-checkbox>
+      <mat-label>{{ "filters_modal_placeholder_criteria" | translate }}</mat-label>
+      <mat-select formControlName="selectionCriteriaSelect"
+                  multiple="true"
+                  [disabled]="selectionCriteria?.length === 0"
+                  [(ngModel)]="predefinedSelectionCriteria"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('bySelectionCriteria', $event)">
+        <ng-container *ngIf="selectionCriteria?.length !== 0">
+          <mat-option *ngFor="let i of selectionCriteria" [value]="i.id">{{ i.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <mat-form-field appearance="fill">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="toggleGenesListSettings('mechanisms')"
+        [switch]="listSettings.ifShowAgingMechanisms"></app-eye-checkbox>
+
+      <mat-label>{{ "filters_modal_placeholder_aging_mechanisms" | translate }}</mat-label>
+      <mat-select formControlName="agingMechanismsSelect"
+                  multiple="true"
+                  [disabled]="agingMechanisms?.length === 0"
+                  [(ngModel)]="predefinedAgingMechanisms"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byAgingMechanism', $event)">
+        <ng-container *ngIf="agingMechanisms?.length !== 0">
+          <mat-option *ngFor="let i of agingMechanisms" [value]="i.id">{{ i.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <mat-form-field appearance="fill">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="toggleGenesListSettings('classes')"
+        [switch]="listSettings.ifShowProteinClasses">
+      </app-eye-checkbox>
+
+      <mat-label>{{ "filters_modal_placeholder_protein_classes" | translate }}</mat-label>
+      <mat-select formControlName="proteinClassesSelect"
+                  multiple="true"
+                  [disabled]="proteinClasses?.length === 0"
+                  [(ngModel)]="predefinedProteinClasses"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byProteinClass', $event)">
+        <ng-container *ngIf="proteinClasses?.length !== 0">
+          <mat-option *ngFor="let i of proteinClasses" [value]="i.id">{{ i.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row __mb-10">
+    <mat-checkbox
+      color="primary"
+      class="checkbox"
+      [checked]="listSettings.ifShowAge"
+      (change)="toggleGenesListSettings('gene-age')">
+      {{ "gene_list_evolutionary_age" | translate }}
+    </mat-checkbox>
+  </div>
+
+  <div class="body__row">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "filters_modal_placeholder_origin" | translate }}</mat-label>
+      <mat-select formControlName="originSelect"
+                  multiple="true"
+                  [disabled]="phylum?.length === 0"
+                  [(ngModel)]="predefinedOrigin"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byOrigin', $event)">
+        <ng-container *ngIf="phylum?.length !== 0">
+          <mat-option *ngFor="let i of phylum" [value]="i.name">{{ i.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "filters_modal_placeholder_family_origin" | translate }}</mat-label>
+      <mat-select formControlName="familyOriginSelect"
+                  multiple="true"
+                  [disabled]="phylum?.length === 0"
+                  [(ngModel)]="predefinedFamilyOrigin"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byFamilyOrigin', $event)">
+        <ng-container *ngIf="phylum?.length !== 0">
+          <mat-option *ngFor="let i of phylum" [value]="i.name">{{ i.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "filters_modal_placeholder_conservative" | translate }}</mat-label>
+      <mat-select formControlName="conservativeInSelect"
+                  multiple="true"
+                  [disabled]="phylum?.length === 0"
+                  [(ngModel)]="predefinedConservativeIn"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byConservativeIn', $event)">
+        <ng-container *ngIf="phylum?.length !== 0">
+          <mat-option *ngFor="let i of phylum" [value]="i.name">{{ i.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row __mb-10">
+    <mat-checkbox
+      color="primary"
+      formControlName="researchesCheckbox"
+      class="checkbox"
+      [(ngModel)]="listSettings.ifShowResearches"
+      (change)="toggleSwitchAndFilter('researches', $event)">
+      {{ "filters_modal_placeholder_show_researches" | translate }}
+    </mat-checkbox>
+  </div>
+
+  <div class="reset-button-wrapper">
+    <button class="btn btn--fill btn--gray reset-button"
+            (click)="resetForm()">
+      {{ "filters_reset" | translate }}
+    </button>
+  </div>
+</form>
+
+<ng-template #notFound>
+  <span>{{'items_not_found' | translate}}</span>
+</ng-template>

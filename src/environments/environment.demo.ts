@@ -7,8 +7,10 @@ export const environment = {
   proteinAtlasUrl: 'https://www.proteinatlas.org/',
   openLongevity80LevelCMS: 'https://openlongevity.com/',
   debugMode: false,
-  languages: ['ru', 'en'],
+  languages: ['ru', 'en', 'zh'],
   mockJsonUrl: ['../data/articles-1.json', '../data/articles-2.json'],
-  termsJsonUrl: ['assets/i18n/terms_en.json', 'assets/i18n/terms_ru.json'],
+  termsJsonUrl: ['assets/i18n/terms-en.json', 'assets/i18n/terms-ru.json'],
   gaTrackingCode: 'G-825YYNSJFC',
+  version: '{{VERSION}}',
+  build: '{{BUILD_NUMBER}}',
 };

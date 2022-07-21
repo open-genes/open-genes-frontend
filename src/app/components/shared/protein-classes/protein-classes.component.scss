@@ -1,0 +1,7 @@
+@import '../../styles';
+
+@include flat-accordion('protein-classes');
+
+.list.list--bulletted li {
+  @include list-item-as-filter-button;
+}

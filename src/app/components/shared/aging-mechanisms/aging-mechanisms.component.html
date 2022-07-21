@@ -1,0 +1,49 @@
+<ng-container *ngIf="geneAgingMechanisms && listLength !== 0; else noMechanism">
+  <ng-container *ngIf="!isAccordion; else accordion">
+    <ul class="list list--bulletted">
+      <li *ngFor="let mechanism of geneAgingMechanisms"
+          [class.__active]="activeListItem.includes(mechanism.id)"
+          (click)="emitOnClick(mechanism.id)">
+        {{ mechanism.name }}
+      </li>
+    </ul>
+  </ng-container>
+
+  <ng-template #accordion>
+    <app-accordion
+      class="aging-mechanisms-accordion"
+      [clickable]="false"
+      [class.aging-mechanisms-accordion--open]="isAccordionOpen"
+      [isOpen]="isAccordionOpen"
+    >
+      <div class="aging-mechanisms-accordion__header" accordion-header>
+        <ul class="list list--bulletted">
+          <li *ngFor="let mechanism of geneAgingMechanisms | slice: 0:maxItemsToShow"
+              [class.__active]="activeListItem.includes(mechanism.id)"
+              (click)="emitOnClick(mechanism.id)">
+            {{ mechanism.name }}
+          </li>
+        </ul>
+        <button (click)="toggleAccordion()"
+                class="aging-mechanisms-accordion__arrow"
+        ><span class="fa far fa-chevron-down"></span>
+        </button>
+      </div>
+      <div class="aging-mechanisms-accordion__body" accordion-body>
+        <ul class="list list--bulletted">
+          <li *ngFor="let mechanism of geneAgingMechanisms | slice: maxItemsToShow"
+              [class.__active]="activeListItem == mechanism.id"
+              (click)="emitOnClick(mechanism.id)">
+            {{ mechanism.name }}
+          </li>
+        </ul>
+      </div>
+    </app-accordion>
+  </ng-template>
+</ng-container>
+
+<ng-template #noMechanism>
+  <div class="no-aging-mechanisms">
+    {{ 'no_associated_mechanisms' | translate }}
+  </div>
+</ng-template>

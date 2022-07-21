@@ -1,78 +1,47 @@
-<div class="panel">
-  <div *ngIf="hpa.proteinClass || gene.proteinClasses"
-       id="protein-classes"
-       class="panel__group row">
-    <div class="col-sm-3">
-      <h6>{{ 'gene_page_hpa_protein_classes' | translate }}</h6>
-    </div>
-    <ul class="panel__item col list list--bulletted">
-      <!-- TODO: These are two different objects parsed from the one source at different time  -->
-      <ng-container *ngIf="translate.currentLang === 'ru' && gene.proteinClasses">
-        <ng-container *ngTemplateOutlet="proteinClassesRu"></ng-container>
-      </ng-container>
-
-      <ng-container *ngIf="translate.currentLang === 'ru' && !gene.proteinClasses">
-        <ng-container *ngTemplateOutlet="HPAproteinClasses"></ng-container>
-      </ng-container>
-
-      <ng-container *ngIf="translate.currentLang === 'en'">
-        <ng-container *ngTemplateOutlet="HPAproteinClasses"></ng-container>
-      </ng-container>
-
-      <ng-template #proteinClassesRu>
-        <li *ngFor="let item of gene.proteinClasses | keyvalue">
-          {{ item.value }}
-        </li>
-      </ng-template>
-
-      <ng-template #HPAproteinClasses>
-        <li *ngFor="let item of hpa.ProteinClass | keyvalue">
-          {{ item.value }}
-        </li>
-      </ng-template>
-    </ul>
-  </div>
-
-  <div *ngIf="hpa.BiologicalProcess"
+<div class="panel human-protein-atlas">
+  <div *ngIf="hpa?.BiologicalProcess"
        class="panel__group row">
     <div class="col-sm-3">
       <h6>{{ 'gene_page_hpa_biological_process' | translate }}</h6>
     </div>
-    <ul class="panel__item col list list--bulletted">
-
-      <li *ngFor="let item of hpa.BiologicalProcess">
-        {{ item }}
-      </li>
-    </ul>
+    <div class="panel__item col">
+      <ul class="list list--bulletted">
+        <li *ngFor="let item of hpa.BiologicalProcess">
+          {{ item }}
+        </li>
+      </ul>
+    </div>
   </div>
 
-  <div *ngIf="hpa.MolecularFunction"
+  <div *ngIf="hpa?.MolecularFunction"
        class="panel__group row">
     <div class="col-sm-3">
       <h6>{{ 'gene_page_hpa_molecular_function' | translate }}</h6>
     </div>
-    <ul class="panel__item col list list--bulletted">
-      <li *ngFor="let item of hpa.MolecularFunction">
-        {{ item }}
-      </li>
-    </ul>
+    <div class="panel__item col">
+      <ul class="list list--bulletted">
+        <li *ngFor="let item of hpa.MolecularFunction">
+          {{ item }}
+        </li>
+      </ul>
+    </div>
   </div>
 
-  <div *ngIf="hpa.SubcellularLocation || hpa.SubcellularMainLocation || hpa.SubcellularAdditionalLocation"
+  <div *ngIf="hpa?.SubcellularLocation || hpa?.SubcellularMainLocation || hpa?.SubcellularAdditionalLocation"
        class="panel__group row">
     <div class="col-12 col-sm-3">
       <h6>{{ 'gene_page_hpa_subcellular_location' | translate }}</h6>
     </div>
 
     <div class="panel__item col">
-      <ng-container *ngIf="hpa.SubcellularLocation">
+      <ng-container *ngIf="hpa?.SubcellularLocation">
           <span *ngFor="let item of hpa.SubcellularLocation"
                 class="alias"
           >{{ item }}
           </span>
       </ng-container>
 
-      <ng-container *ngIf="hpa.SubcellularMainLocation">
+      <ng-container *ngIf="hpa?.SubcellularMainLocation">
         <ng-container *ngIf="!isSimilar(hpa.SubcellularLocation, hpa.SubcellularMainLocation)">
           <span *ngFor="let item of hpa.SubcellularMainLocation"
                 class="alias"
@@ -81,7 +50,7 @@
         </ng-container>
       </ng-container>
 
-      <ng-container *ngIf="hpa.SubcellularAdditionalLocation">
+      <ng-container *ngIf="hpa?.SubcellularAdditionalLocation">
         <ng-container *ngIf="!isSimilar(hpa.SubcellularMainLocation, hpa.SubcellularAdditionalLocation)">
         <span *ngFor="let item of hpa.SubcellularAdditionalLocation"
               class="alias"
@@ -92,15 +61,18 @@
     </div>
   </div>
 
-  <div *ngIf="hpa.DiseaseInvolvement"
+  <div *ngIf="hpa?.DiseaseInvolvement"
        class="panel__group row">
     <div class="col-sm-3">
       <h6>{{'gene_page_hpa_disease_involvement' | translate}}</h6>
     </div>
-    <ul class="panel__item col list list--bulletted">
-      <li *ngFor="let item of hpa.DiseaseInvolvement">
-        {{ item }}
-      </li>
-    </ul>
+    <div class="panel__item col">
+      <ul class="list list--bulletted">
+
+        <li *ngFor="let item of hpa.DiseaseInvolvement">
+          {{ item }}
+        </li>
+      </ul>
+    </div>
   </div>
 </div>

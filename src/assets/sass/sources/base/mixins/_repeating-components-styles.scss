@@ -1,0 +1,336 @@
+// Ripple effect
+@mixin ripple(
+  $border-radius: $border-radius-medium,
+  $color: $color-base,
+) {
+  &:after {
+    content: ' ';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    border-radius: $border-radius;
+    background-color: rgba($color, .15);
+    transition: color, opacity, .15s ease-in-out;
+    opacity: 0;
+  }
+
+  &:hover,
+  &:focus {
+    &:after {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    &:after {
+      opacity: .85;
+    }
+  }
+}
+
+// Panel
+@mixin panel($display: 'block', $padding: '10px') {
+  display: $display;
+  width: 100%;
+  background-color: $color-white;
+  box-shadow: $shadow-for-panel;
+  border-radius: $border-radius-regular;
+  padding: unquote($padding);
+  position: relative;
+}
+
+// Close or menu button
+@mixin close-button($right: 10px, $top: 50%, $color: $color-general) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  z-index: 6;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: $color-gray;
+  transition: color .15s ease-in-out;
+
+  .fa {
+    line-height: normal;
+    vertical-align: -1px;
+  }
+
+  &.active,
+  &:hover {
+    color: $color;
+  }
+}
+
+// Flat accordion
+@mixin flat-accordion($class) {
+  $arrow-button-size: 25px;
+
+  .no-#{$class} {
+    color: $color-gray;
+  }
+
+  .#{$class}-accordion {
+    min-width: 200px;
+    box-sizing: border-box;
+
+    $c: &;
+
+    &__header,
+    &__body {
+      width: 100%;
+    }
+
+    &__header {
+      padding-right: $arrow-button-size + 5px;
+      position: relative;
+    }
+
+    &__body {
+      padding-top: 10px;
+      border-top: 1px solid rgba($color-black, 0.15);
+    }
+
+    &__arrow {
+      height: $arrow-button-size;
+      width: $arrow-button-size;
+      font-size: 14px;
+      color: $color-general;
+      line-height: $arrow-button-size + 2;
+      text-align: center;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      right: 0;
+      z-index: 1;
+      background-color: rgba($color-general, .15);
+      transition: background-color .15s linear;
+
+      .fa {
+        opacity: .75;
+        transition: opacity .15s linear;
+      }
+    }
+
+    &:hover {
+      #{$c}__arrow {
+        background-color: rgba($color-general, .25);
+
+        .fa {
+          opacity: 1;
+        }
+      }
+    }
+
+    &--open {
+      #{$c}__header {
+        padding-bottom: 10px;
+      }
+
+      #{$c}__arrow {
+        transform: scale(1, -1);
+      }
+    }
+  }
+}
+
+@mixin list-item-as-filter-button {
+  cursor: pointer;
+  padding: 4px 5px 4px 15px;
+  border-radius: $border-radius-regular;
+
+  &::before {
+    top: 11px;
+    left: 5px;
+  }
+
+  &.__active,
+  &:hover {
+    color: $color-general;
+    background-color: rgba($color-general, .15);
+  }
+}
+
+// Modal window
+@mixin modal-window($class) {
+  .#{$class}-modal {
+    &__header,
+    &__cover,
+    &__body {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    &__header {
+      position: relative;
+      padding-right: 40px;
+      margin-bottom: 15px;
+
+      .close-button {
+        @include close-button(-10px);
+      }
+    }
+
+    &__cover {
+      margin-bottom: 10px;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    &__body {
+      line-height: $font-line-height;
+    }
+  }
+}
+
+// Simple gene list item
+@mixin simple-gene-list-item($class) {
+  .#{$class} {
+    display: block;
+    width: 100%;
+    background-color: $color-white;
+    box-shadow: $shadow-for-panel;
+    border-radius: $border-radius-regular;
+    padding: 10px 15px;
+    position: relative;
+    font-size: $font-size;
+
+    &__title {
+      margin: 10px 0;
+      padding-right: 30px;
+      font-size: $font-size-big;
+
+      .tag {
+        margin: 0 8px 0 0;
+      }
+
+      .tag, .link {
+        vertical-align: middle;
+      }
+    }
+
+    &__share{
+      position: absolute; // чтобы элемент перестал быть родителем
+      top: 12px;
+      right: 40px;
+    }
+
+    &__actions {
+      position: absolute; // чтобы элемент перестал быть родителем
+      top: 12px;
+      right: 12px;
+      z-index: 1;
+
+      .fa {
+        color: $color-base;
+      }
+    }
+  }
+
+  .#{$class} + .#{$class} {
+    margin-top: 15px;
+  }
+}
+
+@mixin material-sort-header-fix($class: '.filter') {
+  #{$class} {
+    padding-right: 8px;
+    max-width: 100%;
+
+    ::ng-deep .mat-sort-header-container {
+      opacity: .75;
+
+      &.mat-sort-header-sorted {
+        font-weight: $font-weight-medium;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@mixin copy-field(
+  $input-size: 40px,
+  $color: $color-general,
+  $text-color: $color-general,
+  $text-color-h: $color-general-dark) {
+  position: relative;
+  width: 100%;
+  color: $text-color;
+
+  input {
+    display: block;
+    appearance: none;
+    outline: none;
+    border: 1px solid transparent;
+    width: 100%;
+    height: $input-size;
+    background-color: rgba($color, .10);
+    border-radius: $input-size;
+    padding: 0 $input-size 0 $padding-medium;
+    color: inherit;
+    font-family: 'Roboto', 'sans-serif';
+    font-size: $font-size-smaller;
+
+    &:focus {
+      border-color: rgba($color, .25);
+    }
+  }
+
+  button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    height: $input-size;
+    width: $input-size;
+    line-height: $input-size;
+    text-align: center;
+    color: inherit;
+
+    &:hover {
+      color: $text-color-h;
+    }
+
+    @include ripple($input-size);
+  }
+}
+
+@mixin gene-name {
+  .title {
+    font-size: $font-size-bigger;
+    font-weight: $font-weight-medium;
+    color: $color-gray;
+    min-width: 200px;
+    padding: 15px 0 5px 0;
+    line-height: 1;
+
+    .link {
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      position: relative;
+      vertical-align: middle;
+      margin-right: 5px;
+      text-decoration: underline;
+      color: mix($color-gray, $color-general, 90%);
+
+      &:hover,
+      &:active {
+        color: darken(mix($color-gray, $color-general, 90%), 10%);
+      }
+    }
+
+    b {
+      color: $color-black;
+      font-weight: bold;
+    }
+  }
+}
+
+
+

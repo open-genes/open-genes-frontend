@@ -15,6 +15,12 @@ import { ArticlesListModule } from '../../components/shared/articles-list/articl
 import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 import { MatIconModule } from '@angular/material/icon';
 import { WizardModule } from '../../components/shared/wizard/wizard.module';
+import { NoContentModule } from '../../components/shared/no-content/no-content.module';
+import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
+import { ToggleSearchModeModule } from '../../components/shared/toggle-search-mode/toggle-search-mode.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { GeneFieldsModalModule } from "../../components/shared/gene-fields-modal/gene-fields-modal.module";
+
 
 @NgModule({
   declarations: [HomeComponent, MiniCardsComponent],
@@ -32,6 +38,11 @@ import { WizardModule } from '../../components/shared/wizard/wizard.module';
     SidebarModule,
     MatIconModule,
     WizardModule,
+    NoContentModule,
+    IconModule,
+    ToggleSearchModeModule,
+    MatProgressBarModule,
+    GeneFieldsModalModule
   ],
   exports: [PipesModule],
 })

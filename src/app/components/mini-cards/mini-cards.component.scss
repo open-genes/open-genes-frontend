@@ -4,10 +4,6 @@
   width: 100%;
 }
 
-mat-card {
-  color: #fff;
-}
-
 .view-latest {
   width: 100%;
 
@@ -24,13 +20,13 @@ mat-card {
   }
 
   &__card {
-    color: #fff;
+    color: $color-white;
     padding: 5px;
+    min-height: 75px;
     align-self: stretch;
 
     .card__inner {
       height: 100%;
-      min-height: 80px;
       border-radius: 10px;
       padding: 10px;
       font-size: $font-size-smaller;
@@ -49,13 +45,14 @@ mat-card {
       .card__mya {
         width: 100%;
         font-size: .8em;
+        hyphens: auto;
       }
     }
 
     @include resolution_widescreen {
       flex: 0 0 50%;
       font-size: 16px;
-      min-height: 90px;
+      min-height: 70px;
 
       .card__mya {
         display: none;

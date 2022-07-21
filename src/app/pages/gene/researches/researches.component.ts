@@ -1,13 +1,5 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { Researches } from '../../../core/models/openGenesApi/researches.model';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Input, OnInit } from '@angular/core';
+import { Researches } from '../../../core/models/open-genes-api/researches.model';
 
 @Component({
   selector: 'app-researches',
@@ -16,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ResearchesComponent implements OnInit {
   @Input() researches: Researches;
+  @Input() slice = 20;
 
   public isIncreaseLifespan: boolean;
   public isAgeRelatedChanges: boolean;
@@ -25,9 +18,7 @@ export class ResearchesComponent implements OnInit {
   public isGeneAssociatedWithLongevityEffects: boolean;
   public isAdditionalEvidences: boolean;
 
-  @ViewChild('commentModalBody') dialogRef: TemplateRef<any>;
-
-  constructor(public translate: TranslateService, private dialog: MatDialog) {}
+  constructor() {}
 
   ngOnInit() {
     this.isIncreaseLifespan =
@@ -55,19 +46,6 @@ export class ResearchesComponent implements OnInit {
       this.researches?.geneAssociatedWithLongevityEffects.length !== 0;
 
     this.isAdditionalEvidences =
-      this.researches?.additionalEvidences &&
-      this.researches?.additionalEvidences.length !== 0;
-  }
-
-  public openCommentModal(data): void {
-    this.dialog.open(this.dialogRef, {
-      data: data,
-      panelClass: 'comment-modal',
-      minWidth: '320px',
-      maxWidth: '768px',
-    });
-  }
-  public closeCommentModal(): void {
-    this.dialog.closeAll();
+      this.researches?.additionalEvidences && this.researches?.additionalEvidences.length !== 0;
   }
 }

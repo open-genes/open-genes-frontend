@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AssociatedDiseases } from '../../../core/models/openGenesApi/associated-diseases.model';
-import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrapIntoAccordion';
+import { AssociatedDiseases } from '../../../core/models/open-genes-api/associated-diseases.model';
+import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap-into-accordion';
 
 @Component({
   selector: 'app-associated-diseases',
@@ -8,30 +8,20 @@ import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap
   styleUrls: ['./associated-diseases.component.scss'],
 })
 export class AssociatedDiseasesComponent extends WrapIntoAccordion implements OnInit {
-  @Input() geneDiseases: AssociatedDiseases;
-  @Input() activeListItem: string;
-  @Output() clickEvent: EventEmitter<string> = new EventEmitter();
-
-  public mappedDiseases: string[] = [];
+  @Input() geneDiseases: AssociatedDiseases[];
+  @Input() activeListItem: number[];
+  @Output() clickEvent: EventEmitter<number> = new EventEmitter();
 
   constructor() {
     super();
   }
 
   ngOnInit(): void {
-    this.mapDiseases();
     this.setListLength(this.geneDiseases);
     this.putItemsIntoAccordion(this.geneDiseases);
   }
 
-  private mapDiseases(): void {
-    for (const [key, value] of Object.entries(this.geneDiseases)) {
-      this.mappedDiseases.push(value['name']);
-    }
-  }
-
-  public emitOnClick(diseaseName: any): void {
-    this.clickEvent.emit(diseaseName);
-    console.log('clickEvent');
+  public emitOnClick(diseaseId: number): void {
+    this.clickEvent.emit(diseaseId);
   }
 }

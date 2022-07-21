@@ -14,22 +14,21 @@ $articles-gap-l: 10px;
     display: none; // фикс для момента во время подгрузки
   }
 
-  .no-content:not(.no-content--mini),
-  .show-more,
-  .skeleton {
+  .no-articles {
+    width: 100%;
+  }
+
+  .no-articles:not(.no-articles--mini),
+  .show-more {
     padding-right: #{$articles-gap-l};
     padding-left: #{$articles-gap-l};
   }
 
-  .no-content.no-content--mini {
+  .no-articles.no-articles--mini {
     padding-right: #{$articles-gap-s};
     padding-left: #{$articles-gap-s};
-    margin-top: 5px;
+    margin-top: 8px;
   }
-}
-
-app-skeleton {
-  margin-top: 10px;
 }
 
 .tag-list {
@@ -42,6 +41,7 @@ app-skeleton {
 
 .article {
   display: inline-flex;
+  cursor: pointer;
 
   &__card,
   &__cover {
@@ -258,5 +258,9 @@ app-skeleton {
     ::ng-deep {
       @include typography;
     }
+  }
+
+  &__button-wrap {
+    margin-top: 15px;
   }
 }

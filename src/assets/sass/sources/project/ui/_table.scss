@@ -1,7 +1,7 @@
 table.table {
   width: 100%;
   color: $color-black;
-  background: #fff;
+  background: $color-white;
   border: 1px solid $color-borders;
   font-size: $font-size-smaller;
   border-collapse: collapse;
@@ -19,77 +19,75 @@ table.table {
 
   th,
   td {
+    background: $color-white;
     border: 1px solid $color-border-light;
     word-wrap: normal;
 
     // Table cell min-width hack
     &:after {
       content: ' ';
-      display: block;
-      min-width: 5em;
+      display: none;
       height: 0;
     }
   }
 
-  th {
+  th,
+  td {
     padding: .5em;
   }
 
-  td {
-    padding: .2em .5em;
+  @mixin sticky {
+    position: sticky;
+    left: 0;
+    z-index: 2;
   }
 
-  &--zebra,
-  &--dark {
-    tbody tr:nth-of-type(odd) {
-      background: rgba(255, 255, 255, .05);
+  &--sticky {
+    border-collapse: separate;
+
+    thead {
+      th:first-of-type {
+        @include sticky;
+      }
+    }
+    tr{
+      td:first-of-type {
+        @include sticky;
+      }
     }
   }
 
   &--zebra {
-    tbody tr:nth-of-type(odd) {
-      background: rgba(0, 0, 0, .05);
-    }
-  }
-
-  &--dark {
-    color: #ddd;
-    background: #333;
-    font-size: 12pt;
-    border-collapse: collapse;
-
-    thead th,
-    tfoot th {
-      color: #aaa;
-      background: rgba(255, 255, 255, .15);
-    }
-
-    caption {
-      padding: .4em;
-    }
-
-    th,
-    td {
-      padding: .5em;
-      border: 1px solid $color-borders;
+    tbody tr:not(:only-child):nth-of-type(even) td {
+      background: $color-gray-very-light;
     }
   }
 
   .__cell-width-small {
     &:after {
+      display: block;
       width: 8em;
     }
   }
 
   .__cell-width-medium {
     &:after {
+      display: block;
       width: 12em;
     }
   }
 
   .__cell-width-large {
     &:after {
-      width: 16em;
+      display: block;
+      width: 14em;
+    }
+  }
+
+  .__cell-width-very-large {
+    &:after {
+      display: block;
+      width: 24em;
     }
   }
 }

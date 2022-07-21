@@ -18,27 +18,46 @@
   border-radius: $border-radius-regular;
   background-color: $color-general-light;
   font-size: $font-size;
-  color: $color-black;
+  color: adjust-hue($color-general, 10);
 
   &__text {
     display: flex;
-    flex: 80% 2 1;
+    flex: 2 1 80%;
     align-items: flex-start;
     justify-content: flex-start;
     align-content: flex-start;
     flex-direction: column;
   }
 
+  &__image {
+    display: flex;
+    flex: 0 1 50px;
+    align-items: center;
+    justify-content: flex-end;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    &:empty {
+      display: none;
+    }
+  }
+
   &__button {
     display: flex;
-    flex: 100px 0 0;
+    flex: 0 0 100px;
     align-items: center;
     justify-content: flex-end;
     align-content: center;
     flex-direction: row;
 
-    &::ng-deep button {
-      width: 100%;
+    &::ng-deep {
+      button, a {
+        width: 100%;
+      }
     }
   }
 
@@ -50,7 +69,6 @@
   &__title {
     font-size: 1em;
     font-weight: $font-weight-medium;
-    margin-bottom: 1ex;
   }
 
   &__description {
@@ -63,6 +81,14 @@
         vertical-align: middle;
       }
     }
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .hint__title:not(:empty) + .hint__description {
+    margin-top: 1ex;
   }
 
   &--emphasized {

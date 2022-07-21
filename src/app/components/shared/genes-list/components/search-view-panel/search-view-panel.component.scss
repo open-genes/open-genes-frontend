@@ -1,0 +1,22 @@
+@import "../../../../styles";
+
+:host {
+  display: contents;
+}
+
+a,
+button {
+  vertical-align: middle;
+}
+
+button + button {
+  margin-left: 10px;
+}
+
+.toggler {
+  @include resolution_smartphone-and-tablet {
+    display: none;
+  }
+}
+
+

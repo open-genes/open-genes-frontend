@@ -7,6 +7,8 @@ $padding-large: 25px;
 $border-radius-regular: 5px;
 $border-radius-medium: 10px;
 $box-shadow: 0 1px 4px 0 rgba(5, 5, 5, .14);
+$box-shadow-to-bottom: $box-shadow;
+$box-shadow-to-top: 0 -1px 4px 0 rgba(5, 5, 5, .14);
 
 // Fonts
 // TODO: replace with atomic values like: font-size-100, font-size-200, etc.
@@ -33,9 +35,11 @@ $font-weight-black: 900;
 //  $color-black: map-get($base-theme-colors, "color-black");
 
 // Base
-$color-base: #7673d1;
 $color-general-light: #f0f2fc;
+$color-general-200: #dbe0f8;
+$color-general-300: #c6cef4;
 $color-general-semi: #b7bcf1;
+$color-base: #7673d1;
 $color-general: #4d58dc;
 $color-general-dark: darken($color-general, 15%);
 $color-accent: #fe6231;
@@ -48,9 +52,9 @@ $color-black-light: #42464e;
 $color-gray: #838689;
 $color-gray-halfing: #a3a6ab;
 $color-gray-semi: #ced2d7;
-$color-gray-light: #D8DBE3;
-$color-gray-soft: #E3E5EA;
-$color-gray-very-light: #F7FAFB;
+$color-gray-light: #e9ebee;
+$color-gray-soft: #f1f1f1;
+$color-gray-very-light: #fbfbfc;
 $color-white: #fff;
 $color-purple: $color-general;
 $color-blue: #4FA1DD;
@@ -62,16 +66,27 @@ $color-orange-100: #FFEDCF;
 $color-orange-200: #FFC769;
 $color-orange-300: darken(desaturate(#FFC769, 2%), 10%);
 $color-orange-400: #C88142;
-$color-yellow: #ffd700;
+$color-yellow: #fdB338;
 $color-red-light: #fbe5e1;
 $color-red-medium: #f39f96;
 $color-red-text: #c0341d;
 $color-red: #FF4E1A;
 $color-red-dark: darken($color-red, 5%);
 
+$research-tables: (
+  increase-lifespan: #cbcbef,
+  age-related-change: #c8e5fd, // Возрастные изменения экспрессии гена или активности белка
+  gene-intervention-to-vital-processes: #c1e2aa, // Влияние модуляции активности гена на возрастной процесс
+  protein-to-gene: #fbea95, // Участие продукта гена в регуляции генов, связанных со старением
+  gene-to-progeria: #ffd8a9, // Ассоциация гена с ускоренным старением у человека
+  gene-to-longevity-effect: #f5c3c2, // Геномные, транскриптомные и протеомные ассоциации с продолжительностью жизни/возрастным фенотипом
+  gene-to-additional-evidence: #cacaca // Другие подтверждения ассоциации гена со старением
+);
+
 // Gradients
 $orange-gradient1: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, $color-orange-200 100%);
 $orange-gradient2: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, $color-orange-200 100%);
+$pink-blue-gradient: linear-gradient(90deg, #91cefd, #9bb5fa 20%, #a4a4f7 40%, #c2adf5 60%, #d9b5f3 80%, #ebbdf2);
 
 // States variables
 $color-hover: darken(#e8ebfd, 2%);
@@ -90,7 +105,8 @@ $color-border-light: #e3e4e8;
 $color-borders-active: darken($color-hover, 10%);
 
 // - header
-$header-height: 56px;
+$header-announcement-height: $ui-base-height;
+$header-height: 64px;
 
 // - preloader
 $preloader-spinner-size: 50px;
@@ -101,12 +117,18 @@ $dark-panel-100: #64676f;
 $dark-panel-200: #323439;
 
 // - clickable badges
-$color-clikable-500: #832AF5;
-$color-clikable-100: #F2E9FE;
+// @Deprecated
+$color-clickable-500: #832af5;
+$color-clickable-300: #d6b9fc;
+$color-clickable-200: #e4d1fd;
+$color-clickable-100: #f2e9fe;
+
+// SHADOWS
+$shadow-for-panel: 0 24px 48px 0 rgb(230, 235, 245, .4), 0 1px 4px 0 $color-gray-light;
 
 // PATHS
-$path-images: '../images';
-$path-fonts: '../fonts';
+$path-images: '/assets/images';
+$path-fonts: '/assets/fonts';
 
 // Fonts
 $path-font-roboto-thin: $path-fonts + '/roboto/thin.woff2';

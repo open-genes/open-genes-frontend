@@ -7,7 +7,6 @@
     display: none; // фикс для момента во время подгрузки
   }
 
-  .no-content,
   .show-more {
     padding-right: 0;
     padding-left: 0;
@@ -20,6 +19,7 @@ app-skeleton {
 
 .news {
   display: inline-block;
+  width: 100%;
   font-size: 1em;
 
   &__item {
@@ -58,4 +58,8 @@ app-skeleton {
       border-top: 1px solid $color-border-light;
     }
   }
+}
+
+.no-news.no-news--mini {
+  margin-top: 8px;
 }

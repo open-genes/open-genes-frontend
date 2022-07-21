@@ -1,0 +1,40 @@
+@import "../../../styles";
+
+$switch-width: 40px;
+$switch-height: 20px;
+$switch-background: rgba($color-gray, .15);
+$switch-background-active: $color-orange-200;
+$switch-border-radius: 10px;
+$switch-item-width: 18px;
+$switch-item-background: $color-white;
+
+:host {
+  display: inline-block;
+  vertical-align: top;
+  cursor: pointer;
+}
+
+.switch {
+  width: $switch-width;
+  height: $switch-height;
+  background: $switch-background;
+  border-radius: $switch-border-radius;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1px;
+
+  &__bullet {
+    width: $switch-item-width;
+    height: 100%;
+    background: $switch-item-background;
+    border-radius: 100%;
+    box-shadow: 0 1px 3px rgba($color-black, .25);
+  }
+
+  &--toggled {
+    background: $switch-background-active;
+    justify-content: flex-end;
+  }
+}
+

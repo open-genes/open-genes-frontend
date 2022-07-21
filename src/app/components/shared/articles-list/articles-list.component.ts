@@ -12,12 +12,15 @@ import {
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AsyncSubject, Subject } from 'rxjs';
-import { I80levelResponseArticle } from '../../../core/models/vendorsApi/80level/80level.model';
+import { I80levelResponseArticle } from '../../../core/models/vendors-api/80level/80level.model';
 import { map, takeUntil } from 'rxjs/operators';
 import { EightyLevelService } from '../../../core/services/api/80level-api-service/80level-api.service';
 import { environment } from '../../../../environments/environment';
-import { MockApiService } from '../../../core/services/api/mock-api.service';
 import { MatDialog } from '@angular/material/dialog';
+import { ArticleModalComponent } from '../../ui-components/components/modals/article-modal/article-modal.component';
+import { CommonModalComponent } from '../../ui-components/components/modals/common-modal/common-modal.component';
+import { SessionStorageService } from '../../../core/services/session-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-articles-list',
@@ -28,15 +31,16 @@ import { MatDialog } from '@angular/material/dialog';
 export class ArticlesListComponent implements OnInit, OnDestroy {
   public articlesList: I80levelResponseArticle[] = [];
   public environment = environment;
-  public isLoading = true;
+
   public error: number;
   public defaultAvatar = '/assets/images/avatar.png';
   public defaultCover = '/assets/images/default-article-cover.jpg';
   public pageIndex = 1;
-  public showMoreButtonVisible = false;
   public articlesTotal = 0;
   public responsePagePortion: number;
   public articleTags: any[] = [];
+
+  public showMoreButtonVisible = false;
   public isAnyArticleModalOpen = false;
 
   private subscription$ = new Subject();
@@ -46,35 +50,68 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   @Input() isMiniMode = false;
   @Input() sliceTo: number | undefined = undefined;
-  @Output()
-  newArticlesLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Input() showSkeleton: boolean;
+  @Output() showSkeletonChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @ViewChild('articleModalBody') dialogRef: TemplateRef<any>;
+  @ViewChild('cantGetArticle') cantGetArticleRef: TemplateRef<any>;
 
   constructor(
     public translate: TranslateService,
+    private router: Router,
     private readonly eightyLevelService: EightyLevelService,
-    private readonly mock: MockApiService,
+    private readonly sessionStorageService: SessionStorageService,
     private readonly cdRef: ChangeDetectorRef,
     private dialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.makeArticlesList();
+    if (this.router.url === '/') {
+      if (this.sessionStorageService.getStorageValue('articles')) {
+        const storageData = this.sessionStorageService.getStorageValue('articles');
+        this.articlesList = storageData.articles;
+        this.articlesTotal = storageData.total;
+        this.showSkeletonChange.emit(false);
+      } else {
+        this.makeArticlesList();
+      }
+    } else {
+      this.makeArticlesList();
+    }
   }
 
   public showMore(): void {
     if (this.articlesTotal / this.responsePagePortion > this.pageIndex) {
       ++this.pageIndex;
-      this.isLoading = true;
-      this.cdRef.markForCheck();
+      this.showSkeletonChange.emit(true)
       this.makeArticlesList();
     }
+  }
+
+  private makeArticlesList(): void {
+    this.eightyLevelService
+      .getArticles(
+        this.showOnlyForOpenGenes ? { category: 'open-genes', page: this.pageIndex } : { page: this.pageIndex }
+      )
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
+        (data) => {
+          this.handleResponse(data);
+        },
+        (error) => {
+          this.error = error;
+          this.showSkeletonChange.emit(false);
+        }
+      );
   }
 
   private handleResponse(data): void {
     this.articlesList.push(...data.articles.items);
     this.articlesTotal = data.articles.total;
+    if (this.router.url === '/') {
+      this.sessionStorageService.setStorage('articles', { articles: this.articlesList, total: +this.articlesTotal });
+    }
 
     if (this.articlesList?.length !== 0) {
       // Set page length after checking the length of the 1st page
@@ -91,7 +128,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       });
 
       // Emit event to update view
-      this.newArticlesLoaded.emit(true);
+      this.showSkeletonChange.emit(false)
 
       // Check if there is more content to show
       // and show/hide 'Show more' button
@@ -101,27 +138,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         this.showMoreButtonVisible = false;
       }
     }
-
-    // All content is loaded
-    this.isLoading = false;
     this.cdRef.markForCheck();
   }
 
-  private makeArticlesList(): void {
-    this.eightyLevelService
-      .getArticles(
-        this.showOnlyForOpenGenes ? { category: 'open-genes', page: this.pageIndex } : { page: this.pageIndex }
-      )
-      .pipe(takeUntil(this.subscription$))
-      .subscribe(
-        (data) => {
-          this.handleResponse(data);
-        },
-        (error) => (this.error = error)
-      );
-  }
-
-  public openArticleModal(slug): void {
+  public openArticleModal(slug: string): void {
     this.isAnyArticleModalOpen = true;
 
     // Subscribe and get one article data
@@ -135,31 +155,36 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
           return {
             title: res.title,
             subtitle: res.subtitle,
-            image: imageData.content.image,
+            image: imageData?.content.image,
             description: descData,
+            slug: slug,
           };
         })
       )
       .subscribe(
         (modalData) => {
-          this.isAnyArticleModalOpen = false;
           this.cdRef.markForCheck();
-          this.dialog.open(this.dialogRef, {
-            data: modalData,
+          this.dialog.open(ArticleModalComponent, {
+            data: {
+              modalData: modalData,
+            },
             panelClass: 'article-modal',
             minWidth: '320px',
             maxWidth: '768px', // TODO: make a global object with modal settings
+            autoFocus: false,
           });
         },
         () => {
-          console.warn(`Can't get an article by id ${slug}`);
-          this.closeArticleModal();
+          console.error(`Can't get an article by slug ${slug}`);
+          this.dialog.open(CommonModalComponent, {
+            data: { title: '', body: null, template: this.cantGetArticleRef },
+            panelClass: 'article-modal',
+            minWidth: '320px',
+            maxWidth: '768px',
+            autoFocus: false,
+          });
         }
       );
-  }
-
-  public closeArticleModal(): void {
-    this.dialog.closeAll();
     this.isAnyArticleModalOpen = false;
   }
 
@@ -168,6 +193,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.oneArticleSubscription$.unsubscribe();
   }
 
+  // TODO: make util class
   imgErrorHandler(event: any, placeholderImg: string) {
     event.target.src = placeholderImg;
   }

@@ -7,6 +7,9 @@ import { PipesModule } from '../../modules/pipes/pipes.module';
 import { MaterialModule } from '../../modules/vendors/material.module';
 import { NgCapitalizePipeModule, NgToArrayPipeModule } from 'angular-pipes';
 import { FavouritesListComponent } from './favourites-list/favourites-list.component';
+import { NoContentModule } from '../../components/shared/no-content/no-content.module';
+import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
+import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
 
 const routes: Routes = [{ path: '', component: FavouritesComponent }];
 
@@ -20,6 +23,9 @@ const routes: Routes = [{ path: '', component: FavouritesComponent }];
     MaterialModule,
     NgToArrayPipeModule,
     NgCapitalizePipeModule,
+    NoContentModule,
+    IconModule,
+    UiComponentsModule,
   ],
   providers: [],
 })

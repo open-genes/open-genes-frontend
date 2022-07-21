@@ -5,6 +5,8 @@
   flex-flow: column;
   align-content: stretch;
   justify-content: stretch;
+  min-width: 0; // flex item can't be smaller that its content,
+  // override it to fix items overflowing the container
 }
 
 .title {
@@ -26,5 +28,10 @@
   align-content: stretch;
   align-items: stretch;
   margin: 0 -5px; // TODO: use css variables for this margin and margins for content blocks
+
+  ::ng-deep app-skeleton {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 }
 

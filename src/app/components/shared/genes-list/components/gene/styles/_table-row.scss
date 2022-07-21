@@ -1,0 +1,78 @@
+@import "../../../../../styles";
+
+@mixin table-row {
+  .add-to-favorites {
+    margin: -11px 0 0 -8px;
+
+    .icon {
+      font-size: 18px;
+      color: $color-yellow;
+      margin-bottom: 5px;
+    }
+  }
+  :host {
+    display: table-row-group;
+    width: 100%;
+    background: $color-white;
+
+    &:nth-child(odd) {
+      background: $color-general-light;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .cell {
+    position: relative;
+    padding: 12px 8px;
+    vertical-align: top;
+    word-break: keep-all;
+    hyphens: auto;
+
+    &--age {
+      .overflow {
+        width: 180px;
+      }
+    }
+
+    &--expression {
+      .overflow {
+        width: 100px;
+      }
+    }
+
+    &--name,
+    &--diseases,
+    &--functions,
+    &--criteria,
+    &--mechanisms,
+    &--classes,
+    &--methylation {
+      .overflow {
+        width: 220px;
+        display: flex;
+      }
+    }
+
+    &--terms {
+      .overflow {
+        max-width: 500px;
+      }
+    }
+
+    &--actions {
+      .overflow {
+        float: right;
+        width: 40px;
+        text-align: right;
+
+        & > * {
+          position: relative;
+          top: -11px;
+        }
+      }
+    }
+  }
+}

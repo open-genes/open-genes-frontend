@@ -1,0 +1,92 @@
+@import "../../../../../styles";
+
+@mixin card {
+  $card-spacing: 20px;
+  .add-to-favorites {
+    display: inline-block;
+    margin: -8px 0 0 -10px;
+
+    .icon {
+      font-size: 18px;
+      color: $color-yellow;
+      margin-bottom: 5px;
+    }
+  }
+  :host {
+    position: relative;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    @include panel(flex, #{12px 0});
+    margin-top: $card-spacing;
+
+    @include resolution_phablet-and-up {
+      flex: 0 0 calc(50% - #{$card-spacing / 2});
+    }
+
+    @include resolution_phone {
+      flex: 0 0 100%;
+    }
+  }
+
+  .card {
+    position: relative;
+    margin-top: $card-spacing;
+    font-size: $font-size;
+
+    &__content,
+    &__controls,
+    &__section {
+      display: inline-block;
+      width: 100%;
+    }
+
+    &__section {
+      padding: 0 12px;
+      margin-bottom: 10px;
+
+      .label {
+        display: block;
+        width: 100%;
+        font-size: $font-size-small;
+        color: $color-gray-halfing;
+        margin-bottom: .8em;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .label + .list {
+        margin-top: 0;
+      }
+    }
+
+    &__title {
+      padding-right: 30px;
+      margin-bottom: 10px;
+      display: flex;
+
+      .title {
+        font-size: $font-size-huge;
+
+        .link {
+          text-decoration: none;
+        }
+      }
+
+      .card__actions {
+        position: absolute;
+        top: 3px;
+        right: 0;
+        z-index: 1;
+      }
+    }
+
+    &__controls {
+      justify-self: flex-end;
+      margin-top: 12px;
+      border-top: 1px solid $color-borders;
+      padding-top: 12px;
+    }
+  }
+}

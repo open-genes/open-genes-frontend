@@ -1,31 +1,145 @@
-<div class="container-fluid">
-  <div class="row no-gutters align-items-center">
-    <div class="col-9 align-items-center">
-      <a href="/developers" class="link footer__link" target="_blank"
-        ><span class="fa far fa-database"></span>&nbsp;API</a
-      >
+<footer class="wrapper">
+  <div class="container-fluid footer">
+    <div class="row no-gutters footer__row">
+      <div class="col-xs-6 col-md-3 footer__column">
+        <h4>{{ "footer_title_about" | translate }}</h4>
+        <ul class="footer__links">
+          <li>
+            <a [routerLink]="'/about'"
+               routerLinkActive="current"
+            >
+              {{ 'header_menu_about' | translate }}</a>
+          </li>
+          <li>
+            <a [routerLink]="'/help'"
+               routerLinkActive="current"
+            >
+              {{ 'header_menu_help' | translate }}</a>
+          </li>
+          <li>
+            <a [routerLink]="'/contributors'"
+               routerLinkActive="current"
+            >
+              {{ 'header_menu_contributors' | translate }}</a>
+          </li>
+        </ul>
+      </div>
 
-      <a
-        href="https://twitter.com/OpenGenes"
-        class="link footer__link"
-        target="_blank"
-        ><span class="fab fa-twitter"></span>&nbsp;@OpenGenes</a
-      >
-    </div>
+      <div class="col-xs-6 col-md-3 footer__column">
+        <h4>{{ "footer_title_data" | translate }}</h4>
+        <ul class="footer__links">
+          <li>
+            <a [routerLink]="'/horvath-clock'"
+               routerLinkActive="current"
+            >
+              {{ 'search_genes_in_horvath_clock' | translate }}</a>
+          </li>
+          <li>
+            <a [routerLink]="'/diet'"
+               routerLinkActive="current"
+            >
+              {{ 'diet_page_title' | translate }}</a>
+          </li>
+          <li>
+            <a [routerLink]="'/favourites'"
+               routerLinkActive="current"
+            >
+              {{ 'header_menu_favourites' | translate }}
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="'/download'"
+               routerLinkActive="current">
+          <span class="fa far fa-download">
+          </span> {{ 'header_menu_download' | translate }}
+            </a>
+          </li>
+          <li>
+            <a href="/api/docs"
+               target="_blank">
+              {{ 'header_menu_api' | translate }}&nbsp;<span class="fa far fa-external-link"></span>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="'/timeline'"
+               routerLinkActive="current"
+            >
+              {{ 'header_menu_timeline' | translate }}</a>
+          </li>
+        </ul>
+      </div>
 
-    <div class="col footer__language">
-      <app-language></app-language>
+      <div class="col-xs-6 col-md-3 footer__column">
+        <h4>{{ "footer_title_community" | translate }}</h4>
+        <ul class="footer__links">
+          <li>
+            <h6>{{ 'footer_donation_text' | translate }}</h6>
+            <div class="footer__donation-field">
+              <input type="text" readonly [value]="donationWallet">
+              <button
+                (click)="copyLink()">
+                <span class="fa far fa-copy"></span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <a [routerLink]="'/news'"
+               routerLinkActive="current"
+            >
+              {{ 'header_menu_news' | translate }}</a>
+          </li>
+          <li>
+            <a href="https://github.com/orgs/open-genes/projects/5"
+               target="_blank">
+              {{ "header_menu_request_feature" | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-xs-5 col-md-3 col-lg-2 footer__column">
+        <h4>{{ "footer_title_links" | translate }}</h4>
+        <ul class="footer__links __nowrap">
+          <li>
+            <a
+              href="https://twitter.com/OpenGenes"
+              target="_blank"
+            ><span class="fab fa-twitter"></span>&nbsp;@OpenGenes</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://gitcoin.co/grants/4270/open-genes-fights-aging-collecting-missing-data"
+              target="_blank"
+            ><span class="fab fa-ethereum"></span>&nbsp;Gitcoin</a
+            >
+          </li>
+          <li>
+            <a href="https://github.com/orgs/open-genes/"
+               target="_blank"
+            ><span class="fa fab fa-github"></span>&nbsp;GitHub</a
+            >
+          </li>
+          <li>
+            <a href="https://medium.com/@open.genes"
+               target="_blank"
+            ><span class="fa fab fa-medium"></span>&nbsp;Medium</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-xs-1 footer__column footer__column--language">
+        <app-language class="footer__language"></app-language>
+      </div>
     </div>
   </div>
-  <div class="row no-gutters">
-    <div class="col-12">
-      <app-icon
-        class="footer__logo"
-        staticSrc="/assets/images/sk-resident.svg"
-        size="custom"
-        customWidth="60px"
-        customHeight="42px"
-      ></app-icon>
-    </div>
+
+  <div
+    #walletAddressCopied
+    class="hidden">
+    {{ 'footer_donation_copied' | translate }}
   </div>
-</div>
+</footer>
+
+

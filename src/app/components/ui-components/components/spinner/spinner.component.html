@@ -1,6 +1,11 @@
 <div class="loader">
   <div class="loader__inner">
     <span class="fa fal fa-circle-notch fa-spin fa-3x"></span>
+
+    <div *ngIf="description"
+         class="loader__description">
+      {{ description }}
+    </div>
   </div>
 </div>
 

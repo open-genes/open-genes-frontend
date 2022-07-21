@@ -1,0 +1,111 @@
+<div [ngSwitch]="researchType"
+     class="research">
+  <app-search [showTitle]="false"
+              [searchHintsList]="genesList"
+              [setSearchMode]="searchMode"
+              [fixOnTopOnMobile]="false"
+              (confirmedQuery)="updateResearchesList($event)"
+              (searchQuery)="setSearchQuery($event)"
+              (cancel)="setInitialState()"
+              [isDisabled]="error.isError"
+              class="__mb-30">
+  </app-search>
+
+  <ng-container *ngIf="!isNotFound">
+    <!-- Purple -->
+    <section *ngSwitchCase="'lifespan-change'">
+      <app-increase-lifespan
+        [geneColumnOn]="true"
+        [numberColumn]="true"
+        [items]="researches"
+        [slice]="slice | async"
+      ></app-increase-lifespan>
+    </section>
+
+    <!-- Blue -->
+    <section *ngSwitchCase="'age-related-changes'">
+      <app-age-related-changes
+        [geneColumnOn]="true"
+        [numberColumn]="true"
+        [items]="researches"
+        [slice]="slice | async"
+      ></app-age-related-changes>
+    </section>
+
+    <section *ngSwitchCase="'gene-activity-change-impact'">
+      <app-intervention-affects-aging-process
+        [geneColumnOn]="true"
+        [numberColumn]="true"
+        [items]="researches"
+        [slice]="slice | async"
+      ></app-intervention-affects-aging-process>
+    </section>
+
+    <section *ngSwitchCase="'gene-regulation'">
+      <app-protein-regulates-other-genes
+        [geneColumnOn]="true"
+        [numberColumn]="true"
+        [items]="researches"
+        [slice]="slice | async"
+      ></app-protein-regulates-other-genes>
+    </section>
+
+    <section *ngSwitchCase="'association-with-accelerated-aging'">
+      <app-gene-associated-with-progeria-syndromes
+        [geneColumnOn]="true"
+        [numberColumn]="true"
+        [items]="researches"
+        [slice]="slice | async"
+      ></app-gene-associated-with-progeria-syndromes>
+    </section>
+
+    <section *ngSwitchCase="'associations-with-lifespan'">
+      <app-gene-associated-with-longevity-effects
+        [geneColumnOn]="true"
+        [numberColumn]="true"
+        [items]="researches"
+        [slice]="slice | async"
+      ></app-gene-associated-with-longevity-effects>
+    </section>
+
+    <section *ngSwitchCase="'other-evidence'">
+      <app-additional-evidences
+        [geneColumnOn]="true"
+        [numberColumn]="true"
+        [items]="researches"
+        [slice]="slice | async"
+      ></app-additional-evidences>
+    </section>
+  </ng-container>
+
+  <app-spinner *ngIf="isLoading"
+               class="__mt-10 __mb-10"
+  ></app-spinner>
+
+  <div *ngIf="!isNotFound && (researches?.length < options?.objTotal || page < options?.pagination.pagesTotal)"
+       class="btn-wrap show-more __mt-20">
+    <button (click)="showMore($event, researchType)"
+            class="btn show-more__button">
+      {{ "show_more" | translate }} <span class="spinner fas fa-circle-notch fa-spin"></span>
+    </button>
+  </div>
+
+  <section *ngIf="isNotFound">
+    <app-no-content [title]="'nothing_found'">
+      <ng-container icon>
+        <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+      </ng-container>
+    </app-no-content>
+  </section>
+
+  <section *ngIf="error.isError">
+    <app-no-content [title]="'error_page_500'">
+      <ng-container icon>
+        <app-icon icon="error" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+      </ng-container>
+      <ng-container description>
+        {{ error.errorStatus }}
+      </ng-container>
+    </app-no-content>
+  </section>
+</div>

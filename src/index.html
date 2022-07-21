@@ -2,24 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Open Longevity Genes — Database of human genes associated with aging</title>
-  <meta name='description' content='Human curated database of human genes associated with aging and longevity.'>
+  <title>Open Genes — Biological database of human genes associated with aging</title>
+  <meta name='description' content='Curated biological database of human genes associated with aging and longevity.'>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <meta property='og:image' content='/assets/images/social-cover.png'>
-  <meta name="theme-color" content="#7673d1">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/images/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/images/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/images/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/images/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/images/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/images/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#7673d1">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
   <meta name="msapplication-navbutton-color" content="#7673d1">
+  <meta name="theme-color" content="#7673d1">
+  <meta property='og:image' content='/assets/images/social-image.png'>
   <meta name="apple-mobile-web-app-status-bar-style" content="#7673d1">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
-  <link rel="preload" as="font" href="/regular.woff2" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" as="font" href="/fa-regular-400.woff2" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" as="font" href="/fa-light-300.woff2" type="font/woff2" crossorigin="anonymous">
+  <style>
+    .ie-message {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 1;
+      transform: translate(-50%, -50%);
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.5;
+      text-align: center;
+    }
+  </style>
 </head>
 <body class="body--loading">
-  <div class="preloader">
-    <div class="preloader__loader"></div>
-  </div>
-  <app-root></app-root>
+  <h1 class="ie-message"
+      id="ie-message-en">
+    It seems you are using Internet Explorer. This browser is outdated and unsupported. <br>Please open a website in another browser.
+  </h1>
+
+  <h1 class="ie-message"
+      id="ie-message-ru">
+    Кажется, вы используете Internet Explorer. Этот браузер устарел и не поддерживается. <br>Пожалуйста, откройте сайт в другом браузере.
+  </h1>
+
+  <script type="text/javascript">
+    const msie = /msie\s|trident/i.test(window.navigator.userAgent);
+    if (msie) {
+      switch (navigator.language.substring(0, 2)) {
+        case 'ru':
+          document.getElementById('ie-message-ru').style.display = 'block';
+          break;
+        default:
+          document.getElementById('ie-message-en').style.display = 'block';
+      }
+    }
+    else {
+      //render app
+      document.body.innerHTML = "<div class=\"preloader\"><div class=\"preloader__loader\"></div></div> <app-root></app-root>"
+    }
+  </script>
 </body>
 </html>

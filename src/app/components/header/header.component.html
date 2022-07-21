@@ -1,4 +1,9 @@
 <header class="header">
+  <div *ngIf="showAnnouncement && region !== 'Russian Federation'"
+     target="_blank"
+     class="header__announcement">
+    <b>{{ "support_us_gitcoin" | translate }}</b>
+  </div>
   <div class="header__centering">
     <a href="/"
        title="{{'main_page_link' | translate}}">
@@ -10,9 +15,40 @@
         customHeight="35px"
       ></app-icon>
     </a>
-    <div class="header__right">
+
+    <nav class="header__middle">
+      <ul class="navigation-list">
+        <li
+          class="navigation-list__item">
+          <a class="item__link"
+             [routerLink]="'/'"
+             routerLinkActive="__current"
+             [routerLinkActiveOptions]="{ exact: true }"
+          >{{ "toggler_genes" | translate }}</a>
+        </li>
+
+        <li
+          class="navigation-list__item">
+          <a class="item__link"
+             [routerLink]="'/researches'"
+             routerLinkActive="__current"
+          >{{ "toggler_researches" | translate }}</a>
+        </li>
+
+        <li
+          class="navigation-list__item">
+          <a class="item__link"
+                [routerLink]="'/datasets'"
+                routerLinkActive="__current"
+          >{{ "toggler_datasets" | translate }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <nav class="header__right">
       <app-language theme="light"></app-language>
       <app-burger-menu (favsCounterUpdate)="updateView()"></app-burger-menu>
-    </div>
+    </nav>
   </div>
 </header>

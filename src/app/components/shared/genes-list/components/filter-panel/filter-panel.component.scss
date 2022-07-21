@@ -1,0 +1,27 @@
+@import "../../../../styles";
+
+:host {
+  width: 100%;
+  display: inline-block;
+
+  a,
+  button {
+    margin: 0 5px 5px 0;
+  }
+
+  [mat-sort] {
+    display: contents;
+  }
+
+
+  button.modal-button {
+    margin-right: 10px;
+  }
+
+  // - Sort header fix
+  @include material-sort-header-fix;
+}
+
+
+
+

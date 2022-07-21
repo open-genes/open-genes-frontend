@@ -40,6 +40,6 @@
 
 @include resolution_widescreen {
   .container-fluid {
-    max-width: 1400px;
+    max-width: calc(100vw - 40px);
   }
 }

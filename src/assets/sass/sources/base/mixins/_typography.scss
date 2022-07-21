@@ -1,4 +1,31 @@
-@mixin typography {
+// Обрезка текста
+@mixin text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Обрезка многострочного текста
+@mixin overflow-lines($font-size, $font-line-height, $lines, $additional, $whole-height:"") {
+  display: block;
+  display: -webkit-box;
+  font-size: $font-size;
+  line-height: $font-line-height;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  word-break: keep-all;
+  hyphens: auto;
+  @if $whole-height != "" {
+    height: $whole-height;
+  }
+  @else {
+    max-height: ($font-line-height * $font-size * $lines) + $additional;
+  }
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin lists {
   ul, ol {
     &.list {
       width: 100%;
@@ -9,6 +36,11 @@
 
         .alias {
           vertical-align: top;
+        }
+
+        .callout {
+          display: block;
+          float: left;
         }
       }
 
@@ -36,6 +68,41 @@
       }
     }
   }
+
+  dl.list {
+    display: inline-block;
+    width: 100%;
+
+    dt, dd {
+      float: left;
+    }
+
+    dt {
+      clear: left;
+      margin-right: 1ch;
+      font-weight: $font-weight-medium;
+
+      span {
+        font-weight: $font-weight-regular;
+      }
+    }
+
+    dt:not(:first-of-type),
+    dd:not(:first-of-type) {
+      margin-top: .8ex;
+    }
+
+    &--stacked {
+      dt,
+      dd {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@mixin typography {
+  @include lists;
 
   article,
   section {
@@ -92,21 +159,30 @@
     }
 
     * + h3,
+    * + h4,
+    * + h5,
+    * + h6,
     * + p,
     * + .list,
     * + app-code-block {
-      margin-top: 2ex;
+      margin-top: .8ex;
     }
 
     h3 + *,
-    h4 + * {
-      margin-top: .8ex;
+    h4 + *,
+    h5 + *,
+    h6 + * {
+      margin-top: 2ex;
+    }
+
+    article + h3 {
+      margin-top: 3ex;
     }
 
     // It's made in order to not affect styled links.
     // Links in the text received from endpoint don't have classes
-    & > a,
-    & > p a {
+    & > a:not(.btn),
+    & > p a:not(.btn) {
       font-weight: $font-weight-medium;
       color: $color-general;
 
@@ -135,5 +211,66 @@
     p + p {
       margin-top: .8em;
     }
+  }
+}
+
+// TODO: Transfer to mixins folder
+@mixin base-link {
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  position: relative;
+}
+
+@mixin blue-link {
+  color: $color-general;
+
+  &:hover,
+  &:active {
+    color: lighten(mix($color-general, $color-blue, 5%), 3%);
+  }
+}
+
+@mixin gray-link {
+  color: mix($color-gray, $color-general, 90%);
+
+  &:hover,
+  &:active {
+    color: darken(mix($color-gray, $color-general, 90%), 10%);
+  }
+}
+
+@mixin white-link {
+  color: $color-white;
+
+  &:hover,
+  &:active {
+    color: darken($color-white, 10%);
+  }
+}
+
+.link {
+  @include base-link;
+  @include blue-link;
+
+  &--gray {
+    @include gray-link;
+  }
+
+  &--white {
+    @include white-link;
+  }
+
+  &--underline {
+    text-decoration: underline;
+  }
+
+  &--anchor,
+  &--term {
+    @include gray-link;
+    border-bottom: 1px dashed currentColor;
+  }
+
+  &--term {
+    font-style: italic;
   }
 }
