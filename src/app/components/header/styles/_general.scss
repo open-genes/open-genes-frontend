@@ -1,0 +1,51 @@
+.header {
+  width: 100%;
+  color: $color-base;
+  background-color: $color-white;
+  box-shadow: $box-shadow;
+  min-height: $header-height;
+
+  &__centering {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    height: $header-height;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+
+    @include resolution_tablet-and-up {
+      padding: 0 10px;
+    }
+  }
+
+  &__logo {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding: 5px;
+    margin: 0 5px;
+  }
+
+  &__middle {
+    flex: 1 1;
+    height: $header-height;
+
+    @include resolution_smartphone {
+      display: none;
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+
+    app-burger-menu {
+      position: relative;
+      width: 55px;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+@import 'src/assets/sass/sources/base/mixins';
+
+.navigation-list {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: stretch;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 100%;
+  width: 100%;
+
+  &__item {
+    position: relative;
+    display: inline-flex;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    padding: 0 5px;
+
+    .item__link {
+      position: relative;
+      display: flex;
+      align-content: center;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 100%;
+      font-size: $font-size;
+      font-weight: $font-weight-medium;
+      color: $color-black;
+      padding: 0 10px;
+
+      @include ripple;
+
+      &:active {
+        color: $color-general-dark;
+      }
+
+      &.__current {
+        @include ripple($border-radius-medium, $color-gray-halfing);
+
+        &::after {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

@@ -38,6 +38,7 @@ export class FilterService {
     byOrigin: [],
     byFamilyOrigin: [],
     byConservativeIn: [],
+    researches: 0,
   };
 
   public pagination: Pagination = {
@@ -65,8 +66,8 @@ export class FilterService {
   }
 
   // Filter
-  // TODO: filter types typing problems
   public applyFilter(filterType: string, filterValue: any): void {
+    console.log('applyFilter', filterValue);
     if (filterValue) {
       if (Array.isArray(this.filters[filterType])) {
         const arrayValues = filterValue.toString().split(',');
@@ -126,6 +127,7 @@ export class FilterService {
       origin,
       family_origin,
       conservative_in,
+      researches,
     } = FilterTypesEnum; // TODO: this enum is excessive
     switch (filterName) {
       case age_related_processes:
@@ -160,6 +162,9 @@ export class FilterService {
         break;
       case conservative_in:
         this.filters.byConservativeIn = [];
+        break;
+      case researches:
+        this.filters.researches = 0;
         break;
       default:
         this.filters.byAgeRelatedProcess = [];
@@ -217,7 +222,6 @@ export class FilterService {
     this.isClearFiltersBtnShown.next(sum.length >= 2);
 
     this.updateList(this.filters);
-
     this.setQueryParams(this.filters);
   }
 
@@ -235,7 +239,7 @@ export class FilterService {
       }
     }
 
-    this.router.navigate([''], {
+    void this.router.navigate([''], {
       queryParams: queryParams,
     });
   }

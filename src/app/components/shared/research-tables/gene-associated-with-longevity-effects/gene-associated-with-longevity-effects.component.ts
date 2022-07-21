@@ -12,4 +12,21 @@ export class GeneAssociatedWithLongevityEffectsComponent extends ResearchTables 
   constructor(protected dialog: MatDialog) {
     super(dialog);
   }
+
+  public fixDataTypeResponse(dataType: string): string {
+    switch (dataType) {
+      case '1en':
+        return 'genomic';
+      case '1ru':
+        return 'геномные';
+      case '2en':
+        return 'transcriptomic';
+      case '2ru':
+        return 'транскриптомные';
+      case '3en':
+        return 'proteomic';
+      case '3ru':
+        return 'протеомные';
+    }
+  }
 }

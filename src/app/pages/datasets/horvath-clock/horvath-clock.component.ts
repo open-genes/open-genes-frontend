@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ApiService } from '../../core/services/api/open-genes-api.service';
+import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { takeUntil } from 'rxjs/operators';
-import { WizardService } from '../../components/shared/wizard/wizard-service.service';
-import { WindowWidth } from '../../core/utils/window-width';
-import { WindowService } from '../../core/services/browser/window.service';
-import { SearchMode } from '../../core/models/settings.model';
-import { GenesInHorvathClock } from '../../core/models/open-genes-api/genes-in-horvath-clock.model';
+import { WizardService } from '../../../components/shared/wizard/wizard-service.service';
+import { WindowWidth } from '../../../core/utils/window-width';
+import { WindowService } from '../../../core/services/browser/window.service';
+import { SearchMode } from '../../../core/models/settings.model';
+import { GenesInHorvathClock } from '../../../core/models/open-genes-api/genes-in-horvath-clock.model';
 
 @Component({
   selector: 'app-horvath-clock-page',
@@ -92,7 +92,7 @@ export class HorvathClockComponent extends WindowWidth implements OnInit, OnDest
   }
 
   private searchByGenes(query: string): void {
-    if (query && query.length > 2) {
+    if (query && query.length > 1) {
       this.searchedGenes = this.genes?.filter((gene) => {
         // Fields always acquired in response
         const searchedText = [gene.id, gene?.ensembl ? gene.ensembl : '', gene.symbol, gene.name]

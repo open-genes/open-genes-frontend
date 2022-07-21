@@ -104,6 +104,16 @@
     ></app-associated-disease-categories>
   </div>
 
+  <div *ngIf="listSettings.ifShowResearches"
+      class="card__section">
+    <span class="label __mb-0">
+      {{ "gene_list_researches_number" | translate }}
+    </span>
+    <app-experiments-stats
+      [researches]="item.researches">
+    </app-experiments-stats>
+  </div>
+
   <div *ngIf="listSettings.ifShowCriteria"
        class="card__section">
     <span class="label __mb-0">
