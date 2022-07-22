@@ -55,7 +55,7 @@ export class DownloadComponent {
     });
   }
 
-  public async downloadDiseaseCsv() {
+  public async downloadDiseaseTsv() {
     try {
       this.isProcessing = true;
       const res = await this.csvExportService.generateGenesDiseasesTable();
@@ -70,7 +70,7 @@ export class DownloadComponent {
     }
   }
 
-  public async downloadAgingMechanismsCsv() {
+  public async downloadAgingMechanismsTsv() {
     try {
       this.isProcessing = true;
       const res = await this.csvExportService.generateGenesAgingMechanismsTable();
@@ -84,7 +84,7 @@ export class DownloadComponent {
     }
   }
 
-  public async generateGeneTissueRpkmCsv() {
+  public async generateGeneTissueRpkmTsv() {
     try {
       this.isProcessing = true;
       const res = await this.csvExportService.generateGeneTissueRpkmTable();
@@ -98,7 +98,7 @@ export class DownloadComponent {
     }
   }
 
-  public async downloadGoTermsCsv() {
+  public async downloadGoTermsTsv() {
     try {
       this.isProcessing = true;
       const res = await this.csvExportService.generateGeneAndGoTermsTable();
@@ -112,7 +112,7 @@ export class DownloadComponent {
     }
   }
 
-  public async downloadYellowTablesCsv() {
+  public async downloadYellowTablesTsv() {
     try {
       this.isProcessing = true;
       const res = await this.csvExportService.generateYellowTable();
@@ -126,7 +126,7 @@ export class DownloadComponent {
     }
   }
 
-  public async downloadPinkTablesCsv() {
+  public async downloadPinkTablesTsv() {
     try {
       this.isProcessing = true;
       const res = await this.csvExportService.generatePinkTable();
@@ -140,7 +140,7 @@ export class DownloadComponent {
     }
   }
 
-  public async downloadPurpleTablesCsv() {
+  public async downloadPurpleTablesTsv() {
     try {
       this.isProcessing = true;
       const res = await this.csvExportService.generatePurpleTable();
@@ -154,7 +154,7 @@ export class DownloadComponent {
     }
   }
 
-  public async generateGreenTableCsv() {
+  public async generateGreenTableTsv() {
     try {
       this.isProcessing = true;
       const res = await this.csvExportService.generateGreenTable();
@@ -168,7 +168,7 @@ export class DownloadComponent {
     }
   }
 
-  public async generateBlueTableCsv() {
+  public async generateBlueTableTsv() {
     try {
       this.isProcessing = true;
       const res = await this.csvExportService.generateBlueTable();
@@ -182,7 +182,7 @@ export class DownloadComponent {
     }
   }
 
-  public async generateSummarizedResearchResultsCsv() {
+  public async generateSummarizedResearchResultsTsv() {
     this.isProcessing = true;
     const res = await this.csvExportService.generateSummarizedResearchResults();
     if (res.length !== 0) {
@@ -191,4 +191,16 @@ export class DownloadComponent {
       this.openDownloadModal(this.downLoadLinkTemplate);
     }
   }
+
+  public async generateGeneEvolutionTsv() {
+    this.isProcessing = true;
+    const res = await this.csvExportService.generateGeneEvolutionTable();
+    if (res.length !== 0) {
+      this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+      this.currentDatasetName = 'gene-evolution';
+      this.openDownloadModal(this.downLoadLinkTemplate);
+    }
+  }
+
+
 }

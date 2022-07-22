@@ -61,32 +61,32 @@
             <ul class="list">
               <li>
                 <button class="link link--blue link--underline link-button"
-                        (click)="downloadYellowTablesCsv()"
+                        (click)="downloadYellowTablesTsv()"
                 >{{ "gene_page_researches_protein_regulates_genes" | translate }}</button>
               </li>
               <li>
                 <button class="link link--blue link--underline link-button"
-                        (click)="downloadPinkTablesCsv()"
+                        (click)="downloadPinkTablesTsv()"
                 >{{ "gene_page_researches_longevity_effects" | translate }}</button>
               </li>
               <li>
                 <button class="link link--blue link--underline link-button"
-                        (click)="downloadPurpleTablesCsv()"
+                        (click)="downloadPurpleTablesTsv()"
                 >{{ "gene_page_researches_lifespan" | translate }}</button>
               </li>
               <li>
                 <button class="link link--blue link--underline link-button"
-                        (click)="generateGreenTableCsv()"
+                        (click)="generateGreenTableTsv()"
                 >{{ "gene_page_intervention_moderates_aging" | translate }}</button>
               </li>
               <li>
                 <button class="link link--blue link--underline link-button"
-                        (click)="generateBlueTableCsv()"
+                        (click)="generateBlueTableTsv()"
                 >{{ "gene_page_researches_age_related_changes" | translate }}</button>
               </li>
               <li>
                 <button class="link link--blue link--underline link-button"
-                        (click)="generateSummarizedResearchResultsCsv()"
+                        (click)="generateSummarizedResearchResultsTsv()"
                 >{{ "download_page_summarized_research_results" | translate }}</button>
               </li>
             </ul>
@@ -97,26 +97,32 @@
             <ul class="list">
               <li>
                 <button class="link link--blue link--underline link-button"
-                        (click)="downloadDiseaseCsv()"
+                        (click)="downloadDiseaseTsv()"
                 >{{ "download_page_datasets_general_1" | translate }}
                 </button>
               </li>
               <li>
                 <button class="link link--blue link--underline link-button"
-                        (click)="downloadAgingMechanismsCsv()"
+                        (click)="downloadAgingMechanismsTsv()"
                 >{{ "download_page_datasets_general_2" | translate }}
                 </button>
               </li>
               <li>
                 <button class="link link--blue link--underline link-button"
-                        (click)="downloadGoTermsCsv()"
+                        (click)="downloadGoTermsTsv()"
                 >{{ "download_page_datasets_general_3" | translate }}
                 </button>
               </li>
               <li>
                 <button class="link link--blue link--underline link-button"
-                        (click)="generateGeneTissueRpkmCsv()"
+                        (click)="generateGeneTissueRpkmTsv()"
                 >{{ "download_page_datasets_general_4" | translate }}
+                </button>
+              </li>
+              <li>
+                <button class="link link--blue link--underline link-button"
+                        (click)="generateGeneEvolutionTsv()"
+                >{{ "download_page_datasets_general_5" | translate }}
                 </button>
               </li>
             </ul>

@@ -52,7 +52,6 @@ export class CsvExportService extends AdditionalInterventionResolver {
 
   private async generateSimplePairCsv(csvHeader: string, field: any, filterFn?: (gene: any) => any) {
     let resultingString = '';
-    // TODO: cache after once made and invalidate on the next session
     const response = await CsvExportService.FetchData(
       `https://open-genes.com/api/gene/search?pageSize=${this.maxPageSize}`,
       0,
@@ -846,6 +845,33 @@ export class CsvExportService extends AdditionalInterventionResolver {
         }
         return resultingString;
       }
+    }
+    return null;
+  }
+
+  public async generateGeneEvolutionTable() {
+    let items = [];
+    let resultingString = '';
+    const fetchedItems = await CsvExportService.FetchData(
+      `https://open-genes.com/api/gene/search?pageSize=${this.maxPageSize}`,
+      0,
+      1,
+      {}
+    );
+    const resItems = await fetchedItems.json();
+    items = resItems.items;
+    const csvHeader = this.makeRow(['HGNC', 'gene origin', 'gene family origin', 'conservative in']);
+    resultingString = resultingString + csvHeader;
+
+    if (items.length !== 0) {
+      for (const gene of items) {
+        const origin = this.checkBlankValues(gene.origin?.phylum);
+        const familyOrigin = this.checkBlankValues(gene.familyOrigin?.phylum);
+        const conservativeIn = this.checkBlankValues(gene.homologueTaxon);
+        const arrRow = this.makeRow([gene.symbol, origin, familyOrigin, conservativeIn]);
+        resultingString = resultingString + arrRow;
+      }
+      return resultingString;
     }
     return null;
   }
