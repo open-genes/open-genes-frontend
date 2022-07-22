@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Filter } from '../../../../core/models/filters/filter.model';
-import { FilterTypesEnum } from './filter-types.enum';
 import { GenesListSettings } from '../genes-list-settings.model';
 import { Genes } from '../../../../core/models';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -27,6 +26,21 @@ export class FilterService {
 
   // TODO: it's bad that the one can directly change filters state here
   public filters: Filter = {
+    byAgeRelatedProcess: [],
+    byDiseases: [],
+    byDiseaseCategories: [],
+    bySelectionCriteria: [],
+    byExpressionChange: 0,
+    byMethylationChange: '',
+    byAgingMechanism: [],
+    byProteinClass: [],
+    byOrigin: [],
+    byFamilyOrigin: [],
+    byConservativeIn: [],
+    researches: 0,
+  };
+
+  private filtersDefault: Readonly<Filter> = {
     byAgeRelatedProcess: [],
     byDiseases: [],
     byDiseaseCategories: [],
@@ -114,70 +128,11 @@ export class FilterService {
   }
 
   // Clear
-  public clearFilters(filterName?: string): void {
-    const {
-      disease,
-      disease_categories,
-      age_related_processes,
-      selection_criteria,
-      expression_change,
-      methylation_change,
-      aging_mechanism,
-      protein_classes,
-      origin,
-      family_origin,
-      conservative_in,
-      researches,
-    } = FilterTypesEnum; // TODO: this enum is excessive
-    switch (filterName) {
-      case age_related_processes:
-        this.filters.byAgeRelatedProcess = [];
-        break;
-      case disease:
-        this.filters.byDiseases = [];
-        break;
-      case disease_categories:
-        this.filters.byDiseaseCategories = [];
-        break;
-      case selection_criteria:
-        this.filters.bySelectionCriteria = [];
-        break;
-      case expression_change:
-        this.filters.byExpressionChange = 0;
-        break;
-      case methylation_change:
-        this.filters.byMethylationChange = '';
-        break;
-      case aging_mechanism:
-        this.filters.byAgingMechanism = [];
-        break;
-      case protein_classes:
-        this.filters.byProteinClass = [];
-        break;
-      case origin:
-        this.filters.byOrigin = [];
-        break;
-      case family_origin:
-        this.filters.byFamilyOrigin = [];
-        break;
-      case conservative_in:
-        this.filters.byConservativeIn = [];
-        break;
-      case researches:
-        this.filters.researches = 0;
-        break;
-      default:
-        this.filters.byAgeRelatedProcess = [];
-        this.filters.byDiseases = [];
-        this.filters.byDiseaseCategories = [];
-        this.filters.bySelectionCriteria = [];
-        this.filters.byExpressionChange = 0;
-        this.filters.byMethylationChange = '';
-        this.filters.byAgingMechanism = [];
-        this.filters.byProteinClass = [];
-        this.filters.byOrigin = [];
-        this.filters.byFamilyOrigin = [];
-        this.filters.byConservativeIn = [];
+  public clearFilters(filterName?: keyof Filter): void {
+    if (filterName in this.filters) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.filters[filterName] = this.filtersDefault[filterName];
     }
     this.pagination.page = 1;
 

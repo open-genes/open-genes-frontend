@@ -38,7 +38,7 @@
       <app-associated-diseases
         [geneDiseases]="item.diseases"
         [activeListItem]="filters.byDiseases"
-        (clickEvent)="applyFilter(filterTypes.disease, $event)"
+        (clickEvent)="applyFilter('byDiseases', $event)"
       ></app-associated-diseases>
     </div>
   </td>
@@ -49,7 +49,7 @@
       <app-associated-disease-categories
         [geneDiseaseCategories]="item.diseaseCategories"
         [activeListItem]="filters.byDiseaseCategories"
-        (clickEvent)="applyFilter(filterTypes.disease_categories, $event)"
+        (clickEvent)="applyFilter('byDiseaseCategories', $event)"
       ></app-associated-disease-categories>
     </div>
   </td>
@@ -60,7 +60,7 @@
         <app-aging-mechanisms
           [geneAgingMechanisms]="item.agingMechanisms"
           [activeListItem]="filters.byAgingMechanism"
-          (clickEvent)="applyFilter(filterTypes.aging_mechanism, $event)"
+          (clickEvent)="applyFilter('byAgingMechanism', $event)"
         ></app-aging-mechanisms>
       </div>
     </td>
@@ -73,7 +73,7 @@
         *ngIf="item?.proteinClasses"
         [geneProteinClasses]="item.proteinClasses"
         [activeListItem]="filters.byProteinClass"
-        (clickEvent)="applyFilter(filterTypes.protein_classes, $event)"
+        (clickEvent)="applyFilter('byProteinClass', $event)"
       ></app-protein-classes>
     </div>
   </td>
@@ -82,7 +82,7 @@
       class="cell cell--expression">
     <div class="overflow">
       <app-tag
-        (click)="applyFilter(filterTypes.expression_change, item.expressionChange)"
+        (click)="applyFilter('byExpressionChange', item.expressionChange)"
         [isDisabled]="item.expressionChange === 0"
         [isActive]="
             filters.byExpressionChange === item.expressionChange &&
@@ -98,7 +98,7 @@
       <app-selection-criteria
         [geneCriteria]="item.commentCause"
         [activeListItem]="filters.bySelectionCriteria"
-        (clickEvent)="applyFilter(filterTypes.selection_criteria, $event)"
+        (clickEvent)="applyFilter('bySelectionCriteria', $event)"
       ></app-selection-criteria>
     </div>
   </td>
@@ -108,7 +108,7 @@
     <div class="overflow">
       <app-tag
         *ngIf="item.methylationCorrelation !== ''"
-        (click)="applyFilter(filterTypes.methylation_change, item.methylationCorrelation)"
+        (click)="applyFilter('byMethylationChange', item.methylationCorrelation)"
         [isActive]="filters.byMethylationChange === item.methylationCorrelation"
       >{{ item.methylationCorrelation }}
       </app-tag>
@@ -142,8 +142,8 @@
       class="cell cell--functions">
     <app-tag
       *ngFor="let item of item.functionalClusters"
-      (click)="applyFilter(filterTypes.age_related_processes, item.id)"
-      [isActive]="filters.byAgeRelatedProcess.includes(item.id)">
+      (click)="applyFilter('byAgeRelatedProcess', item.id)"
+      [isActive]="isAgeRelatedProcessActive(item.id)">
       {{ item.name }}
     </app-tag>
   </td>

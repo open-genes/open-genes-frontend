@@ -29,7 +29,7 @@
 <button
   *ngIf="filters.byAgeRelatedProcess.length"
   class="filter __active"
-  (click)="clearFilters(filterTypes.age_related_processes)">
+  (click)="clearFilters('byAgeRelatedProcess')">
   {{ "entities_age_related_processes" | translate }}
   <span class="fa fal fa-times"></span>
 </button>
@@ -37,7 +37,7 @@
 <button
   *ngIf="filters.byExpressionChange !== 0"
   class="filter __active"
-  (click)="clearFilters(filterTypes.expression_change)"
+  (click)="clearFilters('byExpressionChange')"
 >
   {{ "main_page_table_expression" | translate }}
   <span class="fa fal fa-times"></span>
@@ -46,7 +46,7 @@
 <button
   *ngIf="filters.byDiseases.length"
   class="filter __active"
-  (click)="clearFilters(filterTypes.disease)"
+  (click)="clearFilters('byDiseases')"
 >
   {{ "gene_list_diseases" | translate }}
   <span class="fa fal fa-times"></span>
@@ -55,7 +55,7 @@
 <button
   *ngIf="filters.bySelectionCriteria.length"
   class="filter __active"
-  (click)="clearFilters(filterTypes.selection_criteria)"
+  (click)="clearFilters('bySelectionCriteria')"
 >
   {{ "main_page_table_criteria" | translate }}
   <span class="fa fal fa-times"></span>
@@ -64,7 +64,7 @@
 <button
   *ngIf="filters.byDiseaseCategories.length"
   class="filter __active"
-  (click)="clearFilters(filterTypes.disease_categories)"
+  (click)="clearFilters('byDiseaseCategories')"
 >
   {{ "gene_list_disease_categories" | translate }}
   <span class="fa fal fa-times"></span>
@@ -73,7 +73,7 @@
 <button
   *ngIf="filters.byAgingMechanism.length"
   class="filter __active"
-  (click)="clearFilters(filterTypes.aging_mechanism)"
+  (click)="clearFilters('byAgingMechanism')"
 >
   {{ "gene_list_aging_mechanisms" | translate }}
   <span class="fa fal fa-times"></span>
@@ -82,7 +82,7 @@
 <button
   *ngIf="filters.byProteinClass.length"
   class="filter __active"
-  (click)="clearFilters(filterTypes.protein_classes)"
+  (click)="clearFilters('byProteinClass')"
 >
   {{ "gene_list_protein_classes" | translate }}
   <span class="fa fal fa-times"></span>

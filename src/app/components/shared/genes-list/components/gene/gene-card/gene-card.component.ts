@@ -20,7 +20,7 @@ export class GeneCardComponent extends GeneTableCardLogic {
     protected _filterService: FilterService,
     protected _favouritesService: FavouritesService,
     protected _snackBar: MatSnackBar,
-    protected cdRef: ChangeDetectorRef,
+    protected cdRef: ChangeDetectorRef
   ) {
     super(_filterService, _favouritesService, _snackBar, cdRef);
   }

@@ -18,6 +18,20 @@ export interface Filter {
   researches: number; // send researches in response
 }
 
+export type Parameters =
+  | 'byDiseases'
+  | 'byDiseaseCategories'
+  | 'byAgeRelatedProcess'
+  | 'bySelectionCriteria'
+  | 'byExpressionChange'
+  | 'byMethylationChange'
+  | 'byAgingMechanism'
+  | 'byProteinClass'
+  | 'byOrigin'
+  | 'byFamilyOrigin'
+  | 'byConservativeIn'
+  | 'researches';
+
 export interface ISort {
   byName: boolean; // by gene name
   byAge: boolean; // by gene evolutionary age (familyOrigin.order field)

@@ -8,7 +8,6 @@ import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.c
 import { Observable, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Filter } from '../models/filters/filter.model';
-import { FilterTypesEnum } from '../../components/shared/genes-list/services/filter-types.enum';
 
 @Directive()
 export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
@@ -16,8 +15,6 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
 
   public listSettings: GenesListSettings;
   public filters: Filter = this.filterService.filters;
-  public filterTypes = FilterTypesEnum;
-
   protected subscription$ = new Subject();
 
   protected constructor(
@@ -95,6 +92,13 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
 
   public isFaved(geneId: number): Observable<boolean> {
     return of(this.favouritesService.isInFavourites(geneId));
+  }
+
+  /**
+   * Narrow type and check if age related process filter is active
+   */
+  public isAgeRelatedProcessActive(id: string): boolean {
+    return this.filters.byAgeRelatedProcess.includes(Number(id));
   }
 
   /**

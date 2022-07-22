@@ -12,12 +12,11 @@ import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { Genes } from '../../../core/models';
 import { FilterService } from './services/filter.service';
-import { FilterTypesEnum, SortEnum } from './services/filter-types.enum';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { FileExportService } from '../../../core/services/browser/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
-import { Filter } from '../../../core/models/filters/filter.model';
+import { Filter, Parameters } from '../../../core/models/filters/filter.model';
 import { Pagination, SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { FavouritesService } from '../../../core/services/favourites.service';
@@ -25,6 +24,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Sort } from '@angular/material/sort';
 import { ApiResponse } from '../../../core/models/api-response.model';
 import { SearchModel } from '../../../core/models/open-genes-api/search.model';
+import { SortEnum } from './services/filter-types.enum';
 
 @Component({
   selector: 'app-genes-list',
@@ -95,7 +95,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
 
   public searchedData: Genes[] = [];
   public foundAndNotFoundGenes: Omit<SearchModel, 'items'>;
-  public filterTypes = FilterTypesEnum;
   public sortEnum = SortEnum;
   public searchMode: SearchMode;
   public isTableView: boolean;
@@ -233,7 +232,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   /**
    * Filter reset
    */
-  public clearFilters(filterName?: string): void {
+  public clearFilters(filterName?: Parameters): void {
     delete this.filterService.filters.bySuggestions;
     delete this.filterService.filters.byGeneSymbol;
     this.filterService.clearFilters(filterName ? filterName : null);

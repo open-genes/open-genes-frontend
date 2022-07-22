@@ -49,7 +49,7 @@
                 <button *ngFor="let item of gene.proteinClasses"
                         matTooltip="{{ item.name }}"
                         class="alias"
-                        (click)="applyFilter(filterTypes.protein_classes, item.id)">
+                        (click)="applyFilter('byProteinClass', item.id)">
                   <div class="alias__overflow">{{item.name}}</div>
                 </button>
               </ng-container>
@@ -126,7 +126,7 @@
                   <div class="row__value col">
                     <ng-container *ngIf="gene.functionalClusters.length; else noData">
                       <button *ngFor="let item of gene.functionalClusters"
-                              class="alias item__value" (click)="applyFilter(filterTypes.age_related_processes, item.id)">
+                              class="alias item__value" (click)="applyFilter('byAgeRelatedProcess', item.id)">
                         {{item.name}}
                       </button>
                     </ng-container>
@@ -177,7 +177,7 @@
                       class="annotation__filters-list"
                       [geneDiseases]="gene.diseases"
                       [activeListItem]="filters.byDiseases"
-                      (clickEvent)="applyFilter(filterTypes.disease, $event)"
+                      (clickEvent)="applyFilter('byDiseases', $event)"
                     ></app-associated-diseases>
 
                     <ng-template #noData>
@@ -197,7 +197,7 @@
                       class="annotation__filters-list"
                       [geneDiseaseCategories] ="gene.diseaseCategories"
                       [activeListItem]="filters.byDiseaseCategories"
-                      (clickEvent)="applyFilter(filterTypes.disease_categories, $event)"
+                      (clickEvent)="applyFilter('byDiseaseCategories', $event)"
                     ></app-associated-disease-categories>
 
                     <ng-template #noData>

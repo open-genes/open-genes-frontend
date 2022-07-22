@@ -1,3 +1,4 @@
-<div class="search-container">
+<div *ngIf="quantity"
+     class="search-container">
   {{ title | translate: { number: quantity } }}
 </div>

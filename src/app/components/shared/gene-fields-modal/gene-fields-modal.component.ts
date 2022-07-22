@@ -6,10 +6,9 @@ import { Observable, Subject } from 'rxjs';
 import { SettingsService } from '../../../core/services/settings.service';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { FilterTypes } from '../../../core/models/filters/filter-types.model';
+import { Parameters } from '../../../core/models/filters/filter.model';
 import { MatSelectChange } from '@angular/material/select';
 import { Filter } from '../../../core/models/filters/filter.model';
-import { FilterTypesEnum } from '../genes-list/services/filter-types.enum';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
@@ -61,8 +60,6 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
 
   // Researches
   public filtersForm: FormGroup;
-  public filterTypes = FilterTypesEnum;
-
   private subscription$ = new Subject();
 
   @Output() showSkeletonChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -220,7 +217,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  public apply(filterType: FilterTypes, $event: MatSelectChange | MatCheckboxChange): void {
+  public apply(filterType: Parameters, $event: MatSelectChange | MatCheckboxChange): void {
     let value;
     if ($event instanceof MatCheckboxChange) {
       value = $event.checked;
@@ -245,7 +242,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     this.getState();
   }
 
-  public toggleSwitchAndFilter(filterType: FilterTypes, $event): void {
+  public toggleSwitchAndFilter(filterType: Parameters, $event): void {
     this.listSettings.ifShowResearches = !$event.checked;
     this.filterService.applyFilter(filterType, Number(this.listSettings.ifShowResearches));
     this.getState();
@@ -263,34 +260,34 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     if (formControlName) {
       switch (formControlName) {
         case 'ageRelatedProcessesSelect':
-          this.filterService.clearFilters('age_related_processes');
+          this.filterService.clearFilters('byAgeRelatedProcess');
           break;
         case 'expressionChangeSelect':
-          this.filterService.clearFilters('expression_change');
+          this.filterService.clearFilters('byExpressionChange');
           break;
         case 'diseasesSelect':
-          this.filterService.clearFilters('disease');
+          this.filterService.clearFilters('byDiseases');
           break;
         case 'diseaseCategoriesSelect':
-          this.filterService.clearFilters('disease_categories');
+          this.filterService.clearFilters('byDiseaseCategories');
           break;
         case 'selectionCriteriaSelect':
-          this.filterService.clearFilters('selection_criteria');
+          this.filterService.clearFilters('bySelectionCriteria');
           break;
         case 'agingMechanismsSelect':
-          this.filterService.clearFilters('aging_mechanism');
+          this.filterService.clearFilters('byAgingMechanism');
           break;
         case 'proteinClassesSelect':
-          this.filterService.clearFilters('protein_classes');
+          this.filterService.clearFilters('byProteinClass');
           break;
         case 'originSelect':
-          this.filterService.clearFilters('origin');
+          this.filterService.clearFilters('byOrigin');
           break;
         case 'familyOriginSelect':
-          this.filterService.clearFilters('family_origin');
+          this.filterService.clearFilters('byFamilyOrigin');
           break;
         case 'conservativeInSelect':
-          this.filterService.clearFilters('conservative_in');
+          this.filterService.clearFilters('byConservativeIn');
           break;
       }
     } else {
