@@ -10,6 +10,8 @@ export class CsvExportService extends AdditionalInterventionResolver {
   // private researches: any[]; // TODO: add typing from OG-724
   private emptyCellValue = 'n/a';
   private maxPageSize = 0;
+  private del = '\t'; // delimiter
+  private eol = '\r'; // end of the line
 
   constructor() {
     super();
@@ -31,10 +33,12 @@ export class CsvExportService extends AdditionalInterventionResolver {
     return fetch(url, fetchOptions).catch(onError);
   }
 
+  private makeRow(arr: any[]): string {
+    return arr.map((i) => `"${i}"`).join(this.del) + this.eol;
+  }
+
   private sanitize(string) {
-    if (typeof string === 'string') {
-      return string.replace('"', '');
-    }
+    // TODO: make sanitization for tsv format
     return string;
   }
 
@@ -48,7 +52,6 @@ export class CsvExportService extends AdditionalInterventionResolver {
 
   private async generateSimplePairCsv(csvHeader: string, field: any, filterFn?: (gene: any) => any) {
     let resultingString = '';
-    // TODO: cache after once made and invalidate on the next session
     const response = await CsvExportService.FetchData(
       `https://open-genes.com/api/gene/search?pageSize=${this.maxPageSize}`,
       0,
@@ -67,7 +70,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
           } else {
             items = gene[field].map((d) => `'${d.name}'`);
           }
-          const csvRow = `"${gene.symbol}", "${items}"\n`;
+          const csvRow = `"${gene.symbol}"${this.del}"${items}"${this.eol}`;
           resultingString = resultingString + csvRow;
         }
         return resultingString;
@@ -77,11 +80,11 @@ export class CsvExportService extends AdditionalInterventionResolver {
   }
 
   public async generateGenesDiseasesTable() {
-    return await this.generateSimplePairCsv('"HGNC", "diseases"\n', 'diseases');
+    return await this.generateSimplePairCsv(`"HGNC", "diseases"${this.eol}`, 'diseases');
   }
 
   public async generateGenesAgingMechanismsTable() {
-    return await this.generateSimplePairCsv('"HGNC", "aging mechanisms"\n', 'agingMechanisms', (g) => {
+    return await this.generateSimplePairCsv(`"HGNC", "aging mechanisms"${this.eol}`, 'agingMechanisms', (g) => {
       // Filter duplicates from backend
       const mappedMechanisms = new Map();
       g.agingMechanisms.forEach((e) => {
@@ -97,7 +100,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
     const fetchedItems = await CsvExportService.FetchData('https://open-genes.com/api/gene/symbols', 0, 1, {});
     const resItems = await fetchedItems.json();
     items = resItems.items;
-    const csvHeader = '"HGNC", "tissue or organ", "rpkm"\n';
+    const csvHeader = this.makeRow(['HGNC', 'tissue or organ', 'rpkm']);
     resultingString = resultingString + csvHeader;
 
     if (items.length !== 0) {
@@ -108,11 +111,11 @@ export class CsvExportService extends AdditionalInterventionResolver {
         const resJson = await res.json();
         if (resJson.expression.length !== 0) {
           for (const i of resJson.expression) {
-            const arrRow = `"${hgnc}", "${i.name}", "${i.exp_rpkm}"\n`;
+            const arrRow = this.makeRow([i.hgnc, i.name, i.exp_rpkm]);
             resultingString = resultingString + arrRow;
           }
         } else {
-          const arrRow = `"${hgnc}", "", ""\n`;
+          const arrRow = this.makeRow([hgnc, '', '']);
           resultingString = resultingString + arrRow;
         }
       }
@@ -128,7 +131,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
     const fetchedItems = await CsvExportService.FetchData('https://open-genes.com/api/gene/symbols', 0, 1, {});
     const resItems = await fetchedItems.json();
     items = resItems.items;
-    const csvHeader = '"HGNC", "GO biological process", "GO molecular activity", "GO cellular component"\n';
+    const csvHeader = this.makeRow(['HGNC', 'GO biological process', 'GO molecular activity', 'GO cellular component']);
     resultingString = resultingString + csvHeader;
 
     if (items.length !== 0) {
@@ -151,11 +154,11 @@ export class CsvExportService extends AdditionalInterventionResolver {
             goComponent = resJson.terms?.cellular_component.flatMap((e) => Object.values(e));
           }
 
-          const csvRow = `"${hgnc}", "${goProcess}", "${goActivity}", "${goComponent}"\n`;
+          const csvRow = this.makeRow([hgnc, goProcess, goActivity, goComponent]);
           // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           resultingString = resultingString + csvRow;
         } else {
-          const csvRow = document.createTextNode(`"${hgnc}", "", "", ""\n`);
+          const csvRow = this.makeRow([hgnc, '', '', '']);
           // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           resultingString = resultingString + csvRow;
         }
@@ -167,22 +170,19 @@ export class CsvExportService extends AdditionalInterventionResolver {
 
   public async generatePinkTable() {
     let resultingString = '';
-    const csvHeader =
-      [
-        'HGNC',
-        'comment',
-        'doi',
-        'pmid',
-        'dataType',
-        'changeType',
-        'modelOrganism',
-        'allelicVariant',
-        'allelicPolymorphism',
-        'longevityEffect',
-        'sex',
-      ]
-        .map((i) => `"${i}"`)
-        .join(',') + '\n';
+    const csvHeader = this.makeRow([
+      'HGNC',
+      'comment',
+      'doi',
+      'pmid',
+      'dataType',
+      'changeType',
+      'modelOrganism',
+      'allelicVariant',
+      'allelicPolymorphism',
+      'longevityEffect',
+      'sex',
+    ]);
     resultingString = resultingString + csvHeader;
 
     const response = await CsvExportService.FetchData(
@@ -209,10 +209,21 @@ export class CsvExportService extends AdditionalInterventionResolver {
             const allelicPolymorphism = this.checkBlankValues(form?.allelicPolymorphism);
             const longevityEffect = this.checkBlankValues(form?.longevityEffect);
             const sex = this.checkBlankValues(form?.sex);
-            resultingString =
-              resultingString +
-              `${geneSymbol}, "${comment}", ${doi}, ${pmid}, "${dataType}", "${changeType}", "${modelOrganism}", ` +
-              `"${allelicVariant}", "${allelicPolymorphism}", "${longevityEffect}", "${sex}"\n`;
+
+            const row = this.makeRow([
+              geneSymbol,
+              comment,
+              doi,
+              pmid,
+              dataType,
+              changeType,
+              modelOrganism,
+              allelicVariant,
+              allelicPolymorphism,
+              longevityEffect,
+              sex,
+            ]);
+            resultingString = resultingString + row;
           }
         }
         return resultingString;
@@ -223,10 +234,15 @@ export class CsvExportService extends AdditionalInterventionResolver {
 
   public async generateYellowTable() {
     let resultingString = '';
-    const csvHeader =
-      ['HGNC', 'comment', 'doi', 'pmid', 'proteinActivity', 'regulatedGene', 'regulationType']
-        .map((i) => `"${i}"`)
-        .join(',') + '\n';
+    const csvHeader = this.makeRow([
+      'HGNC',
+      'comment',
+      'doi',
+      'pmid',
+      'proteinActivity',
+      'regulatedGene',
+      'regulationType',
+    ]);
     resultingString = resultingString + csvHeader;
 
     const response = await CsvExportService.FetchData(
@@ -249,9 +265,9 @@ export class CsvExportService extends AdditionalInterventionResolver {
             const proteinActivity = this.checkBlankValues(form?.proteinActivity);
             const regulationType = this.checkBlankValues(form?.regulationType);
             const regulatedGene = form?.regulatedGene.symbol;
-            resultingString =
-              resultingString +
-              `"${geneSymbol}", "${comment}", "${doi}", "${pmid}", "${proteinActivity}",  "${regulatedGene}", "${regulationType}"\n`;
+
+            const row = this.makeRow([geneSymbol, comment, doi, pmid, proteinActivity, regulatedGene, regulationType]);
+            resultingString = resultingString + row;
           }
         }
         return resultingString;
@@ -262,53 +278,50 @@ export class CsvExportService extends AdditionalInterventionResolver {
 
   public async generatePurpleTable() {
     let resultingString = '';
-    const csvHeader =
-      [
-        'HGNC',
-        'model organism',
-        'sex',
-        'line',
-        'effect on lifespan',
-        'control cohort size',
-        'experiment cohort size',
-        'quantity of animals in a cage or container',
-        'containment temperature (Celcius)',
-        'diet',
-        'target gene expression change',
-        'control lifespan - min',
-        'control lifespan - mean',
-        'control lifespan - median',
-        'control lifespan - max',
-        'experiment lifespan - min',
-        'experiment lifespan - mean',
-        'experiment lifespan - median',
-        'experiment lifespan - max',
-        'lifespan time unit',
-        'lifespan % change - min',
-        'significance',
-        'lifespan % change - mean',
-        'significance',
-        'lifespan % change - median',
-        'significance',
-        'lifespan % change - max',
-        'significance',
-        'intervention deteriorates',
-        'intervention improves',
-        'main effect on lifespan',
-        'intervention way',
-        'intervention method',
-        'genotype',
-        'tissue',
-        'tissue specific promoter',
-        'induction by drug withdrawal',
-        'drug',
-        'treatment start',
-        'treatment end',
-        'doi',
-        'pmid',
-      ]
-        .map((i) => `"${i}"`)
-        .join(',') + '\n';
+    const csvHeader = this.makeRow([
+      'HGNC',
+      'model organism',
+      'sex',
+      'line',
+      'effect on lifespan',
+      'control cohort size',
+      'experiment cohort size',
+      'quantity of animals in a cage or container',
+      'containment temperature (Celcius)',
+      'diet',
+      'target gene expression change',
+      'control lifespan - min',
+      'control lifespan - mean',
+      'control lifespan - median',
+      'control lifespan - max',
+      'experiment lifespan - min',
+      'experiment lifespan - mean',
+      'experiment lifespan - median',
+      'experiment lifespan - max',
+      'lifespan time unit',
+      'lifespan % change - min',
+      'significance',
+      'lifespan % change - mean',
+      'significance',
+      'lifespan % change - median',
+      'significance',
+      'lifespan % change - max',
+      'significance',
+      'intervention deteriorates',
+      'intervention improves',
+      'main effect on lifespan',
+      'intervention way',
+      'intervention method',
+      'genotype',
+      'tissue',
+      'tissue specific promoter',
+      'induction by drug withdrawal',
+      'drug',
+      'treatment start',
+      'treatment end',
+      'doi',
+      'pmid',
+    ]);
     resultingString = resultingString + csvHeader;
 
     // TODO: OG-811
@@ -430,54 +443,51 @@ export class CsvExportService extends AdditionalInterventionResolver {
               // comment = this.checkBlankValues(comment);
               const doi = this.checkBlankValues(form?.doi);
               const pmid = this.checkBlankValues(form?.pmid);
-              const csvRow =
-                [
-                  geneSymbol,
-                  modelOrganism,
-                  sex,
-                  organismLine,
-                  interventionResultForLifespan,
-                  controlCohortSize,
-                  experimentCohortSize,
-                  populationDensity,
-                  temperatureFrom,
-                  temperatureTo,
-                  diet,
-                  expressionChangePercent,
-                  lifespanMinControl,
-                  lifespanMeanControl,
-                  lifespanMedianControl,
-                  lifespanMaxControl,
-                  lifespanMinExperiment,
-                  lifespanMeanExperiment,
-                  lifespanMedianExperiment,
-                  lifespanMaxExperiment,
-                  lifespanTimeUnit,
-                  lifespanMinChangePercent,
-                  minChangePercentSignificance,
-                  lifespanMeanChangePercent,
-                  meanChangePercentSignificance,
-                  lifespanMedianChangePercent,
-                  medianChangePercentSignificance,
-                  lifespanMaxChangePercent,
-                  maxChangePercentSignificance,
-                  interventionDeteriorates,
-                  interventionImproves,
-                  experimentMainEffect,
-                  interventionWay,
-                  interventionMethod,
-                  genotype,
-                  tissues,
-                  tissueSpecificPromoter,
-                  inductionByDrugWithdrawal,
-                  drug,
-                  treatmentStart,
-                  treatmentEnd,
-                  doi,
-                  pmid,
-                ]
-                  .map((i) => `"${i}"`)
-                  .join(',') + '\n';
+              const csvRow = this.makeRow([
+                geneSymbol,
+                modelOrganism,
+                sex,
+                organismLine,
+                interventionResultForLifespan,
+                controlCohortSize,
+                experimentCohortSize,
+                populationDensity,
+                temperatureFrom,
+                temperatureTo,
+                diet,
+                expressionChangePercent,
+                lifespanMinControl,
+                lifespanMeanControl,
+                lifespanMedianControl,
+                lifespanMaxControl,
+                lifespanMinExperiment,
+                lifespanMeanExperiment,
+                lifespanMedianExperiment,
+                lifespanMaxExperiment,
+                lifespanTimeUnit,
+                lifespanMinChangePercent,
+                minChangePercentSignificance,
+                lifespanMeanChangePercent,
+                meanChangePercentSignificance,
+                lifespanMedianChangePercent,
+                medianChangePercentSignificance,
+                lifespanMaxChangePercent,
+                maxChangePercentSignificance,
+                interventionDeteriorates,
+                interventionImproves,
+                experimentMainEffect,
+                interventionWay,
+                interventionMethod,
+                genotype,
+                tissues,
+                tissueSpecificPromoter,
+                inductionByDrugWithdrawal,
+                drug,
+                treatmentStart,
+                treatmentEnd,
+                doi,
+                pmid,
+              ]);
               resultingString = resultingString + csvRow;
             }
           }
@@ -490,25 +500,22 @@ export class CsvExportService extends AdditionalInterventionResolver {
 
   public async generateGreenTable() {
     let resultingString = '';
-    const csvHeader =
-      [
-        'HGNC',
-        'comment',
-        'doi',
-        'pmid',
-        'intervention',
-        'model organism',
-        'line',
-        'intervention deteriorates',
-        'intervention improves',
-        'intervention result',
-        'process',
-        'age',
-        'genotype',
-        'sex',
-      ]
-        .map((i) => `"${i}"`)
-        .join(',') + '\n';
+    const csvHeader = this.makeRow([
+      'HGNC',
+      'comment',
+      'doi',
+      'pmid',
+      'intervention',
+      'model organism',
+      'line',
+      'intervention deteriorates',
+      'intervention improves',
+      'intervention result',
+      'process',
+      'age',
+      'genotype',
+      'sex',
+    ]);
     resultingString = resultingString + csvHeader;
 
     const response = await CsvExportService.FetchData(
@@ -555,10 +562,23 @@ export class CsvExportService extends AdditionalInterventionResolver {
               interventionDeteriorates = this.checkBlankValues(form?.interventionDeteriorates);
             }
 
-            const csvRow =
-              `"${geneSymbol}", "${comment}", "${doi}", "${pmid}", "${geneIntervention}",  "${modelOrganism}", ` +
-              `"${organismLine}", "${interventionDeteriorates}", "${interventionImproves}", "${interventionResult}", ` +
-              `"${vitalProcess}", "${age}", "${genotype}", "${sex}"\n`;
+            const csvRow = this.makeRow([
+              geneSymbol,
+              comment,
+              doi,
+              pmid,
+              geneIntervention,
+              modelOrganism,
+              organismLine,
+              interventionDeteriorates,
+              organismLine,
+              interventionImproves,
+              interventionResult,
+              vitalProcess,
+              age,
+              genotype,
+              sex,
+            ]);
             resultingString = resultingString + csvRow;
           }
         }
@@ -570,34 +590,31 @@ export class CsvExportService extends AdditionalInterventionResolver {
 
   public async generateBlueTable() {
     let resultingString = '';
-    const csvHeader =
-      [
-        'HGNC',
-        'model organism',
-        'line',
-        'sex',
-        'change percentage',
-        'p value',
-        'sample',
-        'age of control - max',
-        'age of experiment - max',
-        'age of control - mean',
-        'age of experiment - mean',
-        'age of control - max',
-        'age of experiment - max',
-        'age unit',
-        'change type',
-        'control cohort size',
-        'experiment cohort size',
-        'statistical method',
-        'expression evaluation by',
-        'measurement method',
-        'comment',
-        'doi',
-        'pmid',
-      ]
-        .map((i) => `"${i}"`)
-        .join(',') + '\n';
+    const csvHeader = this.makeRow([
+      'HGNC',
+      'model organism',
+      'line',
+      'sex',
+      'change percentage',
+      'p value',
+      'sample',
+      'age of control - max',
+      'age of experiment - max',
+      'age of control - mean',
+      'age of experiment - mean',
+      'age of control - max',
+      'age of experiment - max',
+      'age unit',
+      'change type',
+      'control cohort size',
+      'experiment cohort size',
+      'statistical method',
+      'expression evaluation by',
+      'measurement method',
+      'comment',
+      'doi',
+      'pmid',
+    ]);
     resultingString = resultingString + csvHeader;
 
     const response = await CsvExportService.FetchData(
@@ -636,11 +653,31 @@ export class CsvExportService extends AdditionalInterventionResolver {
             const statisticalMethod = this.checkBlankValues(form?.statisticalMethod);
             const expressionEvaluationBy = this.checkBlankValues(form?.expressionEvaluationBy);
             const measurementMethod = this.checkBlankValues(form?.measurementMethod);
-            const csvRow =
-              `"${geneSymbol}", ${modelOrganism}", "${organismLine}", "${sex}", "${value}", "${pValue}", ` +
-              `"${sample}", "${maxAgeOfControls}", "${maxAgeOfExperiment}", "${meanAgeOfControls}", "${meanAgeOfExperiment}", ` +
-              `"${minAgeOfControls}", "${minAgeOfExperiment}", "${ageUnit}", "${changeType}", "${controlCohortSize}", ` +
-              `"${experimentCohortSize}", "${statisticalMethod}", "${expressionEvaluationBy}", "${measurementMethod}", "${comment}", "${doi}", "${pmid}"\n`;
+            const csvRow = this.makeRow([
+              geneSymbol,
+              modelOrganism,
+              organismLine,
+              sex,
+              value,
+              pValue,
+              sample,
+              maxAgeOfControls,
+              maxAgeOfExperiment,
+              meanAgeOfControls,
+              meanAgeOfExperiment,
+              minAgeOfControls,
+              minAgeOfExperiment,
+              ageUnit,
+              changeType,
+              controlCohortSize,
+              experimentCohortSize,
+              statisticalMethod,
+              expressionEvaluationBy,
+              measurementMethod,
+              comment,
+              doi,
+              pmid,
+            ]);
             resultingString = resultingString + csvRow;
           }
         }
@@ -652,11 +689,17 @@ export class CsvExportService extends AdditionalInterventionResolver {
 
   public async generateSummarizedResearchResults() {
     let resultingString = '';
-    const csvHeader =
-      ['HGNC', 'research', 'criteria', 'model organism', 'sex', 'line', 'tissue', 'doi', 'pmid']
-        .map((i) => `"${i}"`)
-        .join(',') + '\n';
-
+    const csvHeader = this.makeRow([
+      'HGNC',
+      'research',
+      'criteria',
+      'model organism',
+      'sex',
+      'line',
+      'tissue',
+      'doi',
+      'pmid',
+    ]);
     resultingString = resultingString + csvHeader;
 
     const response = await CsvExportService.FetchData(
@@ -710,9 +753,9 @@ export class CsvExportService extends AdditionalInterventionResolver {
                 }
 
                 const csvRow =
-                  `"${symbol}", "Effect of gene activity modulation on lifespan in ${modelOrganism}", ` +
-                  `"${experimentMainEffect} (${interventionMethod}) ${interventionResultForLifespan}", ` +
-                  `"${modelOrganism}", "${sex}", "${line}", "${tissues}", "${doi}", "${pmid}"\n`;
+                  `"${symbol}"${this.del}"Effect of gene activity modulation on lifespan in ${modelOrganism}"${this.del}` +
+                  `"${experimentMainEffect} (${interventionMethod}) ${interventionResultForLifespan}"${this.del}` +
+                  this.makeRow([modelOrganism, sex, line, tissues, doi, pmid]);
                 resultingString = resultingString + csvRow;
               }
             });
@@ -732,8 +775,9 @@ export class CsvExportService extends AdditionalInterventionResolver {
                 const expressionEvaluationBy = this.checkBlankValues(form?.expressionEvaluationBy);
 
                 const csvRow =
-                  `"${symbol}", "Age-related changes in gene expression or protein activity in ${modelOrganism}", ` +
-                  `"${changeType} (expression evaluated by ${expressionEvaluationBy})", "${modelOrganism}", "${sex}", "${line}", "${sample}", "${doi}", "${pmid}"\n`;
+                  `"${symbol}"${this.del}"Age-related changes in gene expression or protein activity in ${modelOrganism}"${this.del}` +
+                  `"${changeType} (expression evaluated by ${expressionEvaluationBy})"${this.del}` +
+                  this.makeRow([modelOrganism, sex, line, sample, doi, pmid]);
                 resultingString = resultingString + csvRow;
               }
             });
@@ -754,8 +798,9 @@ export class CsvExportService extends AdditionalInterventionResolver {
                 const vitalProcess = this.checkBlankValues(form?.vitalProcess);
 
                 const csvRow =
-                  `"${symbol}", "Effect of gene activity modulation on the age-related process in ${modelOrganism}", ` +
-                  `"${geneIntervention} caused ${result} in ${vitalProcess}", "${modelOrganism}", "${sex}", "${line}", " ", "${doi}", "${pmid}"\n`;
+                  `"${symbol}"${this.del}"Effect of gene activity modulation on the age-related process in ${modelOrganism}"${this.del}` +
+                  `"${geneIntervention} caused ${result} in ${vitalProcess}"${this.del}` +
+                  this.makeRow([modelOrganism, sex, line, ' ', doi, pmid]);
                 resultingString = resultingString + csvRow;
               }
             });
@@ -774,8 +819,9 @@ export class CsvExportService extends AdditionalInterventionResolver {
               const sex = this.checkBlankValues(form?.sex);
 
               const csvRow =
-                `"${symbol}", "Genomic, transcriptomic, and proteomic associations with lifespan/age-related phenotype in ${modelOrganism}", ` +
-                `"${longevityEffect} of ${allelicPolymorphism}", "${modelOrganism}", "${sex}", " ", " ", "${doi}", "${pmid}"\n`;
+                `"${symbol}"${this.del}"Genomic, transcriptomic, and proteomic associations with lifespan/age-related phenotype in ${modelOrganism}"${this.del}` +
+                `"${longevityEffect} of ${allelicPolymorphism}", "${modelOrganism}"${this.del}` +
+                this.makeRow([sex, ' ', ' ', doi, pmid]);
               resultingString = resultingString + csvRow;
             });
           }
@@ -789,16 +835,43 @@ export class CsvExportService extends AdditionalInterventionResolver {
               const proteinActivity = this.checkBlankValues(form?.proteinActivity);
               const regulationType = this.checkBlankValues(form?.regulationType);
               const regulatedGene = form?.regulatedGene.symbol;
-
               const csvRow =
-                `"${symbol}", "Involvement of a gene product in the regulation of genes associated with aging", ` +
-                `"${proteinActivity} ${regulationType} of ${regulatedGene}", " ", " ", " ", " ", "${doi}", "${pmid}"\n`;
+                `"${symbol}"${this.del}"Involvement of a gene product in the regulation of genes associated with aging"${this.del}` +
+                `"${proteinActivity} ${regulationType} of ${regulatedGene}"${this.del}` +
+                this.makeRow([' ', ' ', ' ', ' ', doi, pmid]);
               resultingString = resultingString + csvRow;
             });
           }
         }
         return resultingString;
       }
+    }
+    return null;
+  }
+
+  public async generateGeneEvolutionTable() {
+    let items = [];
+    let resultingString = '';
+    const fetchedItems = await CsvExportService.FetchData(
+      `https://open-genes.com/api/gene/search?pageSize=${this.maxPageSize}`,
+      0,
+      1,
+      {}
+    );
+    const resItems = await fetchedItems.json();
+    items = resItems.items;
+    const csvHeader = this.makeRow(['HGNC', 'gene origin', 'gene family origin', 'conservative in']);
+    resultingString = resultingString + csvHeader;
+
+    if (items.length !== 0) {
+      for (const gene of items) {
+        const origin = this.checkBlankValues(gene.origin?.phylum);
+        const familyOrigin = this.checkBlankValues(gene.familyOrigin?.phylum);
+        const conservativeIn = this.checkBlankValues(gene.homologueTaxon);
+        const arrRow = this.makeRow([gene.symbol, origin, familyOrigin, conservativeIn]);
+        resultingString = resultingString + arrRow;
+      }
+      return resultingString;
     }
     return null;
   }
