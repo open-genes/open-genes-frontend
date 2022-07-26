@@ -160,7 +160,7 @@ export class DownloadComponent {
       const res = await this.csvExportService.generateGreenTable();
       if (res.length !== 0) {
         this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'gene-activity-change-impact';
+        this.currentDatasetName = 'age-related-processes-change';
         this.openDownloadModal(this.downLoadLinkTemplate);
       }
     } catch {
