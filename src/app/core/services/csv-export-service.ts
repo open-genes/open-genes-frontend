@@ -571,7 +571,6 @@ export class CsvExportService extends AdditionalInterventionResolver {
               modelOrganism,
               organismLine,
               interventionDeteriorates,
-              organismLine,
               interventionImproves,
               interventionResult,
               vitalProcess,
