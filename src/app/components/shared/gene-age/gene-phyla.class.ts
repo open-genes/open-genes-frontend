@@ -39,6 +39,12 @@ export abstract class GenePhylaClass {
       age: '900–1100',
       order: 3,
     },
+    7: {
+      translationString: 'phylum_teleostomi',
+      name: 'Teleostomi',
+      age: null,
+      order: 12,
+    },
     8: {
       translationString: 'phylum_procaryota',
       name: 'Procaryota',
@@ -109,37 +115,43 @@ export abstract class GenePhylaClass {
       translationString: 'phylum_theria',
       name: 'Theria',
       age: '150',
-      order: 19,
+      order: 20,
     },
     20: {
       translationString: 'phylum_eutheria',
       name: 'Eutheria',
       age: null,
-      order: 20,
+      order: 21,
     },
     21: {
       translationString: 'phylum_boreoeutheria',
       name: 'Boreoeutheria',
       age: null,
-      order: 221,
+      order: 22,
     },
     22: {
       translationString: 'phylum_euarchontoglires',
       name: 'Euarchontoglires',
       age: null,
-      order: 22,
+      order: 23,
     },
     23: {
       translationString: 'phylum_primatibus',
       name: 'Primatibus',
       age: null,
-      order: 23,
+      order: 24,
     },
     24: {
       translationString: 'phylum_not_specified',
       name: '-',
       age: null,
-      order: 24,
+      order: 25,
+    },
+    25: {
+      translationString: 'phylum_placentalia',
+      name: 'Placentalia',
+      age: '190',
+      order: 19,
     },
   };
 
