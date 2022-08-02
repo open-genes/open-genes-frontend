@@ -15,7 +15,7 @@ import { FilterService } from '../../components/shared/genes-list/services/filte
 import { Gene, Ortholog } from '../../core/models';
 import { Filter } from '../../core/models/filters/filter.model';
 import { Utils } from '../../core/utils/utils.mixin';
-import { Researches } from 'src/app/core/models/open-genes-api/researches.model';
+import { Studies } from 'src/app/core/models/open-genes-api/researches.model';
 
 @Component({
   selector: 'app-gene-page',
@@ -49,7 +49,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
   public filters: Filter = this.filterService.filters;
   public orthologsMaxItemsToShow = 9;
   public orthologsMaxItems: number = this.orthologsMaxItemsToShow;
-  public researches: Observable<Researches>;
+  public researches: Observable<Studies>;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
@@ -128,7 +128,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
           });
           this.isAnyResearchFilled = Math.max(...researchesLengths) !== 0;
 
-          const strongResearches = [
+          const strongResearchTypes = [
             compoundResearches.increaseLifespan,
             compoundResearches.ageRelatedChangesOfGene,
             compoundResearches.interventionToGeneImprovesVitalProcesses,
@@ -136,12 +136,12 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
             compoundResearches.geneAssociatedWithLongevityEffects,
           ];
 
-          if (strongResearches.length !== 0) {
-            const strongResearchesLengths = [];
-            strongResearches.forEach((value) => {
-              strongResearchesLengths.push(Number(Object.entries(value).length));
+          if (strongResearchTypes.length !== 0) {
+            const strongResearchTypesLengths = [];
+            strongResearchTypes.forEach((value) => {
+              strongResearchTypesLengths.push(Number(Object.entries(value).length));
             });
-            this.isAnyStrongResearchFilled = Math.max(...strongResearchesLengths) !== 0;
+            this.isAnyStrongResearchFilled = Math.max(...strongResearchTypesLengths) !== 0;
           } else {
             this.isAnyStrongResearchFilled = false;
           }

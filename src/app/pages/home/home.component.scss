@@ -6,16 +6,6 @@
   margin-bottom: 5px;
 }
 
-.filters-wrapper {
-  min-width: 0;
-  padding: 0 5px;
-  margin-bottom: 10px;
-
-  .skeleton {
-    margin: 0;
-  }
-}
-
 .home-container {
   $bootstrap-widescreen: 1400px - .02px;
   @media only screen and (min-width: $widescreen) and (max-width: $bootstrap-widescreen) {
@@ -23,12 +13,3 @@
   }
 }
 
-.sidebar-column {
-  &--mobile {
-    order: 2;
-  }
-
-  &--desktop {
-    padding-right: 0;
-  }
-}

@@ -1,22 +1,25 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { GenesListSettings } from '../genes-list/genes-list-settings.model';
-import { FilterService } from '../genes-list/services/filter.service';
+import { GenesListSettings } from '../../genes-list-settings.model';
+import { FilterService } from '../../services/filter.service';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
-import { SettingsService } from '../../../core/services/settings.service';
-import { ApiService } from '../../../core/services/api/open-genes-api.service';
+import { SettingsService } from '../../../../../core/services/settings.service';
+import { ApiService } from '../../../../../core/services/api/open-genes-api.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Parameters } from '../../../core/models/filters/filter.model';
+import { ApiSearchParameters } from '../../../../../core/models/filters/filter.model';
 import { MatSelectChange } from '@angular/material/select';
-import { Filter } from '../../../core/models/filters/filter.model';
+import { Filter } from '../../../../../core/models/filters/filter.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
-  selector: 'app-gene-fields-modal',
-  templateUrl: './gene-fields-modal.component.html',
-  styleUrls: ['./gene-fields-modal.component.scss'],
+  selector: 'app-gene-filters-panel',
+  templateUrl: './gene-filters-panel.component.html',
+  styleUrls: ['./gene-filters-panel.component.scss'],
 })
-export class GeneFieldsModalComponent implements OnInit, OnDestroy {
+export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
+  private subscription$ = new Subject();
+  public filtersForm: FormGroup;
+
   // FIELDS VISIBILITY
   public listSettings: GenesListSettings;
   // FILTERS
@@ -57,10 +60,6 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
   public predefinedOrigin: any[] = [];
   public predefinedFamilyOrigin: any[] = [];
   public predefinedConservativeIn: any[] = [];
-
-  // Researches
-  public filtersForm: FormGroup;
-  private subscription$ = new Subject();
 
   @Output() showSkeletonChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() filterLoaded: EventEmitter<string> = new EventEmitter<string>();
@@ -170,7 +169,6 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
         this.predefinedFamilyOrigin = data.byFamilyOrigin;
         this.predefinedConservativeIn = data.byConservativeIn;
         this.showSkeletonChange.emit(false);
-        console.log(this.listSettings.ifShowResearches);
         this.listSettings.ifShowResearches = !!data.researches;
       });
   }
@@ -217,7 +215,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  public apply(filterType: Parameters, $event: MatSelectChange | MatCheckboxChange): void {
+  public apply(filterType: ApiSearchParameters, $event: MatSelectChange | MatCheckboxChange): void {
     let value;
     if ($event instanceof MatCheckboxChange) {
       value = $event.checked;
@@ -242,7 +240,7 @@ export class GeneFieldsModalComponent implements OnInit, OnDestroy {
     this.getState();
   }
 
-  public toggleSwitchAndFilter(filterType: Parameters, $event): void {
+  public toggleSwitchAndFilter(filterType: ApiSearchParameters, $event): void {
     this.listSettings.ifShowResearches = !$event.checked;
     this.filterService.applyFilter(filterType, Number(this.listSettings.ifShowResearches));
     this.getState();

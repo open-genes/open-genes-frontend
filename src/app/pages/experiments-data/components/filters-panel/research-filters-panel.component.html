@@ -1,0 +1,26 @@
+<form class="filters-modal__body"
+      [formGroup]="filtersForm">
+  <div class="body__row">
+    <mat-form-field appearance="fill" color="primary">
+      <mat-label>{{ "filters_modal_placeholder_age_related_processes" | translate }}</mat-label>
+      <mat-select formControlName="ageRelatedProcessesSelect"
+                  multiple="true"
+                  [disabled]="processes?.length === 0"
+                  [(ngModel)]="predefinedProcesses"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byAgeRelatedProcess', $event)">
+        <ng-container *ngIf="processes?.length !== 0">
+          <mat-option *ngFor="let i of processes | searchFilter : searchText" [value]="i.id">{{ i.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+
+  <div class="reset-button-wrapper">
+    <button class="btn btn--fill btn--gray reset-button"
+            (click)="resetForm()">
+      {{ "filters_reset" | translate }}
+    </button>
+  </div>
+</form>

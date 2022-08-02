@@ -11,7 +11,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { PipesModule } from '../../modules/pipes/pipes.module';
 import { MaterialModule } from '../../modules/vendors/material.module';
 import { NgSplitPipeModule, NgToArrayPipeModule } from 'angular-pipes';
-import { ResearchesComponent } from './researches/researches.component';
+import { ResearchDataComponent } from './research-data/research-data.component';
 import { GeneOntologyComponent } from './gene-ontology/gene-ontology.component';
 import { HumanProteinAtlasComponent } from './human-protein-atlas/human-protein-atlas.component';
 import { ExpressionComponent } from './expression/expression.component';
@@ -31,12 +31,12 @@ import { GeneLocationComponent } from '../../components/shared/gene-location/gen
 @NgModule({
   declarations: [
     GeneComponent,
-    ResearchesComponent,
+    ResearchDataComponent,
     GeneOntologyComponent,
     HumanProteinAtlasComponent,
     ExpressionComponent,
     DynamicContentAnchorsDirective,
-    GeneLocationComponent
+    GeneLocationComponent,
   ],
   imports: [
     CommonModule,

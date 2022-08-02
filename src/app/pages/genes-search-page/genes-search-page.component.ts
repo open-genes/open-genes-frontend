@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { GeneFieldsModalComponent } from '../../components/shared/gene-fields-modal/gene-fields-modal.component';
+import { GeneFiltersPanelComponent } from '../../components/shared/genes-list/components/gene-filters-panel/gene-filters-panel.component';
 import { Genes } from '../../core/models';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
 import { WindowService } from '../../core/services/browser/window.service';
@@ -14,7 +14,7 @@ import { WindowWidth } from '../../core/utils/window-width';
   styleUrls: ['./genes-search-page.component.scss'],
 })
 export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnDestroy {
-  @ViewChild(GeneFieldsModalComponent) filterPanel!: GeneFieldsModalComponent;
+  @ViewChild(GeneFiltersPanelComponent) filterPanel!: GeneFiltersPanelComponent;
 
   public searchedGenes: Pick<Genes, 'id' | 'name' | 'symbol' | 'aliases' | 'ensembl'>[] | Genes[] = [];
   public confirmedGenesList: Genes[];

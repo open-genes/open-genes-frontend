@@ -1,6 +1,6 @@
 <div class="page main-page">
   <div class="page__inner __pt-30 __pb-60">
-    <div class="container-fluid home-container">
+    <div class="container-fluid search-page-container">
       <div class="row">
         <ng-container *ngIf="!errorStatus; else errorMessage">
           <div class="col-12">
@@ -22,9 +22,9 @@
 
               <app-sidebar-item *ngIf="!isMobile">
                 <div content class="filters-wrapper">
-                  <app-gene-fields-modal
+                  <app-gene-filters-panel
                     (showSkeletonChange)="updateViewOnSkeletonChange($event, 'filters')"
-                  ></app-gene-fields-modal>
+                  ></app-gene-filters-panel>
                   <app-skeleton
                     *ngIf="showFiltersSkeleton"
                     class="skeleton"

@@ -18,7 +18,7 @@ export interface Filter {
   researches: number; // send researches in response
 }
 
-export type Parameters =
+export type ApiSearchParameters =
   | 'byDiseases'
   | 'byDiseaseCategories'
   | 'byAgeRelatedProcess'

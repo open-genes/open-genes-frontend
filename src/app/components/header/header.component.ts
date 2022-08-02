@@ -4,7 +4,6 @@ import {
   Component, Input,
   OnDestroy,
 } from '@angular/core';
-import { FilterService } from '../shared/genes-list/services/filter.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -19,7 +18,6 @@ export class HeaderComponent implements OnDestroy {
   private favouritesSubscription: Subscription;
 
   constructor(
-    private readonly filterService: FilterService,
     private readonly cdRef: ChangeDetectorRef
   ) {}
 

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '@angular/core';
-import { Researches } from '../../../core/models/open-genes-api/researches.model';
+import { Studies } from '../../../core/models/open-genes-api/researches.model';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CommonBottomSheetComponent } from '../../ui-components/components/modals/common-bottom-sheet/common-bottom-sheet.component';
 
@@ -10,31 +10,31 @@ import { CommonBottomSheetComponent } from '../../ui-components/components/modal
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExperimentsStatsComponent implements OnInit {
-  @Input() researches: Researches;
+  @Input() researches: Studies;
   public maxValue: number;
   public legend = [
     {
-      title: 'gene_page_researches_lifespan',
+      title: 'gene_page_research_data_lifespan',
       cssClass: 'legend-container__item--increase-lifespan',
     },
     {
-      title: 'gene_page_researches_age_related_changes',
+      title: 'gene_page_research_data_age_related_changes',
       cssClass: 'legend-container__item--age-related-change',
     },
     {
-      title: 'gene_page_researches_lifespan',
+      title: 'gene_page_research_data_lifespan',
       cssClass: 'legend-container__item--gene-intervention-to-vital-processes',
     },
     {
-      title: 'gene_page_researches_protein_regulates_genes',
+      title: 'gene_page_research_data_protein_regulates_genes',
       cssClass: 'legend-container__item--protein-to-gene',
     },
     {
-      title: 'gene_page_researches_progeria',
+      title: 'gene_page_research_data_progeria',
       cssClass: 'legend-container__item--gene-to-progeria',
     },
     {
-      title: 'gene_page_researches_longevity_effects',
+      title: 'gene_page_research_data_longevity_effects',
       cssClass: 'legend-container__item--gene-to-longevity-effect',
     },
   ];
