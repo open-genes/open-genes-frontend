@@ -15,13 +15,13 @@
       <th class="__cell-width-small">
         {{ "gene_intervention_result" | translate }}
       </th>
-      <th>{{ "researches_object" | translate }}</th>
-      <th>{{ "researches_age" | translate }}<sup>*</sup></th>
-      <th>{{ "researches_sex" | translate }}</th>
-      <th>{{ "researches_line" | translate }}</th>
-      <th>{{ "researches_genotype" | translate }}</th>
+      <th>{{ "research_data_object" | translate }}</th>
+      <th>{{ "research_data_age" | translate }}<sup>*</sup></th>
+      <th>{{ "research_data_sex" | translate }}</th>
+      <th>{{ "research_data_line" | translate }}</th>
+      <th>{{ "research_data_genotype" | translate }}</th>
       <th>
-        {{ "researches_comment" | translate }}
+        {{ "research_data_comment" | translate }}
       </th>
       </thead>
       <tbody>
@@ -98,7 +98,7 @@
           <button class="btn btn--small btn--purple btn--flat"
                   (click)="openCommentModal('researches_comment', item, links)"
           >
-            {{ "researches_comment_button" | translate }}
+            {{ "research_data_comment_button" | translate }}
           </button>
         </td>
       </tr>
@@ -106,7 +106,7 @@
     </table>
   </div>
   <legend class="reference">
-    <sup>*</sup>{{ "gene_page_researches_lifespan_hint1" | translate }}
+    <sup>*</sup>{{ "gene_page_research_data_lifespan_hint1" | translate }}
   </legend>
 </section>
 

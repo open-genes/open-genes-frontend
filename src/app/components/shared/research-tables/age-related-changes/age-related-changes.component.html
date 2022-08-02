@@ -1,5 +1,5 @@
 <section>
-  <h4>{{ "gene_page_researches_age_related_changes" | translate }}</h4>
+  <h4>{{ "gene_page_research_data_age_related_changes" | translate }}</h4>
   <div class="table-section __mt-20 __w-content-fluid">
     <table class="table table--zebra table--sticky table--age-related-change">
       <thead>
@@ -12,20 +12,20 @@
       <th class="__cell-width-small">
         {{ "age_related_changes_type" | translate }}
       </th>
-      <th class="__cell-width-medium">{{ "researches_object" | translate }},
-        {{ "researches_line" | translate | lowercase }},
-        {{ "researches_sex" | translate | lowercase }}
+      <th class="__cell-width-medium">{{ "research_data_object" | translate }},
+        {{ "research_data_line" | translate | lowercase }},
+        {{ "research_data_sex" | translate | lowercase }}
       </th>
 
       <th>{{ "age_related_changes_sample" | translate }}</th>
-      <th class="__cell-width-medium">{{ "researches_l_cohort_size" | translate }}</th>
-      <th class="__cell-width-medium">{{ "researches_age_of_control" | translate }}</th>
-      <th class="__cell-width-medium">{{ "researches_age_of_experiment" | translate }}</th>
+      <th class="__cell-width-medium">{{ "research_data_l_cohort_size" | translate }}</th>
+      <th class="__cell-width-medium">{{ "research_data_age_of_control" | translate }}</th>
+      <th class="__cell-width-medium">{{ "research_data_age_of_experiment" | translate }}</th>
       <th>{{ "age_related_changes_measurement_method" | translate }}</th>
       <th>{{ "age_related_changes_statical_method" | translate }}</th>
-      <th class="__nowrap">{{ "researches_pvalue" | translate }}</th>
+      <th class="__nowrap">{{ "research_data_pvalue" | translate }}</th>
       <th>
-        {{ "researches_comment" | translate }}
+        {{ "research_data_comment" | translate }}
       </th>
       </thead>
       <tbody>
@@ -55,11 +55,11 @@
 
         <td>
           <dl class="list">
-            <dt>{{ "researches_model_organism" | translate }}:&nbsp;</dt>
+            <dt>{{ "research_data_model_organism" | translate }}:&nbsp;</dt>
             <dd>{{ r.modelOrganism | checkBlankValue }}</dd>
-            <dt>{{ "researches_sex" | translate }}:&nbsp;</dt>
+            <dt>{{ "research_data_sex" | translate }}:&nbsp;</dt>
             <dd>{{ r.sex | checkBlankValue }}</dd>
-            <dt>{{ "researches_line" | translate }}:&nbsp;</dt>
+            <dt>{{ "research_data_line" | translate }}:&nbsp;</dt>
             <dd>{{ r.organismLine | checkBlankValue }}</dd>
           </dl>
         </td>
@@ -72,10 +72,10 @@
 
         <td>
           <dl class="list">
-            <dt>{{ "researches_l_control" | translate }}:
+            <dt>{{ "research_data_l_control" | translate }}:
               <span>{{ r.controlCohortSize ? r.controlCohortSize : '—' }}</span></dt>
             <dd></dd>
-            <dt>{{ "researches_l_experiment" | translate }}:&nbsp;</dt>
+            <dt>{{ "research_data_l_experiment" | translate }}:&nbsp;</dt>
             <dd>{{ r.controlCohortSize ? r.experimentCohortSize : '—' }}</dd>
           </dl>
         </td>
@@ -84,7 +84,7 @@
           <dl class="list">
             <ng-container *ngIf="r.minAgeOfControls">
               <dt>
-                {{ "researches_l_min" | translate}}
+                {{ "research_data_l_min" | translate}}
               </dt>
               <dd
                 [innerHTML]=" outputValueWithUnit(r.minAgeOfControls, formatUnitGrammaticalCase(r.minAgeOfControls, r.ageUnit))"
@@ -92,7 +92,7 @@
             </ng-container>
             <ng-container *ngIf="r.meanAgeOfControls">
               <dt>
-                {{ "researches_l_mean" | translate}}
+                {{ "research_data_l_mean" | translate}}
               </dt>
               <dd
                 [innerHTML]="outputValueWithUnit(r.meanAgeOfControls, formatUnitGrammaticalCase(r.meanAgeOfControls, r.ageUnit))"
@@ -100,7 +100,7 @@
             </ng-container>
             <ng-container *ngIf="r.maxAgeOfControls">
               <dt>
-                {{ "researches_l_max" | translate}}
+                {{ "research_data_l_max" | translate}}
               </dt>
               <dd
                 [innerHTML]="outputValueWithUnit(r.maxAgeOfControls, formatUnitGrammaticalCase(r.maxAgeOfControls, r.ageUnit))"
@@ -113,7 +113,7 @@
           <dl class="list">
             <ng-container *ngIf="r.minAgeOfExperiment">
               <dt>
-                {{ "researches_l_min" | translate}}
+                {{ "research_data_l_min" | translate}}
               </dt>
               <dd
                 [innerHTML]="outputValueWithUnit(r.minAgeOfExperiment, formatUnitGrammaticalCase(r.minAgeOfExperiment, r.ageUnit))"
@@ -121,7 +121,7 @@
             </ng-container>
             <ng-container *ngIf="r.meanAgeOfExperiment">
               <dt>
-                {{ "researches_l_mean" | translate}}
+                {{ "research_data_l_mean" | translate}}
               </dt>
               <dd
                 [innerHTML]="outputValueWithUnit(r.meanAgeOfExperiment, formatUnitGrammaticalCase(r.meanAgeOfExperiment, r.ageUnit))"
@@ -129,7 +129,7 @@
             </ng-container>
             <ng-container *ngIf="r.maxAgeOfExperiment">
               <dt>
-                {{ "researches_l_max" | translate}}
+                {{ "research_data_l_max" | translate}}
               </dt>
               <dd
                 [innerHTML]="outputValueWithUnit(r.maxAgeOfExperiment, formatUnitGrammaticalCase(r.maxAgeOfExperiment, r.ageUnit))"
@@ -160,7 +160,7 @@
           <button class="btn btn--small btn--purple btn--flat"
                   (click)="openCommentModal('researches_comment', r, links)"
           >
-            {{ "researches_comment_button" | translate }}
+            {{ "research_data_comment_button" | translate }}
           </button>
         </td>
       </tr>

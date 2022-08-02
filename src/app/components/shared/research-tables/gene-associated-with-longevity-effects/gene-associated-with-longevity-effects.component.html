@@ -1,5 +1,5 @@
 <section>
-  <h4>{{ "gene_page_researches_longevity_effects" | translate }}</h4>
+  <h4>{{ "gene_page_research_data_longevity_effects" | translate }}</h4>
 
   <app-hint>
     <ng-container description>
@@ -21,50 +21,50 @@
         {{ "gene_page_allelic_polymorphism" | translate }}
       </th>
       <th class="hidden">
-        {{ "researches_chromosome_location" | translate }}
+        {{ "research_data_chromosome_location" | translate }}
       </th>
       <th>
-        {{ "researches_position_in_gene" | translate }}
+        {{ "research_data_position_in_gene" | translate }}
       </th>
       <th class="__cell-width-small">
-        {{ "researches_association_type" | translate }}
+        {{ "research_data_association_type" | translate }}
       </th>
       <th>
-        {{ "researches_significance_title" | translate }}
+        {{ "research_data_significance_title" | translate }}
       </th>
       <th class="__cell-width-medium">
-        {{ "gene_page_researches_transcriptome_proteome" | translate }}
+        {{ "gene_page_research_data_transcriptome_proteome" | translate }}
       </th>
       <th class="__cell-width-medium">
-        {{ "researches_n_of_control_and_experiment" | translate }}
+        {{ "research_data_n_of_control_and_experiment" | translate }}
       </th>
       <th class="__cell-width-medium">
-        {{ "researches_age_of_control" | translate }}
+        {{ "research_data_age_of_control" | translate }}
         <app-info-button
           (click)="openCommentModal('clarification', null, ageOfControlHint)"
         ></app-info-button>
       </th>
       <th class="__cell-width-medium">
-        {{ "researches_age_of_experiment" | translate }} {{ "researches_age_centenarians" | translate }}
+        {{ "research_data_age_of_experiment" | translate }} {{ "research_data_age_centenarians" | translate }}
         <app-info-button
           (click)="openCommentModal('clarification', null, ageOfExperimentHint)"
         ></app-info-button>
       </th>
       <th>
-        {{ "researches_ethnicity" | translate }}
+        {{ "research_data_ethnicity" | translate }}
       </th>
       <th class="__cell-width-large">
-        {{ "researches_associated_and_non_associated" | translate }}
+        {{ "research_data_associated_and_non_associated" | translate }}
       </th>
       <th class="__cell-width-large">
-        {{ "researches_associated_and_non_associated_percent" | translate }}
+        {{ "research_data_associated_and_non_associated_percent" | translate }}
       </th>
       <th>
-        {{ "researches_research_type" | translate }}
+        {{ "research_data_research_type" | translate }}
       </th>
-      <th class="__cell-width-medium">{{ "researches_sex" | translate }}</th>
+      <th class="__cell-width-medium">{{ "research_data_sex" | translate }}</th>
       <th>
-        {{ "researches_comment" | translate }}
+        {{ "research_data_comment" | translate }}
       </th>
       </thead>
 
@@ -87,25 +87,25 @@
         <td>
           <dl class="list">
             <dt>
-              {{ "researches_polymorphism_type" | translate }}:
+              {{ "research_data_polymorphism_type" | translate }}:
             </dt>
             <dd>
               {{ item.polymorphismType | checkBlankValue }}
             </dd>
             <dt>
-              {{ "researches_polymorphism" | translate }}:
+              {{ "research_data_polymorphism" | translate }}:
             </dt>
             <dd>
               {{ item.polymorphismId | checkBlankValue }}
             </dd>
             <dt>
-              {{ "researches_amino_acid_substitution" | translate }}:
+              {{ "research_data_amino_acid_substitution" | translate }}:
             </dt>
             <dd>
               {{ item.nucleotideChange | checkBlankValue }}
             </dd>
             <dt>
-              {{ "researches_amino_acid_substitution" | translate }}:
+              {{ "research_data_amino_acid_substitution" | translate }}:
             </dt>
             <dd>
               {{ item.aminoAcidChange | checkBlankValue }}
@@ -151,13 +151,13 @@
         <td>
           <dl class="list">
             <dt>
-              {{ "researches_l_control" | translate }}
+              {{ "research_data_l_control" | translate }}
             </dt>
             <dd>
               {{ item.nOfControls | checkBlankValue }}
             </dd>
             <dt>
-              {{ "researches_l_experiment" | translate }}
+              {{ "research_data_l_experiment" | translate }}
             </dt>
             <dd>
               {{ item.nOfExperiment | checkBlankValue }}
@@ -171,7 +171,7 @@
             class="list">
             <ng-container *ngIf="item.minAgeOfControls">
               <dt>
-                {{ "researches_l_min" | translate}}
+                {{ "research_data_l_min" | translate}}
               </dt>
               <dd
                 [innerHTML]="outputValueWithUnit(item.minAgeOfControls, formatUnitGrammaticalCase(item.minAgeOfControls, ('years' | translate)))"
@@ -180,7 +180,7 @@
 
             <ng-container *ngIf="item.meanAgeOfControls">
               <dt>
-                {{ "researches_l_mean" | translate}}
+                {{ "research_data_l_mean" | translate}}
               </dt>
               <dd
                 [innerHTML]="outputValueWithUnit(item.meanAgeOfControls, formatUnitGrammaticalCase(item.meanAgeOfControls, ('years' | translate)))"
@@ -189,7 +189,7 @@
 
             <ng-container *ngIf="item.maxAgeOfExperiment">
               <dt>
-                {{ "researches_l_max" | translate}}
+                {{ "research_data_l_max" | translate}}
               </dt>
               <dd
                 [innerHTML]="outputValueWithUnit(item.maxAgeOfControls, formatUnitGrammaticalCase(item.maxAgeOfControls, ('years' | translate)))"
@@ -204,7 +204,7 @@
             class="list">
             <ng-container *ngIf="item.minAgeOfExperiment">
               <dt>
-                {{ "researches_l_min" | translate}}
+                {{ "research_data_l_min" | translate}}
               </dt>
               <dd
                 [innerHTML]="outputValueWithUnit(item.minAgeOfExperiment, formatUnitGrammaticalCase(item.minAgeOfExperiment, ('years' | translate)))"
@@ -213,7 +213,7 @@
 
             <ng-container *ngIf="item.meanAgeOfExperiment">
               <dt>
-                {{ "researches_l_mean" | translate}}
+                {{ "research_data_l_mean" | translate}}
               </dt>
               <dd
                 [innerHTML]="outputValueWithUnit(item.meanAgeOfExperiment, formatUnitGrammaticalCase(item.meanAgeOfExperiment, ('years' | translate)))"
@@ -222,7 +222,7 @@
 
             <ng-container *ngIf="item.maxAgeOfExperiment">
               <dt>
-                {{ "researches_l_max" | translate}}
+                {{ "research_data_l_max" | translate}}
               </dt>
               <dd
                 [innerHTML]="outputValueWithUnit(item.maxAgeOfExperiment, formatUnitGrammaticalCase(item.maxAgeOfExperiment, ('years' | translate)))"
@@ -239,13 +239,13 @@
         <td>
           <dl class="list">
             <dt>
-              {{ "researches_associtated_allele" | translate }}
+              {{ "research_data_associtated_allele" | translate }}
             </dt>
             <dd>
               {{ item.associatedAllele | checkBlankValue }}
             </dd>
             <dt>
-              {{ "researches_non_associtated_allele" | translate }}
+              {{ "research_data_non_associtated_allele" | translate }}
             </dt>
             <dd>
               {{ item.nonAssociatedAllele | checkBlankValue }}
@@ -256,13 +256,13 @@
         <td>
           <dl class="list">
             <dt>
-              {{ "researches_l_control" | translate }}
+              {{ "research_data_l_control" | translate }}
             </dt>
             <dd>
               {{ item.frequencyControls | checkBlankValue: '':'%'}}
             </dd>
             <dt>
-              {{ "researches_l_experiment" | translate }}
+              {{ "research_data_l_experiment" | translate }}
             </dt>
             <dd>
               {{ item.frequencyExperiment | checkBlankValue: '':'%'}}
@@ -286,7 +286,7 @@
           <button class="btn btn--small btn--purple btn--flat"
                   (click)="openCommentModal('researches_comment', item, links)"
           >
-            {{ "researches_comment_button" | translate }}
+            {{ "research_data_comment_button" | translate }}
           </button>
         </td>
       </tr>

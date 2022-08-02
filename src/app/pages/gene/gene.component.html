@@ -120,7 +120,7 @@
               <section class="wrapper gene-page__annotation">
                 <div class="row no-gutters annotation__row row no-gutters annotation__row--emphasized">
                   <div class="row__title col-xs-12 col-md-5">
-                    {{ 'gene_page_researches_processes' | translate }}:
+                    {{ 'gene_page_research_data_processes' | translate }}:
                   </div>
 
                   <div class="row__value col">
@@ -158,7 +158,7 @@
 
                 <div class="row no-gutters annotation__row">
                   <div class="row__title col-xs-12 col-md-5">
-                    {{ 'gene_page_researches_age_related_changes_human' | translate }}:
+                    {{ 'gene_page_research_data_age_related_changes_human' | translate }}:
                   </div>
 
                   <div class="row__value col">
@@ -302,9 +302,9 @@
 
                   <section *ngIf="isAnyResearchFilled">
                     <h2 class="__mb-15">{{ 'gene_page_title_researches' | translate }}</h2>
-                    <app-researches [researches]="researches | async"
+                    <app-research-data [studies]="researches | async"
                                     [slice]="undefined"
-                    ></app-researches>
+                    ></app-research-data>
                   </section>
 
                   <section appTermInfo>

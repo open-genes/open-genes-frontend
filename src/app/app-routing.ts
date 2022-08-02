@@ -46,7 +46,8 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'researches',
-    loadChildren: () => import('./pages/researches/researches-page.module').then((m) => m.ResearchesPageModule),
+    loadChildren: () =>
+      import('./pages/experiments-data/experiments-data-page.module').then((m) => m.ExperimentsDataPageModule),
   },
   {
     path: 'genes',

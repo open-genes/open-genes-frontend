@@ -201,6 +201,4 @@ export class DownloadComponent {
       this.openDownloadModal(this.downLoadLinkTemplate);
     }
   }
-
-
 }

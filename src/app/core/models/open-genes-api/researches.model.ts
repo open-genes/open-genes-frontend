@@ -186,7 +186,7 @@ export interface PinkTable extends Research {
 export type GrayTable = Research;
 
 // TODO: backend: misleading names of researches
-export interface Researches {
+export interface Studies {
   increaseLifespan: PurpleTable[];
   ageRelatedChangesOfGene: BlueTable[];
   interventionToGeneImprovesVitalProcesses: GreenTable[];

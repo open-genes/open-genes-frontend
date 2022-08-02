@@ -16,7 +16,7 @@ import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { FileExportService } from '../../../core/services/browser/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
-import { Filter, Parameters } from '../../../core/models/filters/filter.model';
+import { Filter, ApiSearchParameters } from '../../../core/models/filters/filter.model';
 import { Pagination, SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { FavouritesService } from '../../../core/services/favourites.service';
@@ -232,7 +232,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   /**
    * Filter reset
    */
-  public clearFilters(filterName?: Parameters): void {
+  public clearFilters(filterName?: ApiSearchParameters): void {
     delete this.filterService.filters.bySuggestions;
     delete this.filterService.filters.byGeneSymbol;
     this.filterService.clearFilters(filterName ? filterName : null);

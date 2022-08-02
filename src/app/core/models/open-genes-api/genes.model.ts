@@ -1,4 +1,4 @@
-import { Researches } from './researches.model';
+import { Studies } from './researches.model';
 import { Origin } from './origin.model';
 import { Terms, TermsLegacy } from './gene-ontology.model';
 import { HumanProteinAtlas } from './human-protein-atlas.model';
@@ -45,7 +45,7 @@ interface GeneralGeneInfo {
 }
 
 export interface Genes extends GeneralGeneInfo {
-  researches?: Researches; // if `researches=1` query parameter passed
+  researches?: Studies; // if `researches=1` query parameter passed
   terms?: TermsLegacy;
 }
 
@@ -77,7 +77,7 @@ export interface Gene extends GeneralGeneInfo {
   proteinDescriptionUniProt: string;
   proteinDescriptionOpenGenes: string;
   commentAgingEN: string;
-  researches: Researches;
+  researches: Studies;
   expression: {
     name: string;
     exp_rpkm: number;
