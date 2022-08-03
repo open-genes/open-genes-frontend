@@ -148,7 +148,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   /**
    * Get genes list
    */
-  setInitialState(): void {
+  public setInitialState(): void {
     this.filterService.filterResult
       .pipe(
         takeUntil(this.subscription$),
@@ -175,6 +175,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
           }
 
           if (this.filterService.filters.byGeneSymbol || this.filterService.filters.bySuggestions) {
+            this.resetPagination();
             this.openSnackBar();
           }
 
@@ -236,6 +237,11 @@ export class GenesListComponent implements OnInit, OnDestroy {
     delete this.filterService.filters.bySuggestions;
     delete this.filterService.filters.byGeneSymbol;
     this.filterService.clearFilters(filterName ? filterName : null);
+  }
+
+  public resetPagination(): void {
+    this.filterService.pagination.page = 1;
+    this.currentPage = this.filterService.pagination.page;
   }
 
   /**
