@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { GenesListSettings } from '../../genes-list-settings.model';
-import { FilterService } from '../../services/filter.service';
+import { GenesFilterService } from '../../services/genes-filter.service';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { SettingsService } from '../../../../../core/services/settings.service';
@@ -66,7 +66,7 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
 
   constructor(
     private apiService: ApiService,
-    private filterService: FilterService,
+    private filterService: GenesFilterService,
     private settingsService: SettingsService
   ) {
     this.filtersForm = new FormGroup({

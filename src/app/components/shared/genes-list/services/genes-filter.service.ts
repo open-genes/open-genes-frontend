@@ -14,7 +14,7 @@ import { ApiResponse } from '../../../../core/models/api-response.model';
 @Injectable({
   providedIn: 'root',
 })
-export class FilterService {
+export class GenesFilterService {
   private listOfFields$ = new BehaviorSubject<any>('');
   private filterChanges$ = new BehaviorSubject<any>([]);
 

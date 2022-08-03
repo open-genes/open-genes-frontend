@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
-import { FilterService } from '../../../services/filter.service';
+import { GenesFilterService } from '../../../services/genes-filter.service';
 import { FavouritesService } from '../../../../../../core/services/favourites.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeneTableCardLogic } from '../../../../../../core/utils/gene-table-card-logic';
@@ -18,7 +18,7 @@ export class GeneAnnotationsCardComponent extends GeneTableCardLogic {
   isAddToFavoritesShown: boolean;
 
   constructor(
-    protected _filterService: FilterService,
+    protected _filterService: GenesFilterService,
     protected _favouritesService: FavouritesService,
     protected _snackBar: MatSnackBar,
     protected cdRef: ChangeDetectorRef,

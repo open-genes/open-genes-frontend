@@ -7,7 +7,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { SettingsService } from '../../../../core/services/settings.service';
 import { ApiSearchParameters } from '../../../../core/models/filters/filter.model';
 import { FilterPanelLogic } from '../../../../core/utils/filter-panel-logic';
-import { FilterService } from 'src/app/components/shared/genes-list/services/filter.service';
+import { GenesFilterService } from 'src/app/components/shared/genes-list/services/genes-filter.service';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
 
 @Component({
@@ -28,7 +28,7 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
 
   constructor(
     private settingsService: SettingsService,
-    public filterService: FilterService,
+    public filterService: GenesFilterService,
     public apiService: ApiService
   ) {
     super(apiService, filterService);

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, TemplateRef } from '@angular/core';
-import { FilterService } from '../../services/filter.service';
+import { GenesFilterService } from '../../services/genes-filter.service';
 import { GeneTableCardLogic } from '../../../../../core/utils/gene-table-card-logic';
 import { FavouritesService } from '../../../../../core/services/favourites.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -20,7 +20,7 @@ export class GenesTableHeaderComponent extends GeneTableCardLogic {
   private retrievedSettings: Settings;
 
   constructor(
-    protected _filterService: FilterService,
+    protected _filterService: GenesFilterService,
     protected _favouritesService: FavouritesService,
     protected _snackBar: MatSnackBar,
     protected cdRef: ChangeDetectorRef,

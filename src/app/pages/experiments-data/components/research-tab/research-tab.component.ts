@@ -19,7 +19,7 @@ import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SearchMode } from '../../../../core/models/settings.model';
 import { Genes } from '../../../../core/models';
-import { FilterService } from '../../../../components/shared/genes-list/services/filter.service';
+import { GenesFilterService } from '../../../../components/shared/genes-list/services/genes-filter.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -52,7 +52,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     private readonly apiService: ApiService,
     private readonly cdRef: ChangeDetectorRef,
     private snackBar: MatSnackBar,
-    private filterService: FilterService,
+    private filterService: GenesFilterService,
     private renderer: Renderer2
   ) {
     super();

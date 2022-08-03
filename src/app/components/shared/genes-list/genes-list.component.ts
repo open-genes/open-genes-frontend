@@ -11,7 +11,7 @@ import {
 import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { Genes } from '../../../core/models';
-import { FilterService } from './services/filter.service';
+import { GenesFilterService } from './services/genes-filter.service';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { FileExportService } from '../../../core/services/browser/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
@@ -115,7 +115,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   private snackBarRef: MatSnackBarRef<SnackBarComponent>;
 
   constructor(
-    private filterService: FilterService,
+    private filterService: GenesFilterService,
     private settingsService: SettingsService,
     private favouritesService: FavouritesService,
     private fileExportService: FileExportService,

@@ -2,7 +2,7 @@ import { Directive, EventEmitter, Injector, Output } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { ApiService } from '../services/api/open-genes-api.service';
-import { FilterService } from '../../components/shared/genes-list/services/filter.service';
+import { GenesFilterService } from '../../components/shared/genes-list/services/genes-filter.service';
 import { ApiSearchParameters, Filter } from '../models/filters/filter.model';
 import { MatSelectChange } from '@angular/material/select';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -32,7 +32,7 @@ export class FilterPanelLogic {
   public listSettings: GenesListSettings;
   @Output() filterReady: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(public apiService: ApiService, public filterService: FilterService) {}
+  constructor(public apiService: ApiService, public filterService: GenesFilterService) {}
 
   public getStateForFields(updateFields: StateParams[]): void {
     this.filterService

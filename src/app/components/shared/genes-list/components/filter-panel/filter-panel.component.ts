@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FilterService } from '../../services/filter.service';
+import { GenesFilterService } from '../../services/genes-filter.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { Filter } from '../../../../../core/models/filters/filter.model';
@@ -29,7 +29,7 @@ export class FilterPanelComponent implements OnChanges {
   private retrievedSettings: Settings;
 
   constructor(
-    private filterService: FilterService,
+    private filterService: GenesFilterService,
     private settingsService: SettingsService,
     private dialog: MatDialog
   ) {}

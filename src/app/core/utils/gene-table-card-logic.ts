@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Directive, Input, OnDestroy, OnInit } from '@angular/core';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
 import { Gene } from '../models';
-import { FilterService } from '../../components/shared/genes-list/services/filter.service';
+import { GenesFilterService } from '../../components/shared/genes-list/services/genes-filter.service';
 import { FavouritesService } from '../services/favourites.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
@@ -18,7 +18,7 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
   protected subscription$ = new Subject();
 
   protected constructor(
-    protected filterService: FilterService,
+    protected filterService: GenesFilterService,
     protected favouritesService: FavouritesService,
     protected snackBar: MatSnackBar,
     protected cdRef: ChangeDetectorRef
