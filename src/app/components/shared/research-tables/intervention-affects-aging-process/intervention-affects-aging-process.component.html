@@ -53,7 +53,7 @@
               <ul class="list list--terms-w-p">
                 <li *ngFor="let result of item.interventionImproves"
                     class="term-w-p term-w-p--positive">
-                  {{ 'researches_improves' | translate }} {{ result.name }}
+                  {{ 'research_data_improves' | translate }} {{ result.name }}
                 </li>
               </ul>
             </ng-container>
@@ -62,7 +62,7 @@
               <ul class="list list--terms-w-p">
                 <li *ngFor="let result of item.interventionDeteriorates"
                     class="term-w-p term-w-p--negative">
-                  {{ 'researches_deteriorates' | translate }} {{ result.name }}
+                  {{ 'research_data_deteriorates' | translate }} {{ result.name }}
                 </li>
               </ul>
             </ng-container>
@@ -96,7 +96,7 @@
         </td>
         <td>
           <button class="btn btn--small btn--purple btn--flat"
-                  (click)="openCommentModal('research-data_comment', item, links)"
+                  (click)="openCommentModal('research_data_comment', item, links)"
           >
             {{ "research_data_comment_button" | translate }}
           </button>

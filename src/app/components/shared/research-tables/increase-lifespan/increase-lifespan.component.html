@@ -271,7 +271,7 @@
                 <ul class="list list--terms-w-p">
                   <li *ngFor="let result of r.interventionImproves"
                       class="term-w-p term-w-p--positive">
-                    {{ 'researches_improves' | translate }} {{ result.name }}
+                    {{ 'research_data_improves' | translate }} {{ result.name }}
                   </li>
                 </ul>
               </ng-container>
@@ -280,7 +280,7 @@
                 <ul class="list list--terms-w-p">
                   <li *ngFor="let result of r.interventionDeteriorates"
                       class="term-w-p term-w-p--negative">
-                    {{ 'researches_deteriorates' | translate }} {{ result.name }}
+                    {{ 'research_data_deteriorates' | translate }} {{ result.name }}
                   </li>
                 </ul>
               </ng-container>
@@ -396,7 +396,7 @@
 
           <td>
             <button class="btn btn--small btn--purple btn--flat"
-                    (click)="openCommentModal('research-data_comment', r, links)"
+                    (click)="openCommentModal('research_data_comment', r, links)"
             >
               {{ "research_data_comment_button" | translate }}
             </button>
@@ -453,11 +453,11 @@
 </ng-template>
 
 <ng-template #researchesResultHint>
-  {{ 'researches_purple_form_result_hint' | translate }}
+  {{ 'research_data_purple_form_result_hint' | translate }}
 </ng-template>
 
 <ng-template #researchesLineHint>
-  {{ 'researches_purple_form_line_hint' | translate }}
+  {{ 'research_data_purple_form_line_hint' | translate }}
 </ng-template>
 
 <ng-template #therapy let-sample=sample>
@@ -470,13 +470,13 @@
       <ng-container *ngIf="sample.treatmentStart">
         <dt>{{ "research_data_l_therapy_age" | translate }}</dt>
         <dl>
-          {{ sample.treatmentStart || sample.startStageOfDevelopment? ('researches_l_therapy_from' | translate | titlecase) : '' }}
+          {{ sample.treatmentStart || sample.startStageOfDevelopment? ('research_data_l_therapy_from' | translate | titlecase) : '' }}
           {{ sample.treatmentStart | checkBlankValue: '':'':'' }}
           <span [innerHTML]="formatUnitGrammaticalCase(sample.treatmentStart, sample.startTimeUnit)"
           ></span>
           {{ sample.startStageOfDevelopment | checkBlankValue: '':'':''}}
 
-          {{ sample.treatmentEnd || sample.endStageOfDevelopment? ('researches_l_therapy_to' | translate) : '' }}
+          {{ sample.treatmentEnd || sample.endStageOfDevelopment? ('research_data_l_therapy_to' | translate) : '' }}
           {{ sample.treatmentEnd | checkBlankValue: '':'':'' }}
           <span [innerHTML]="formatUnitGrammaticalCase(sample.treatmentEnd, sample.endTimeUnit)"
           ></span>
@@ -491,7 +491,7 @@
     <p>{{ !!sample.inductionByDrugWithdrawal? ("research_data_l_therapy_mutation_induction_true" | translate) : "" }}</p>
     <ng-container *ngIf="sample.treatmentDescription">
       <button class="btn btn--small btn--purple btn--flat __ml-minus-5 __w-auto"
-              (click)="openCommentModal('researches_l_therapy_description', sample, therapyDescription)"
+              (click)="openCommentModal('research_data_l_therapy_description', sample, therapyDescription)"
       >
         {{ "research_data_l_therapy_description" | translate }}
       </button>
@@ -501,5 +501,5 @@
 </ng-template>
 
 <ng-template #therapyHint>
-  {{ 'researches_l_therapy_hint' | translate }}
+  {{ 'research_data_l_therapy_hint' | translate }}
 </ng-template>
