@@ -1,7 +1,7 @@
 /**
- * Model describing a common filters set for genes list
+ * Common filters set for genes list
  */
-export interface Filter {
+export interface ApiGeneSearchFilter {
   bySuggestions?: string;
   byGeneSymbol?: string[];
   byDiseases: number[]; // by the name of the associated disease
@@ -35,4 +35,42 @@ export type ApiSearchParameters =
 export interface ISort {
   byName: boolean; // by gene name
   byAge: boolean; // by gene evolutionary age (familyOrigin.order field)
+}
+
+/**
+ * Common filters set for studies list
+ */
+export type StudiesSortPurple =
+  | 'lifespanMinChangePercent'
+  | 'lifespanMeanChangePercent'
+  | 'lifespanMedianChangePercent'
+  | 'lifespanMaxChangePercent';
+
+type StudiesSortGeneral = 'criteriaQuantity' | 'familyPhylum';
+
+export type StudiesSortBlue = StudiesSortGeneral;
+export type StudiesSortGreen = StudiesSortGeneral;
+export type StudiesSortYellow = StudiesSortGeneral;
+export type StudiesSortOrange = StudiesSortGeneral;
+export type StudiesSortPink = StudiesSortGeneral;
+export type StudiesSortGray = StudiesSortGeneral;
+
+export interface ApiResearchFilter {
+  sortBy: StudiesSortPurple | StudiesSortGeneral | '';
+  sortOrder: 'ASC' | 'DESC' | '';
+  byDiseases: number[];
+  byDiseaseCategories: number[];
+  byAgeRelatedProcess: number[];
+  byExpressionChange: number;
+  bySelectionCriteria: number[];
+  byAgingMechanism: number[];
+  byProteinClass: number[];
+  bySpecies: number[];
+  byOrigin: string[];
+  byFamilyOrigin: string[];
+  byConservativeIn: string[];
+  byGeneId: number;
+  byGeneSymbol: string[];
+  bySuggestions: string;
+  byChromosomeNum: number;
 }

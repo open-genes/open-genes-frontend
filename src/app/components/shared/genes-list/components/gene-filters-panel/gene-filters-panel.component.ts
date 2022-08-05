@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { GenesListSettings } from '../../genes-list-settings.model';
-import { GenesFilterService } from '../../services/genes-filter.service';
+import { GenesFilterService } from '../../../../../core/services/filters/genes-filter.service';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { SettingsService } from '../../../../../core/services/settings.service';
@@ -8,7 +8,7 @@ import { ApiService } from '../../../../../core/services/api/open-genes-api.serv
 import { FormControl, FormGroup } from '@angular/forms';
 import { ApiSearchParameters } from '../../../../../core/models/filters/filter.model';
 import { MatSelectChange } from '@angular/material/select';
-import { Filter } from '../../../../../core/models/filters/filter.model';
+import { ApiGeneSearchFilter } from '../../../../../core/models/filters/filter.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
@@ -157,7 +157,7 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
     this.filterService
       .getFilterState()
       .pipe(takeUntil(this.subscription$))
-      .subscribe((data: Filter) => {
+      .subscribe((data: ApiGeneSearchFilter) => {
         this.predefinedProcesses = data.byAgeRelatedProcess;
         this.predefinedExpressionChanges = data.byExpressionChange;
         this.predefinedDiseases = data.byDiseases;

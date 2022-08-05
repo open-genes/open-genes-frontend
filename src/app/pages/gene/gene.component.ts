@@ -11,9 +11,9 @@ import { SearchModeEnum, Settings } from '../../core/models/settings.model';
 import { FavouritesService } from '../../core/services/favourites.service';
 import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { GenesFilterService } from '../../components/shared/genes-list/services/genes-filter.service';
+import { GenesFilterService } from '../../core/services/filters/genes-filter.service';
 import { Gene, Ortholog } from '../../core/models';
-import { Filter } from '../../core/models/filters/filter.model';
+import { ApiGeneSearchFilter } from '../../core/models/filters/filter.model';
 import { Utils } from '../../core/utils/utils.mixin';
 import { Studies } from 'src/app/core/models/open-genes-api/researches.model';
 
@@ -46,7 +46,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
   public isGeneCandidate = false;
   public isUiHintsSettingOn: boolean;
   public isInFavourites: boolean;
-  public filters: Filter = this.filterService.filters;
+  public filters: ApiGeneSearchFilter = this.filterService.filters;
   public orthologsMaxItemsToShow = 9;
   public orthologsMaxItems: number = this.orthologsMaxItemsToShow;
   public researches: Observable<Studies>;

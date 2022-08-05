@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { GenesFilterService } from '../../services/genes-filter.service';
+import { GenesFilterService } from '../../../../../core/services/filters/genes-filter.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
-import { Filter } from '../../../../../core/models/filters/filter.model';
+import { ApiGeneSearchFilter } from '../../../../../core/models/filters/filter.model';
 import { SettingsService } from '../../../../../core/services/settings.service';
 import { Settings, SettingsEnum } from '../../../../../core/models/settings.model';
 import { CommonModalComponent } from '../../../../ui-components/components/modals/common-modal/common-modal.component';
-import { SortEnum } from '../../services/filter-types.enum';
+import { SortEnum } from '../../../../../core/services/filters/filter-types.enum';
 
 @Component({
   selector: 'app-filter-panel',
@@ -21,9 +21,9 @@ export class FilterPanelComponent implements OnChanges {
   @Output() sortItem: EventEmitter<Sort> = new EventEmitter<Sort>();
   @Output() clearFilterItem: EventEmitter<any> = new EventEmitter();
 
-  public filters: Filter = this.filterService.filters;
+  public filters: ApiGeneSearchFilter = this.filterService.filters;
   public sortEnum = SortEnum;
-  public isClear$ = this.filterService.isClearFiltersBtnShown;
+  public isClear$ = this.filterService.twoOrMoreFiltersApplied;
 
   private settingsKey = SettingsEnum;
   private retrievedSettings: Settings;

@@ -1,20 +1,20 @@
 import { ChangeDetectorRef, Directive, Input, OnDestroy, OnInit } from '@angular/core';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
 import { Gene } from '../models';
-import { GenesFilterService } from '../../components/shared/genes-list/services/genes-filter.service';
+import { GenesFilterService } from '../services/filters/genes-filter.service';
 import { FavouritesService } from '../services/favourites.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
 import { Observable, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Filter } from '../models/filters/filter.model';
+import { ApiGeneSearchFilter } from '../models/filters/filter.model';
 
 @Directive()
 export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
   @Input() item: Gene;
 
   public listSettings: GenesListSettings;
-  public filters: Filter = this.filterService.filters;
+  public filters: ApiGeneSearchFilter = this.filterService.filters;
   protected subscription$ = new Subject();
 
   protected constructor(

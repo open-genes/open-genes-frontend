@@ -18,7 +18,7 @@ import { ApiResponse } from '../../models/api-response.model';
 import { SearchModel } from '../../models/open-genes-api/search.model';
 import { Pagination } from '../../models/settings.model';
 import { Diet } from '../../models/open-genes-api/diet.model';
-import { ResearchArguments } from '../../models/open-genes-api/researches.model';
+import { Research, ResearchArguments } from '../../models/open-genes-api/researches.model';
 
 @Injectable({
   providedIn: 'root',
@@ -71,6 +71,21 @@ export class ApiService {
     return this.http.get<GenesInHorvathClock[]>(`/api/methylation?lang=${this.currentLang}`);
   }
 
+  getGenes(): Observable<Genes[]> {
+    return this.http.get<Genes[]>(`/api/gene?lang=${this.currentLang}`);
+  }
+
+  // New API
+  getGenesV2(): Observable<ApiResponse<Genes>> {
+    const params = new HttpParams();
+    return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });
+  }
+
+  getStudies(studyType: ResearchArguments): Observable<any> {
+    const params = new HttpParams();
+    return this.http.get<ApiResponse<Research>>(`/api/research/${studyType}`, { params });
+  }
+
   getGenesForDiet(pagination?: Pagination): Observable<ApiResponse<Diet>> {
     let params = new HttpParams();
 
@@ -82,23 +97,6 @@ export class ApiService {
     }
 
     return this.http.get<ApiResponse<Diet>>(`/api/diet`, { params });
-  }
-
-  getGenes(): Observable<Genes[]> {
-    return this.http.get<Genes[]>(`/api/gene?lang=${this.currentLang}`);
-  }
-
-  // New API
-  getGenesV2(pagination?: Pagination): Observable<ApiResponse<Genes>> {
-    let params = new HttpParams();
-
-    if (pagination) {
-      params = params
-        .set('lang', this.translate.currentLang)
-        .set('page', pagination?.page)
-        .set('pageSize', pagination?.pageSize);
-    }
-    return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });
   }
 
   getDiseases(): Observable<AssociatedDiseases[]> {
@@ -127,9 +125,5 @@ export class ApiService {
 
   getPhylum(): Observable<Phylum[]> {
     return this.http.get<Phylum[]>(`/api/phylum?lang=${this.currentLang}`);
-  }
-
-  getResearches(research: ResearchArguments, page: number, pageSize?: number): Observable<any> {
-    return this.http.get<any[]>(`/api/research/${research}?lang=${this.currentLang}&page=${page}`);
   }
 }

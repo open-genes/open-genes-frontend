@@ -11,12 +11,12 @@ import {
 import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { Genes } from '../../../core/models';
-import { GenesFilterService } from './services/genes-filter.service';
+import { GenesFilterService } from '../../../core/services/filters/genes-filter.service';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { FileExportService } from '../../../core/services/browser/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
-import { Filter, ApiSearchParameters } from '../../../core/models/filters/filter.model';
+import { ApiGeneSearchFilter, ApiSearchParameters } from '../../../core/models/filters/filter.model';
 import { Pagination, SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { FavouritesService } from '../../../core/services/favourites.service';
@@ -24,7 +24,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Sort } from '@angular/material/sort';
 import { ApiResponse } from '../../../core/models/api-response.model';
 import { SearchModel } from '../../../core/models/open-genes-api/search.model';
-import { SortEnum } from './services/filter-types.enum';
+import { SortEnum } from '../../../core/services/filters/filter-types.enum';
 
 @Component({
   selector: 'app-genes-list',
@@ -152,7 +152,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
     this.filterService.filterResult
       .pipe(
         takeUntil(this.subscription$),
-        switchMap((filters: Filter) => {
+        switchMap((filters: ApiGeneSearchFilter) => {
           this.isLoading = !this.isGoTermsMode;
           this.loading.emit(!this.isGoTermsMode);
           this.isGoSearchPerformed = !this.isGoTermsMode;

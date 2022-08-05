@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { Filter } from '../../../../core/models/filters/filter.model';
-import { GenesListSettings } from '../genes-list-settings.model';
-import { Genes } from '../../../../core/models';
+import { ApiGeneSearchFilter } from '../../models/filters/filter.model';
+import { GenesListSettings } from '../../../components/shared/genes-list/genes-list-settings.model';
+import { Genes } from '../../models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
-import { Pagination } from '../../../../core/models/settings.model';
-import { SettingsService } from '../../../../core/services/settings.service';
+import { Pagination } from '../../models/settings.model';
+import { SettingsService } from '../settings.service';
 import { Sort } from '@angular/material/sort';
-import { ApiResponse } from '../../../../core/models/api-response.model';
+import { ApiResponse } from '../../models/api-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,15 +17,13 @@ import { ApiResponse } from '../../../../core/models/api-response.model';
 export class GenesFilterService {
   private listOfFields$ = new BehaviorSubject<any>('');
   private filterChanges$ = new BehaviorSubject<any>([]);
-
   public currentFields: Observable<GenesListSettings> = this.listOfFields$.asObservable();
-  public filterResult: Observable<Filter> = this.filterChanges$.asObservable();
-  public isClearFiltersBtnShown = new BehaviorSubject<boolean>(false);
-
+  public filterResult: Observable<ApiGeneSearchFilter> = this.filterChanges$.asObservable();
+  public twoOrMoreFiltersApplied = new BehaviorSubject<boolean>(false);
   public sortParams: Sort;
 
   // TODO: it's bad that the one can directly change filters state here
-  public filters: Filter = {
+  public filters: ApiGeneSearchFilter = {
     byAgeRelatedProcess: [],
     byDiseases: [],
     byDiseaseCategories: [],
@@ -40,7 +38,7 @@ export class GenesFilterService {
     researches: 0,
   };
 
-  private filtersDefault: Readonly<Filter> = {
+  private filtersDefault: Readonly<ApiGeneSearchFilter> = {
     byAgeRelatedProcess: [],
     byDiseases: [],
     byDiseaseCategories: [],
@@ -75,7 +73,7 @@ export class GenesFilterService {
   }
 
   // Get state
-  getFilterState(): Observable<Filter> {
+  getFilterState(): Observable<ApiGeneSearchFilter> {
     return of(this.filters);
   }
 
@@ -123,12 +121,12 @@ export class GenesFilterService {
     this.updateList(this.filters);
   }
 
-  public updateList(filterParams: Filter): void {
+  public updateList(filterParams: ApiGeneSearchFilter): void {
     this.filterChanges$.next(filterParams);
   }
 
   // Clear
-  public clearFilters(filterName?: keyof Filter): void {
+  public clearFilters(filterName?: keyof ApiGeneSearchFilter): void {
     if (filterName in this.filters) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -174,13 +172,13 @@ export class GenesFilterService {
         sum.push(1);
       }
     });
-    this.isClearFiltersBtnShown.next(sum.length >= 2);
+    this.twoOrMoreFiltersApplied.next(sum.length >= 2);
 
     this.updateList(this.filters);
     this.setQueryParams(this.filters);
   }
 
-  private setQueryParams(filterParams: Filter): void {
+  private setQueryParams(filterParams: ApiGeneSearchFilter): void {
     const queryParams = {};
     for (const key in filterParams) {
       if (filterParams[key]) {

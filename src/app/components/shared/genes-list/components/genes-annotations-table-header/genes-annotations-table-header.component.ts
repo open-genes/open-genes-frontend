@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { GenesFilterService } from '../../services/genes-filter.service';
+import { GenesFilterService } from '../../../../../core/services/filters/genes-filter.service';
 import { GeneTableCardLogic } from '../../../../../core/utils/gene-table-card-logic';
 import { FavouritesService } from '../../../../../core/services/favourites.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
