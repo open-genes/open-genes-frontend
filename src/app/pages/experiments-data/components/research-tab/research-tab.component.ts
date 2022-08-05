@@ -19,7 +19,8 @@ import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SearchMode } from '../../../../core/models/settings.model';
 import { Genes } from '../../../../core/models';
-import { GenesFilterService } from '../../../../components/shared/genes-list/services/genes-filter.service';
+import { StudiesFilterService } from '../../../../core/services/filters/studies-filter.service';
+import { Router } from '@angular/router';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,8 +52,9 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   constructor(
     private readonly apiService: ApiService,
     private readonly cdRef: ChangeDetectorRef,
+    private router: Router,
     private snackBar: MatSnackBar,
-    private filterService: GenesFilterService,
+    private filterService: StudiesFilterService,
     private renderer: Renderer2
   ) {
     super();
@@ -65,6 +67,16 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
+    this.filterService.clearFilters();
+    // TODO: DRY
+    const urlTree = this.router.parseUrl(this.router.url);
+    let urlWithoutParams = '/';
+    if (Object.keys(urlTree.root.children).length !== 0) {
+      urlWithoutParams = urlTree.root.children?.primary.segments.map((it) => it.path).join('/');
+    }
+    void this.router.navigate([urlWithoutParams], {
+      queryParams: [],
+    });
   }
 
   public setInitialState(): void {
@@ -106,6 +118,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   }
 
   public setSearchQuery(query: string): void {
+    this.filterService.clearFilters();
     this.searchByGenes(query);
   }
 
@@ -156,8 +169,9 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public getResearches(researchType: ResearchArguments, callback?: () => void): void {
     this.isLoading = true;
     this.cdRef.markForCheck();
-    this.apiService
-      .getResearches(researchType, this.page)
+    this.filterService.pagination.page = this.page; // TODO: no public properties for filter class
+    this.filterService
+      .getSortedAndFilteredStudies(researchType)
       .pipe(
         takeUntil(this.subscription$),
         map((r: ApiResponse<ResearchTypes>) => {

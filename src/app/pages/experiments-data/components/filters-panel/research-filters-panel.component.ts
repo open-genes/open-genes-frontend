@@ -1,4 +1,4 @@
-import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -7,8 +7,8 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { SettingsService } from '../../../../core/services/settings.service';
 import { ApiSearchParameters } from '../../../../core/models/filters/filter.model';
 import { FilterPanelLogic } from '../../../../core/utils/filter-panel-logic';
-import { GenesFilterService } from 'src/app/components/shared/genes-list/services/genes-filter.service';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
+import { StudiesFilterService } from '../../../../core/services/filters/studies-filter.service';
 
 @Component({
   selector: 'app-research-filters-panel',
@@ -17,6 +17,7 @@ import { ApiService } from '../../../../core/services/api/open-genes-api.service
 })
 export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implements OnInit, OnDestroy {
   public filtersForm: FormGroup;
+  @Output() filterReady: EventEmitter<string> = new EventEmitter<string>();
 
   // Search in selects
   searchText: any;
@@ -28,7 +29,7 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
 
   constructor(
     private settingsService: SettingsService,
-    public filterService: GenesFilterService,
+    public filterService: StudiesFilterService,
     public apiService: ApiService
   ) {
     super(apiService, filterService);
