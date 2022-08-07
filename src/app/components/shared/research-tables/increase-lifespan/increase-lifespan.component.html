@@ -1,4 +1,4 @@
-<section>
+<section *ngIf="items?.length !== 0">
   <h4>{{ "gene_page_research_data_lifespan" | translate }}</h4>
 
   <div class="table-section __mt-20 __w-content-fluid">
@@ -48,8 +48,7 @@
         </th>
         <th class="__cell-width-medium">
           {{ "research_data_l_intervention_way" | translate }},
-          {{ "research_data_method" | translate | lowercase }},
-          {{ "research_data_genotype" | translate | lowercase }}
+          {{ "research_data_method" | translate | lowercase }}
         </th>
         <th>{{ "research_data_l_tissue_specificity" | translate }}</th>
         <th>

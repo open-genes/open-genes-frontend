@@ -70,10 +70,6 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
     if (name === 'latest') {
       this.showLatestGenesSkeleton = event;
     }
-
-    if (name === 'filters') {
-      this.showFiltersSkeleton = event;
-    }
   }
 
   public setLoader(event: boolean) {

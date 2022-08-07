@@ -2,17 +2,17 @@
       class="search-form"
       [ngClass]="
       {'search-form--disabled': formDisabled,
-      'search-form--active': showSearchResult,
+      'search-form--active': showSearchHints,
       'search-form--fix-on-top': fixOnTopOnMobile}">
 
-  <div *ngIf="showSearchResult"
+  <div *ngIf="showSearchHints"
        class="search-backdrop"
-       (click)="closeSearchTipsDropdown($event)">
+       (click)="closeSearchHintsDropdown($event)">
   </div>
 
   <div class="search-form__panel">
     <button
-      (click)="closeSearchTipsDropdown($event)"
+      (click)="closeSearchHintsDropdown($event)"
       mat-icon-button
       color="primary"
       type="button"
@@ -55,7 +55,7 @@
       ></mat-progress-bar>
     </div>
 
-    <div *ngIf="showSearchResult && clearFieldButton"
+    <div *ngIf="showSearchHints && clearFieldButton"
          class="search-form__autocomplete-list">
       <ng-container *ngFor="let gene of searchedData; let i = index">
         <button

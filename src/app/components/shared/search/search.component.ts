@@ -54,7 +54,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Input() fixOnTopOnMobile = true; // TODO: move it out of component and activate in parent component on event
   @Input() placeholder: string;
   @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
-  @Output() isAnyToSubmit: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() isAnyQueryToSubmit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public searchedData: Partial<Genes[]>;
@@ -62,7 +62,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   public searchMode: SearchMode;
   public formDisabled: boolean;
   public clearFieldButton: boolean;
-  public showSearchResult = false;
+  public showSearchHints = false;
   public highlightText: string;
 
   private subscription$ = new Subject();
@@ -86,7 +86,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription$.next();
     this.subscription$.complete();
-    this.closeSearchTipsDropdown();
+    this.closeSearchHintsDropdown();
   }
 
   private subsToSearchFieldChanges(): void {
@@ -97,15 +97,15 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
         filter((query: string) => {
           this.clearFieldButton = !!query;
           this.highlightText = query;
-          this.showSearchResult = query?.length > 1;
+          this.showSearchHints = query?.length > 1;
 
-          if (this.showSearchResult && this.fixOnTopOnMobile) {
+          if (this.showSearchHints && this.fixOnTopOnMobile) {
             this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
           } else {
             this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
           }
 
-          return this.showSearchResult;
+          return this.showSearchHints;
         }),
         distinctUntilChanged(),
         takeUntil(this.subscription$)
@@ -117,12 +117,12 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   public onSearch(): void {
-    this.isAnyToSubmit.emit(!!this.highlightText);
+    this.isAnyQueryToSubmit.emit(!!this.highlightText);
   }
 
-  public closeSearchTipsDropdown(event?): void {
+  public closeSearchHintsDropdown(event?): void {
     event?.stopPropagation();
-    this.showSearchResult = false;
+    this.showSearchHints = false;
     if (this.fixOnTopOnMobile) {
       this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
     }
@@ -132,8 +132,8 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     this.searchForm.get('searchField').setValue('');
     const query: string = this.searchForm.get('searchField').value;
     this.searchQuery.emit(query);
-    this.isAnyToSubmit.emit(false);
+    this.isAnyQueryToSubmit.emit(false);
     this.cancel.emit(true);
-    this.closeSearchTipsDropdown();
+    this.closeSearchHintsDropdown();
   }
 }

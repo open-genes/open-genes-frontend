@@ -1,9 +1,9 @@
-<div [ngSwitch]="researchType"
+<div [ngSwitch]="studyType"
      class="research">
   <app-search [searchHintsList]="genesList"
-              placeholder="search_field_start_typing"
+              placeholder="search_field_by_comma"
               [fixOnTopOnMobile]="false"
-              (isAnyToSubmit)="updateResearchesList($event)"
+              (isAnyQueryToSubmit)="updateResearchesList($event)"
               (searchQuery)="setSearchQuery($event)"
               (cancel)="setInitialState()"
               [isDisabled]="error.isError"
@@ -16,7 +16,7 @@
       <app-increase-lifespan
         [geneColumnOn]="true"
         [numberColumn]="true"
-        [items]="researches"
+        [items]="resultingList"
         [slice]="slice | async"
       ></app-increase-lifespan>
     </section>
@@ -26,7 +26,7 @@
       <app-age-related-changes
         [geneColumnOn]="true"
         [numberColumn]="true"
-        [items]="researches"
+        [items]="resultingList"
         [slice]="slice | async"
       ></app-age-related-changes>
     </section>
@@ -35,7 +35,7 @@
       <app-intervention-affects-aging-process
         [geneColumnOn]="true"
         [numberColumn]="true"
-        [items]="researches"
+        [items]="resultingList"
         [slice]="slice | async"
       ></app-intervention-affects-aging-process>
     </section>
@@ -44,7 +44,7 @@
       <app-protein-regulates-other-genes
         [geneColumnOn]="true"
         [numberColumn]="true"
-        [items]="researches"
+        [items]="resultingList"
         [slice]="slice | async"
       ></app-protein-regulates-other-genes>
     </section>
@@ -53,7 +53,7 @@
       <app-gene-associated-with-progeria-syndromes
         [geneColumnOn]="true"
         [numberColumn]="true"
-        [items]="researches"
+        [items]="resultingList"
         [slice]="slice | async"
       ></app-gene-associated-with-progeria-syndromes>
     </section>
@@ -62,7 +62,7 @@
       <app-gene-associated-with-longevity-effects
         [geneColumnOn]="true"
         [numberColumn]="true"
-        [items]="researches"
+        [items]="resultingList"
         [slice]="slice | async"
       ></app-gene-associated-with-longevity-effects>
     </section>
@@ -71,7 +71,7 @@
       <app-additional-evidences
         [geneColumnOn]="true"
         [numberColumn]="true"
-        [items]="researches"
+        [items]="resultingList"
         [slice]="slice | async"
       ></app-additional-evidences>
     </section>
@@ -81,9 +81,9 @@
                class="__mt-10 __mb-10"
   ></app-spinner>
 
-  <div *ngIf="!isNotFound && (researches?.length < options?.objTotal || page < options?.pagination.pagesTotal)"
+  <div *ngIf="!isNotFound && (resultingList?.length < options?.objTotal || currentPage < options?.pagination.pagesTotal)"
        class="btn-wrap show-more __mt-20">
-    <button (click)="showMore($event, researchType)"
+    <button (click)="showMore($event, studyType)"
             class="btn show-more__button">
       {{ "show_more" | translate }} <span class="spinner fas fa-circle-notch fa-spin"></span>
     </button>

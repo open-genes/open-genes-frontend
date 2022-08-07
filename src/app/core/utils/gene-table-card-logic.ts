@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Directive, Input, OnDestroy, OnInit } from '@angular/core';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
-import { Gene } from '../models';
+import { Gene, Genes } from '../models';
 import { GenesFilterService } from '../services/filters/genes-filter.service';
 import { FavouritesService } from '../services/favourites.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,7 +11,7 @@ import { ApiGeneSearchFilter } from '../models/filters/filter.model';
 
 @Directive()
 export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
-  @Input() item: Gene;
+  @Input() item: Genes;
 
   public listSettings: GenesListSettings;
   public filters: ApiGeneSearchFilter = this.filterService.filters;

@@ -24,7 +24,7 @@ export class SettingsService {
     ifShowMethylation: false,
     ifShowAgingMechanisms: true,
     ifShowProteinClasses: true,
-    ifShowResearches: false,
+    ifShowExperimentsStats: false,
   };
 
   constructor() {

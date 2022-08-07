@@ -71,7 +71,7 @@ export class StudiesFilterService {
 
   // Filter
   public applyFilter(filterType: string, filterValue: any): void {
-    console.log('applyFilter', filterValue);
+    console.log('StudiesFilterService.applyFilter ', filterType, filterValue);
     if (filterValue) {
       if (Array.isArray(this.filters[filterType])) {
         const arrayValues = filterValue.toString().split(',');

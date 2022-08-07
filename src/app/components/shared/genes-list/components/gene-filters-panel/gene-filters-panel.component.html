@@ -220,9 +220,9 @@
   <div class="body__row __mb-10">
     <mat-checkbox
       color="primary"
-      formControlName="researchesCheckbox"
+      formControlName="experimentsStatsCheckbox"
       class="checkbox"
-      [(ngModel)]="listSettings.ifShowResearches"
+      [(ngModel)]="listSettings.ifShowExperimentsStats"
       (change)="toggleSwitchAndFilter('researches', $event)">
       {{ "filters_modal_placeholder_show_research_data" | translate }}
     </mat-checkbox>

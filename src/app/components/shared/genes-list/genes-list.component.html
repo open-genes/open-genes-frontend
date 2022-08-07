@@ -5,18 +5,19 @@
       class="__mb-10"
       [isMobile]="isMobile"
       [isGoTermsMode]="isGoTermsMode"
+      [twoOrMoreFiltersApplied]="filterService.twoOrMoreFiltersApplied"
       (sortItem)="sortBy($event)"
       (clearFilterItem)="clearFilters($event)"
     ></app-filter-panel>
     <app-search-view-panel
-      [ngClass]="isGoTermsMode && searchedData?.length === 0 ? 'hidden' : ''"
+      [ngClass]="isGoTermsMode && resultingList?.length === 0 ? 'hidden' : ''"
       [isMobile]="isMobile"
       [downloadJsonLink]="downloadJsonLink"
       (tableView)="toggleGenesView($event)"
     ></app-search-view-panel>
 </div>
 
-<div *ngIf="searchedData?.length"
+<div *ngIf="resultingList?.length"
      class="genes-info">
   <div class="genes-info__group" *ngIf="foundAndNotFoundGenes?.found.length">
     <div class="genes-info__title">
@@ -40,7 +41,7 @@
 
 <!-- Content -->
 <section
-  *ngIf="searchedData?.length"
+  *ngIf="resultingList?.length"
   class="view-content"
   [ngClass]="isTableView && !isMobile ? 'view-content--as-table' : 'view-content--as-cards'"
 >
@@ -55,7 +56,7 @@
 
       <ng-container *ngIf="isGoTermsMode && isGoSearchPerformed ; else table">
         <app-gene-annotations-table-row
-          *ngFor="let rowData of searchedData"
+          *ngFor="let rowData of resultingList"
           [item]="rowData"
           [isAdded]="isFaved(rowData.id)"
           (unFav)="unFavItem($event)"
@@ -66,7 +67,7 @@
 
       <ng-template #table>
         <app-gene-table-row
-          *ngFor="let rowData of searchedData"
+          *ngFor="let rowData of resultingList"
           [item]="rowData"
           [isAdded]="isFaved(rowData.id)"
           (unFav)="unFavItem($event)"
@@ -82,7 +83,7 @@
     <ng-container *ngIf="isGoTermsMode && isGoSearchPerformed ; else card">
       <app-gene-annotations-card
         class="card"
-        *ngFor="let rowData of searchedData"
+        *ngFor="let rowData of resultingList"
         [item]="rowData"
         [isAdded]="isFaved(rowData.id)"
         (unFav)="unFavItem($event)"
@@ -94,7 +95,7 @@
     <ng-template #card>
       <app-gene-card
         class="card"
-        *ngFor="let rowData of searchedData"
+        *ngFor="let rowData of resultingList"
         [item]="rowData"
         [isAdded]="isFaved(rowData.id)"
         (unFav)="unFavItem($event)"
@@ -108,7 +109,7 @@
 <!-- Show more Button -->
 <div
   class="btn-wrap show-more"
-  *ngIf="searchedData.length >= pagination?.pageSize && currentPage < pagination?.pagesTotal">
+  *ngIf="resultingList.length >= pagination?.pageSize && currentPage < pagination?.pagesTotal">
   <button (click)="loadMoreGenes()"
           class="btn show-more__button">
     {{ "show_more" | translate }}
@@ -118,7 +119,7 @@
 <ng-container *ngIf="isGoTermsMode; else geneSearchMode">
   <ng-container *ngIf="isGoSearchPerformed">
     <!-- GO search mode no content error message -->
-    <ng-container *ngIf="!isLoading && searchedData?.length === 0">
+    <ng-container *ngIf="!isLoading && resultingList?.length === 0">
       <app-no-content [title]="'nothing_found'">
         <ng-container icon>
           <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
@@ -141,7 +142,7 @@
 </ng-container>
 
 <ng-template #geneSearchMode>
-  <ng-container *ngIf="!isLoading && searchedData?.length === 0">
+  <ng-container *ngIf="!isLoading && resultingList?.length === 0">
     <app-no-content [title]="'nothing_found'">
       <ng-container icon>
         <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>

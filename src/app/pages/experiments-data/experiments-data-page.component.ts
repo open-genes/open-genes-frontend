@@ -28,7 +28,7 @@ export class ExperimentsDataPageComponent extends WindowWidth implements OnInit 
       param: 'age-related-changes',
     },
     {
-      title: 'gene_page_research_data_lifespan',
+      title: 'gene_page_intervention_moderates_aging',
       cssClass: 'tab--gene-intervention-to-vital-processes',
       param: 'gene-activity-change-impact',
     },

@@ -411,7 +411,7 @@
   "search_by_annotations": "Search by annotations",
   "search_by_research_data": "Age-related genes studies",
   "search_by_research_data_hint_go": "Try it",
-  "search_field_by_comma": "HGNC comma separated genes",
+  "search_field_by_comma": "Comma separated gene HGNCs",
   "search_field_start_typing": "HGNC, name or Ensembl",
   "search_field_tap_search": "By annotations, e.g.: \"cytokine\"",
   "search_for_genes": "Search by gene's name",

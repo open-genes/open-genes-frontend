@@ -89,7 +89,7 @@
 </button>
 
 <button
-  *ngIf="isClear$ | async"
+  *ngIf="twoOrMoreFiltersApplied | async"
   class="btn btn--small btn--purple"
   (click)="clearFilters()"
 >

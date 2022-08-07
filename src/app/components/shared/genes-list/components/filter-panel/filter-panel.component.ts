@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { GenesFilterService } from '../../../../../core/services/filters/genes-filter.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
-import { ApiGeneSearchFilter } from '../../../../../core/models/filters/filter.model';
-import { SettingsService } from '../../../../../core/services/settings.service';
-import { Settings, SettingsEnum } from '../../../../../core/models/settings.model';
 import { CommonModalComponent } from '../../../../ui-components/components/modals/common-modal/common-modal.component';
 import { SortEnum } from '../../../../../core/services/filters/filter-types.enum';
+import { BehaviorSubject } from 'rxjs';
+import { ApiGeneSearchFilter } from '../../../../../core/models/filters/filter.model';
+import { GenesFilterService } from '../../../../../core/services/filters/genes-filter.service';
 
 @Component({
   selector: 'app-filter-panel',
@@ -17,22 +16,15 @@ import { SortEnum } from '../../../../../core/services/filters/filter-types.enum
 export class FilterPanelComponent implements OnChanges {
   @Input() isMobile: boolean;
   @Input() isGoTermsMode: boolean;
+  @Input() twoOrMoreFiltersApplied: BehaviorSubject<boolean>;
 
   @Output() sortItem: EventEmitter<Sort> = new EventEmitter<Sort>();
   @Output() clearFilterItem: EventEmitter<any> = new EventEmitter();
 
   public filters: ApiGeneSearchFilter = this.filterService.filters;
   public sortEnum = SortEnum;
-  public isClear$ = this.filterService.twoOrMoreFiltersApplied;
 
-  private settingsKey = SettingsEnum;
-  private retrievedSettings: Settings;
-
-  constructor(
-    private filterService: GenesFilterService,
-    private settingsService: SettingsService,
-    private dialog: MatDialog
-  ) {}
+  constructor(private filterService: GenesFilterService, private dialog: MatDialog) {}
 
   ngOnChanges(): void {
     if (!this.isMobile) {

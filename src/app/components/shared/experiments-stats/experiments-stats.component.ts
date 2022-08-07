@@ -10,7 +10,7 @@ import { CommonBottomSheetComponent } from '../../ui-components/components/modal
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExperimentsStatsComponent implements OnInit {
-  @Input() researches: Studies;
+  @Input() experiments: Studies;
   public maxValue: number;
   public legend = [
     {
@@ -51,8 +51,8 @@ export class ExperimentsStatsComponent implements OnInit {
   }
 
   private findMaxValue(): number {
-    if (this.researches) {
-      const arr: number[] = Object.values(this.researches).map((entry) => entry.length);
+    if (this.experiments) {
+      const arr: number[] = Object.values(this.experiments).map((entry) => entry.length);
       const max = Math.max(...arr);
       return max <= 0 ? 1 : max;
     }

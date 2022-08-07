@@ -20,7 +20,7 @@
               <div class="col-12">
                 <app-search [searchHintsList]="searchedGenesList"
                             placeholder="search_field_start_typing"
-                            (isAnyToSubmit)="updateGenesList($event)"
+                            (isAnyQueryToSubmit)="updateGenesList($event)"
                             (searchQuery)="setSearchQuery($event)"
                             class="__mb-30">
                 </app-search>

@@ -45,7 +45,7 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/download/download.module').then((m) => m.DownloadModule),
   },
   {
-    path: 'researches',
+    path: 'experiments',
     loadChildren: () =>
       import('./pages/experiments-data/experiments-data-page.module').then((m) => m.ExperimentsDataPageModule),
   },

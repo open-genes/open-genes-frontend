@@ -88,7 +88,7 @@
               [isDisabled]="genesListIsLoading"
               placeholder="search_field_tap_search"
               [showProgressBar]="showProgressBar"
-              (isAnyToSubmit)="updateGenesList($event)"
+              (isAnyQueryToSubmit)="updateGenesList($event)"
               (searchQuery)="setSearchQuery($event)"
             ></app-search>
 
@@ -96,7 +96,7 @@
               [setSearchMode]="'searchByGoTerms'"
               (loading)="setLoader($event)"
               (errorStatus)="errorStatus = $event"
-              (genesQuantity)="itemsQuantity = $event"
+              (itemsNumber)="itemsQuantity = $event"
               [genesList]="confirmedGenesList"
               [isMobile]="isMobile"
               [showFiltersPanel]="false">

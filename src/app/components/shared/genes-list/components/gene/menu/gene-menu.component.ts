@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Gene } from '../../../../../../core/models';
+import { Genes } from '../../../../../../core/models';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GeneMenuComponent {
-  @Input() gene: Gene;
+  @Input() gene: Genes;
   @Input() isAdded: Observable<boolean>;
   @Output() unFav: EventEmitter<number> = new EventEmitter();
   @Output() fav: EventEmitter<number> = new EventEmitter();

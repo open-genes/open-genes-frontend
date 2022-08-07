@@ -19,14 +19,14 @@
             <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 sidebar-column"
                  [ngClass]="isMobile? 'sidebar-column--mobile' : 'sidebar-column--desktop'">
               <app-sidebar>
-                <app-sidebar-item>
+                <app-sidebar-item *ngIf="!isMobile">
                   <div content class="filters-wrapper">
-                    <app-research-filters-panel>
-                    </app-research-filters-panel>
+                    <app-research-filters-panel></app-research-filters-panel>
                   </div>
                 </app-sidebar-item>
               </app-sidebar>
             </div>
+
             <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
               <mat-tab-group
                 [disablePagination]="true"
@@ -44,7 +44,7 @@
                   <ng-template matTabContent>
                     <app-research-tab
                       class="tab__content"
-                      [researchType]="tab.param"
+                      [studyType]="tab.param"
                       (dataLoaded)="setIsListLoaded($event)"
                     ></app-research-tab>
                   </ng-template>

@@ -8,5 +8,5 @@ export interface GenesListSettings {
   ifShowMethylation: boolean;
   ifShowAgingMechanisms: boolean;
   ifShowProteinClasses: boolean;
-  ifShowResearches: boolean;
+  ifShowExperimentsStats: boolean;
 }

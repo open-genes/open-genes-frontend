@@ -35,6 +35,7 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
     super(apiService, filterService);
     this.filtersForm = new FormGroup({
       ageRelatedProcessesSearchInput: new FormControl([[], null]),
+      ageRelatedProcessesSelect: new FormControl([[], [null]]),
     });
   }
 
@@ -101,8 +102,8 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
   }
 
   public toggleSwitchAndFilter(filterType: ApiSearchParameters, $event): void {
-    this.listSettings.ifShowResearches = !$event.checked;
-    this.filterService.applyFilter(filterType, Number(this.listSettings.ifShowResearches));
+    this.listSettings.ifShowExperimentsStats = !$event.checked;
+    this.filterService.applyFilter(filterType, Number(this.listSettings.ifShowExperimentsStats));
     this.getState();
   }
 

@@ -81,7 +81,7 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
       originSelect: new FormControl([[], [null]]),
       familyOriginSelect: new FormControl([[], [null]]),
       conservativeInSelect: new FormControl([[], [null]]),
-      researchesCheckbox: new FormControl([false, [null]]),
+      experimentsStatsCheckbox: new FormControl([false, [null]]),
     });
   }
 
@@ -169,7 +169,7 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
         this.predefinedFamilyOrigin = data.byFamilyOrigin;
         this.predefinedConservativeIn = data.byConservativeIn;
         this.showSkeletonChange.emit(false);
-        this.listSettings.ifShowResearches = !!data.researches;
+        this.listSettings.ifShowExperimentsStats = !!data.researches;
       });
   }
 
@@ -241,8 +241,8 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
   }
 
   public toggleSwitchAndFilter(filterType: ApiSearchParameters, $event): void {
-    this.listSettings.ifShowResearches = !$event.checked;
-    this.filterService.applyFilter(filterType, Number(this.listSettings.ifShowResearches));
+    this.listSettings.ifShowExperimentsStats = !$event.checked;
+    this.filterService.applyFilter(filterType, Number(this.listSettings.ifShowExperimentsStats));
     this.getState();
   }
 
