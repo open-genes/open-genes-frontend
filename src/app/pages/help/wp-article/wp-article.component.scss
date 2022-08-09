@@ -1,27 +1,38 @@
 @import "../../styles";
 
-:host {
-  ::ng-deep figure {
-    width: 100%;
-    float: left;
-    text-align: center;
+article {
+  ::ng-deep {
+    figure {
+      width: 100%;
+      float: left;
+      text-align: center;
 
-    img {
-      display: inline-block;
-      width: 60%;
-      height: auto;
+      img {
+        display: inline-block;
+        width: 60%;
+        height: auto;
+      }
     }
-  }
 
-  ul, ol, dl {
-    @include list;
-  }
+    ul, ol, dl {
+      @include list;
+    }
 
-  ul, ol {
-    @include ul;
-  }
+    ul {
+      @include ul;
+    }
 
-  dl {
-    @include dl;
+    dl {
+      @include dl;
+    }
+
+    a {
+      @include base-link;
+      @include blue-link;
+    }
+
+    a[href^="#"] {
+      @include anchor-link;
+    }
   }
 }

@@ -14,6 +14,7 @@ import { NoContentModule } from '../../components/shared/no-content/no-content.m
 import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
 import { PipesModule } from '../../modules/pipes/pipes.module';
 import { WpArticleComponent } from './wp-article/wp-article.component';
+import { DirectivesModule } from "../../directives/directives.module";
 
 @NgModule({
   declarations: [HelpComponent, EntitiesComponent, WpArticlesComponent, WpArticleComponent],
@@ -28,6 +29,7 @@ import { WpArticleComponent } from './wp-article/wp-article.component';
     NoContentModule,
     IconModule,
     PipesModule,
-  ],
+    DirectivesModule
+  ]
 })
 export class HelpModule {}
