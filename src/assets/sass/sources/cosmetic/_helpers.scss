@@ -69,7 +69,8 @@ $sizes: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 80, 100, 120);
 // фикс для таблиц и другуго контента, который расширяет страницу
 .__w-content {
   @include resolution_widescreen {
-    max-width: calc(100vw - ((#{$widescreen} / 12) * 3) - #{$gutter});
+    $a: ($widescreen / 12) * 3;
+    max-width: calc(100vw - #{$a - $gutter});
   }
 
   @include resolution_all-but-widescreen {

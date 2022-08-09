@@ -36,15 +36,15 @@ export class EntitiesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     switch (this.router.url) {
-      case '/help/age-related-processes':
+      case '/help/entities/age-related-processes':
         this.source$ = this.apiService.getAgeRelatedProcesses();
         this.title = 'entities_age_related_processes';
         break;
-      case '/help/aging-mechanisms':
+      case '/help/entities/aging-mechanisms':
         this.source$ = this.apiService.getAgingMechanisms();
         this.title = 'entities_aging_mechanisms';
         break;
-      case '/help/selection-criteria':
+      case '/help/entities/selection-criteria':
         this.source$ = this.apiService.getSelectionCriteria();
         this.title = 'entities_selection_criteria';
         break;
