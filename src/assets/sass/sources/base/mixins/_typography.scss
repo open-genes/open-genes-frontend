@@ -184,6 +184,15 @@
   }
 }
 
+@mixin margin-clamp-fix {
+  p,
+  h1, h2, h3, h4, h5, h6,
+  ul, ol, dl {
+    width: 100%;
+    float: left;
+  }
+}
+
 @mixin typography {
   @include lists;
 
@@ -198,13 +207,6 @@
     }
     @include resolution_smartphone {
       font-size: 14px;
-    }
-
-    p,
-    h1, h2, h3, h4, h5, h6,
-    ul, ol, dl {
-      width: 100%;
-      float: left;
     }
 
     h1,
