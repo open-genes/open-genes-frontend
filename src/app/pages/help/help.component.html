@@ -18,6 +18,10 @@
           <app-sidebar>
             <mat-nav-list>
               <a mat-list-item
+                 [routerLink]="'/help'" fragment="guidelines">
+                {{ 'help_page_articles_title' | translate }}
+              </a>
+              <a mat-list-item
                  [routerLink]="'/help'" fragment="faq">
                 {{ 'help_page_title_faq' | translate }}
               </a>
@@ -30,7 +34,8 @@
         </div>
 
         <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-8">
-          <section class="row no-gutters">
+          <section id="guidelines"
+                   class="row no-gutters faq__section">
             <h2 class="col col-12">
               {{ "help_page_articles_title" | translate }}
             </h2>
