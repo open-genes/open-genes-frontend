@@ -41,7 +41,7 @@ export class WpArticlesComponent implements OnInit, OnDestroy {
 
   private getArticles(pagination: Pagination): void {
     this.wpApiService
-      .getCategories()
+      .getCategories('en')
       .pipe(
         switchMap((categories) => {
           return this.wpApiService.getArticlesByCategoryId(categories[0].id, pagination);

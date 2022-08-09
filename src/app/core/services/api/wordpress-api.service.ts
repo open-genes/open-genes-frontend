@@ -16,8 +16,9 @@ export class WordpressApiService {
 
   constructor(private http: HttpClient, private translate: TranslateService) {}
 
-  getCategories(): Observable<Category[]> {
-    const params = new HttpParams().set('slug', this.translate.currentLang);
+  getCategories(language?: string): Observable<Category[]> {
+    const params = new HttpParams().set('slug', language ? language : this.translate.currentLang);
+    console.log(this.translate.currentLang);
     return this.http.get<Category[]>(`${this.url}categories`, { params });
   }
 
