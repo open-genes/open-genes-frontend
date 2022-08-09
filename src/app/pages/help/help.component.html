@@ -31,10 +31,11 @@
 
         <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-8">
           <section class="row no-gutters">
-            <h1 class="col col-12">
-              {{ "news_page_articles_title" | translate }}
-            </h1>
+            <h2 class="col col-12">
+              {{ "help_page_articles_title" | translate }}
+            </h2>
             <app-wp-articles
+              class="faq__section"
               [showSkeleton] = 'showCardSkeleton'
               (showSkeletonChange)='showCardSkeleton = $event'
             ></app-wp-articles>
@@ -48,8 +49,7 @@
 
           <section class="row no-gutters">
             <h2>{{ 'help_page_title_faq' | translate }}</h2>
-            <p></p>
-            <mat-expansion-panel>
+            <mat-expansion-panel class="faq__section">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   <ng-container *ngIf="translate.currentLang === 'ru'">
@@ -290,17 +290,17 @@
 
             <ul class="list">
               <li>
-                <a [routerLink]="'age-related-processes'"
+                <a [routerLink]="'entities/age-related-processes'"
                    class="link">
                   {{ 'entities_age_related_processes' | translate }}</a>
               </li>
               <li>
-                <a [routerLink]="'aging-mechanisms'"
+                <a [routerLink]="'entities/aging-mechanisms'"
                    class="link">
                   {{ 'entities_aging_mechanisms' | translate }}</a>
               </li>
               <li>
-                <a [routerLink]="'selection-criteria'"
+                <a [routerLink]="'entities/selection-criteria'"
                    class="link">
                   {{ 'entities_selection_criteria' | translate }}</a>
               </li>

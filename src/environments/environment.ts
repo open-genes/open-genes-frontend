@@ -10,7 +10,7 @@ export const environment = {
   pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',
   proteinAtlasUrl: 'https://www.proteinatlas.org/',
   openLongevity80LevelCMS: 'https://openlongevity.com/',
-  wordpressApiUrl: 'http://content.open-genes.com/wp-json/wp/v2/',
+  wordpressApiUrl: 'https://content.open-genes.com/wp-json/wp/v2/',
   debugMode: true,
   languages: ['ru', 'en', 'zh'],
   mockJsonUrl: ['data/articles-1.json', 'data/articles-2.json'],

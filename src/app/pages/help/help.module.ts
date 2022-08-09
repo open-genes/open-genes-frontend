@@ -13,9 +13,10 @@ import { WpArticlesComponent } from './wp-articles/wp-articles.component';
 import { NoContentModule } from '../../components/shared/no-content/no-content.module';
 import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
 import { PipesModule } from '../../modules/pipes/pipes.module';
+import { WpArticleComponent } from './wp-article/wp-article.component';
 
 @NgModule({
-  declarations: [HelpComponent, EntitiesComponent, WpArticlesComponent],
+  declarations: [HelpComponent, EntitiesComponent, WpArticlesComponent, WpArticleComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(HELP_ROUTES),

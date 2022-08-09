@@ -1,4 +1,4 @@
-export interface Article {
+export interface Articles {
   id: number;
   date: string;
   date_gmt: string;
@@ -16,22 +16,22 @@ export interface Article {
   };
   content: {
     rendered: string;
-    protected: false;
+    protected: boolean;
   };
   excerpt: {
     rendered: string;
-    protected: false;
+    protected: boolean;
   };
-  author: number;
+  author: string;
   featured_media: number;
   comment_status: string;
   ping_status: string;
-  sticky: false;
+  sticky: boolean;
   template: string;
   format: string;
-  meta: [];
+  meta: any[];
   categories: number[];
-  tags: [];
+  tags: any[];
   _links: {
     self: [
       {
@@ -50,7 +50,7 @@ export interface Article {
     ];
     author: [
       {
-        embeddable: true;
+        embeddable: boolean;
         href: string;
       }
     ];
@@ -60,26 +60,41 @@ export interface Article {
         href: string;
       }
     ];
-    'version-history': {
-      count: number;
-      href: string;
-    }[];
-    'predecessor-version': {
-      id: number;
-      href: string;
-    }[];
-    'wp:attachment': {
-      href: string;
-    }[];
-    'wp:term': {
-      taxonomy: string;
-      embeddable: true;
-      href: string;
-    }[];
-    curies: {
-      name: string;
-      href: string;
-      templated: true;
-    }[];
+    'version-history': [
+      {
+        count: number;
+        href: string;
+      }
+    ];
+    'predecessor-version': [
+      {
+        id: number;
+        href: string;
+      }
+    ];
+    'wp:attachment': [
+      {
+        href: string;
+      }
+    ];
+    'wp:term': [
+      {
+        taxonomy: string;
+        embeddable: boolean;
+        href: string;
+      },
+      {
+        taxonomy: string;
+        embeddable: boolean;
+        href: string;
+      }
+    ];
+    curies: [
+      {
+        name: string;
+        href: string;
+        templated: boolean;
+      }
+    ];
   };
 }

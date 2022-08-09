@@ -3,12 +3,13 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input, OnDestroy,
+  Input,
   OnInit,
+  OnDestroy,
   Output,
 } from '@angular/core';
 import { WordpressApiService } from '../../../core/services/api/wordpress-api.service';
-import { Article } from '../../../core/models/wordpress/article.model';
+import { Articles } from '../../../core/models/wordpress/articles.model';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Pagination } from '../../../core/models/settings.model';
@@ -23,25 +24,19 @@ export class WpArticlesComponent implements OnInit, OnDestroy {
   @Input() showSkeleton: boolean;
   @Output() showSkeletonChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  public articlesList: Article[] = [];
+  public articlesList: Articles[] = [];
   public articleTags: any[] = [];
   public pagination: Pagination = {
     page: 1,
     pageSize: 20,
   };
-
   public showMoreButtonVisible = false;
-
   private unsubscribe$ = new Subject();
 
   constructor(private wpApiService: WordpressApiService, private cdRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.getArticles(this.pagination);
-  }
-
-  public openNewBlank(url: string): void {
-    window.open(url, '_blank');
   }
 
   private getArticles(pagination: Pagination): void {
@@ -56,6 +51,7 @@ export class WpArticlesComponent implements OnInit, OnDestroy {
       .subscribe(
         (articles) => {
           this.articlesList = articles;
+
           // Populate tag list avoiding duplicates
           articles.forEach((article) => {
             if (article?.tags.length !== 0) {

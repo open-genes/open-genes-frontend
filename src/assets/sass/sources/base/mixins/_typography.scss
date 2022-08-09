@@ -25,72 +25,84 @@
   text-overflow: ellipsis;
 }
 
+@mixin list {
+  width: 100%;
+
+  li {
+    width: 100%;
+    position: relative;
+
+    .alias {
+      vertical-align: top;
+    }
+
+    .callout {
+      display: block;
+      float: left;
+    }
+  }
+
+  li + li {
+    margin-top: .8ex;
+  }
+}
+
+@mixin ul {
+  li {
+    padding-left: 1.8ex;
+
+    &:before {
+      content: " ";
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: $color-general;
+      position: absolute;
+      left: 0;
+      top: 1ex;
+      z-index: 0;
+    }
+  }
+}
+
+@mixin dl {
+  display: inline-block;
+  width: 100%;
+
+  dt, dd {
+    float: left;
+  }
+
+  dt {
+    clear: left;
+    margin-right: 1ch;
+    font-weight: $font-weight-medium;
+
+    span {
+      font-weight: $font-weight-regular;
+    }
+  }
+
+  dt:not(:first-of-type),
+  dd:not(:first-of-type) {
+    margin-top: .8ex;
+  }
+}
+
 @mixin lists {
   ul, ol {
     &.list {
-      width: 100%;
-
-      li {
-        width: 100%;
-        position: relative;
-
-        .alias {
-          vertical-align: top;
-        }
-
-        .callout {
-          display: block;
-          float: left;
-        }
-      }
-
-      li + li {
-        margin-top: .8ex;
-      }
+      @include list;
     }
   }
 
   ul.list--bulletted {
-    li {
-      padding-left: 1.8ex;
-
-      &:before {
-        content: " ";
-        display: block;
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background-color: $color-general;
-        position: absolute;
-        left: 0;
-        top: 1ex;
-        z-index: 0;
-      }
-    }
+    @include ul;
   }
 
   dl.list {
-    display: inline-block;
-    width: 100%;
-
-    dt, dd {
-      float: left;
-    }
-
-    dt {
-      clear: left;
-      margin-right: 1ch;
-      font-weight: $font-weight-medium;
-
-      span {
-        font-weight: $font-weight-regular;
-      }
-    }
-
-    dt:not(:first-of-type),
-    dd:not(:first-of-type) {
-      margin-top: .8ex;
-    }
+    @include dl;
 
     &--stacked {
       dt,
@@ -115,6 +127,11 @@
     }
     @include resolution_smartphone {
       font-size: 14px;
+    }
+
+    p {
+      width: 100%;
+      float: left;
     }
 
     h1,

@@ -1,0 +1,33 @@
+<div *ngIf="res"
+     class="page text-page">
+  <div class="page__inner __pb-60">
+    <div class="wrapper text-page__header" [style.background-image]="res.featured_media">
+      <div class="container-fluid">
+        <div class="row no-gutters">
+          <div class="col col-12">
+            <app-breadcrumbs></app-breadcrumbs>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <div class="col col-12">
+            <div class="page__title">
+              <h1>{{ res?.title.rendered }}</h1>
+              <p *ngIf="res.date"
+                 class="__mt-20">
+                {{res.date | date:'longDate'}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row no-gutters">
+        <div class="col col-12">
+          <article [innerHTML]="res?.content.rendered"></article>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
