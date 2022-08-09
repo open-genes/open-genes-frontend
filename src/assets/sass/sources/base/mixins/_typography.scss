@@ -25,72 +25,86 @@
   text-overflow: ellipsis;
 }
 
+@mixin list {
+  width: 100%;
+
+  li {
+    width: 100%;
+    position: relative;
+
+    .alias {
+      vertical-align: top;
+    }
+
+    .callout {
+      display: block;
+      float: left;
+    }
+  }
+
+  li + li,
+  li > ul,
+  li > ol {
+    margin-top: .8ex;
+  }
+}
+
+@mixin ul {
+  li {
+    padding-left: 1.8ex;
+
+    &:before {
+      content: " ";
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: $color-general;
+      position: absolute;
+      left: 0;
+      top: 1ex;
+      z-index: 0;
+    }
+  }
+}
+
+@mixin dl {
+  display: inline-block;
+  width: 100%;
+
+  dt, dd {
+    float: left;
+  }
+
+  dt {
+    clear: left;
+    margin-right: 1ch;
+    font-weight: $font-weight-medium;
+
+    span {
+      font-weight: $font-weight-regular;
+    }
+  }
+
+  dt:not(:first-of-type),
+  dd:not(:first-of-type) {
+    margin-top: .8ex;
+  }
+}
+
 @mixin lists {
   ul, ol {
     &.list {
-      width: 100%;
-
-      li {
-        width: 100%;
-        position: relative;
-
-        .alias {
-          vertical-align: top;
-        }
-
-        .callout {
-          display: block;
-          float: left;
-        }
-      }
-
-      li + li {
-        margin-top: .8ex;
-      }
+      @include list;
     }
   }
 
   ul.list--bulletted {
-    li {
-      padding-left: 1.8ex;
-
-      &:before {
-        content: " ";
-        display: block;
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background-color: $color-general;
-        position: absolute;
-        left: 0;
-        top: 1ex;
-        z-index: 0;
-      }
-    }
+    @include ul;
   }
 
   dl.list {
-    display: inline-block;
-    width: 100%;
-
-    dt, dd {
-      float: left;
-    }
-
-    dt {
-      clear: left;
-      margin-right: 1ch;
-      font-weight: $font-weight-medium;
-
-      span {
-        font-weight: $font-weight-regular;
-      }
-    }
-
-    dt:not(:first-of-type),
-    dd:not(:first-of-type) {
-      margin-top: .8ex;
-    }
+    @include dl;
 
     &--stacked {
       dt,
@@ -98,6 +112,75 @@
         width: 100%;
       }
     }
+  }
+}
+
+// TODO: Transfer to mixins folder
+@mixin base-link {
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  position: relative;
+}
+
+@mixin blue-link {
+  color: $color-general;
+
+  &:hover,
+  &:active {
+    color: lighten(mix($color-general, $color-blue, 5%), 3%);
+  }
+}
+
+@mixin gray-link {
+  color: mix($color-gray, $color-general, 90%);
+
+  &:hover,
+  &:active {
+    color: darken(mix($color-gray, $color-general, 90%), 10%);
+  }
+}
+
+@mixin white-link {
+  color: $color-white;
+
+  &:hover,
+  &:active {
+    color: darken($color-white, 10%);
+  }
+}
+
+@mixin underlined-link {
+  text-decoration: underline;
+}
+
+@mixin anchor-link {
+  @include gray-link;
+  border-bottom: 1px dashed currentColor;
+}
+
+.link {
+  @include base-link;
+  @include blue-link;
+
+  &--gray {
+    @include gray-link;
+  }
+
+  &--white {
+    @include white-link;
+  }
+
+  &--underline {
+    @include underlined-link;
+  }
+
+  &--anchor,
+  &--term {
+    @include anchor-link;
+  }
+
+  &--term {
+    font-style: italic;
   }
 }
 
@@ -115,6 +198,13 @@
     }
     @include resolution_smartphone {
       font-size: 14px;
+    }
+
+    p,
+    h1, h2, h3, h4, h5, h6,
+    ul, ol, dl {
+      width: 100%;
+      float: left;
     }
 
     h1,
@@ -165,7 +255,7 @@
     * + p,
     * + .list,
     * + app-code-block {
-      margin-top: .8ex;
+      margin-top: 2.5ex;
     }
 
     h3 + *,
@@ -173,10 +263,6 @@
     h5 + *,
     h6 + * {
       margin-top: 2ex;
-    }
-
-    article + h3 {
-      margin-top: 3ex;
     }
 
     // It's made in order to not affect styled links.
@@ -203,6 +289,9 @@
   h2 + article {
     margin-top: 30px;
   }
+  article + h3 {
+    margin-top: 3ex;
+  }
 
   .reference {
     font-size: 80%;
@@ -211,66 +300,5 @@
     p + p {
       margin-top: .8em;
     }
-  }
-}
-
-// TODO: Transfer to mixins folder
-@mixin base-link {
-  font-weight: $font-weight-medium;
-  cursor: pointer;
-  position: relative;
-}
-
-@mixin blue-link {
-  color: $color-general;
-
-  &:hover,
-  &:active {
-    color: lighten(mix($color-general, $color-blue, 5%), 3%);
-  }
-}
-
-@mixin gray-link {
-  color: mix($color-gray, $color-general, 90%);
-
-  &:hover,
-  &:active {
-    color: darken(mix($color-gray, $color-general, 90%), 10%);
-  }
-}
-
-@mixin white-link {
-  color: $color-white;
-
-  &:hover,
-  &:active {
-    color: darken($color-white, 10%);
-  }
-}
-
-.link {
-  @include base-link;
-  @include blue-link;
-
-  &--gray {
-    @include gray-link;
-  }
-
-  &--white {
-    @include white-link;
-  }
-
-  &--underline {
-    text-decoration: underline;
-  }
-
-  &--anchor,
-  &--term {
-    @include gray-link;
-    border-bottom: 1px dashed currentColor;
-  }
-
-  &--term {
-    font-style: italic;
   }
 }

@@ -9,9 +9,15 @@ import { EntitiesComponent } from './entities/entities.component';
 import { HELP_ROUTES } from './help-routing';
 import { NgToArrayPipeModule } from 'angular-pipes';
 import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
+import { WpArticlesComponent } from './wp-articles/wp-articles.component';
+import { NoContentModule } from '../../components/shared/no-content/no-content.module';
+import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
+import { PipesModule } from '../../modules/pipes/pipes.module';
+import { WpArticleComponent } from './wp-article/wp-article.component';
+import { DirectivesModule } from "../../directives/directives.module";
 
 @NgModule({
-  declarations: [HelpComponent, EntitiesComponent],
+  declarations: [HelpComponent, EntitiesComponent, WpArticlesComponent, WpArticleComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(HELP_ROUTES),
@@ -20,6 +26,10 @@ import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
     UiComponentsModule,
     NgToArrayPipeModule,
     SidebarModule,
-  ],
+    NoContentModule,
+    IconModule,
+    PipesModule,
+    DirectivesModule
+  ]
 })
 export class HelpModule {}

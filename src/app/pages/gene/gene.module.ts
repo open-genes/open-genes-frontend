@@ -15,7 +15,6 @@ import { ResearchesComponent } from './researches/researches.component';
 import { GeneOntologyComponent } from './gene-ontology/gene-ontology.component';
 import { HumanProteinAtlasComponent } from './human-protein-atlas/human-protein-atlas.component';
 import { ExpressionComponent } from './expression/expression.component';
-import { DynamicContentAnchorsDirective } from './directives/anchor-links.directive';
 import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
 import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 import { DirectivesModule } from '../../directives/directives.module';
@@ -35,8 +34,7 @@ import { GeneLocationComponent } from '../../components/shared/gene-location/gen
     GeneOntologyComponent,
     HumanProteinAtlasComponent,
     ExpressionComponent,
-    DynamicContentAnchorsDirective,
-    GeneLocationComponent
+    GeneLocationComponent,
   ],
   imports: [
     CommonModule,
