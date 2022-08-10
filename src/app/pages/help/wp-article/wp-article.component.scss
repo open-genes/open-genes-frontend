@@ -1,7 +1,9 @@
 @import "../../styles";
 
-article {
-  ::ng-deep {
+.guideline-page {
+  article::ng-deep {
+    @include margin-clamp-fix;
+
     figure {
       width: 100%;
       float: left;
