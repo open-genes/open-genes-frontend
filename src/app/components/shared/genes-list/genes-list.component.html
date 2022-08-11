@@ -30,7 +30,7 @@
   </div>
   <div class="genes-info__group" *ngIf="foundAndNotFoundGenes?.notFound.length">
     <div class="genes-info__title">
-      {{ 'items_found' | translate }} {{ foundAndNotFoundGenes?.notFound.length }}:
+      {{ 'items_not_found' | translate }} {{ foundAndNotFoundGenes?.notFound.length }}:
     </div>
     <ng-container
       *ngFor="let geneName of foundAndNotFoundGenes?.notFound;  let last = last">
