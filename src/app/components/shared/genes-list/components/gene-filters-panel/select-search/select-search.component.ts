@@ -1,12 +1,12 @@
 import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
-import { ApiSearchParameters } from '../../../../../../core/models/filters/filter.model';
+import { ApiGeneSearchParameters } from '../../../../../../core/models/filters/filter.model';
 import { MatSelectChange } from '@angular/material/select';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { GeneFiltersPanelComponent } from '../gene-filters-panel.component';
 
 interface AppliedFilter {
-  filterType: ApiSearchParameters;
+  filterType: ApiGeneSearchParameters;
   event: MatSelectChange | MatCheckboxChange;
 }
 
@@ -24,14 +24,14 @@ interface AppliedFilter {
 })
 export class SelectSearchComponent {
   @Input() placeholder = '';
-  @Input() filterType: ApiSearchParameters;
+  @Input() filterType: ApiGeneSearchParameters;
   @Input() items: Map<number, any> = new Map();
   @Input() predefinedItems: any[] = [];
 
   @Output() filterApplied: EventEmitter<AppliedFilter> = new EventEmitter<AppliedFilter>();
   @Output() searchApplied: EventEmitter<KeyboardEvent> = new EventEmitter<KeyboardEvent>();
 
-  apply(filterType: ApiSearchParameters, $event: MatSelectChange | MatCheckboxChange) {
+  apply(filterType: ApiGeneSearchParameters, $event: MatSelectChange | MatCheckboxChange) {
     this.filterApplied.emit({ filterType: filterType, event: $event });
   }
 

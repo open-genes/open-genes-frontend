@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 import { SettingsService } from '../../../../../core/services/settings.service';
 import { ApiService } from '../../../../../core/services/api/open-genes-api.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ApiSearchParameters } from '../../../../../core/models/filters/filter.model';
+import { ApiGeneSearchParameters } from '../../../../../core/models/filters/filter.model';
 import { MatSelectChange } from '@angular/material/select';
 import { ApiGeneSearchFilter } from '../../../../../core/models/filters/filter.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -215,7 +215,7 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
     }
   }
 
-  public apply(filterType: ApiSearchParameters, $event: MatSelectChange | MatCheckboxChange): void {
+  public apply(filterType: ApiGeneSearchParameters, $event: MatSelectChange | MatCheckboxChange): void {
     let value;
     if ($event instanceof MatCheckboxChange) {
       value = $event.checked;
@@ -240,7 +240,7 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
     this.getState();
   }
 
-  public toggleSwitchAndFilter(filterType: ApiSearchParameters, $event): void {
+  public toggleSwitchAndFilter(filterType: ApiGeneSearchParameters, $event): void {
     this.listSettings.ifShowExperimentsStats = !$event.checked;
     this.filterService.applyFilter(filterType, Number(this.listSettings.ifShowExperimentsStats));
     this.getState();
@@ -303,7 +303,6 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
       (fields) => {
         this.settingsService.setFieldsForShow(fields);
         this.listSettings = fields;
-        console.log(this.listSettings);
       },
       (error) => {
         console.warn(error);
@@ -348,7 +347,6 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
     this.filterService.updateFields(this.listSettings);
 
     if (callback instanceof Function) {
-      console.log('args: ', ...callback.arguments);
       callback(...callback.arguments);
     }
   }

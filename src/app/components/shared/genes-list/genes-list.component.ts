@@ -8,7 +8,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { EMPTY, Observable, of, Subject } from 'rxjs';
+import { EMPTY, Observable, of, Subject, Subscription } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { Genes } from '../../../core/models';
 import { GenesFilterService } from '../../../core/services/filters/genes-filter.service';
@@ -16,16 +16,15 @@ import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { FileExportService } from '../../../core/services/browser/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
-import { ApiSearchParameters } from '../../../core/models/filters/filter.model';
-import { Pagination, SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
+import { ApiGeneSearchParameters } from '../../../core/models/filters/filter.model';
+import { SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { FavouritesService } from '../../../core/services/favourites.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Sort } from '@angular/material/sort';
-import { ApiResponse } from '../../../core/models/api-response.model';
+import { ApiResponse, PageOptions } from '../../../core/models/api-response.model';
 import { SearchModel } from '../../../core/models/open-genes-api/search.model';
 import { SortEnum } from '../../../core/services/filters/filter-types.enum';
-import { RouterParamsDecorator } from '../../../core/decorators/router-params.decorator';
 
 @Component({
   selector: 'app-genes-list',
@@ -33,8 +32,8 @@ import { RouterParamsDecorator } from '../../../core/decorators/router-params.de
   styleUrls: ['./genes-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-@RouterParamsDecorator()
 export class GenesListComponent implements OnInit, OnDestroy {
+  @Input() cancelSearch: Observable<void>;
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
   @Input() set setSearchMode(searchMode: SearchMode) {
@@ -101,21 +100,22 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public isGoSearchPerformed: boolean;
   public downloadJsonLink: string | SafeResourceUrl = '#';
   public currentPage: number;
-  public pagination: Pagination;
+  public options: PageOptions;
   public isLoading = false;
 
+  private cancelSearchSubscription$: Subscription;
   private cachedData: Genes[] = [];
   private querySubstrings: string[] = [];
   private retrievedSettings: Settings;
   private searchModeEnum = SearchModeEnum;
   private subscription$ = new Subject();
   private genesFromInput: Genes[];
-  private genesPerPage = 20;
+  private itemsPerPage = 20;
   private snackBarRef: MatSnackBarRef<SnackBarComponent>;
 
   constructor(
     public filterService: GenesFilterService,
-    activatedRoute: ActivatedRoute,
+    public activatedRoute: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService,
     private favouritesService: FavouritesService,
@@ -125,12 +125,27 @@ export class GenesListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.activatedRoute?.queryParams.subscribe((params) => {
+      if (Object.keys(params).length) {
+        for (const key in params) {
+          if (params[key] !== this.filterService.filters[key].toString()) {
+            this.filterService.applyFilter(key, params[key]);
+          }
+        }
+      }
+    });
     this.favouritesService.getItems();
     this.setInitSettings();
     this.setInitialState();
+
+    this.cancelSearchSubscription$ = this.cancelSearch.subscribe(() => {
+      this.filterService.clearFilters();
+      this.setInitialState();
+    });
   }
 
   ngOnDestroy(): void {
+    this.cancelSearchSubscription$.unsubscribe();
     this.subscription$.unsubscribe();
     this.filterService.clearFilters();
   }
@@ -169,15 +184,17 @@ export class GenesListComponent implements OnInit, OnDestroy {
             this.resultingList = [...this.cachedData];
           }
 
-          if (this.filterService.filters.byGeneSymbol || this.filterService.filters.bySuggestions) {
+          if (
+            this.filterService.filters.byGeneSymbol?.length !== 0 ||
+            this.filterService.filters.bySuggestions?.length !== 0
+          ) {
             this.resetPagination();
-            this.openSnackBar();
           }
 
           this.downloadSearch(this.resultingList);
           this.setFoundAndNotFound();
 
-          this.pagination = res.options.pagination;
+          this.options = res.options;
           this.isLoading = false;
           this.loading.emit(false);
           this.itemsNumber.emit(res.options.objTotal);
@@ -198,14 +215,14 @@ export class GenesListComponent implements OnInit, OnDestroy {
    */
   public loadMoreGenes(): void {
     if (!this.isGoTermsMode) {
-      this.filterService.onLoadMoreGenes(this.pagination.pagesTotal);
+      this.filterService.onLoadMoreGenes(this.options?.pagination?.pagesTotal);
       return;
     }
 
-    if (this.genesFromInput?.length >= this.genesPerPage) {
+    if (this.genesFromInput?.length >= this.itemsPerPage) {
       this.currentPage++;
-      const end = this.currentPage * this.genesPerPage;
-      const start = end - this.genesPerPage;
+      const end = this.currentPage * this.itemsPerPage;
+      const start = end - this.itemsPerPage;
       const nextPageData = this.genesFromInput.slice(start, end);
       this.resultingList.push(...nextPageData);
     }
@@ -228,9 +245,9 @@ export class GenesListComponent implements OnInit, OnDestroy {
   /**
    * Filter reset
    */
-  public clearFilters(filterName?: ApiSearchParameters): void {
-    delete this.filterService.filters.bySuggestions;
-    delete this.filterService.filters.byGeneSymbol;
+  public clearFilters(filterName?: ApiGeneSearchParameters): void {
+    this.filterService.clearFilters('bySuggestions');
+    this.filterService.clearFilters('byGeneSymbol');
     this.filterService.clearFilters(filterName ? filterName : null);
   }
 
@@ -316,9 +333,9 @@ export class GenesListComponent implements OnInit, OnDestroy {
     this.snackBarRef = this.snackBar.openFromComponent(SnackBarComponent, {
       data: {
         title: 'items_found',
-        length: this.resultingList ? this.resultingList.length : 0,
+        length: this.options ? this.options.objTotal : 0,
       },
-      duration: 600,
+      duration: 1200,
     });
   }
 

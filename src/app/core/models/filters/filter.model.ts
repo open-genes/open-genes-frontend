@@ -4,6 +4,7 @@
 export interface ApiGeneSearchFilter {
   bySuggestions?: string;
   byGeneSymbol?: string[];
+  byGeneId?: number;
   byDiseases: number[]; // by the name of the associated disease
   byDiseaseCategories: number[]; // by the name of the associated disease category
   byAgeRelatedProcess: number[]; // by functional classes
@@ -18,7 +19,7 @@ export interface ApiGeneSearchFilter {
   researches: number; // send researches in response
 }
 
-export type ApiSearchParameters =
+export type ApiGeneSearchParameters =
   | 'byDiseases'
   | 'byDiseaseCategories'
   | 'byAgeRelatedProcess'
@@ -74,3 +75,22 @@ export interface ApiResearchFilter {
   bySuggestions: string;
   byChromosomeNum: number;
 }
+
+export type ApiResearchSearchParameters =
+  | 'sortBy'
+  | 'sortOrder'
+  | 'byDiseases'
+  | 'byDiseaseCategories'
+  | 'byAgeRelatedProcess'
+  | 'byExpressionChange'
+  | 'bySelectionCriteria'
+  | 'byAgingMechanism'
+  | 'byProteinClass'
+  | 'bySpecies'
+  | 'byOrigin'
+  | 'byFamilyOrigin'
+  | 'byConservativeIn'
+  | 'byGeneId'
+  | 'byGeneSymbol'
+  | 'bySuggestions'
+  | 'byChromosomeNum';

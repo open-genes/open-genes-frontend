@@ -18,7 +18,6 @@ export class WordpressApiService {
 
   getCategories(language?: string): Observable<Category[]> {
     const params = new HttpParams().set('slug', language ? language : this.translate.currentLang);
-    console.log(this.translate.currentLang);
     return this.http.get<Category[]>(`${this.url}categories`, { params });
   }
 

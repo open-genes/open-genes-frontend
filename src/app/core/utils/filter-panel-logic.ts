@@ -1,7 +1,6 @@
 import { takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { ApiService } from '../services/api/open-genes-api.service';
-import { ApiSearchParameters, ApiGeneSearchFilter } from '../models/filters/filter.model';
 import { MatSelectChange } from '@angular/material/select';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
@@ -17,6 +16,7 @@ enum FilterStateEnum {
   'predefinedOrigin' = 'byOrigin',
   'predefinedFamilyOrigin' = 'byFamilyOrigin',
   'predefinedConservativeIn' = 'byConservativeIn',
+  'predefinedModelOrganisms' = 'bySpecies',
 }
 
 interface StateParams {
@@ -34,14 +34,11 @@ export abstract class FilterPanelLogic {
     this.service
       .getFilterState()
       .pipe(takeUntil(this.subscription$))
-      .subscribe((data: ApiGeneSearchFilter) => {
+      .subscribe((data: any) => {
         updateFields.forEach((f) => {
-          console.log('Instance: ', this.service);
           const key = FilterStateEnum[f.type];
           f.field = data[key];
         });
-
-        // this.emitViewUpdate.emit(false);
       });
   }
 
@@ -71,12 +68,14 @@ export abstract class FilterPanelLogic {
         return this.api.getProteinClasses();
       case 'phylum':
         return this.api.getPhylum();
+      case 'model-organisms':
+        return this.api.getModelOrganisms();
       default:
         return;
     }
   }
 
-  public apply(filterType: ApiSearchParameters, $event: MatSelectChange | MatCheckboxChange): void {
+  public apply(filterType: any, $event: MatSelectChange | MatCheckboxChange): void {
     let value;
     if ($event instanceof MatCheckboxChange) {
       value = $event.checked;

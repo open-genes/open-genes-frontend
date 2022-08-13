@@ -40,7 +40,6 @@ export class WpArticleComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           this.res = res[0];
-          console.log(this.res);
           this.showSkeletonChange.next(false);
           this.cdRef.markForCheck();
         },

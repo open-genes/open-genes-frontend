@@ -2,15 +2,15 @@
       [formGroup]="filtersForm">
   <div class="body__row">
     <mat-form-field appearance="fill" color="primary">
-      <mat-label>{{ "filters_modal_placeholder_age_related_processes" | translate }}</mat-label>
+      <mat-label>{{ "filters_modal_placeholder_model_organisms" | translate }}</mat-label>
       <mat-select formControlName="ageRelatedProcessesSelect"
                   multiple="true"
-                  [disabled]="processes?.length === 0"
-                  [(ngModel)]="predefinedProcesses"
+                  [disabled]="modelOrganisms?.length === 0"
+                  [(ngModel)]="predefinedModelOrganisms"
                   [compareWith]="compareSelectValues"
-                  (selectionChange)="apply('byAgeRelatedProcess', $event)">
-        <ng-container *ngIf="processes?.length !== 0">
-          <mat-option *ngFor="let i of processes | searchFilter : searchText" [value]="i.id">{{ i.name }}</mat-option>
+                  (selectionChange)="apply('bySpecies', $event)">
+        <ng-container *ngIf="modelOrganisms?.length !== 0">
+          <mat-option *ngFor="let i of modelOrganisms | searchFilter : searchText" [value]="i.id">{{ i.latinName }}</mat-option>
         </ng-container>
       </mat-select>
     </mat-form-field>

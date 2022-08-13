@@ -92,7 +92,7 @@ export class GenesMethylationListComponent implements OnInit {
         title: 'items_found',
         length: this.searchedData ? this.searchedData.length : 0,
       },
-      duration: 600,
+      duration: 1200,
     });
   }
 

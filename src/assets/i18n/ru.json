@@ -137,6 +137,7 @@
   "filters_modal_placeholder_family_origin": "Происхождение генного семейства",
   "filters_modal_placeholder_conservative": "Консервативен у",
   "filters_modal_placeholder_show_research_data": "Статистика экспериментов",
+  "filters_modal_placeholder_model_organisms": "Модельные организмы",
   "filters_modal_title": "Фильтры и поля",
   "filters_modal_show": "Показать поле в списке",
   "filters_reset": "Сбросить",

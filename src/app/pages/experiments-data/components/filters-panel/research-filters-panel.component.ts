@@ -4,8 +4,7 @@ import { Observable } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { SettingsService } from '../../../../core/services/settings.service';
-import { ApiSearchParameters } from '../../../../core/models/filters/filter.model';
+import { ApiResearchSearchParameters } from '../../../../core/models/filters/filter.model';
 import { FilterPanelLogic } from '../../../../core/utils/filter-panel-logic';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
 import { StudiesFilterService } from '../../../../core/services/filters/studies-filter.service';
@@ -23,15 +22,11 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
   searchText: any;
 
   // Age-related processes
-  public processes: any[] = []; // TODO: typing
-  public predefinedProcesses: any[] = [];
-  public processesModel: Observable<any[]>;
+  public modelOrganisms: any[] = []; // TODO: typing
+  public predefinedModelOrganisms: any[] = [];
+  public modelOrganismsModel: Observable<any[]>;
 
-  constructor(
-    private settingsService: SettingsService,
-    public filterService: StudiesFilterService,
-    public apiService: ApiService
-  ) {
+  constructor(public filterService: StudiesFilterService, public apiService: ApiService) {
     super(apiService, filterService);
     this.filtersForm = new FormGroup({
       ageRelatedProcessesSearchInput: new FormControl([[], null]),
@@ -40,13 +35,11 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
   }
 
   ngOnInit() {
-    this.updateVisibleFields();
-
     // FILTERS
     // Age-related processes
-    this.processesModel = this.populateSelect('processes');
-    this.processesModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
-      this.processes = data;
+    this.modelOrganismsModel = this.populateSelect('model-organisms');
+    this.modelOrganismsModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
+      this.modelOrganisms = data;
     });
 
     // Set the values tha user has already selected in the genes list
@@ -63,8 +56,8 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
   private getState(): void {
     this.getStateForFields([
       {
-        field: this.predefinedProcesses,
-        type: 'processes',
+        field: this.predefinedModelOrganisms,
+        type: 'species',
       },
     ]);
   }
@@ -78,45 +71,15 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
     return r;
   }
 
-  public applyAndUpdate(filterType: ApiSearchParameters, $event: MatSelectChange | MatCheckboxChange): void {
+  public applyAndUpdate(filterType: ApiResearchSearchParameters, $event: MatSelectChange | MatCheckboxChange): void {
     this.apply(filterType, $event);
     this.getState();
   }
 
-  /**
-   * Update list view
-   */
-  public toggleGenesListSettings(param: string, callback?: void | ((...args: any[]) => void)): void {
-    switch (param) {
-      case 'processes':
-        this.listSettings.ifShowFuncClusters = !this.listSettings.ifShowFuncClusters;
-        break;
-      default:
-        break;
-    }
-    this.filterService.updateFields(this.listSettings);
-
-    if (callback instanceof Function) {
-      callback(...callback.arguments);
-    }
-  }
-
-  public toggleSwitchAndFilter(filterType: ApiSearchParameters, $event): void {
+  public toggleSwitchAndFilter(filterType: ApiResearchSearchParameters, $event): void {
     this.listSettings.ifShowExperimentsStats = !$event.checked;
     this.filterService.applyFilter(filterType, Number(this.listSettings.ifShowExperimentsStats));
     this.getState();
-  }
-
-  private updateVisibleFields(): void {
-    this.filterService.currentFields.pipe(takeUntil(this.subscription$)).subscribe(
-      (fields) => {
-        this.settingsService.setFieldsForShow(fields);
-        this.listSettings = fields;
-      },
-      (error) => {
-        console.warn(error);
-      }
-    );
   }
 
   /**
@@ -126,7 +89,7 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
     if (formControlName) {
       switch (formControlName) {
         case 'ageRelatedProcessesSelect':
-          this.filterService.clearFilters('byAgeRelatedProcess');
+          this.filterService.clearFilters('bySpecies');
           break;
       }
     } else {

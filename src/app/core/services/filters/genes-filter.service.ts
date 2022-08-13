@@ -5,11 +5,11 @@ import { GenesListSettings } from '../../../components/shared/genes-list/genes-l
 import { Genes } from '../../models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
 import { Pagination } from '../../models/settings.model';
 import { SettingsService } from '../settings.service';
 import { Sort } from '@angular/material/sort';
 import { ApiResponse } from '../../models/api-response.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +36,9 @@ export class GenesFilterService {
     byFamilyOrigin: [],
     byConservativeIn: [],
     researches: 0,
+    byGeneId: null,
+    byGeneSymbol: [],
+    bySuggestions: '',
   };
 
   private filtersDefault: Readonly<ApiGeneSearchFilter> = {
@@ -51,6 +54,9 @@ export class GenesFilterService {
     byFamilyOrigin: [],
     byConservativeIn: [],
     researches: 0,
+    byGeneId: null,
+    byGeneSymbol: [],
+    bySuggestions: null,
   };
 
   public pagination: Pagination = {
@@ -79,7 +85,6 @@ export class GenesFilterService {
 
   // Filter
   public applyFilter(filterType: string, filterValue: any): void {
-    console.log('applyFilter', filterValue);
     if (filterValue) {
       if (Array.isArray(this.filters[filterType])) {
         const arrayValues = filterValue.toString().split(',');
@@ -127,13 +132,12 @@ export class GenesFilterService {
 
   // Clear
   public clearFilters(filterName?: keyof ApiGeneSearchFilter): void {
-    if (filterName in this.filters) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      this.filters[filterName] = this.filtersDefault[filterName];
+    if (filterName && filterName in this.filters) {
+      this.filters[filterName as any] = JSON.parse(JSON.stringify(this.filtersDefault[filterName]));
+    } else {
+      this.filters = Object.assign({}, this.filters, this.filtersDefault);
     }
     this.pagination.page = 1;
-
     this.areMoreThan2FiltersApplied();
   }
 
@@ -162,6 +166,7 @@ export class GenesFilterService {
       params = params.set('sortBy', this.sortParams.active).set('sortOrder', this.sortParams.direction.toUpperCase());
     }
 
+    // return this.apiService.getGenesV2(params);
     return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });
   }
 
@@ -175,10 +180,10 @@ export class GenesFilterService {
     this.twoOrMoreFiltersApplied.next(sum.length >= 2);
 
     this.updateList(this.filters);
-    this.setQueryParams(this.filters);
+    this.applyQueryParams(this.filters);
   }
 
-  private setQueryParams(filterParams: ApiGeneSearchFilter): void {
+  private applyQueryParams(filterParams: ApiGeneSearchFilter): void {
     const queryParams = {};
     for (const key in filterParams) {
       if (filterParams[key]) {

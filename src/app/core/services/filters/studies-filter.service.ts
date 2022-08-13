@@ -23,6 +23,26 @@ export class StudiesFilterService {
   public twoOrMoreFiltersApplied = new BehaviorSubject<boolean>(false);
   public sortParams: Sort;
 
+  public filters: ApiResearchFilter = {
+    sortBy: '',
+    sortOrder: '',
+    byDiseases: [],
+    byDiseaseCategories: [],
+    byAgeRelatedProcess: [],
+    byExpressionChange: 0,
+    bySelectionCriteria: [],
+    byAgingMechanism: [],
+    byProteinClass: [],
+    bySpecies: [],
+    byOrigin: [],
+    byFamilyOrigin: [],
+    byConservativeIn: [],
+    byGeneId: null,
+    byGeneSymbol: [],
+    bySuggestions: '',
+    byChromosomeNum: null,
+  };
+
   private filtersDefault: Readonly<ApiResearchFilter> = {
     sortBy: '',
     sortOrder: '',
@@ -42,7 +62,6 @@ export class StudiesFilterService {
     bySuggestions: '',
     byChromosomeNum: null,
   };
-  filters: ApiResearchFilter = { ...this.filtersDefault };
 
   public pagination: Pagination = {
     page: 1,
@@ -71,7 +90,7 @@ export class StudiesFilterService {
 
   // Filter
   public applyFilter(filterType: string, filterValue: any): void {
-    console.log('StudiesFilterService.applyFilter ', filterType, filterValue);
+    console.log('applyFilter', filterType, filterValue);
     if (filterValue) {
       if (Array.isArray(this.filters[filterType])) {
         const arrayValues = filterValue.toString().split(',');
@@ -119,14 +138,12 @@ export class StudiesFilterService {
 
   // Clear
   public clearFilters(filterName?: keyof ApiResearchFilter): void {
-    console.log('clearFilters');
-    if (filterName in this.filters) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      this.filters[filterName] = this.filtersDefault[filterName];
+    if (filterName && filterName in this.filters) {
+      this.filters[filterName as any] = JSON.parse(JSON.stringify(this.filtersDefault[filterName]));
+    } else {
+      this.filters = Object.assign({}, this.filters, this.filtersDefault);
     }
     this.pagination.page = 1;
-
     this.areMoreThan2FiltersApplied();
   }
 
@@ -154,8 +171,7 @@ export class StudiesFilterService {
     if (this.sortParams && this.sortParams.direction) {
       params = params.set('sortBy', this.sortParams.active).set('sortOrder', this.sortParams.direction.toUpperCase());
     }
-
-    return this.apiService.getStudies(studyType);
+    return this.apiService.getStudies(studyType, params);
   }
 
   private areMoreThan2FiltersApplied(): void {
@@ -168,10 +184,10 @@ export class StudiesFilterService {
     this.twoOrMoreFiltersApplied.next(sum.length >= 2);
 
     this.updateList(this.filters);
-    this.setQueryParams(this.filters);
+    this.applyQueryParams(this.filters);
   }
 
-  private setQueryParams(filterParams: ApiResearchFilter): void {
+  private applyQueryParams(filterParams: ApiResearchFilter): void {
     const queryParams = {};
     for (const key in filterParams) {
       if (filterParams[key]) {

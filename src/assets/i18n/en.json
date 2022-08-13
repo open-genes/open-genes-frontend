@@ -119,6 +119,7 @@
   "filters_modal_placeholder_family_origin": "Gene family origin",
   "filters_modal_placeholder_conservative": "Conservative in",
   "filters_modal_placeholder_show_research_data": "Experiments stats",
+  "filters_modal_placeholder_model_organisms": "Model organisms",
   "filters_modal_title": "Filters and fields",
   "filters_modal_show": "Show field in list",
   "filters_reset": "Reset",

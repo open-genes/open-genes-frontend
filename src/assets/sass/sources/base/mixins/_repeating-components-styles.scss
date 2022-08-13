@@ -332,5 +332,144 @@
   }
 }
 
+@mixin filter-panel {
+  :host {
+    max-width: 100%;
+    display: block;
+  }
+
+  .disabled {
+    pointer-events: none;
+    user-select: none;
+    opacity: .85;
+  }
+
+  .body__row {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    font-size: 11px; // regulates mat-select size
+    margin-bottom: 10px;
+
+    .inline-button {
+      font-size: 1.2em;
+      color: $color-black-light;
+      line-height: 3.2em;
+    }
+
+    .checkbox {
+      font-size: 1.2em;
+    }
+
+    mat-form-field {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    ::ng-deep {
+      app-eye-checkbox {
+        margin-left: -2px;
+      }
+
+      .mat-form-field-wrapper {
+        padding-bottom: 0;
+      }
+
+      .mat-form-field-prefix {
+        top: -0.4em;
+        margin-left: -6px;
+      }
+
+      .mat-form-field-underline {
+        display: none;
+      }
+
+      .mat-form-field-flex {
+        border-radius: $border-radius-regular;
+        background-color: rgba($color-general, .10);
+      }
+
+      .mat-select-arrow-wrapper {
+        padding-top: 0.4em;
+      }
+    }
+  }
+
+  .separator {
+    width: 100%;
+    height: 0;
+    border-top: 1px solid $color-borders;
+    margin: 0 0 10px 0;
+  }
+
+  .reset-button-wrapper {
+    width: 100%;
+
+    .reset-button {
+      width: 100%;
+      margin: 0 auto;
+    }
+  }
+
+  :host-context(.filters-modal) {
+    .filters-modal__body {
+      display: grid;
+      align-content: space-between;
+      align-items: start;
+      justify-items: start;
+      grid-gap: 10px;
+      justify-content: center;
+
+      .body__row {
+        margin-bottom: 0;
+      }
+
+      @include resolution_tablet-and-up {
+        grid-template-columns: 1fr 1fr;
+
+        .separator,
+        .reset-button-wrapper {
+          grid-column-start: 1;
+          grid-column-end: 3;
+        }
+      }
+
+      @include resolution_smartphone {
+        grid-template-columns: 1fr;
+
+        .separator,
+        .reset-button-wrapper {
+          grid-column-start: 1;
+          grid-column-end: 2;
+        }
+      }
+    }
+  }
+
+  // Multiline select option
+  mat-option.mat-option {
+    align-items: flex-start;
+    height: auto;
+    white-space: normal;
+    line-height: normal;
+    padding: 1em;
+  }
+  .search-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 40px;
+    padding: 2px;
+    background-color: $color-general-200;
+
+    &__input {
+      width: 100%;
+      height: 100%;
+      padding: 10px;
+      border: none;
+    }
+  }
+}
+
 
 

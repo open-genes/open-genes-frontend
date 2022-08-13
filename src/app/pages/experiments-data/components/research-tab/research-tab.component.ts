@@ -7,7 +7,6 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  Renderer2,
 } from '@angular/core';
 import { ResearchArguments, ResearchTypes } from '../../../../core/models/open-genes-api/researches.model';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
@@ -22,7 +21,6 @@ import { Genes } from '../../../../core/models';
 import { StudiesFilterService } from '../../../../core/services/filters/studies-filter.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiResearchFilter } from '../../../../core/models/filters/filter.model';
-import { RouterParamsDecorator } from '../../../../core/decorators/router-params.decorator';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,14 +28,11 @@ import { RouterParamsDecorator } from '../../../../core/decorators/router-params
   templateUrl: './research-tab.component.html',
   styleUrls: ['./research-tab.component.scss'],
 })
-@RouterParamsDecorator()
 export class ResearchTabComponent extends AdditionalInterventionResolver implements OnInit, OnDestroy {
   @Input() studyType: ResearchArguments;
   @Output() dataLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  public itemsNumber: number;
-  public resultingList: ResearchTypes[] = [];
-  public query: string;
+  public query: string; // TODO: output its value under the search field
   public searchMode: SearchMode = 'searchByGenes';
   public studies: ResearchTypes[] = [];
   public options: PageOptions;
@@ -49,11 +44,10 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     isError: false,
     errorStatus: '',
   };
-
-  private cachedData: ResearchTypes[] = [];
-  private querySubstrings: string[] = [];
-  private subscription$ = new Subject();
   public genesList: Pick<Genes, 'id' | 'symbol' | 'name' | 'ensembl'>[] = [];
+
+  private subscription$ = new Subject();
+  private itemsPerPage = 20;
 
   constructor(
     private readonly apiService: ApiService,
@@ -61,150 +55,114 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     private router: Router,
     private snackBar: MatSnackBar,
     private filterService: StudiesFilterService,
-    private activatedRoute: ActivatedRoute,
-    private renderer: Renderer2
+    private activatedRoute: ActivatedRoute
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.setInitialState();
+    this.activatedRoute?.queryParams.subscribe((params) => {
+      if (Object.keys(params).length) {
+        for (const key in params) {
+          if (params[key] !== this.filterService.filters[key].toString()) {
+            this.filterService.applyFilter(key, params[key]);
+          }
+        }
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
     this.filterService.clearFilters();
+    this.slice.complete();
   }
 
-  public setInitialState(): void {
-    this.getGenesListForHints();
+  private setInitialState(): void {
+    this.query = null;
+    this.studies = [];
+    this.resetPagination();
+    this.isNotFound = false;
+    this.error.isError = false;
+    this.error.errorStatus = undefined;
+    this.filterService.clearFilters();
+    this.getStudies(this.studyType);
+  }
+
+  public setSearchQuery(query: string): void {
+    if (query && query.length > 1) {
+      this.query = query.toLocaleLowerCase().trim();
+    }
+    this.searchGenes(query);
+  }
+
+  private searchGenes(query: string): void {
+    if (query && query.length > 1) {
+      // this.showProgressBar = true;
+      this.apiService
+        .getGenesMatchByString(query, this.query.length > 1 ? 'input' : undefined)
+        .pipe(takeUntil(this.subscription$))
+        .subscribe(
+          (searchData) => {
+            this.genesList = searchData.items; // If nothing found, will return empty array
+            // this.showProgressBar = false;
+          },
+          (error) => {
+            console.warn(error);
+            // this.showProgressBar = false;
+          }
+        );
+    } else {
+      this.genesList = [];
+    }
+  }
+
+  public updateStudiesList(isSubmit?: boolean): void {
+    if (isSubmit) {
+      this.filterService.clearFilters('byGeneSymbol');
+      this.getStudies(this.studyType);
+    } else {
+      this.studies = null;
+    }
+  }
+
+  public resetPagination(): void {
+    this.filterService.pagination.page = 1;
+    this.currentPage = this.filterService.pagination.page;
+    this.slice.next(20);
+  }
+
+  private openSnackBar(res: ApiResponse<any>): void {
+    if (res?.options) {
+      this.snackBar.openFromComponent(SnackBarComponent, {
+        data: {
+          title: 'items_found',
+          length: res.options.objTotal,
+        },
+        duration: 1200,
+      });
+    }
+  }
+
+  public getStudies(researchType: ResearchArguments, callback?: () => void): void {
+    this.isLoading = true;
+    if (this.currentPage === 1) {
+      this.studies = [];
+      this.filterService.clearFilters('byGeneSymbol');
+    }
+    if (this.query) {
+      this.filterService.applyFilter('byGeneSymbol', this.query);
+    }
+
     this.filterService.filterResult
       .pipe(
         takeUntil(this.subscription$),
         switchMap((filters: ApiResearchFilter) => {
-          // isLoading
-          this.studies = [];
-          // this.currentPage = 1;
-          this.error.isError = false;
-          this.error.errorStatus = undefined;
-          this.isNotFound = false;
+          // Subscribing to any filters update and return getSortedAndFilteredStudies method to subscribe
           return this.filterService.getSortedAndFilteredStudies(this.studyType);
         })
       )
-      .subscribe(
-        (res: ApiResponse<ResearchTypes>) => {
-          this.currentPage = this.filterService.pagination.page;
-
-          if (this.currentPage == 1) {
-            this.cachedData = [];
-          }
-
-          if (res.items?.length) {
-            this.cachedData.push(...res.items);
-            this.resultingList = [...this.cachedData];
-          }
-
-          // TODO: Why this statement?
-          if (this.filterService.filters.byGeneSymbol || this.filterService.filters.byGeneSymbol) {
-            // this.resetPagination();
-            this.openSnackBar();
-          }
-
-          // this.downloadSearch(this.searchedData);
-          this.isLoading = false;
-          this.itemsNumber = res.options.objTotal;
-          this.cdRef.markForCheck();
-        },
-        (error) => {
-          console.warn(error);
-          // this.isLoading = false;
-          this.error.isError = false;
-          this.error.errorStatus = undefined;
-          this.cdRef.markForCheck();
-        }
-      );
-  }
-
-  public setResearchesList(query: Genes[] | string) {
-    if (query) {
-      if (query.length > 1) {
-        const length = (query as string).split(',').length;
-        if (length > 1) {
-          this.filterService.clearFilters('byGeneSymbol');
-          this.querySubstrings = (query as string)
-            .split(',')
-            .map((query) => query.trim())
-            .filter((q) => q);
-          this.filterService.filters.byGeneSymbol = this.querySubstrings;
-        } else {
-          this.querySubstrings = [];
-          this.filterService.clearFilters('byGeneSymbol');
-        }
-        this.filterService.updateList(this.filterService.filters);
-      } else {
-        this.studies = [];
-      }
-
-      if (this.studies.length) {
-        this.openSnackBar();
-      }
-    } else {
-      this.querySubstrings = [];
-    }
-  }
-
-  public setSearchQuery(query: string): void {
-    this.filterService.clearFilters();
-    this.searchByGenes(query);
-  }
-
-  public updateResearchesList(query): void {
-    if (query && this.resultingList.length !== 0) {
-      this.studies = [...this.resultingList];
-    } else {
-      this.studies = [];
-    }
-    this.isNotFound = this.resultingList.length === 0;
-    this.openSnackBar();
-  }
-
-  private searchByGenes(query: string): void {
-    if (query && query.length > 1) {
-      this.query = query.toLocaleLowerCase().trim();
-      this.filterService.applyFilter('byGeneSymbol', query);
-      this.getExperiments(this.studyType);
-    } else {
-      this.resultingList = [];
-    }
-  }
-
-  private openSnackBar(): void {
-    this.snackBar.openFromComponent(SnackBarComponent, {
-      data: {
-        title: 'items_found',
-        length: this.studies ? this.studies.length : 0,
-      },
-      duration: 600,
-    });
-  }
-
-  public getGenesListForHints(): void {
-    this.apiService
-      .getGenesV2()
-      .pipe(takeUntil(this.subscription$))
-      .subscribe((res) => {
-        this.genesList = res.items.map((r) => {
-          return { id: r.id, symbol: r.symbol, name: r.name, ensembl: r.ensembl };
-        });
-      });
-  }
-
-  public getExperiments(researchType: ResearchArguments, callback?: () => void): void {
-    this.isLoading = true;
-    this.cdRef.markForCheck();
-    this.filterService.pagination.page = this.currentPage; // TODO: no public properties for filter class
-    this.filterService
-      .getSortedAndFilteredStudies(researchType)
       .pipe(
         takeUntil(this.subscription$),
         map((r: ApiResponse<ResearchTypes>) => {
@@ -215,14 +173,15 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
         })
       )
       .subscribe(
-        (researches) => {
-          this.studies = [...this.studies, ...researches.items] as any;
-          this.options = researches.options;
+        (res) => {
+          this.studies.push(...res.items);
+          this.options = res.options;
+          this.openSnackBar(res);
           this.isLoading = false;
+          this.isNotFound = res.items?.length === 0;
           this.cdRef.markForCheck();
         },
         (err) => {
-          // TODO: error output
           this.error.isError = true;
           this.error.errorStatus = err.statusText;
           this.isLoading = false;
@@ -236,12 +195,16 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   }
 
   public showMore(event: any, researchType: ResearchArguments): void {
-    this.renderer.addClass(event.target, 'show-more__button--active');
-    this.currentPage = this.currentPage + 1;
-    this.getExperiments(researchType, () => {
-      this.slice.next(this.studies.length);
-      this.renderer.removeClass(event.target, 'show-more__button--active');
-      this.cdRef.markForCheck();
-    });
+    this.currentPage++;
+    this.filterService.pagination.page = this.currentPage;
+    this.filterService.onLoadMoreGenes(this.options?.pagination?.pagesTotal);
+    this.slice.next(this.studies.length + this.itemsPerPage);
+    this.getStudies(researchType);
+    this.cdRef.detectChanges();
+  }
+
+  public cancelSearch() {
+    this.filterService.clearFilters();
+    this.setInitialState();
   }
 }

@@ -18,7 +18,8 @@ import { ApiResponse } from '../../models/api-response.model';
 import { SearchModel } from '../../models/open-genes-api/search.model';
 import { Pagination } from '../../models/settings.model';
 import { Diet } from '../../models/open-genes-api/diet.model';
-import { Research, ResearchArguments } from '../../models/open-genes-api/researches.model';
+import { Research, ResearchArguments, ResearchTypes } from '../../models/open-genes-api/researches.model';
+import { ModelOrganism } from '../../models/open-genes-api/model-organism.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +37,6 @@ export class ApiService {
   }
 
   // Legacy API
-
   getLastEditedGene(): Observable<Genes[]> {
     return this.http.get<Genes[]>(`/api/gene/by-latest`);
   }
@@ -55,7 +55,6 @@ export class ApiService {
 
   getGenesMatchByString(request: string, param: string = 'input'): Observable<SearchModel> {
     const params = new HttpParams().set(`${param}`, `${request}`);
-
     return this.http.get<SearchModel>(`/api/gene/suggestions`, { params });
   }
 
@@ -71,19 +70,22 @@ export class ApiService {
     return this.http.get<GenesInHorvathClock[]>(`/api/methylation?lang=${this.currentLang}`);
   }
 
+  /* @Deprecated */
   getGenes(): Observable<Genes[]> {
     return this.http.get<Genes[]>(`/api/gene?lang=${this.currentLang}`);
   }
 
   // New API
-  getGenesV2(): Observable<ApiResponse<Genes>> {
-    const params = new HttpParams();
+  getGenesV2(params?: HttpParams): Observable<ApiResponse<Genes>> {
     return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });
   }
 
-  getStudies(studyType: ResearchArguments): Observable<any> {
-    const params = new HttpParams();
-    return this.http.get<ApiResponse<Research>>(`/api/research/${studyType}`, { params });
+  getSymbols(): Observable<ApiResponse<string>> {
+    return this.http.get<ApiResponse<string>>(`/api/gene/symbols`);
+  }
+
+  getStudies(studyType: ResearchArguments, params?: HttpParams): Observable<ApiResponse<ResearchTypes>> {
+    return this.http.get<ApiResponse<ResearchTypes>>(`/api/research/${studyType}`, { params });
   }
 
   getGenesForDiet(pagination?: Pagination): Observable<ApiResponse<Diet>> {
@@ -125,5 +127,9 @@ export class ApiService {
 
   getPhylum(): Observable<Phylum[]> {
     return this.http.get<Phylum[]>(`/api/phylum?lang=${this.currentLang}`);
+  }
+
+  getModelOrganisms(): Observable<ModelOrganism[]> {
+    return this.http.get<ModelOrganism[]>(`/api/model-organism?lang=${this.currentLang}`);
   }
 }

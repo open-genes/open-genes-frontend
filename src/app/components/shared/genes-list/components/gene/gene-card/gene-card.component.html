@@ -136,7 +136,7 @@
 
     <app-tag
       *ngFor="let cluster of item.functionalClusters"
-      (click)="applyFilter('by', cluster['id'])"
+      (click)="applyFilter('byAgeRelatedProcess', cluster['id'])"
       [isActive]="isAgeRelatedProcessActive(cluster['id'])"
     >
       {{ cluster["name"] }}

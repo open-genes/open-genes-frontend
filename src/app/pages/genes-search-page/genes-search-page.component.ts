@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { GeneFiltersPanelComponent } from '../../components/shared/genes-list/components/gene-filters-panel/gene-filters-panel.component';
 import { Genes } from '../../core/models';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
@@ -7,6 +7,7 @@ import { WizardService } from '../../components/shared/wizard/wizard-service.ser
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { takeUntil } from 'rxjs/operators';
 import { WindowWidth } from '../../core/utils/window-width';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-genes-search-page',
@@ -33,6 +34,7 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
   public showProgressBar = false;
   public queryLength: number;
   public placeholder: string;
+  public $cancelSearch: Subject<void> = new Subject<void>();
 
   constructor(
     public windowService: WindowService,
@@ -52,6 +54,10 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
     });
 
     this.loadWizard();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
   }
 
   /**
@@ -141,9 +147,5 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
 
   private loadWizard() {
     this.wizardService.openOnce();
-  }
-
-  ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
   }
 }

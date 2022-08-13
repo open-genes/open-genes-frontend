@@ -1,32 +1,30 @@
 <div [ngSwitch]="studyType"
      class="research">
   <app-search [searchHintsList]="genesList"
-              placeholder="search_field_by_comma"
-              [fixOnTopOnMobile]="false"
-              (isAnyQueryToSubmit)="updateResearchesList($event)"
-              (searchQuery)="setSearchQuery($event)"
-              (cancel)="setInitialState()"
               [isDisabled]="error.isError"
+              placeholder="search_field_by_comma"
+              (isAnyQueryToSubmit)="updateStudiesList($event)"
+              (searchQuery)="setSearchQuery($event)"
+              (cancel)="cancelSearch()"
+              [fixOnTopOnMobile]="false"
               class="__mb-30">
   </app-search>
 
   <ng-container *ngIf="!isNotFound">
-    <!-- Purple -->
     <section *ngSwitchCase="'lifespan-change'">
       <app-increase-lifespan
         [geneColumnOn]="true"
         [numberColumn]="true"
-        [items]="resultingList"
+        [items]="studies"
         [slice]="slice | async"
       ></app-increase-lifespan>
     </section>
 
-    <!-- Blue -->
     <section *ngSwitchCase="'age-related-changes'">
       <app-age-related-changes
         [geneColumnOn]="true"
         [numberColumn]="true"
-        [items]="resultingList"
+        [items]="studies"
         [slice]="slice | async"
       ></app-age-related-changes>
     </section>
@@ -35,7 +33,7 @@
       <app-intervention-affects-aging-process
         [geneColumnOn]="true"
         [numberColumn]="true"
-        [items]="resultingList"
+        [items]="studies"
         [slice]="slice | async"
       ></app-intervention-affects-aging-process>
     </section>
@@ -44,7 +42,7 @@
       <app-protein-regulates-other-genes
         [geneColumnOn]="true"
         [numberColumn]="true"
-        [items]="resultingList"
+        [items]="studies"
         [slice]="slice | async"
       ></app-protein-regulates-other-genes>
     </section>
@@ -53,7 +51,7 @@
       <app-gene-associated-with-progeria-syndromes
         [geneColumnOn]="true"
         [numberColumn]="true"
-        [items]="resultingList"
+        [items]="studies"
         [slice]="slice | async"
       ></app-gene-associated-with-progeria-syndromes>
     </section>
@@ -62,7 +60,7 @@
       <app-gene-associated-with-longevity-effects
         [geneColumnOn]="true"
         [numberColumn]="true"
-        [items]="resultingList"
+        [items]="studies"
         [slice]="slice | async"
       ></app-gene-associated-with-longevity-effects>
     </section>
@@ -71,7 +69,7 @@
       <app-additional-evidences
         [geneColumnOn]="true"
         [numberColumn]="true"
-        [items]="resultingList"
+        [items]="studies"
         [slice]="slice | async"
       ></app-additional-evidences>
     </section>
@@ -81,13 +79,15 @@
                class="__mt-10 __mb-10"
   ></app-spinner>
 
-  <div *ngIf="!isNotFound && (resultingList?.length < options?.objTotal || currentPage < options?.pagination.pagesTotal)"
-       class="btn-wrap show-more __mt-20">
-    <button (click)="showMore($event, studyType)"
-            class="btn show-more__button">
-      {{ "show_more" | translate }} <span class="spinner fas fa-circle-notch fa-spin"></span>
-    </button>
-  </div>
+  <ng-container *ngIf="options">
+    <div *ngIf="!isNotFound && (studies?.length < options?.objTotal || currentPage < options?.pagination.pagesTotal)"
+         class="btn-wrap show-more __mt-20">
+      <button (click)="showMore($event, studyType)"
+              class="btn show-more__button">
+        {{ "show_more" | translate }} <span class="spinner fas fa-circle-notch fa-spin"></span>
+      </button>
+    </div>
+  </ng-container>
 
   <section *ngIf="isNotFound">
     <app-no-content [title]="'nothing_found'">
