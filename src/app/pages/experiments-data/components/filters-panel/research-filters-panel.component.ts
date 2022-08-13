@@ -76,11 +76,11 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
     this.getState();
   }
 
-  public toggleSwitchAndFilter(filterType: ApiResearchSearchParameters, $event): void {
-    this.listSettings.ifShowExperimentsStats = !$event.checked;
-    this.filterService.applyFilter(filterType, Number(this.listSettings.ifShowExperimentsStats));
-    this.getState();
-  }
+  // public toggleSwitchAndFilter(filterType: ApiResearchSearchParameters, $event): void {
+  //   this.listSettings.ifShowExperimentsStats = $event.checked;
+  //   this.filterService.applyFilter(filterType, Number(this.listSettings[filterType]));
+  //   this.getState();
+  // }
 
   /**
    * Form reset

@@ -42,10 +42,10 @@
       text-shadow: 0 0 1px $color-white, 0 0 1px $color-white, 0 0 1px $color-white, 0 0 1px $color-white;
     }
 
-    @each $name, $color in $research-tables {
+    @each $name, $color in $experiment-tables {
       &--#{$name} {
-        .research__scale {
-          background-color: map.get($research-tables, $name);
+        .experiment__scale {
+          background-color: map.get($experiment-tables, $name);
         }
       }
     }
@@ -73,7 +73,7 @@
       border: .5px solid rgba($color-black, .15);
     }
 
-    @each $class, $color in $research-tables {
+    @each $class, $color in $experiment-tables {
       &--#{$class}::before {
         background: $color;
       }

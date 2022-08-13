@@ -4,16 +4,16 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'setClassName',
 })
 export class SetClassNamePipe implements PipeTransform {
-  transform(researchName: string): string {
+  transform(experimentName: string): string {
     const classNames = new Map([
-      ['increaseLifespan', 'research--increase-lifespan'],
-      ['ageRelatedChangesOfGene', 'research--age-related-change'],
-      ['interventionToGeneImprovesVitalProcesses', 'research--gene-intervention-to-vital-processes'],
-      ['proteinRegulatesOtherGenes', 'research--protein-to-gene'],
-      ['geneAssociatedWithProgeriaSyndromes', 'research--gene-to-progeria'],
-      ['geneAssociatedWithLongevityEffects', 'research--gene-to-longevity-effect'],
-      ['additionalEvidences', 'research--gene-to-additional-evidence'],
+      ['increaseLifespan', 'experiment--increase-lifespan'],
+      ['ageRelatedChangesOfGene', 'experiment--age-related-change'],
+      ['interventionToGeneImprovesVitalProcesses', 'experiment--gene-intervention-to-vital-processes'],
+      ['proteinRegulatesOtherGenes', 'experiment--protein-to-gene'],
+      ['geneAssociatedWithProgeriaSyndromes', 'experiment--gene-to-progeria'],
+      ['geneAssociatedWithLongevityEffects', 'experiment--gene-to-longevity-effect'],
+      ['additionalEvidences', 'experiment--gene-to-additional-evidence'],
     ]);
-    return classNames.get(researchName);
+    return classNames.get(experimentName);
   }
 }

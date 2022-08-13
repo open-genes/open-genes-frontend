@@ -224,7 +224,7 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
   }
 
   public toggleSwitchAndFilter(filterType: ApiGeneSearchParameters, $event): void {
-    this.listSettings.ifShowExperimentsStats = !$event.checked;
+    this.listSettings.ifShowExperimentsStats = $event.checked;
     this.filterService.applyFilter(filterType, Number(this.listSettings.ifShowExperimentsStats));
     this.getState();
   }

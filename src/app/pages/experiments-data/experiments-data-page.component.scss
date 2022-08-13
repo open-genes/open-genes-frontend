@@ -18,7 +18,7 @@
     border: .5px solid rgba($color-black, .15);
   }
 
-  @each $class, $color in $research-tables {
+  @each $class, $color in $experiment-tables {
     &--#{$class}::before {
       background: $color;
     }
