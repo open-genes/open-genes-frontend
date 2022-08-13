@@ -27,23 +27,6 @@
 </ng-container>
 
 <button
-  *ngIf="filters.byAgeRelatedProcess.length"
-  class="filter __active"
-  (click)="clearFilters('byAgeRelatedProcess')">
-  {{ "entities_age_related_processes" | translate }}
-  <span class="fa fal fa-times"></span>
-</button>
-
-<button
-  *ngIf="filters.byExpressionChange !== 0"
-  class="filter __active"
-  (click)="clearFilters('byExpressionChange')"
->
-  {{ "main_page_table_expression" | translate }}
-  <span class="fa fal fa-times"></span>
-</button>
-
-<button
   *ngIf="filters.byDiseases.length"
   class="filter __active"
   (click)="clearFilters('byDiseases')"

@@ -26,12 +26,6 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
   // Search in selects
   searchText: any;
 
-  // Age-related processes
-  public processes: any[] = []; // TODO: typing
-  public predefinedProcesses: any[] = [];
-  public processesModel: Observable<any[]>;
-  // Expression
-  public predefinedExpressionChanges: number;
   // Diseases
   public diseases: Map<number, any> = new Map();
   private cachedDisease: Map<number, any> = new Map();
@@ -72,7 +66,6 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
     this.filtersForm = new FormGroup({
       ageRelatedProcessesSearchInput: new FormControl([[], null]),
       ageRelatedProcessesSelect: new FormControl([[], [null]]),
-      expressionChangeSelect: new FormControl([[], null]),
       diseasesSelect: new FormControl([[], [null]]),
       diseaseCategoriesSelect: new FormControl([[], [null]]),
       selectionCriteriaSelect: new FormControl([[], [null]]),
@@ -89,12 +82,6 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
     this.updateVisibleFields();
 
     // FILTERS
-    // Age-related processes
-    this.processesModel = this.getEntitiesList('processes');
-    this.processesModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
-      this.processes = data;
-    });
-
     // Diseases
     this.diseasesModel = this.getEntitiesList('diseases');
     this.diseasesModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
@@ -158,8 +145,6 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
       .getFilterState()
       .pipe(takeUntil(this.subscription$))
       .subscribe((data: ApiGeneSearchFilter) => {
-        this.predefinedProcesses = data.byAgeRelatedProcess;
-        this.predefinedExpressionChanges = data.byExpressionChange;
         this.predefinedDiseases = data.byDiseases;
         this.predefinedDiseaseCategories = data.byDiseaseCategories;
         this.predefinedSelectionCriteria = data.bySelectionCriteria;
@@ -195,8 +180,6 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
   private getEntitiesList(key): Observable<any[]> {
     this.filterLoaded.emit(key);
     switch (key) {
-      case 'processes':
-        return this.apiService.getAgeRelatedProcesses();
       case 'mechanisms':
         return this.apiService.getAgingMechanisms();
       case 'criteria':
@@ -257,12 +240,6 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
   public resetForm(formControlName: string = null): void {
     if (formControlName) {
       switch (formControlName) {
-        case 'ageRelatedProcessesSelect':
-          this.filterService.clearFilters('byAgeRelatedProcess');
-          break;
-        case 'expressionChangeSelect':
-          this.filterService.clearFilters('byExpressionChange');
-          break;
         case 'diseasesSelect':
           this.filterService.clearFilters('byDiseases');
           break;
@@ -319,12 +296,6 @@ export class GeneFiltersPanelComponent implements OnInit, OnDestroy {
     switch (param) {
       case 'gene-age':
         this.listSettings.ifShowAge = !this.listSettings.ifShowAge;
-        break;
-      case 'processes':
-        this.listSettings.ifShowFuncClusters = !this.listSettings.ifShowFuncClusters;
-        break;
-      case 'expression':
-        this.listSettings.ifShowExpression = !this.listSettings.ifShowExpression;
         break;
       case 'diseases':
         this.listSettings.ifShowDiseases = !this.listSettings.ifShowDiseases;

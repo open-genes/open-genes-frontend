@@ -133,18 +133,4 @@
       ></app-gene-menu>
     </div>
   </td>
-
-</tr>
-
-<tr class="item">
-  <td *ngIf="item.functionalClusters.length !== 0 && listSettings.ifShowFuncClusters"
-      colspan="100%"
-      class="cell cell--functions">
-    <app-tag
-      *ngFor="let item of item.functionalClusters"
-      (click)="applyFilter('byAgeRelatedProcess', item.id)"
-      [isActive]="isAgeRelatedProcessActive(item.id)">
-      {{ item.name }}
-    </app-tag>
-  </td>
 </tr>

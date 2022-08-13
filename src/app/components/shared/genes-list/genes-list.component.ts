@@ -145,7 +145,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.cancelSearchSubscription$.unsubscribe();
+    this.cancelSearchSubscription$?.unsubscribe();
     this.subscription$.unsubscribe();
     this.filterService.clearFilters();
   }

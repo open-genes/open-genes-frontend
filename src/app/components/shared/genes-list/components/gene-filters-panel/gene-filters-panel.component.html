@@ -1,45 +1,6 @@
 <form class="filters-modal__body"
       [formGroup]="filtersForm">
   <div class="body__row">
-    <mat-form-field appearance="fill" color="primary">
-      <app-eye-checkbox
-        matPrefix
-        (changeEvent)="toggleGenesListSettings('processes')"
-        [switch]="listSettings.ifShowFuncClusters"></app-eye-checkbox>
-      <mat-label>{{ "filters_modal_placeholder_age_related_processes" | translate }}</mat-label>
-      <mat-select formControlName="ageRelatedProcessesSelect"
-                  multiple="true"
-                  [disabled]="processes?.length === 0"
-                  [(ngModel)]="predefinedProcesses"
-                  [compareWith]="compareSelectValues"
-                  (selectionChange)="apply('byAgeRelatedProcess', $event)">
-        <ng-container *ngIf="processes?.length !== 0">
-          <mat-option *ngFor="let i of processes | searchFilter : searchText" [value]="i.id">{{ i.name }}</mat-option>
-        </ng-container>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div class="body__row">
-    <mat-form-field appearance="fill">
-      <app-eye-checkbox
-        matPrefix
-        (changeEvent)="toggleGenesListSettings('expression')"
-        [switch]="listSettings.ifShowExpression"></app-eye-checkbox>
-      <mat-label>{{ "filters_modal_placeholder_expression_change" | translate }}</mat-label>
-      <mat-select formControlName="expressionChangeSelect"
-                  [(ngModel)]="predefinedExpressionChanges"
-                  [compareWith]="compareSelectValues"
-                  (selectionChange)="apply('byExpressionChange', $event)">
-        <mat-option>{{ 'nothing_selected' | translate }}</mat-option>
-        <mat-option [value]="1">{{ "expression_change_decreased" | translate }}</mat-option>
-        <mat-option [value]="2">{{ "expression_change_increased" | translate }}</mat-option>
-        <mat-option [value]="3">{{ "expression_change_mixed" | translate }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div class="body__row">
     <mat-form-field appearance="fill">
       <app-eye-checkbox
         matPrefix
