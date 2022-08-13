@@ -78,20 +78,6 @@
     </div>
   </td>
 
-  <td *ngIf="listSettings.ifShowExpression"
-      class="cell cell--expression">
-    <div class="overflow">
-      <app-tag
-        (click)="applyFilter('byExpressionChange', item.expressionChange)"
-        [isDisabled]="item.expressionChange === 0"
-        [isActive]="
-            filters.byExpressionChange === item.expressionChange &&
-            item.expressionChange !== 0"
-      >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
-      </app-tag>
-    </div>
-  </td>
-
   <td *ngIf="listSettings.ifShowCriteria"
       class="cell cell--criteria">
     <div class="overflow">
@@ -100,18 +86,6 @@
         [activeListItem]="filters.bySelectionCriteria"
         (clickEvent)="applyFilter('bySelectionCriteria', $event)"
       ></app-selection-criteria>
-    </div>
-  </td>
-
-  <td *ngIf="listSettings.ifShowMethylation"
-      class="cell cell--methylation">
-    <div class="overflow">
-      <app-tag
-        *ngIf="item.methylationCorrelation !== ''"
-        (click)="applyFilter('byMethylationChange', item.methylationCorrelation)"
-        [isActive]="filters.byMethylationChange === item.methylationCorrelation"
-      >{{ item.methylationCorrelation }}
-      </app-tag>
     </div>
   </td>
 

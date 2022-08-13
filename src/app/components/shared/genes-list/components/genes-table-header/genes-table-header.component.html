@@ -40,27 +40,10 @@
   </div>
 </td>
 
-<td *ngIf="listSettings.ifShowExpression"
-    class="table-header__cell table-header__cell--expression">
-  <div class="overflow">
-    {{ "main_page_table_expression" | translate }}
-    <app-info-button *ngIf="isUiHintsSettingOn"
-                     (click)="openBottomSheet($event, expressionChangeHint)"
-    ></app-info-button>
-  </div>
-</td>
-
 <td *ngIf="listSettings.ifShowCriteria"
     class="table-header__cell table-header__cell--criteria">
   <div class="overflow">
     {{ "main_page_table_criteria" | translate }}
-  </div>
-</td>
-
-<td *ngIf="listSettings.ifShowMethylation"
-    class="table-header__cell table-header__cell--methylation">
-  <div class="overflow">
-    {{ "main_page_table_methylation" | translate }}
   </div>
 </td>
 

@@ -16,12 +16,9 @@ export class SettingsService {
   public genesListSettings: GenesListSettings = {
     // Default:
     ifShowAge: true,
-    ifShowFuncClusters: true,
-    ifShowExpression: true,
     ifShowDiseases: false,
     ifShowDiseaseCategories: true,
     ifShowCriteria: false,
-    ifShowMethylation: false,
     ifShowAgingMechanisms: true,
     ifShowProteinClasses: true,
     ifShowExperimentsStats: false,
