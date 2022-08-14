@@ -68,7 +68,7 @@ export class ExperimentsDataPageComponent extends WindowWidth implements OnInit 
     }
   }
 
-  public setIsListLoaded(event): void {
+  public setIsListLoaded(): void {
     this.cdRef.markForCheck();
     this.cdRef.detectChanges();
   }

@@ -7,6 +7,7 @@
               (searchQuery)="setSearchQuery($event)"
               (cancel)="cancelSearch()"
               [fixOnTopOnMobile]="false"
+              [showProgressBar]="showProgressBar"
               class="__mb-30">
   </app-search>
 
@@ -82,7 +83,7 @@
   <ng-container *ngIf="options">
     <div *ngIf="!isNotFound && (studies?.length < options?.objTotal || currentPage < options?.pagination.pagesTotal)"
          class="btn-wrap show-more __mt-20">
-      <button (click)="showMore($event, studyType)"
+      <button (click)="showMore(studyType)"
               class="btn show-more__button">
         {{ "show_more" | translate }} <span class="spinner fas fa-circle-notch fa-spin"></span>
       </button>

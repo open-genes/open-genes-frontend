@@ -20,7 +20,6 @@ import { SearchMode } from '../../../../core/models/settings.model';
 import { Genes } from '../../../../core/models';
 import { StudiesFilterService } from '../../../../core/services/filters/studies-filter.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiResearchFilter } from '../../../../core/models/filters/filter.model';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,9 +29,9 @@ import { ApiResearchFilter } from '../../../../core/models/filters/filter.model'
 })
 export class ResearchTabComponent extends AdditionalInterventionResolver implements OnInit, OnDestroy {
   @Input() studyType: ResearchArguments;
-  @Output() dataLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() dataLoaded: EventEmitter<never> = new EventEmitter<never>();
 
-  public query: string; // TODO: output its value under the search field
+  public query: string;
   public searchMode: SearchMode = 'searchByGenes';
   public studies: ResearchTypes[] = [];
   public options: PageOptions;
@@ -45,6 +44,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     errorStatus: '',
   };
   public genesList: Pick<Genes, 'id' | 'symbol' | 'name' | 'ensembl'>[] = [];
+  public showProgressBar: boolean;
 
   private subscription$ = new Subject();
   private itemsPerPage = 20;
@@ -77,6 +77,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.subscription$.unsubscribe();
     this.filterService.clearFilters();
     this.slice.complete();
+    this.snackBar.dismiss();
   }
 
   private setInitialState(): void {
@@ -99,18 +100,18 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
 
   private searchGenes(query: string): void {
     if (query && query.length > 1) {
-      // this.showProgressBar = true;
+      this.showProgressBar = true;
       this.apiService
         .getGenesMatchByString(query, this.query.length > 1 ? 'input' : undefined)
         .pipe(takeUntil(this.subscription$))
         .subscribe(
           (searchData) => {
             this.genesList = searchData.items; // If nothing found, will return empty array
-            // this.showProgressBar = false;
+            this.showProgressBar = false;
           },
           (error) => {
             console.warn(error);
-            // this.showProgressBar = false;
+            this.showProgressBar = false;
           }
         );
     } else {
@@ -158,7 +159,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.filterService.filterResult
       .pipe(
         takeUntil(this.subscription$),
-        switchMap((filters: ApiResearchFilter) => {
+        switchMap(() => {
           // Subscribing to any filters update and return getSortedAndFilteredStudies method to subscribe
           return this.filterService.getSortedAndFilteredStudies(this.studyType);
         })
@@ -167,7 +168,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
         takeUntil(this.subscription$),
         map((r: ApiResponse<ResearchTypes>) => {
           if (researchType === 'lifespan-change') {
-            r.items = r.items.filter((r: any) => this.resolveAdditionalIntervention(r));
+            r.items = r.items.filter((s: any) => this.resolveAdditionalIntervention(s));
           }
           return r;
         })
@@ -188,13 +189,13 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
           this.cdRef.markForCheck();
         }
       );
-    this.dataLoaded.emit(true);
+    this.dataLoaded.emit();
     if (callback) {
       callback();
     }
   }
 
-  public showMore(event: any, researchType: ResearchArguments): void {
+  public showMore(researchType: ResearchArguments): void {
     this.currentPage++;
     this.filterService.pagination.page = this.currentPage;
     this.filterService.onLoadMoreGenes(this.options?.pagination?.pagesTotal);
