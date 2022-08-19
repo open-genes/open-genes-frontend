@@ -19,6 +19,27 @@
             <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 sidebar-column"
                  [ngClass]="isMobile? 'sidebar-column--mobile' : 'sidebar-column--desktop'">
               <app-sidebar>
+                <app-sidebar-item>
+                  <div content class="hint-wrapper">
+                    <app-hint hintType="emphasized">
+                      <ng-container title>
+                        <span class="fa far fa-magic"></span>&nbsp;{{ 'experiments_page_download_title' | translate }}
+                      </ng-container>
+
+                      <ng-container description>
+                        {{ "experiments_page_download_description" | translate }}
+                      </ng-container>
+
+                      <ng-container button>
+                        <button class="btn btn--fill btn--small btn--white"
+                                routerLink="/download">
+                          {{ 'experiments_page_download_button' | translate }}
+                        </button>
+                      </ng-container>
+                    </app-hint>
+                  </div>
+                </app-sidebar-item>
+
                 <app-sidebar-item *ngIf="!isMobile">
                   <div content class="filters-wrapper">
                     <app-research-filters-panel></app-research-filters-panel>

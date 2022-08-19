@@ -23,7 +23,7 @@
           <a class="item__link"
              [routerLink]="'/genes'"
              routerLinkActive="__current"
-          >{{ "toggler_genes" | translate }}</a>
+          >{{ "header_genes" | translate }}</a>
         </li>
 
         <li
@@ -31,7 +31,7 @@
           <a class="item__link"
              [routerLink]="'/annotations'"
              routerLinkActive="__current"
-          >{{ "toggler_annotations" | translate }}</a>
+          >{{ "header_annotations" | translate }}</a>
         </li>
 
         <li
@@ -39,7 +39,7 @@
           <a class="item__link"
              [routerLink]="'/experiments'"
              routerLinkActive="__current"
-          >{{ "toggler_studies" | translate }}</a>
+          >{{ "header_studies" | translate }}</a>
         </li>
 
         <li
@@ -47,7 +47,25 @@
           <a class="item__link"
                 [routerLink]="'/datasets'"
                 routerLinkActive="__current"
-          >{{ "toggler_datasets" | translate }}
+          >{{ "header_datasets" | translate }}
+          </a>
+        </li>
+
+        <li
+          class="navigation-list__item">
+          <a class="item__link"
+             [routerLink]="'/download'"
+             routerLinkActive="__current"
+          >{{ "header_download" | translate }}
+          </a>
+        </li>
+
+        <li
+          class="navigation-list__item">
+          <a class="item__link"
+             [routerLink]="'/help'"
+             routerLinkActive="__current"
+          >{{ "header_help" | translate }}
           </a>
         </li>
       </ul>
@@ -55,7 +73,7 @@
 
     <nav class="header__right">
       <app-language theme="light"></app-language>
-      <app-burger-menu (favsCounterUpdate)="updateView()"></app-burger-menu>
+      <app-burger-menu></app-burger-menu>
     </nav>
   </div>
 </header>

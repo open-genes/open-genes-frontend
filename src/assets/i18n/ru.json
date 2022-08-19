@@ -115,6 +115,9 @@
   "expression_change_log_fc": "Изменение экспрессии log(FC)",
   "experiment_number": "Количество групп эксперимента",
   "expression_change_percent": "Процент изменения экспрессии",
+  "experiments_page_download_title": "Скачайте датасеты исследований",
+  "experiments_page_download_description": "Все исследования доступны для скачивания в виде отдельных датасетов",
+  "experiments_page_download_button": "Перейти",
   "favourites_add": "Добавить в Избранное",
   "favourites_added": "Добавлено в Избранное! ✨",
   "favourites_clear": "Очистить",
@@ -214,7 +217,7 @@
   "header_menu_api": "API",
   "header_menu_contributors": "Команда и благодарности",
   "header_menu_datasets": "Датасеты",
-  "header_menu_download": "Скачать данные",
+  "header_menu_download": "Скачать",
   "header_menu_favourites": "Избранное",
   "header_menu_help": "Справочная информация",
   "header_menu_news": "Статьи",
@@ -494,5 +497,11 @@
   "next_page": "Следующая страница",
   "prev_page": "Предыдущая страница",
   "of_label": "из",
-  "years": "лет"
+  "years": "лет",
+  "header_genes": "Гены",
+  "header_annotations": "Аннотации GO",
+  "header_studies": "Исследования",
+  "header_datasets": "Датасеты",
+  "header_download": "Скачать",
+  "header_help": "Помощь"
 }
