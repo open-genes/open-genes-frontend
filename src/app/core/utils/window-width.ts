@@ -13,7 +13,9 @@ export abstract class WindowWidth extends ToMap {
     mobile: 767.98,
   };
 
-  protected constructor(public windowService: WindowService) {
+  protected constructor(
+    public windowService: WindowService
+  ) {
     super();
 
     if ('ontouchstart' in document.documentElement) {
@@ -21,22 +23,29 @@ export abstract class WindowWidth extends ToMap {
     }
   }
 
+  private set(width: number): void {
+    this.isMobile = width <= this.breakpoints.desktop;
+    this.isTablet =
+      width > this.breakpoints.mobile &&
+      width <= this.breakpoints.desktop;
+  }
+
   protected initWindowWidth(callback: any): void {
     this.windowService
       .setWindowWidth()
       .pipe(takeUntil(this.subscription$))
       .subscribe((width) => {
-        this.isMobile = width <= this.breakpoints.desktop;
-        this.isTablet = width > this.breakpoints.mobile && width <= this.breakpoints.desktop;
+        this.set(width);
         callback();
       });
   }
 
   protected detectWindowWidth(callback: any): void {
-    this.windowService.windowWidth$.pipe(takeUntil(this.subscription$)).subscribe((width) => {
-      this.isMobile = width <= this.breakpoints.desktop;
-      this.isTablet = width > this.breakpoints.mobile && width <= this.breakpoints.desktop;
-      callback();
-    });
+    this.windowService.windowWidth$
+      .pipe(takeUntil(this.subscription$))
+      .subscribe((width) => {
+        this.set(width);
+        callback();
+      });
   }
 }
