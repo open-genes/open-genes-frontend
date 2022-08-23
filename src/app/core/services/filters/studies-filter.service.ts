@@ -43,7 +43,7 @@ export class StudiesFilterService {
     byChromosomeNum: null,
   };
 
-  private filtersDefault: Readonly<ApiResearchFilter> = {
+  private filtersDefaultState: Readonly<ApiResearchFilter> = {
     sortBy: '',
     sortOrder: '',
     byDiseases: [],
@@ -75,6 +75,7 @@ export class StudiesFilterService {
     private settingsService: SettingsService,
     private router: Router
   ) {
+    Object.freeze(this.filtersDefaultState);
     this.updateFields(this.settingsService.genesListSettings);
     this.filterChanges$.next(this.filters);
   }
@@ -139,9 +140,17 @@ export class StudiesFilterService {
   // Clear
   public clearFilters(filterName?: keyof ApiResearchFilter): void {
     if (filterName && filterName in this.filters) {
-      this.filters[filterName as any] = JSON.parse(JSON.stringify(this.filtersDefault[filterName]));
+      for (const key in this.filtersDefaultState) {
+        if (String(key) === filterName) {
+          this.filters[key] = this.filtersDefaultState[key];
+        }
+      }
     } else {
-      this.filters = Object.assign({}, this.filters, this.filtersDefault);
+      if (filterName && filterName in this.filters) {
+        for (const key in this.filtersDefaultState) {
+          this.filters[key] = this.filtersDefaultState[key];
+        }
+      }
     }
     this.pagination.page = 1;
     this.areMoreThan2FiltersApplied();

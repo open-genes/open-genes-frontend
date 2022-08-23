@@ -3,7 +3,10 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ApiGeneSearchFilter } from '../../models/filters/filter.model';
 import { GenesListSettings } from '../../../components/shared/genes-list/genes-list-settings.model';
 import { Genes } from '../../models';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpParams,
+} from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { Pagination } from '../../models/settings.model';
 import { SettingsService } from '../settings.service';
@@ -19,7 +22,9 @@ export class GenesFilterService {
   private filterChanges$ = new BehaviorSubject<any>([]);
   public currentFields: Observable<GenesListSettings> = this.listOfFields$.asObservable();
   public filterResult: Observable<ApiGeneSearchFilter> = this.filterChanges$.asObservable();
-  public twoOrMoreFiltersApplied = new BehaviorSubject<boolean>(false);
+  public twoOrMoreFiltersApplied = new BehaviorSubject<boolean>(
+    false
+  );
   public sortParams: Sort;
 
   // TODO: it's bad that the one can directly change filters state here
@@ -41,7 +46,7 @@ export class GenesFilterService {
     bySuggestions: '',
   };
 
-  private filtersDefault: Readonly<ApiGeneSearchFilter> = {
+  private filtersDefaultState: Readonly<ApiGeneSearchFilter> = {
     byAgeRelatedProcess: [],
     byDiseases: [],
     byDiseaseCategories: [],
@@ -70,7 +75,11 @@ export class GenesFilterService {
     private settingsService: SettingsService,
     private router: Router
   ) {
-    this.updateFields(this.settingsService.genesListSettings);
+    console.log('filtersDefault initial state: ', this.filtersDefaultState);
+    Object.freeze(this.filtersDefaultState);
+    this.updateFields(
+      this.settingsService.genesListSettings
+    );
     this.filterChanges$.next(this.filters);
   }
 
@@ -84,21 +93,40 @@ export class GenesFilterService {
   }
 
   // Filter
-  public applyFilter(filterType: string, filterValue: any): void {
+  public applyFilter(
+    filterType: string,
+    filterValue: any
+  ): void {
     if (filterValue) {
       if (Array.isArray(this.filters[filterType])) {
-        const arrayValues = filterValue.toString().split(',');
+        const arrayValues = filterValue
+          .toString()
+          .split(',');
         if (arrayValues.length > 1) {
-          this.filters[filterType] = arrayValues.map((value: string | number) => (+value ? +value : value));
+          this.filters[
+            filterType
+          ] = arrayValues.map((value: string | number) =>
+            +value ? +value : value
+          );
         } else {
-          filterValue = +filterValue ? +filterValue : Array.isArray(filterValue) ? filterValue[0] : filterValue;
-          if (!this.filters[filterType].includes(filterValue)) {
+          filterValue = +filterValue
+            ? +filterValue
+            : Array.isArray(filterValue)
+            ? filterValue[0]
+            : filterValue;
+          if (
+            !this.filters[filterType].includes(filterValue)
+          ) {
             this.filters[filterType].push(filterValue);
           } else {
-            this.filters[filterType] = this.filters[filterType].filter((item) => item !== filterValue);
+            this.filters[filterType] = this.filters[
+              filterType
+            ].filter((item) => item !== filterValue);
           }
         }
-      } else if (typeof this.filters[filterType] === 'number') {
+      } else if (
+        typeof this.filters[filterType] === 'number'
+      ) {
         if (this.filters[filterType] !== +filterValue) {
           this.filters[filterType] = +filterValue;
         } else {
@@ -133,9 +161,17 @@ export class GenesFilterService {
   // Clear
   public clearFilters(filterName?: keyof ApiGeneSearchFilter): void {
     if (filterName && filterName in this.filters) {
-      this.filters[filterName as any] = JSON.parse(JSON.stringify(this.filtersDefault[filterName]));
+      for (const key in this.filtersDefaultState) {
+        if (String(key) === filterName) {
+          this.filters[key] = this.filtersDefaultState[key];
+        }
+      }
     } else {
-      this.filters = Object.assign({}, this.filters, this.filtersDefault);
+      if (filterName && filterName in this.filters) {
+        for (const key in this.filtersDefaultState) {
+          this.filters[key] = this.filtersDefaultState[key];
+        }
+      }
     }
     this.pagination.page = 1;
     this.areMoreThan2FiltersApplied();
@@ -148,32 +184,45 @@ export class GenesFilterService {
       .set('pageSize', this.pagination.pageSize);
 
     if (this.filters) {
-      Object.entries(this.filters).forEach(([key, value]) => {
-        if (value) {
-          if (Array.isArray(value)) {
-            if (value.length) {
-              const str = value.join();
-              params = params.set(`${key}`, `${str}`);
+      Object.entries(this.filters).forEach(
+        ([key, value]) => {
+          if (value) {
+            if (Array.isArray(value)) {
+              if (value.length) {
+                const str = value.join();
+                params = params.set(`${key}`, `${str}`);
+              }
+            } else {
+              params = params.set(`${key}`, `${value}`);
             }
-          } else {
-            params = params.set(`${key}`, `${value}`);
           }
         }
-      });
+      );
     }
 
     if (this.sortParams && this.sortParams.direction) {
-      params = params.set('sortBy', this.sortParams.active).set('sortOrder', this.sortParams.direction.toUpperCase());
+      params = params
+        .set('sortBy', this.sortParams.active)
+        .set(
+          'sortOrder',
+          this.sortParams.direction.toUpperCase()
+        );
     }
 
     // return this.apiService.getGenesV2(params);
-    return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });
+    return this.http.get<ApiResponse<Genes>>(
+      `/api/gene/search`,
+      { params }
+    );
   }
 
   private areMoreThan2FiltersApplied(): void {
     const sum = [];
     Object.values(this.filters).forEach((value) => {
-      if ((value && value.length) || (typeof value === 'number' && value !== 0)) {
+      if (
+        (value && value.length) ||
+        (typeof value === 'number' && value !== 0)
+      ) {
         sum.push(1);
       }
     });
@@ -183,7 +232,9 @@ export class GenesFilterService {
     this.applyQueryParams(this.filters);
   }
 
-  private applyQueryParams(filterParams: ApiGeneSearchFilter): void {
+  private applyQueryParams(
+    filterParams: ApiGeneSearchFilter
+  ): void {
     const queryParams = {};
     for (const key in filterParams) {
       if (filterParams[key]) {
@@ -200,7 +251,9 @@ export class GenesFilterService {
     const urlTree = this.router.parseUrl(this.router.url);
     let urlWithoutParams = '/';
     if (Object.keys(urlTree.root.children).length !== 0) {
-      urlWithoutParams = urlTree.root.children?.primary.segments.map((it) => it.path).join('/');
+      urlWithoutParams = urlTree.root.children?.primary.segments
+        .map((it) => it.path)
+        .join('/');
     }
 
     void this.router.navigate([urlWithoutParams], {

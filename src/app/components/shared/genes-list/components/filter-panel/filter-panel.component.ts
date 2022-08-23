@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { CommonModalComponent } from '../../../../ui-components/components/modals/common-modal/common-modal.component';
@@ -24,7 +24,11 @@ export class FilterPanelComponent implements OnChanges {
   public filters: ApiGeneSearchFilter = this.filterService.filters;
   public sortEnum = SortEnum;
 
-  constructor(private filterService: GenesFilterService, private dialog: MatDialog) {}
+  constructor(
+    private filterService: GenesFilterService,
+    private dialog: MatDialog,
+    private cdRef: ChangeDetectorRef,
+  ) {}
 
   ngOnChanges(): void {
     if (!this.isMobile) {
@@ -37,6 +41,7 @@ export class FilterPanelComponent implements OnChanges {
    */
   public clearFilters(filterName?: string) {
     this.clearFilterItem.emit(filterName);
+    this.cdRef.markForCheck();
   }
 
   /**

@@ -17,18 +17,4 @@
       ></app-gene-menu>
     </div>
   </td>
-
-</tr>
-
-<tr class="item">
-  <td *ngIf="listSettings.ifShowClasses"
-      colspan="100%"
-      class="cell cell--functions">
-    <app-tag
-      *ngFor="let item of item.functionalClusters"
-      (click)="onFuncCluster(item['id'])"
-      [isActive]="filters.byClasses.includes(item['id'])"
-    >{{ item["name"] }}
-    </app-tag>
-  </td>
 </tr>

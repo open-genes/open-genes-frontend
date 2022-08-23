@@ -1,6 +1,12 @@
-import { ChangeDetectorRef, Directive, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Directive,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
-import { Gene, Genes } from '../models';
+import { Genes } from '../models';
 import { GenesFilterService } from '../services/filters/genes-filter.service';
 import { FavouritesService } from '../services/favourites.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,11 +16,13 @@ import { takeUntil } from 'rxjs/operators';
 import { ApiGeneSearchFilter } from '../models/filters/filter.model';
 
 @Directive()
-export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
+export abstract class GeneTableCardLogic
+  implements OnInit, OnDestroy {
   @Input() item: Genes;
 
   public listSettings: GenesListSettings;
-  public filters: ApiGeneSearchFilter = this.filterService.filters;
+  public filters: ApiGeneSearchFilter = this.filterService
+    .filters;
   protected subscription$ = new Subject();
 
   protected constructor(
@@ -37,23 +45,28 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
    * Update list view on card or table
    */
   protected updateCurrentFields() {
-    this.filterService.currentFields.pipe(takeUntil(this.subscription$)).subscribe(
-      (fields) => {
-        this.listSettings = fields;
-        this.cdRef.markForCheck();
-      },
-      (error) => {
-        console.warn(error);
-        this.cdRef.markForCheck();
-      }
-    );
+    this.filterService.currentFields
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
+        (fields) => {
+          this.listSettings = fields;
+          this.cdRef.markForCheck();
+        },
+        (error) => {
+          console.warn(error);
+          this.cdRef.markForCheck();
+        }
+      );
   }
 
   /**
    * get item id and send this to app-genes-list  (for filtering)
    */
 
-  public applyFilter(filterType: string, filterValue: number | string): void {
+  public applyFilter(
+    filterType: string,
+    filterValue: number | string
+  ): void {
     this.filterService.applyFilter(filterType, filterValue);
   }
 
@@ -91,20 +104,26 @@ export abstract class GeneTableCardLogic implements OnInit, OnDestroy {
   }
 
   public isFaved(geneId: number): Observable<boolean> {
-    return of(this.favouritesService.isInFavourites(geneId));
+    return of(
+      this.favouritesService.isInFavourites(geneId)
+    );
   }
 
   /**
    * Narrow type and check if age related process filter is active
    */
   public isAgeRelatedProcessActive(id: string): boolean {
-    return this.filters.byAgeRelatedProcess.includes(Number(id));
+    return this.filters.byAgeRelatedProcess.includes(
+      Number(id)
+    );
   }
 
   /**
    * Filters translations
    */
-  public getExpressionLocaleKey(expression: number): string {
+  public getExpressionLocaleKey(
+    expression: number
+  ): string {
     const expressionTranslations = new Map([
       [0, 'expression_change_no_data'],
       [1, 'expression_change_decreased'],

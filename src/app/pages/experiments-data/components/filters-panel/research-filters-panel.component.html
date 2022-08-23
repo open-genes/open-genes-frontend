@@ -3,7 +3,7 @@
   <div class="body__row">
     <mat-form-field appearance="fill" color="primary">
       <mat-label>{{ "filters_modal_placeholder_model_organisms" | translate }}</mat-label>
-      <mat-select formControlName="ageRelatedProcessesSelect"
+      <mat-select formControlName="modelOrganismSelect"
                   multiple="true"
                   [disabled]="modelOrganisms?.length === 0"
                   [(ngModel)]="predefinedModelOrganisms"

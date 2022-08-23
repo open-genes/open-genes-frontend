@@ -17,11 +17,26 @@ enum FilterStateEnum {
   'predefinedFamilyOrigin' = 'byFamilyOrigin',
   'predefinedConservativeIn' = 'byConservativeIn',
   'predefinedModelOrganisms' = 'bySpecies',
+  'predefinedExperimentsStats' = 'researches'
 }
 
+type StateTypes =
+  | 'predefinedProcesses'
+  | 'predefinedExpressionChanges'
+  | 'predefinedDiseases'
+  | 'predefinedDiseaseCategories'
+  | 'predefinedSelectionCriteria'
+  | 'predefinedAgingMechanisms'
+  | 'predefinedProteinClasses'
+  | 'predefinedOrigin'
+  | 'predefinedFamilyOrigin'
+  | 'predefinedConservativeIn'
+  | 'predefinedModelOrganisms'
+  | 'predefinedExperimentsStats';
+
 interface StateParams {
-  field: any[];
-  type: string;
+  field: any[] | boolean;
+  type: StateTypes;
 }
 
 export abstract class FilterPanelLogic {
@@ -42,6 +57,9 @@ export abstract class FilterPanelLogic {
       });
   }
 
+  /**
+   * Check if values being passed into a select control exist in options array
+   */
   public compareSelectValues(value1: any, value2: any): boolean {
     if (value1 && value2) {
       return value1 === value2;
@@ -77,6 +95,7 @@ export abstract class FilterPanelLogic {
 
   public apply(filterType: any, $event: MatSelectChange | MatCheckboxChange): void {
     let value;
+    console.log(`apply(${filterType})`);
     if ($event instanceof MatCheckboxChange) {
       value = $event.checked;
     } else if ($event instanceof MatSelectChange) {

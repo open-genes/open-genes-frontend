@@ -2,7 +2,7 @@
   <ng-container *ngIf="!isAccordion; else accordion">
     <ul class="list list--bulletted">
       <li *ngFor="let mechanism of geneAgingMechanisms"
-          [class.__active]="activeListItem.includes(mechanism.id)"
+          [class.__active]="activeListItem?.includes(mechanism.id)"
           (click)="emitOnClick(mechanism.id)">
         {{ mechanism.name }}
       </li>
@@ -19,7 +19,7 @@
       <div class="aging-mechanisms-accordion__header" accordion-header>
         <ul class="list list--bulletted">
           <li *ngFor="let mechanism of geneAgingMechanisms | slice: 0:maxItemsToShow"
-              [class.__active]="activeListItem.includes(mechanism.id)"
+              [class.__active]="activeListItem?.includes(mechanism.id)"
               (click)="emitOnClick(mechanism.id)">
             {{ mechanism.name }}
           </li>

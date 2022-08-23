@@ -160,7 +160,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
           this.ortholog = this.gene.ortholog.sort((a, b) => {
             return (
               (a.species.latinName > b.species.latinName ? 1 : -1) &&
-              (a.species.latinName.includes('Drosophila') ? -1 : 1)
+              (a.species.latinName?.includes('Drosophila') ? -1 : 1)
             );
           });
 

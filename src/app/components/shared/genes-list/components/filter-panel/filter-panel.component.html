@@ -27,7 +27,7 @@
 </ng-container>
 
 <button
-  *ngIf="filters.byDiseases.length"
+  *ngIf="filters.byDiseases?.length"
   class="filter __active"
   (click)="clearFilters('byDiseases')"
 >
@@ -36,16 +36,7 @@
 </button>
 
 <button
-  *ngIf="filters.bySelectionCriteria.length"
-  class="filter __active"
-  (click)="clearFilters('bySelectionCriteria')"
->
-  {{ "main_page_table_criteria" | translate }}
-  <span class="fa fal fa-times"></span>
-</button>
-
-<button
-  *ngIf="filters.byDiseaseCategories.length"
+  *ngIf="filters.byDiseaseCategories?.length !== 0"
   class="filter __active"
   (click)="clearFilters('byDiseaseCategories')"
 >
@@ -54,7 +45,16 @@
 </button>
 
 <button
-  *ngIf="filters.byAgingMechanism.length"
+  *ngIf="filters.bySelectionCriteria?.length !== 0"
+  class="filter __active"
+  (click)="clearFilters('bySelectionCriteria')"
+>
+  {{ "main_page_table_criteria" | translate }}
+  <span class="fa fal fa-times"></span>
+</button>
+
+<button
+  *ngIf="filters.byAgingMechanism?.length !== 0"
   class="filter __active"
   (click)="clearFilters('byAgingMechanism')"
 >
@@ -63,7 +63,7 @@
 </button>
 
 <button
-  *ngIf="filters.byProteinClass.length"
+  *ngIf="filters.byProteinClass?.length !== 0"
   class="filter __active"
   (click)="clearFilters('byProteinClass')"
 >
@@ -72,12 +72,39 @@
 </button>
 
 <button
+  *ngIf="filters.byOrigin?.length !== 0"
+  class="filter __active"
+  (click)="clearFilters('byOrigin')"
+>
+  {{ "filters_modal_placeholder_origin" | translate }}
+  <span class="fa fal fa-times"></span>
+</button>
+
+<button
+  *ngIf="filters.byFamilyOrigin?.length !== 0"
+  class="filter __active"
+  (click)="clearFilters('byFamilyOrigin')"
+>
+  {{ "filters_modal_placeholder_family_origin" | translate }}
+  <span class="fa fal fa-times"></span>
+</button>
+
+<button
+  *ngIf="filters.byConservativeIn?.length !== 0"
+  class="filter __active"
+  (click)="clearFilters('byConservativeIn')"
+>
+  {{ "filters_modal_placeholder_conservative" | translate }}
+  <span class="fa fal fa-times"></span>
+</button>
+
+<button
   *ngIf="twoOrMoreFiltersApplied | async"
-  class="btn btn--small btn--purple"
+  class="filter"
   (click)="clearFilters()"
 >
-  <span class="fa far fa-times"></span>
   {{ "filters_reset" | translate }}
+  <span class="fa fal fa-times"></span>
 </button>
 
 <ng-template #GeneFieldsModalTemplate>
