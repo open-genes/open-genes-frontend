@@ -3,6 +3,11 @@
     <div class="row no-gutters footer__row">
       <div class="col-xs-6 col-md-3 footer__column">
         <h4>{{ "footer_title_about" | translate }}</h4>
+        <p>{{ 'footer_about' | translate }} <a
+          href="{{ 'about_page_about_section_title_link' | translate }}"
+          class="link link--underline"
+          target="_blank">Open&nbsp;Longevity&nbsp;<span class="fa far fa-external-link"></span></a>
+        </p>
         <ul class="footer__links">
           <li>
             <a [routerLink]="'/about'"

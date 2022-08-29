@@ -30,7 +30,7 @@
         <li
           class="navigation-list__item">
           <a class="item__link"
-             [routerLink]="'/researches'"
+             [routerLink]="'/studies'"
              routerLinkActive="__current"
           >{{ "toggler_researches" | translate }}</a>
         </li>
@@ -41,6 +41,24 @@
                 [routerLink]="'/datasets'"
                 routerLinkActive="__current"
           >{{ "toggler_datasets" | translate }}
+          </a>
+        </li>
+
+        <li
+          class="navigation-list__item">
+          <a class="item__link"
+             [routerLink]="'/download'"
+             routerLinkActive="__current"
+          >{{ "header_menu_download" | translate }}
+          </a>
+        </li>
+
+        <li
+          class="navigation-list__item">
+          <a class="item__link"
+             [routerLink]="'/help'"
+             routerLinkActive="__current"
+          >{{ "header_menu_help" | translate }}
           </a>
         </li>
       </ul>
