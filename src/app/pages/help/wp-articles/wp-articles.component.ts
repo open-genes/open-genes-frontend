@@ -32,6 +32,8 @@ export class WpArticlesComponent implements OnInit, OnDestroy {
   };
   public showMoreButtonVisible = false;
   private unsubscribe$ = new Subject();
+  // Slugs of articles which are required on a website but should be hidden in a main list
+  private hiddenArticles = ['cookies-policy'];
 
   constructor(private wpApiService: WordpressApiService, private cdRef: ChangeDetectorRef) {}
 
@@ -50,10 +52,14 @@ export class WpArticlesComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (articles) => {
-          this.articlesList = articles;
-
           // Populate tag list avoiding duplicates
           articles.forEach((article) => {
+            // Populate articles array avoiding duplicates
+            if (!this.hiddenArticles.includes(article.slug)) {
+              this.articlesList.push(article);
+            }
+
+            // Populate tag array avoiding duplicates
             if (article?.tags.length !== 0) {
               this.articleTags = [...new Set(article.tags)];
             }

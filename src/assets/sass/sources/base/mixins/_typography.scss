@@ -1,4 +1,4 @@
-// Обрезка текста
+// Text truncation
 @mixin text-overflow {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -31,6 +31,8 @@
   li {
     width: 100%;
     position: relative;
+    word-break: break-word;
+    hyphens: auto;
 
     .alias {
       vertical-align: top;
