@@ -1,5 +1,5 @@
 import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
-import { ApiGeneSearchParameters } from '../../../../../../core/models/filters/filter.model';
+import { ApiGeneSearchParameters } from '../../../../../core/models/filters/filter.model';
 import { MatSelectChange } from '@angular/material/select';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
