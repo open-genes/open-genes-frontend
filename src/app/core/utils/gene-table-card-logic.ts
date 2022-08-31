@@ -1,11 +1,11 @@
 import {
   ChangeDetectorRef,
-  Directive,
+  Directive, EventEmitter,
   Input,
   OnDestroy,
-  OnInit,
+  OnInit, Output,
 } from '@angular/core';
-import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
+import { appliedFilter, GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
 import { Genes } from '../models';
 import { GenesFilterService } from '../services/filters/genes-filter.service';
 import { FavouritesService } from '../services/favourites.service';
@@ -19,6 +19,7 @@ import { ApiGeneSearchFilter } from '../models/filters/filter.model';
 export abstract class GeneTableCardLogic
   implements OnInit, OnDestroy {
   @Input() item: Genes;
+  @Output() filterChanged: EventEmitter<appliedFilter> = new EventEmitter<appliedFilter>();
 
   public listSettings: GenesListSettings;
   public filters: ApiGeneSearchFilter = this.filterService
@@ -63,11 +64,9 @@ export abstract class GeneTableCardLogic
    * get item id and send this to app-genes-list  (for filtering)
    */
 
-  public applyFilter(
-    filterType: string,
-    filterValue: number | string
-  ): void {
+  public applyFilter(filterType: string, filterValue: number | string): void {
     this.filterService.applyFilter(filterType, filterValue);
+    this.filterChanged.emit({ name: filterType, value: filterValue });
   }
 
   /**

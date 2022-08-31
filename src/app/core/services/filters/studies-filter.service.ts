@@ -43,26 +43,6 @@ export class StudiesFilterService {
     byChromosomeNum: null,
   };
 
-  private filtersDefaultState: Readonly<ApiResearchFilter> = {
-    sortBy: '',
-    sortOrder: '',
-    byDiseases: [],
-    byDiseaseCategories: [],
-    byAgeRelatedProcess: [],
-    byExpressionChange: 0,
-    bySelectionCriteria: [],
-    byAgingMechanism: [],
-    byProteinClass: [],
-    bySpecies: [],
-    byOrigin: [],
-    byFamilyOrigin: [],
-    byConservativeIn: [],
-    byGeneId: null,
-    byGeneSymbol: [],
-    bySuggestions: '',
-    byChromosomeNum: null,
-  };
-
   public pagination: Pagination = {
     page: 1,
     pageSize: 20,
@@ -75,7 +55,6 @@ export class StudiesFilterService {
     private settingsService: SettingsService,
     private router: Router
   ) {
-    Object.freeze(this.filtersDefaultState);
     this.updateFields(this.settingsService.genesListSettings);
     this.filterChanges$.next(this.filters);
   }
@@ -138,20 +117,56 @@ export class StudiesFilterService {
   }
 
   // Clear
+  // Clear
   public clearFilters(filterName?: keyof ApiResearchFilter): void {
-    if (filterName && filterName in this.filters) {
-      for (const key in this.filtersDefaultState) {
-        if (String(key) === filterName) {
-          this.filters[key] = this.filtersDefaultState[key];
-        }
-      }
-    } else {
-      if (filterName && filterName in this.filters) {
-        for (const key in this.filtersDefaultState) {
-          this.filters[key] = this.filtersDefaultState[key];
-        }
-      }
+    switch (filterName) {
+      case 'byDiseases':
+        this.filters.byDiseases = [];
+        break;
+      case 'byDiseaseCategories':
+        this.filters.byDiseaseCategories = [];
+        break;
+      case 'bySelectionCriteria':
+        this.filters.bySelectionCriteria = [];
+        break;
+      case 'byAgingMechanism':
+        this.filters.byAgingMechanism = [];
+        break;
+      case 'byProteinClass':
+        this.filters.byProteinClass = [];
+        break;
+      case 'byFamilyOrigin':
+        this.filters.byFamilyOrigin = [];
+        break;
+      case 'byConservativeIn':
+        this.filters.byConservativeIn = [];
+        break;
+      case 'byGeneId':
+        this.filters.byGeneId = null;
+        break;
+      case 'byGeneSymbol':
+        this.filters.byGeneSymbol = [];
+        break;
+      case 'bySuggestions':
+        this.filters.bySuggestions = '';
+        break;
+      case 'byChromosomeNum':
+        this.filters.byChromosomeNum = null;
+        break;
+      default:
+        this.filters.byDiseases = [];
+        this.filters.byDiseaseCategories = [];
+        this.filters.bySelectionCriteria = [];
+        this.filters.byAgingMechanism = [];
+        this.filters.byProteinClass = [];
+        this.filters.byFamilyOrigin = [];
+        this.filters.byConservativeIn = [];
+        this.filters.byGeneId = null;
+        this.filters.byGeneSymbol = [];
+        this.filters.bySuggestions = '';
+
     }
+
     this.pagination.page = 1;
     this.areMoreThan2FiltersApplied();
   }

@@ -46,24 +46,6 @@ export class GenesFilterService {
     bySuggestions: '',
   };
 
-  private filtersDefaultState: Readonly<ApiGeneSearchFilter> = {
-    byAgeRelatedProcess: [],
-    byDiseases: [],
-    byDiseaseCategories: [],
-    bySelectionCriteria: [],
-    byExpressionChange: 0,
-    byMethylationChange: '',
-    byAgingMechanism: [],
-    byProteinClass: [],
-    byOrigin: [],
-    byFamilyOrigin: [],
-    byConservativeIn: [],
-    researches: 0,
-    byGeneId: null,
-    byGeneSymbol: [],
-    bySuggestions: null,
-  };
-
   public pagination: Pagination = {
     page: 1,
     pageSize: 20,
@@ -75,8 +57,6 @@ export class GenesFilterService {
     private settingsService: SettingsService,
     private router: Router
   ) {
-    console.log('filtersDefault initial state: ', this.filtersDefaultState);
-    Object.freeze(this.filtersDefaultState);
     this.updateFields(
       this.settingsService.genesListSettings
     );
@@ -93,10 +73,7 @@ export class GenesFilterService {
   }
 
   // Filter
-  public applyFilter(
-    filterType: string,
-    filterValue: any
-  ): void {
+  public applyFilter(filterType: string, filterValue: any): void {
     if (filterValue) {
       if (Array.isArray(this.filters[filterType])) {
         const arrayValues = filterValue
@@ -160,19 +137,67 @@ export class GenesFilterService {
 
   // Clear
   public clearFilters(filterName?: keyof ApiGeneSearchFilter): void {
-    if (filterName && filterName in this.filters) {
-      for (const key in this.filtersDefaultState) {
-        if (String(key) === filterName) {
-          this.filters[key] = this.filtersDefaultState[key];
-        }
-      }
-    } else {
-      if (filterName && filterName in this.filters) {
-        for (const key in this.filtersDefaultState) {
-          this.filters[key] = this.filtersDefaultState[key];
-        }
-      }
+    switch (filterName) {
+      case 'byAgeRelatedProcess':
+        this.filters.byAgeRelatedProcess = [];
+        break;
+      case 'byDiseases':
+        this.filters.byDiseases = [];
+        break;
+      case 'byDiseaseCategories':
+        this.filters.byDiseaseCategories = [];
+        break;
+      case 'bySelectionCriteria':
+        this.filters.bySelectionCriteria = [];
+        break;
+      case 'byExpressionChange':
+        this.filters.byExpressionChange = null;
+        break;
+      case 'byMethylationChange':
+        this.filters.byMethylationChange = '';
+        break;
+      case 'byAgingMechanism':
+        this.filters.byAgingMechanism = [];
+        break;
+      case 'byProteinClass':
+        this.filters.byProteinClass = [];
+        break;
+      case 'byFamilyOrigin':
+        this.filters.byFamilyOrigin = [];
+        break;
+      case 'byConservativeIn':
+        this.filters.byConservativeIn = [];
+        break;
+      case 'researches':
+        this.filters.researches = 0;
+        break;
+      case 'byGeneId':
+        this.filters.byGeneId = null;
+        break;
+      case 'byGeneSymbol':
+        this.filters.byGeneSymbol = [];
+        break;
+      case 'bySuggestions':
+        this.filters.bySuggestions = '';
+        break;
+      default:
+        this.filters.byAgeRelatedProcess = [];
+        this.filters.byDiseases = [];
+        this.filters.byDiseaseCategories = [];
+        this.filters.bySelectionCriteria = [];
+        this.filters.byExpressionChange = null;
+        this.filters.byMethylationChange = '';
+        this.filters.byAgingMechanism = [];
+        this.filters.byProteinClass = [];
+        this.filters.byFamilyOrigin = [];
+        this.filters.byConservativeIn = [];
+        this.filters.researches = 0;
+        this.filters.byGeneId = null;
+        this.filters.byGeneSymbol = [];
+        this.filters.bySuggestions = '';
+
     }
+
     this.pagination.page = 1;
     this.areMoreThan2FiltersApplied();
   }

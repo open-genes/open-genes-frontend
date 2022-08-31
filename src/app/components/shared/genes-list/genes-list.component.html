@@ -72,6 +72,7 @@
           [isAdded]="isFaved(rowData.id)"
           (unFav)="unFavItem($event)"
           (fav)="favItem($event)"
+          (filterChanged)="filterChanged.emit($event)"
         >
         </app-gene-table-row>
       </ng-template>
@@ -100,6 +101,7 @@
         [isAdded]="isFaved(rowData.id)"
         (unFav)="unFavItem($event)"
         (fav)="favItem($event)"
+        (filterChanged)="filterChanged.emit($event)"
       >
       </app-gene-card>
     </ng-template>

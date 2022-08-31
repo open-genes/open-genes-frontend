@@ -249,7 +249,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
       this.settingsService.setSettings('searchMode', this.searchModeEnum.searchByGenes);
     }
 
-    void this.router.navigate([''], {
+    void this.router.navigate(['genes'], {
       queryParams: queryParams,
     });
   }

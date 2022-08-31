@@ -25,6 +25,7 @@ import { Sort } from '@angular/material/sort';
 import { ApiResponse, PageOptions } from '../../../core/models/api-response.model';
 import { SearchModel } from '../../../core/models/open-genes-api/search.model';
 import { SortEnum } from '../../../core/services/filters/filter-types.enum';
+import { appliedFilter } from './genes-list-settings.model';
 
 @Component({
   selector: 'app-genes-list',
@@ -90,6 +91,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() errorStatus: EventEmitter<string> = new EventEmitter<string>();
   @Output() itemsNumber: EventEmitter<number> = new EventEmitter<number>();
+  @Output() filterChanged: EventEmitter<appliedFilter> = new EventEmitter<appliedFilter>();
 
   public resultingList: Genes[] = [];
   public foundAndNotFoundGenes: Omit<SearchModel, 'items'>;
@@ -125,20 +127,28 @@ export class GenesListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute?.queryParams.subscribe((params) => {
-      if (Object.keys(params).length) {
-        for (const key in params) {
-          if (params[key] !== this.filterService.filters[key].toString()) {
-            this.filterService.applyFilter(key, params[key]);
+    this.activatedRoute?.queryParams
+      .pipe(takeUntil(this.subscription$))
+      .subscribe((params) => {
+        if (Object.keys(params).length) {
+          for (const key in params) {
+            if (
+              params[key] !==
+              this.filterService.filters[key].toString()
+            ) {
+              this.filterService.applyFilter(
+                key,
+                params[key]
+              );
+            }
           }
         }
-      }
-    });
+      });
     this.favouritesService.getItems();
     this.setInitSettings();
     this.setInitialState();
 
-    this.cancelSearchSubscription$ = this.cancelSearch.subscribe(() => {
+    this.cancelSearchSubscription$ = this.cancelSearch?.subscribe(() => {
       this.filterService.clearFilters();
       this.setInitialState();
     });
@@ -248,6 +258,8 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public clearFilters(filterName?: ApiGeneSearchParameters): void {
     console.log(`clearFilters(${filterName})`);
     this.filterService.clearFilters(filterName);
+    this.filterChanged.emit({ name: filterName, value: null });
+    this.cdRef.markForCheck();
   }
 
   public resetPagination(): void {
@@ -258,6 +270,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   /**
    * Sorting genes list
    */
+  // TODO: remove sort on frontend
   public sortBy(sort: Sort): void {
     const unSortedData = this.resultingList.slice();
 

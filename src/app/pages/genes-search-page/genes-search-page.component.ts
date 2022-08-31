@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { GeneFiltersPanelComponent } from '../../components/shared/genes-list/components/gene-filters-panel/gene-filters-panel.component';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { GeneFiltersPanelComponent } from './components/gene-filters-panel/gene-filters-panel.component';
 import { Genes } from '../../core/models';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
 import { WindowService } from '../../core/services/browser/window.service';
@@ -8,6 +8,7 @@ import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { takeUntil } from 'rxjs/operators';
 import { WindowWidth } from '../../core/utils/window-width';
 import { Subject } from 'rxjs';
+import { appliedFilter } from '../../components/shared/genes-list/genes-list-settings.model';
 
 @Component({
   selector: 'app-genes-search-page',
@@ -25,7 +26,6 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
   public errorStatus: string;
   public searchMode: SearchMode = 'searchByGenes';
   public searchModeEnum = SearchModeEnum;
-
   public genesListIsLoading = true;
   public showLatestGenesSkeleton = true;
   public showArticlesSkeleton = true;
@@ -35,6 +35,7 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
   public queryLength: number;
   public placeholder: string;
   public $cancelSearch: Subject<void> = new Subject<void>();
+  public lastChangedFilter: appliedFilter;
 
   constructor(
     public windowService: WindowService,
@@ -58,13 +59,14 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
+
   }
 
   /**
    * View
    */
 
-  public updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'pubmed' | 'latest' | 'filters'): void {
+  public updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'pubmed' | 'latest'): void {
     if (name === 'articles') {
       this.showArticlesSkeleton = event;
     }
@@ -76,6 +78,10 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
     if (name === 'latest') {
       this.showLatestGenesSkeleton = event;
     }
+  }
+
+  public updateOnFilterChange($event: appliedFilter) {
+    this.lastChangedFilter = $event;
   }
 
   public setLoader(event: boolean) {

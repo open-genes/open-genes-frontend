@@ -1,62 +1,15 @@
-import { takeUntil } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { ApiService } from '../services/api/open-genes-api.service';
 import { MatSelectChange } from '@angular/material/select';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
-
-enum FilterStateEnum {
-  'predefinedProcesses' = 'byAgeRelatedProcess',
-  'predefinedExpressionChanges' = 'byExpressionChange',
-  'predefinedDiseases' = 'byDiseases',
-  'predefinedDiseaseCategories' = 'byDiseaseCategories',
-  'predefinedSelectionCriteria' = 'bySelectionCriteria',
-  'predefinedAgingMechanisms' = 'byAgingMechanism',
-  'predefinedProteinClasses' = 'byProteinClass',
-  'predefinedOrigin' = 'byOrigin',
-  'predefinedFamilyOrigin' = 'byFamilyOrigin',
-  'predefinedConservativeIn' = 'byConservativeIn',
-  'predefinedModelOrganisms' = 'bySpecies',
-  'predefinedExperimentsStats' = 'researches'
-}
-
-type StateTypes =
-  | 'predefinedProcesses'
-  | 'predefinedExpressionChanges'
-  | 'predefinedDiseases'
-  | 'predefinedDiseaseCategories'
-  | 'predefinedSelectionCriteria'
-  | 'predefinedAgingMechanisms'
-  | 'predefinedProteinClasses'
-  | 'predefinedOrigin'
-  | 'predefinedFamilyOrigin'
-  | 'predefinedConservativeIn'
-  | 'predefinedModelOrganisms'
-  | 'predefinedExperimentsStats';
-
-interface StateParams {
-  field: any[] | boolean;
-  type: StateTypes;
-}
+import { map, takeUntil } from 'rxjs/operators';
 
 export abstract class FilterPanelLogic {
   protected subscription$ = new Subject();
   public listSettings: GenesListSettings;
 
   constructor(public api: ApiService, public service: any) {}
-
-  public getStateForFields(updateFields: StateParams[]): void {
-    this.service
-      .getFilterState()
-      .pipe(takeUntil(this.subscription$))
-      .subscribe((data: any) => {
-        updateFields.forEach((f) => {
-          const key = FilterStateEnum[f.type];
-          f.field = data[key];
-        });
-      });
-  }
-
   /**
    * Check if values being passed into a select control exist in options array
    */
@@ -71,6 +24,8 @@ export abstract class FilterPanelLogic {
    * Get entities for filters lists
    */
   public getEntitiesList(key): Observable<any[]> {
+    const diseases = [];
+    const diseaseCategories = [];
     switch (key) {
       case 'processes':
         return this.api.getAgeRelatedProcesses();
@@ -79,9 +34,36 @@ export abstract class FilterPanelLogic {
       case 'criteria':
         return this.api.getSelectionCriteria();
       case 'diseases':
-        return this.api.getDiseases();
+        this.api
+          .getDiseases()
+          .pipe(takeUntil(this.subscription$))
+          .subscribe((data: any[]) => {
+            for (const [id, entries] of Object.entries(data)) {
+              if (entries.name?.length) {
+                diseases.push({ id: Number(id), ...entries });
+              }
+            }
+          });
+        console.log('getEntitiesList diseases', diseases);
+        return of(diseases);
       case 'disease-categories':
-        return this.api.getDiseaseCategories();
+        this.api
+          .getDiseaseCategories()
+          .pipe(
+            takeUntil(this.subscription$),
+            map((d) => {
+              console.log('map', d);
+              return d;
+            }),
+          )
+          .subscribe((data: any[]) => {
+          for (const [id, entries] of Object.entries(data)) {
+            if (entries.icdCategoryName?.length && entries.icdCode?.length) {
+              diseaseCategories.push({id: Number(id), ...entries});
+            }
+          }
+        });
+        return of(diseaseCategories);
       case 'classes':
         return this.api.getProteinClasses();
       case 'phylum':
@@ -105,12 +87,6 @@ export abstract class FilterPanelLogic {
 
     // Check if event is emitted on select change
     if (Array.isArray(value) && value.length === 0) {
-      return;
-    }
-
-    // If value is emitted when user clicks empty option which is "Not selected"
-    // There is no id 0, so we don't send this value
-    if (Number(value) === 0) {
       return;
     }
 

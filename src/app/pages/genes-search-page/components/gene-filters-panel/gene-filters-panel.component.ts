@@ -1,36 +1,47 @@
-import {
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
-import { GenesListSettings } from '../../genes-list-settings.model';
-import { GenesFilterService } from '../../../../../core/services/filters/genes-filter.service';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { SettingsService } from '../../../../../core/services/settings.service';
-import { ApiService } from '../../../../../core/services/api/open-genes-api.service';
+import { appliedFilter, GenesListSettings } from '../../../../components/shared/genes-list/genes-list-settings.model';
+import { ApiGeneSearchParameters, ApiResearchSearchParameters } from '../../../../core/models/filters/filter.model';
+import { SettingsService } from '../../../../core/services/settings.service';
+import { GenesFilterService } from '../../../../core/services/filters/genes-filter.service';
+import { ApiService } from '../../../../core/services/api/open-genes-api.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import {
-  ApiGeneSearchParameters,
-  ApiResearchSearchParameters,
-} from '../../../../../core/models/filters/filter.model';
 import { MatSelectChange } from '@angular/material/select';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { FilterPanelLogic } from '../../../../../core/utils/filter-panel-logic';
+import { FilterPanelLogic } from '../../../../core/utils/filter-panel-logic';
+
+type formControls =
+  | 'diseasesSelect'
+  | 'diseaseCategoriesSelect'
+  | 'selectionCriteriaSelect'
+  | 'agingMechanismsSelect'
+  | 'proteinClassesSelect'
+  | 'originSelect'
+  | 'familyOriginSelect'
+  | 'conservativeInSelect'
+  | 'experimentsStatsCheckbox';
+
+enum formControlToFilter {
+  'diseasesSelect' = 'byDiseases',
+  'diseaseCategoriesSelect' = 'byDiseaseCategories',
+  'selectionCriteriaSelect' = 'bySelectionCriteria',
+  'agingMechanismsSelect' = 'byAgingMechanism',
+  'proteinClassesSelect' = 'byProteinClass',
+  'originSelect' = 'byOrigin',
+  'familyOriginSelect' = 'byFamilyOrigin',
+  'conservativeInSelect' = 'byConservativeIn',
+  'experimentsStatsCheckbox' = 'researches'
+}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-gene-filters-panel',
   templateUrl: './gene-filters-panel.component.html',
   styleUrls: ['./gene-filters-panel.component.scss'],
 })
-export class GeneFiltersPanelComponent
-  extends FilterPanelLogic
-  implements OnInit, OnDestroy {
+export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnChanges, OnInit, OnDestroy {
   public filtersForm: FormGroup;
-  @Output()
-  filterReady: EventEmitter<string> = new EventEmitter<string>();
 
   // FIELDS VISIBILITY
   public listSettings: GenesListSettings;
@@ -39,12 +50,12 @@ export class GeneFiltersPanelComponent
   searchText: any;
 
   // Diseases
-  public diseases: Map<number, any> = new Map();
-  private cachedDisease: Map<number, any> = new Map();
+  public diseases: any[] = [];
+  private cachedDiseases: any[] = [];
   public predefinedDiseases: any[] = [];
   public diseasesModel: Observable<any[]>;
   // Disease categories
-  public diseaseCategories: Map<number, any> = new Map();
+  public diseaseCategories: any[] = [];
   public predefinedDiseaseCategories: any[] = [];
   public diseaseCategoriesModel: Observable<any[]>;
   // Selection criteria
@@ -68,15 +79,21 @@ export class GeneFiltersPanelComponent
   // Experiments
   public predefinedExperimentsStats: boolean;
 
-  @Output()
-  showSkeletonChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output()
-  filterLoaded: EventEmitter<string> = new EventEmitter<string>();
+  @Input() set lastChangedFilter(filter: appliedFilter) {
+    // Change detection workaround
+    if (filter.name) {
+      console.log('@Input(): ', filter);
+      this.getState();
+    }
+  }
+  @Output() filterLoaded: EventEmitter<never> = new EventEmitter<never>();
+  @Output() filterApplied: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     private apiService: ApiService,
     private filterService: GenesFilterService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private readonly cdRef: ChangeDetectorRef,
   ) {
     super(apiService, filterService);
     this.filtersForm = new FormGroup({
@@ -95,7 +112,11 @@ export class GeneFiltersPanelComponent
     });
   }
 
-  ngOnInit() {
+  ngOnChanges(): void {
+    this.getState();
+  }
+
+  ngOnInit(): void {
     this.updateVisibleFields();
 
     // FILTERS
@@ -105,34 +126,22 @@ export class GeneFiltersPanelComponent
     // Diseases
     this.diseasesModel = this.getEntities('diseases');
     this.diseasesModel
-      .pipe(takeUntil(this.subscription$))
       .subscribe((data: any[]) => {
-        for (const [key, value] of Object.entries(data)) {
-          // TODO: remove this check when backend will be fixed up
-          if (value['name']) {
-            this.diseases.set(+key, value);
-            this.cachedDisease.set(+key, value);
-          }
-        }
+        console.log('diseases', data);
+        this.diseases = data;
+        this.cachedDiseases = data;
       });
 
     // Disease categories
     this.diseaseCategoriesModel = this.getEntities('disease-categories');
     this.diseaseCategoriesModel
-      .pipe(takeUntil(this.subscription$))
       .subscribe((data: any[]) => {
-        for (const [key, value] of Object.entries(data)) {
-          // TODO: remove this check when backend will be fixed up
-          if (value['icdCode'].length !== 0) {
-            this.diseaseCategories.set(+key, value);
-          }
-        }
+        this.diseaseCategories = data;
       });
 
     // Selection criteria
     this.selectionCriteriaModel = this.getEntities('criteria');
     this.selectionCriteriaModel
-      .pipe(takeUntil(this.subscription$))
       .subscribe((data: any[]) => {
         this.selectionCriteria = data;
       });
@@ -140,7 +149,6 @@ export class GeneFiltersPanelComponent
     // Aging mechanisms
     this.agingMechanismsModel = this.getEntities('mechanisms');
     this.agingMechanismsModel
-      .pipe(takeUntil(this.subscription$))
       .subscribe((data: any[]) => {
         this.agingMechanisms = data;
       });
@@ -148,7 +156,6 @@ export class GeneFiltersPanelComponent
     // Protein classes
     this.proteinClassesModel = this.getEntities('classes');
     this.proteinClassesModel
-      .pipe(takeUntil(this.subscription$))
       .subscribe((data: any[]) => {
         this.proteinClasses = data;
       });
@@ -160,7 +167,6 @@ export class GeneFiltersPanelComponent
         map((data: any) =>
           data.sort((a, b) => a.order - b.order)
         ),
-        takeUntil(this.subscription$)
       )
       .subscribe((data: any[]) => {
         this.phylum = data;
@@ -178,44 +184,26 @@ export class GeneFiltersPanelComponent
    * Retrieve filters state to a component
    */
   private getState(): void {
-    this.getStateForFields([
-      {
-        field: this.predefinedDiseases,
-        type: 'predefinedDiseases',
-      },
-      {
-        field: this.predefinedDiseaseCategories,
-        type: 'predefinedDiseaseCategories',
-      },
-      {
-        field: this.predefinedSelectionCriteria,
-        type: 'predefinedSelectionCriteria',
-      },
-      {
-        field: this.predefinedAgingMechanisms,
-        type: 'predefinedAgingMechanisms',
-      },
-      {
-        field: this.predefinedProteinClasses,
-        type: 'predefinedProteinClasses',
-      },
-      {
-        field: this.predefinedOrigin,
-        type: 'predefinedOrigin',
-      },
-      {
-        field: this.predefinedFamilyOrigin,
-        type: 'predefinedFamilyOrigin',
-      },
-      {
-        field: this.predefinedConservativeIn,
-        type: 'predefinedConservativeIn',
-      },
-      {
-        field: this.predefinedExperimentsStats,
-        type: 'predefinedExperimentsStats',
-      },
-    ]);
+    console.log('GeneFiltersPanelComponent.getState()')
+    this.filterService
+      .getFilterState()
+      .subscribe((data: any) => {
+        if (data) {
+          this.predefinedDiseases = data.byDiseases;
+          this.predefinedDiseaseCategories = data.byDiseaseCategories;
+          this.predefinedSelectionCriteria = data.bySelectionCriteria;
+          this.predefinedAgingMechanisms = data.byAgingMechanism;
+          this.predefinedProteinClasses = data.byProteinClass;
+          this.predefinedOrigin = data.byOrigin;
+          this.predefinedFamilyOrigin = data.byFamilyOrigin;
+          this.predefinedConservativeIn = data.byConservativeIn;
+          this.listSettings.ifShowExperimentsStats = !!data.researches;
+        }
+        console.log('filters', this.filterService.filters);
+        console.log('predefinedDiseases', this.predefinedDiseases);
+        this.cdRef.markForCheck();
+        this.cdRef.detectChanges();
+      });
   }
 
   /**
@@ -223,7 +211,8 @@ export class GeneFiltersPanelComponent
    */
   private getEntities(key: string): Observable<any[]> {
     const r = this.getEntitiesList(key);
-    this.filterReady.emit(key);
+    this.filterApplied.emit(key);
+    // TODO: use to display skeleton loader
     return r;
   }
 
@@ -232,6 +221,7 @@ export class GeneFiltersPanelComponent
     $event: MatSelectChange | MatCheckboxChange): void {
     this.apply(filterType, $event);
     this.getState();
+    this.filterLoaded.emit();
   }
 
   public toggleSwitchAndFilter(filterType: ApiGeneSearchParameters, $event): void {
@@ -244,14 +234,12 @@ export class GeneFiltersPanelComponent
   }
 
   /**
-   * Exclusions
+   * Search
    */
   public filterDiseases(event: KeyboardEvent): void {
     const searchText = (event.target as HTMLInputElement).value.toLowerCase();
-    this.diseases = new Map(
-      [...this.cachedDisease].filter(([key, value]) =>
-        value.name.toLowerCase().includes(searchText)
-      )
+    this.diseases = this.cachedDiseases.filter(
+      (d) => d.name.toLowerCase().includes(searchText)
     );
     event.stopPropagation();
   }
@@ -319,37 +307,10 @@ export class GeneFiltersPanelComponent
   /**
    * Form reset
    */
-  public resetForm(formControlName: string = null): void {
+  public resetForm(formControlName: formControls = null): void {
     if (formControlName) {
-      switch (formControlName) {
-        case 'diseasesSelect':
-          this.filterService.clearFilters('byDiseases');
-          break;
-        case 'diseaseCategoriesSelect':
-          this.filterService.clearFilters('byDiseaseCategories');
-          break;
-        case 'selectionCriteriaSelect':
-          this.filterService.clearFilters('bySelectionCriteria');
-          break;
-        case 'agingMechanismsSelect':
-          this.filterService.clearFilters('byAgingMechanism');
-          break;
-        case 'proteinClassesSelect':
-          this.filterService.clearFilters('byProteinClass');
-          break;
-        case 'originSelect':
-          this.filterService.clearFilters('byOrigin');
-          break;
-        case 'familyOriginSelect':
-          this.filterService.clearFilters('byFamilyOrigin');
-          break;
-        case 'conservativeInSelect':
-          this.filterService.clearFilters('byConservativeIn');
-          break;
-        case 'experimentsStatsCheckbox':
-          this.filterService.clearFilters('researches');
-          break;
-      }
+      this.filterService.clearFilters(formControlToFilter[formControlName]);
+      this.filtersForm.controls[formControlName].reset();
     } else {
       this.filtersForm.reset();
       this.filterService.clearFilters();

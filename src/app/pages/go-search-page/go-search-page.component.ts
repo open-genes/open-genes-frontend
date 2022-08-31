@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Genes } from '../../core/models';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
 import { WindowService } from '../../core/services/browser/window.service';

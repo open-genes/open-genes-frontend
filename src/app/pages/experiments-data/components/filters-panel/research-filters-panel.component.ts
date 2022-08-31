@@ -70,12 +70,11 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
    * Retrieve filters state to a component
    */
   private getState(): void {
-    this.getStateForFields([
-      {
-        field: this.predefinedModelOrganisms,
-        type: 'predefinedModelOrganisms',
-      },
-    ]);
+    this.filterService
+      .getFilterState()
+      .subscribe((data: any) => {
+        this.predefinedModelOrganisms = data.bySpecies;
+      });
   }
 
   /**

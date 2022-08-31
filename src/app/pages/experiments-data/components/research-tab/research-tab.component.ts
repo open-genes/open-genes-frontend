@@ -62,7 +62,9 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
 
   ngOnInit(): void {
     this.setInitialState();
-    this.activatedRoute?.queryParams.subscribe((params) => {
+    this.activatedRoute?.queryParams
+      .pipe(takeUntil(this.subscription$))
+      .subscribe((params) => {
       if (Object.keys(params).length) {
         for (const key in params) {
           if (params[key] !== this.filterService.filters[key].toString()) {

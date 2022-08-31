@@ -42,7 +42,9 @@
 
               <app-sidebar-item *ngIf="!isMobile">
                 <div content class="filters-wrapper">
-                  <app-gene-filters-panel></app-gene-filters-panel>
+                  <app-gene-filters-panel
+                    [lastChangedFilter]="lastChangedFilter"
+                  ></app-gene-filters-panel>
                 </div>
               </app-sidebar-item>
             </app-sidebar>
@@ -69,13 +71,13 @@
               (loading)="setLoader($event)"
               (errorStatus)="errorStatus = $event"
               (itemsNumber)="itemsQuantity = $event"
+              (filterChanged)="updateOnFilterChange($event)"
               [genesList]="confirmedQuery"
               [isMobile]="isMobile"
               [setSearchMode]="searchMode"
               [showFiltersPanel]="true"
               [cancelSearch]="$cancelSearch.asObservable()"
-            >
-            </app-genes-list>
+            ></app-genes-list>
           </div>
         </ng-container>
       </div>

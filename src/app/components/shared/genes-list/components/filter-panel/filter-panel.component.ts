@@ -37,15 +37,15 @@ export class FilterPanelComponent implements OnChanges {
   }
 
   /**
-   * Send clear filter item
+   * Emit event when resetting a filter
    */
   public clearFilters(filterName?: string) {
     this.clearFilterItem.emit(filterName);
-    this.cdRef.markForCheck();
+    this.cdRef.detectChanges();
   }
 
   /**
-   * Send sort item
+   * Emit event when sorting
    */
   public sortBy(event: Sort) {
     this.sortItem.emit(event);
