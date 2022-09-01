@@ -134,6 +134,9 @@
       <div class="col-xs-12 col-md-2 col-lg-2 footer__column footer__column--language">
         <ul class="footer__links">
           <li>
+            {{ "build" | translate }} {{ buildNumber }}
+          </li>
+          <li>
             <a routerLink="/help/articles/cookies-policy"
                target="_blank"
             >{{ "cookie_banner_link" | translate }}</a>

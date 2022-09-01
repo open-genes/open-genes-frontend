@@ -23,10 +23,11 @@
 
 footer.wrapper {
   background-color: $color-black;
-  color: $color-gray-semi;
 }
 
 .footer {
+  color: $color-gray-semi;
+
   &__row {
     display: flex;
     align-content: flex-start;
@@ -64,6 +65,7 @@ footer.wrapper {
       display: list-item;
       width: 100%;
       font-size: 1em;
+      color: $color-gray-semi;
     }
   }
 
@@ -96,5 +98,6 @@ footer.wrapper {
 
   &__language {
     margin: -10px;
+    color: $color-black;
   }
 }

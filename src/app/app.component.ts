@@ -14,6 +14,10 @@ import { SettingsService } from './core/services/settings.service';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
+  public app = {
+    build: environment.build,
+    version: environment.version,
+  };
   public region: string;
   public isFooterVisible = true;
   public showCookieBanner = false;
@@ -56,7 +60,7 @@ export class AppComponent implements OnInit {
   }
 
   private outputVersion(): void {
-    console.log(`version: ${environment.version} \nbuild: ${environment.build}`);
+    console.log(`version: ${this.app.version} \nbuild: ${this.app.build}`);
     // TODO: add output for logger
   }
 
