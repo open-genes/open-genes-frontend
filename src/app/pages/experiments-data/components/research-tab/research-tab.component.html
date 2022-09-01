@@ -39,6 +39,15 @@
       ></app-intervention-affects-aging-process>
     </section>
 
+    <section *ngSwitchCase="'associations-with-lifespan'">
+      <app-gene-associated-with-longevity-effects
+        [geneColumnOn]="true"
+        [numberColumn]="true"
+        [items]="studies"
+        [slice]="slice | async"
+      ></app-gene-associated-with-longevity-effects>
+    </section>
+
     <section *ngSwitchCase="'gene-regulation'">
       <app-protein-regulates-other-genes
         [geneColumnOn]="true"
@@ -55,15 +64,6 @@
         [items]="studies"
         [slice]="slice | async"
       ></app-gene-associated-with-progeria-syndromes>
-    </section>
-
-    <section *ngSwitchCase="'associations-with-lifespan'">
-      <app-gene-associated-with-longevity-effects
-        [geneColumnOn]="true"
-        [numberColumn]="true"
-        [items]="studies"
-        [slice]="slice | async"
-      ></app-gene-associated-with-longevity-effects>
     </section>
 
     <section *ngSwitchCase="'other-evidence'">

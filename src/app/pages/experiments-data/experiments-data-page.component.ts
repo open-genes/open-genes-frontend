@@ -33,9 +33,9 @@ export class ExperimentsDataPageComponent extends WindowWidth implements OnInit 
       param: 'gene-activity-change-impact',
     },
     {
-      title: 'gene_page_research_data_protein_regulates_genes',
-      cssClass: 'tab--protein-to-gene',
-      param: 'gene-regulation',
+      title: 'gene_page_research_data_longevity_effects',
+      cssClass: 'tab--gene-to-longevity-effect',
+      param: 'associations-with-lifespan',
     },
     {
       title: 'gene_page_research_data_progeria',
@@ -43,10 +43,11 @@ export class ExperimentsDataPageComponent extends WindowWidth implements OnInit 
       param: 'association-with-accelerated-aging',
     },
     {
-      title: 'gene_page_research_data_longevity_effects',
-      cssClass: 'tab--gene-to-longevity-effect',
-      param: 'associations-with-lifespan',
+      title: 'gene_page_research_data_protein_regulates_genes',
+      cssClass: 'tab--protein-to-gene',
+      param: 'gene-regulation',
     },
+
     // {
     //   title: 'gene_page_research_data_additional_evidence',
     //   cssClass: 'tab--gene-to-additional-evidence',
