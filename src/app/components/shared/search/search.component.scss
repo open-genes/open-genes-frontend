@@ -187,9 +187,10 @@ $input-border-radius: 5px;
   }
 
   &__autocomplete-item {
+    position: relative;
     display: block;
     width: 100%;
-    padding: 10px;
+    padding: $padding-regular 25px $padding-regular $padding-regular;
     font-size: 14px;
     white-space: nowrap;
     overflow: hidden;
@@ -203,6 +204,15 @@ $input-border-radius: 5px;
 
     .item__name {
       color: $color-gray;
+    }
+
+    .item__go-icon {
+      position: absolute;
+      top: 50%;
+      right: $padding-regular;
+      z-index: 0;
+      transform: translateY(-50%);
+      color: $color-general;
     }
 
     .item__name,

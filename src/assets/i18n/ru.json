@@ -214,6 +214,7 @@
   "go_results_start_description": "Введите запрос и нажмите Enter или кнопку 🔍",
   "go_results_start_title": "Поиск генов по текстам аннотаций Gene Ontology",
   "go_terms": "GO Terms",
+  "go_to_gene_page": "Перейти на страницу гена",
   "header_menu_about": "О базе",
   "header_menu_api": "API",
   "header_menu_contributors": "Команда и благодарности",
@@ -504,5 +505,5 @@
   "header_studies": "Исследования",
   "header_datasets": "Датасеты",
   "header_download": "Скачать",
-  "header_help": "Помощь"
+  "header_help": "Помощь",
 }
