@@ -78,12 +78,6 @@
                 </a>
 
                 <a mat-list-item
-                   *ngIf="gene.expression.length !== 0"
-                   [routerLink]="['/gene', symbol]" fragment="expression">
-                  {{ 'gene_page_title_expression' | translate }}
-                </a>
-
-                <a mat-list-item
                    *ngIf="isAnyGoCategory"
                    [routerLink]="['/gene', symbol]" fragment="terms">
                   Gene Ontology
@@ -339,15 +333,6 @@
                       [component]="geneOntologyComponentMap"
                       [activity]="geneOntologyActivityMap"
                     ></app-gene-ontology>
-                  </section>
-
-                  <section class="wrapper gene-page__expression"
-                           *ngIf="gene.expression.length !== 0"
-                           id="expression">
-                    <app-expression
-                      [gene]="gene"
-                      [max]="expressionMaxValue"
-                    ></app-expression>
                   </section>
 
                   <section class="wrapper" id="human-protein-atlas"
