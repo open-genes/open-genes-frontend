@@ -245,10 +245,6 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
     const queryParams = {};
     queryParams[filterType] = id;
 
-    if (this.retrievedSettings.searchMode === this.searchModeEnum.searchByGoTerms) {
-      this.settingsService.setSettings('searchMode', this.searchModeEnum.searchByGenes);
-    }
-
     void this.router.navigate(['genes'], {
       queryParams: queryParams,
     });

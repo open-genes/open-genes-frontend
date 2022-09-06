@@ -8,6 +8,7 @@ import { TranslateService } from "@ngx-translate/core";
 export class HumanProteinAtlasComponent {
   @Input() public gene: any;
   @Input() public hpa: any; // shorthand property
+  @Input() public applyFilterFn: (...args: any[]) => void;
 
   constructor(public translate: TranslateService) {}
 

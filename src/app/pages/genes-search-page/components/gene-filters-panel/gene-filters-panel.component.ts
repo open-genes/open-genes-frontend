@@ -82,7 +82,6 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
   @Input() set lastChangedFilter(filter: appliedFilter) {
     // Change detection workaround
     if (filter.name) {
-      console.log('@Input(): ', filter);
       this.getState();
     }
   }

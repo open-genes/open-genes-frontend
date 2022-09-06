@@ -256,7 +256,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
    * Filter reset
    */
   public clearFilters(filterName?: ApiGeneSearchParameters): void {
-    console.log(`clearFilters(${filterName})`);
     this.filterService.clearFilters(filterName);
     this.filterChanged.emit({ name: filterName, value: null });
     this.cdRef.markForCheck();
