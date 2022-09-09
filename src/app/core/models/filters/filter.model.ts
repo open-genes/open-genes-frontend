@@ -66,7 +66,7 @@ export interface ApiResearchFilter {
   bySelectionCriteria: number[];
   byAgingMechanism: number[];
   byProteinClass: number[];
-  bySpecies: number[];
+  bySpecies: number;
   byOrigin: string[];
   byFamilyOrigin: string[];
   byConservativeIn: string[];

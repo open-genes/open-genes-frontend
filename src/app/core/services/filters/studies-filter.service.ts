@@ -9,8 +9,8 @@ import { SettingsService } from '../settings.service';
 import { Sort } from '@angular/material/sort';
 import { ApiResponse } from '../../models/api-response.model';
 import { GenesListSettings } from '../../../components/shared/genes-list/genes-list-settings.model';
-import { ApiService } from '../api/open-genes-api.service';
 import { ResearchArguments, ResearchTypes } from '../../models/open-genes-api/researches.model';
+import { ApiService } from '../api/open-genes-api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +33,7 @@ export class StudiesFilterService {
     bySelectionCriteria: [],
     byAgingMechanism: [],
     byProteinClass: [],
-    bySpecies: [],
+    bySpecies: null,
     byOrigin: [],
     byFamilyOrigin: [],
     byConservativeIn: [],
@@ -51,11 +51,13 @@ export class StudiesFilterService {
   constructor(
     private http: HttpClient,
     private translate: TranslateService,
-    private apiService: ApiService,
     private settingsService: SettingsService,
-    private router: Router
+    private router: Router,
+    private apiService: ApiService,
   ) {
-    this.updateFields(this.settingsService.genesListSettings);
+    this.updateFields(
+      this.settingsService.genesListSettings
+    );
     this.filterChanges$.next(this.filters);
   }
 
@@ -116,7 +118,6 @@ export class StudiesFilterService {
   }
 
   // Clear
-  // Clear
   public clearFilters(filterName?: keyof ApiResearchFilter): void {
     switch (filterName) {
       case 'byDiseases':
@@ -133,6 +134,9 @@ export class StudiesFilterService {
         break;
       case 'byProteinClass':
         this.filters.byProteinClass = [];
+        break;
+      case 'bySpecies':
+        this.filters.bySpecies = null;
         break;
       case 'byFamilyOrigin':
         this.filters.byFamilyOrigin = [];
@@ -158,12 +162,12 @@ export class StudiesFilterService {
         this.filters.bySelectionCriteria = [];
         this.filters.byAgingMechanism = [];
         this.filters.byProteinClass = [];
+        this.filters.bySpecies = null;
         this.filters.byFamilyOrigin = [];
         this.filters.byConservativeIn = [];
         this.filters.byGeneId = null;
         this.filters.byGeneSymbol = [];
         this.filters.bySuggestions = '';
-
     }
 
     this.pagination.page = 1;
