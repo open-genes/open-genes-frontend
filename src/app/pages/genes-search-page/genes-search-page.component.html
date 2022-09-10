@@ -43,6 +43,7 @@
               <app-sidebar-item *ngIf="!isMobile">
                 <div content class="filters-wrapper">
                   <app-gene-filters-panel
+                    [isLoading]="genesListIsLoading"
                     [lastChangedFilter]="lastChangedFilter"
                   ></app-gene-filters-panel>
                 </div>

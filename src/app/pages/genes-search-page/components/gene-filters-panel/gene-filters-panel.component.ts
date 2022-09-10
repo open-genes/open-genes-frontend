@@ -77,8 +77,9 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
   public predefinedFamilyOrigin: any[] = [];
   public predefinedConservativeIn: any[] = [];
   // Experiments
-  public predefinedExperimentsStats: boolean;
+  public ifShowExperimentsStats = false;
 
+  @Input() isLoading = false;
   @Input() set lastChangedFilter(filter: appliedFilter) {
     // Change detection workaround
     if (filter.name) {
@@ -124,7 +125,6 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
     this.diseasesModel
       .pipe(takeUntil(this.subscription$))
       .subscribe((data: any[]) => {
-        console.log('diseases', data);
         this.diseases = data;
         this.cachedDiseases = data;
       });
@@ -198,7 +198,9 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
           this.predefinedOrigin = data.byOrigin;
           this.predefinedFamilyOrigin = data.byFamilyOrigin;
           this.predefinedConservativeIn = data.byConservativeIn;
-          this.listSettings.ifShowExperimentsStats = !!data.researches;
+
+          this.ifShowExperimentsStats = !!data.researches ?? false;
+          this.filtersForm.controls.experimentsStatsCheckbox.patchValue(!!data.researches);
         }
         this.cdRef.markForCheck();
         this.cdRef.detectChanges();
@@ -225,11 +227,11 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
 
   public toggleSwitchAndFilter(filterType: ApiGeneSearchParameters, $event): void {
     this.listSettings.ifShowExperimentsStats = $event.checked;
+    console.log("toggle switch and filter", Number(this.listSettings.ifShowExperimentsStats))
     this.filterService.applyFilter(
       filterType,
       Number(this.listSettings.ifShowExperimentsStats)
     );
-    this.getState();
   }
 
   /**
