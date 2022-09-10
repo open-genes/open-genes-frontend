@@ -43,8 +43,14 @@
 <section
   *ngIf="resultingList?.length"
   class="view-content"
-  [ngClass]="isTableView && !isMobile ? 'view-content--as-table' : 'view-content--as-cards'"
->
+  [ngClass]="{
+  'view-content--as-table': isTableView && !isMobile,
+  'view-content--as-cards': !(isTableView && !isMobile),
+  'view-content--widescreen': viewport === 'widescreen',
+  'view-content--desktop': viewport === 'desktop',
+  'view-content--tablet': viewport === 'tablet',
+  'view-content--smartphone': viewport === 'smartphone'
+  }">
   <!-- Table view -->
   <ng-container *ngIf="isTableView && !isMobile">
     <table>
@@ -61,8 +67,7 @@
           [isAdded]="isFaved(rowData.id)"
           (unFav)="unFavItem($event)"
           (fav)="favItem($event)"
-        >
-        </app-gene-annotations-table-row>
+        ></app-gene-annotations-table-row>
       </ng-container>
 
       <ng-template #table>
@@ -73,8 +78,7 @@
           (unFav)="unFavItem($event)"
           (fav)="favItem($event)"
           (filterChanged)="filterChanged.emit($event)"
-        >
-        </app-gene-table-row>
+        ></app-gene-table-row>
       </ng-template>
     </table>
   </ng-container>
@@ -89,8 +93,7 @@
         [isAdded]="isFaved(rowData.id)"
         (unFav)="unFavItem($event)"
         (fav)="favItem($event)"
-      >
-      </app-gene-annotations-card>
+      ></app-gene-annotations-card>
     </ng-container>
 
     <ng-template #card>
@@ -102,8 +105,7 @@
         (unFav)="unFavItem($event)"
         (fav)="favItem($event)"
         (filterChanged)="filterChanged.emit($event)"
-      >
-      </app-gene-card>
+      ></app-gene-card>
     </ng-template>
   </ng-container>
 </section>

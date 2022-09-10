@@ -12,20 +12,44 @@
       margin-bottom: 5px;
     }
   }
+
   :host {
     position: relative;
     flex-flow: column nowrap;
     justify-content: space-between;
     @include panel(flex, #{12px 0});
     margin-top: $card-spacing;
+  }
 
-    @include resolution_phablet-and-up {
-      flex: 0 0 calc(50% - #{$card-spacing / 2});
-    }
+  :host-context(.view-content--widescreen) {
+    flex: 0 0 calc(#{100% / 3} - #{$card-spacing / 1.5});
+    margin-right: #{$card-spacing};
 
-    @include resolution_phone {
-      flex: 0 0 100%;
+    &:nth-child(3n) {
+      margin-right: 0;
     }
+  }
+
+  :host-context(.view-content--desktop) {
+    flex: 0 0 calc(50% - #{$card-spacing / 2});
+    margin-right: #{$card-spacing};
+
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+
+  :host-context(.view-content--tablet) {
+    flex: 0 0 calc(50% - #{$card-spacing / 2});
+    margin-right: #{$card-spacing};
+
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+
+  :host-context(.view-content--smartphone) {
+    flex: 0 0 100%;
   }
 
   .card {

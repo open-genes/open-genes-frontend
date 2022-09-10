@@ -4,7 +4,7 @@
   </div>
 </td>
 
-<td *ngIf="listSettings.ifShowAge"
+<td *ngIf="listSettings?.ifShowAge"
     class="table-header__cell table-header__cell--age">
   <div class="overflow">{{ 'phylogeny' | translate }}, {{ 'origin' | translate | lowercase }}. </div>
   <div class="overflow">
@@ -12,42 +12,42 @@
   </div>
 </td>
 
-<td *ngIf="listSettings.ifShowDiseases"
+<td *ngIf="listSettings?.ifShowDiseases"
     class="table-header__cell table-header__cell--diseases">
   <div class="overflow">
     {{ "gene_list_diseases" | translate }}
   </div>
 </td>
 
-<td *ngIf="listSettings.ifShowDiseaseCategories"
+<td *ngIf="listSettings?.ifShowDiseaseCategories"
     class="table-header__cell table-header__cell--diseases">
   <div class="overflow">
     {{ "gene_list_disease_categories" | translate }}
   </div>
 </td>
 
-<td *ngIf="listSettings.ifShowAgingMechanisms"
+<td *ngIf="listSettings?.ifShowAgingMechanisms"
     class="table-header__cell table-header__cell--mechanisms">
   <div class="overflow">
     {{ "gene_list_aging_mechanisms" | translate }}
   </div>
 </td>
 
-<td *ngIf="listSettings.ifShowProteinClasses"
+<td *ngIf="listSettings?.ifShowProteinClasses"
     class="table-header__cell table-header__cell--classes">
   <div class="overflow">
     {{ "gene_list_protein_classes" | translate }}
   </div>
 </td>
 
-<td *ngIf="listSettings.ifShowCriteria"
+<td *ngIf="listSettings?.ifShowCriteria"
     class="table-header__cell table-header__cell--criteria">
   <div class="overflow">
     {{ "main_page_table_criteria" | translate }}
   </div>
 </td>
 
-<td *ngIf="listSettings.ifShowExperimentsStats"
+<td *ngIf="listSettings?.ifShowExperimentsStats"
     class="table-header__cell table-header__cell--methylation">
   <div class="overflow">
     {{ "gene_list_research_data_number" | translate }}
