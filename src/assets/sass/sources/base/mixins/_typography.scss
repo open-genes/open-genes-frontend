@@ -5,7 +5,14 @@
   white-space: nowrap;
 }
 
-// Обрезка многострочного текста
+// Line break
+@mixin break-string($length: 80%) {
+  display: block;
+  width: $length;
+  word-break: break-all;
+}
+
+// Multiline text truncation
 @mixin overflow-lines($font-size, $font-line-height, $lines, $additional, $whole-height:"") {
   display: block;
   display: -webkit-box;

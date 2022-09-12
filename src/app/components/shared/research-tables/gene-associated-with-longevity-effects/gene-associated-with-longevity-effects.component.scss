@@ -4,3 +4,7 @@
 @include modal-window('comment');
 @import "../styles/table";
 @import "../styles/publication-info-modal";
+
+.break-string {
+  @include break-string(40ch);
+}

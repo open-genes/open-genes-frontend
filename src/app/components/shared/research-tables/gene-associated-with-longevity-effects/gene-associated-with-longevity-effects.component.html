@@ -96,23 +96,30 @@
               {{ "research_data_polymorphism" | translate }}:
             </dt>
             <dd>
-              {{ item.polymorphismId | checkBlankValue }}
+              <div class="break-string">
+                {{ item.polymorphismId | checkBlankValue }}
+              </div>
             </dd>
             <dt>
               {{ "research_data_amino_acid_substitution" | translate }}:
             </dt>
             <dd>
-              {{ item.nucleotideChange | checkBlankValue }}
+              <div class="break-string">
+                {{ item.nucleotideChange | checkBlankValue }}
+              </div>
             </dd>
             <dt>
               {{ "research_data_amino_acid_substitution" | translate }}:
             </dt>
             <dd>
-              {{ item.aminoAcidChange | checkBlankValue }}
+              <div class="break-string">
+                {{ item.aminoAcidChange | checkBlankValue }}
+              </div>
             </dd>
           </dl>
 
-          <p *ngIf="item?.polymorphismOther">
+          <p *ngIf="item?.polymorphismOther"
+             class="break-string">
             {{ item.polymorphismOther }}
           </p>
         </td>
