@@ -227,7 +227,6 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
 
   public toggleSwitchAndFilter(filterType: ApiGeneSearchParameters, $event): void {
     this.listSettings.ifShowExperimentsStats = $event.checked;
-    console.log("toggle switch and filter", Number(this.listSettings.ifShowExperimentsStats))
     this.filterService.applyFilter(
       filterType,
       Number(this.listSettings.ifShowExperimentsStats)

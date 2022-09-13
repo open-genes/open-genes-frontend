@@ -13,8 +13,7 @@ import { WindowWidth } from '../../core/utils/window-width';
   styleUrls: ['./go-search-page.component.scss'],
 })
 export class GoSearchPageComponent extends WindowWidth implements OnInit, OnDestroy {
-  public searchedGenes: Pick<Genes, 'id' | 'name' | 'symbol' | 'aliases' | 'ensembl'>[] | Genes[] = [];
-  public confirmedGenesList: Genes[];
+  public results: any[];
   public confirmedQuery: string;
   public searchedQuery: string;
   public itemsQuantity: number;
@@ -30,6 +29,7 @@ export class GoSearchPageComponent extends WindowWidth implements OnInit, OnDest
   public showProgressBar = false;
   public queryLength: number;
   public placeholder: string;
+  public query: string;
 
   constructor(
     public windowService: WindowService,
@@ -47,8 +47,6 @@ export class GoSearchPageComponent extends WindowWidth implements OnInit, OnDest
     this.detectWindowWidth(() => {
       this.cdRef.markForCheck();
     });
-
-    this.loadWizard();
   }
 
   /**
@@ -83,33 +81,40 @@ export class GoSearchPageComponent extends WindowWidth implements OnInit, OnDest
 
   public updateGenesList(query): void {
     if (query) {
-      this.confirmedGenesList = this.searchedGenes as Genes[];
+      this.confirmedQuery = this.searchedQuery;
     } else {
       this.confirmedQuery = null;
-      this.confirmedGenesList = null;
+      this.results = null;
     }
   }
 
   public setSearchQuery(query: string): void {
-    this.searchGenesByGoTerm(query);
+    if (query && query.length > 1) {
+      this.query = query.toLocaleLowerCase().trim();
+    }
   }
 
-  public setSearchMode(searchMode: SearchMode): void {
-    this.searchMode = searchMode;
-    this.confirmedQuery = null;
-    this.confirmedGenesList = null;
-  }
-  private searchGenesByGoTerm(query: string): void {
+  public searchGenesByGoTerm(query: string): void {
+    this.cdRef.detach();
     if (query && query.length > 1) {
       this.showProgressBar = true;
       this.apiService
         .getGoTermMatchByString(query)
         .pipe(takeUntil(this.subscription$))
         .subscribe(
-          (genes) => {
-            this.searchedGenes = genes; // If nothing found, will return empty array
-            this.mapTerms();
-            this.showProgressBar = false;
+          (res) => {
+            const genes = [...res];
+            genes.forEach((gene: Genes) => {
+              if (gene.terms) {
+                Object.keys(gene.terms).forEach((key) => [
+                  gene.terms[key].map((term) => {
+                    return (gene.terms[key] = this.toMap(term));
+                  }),
+                ]);
+              }
+            });
+            this.results = genes;
+              this.showProgressBar = false;
           },
           (error) => {
             console.warn(error);
@@ -117,37 +122,11 @@ export class GoSearchPageComponent extends WindowWidth implements OnInit, OnDest
           }
         );
     } else {
-      this.searchedGenes = [];
+      this.results = [];
     }
+    this.cdRef.reattach();
   }
 
-  /**
-   * Map data
-   */
-
-  private mapTerms(): void {
-    this.searchedGenes.forEach((gene: Genes) => {
-      if (gene.terms) {
-        Object.keys(gene.terms).forEach((key) => [
-          gene.terms[key].map((term) => {
-            return (gene.terms[key] = this.toMap(term));
-          }),
-        ]);
-      }
-    });
-  }
-
-  /**
-   * Wizard
-   */
-
-  public openWizard() {
-    this.wizardService.open();
-  }
-
-  private loadWizard() {
-    this.wizardService.openOnce();
-  }
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();

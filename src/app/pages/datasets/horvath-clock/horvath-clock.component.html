@@ -27,8 +27,8 @@
                 <app-search [searchHintsList]="searchedGenes"
                             placeholder="search_field_start_typing"
                             setSearchMode="searchByGenes"
-                            (isAnyQueryToSubmit)="updateGenesList($event)"
-                            (searchQuery)="setSearchQuery($event)">
+                            (updateOnKeyUp)="updateGenesList($event)"
+                            (queryChange)="setSearchQuery($event)">
                 </app-search>
 
                 <app-genes-methylation-list

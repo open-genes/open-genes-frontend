@@ -2,9 +2,10 @@
      class="research">
   <app-search [searchHintsList]="genesList"
               [isDisabled]="error.isError"
+              [predefinedValue]="query"
               placeholder="search_field_by_comma"
-              (isAnyQueryToSubmit)="updateStudiesList($event)"
-              (searchQuery)="setSearchQuery($event)"
+              (queryChange)="setSearchQuery($event)"
+              (search)="updateStudiesList($event)"
               (cancel)="cancelSearch()"
               [fixOnTopOnMobile]="false"
               [showProgressBar]="showProgressBar"

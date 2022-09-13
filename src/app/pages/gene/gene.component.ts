@@ -229,6 +229,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
     this.routeSubscribe.unsubscribe();
+    this.snackBar.dismiss();
     this.bottomSheet.dismiss();
   }
 

@@ -21,8 +21,8 @@
                 <app-search [searchHintsList]="searchedGenesList"
                             placeholder="search_field_start_typing"
                             setSearchMode="searchByGenes"
-                            (isAnyQueryToSubmit)="updateGenesList($event)"
-                            (searchQuery)="setSearchQuery($event)"
+                            (updateOnKeyUp)="updateGenesList($event)"
+                            (queryChange)="setSearchQuery($event)"
                             class="__mb-30">
                 </app-search>
 

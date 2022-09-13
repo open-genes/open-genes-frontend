@@ -37,7 +37,7 @@
         mat-icon-button
         class="search-form__submit search-form__submit--active"
         type="submit"
-        (click)="onSearch()">
+        (click)="submitSearch()">
         <span class="fa fal fa-search"></span>
       </button>
 
@@ -46,7 +46,7 @@
         type="text"
         placeholder="{{ placeholder | translate }}"
         class="field search-form__field"
-        (keyup.enter)="onSearch()"
+        (keyup.enter)="updateSearch()"
       >
       <mat-progress-bar
         *ngIf="showProgressBar"

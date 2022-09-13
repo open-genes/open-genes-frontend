@@ -27,6 +27,12 @@ import { SearchMode } from '../../../core/models/settings.model';
 })
 export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Inject(Document) public document: Document;
+
+  @Input() set predefinedValue(value: string) {
+    if (value) {
+      this.searchForm.get('searchField').setValue(value);
+    }
+  }
   @Input() showProgressBar: boolean;
   @Input() set isDisabled(value: boolean) {
     this.formDisabled = value;
@@ -36,13 +42,11 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
       this.searchForm.controls['searchField'].enable();
     }
   }
-
   @Input() set searchHintsList(genes: any) {
     if (genes) {
       this.searchedData = genes;
     }
   }
-
   @Input() set setSearchMode(value: SearchMode) {
     if (value) {
       this.searchMode = value;
@@ -50,11 +54,11 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
       this.searchForm.get('searchField').setValue('');
     }
   }
-
   @Input() fixOnTopOnMobile = true; // TODO: move it out of component and activate in parent component on event
   @Input() placeholder: string;
-  @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
-  @Output() isAnyQueryToSubmit: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() queryChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() updateOnKeyUp: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() search: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public searchedData: Partial<Genes[]>;
@@ -111,13 +115,9 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
         takeUntil(this.subscription$)
       )
       .subscribe((query: string) => {
-        this.searchQuery.emit(query);
+        this.queryChange.emit(query);
         this.cdRef.markForCheck();
       });
-  }
-
-  public onSearch(): void {
-    this.isAnyQueryToSubmit.emit(!!this.highlightText);
   }
 
   public closeSearchHintsDropdown(event?): void {
@@ -128,11 +128,24 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     }
   }
 
+  public updateSearch(): void {
+    this.updateOnKeyUp.emit(!!this.highlightText);
+  }
+
+  public submitSearch(): void {
+    const query: string = this.searchForm.get('searchField').value;
+    if (query.length === 0) {
+      this.clearSearch();
+      return;
+    }
+    this.search.emit(true);
+  }
+
   public clearSearch(): void {
     this.searchForm.get('searchField').setValue('');
     const query: string = this.searchForm.get('searchField').value;
-    this.searchQuery.emit(query);
-    this.isAnyQueryToSubmit.emit(false);
+    this.queryChange.emit(query);
+    this.updateOnKeyUp.emit(false);
     this.cancel.emit(true);
     this.closeSearchHintsDropdown();
   }
