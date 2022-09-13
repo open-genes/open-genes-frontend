@@ -216,6 +216,7 @@
   "go_results_start_description": "Type in your query and press Enter or tap 🔍",
   "go_results_start_title": "Search for genes by Gene Ontology annotations description",
   "go_terms": "GO Terms",
+  "go_to_gene_page": "Go to gene page",
   "header_menu_about": "About",
   "header_menu_api": "API",
   "header_menu_contributors": "Team and contributors",
