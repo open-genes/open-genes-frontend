@@ -5,6 +5,7 @@
   "build": "Сборка",
   "footer_about": "Open Genes — это база данных генов человека,\n ассоциированных со старением и продолжительностью жизни, разрабатываемая",
   "footer_about_link": "https://openlongevity.org/",
+  "footer_cookie_link": "Политика Cookies",
   "about_page_button": "Начать поиск",
   "about_page_contribute_title": "Внесите свой вклад",
   "about_page_curated_section_subtitle": "Биологи вручную собирают информацию об эволюции гена, его функциях, а также методах\n определения ассоциации гена со старением и продолжительностью жизни.",
@@ -51,7 +52,7 @@
   "clarification": "Пояснение",
   "contributors_page_title": "Команда и благодарности",
   "cookie_banner_text": "Мы используем файлы cookie и аналогичные технологии. Продолжая использовать этот веб-сайт, вы соглашаетесь на использование файлов cookie и аналогичных технологий в соответствии с нашей ",
-  "cookie_banner_link": "Политикой Cookie",
+  "cookie_banner_link": "Политикой Cookies",
   "cookie_banner_button": "Принять",
   "criteriaQuantity": "Критерии отбора",
   "cr_result": "Результат",
@@ -508,5 +509,5 @@
   "header_studies": "Исследования",
   "header_datasets": "Датасеты",
   "header_download": "Скачать",
-  "header_help": "Помощь",
+  "header_help": "Помощь"
 }

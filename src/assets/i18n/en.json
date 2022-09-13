@@ -5,6 +5,7 @@
   "build": "Build",
   "footer_about": "Open Genes  is a biological database of human genes associated with aging and lifespan, maintained by",
   "footer_about_link": "http://eng.openlongevity.org/",
+  "footer_cookie_link": "Cookies Policy",
   "about_page_button": "Start search",
   "about_page_contribute_title": "Contribute to the project",
   "about_page_curated_section_subtitle": "Biologists manually collect information about the gene evolution, its functions, and methods for determining the gene's association with aging and longevity.",
