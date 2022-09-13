@@ -17,8 +17,16 @@
     position: relative;
     flex-flow: column nowrap;
     justify-content: space-between;
-    @include panel(flex, #{12px 0});
     margin-top: $card-spacing;
+    @include panel(flex, #{12px 0});
+
+    @include resolution_phablet-and-up {
+      flex: 0 0 calc(50% - #{$card-spacing / 2});
+    }
+
+    @include resolution_phone {
+      flex: 0 0 100%;
+    }
   }
 
   :host-context(.view-content--widescreen) {

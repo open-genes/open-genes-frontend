@@ -45,7 +45,7 @@
   class="view-content"
   [ngClass]="{
   'view-content--as-table': isTableView && !isMobile,
-  'view-content--as-cards': !(isTableView && !isMobile),
+  'view-content--as-cards': !isTableView || isMobile,
   'view-content--widescreen': viewport === 'widescreen',
   'view-content--desktop': viewport === 'desktop',
   'view-content--tablet': viewport === 'tablet',
