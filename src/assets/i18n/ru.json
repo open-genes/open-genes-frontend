@@ -509,5 +509,6 @@
   "header_studies": "Исследования",
   "header_datasets": "Датасеты",
   "header_download": "Скачать",
-  "header_help": "Помощь"
+  "header_help": "Помощь",
+  "studies_page_study_types": "Виды исследований"
 }

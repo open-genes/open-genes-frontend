@@ -509,5 +509,6 @@
   "header_studies": "Studies",
   "header_datasets": "Datasets",
   "header_download": "Download",
-  "header_help": "Help"
+  "header_help": "Help",
+  "studies_page_study_types": "Study types"
 }
