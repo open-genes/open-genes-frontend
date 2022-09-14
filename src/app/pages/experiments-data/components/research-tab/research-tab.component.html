@@ -1,5 +1,10 @@
 <div [ngSwitch]="studyType"
      class="research">
+  <app-search-counter
+    [quantity]="options.objTotal"
+    [title]="'main_page_total'"
+  ></app-search-counter>
+
   <app-search [predefinedValue]="query"
               [searchHintsList]="genesList"
               [isDisabled]="error.isError"
