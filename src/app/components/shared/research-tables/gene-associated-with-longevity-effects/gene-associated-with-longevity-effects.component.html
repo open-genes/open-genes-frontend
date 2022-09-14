@@ -144,8 +144,12 @@
         </td>
 
         <td>
-          <ng-container *ngIf="item?.significance; else dash">
+          <ng-container *ngIf="item?.significance || item?.pValue; else dash">
             {{ item.significance }}
+
+            <ng-container *ngIf="item?.pValue">
+              <br>{{ item?.pValue }}
+            </ng-container>
           </ng-container>
         </td>
 
