@@ -9,7 +9,7 @@ import {
   Output,
 } from '@angular/core';
 import { ResearchArguments, ResearchTypes } from '../../../../core/models/open-genes-api/researches.model';
-import { map, shareReplay, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { distinctUntilChanged, map, switchMap, takeUntil } from 'rxjs/operators';
 import { ApiResponse, PageOptions } from '../../../../core/models/api-response.model';
 import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
@@ -92,7 +92,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.snackBar = undefined;
   }
 
-  private setInitialState(): void {
+  public setInitialState(): void {
     this.query = null;
     this.cachedData = [];
     this.studies = [];
@@ -171,19 +171,19 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
 
     this.filterService.filterResult
       .pipe(
+        distinctUntilChanged(),
         takeUntil(this.studies$),
         switchMap(() => {
           // Subscribing to any filters update and return getSortedAndFilteredStudies method to subscribe
           return this.filterService.getSortedAndFilteredStudies(this.studyType);
         }),
-        tap((r) => map((r: ApiResponse<ResearchTypes>) => {
+        map((r: ApiResponse<ResearchTypes>) => {
           if (researchType === 'lifespan-change') {
-            r.items = r.items.filter((s: any) => this.resolveAdditionalIntervention(s));
+            r.items = r.items.filter((r: any) => this.resolveAdditionalIntervention(r));
           }
           return r;
-        })),
-        shareReplay()
-      )
+        }
+      ))
       .subscribe(
         (res) => {
 
@@ -213,16 +213,11 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.dataLoaded.emit();
   }
 
-  public showMore(researchType: ResearchArguments): void {
+  public showMore(): void {
     this.currentPage++;
     this.filterService.pagination.page = this.currentPage;
     this.filterService.onLoadMoreGenes(this.options?.pagination?.pagesTotal);
     this.slice.next(this.studies.length + this.itemsPerPage);
     this.cdRef.detectChanges();
-  }
-
-  public cancelSearch() {
-    this.filterService.clearFilters();
-    this.setInitialState();
   }
 }

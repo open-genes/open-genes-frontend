@@ -1,14 +1,15 @@
 <div [ngSwitch]="studyType"
      class="research">
-  <app-search [searchHintsList]="genesList"
+  <app-search [predefinedValue]="query"
+              [searchHintsList]="genesList"
               [isDisabled]="error.isError"
-              [predefinedValue]="query"
               placeholder="search_field_by_comma"
-              (queryChange)="setSearchQuery($event)"
               (search)="updateStudiesList($event)"
-              (cancel)="cancelSearch()"
+              (queryChange)="setSearchQuery($event)"
+              (cancel)="setInitialState()"
               [fixOnTopOnMobile]="false"
               [showProgressBar]="showProgressBar"
+              [showClearButton]="isNotFound"
               class="__mb-30">
   </app-search>
 
@@ -84,7 +85,7 @@
   <ng-container *ngIf="options">
     <div *ngIf="!isNotFound && (studies?.length < options?.objTotal || currentPage < options?.pagination.pagesTotal)"
          class="btn-wrap show-more __mt-20">
-      <button (click)="showMore(studyType)"
+      <button (click)="showMore()"
               class="btn show-more__button">
         {{ "show_more" | translate }} <span class="spinner fas fa-circle-notch fa-spin"></span>
       </button>

@@ -20,9 +20,10 @@
               <div class="col-12">
                 <app-search [searchHintsList]="searchedGenesList"
                             placeholder="search_field_start_typing"
-                            setSearchMode="searchByGenes"
-                            (updateOnKeyUp)="updateGenesList($event)"
+                            searchMode="searchByGenes"
+                            (search)="updateGenesList($event)"
                             (queryChange)="setSearchQuery($event)"
+                            [showClearButton]="isNotFound"
                             class="__mb-30">
                 </app-search>
 

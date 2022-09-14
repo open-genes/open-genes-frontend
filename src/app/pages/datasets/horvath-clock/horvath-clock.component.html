@@ -26,8 +26,8 @@
               <div class="col-12">
                 <app-search [searchHintsList]="searchedGenes"
                             placeholder="search_field_start_typing"
-                            setSearchMode="searchByGenes"
-                            (updateOnKeyUp)="updateGenesList($event)"
+                            searchMode="searchByGenes"
+                            (search)="updateGenesList($event)"
                             (queryChange)="setSearchQuery($event)">
                 </app-search>
 

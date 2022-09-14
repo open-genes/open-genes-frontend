@@ -14,8 +14,6 @@ import { WindowWidth } from '../../core/utils/window-width';
 })
 export class GoSearchPageComponent extends WindowWidth implements OnInit, OnDestroy {
   public results: any[];
-  public confirmedQuery: string;
-  public searchedQuery: string;
   public itemsQuantity: number;
   public errorStatus: string;
   public searchMode: SearchMode = 'searchByGoTerms';
@@ -53,7 +51,7 @@ export class GoSearchPageComponent extends WindowWidth implements OnInit, OnDest
    * View
    */
 
-  public updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'pubmed' | 'latest' | 'filters'): void {
+  public updateViewOnSkeletonChange(event: boolean, name: 'articles' | 'pubmed' | 'latest'): void {
     if (name === 'articles') {
       this.showArticlesSkeleton = event;
     }
@@ -65,10 +63,6 @@ export class GoSearchPageComponent extends WindowWidth implements OnInit, OnDest
     if (name === 'latest') {
       this.showLatestGenesSkeleton = event;
     }
-
-    if (name === 'filters') {
-      this.showFiltersSkeleton = event;
-    }
   }
 
   public setLoader(event: boolean) {
@@ -79,11 +73,11 @@ export class GoSearchPageComponent extends WindowWidth implements OnInit, OnDest
    * Search
    */
 
-  public updateGenesList(query): void {
-    if (query) {
-      this.confirmedQuery = this.searchedQuery;
+  public updateGenesList(event: boolean): void {
+    if (event) {
+      this.searchGenesByGoTerm(this.query);
     } else {
-      this.confirmedQuery = null;
+      this.query = null;
       this.results = null;
     }
   }
@@ -95,7 +89,6 @@ export class GoSearchPageComponent extends WindowWidth implements OnInit, OnDest
   }
 
   public searchGenesByGoTerm(query: string): void {
-    this.cdRef.detach();
     if (query && query.length > 1) {
       this.showProgressBar = true;
       this.apiService
@@ -103,7 +96,7 @@ export class GoSearchPageComponent extends WindowWidth implements OnInit, OnDest
         .pipe(takeUntil(this.subscription$))
         .subscribe(
           (res) => {
-            const genes = [...res];
+            const genes = [...res.items];
             genes.forEach((gene: Genes) => {
               if (gene.terms) {
                 Object.keys(gene.terms).forEach((key) => [
@@ -124,7 +117,6 @@ export class GoSearchPageComponent extends WindowWidth implements OnInit, OnDest
     } else {
       this.results = [];
     }
-    this.cdRef.reattach();
   }
 
 

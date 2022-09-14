@@ -7,3 +7,11 @@
 }
 
 @include search-page-styles();
+
+.main-page {
+  &__search-tips {
+    font-size: $font-size;
+    color: $color-gray;
+    margin-bottom: 1em;
+  }
+}

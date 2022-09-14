@@ -83,13 +83,12 @@
             ></app-search-counter>
 
             <app-search
-              class="__mt-20 __mb-10"
+              class="__mb-10"
               [isDisabled]="genesListIsLoading"
               placeholder="search_field_tap_search"
               [showProgressBar]="showProgressBar"
-              (updateOnKeyUp)="updateGenesList($event)"
               (queryChange)="setSearchQuery($event)"
-              (search)="searchGenesByGoTerm(query)"
+              (search)="updateGenesList($event)"
             ></app-search>
 
             <app-genes-list
