@@ -213,11 +213,12 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.dataLoaded.emit();
   }
 
-  public showMore(): void {
+  public showMore(researchType: ResearchArguments): void {
     this.currentPage++;
     this.filterService.pagination.page = this.currentPage;
     this.filterService.onLoadMoreGenes(this.options?.pagination?.pagesTotal);
     this.slice.next(this.studies.length + this.itemsPerPage);
+    this.getStudies(researchType);
     this.cdRef.detectChanges();
   }
 }
