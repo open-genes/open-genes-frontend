@@ -30,12 +30,15 @@
               {{ "main_page_table_name" | translate }}
             </th>
             <!-- General data columns -->
-            <th>{{ "research_data_model_organism" | translate }},
-              {{ "research_data_sex" | translate | lowercase }},
-              {{ "research_data_line" | translate | lowercase }}
-              <app-info-button
-                (click)="openCommentModal('clarification', null, researchesLineHint)"
-              ></app-info-button>
+            <th>
+              <div class="__nowrap">
+                {{ "research_data_model_organism" | translate }},
+                {{ "research_data_sex" | translate | lowercase }},
+                {{ "research_data_line" | translate | lowercase }}
+                <app-info-button
+                  (click)="openCommentModal('clarification', null, researchesLineHint)"
+                ></app-info-button>
+              </div>
             </th>
             <th class="__cell-width-small">{{ "research_data_l_main_effect" | translate }}</th>
             <th class="__cell-width-medium">{{ "research_data_result" | translate }}

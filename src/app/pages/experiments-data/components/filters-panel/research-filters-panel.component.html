@@ -9,7 +9,9 @@
                   [compareWith]="compareSelectValues"
                   (selectionChange)="apply('bySpecies', $event)">
         <ng-container *ngIf="modelOrganisms?.length !== 0">
-          <mat-option *ngFor="let i of modelOrganisms | searchFilter : searchText" [value]="i.id">{{ i.latinName }}</mat-option>
+          <mat-option *ngFor="let i of modelOrganisms | searchFilter : searchText" [value]="i.id">
+            {{ i.latinName?.length? i.latinName : i.name }}
+          </mat-option>
         </ng-container>
       </mat-select>
     </mat-form-field>

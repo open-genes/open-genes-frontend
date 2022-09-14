@@ -35,8 +35,7 @@ export class ScrollableContainerDirective implements AfterViewInit, OnDestroy {
 
           this.eventListener = childEl.addEventListener('scroll', (e) => {
             if (e.target.scrollLeft > scrollThreshold) {
-              if ((e.target.scrollWidth - (Number(e.target.scrollLeft) + scrollThreshold))
-                > (parentWidth - scrollThreshold)) {
+              if ((e.target.scrollWidth - (Number(e.target.scrollLeft) + scrollThreshold)) > (parentWidth - scrollThreshold)) {
                 fadeOutLeft.classList.remove(classHidden);
                 fadeOutRight.classList.remove(classHidden);
               } else {
