@@ -1,57 +1,62 @@
 <section *ngIf="items?.length !== 0">
   <h4>{{ "gene_page_research_data_additional_evidence" | translate }}</h4>
-  <div class="table-section __mt-20 __w-content-fluid">
-    <table class="table table--zebra table--sticky table--gene-to-additional-evidence">
-      <thead>
-      <th *ngIf="numberColumn">
-        #
-      </th>
-      <th *ngIf="geneColumnOn">
-        {{ "main_page_table_name" | translate }}
-      </th>
-      <th>
-        {{ "research_data_comment" | translate }}
-      </th>
-      <th>
-        {{ "research_data_reference" | translate }}
-      </th>
-      </thead>
-      <tbody>
-      <tr *ngFor="let item of items | slice: 0:slice let i = index">
-        <td *ngIf="numberColumn"
-            class="number-column">
-          <div class="number-column__inner">{{ i + 1 }}</div>
-        </td>
-        <td *ngIf="geneColumnOn"
-            class="__cell-width-medium">
-          <div *ngIf="item.hasOwnProperty('geneSymbol')"
-               class="title">
-            <a [routerLink]="['/gene', item.geneSymbol]" class="link link--gray">
-              <b>{{ item.geneSymbol }}</b> {{ item.geneName }}
-            </a>
-          </div>
-        </td>
-        <td>
-          {{ item.comment }}
-        </td>
-        <td>
-          <a
-            *ngIf="item?.doi !== ''"
-            href="https://doi.org/{{ item?.doi }}"
-            class="link"
-            target="_blank"
-          >{{ item?.doi }}</a
-          ><br>
+  <div class="view __w-content-fluid __mt-20">
+    <div class="view__fadeout view__fadeout--l view__fadeout--hidden"></div>
+    <div class="view__fadeout view__fadeout--r view__fadeout--hidden"></div>
+    <div appScrollableContainer
+         class="view__content table-section __w-content-fluid">
+      <table class="table table--zebra table--sticky table--gene-to-additional-evidence">
+        <thead>
+        <th *ngIf="numberColumn">
+          #
+        </th>
+        <th *ngIf="geneColumnOn">
+          {{ "main_page_table_name" | translate }}
+        </th>
+        <th>
+          {{ "research_data_comment" | translate }}
+        </th>
+        <th>
+          {{ "research_data_reference" | translate }}
+        </th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of items | slice: 0:slice let i = index">
+          <td *ngIf="numberColumn"
+              class="number-column">
+            <div class="number-column__inner">{{ i + 1 }}</div>
+          </td>
+          <td *ngIf="geneColumnOn"
+              class="__cell-width-medium">
+            <div *ngIf="item.hasOwnProperty('geneSymbol')"
+                 class="title">
+              <a [routerLink]="['/gene', item.geneSymbol]" class="link link--gray">
+                <b>{{ item.geneSymbol }}</b> {{ item.geneName }}
+              </a>
+            </div>
+          </td>
+          <td>
+            {{ item.comment }}
+          </td>
+          <td>
+            <a
+              *ngIf="item?.doi !== ''"
+              href="https://doi.org/{{ item?.doi }}"
+              class="link"
+              target="_blank"
+            >{{ item?.doi }}</a
+            ><br>
 
-          <a
-            *ngIf="item?.pmid !== ''"
-            href="https://pubmed.ncbi.nlm.nih.gov/17170002/{{ item?.pmid }}"
-            class="link"
-            target="_blank"
-          >{{ item?.pmid }}</a>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+            <a
+              *ngIf="item?.pmid !== ''"
+              href="https://pubmed.ncbi.nlm.nih.gov/17170002/{{ item?.pmid }}"
+              class="link"
+              target="_blank"
+            >{{ item?.pmid }}</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
