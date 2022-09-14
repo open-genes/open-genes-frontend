@@ -471,5 +471,52 @@
   }
 }
 
+@mixin hide-scrollbar {
+  // IE, Edge, FF
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  // Chrome, Safari, Opera
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@mixin scrollable-container($bg-color: $color-white) {
+  .view {
+    position: relative;
+    max-width: 100%;
+
+    &,
+    &__content {
+      width: 100%;
+    }
+
+    &__fadeout {
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+      pointer-events: none;
+      width: 24px;
+
+      &--r {
+        right: 0;
+        background: linear-gradient(to right, rgba($bg-color, 0) 0, $bg-color 100%);
+      }
+
+      &--l {
+        left: 0;
+        background: linear-gradient(to left, rgba($bg-color, 0) 0, $bg-color 100%);
+      }
+
+      &--hidden {
+        visibility: hidden;
+      }
+    }
+  }
+}
+
 
 

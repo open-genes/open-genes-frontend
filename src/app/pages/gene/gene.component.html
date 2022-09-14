@@ -44,23 +44,6 @@
               </span>
             </span>
             </div>
-            <div class="col col-12 header__protein-classes">
-              <ng-container *ngIf="gene.proteinClasses; else tagSkeletal">
-                <button *ngFor="let item of gene.proteinClasses"
-                        matTooltip="{{ item.name }}"
-                        class="alias"
-                        (click)="applyFilter('byProteinClass', item.id)">
-                  <div class="alias__overflow">{{item.name}}</div>
-                </button>
-              </ng-container>
-
-              <ng-template #tagSkeletal>
-                <span class="alias __skeletal"></span>
-                <span class="alias __skeletal"></span>
-                <span class="alias __skeletal"></span>
-                <span class="alias __skeletal"></span>
-              </ng-template>
-            </div>
           </div>
         </div>
       </section>
@@ -95,12 +78,6 @@
                 </a>
 
                 <a mat-list-item
-                   *ngIf="gene.expression.length !== 0"
-                   [routerLink]="['/gene', symbol]" fragment="expression">
-                  {{ 'gene_page_title_expression' | translate }}
-                </a>
-
-                <a mat-list-item
                    *ngIf="isAnyGoCategory"
                    [routerLink]="['/gene', symbol]" fragment="terms">
                   Gene Ontology
@@ -120,13 +97,14 @@
               <section class="wrapper gene-page__annotation">
                 <div class="row no-gutters annotation__row row no-gutters annotation__row--emphasized">
                   <div class="row__title col-xs-12 col-md-5">
-                    {{ 'gene_page_research_data_processes' | translate }}:
+                    {{ 'gene_page_aging_mechanisms' | translate }}:
                   </div>
 
                   <div class="row__value col">
-                    <ng-container *ngIf="gene.functionalClusters.length; else noData">
-                      <button *ngFor="let item of gene.functionalClusters"
-                              class="alias item__value" (click)="applyFilter('byAgeRelatedProcess', item.id)">
+                    <ng-container *ngIf="gene.agingMechanisms.length; else noData">
+                      <button *ngFor="let item of gene.agingMechanisms"
+                              class="alias"
+                               (click)="applyFilter('byAgingMechanism', item.id)">
                         {{item.name}}
                       </button>
                     </ng-container>
@@ -301,7 +279,7 @@
                       else noContent">
 
                   <section *ngIf="isAnyResearchFilled">
-                    <h2 class="__mb-15">{{ 'gene_page_title_researches' | translate }}</h2>
+                    <h2 class="__mb-15">{{ 'gene_page_title_research_data' | translate }}</h2>
                     <app-research-data [studies]="researches | async"
                                     [slice]="undefined"
                     ></app-research-data>
@@ -357,15 +335,6 @@
                     ></app-gene-ontology>
                   </section>
 
-                  <section class="wrapper gene-page__expression"
-                           *ngIf="gene.expression.length !== 0"
-                           id="expression">
-                    <app-expression
-                      [gene]="gene"
-                      [max]="expressionMaxValue"
-                    ></app-expression>
-                  </section>
-
                   <section class="wrapper" id="human-protein-atlas"
                            *ngIf="isHpa">
                     <h3 class="notranslate __mb-20">
@@ -374,7 +343,19 @@
                     <app-human-protein-atlas
                       [gene]="gene"
                       [hpa]="gene.humanProteinAtlas"
+                      [applyFilterFn]="applyFilter.bind(this)"
                     ></app-human-protein-atlas>
+                  </section>
+
+                  <section *ngIf="gene.functionalClusters.length"
+                           class="wrapper" id="tags">
+                    <h3 class="notranslate">
+                      {{'tags' | translate}}
+                    </h3>
+                    <app-tag *ngFor="let item of gene.functionalClusters"
+                            (click)="applyFilter('byAgeRelatedProcess', item.id)">
+                      #{{item.name}}
+                    </app-tag>
                   </section>
                 </div>
 

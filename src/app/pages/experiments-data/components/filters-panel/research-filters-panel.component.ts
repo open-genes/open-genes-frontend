@@ -1,4 +1,6 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   OnDestroy,
@@ -15,15 +17,21 @@ import { FilterPanelLogic } from '../../../../core/utils/filter-panel-logic';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
 import { StudiesFilterService } from '../../../../core/services/filters/studies-filter.service';
 
+type formControls = 'bySpecies';
+
+enum formControlToFilter {
+  'model-organisms' = 'bySpecies',
+}
+
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-research-filters-panel',
   templateUrl: './research-filters-panel.component.html',
   styleUrls: ['./research-filters-panel.component.scss'],
 })
 export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implements OnInit, OnDestroy {
   public filtersForm: FormGroup;
-  @Output()
-  filterReady: EventEmitter<string> = new EventEmitter<string>();
+  @Output() filterReady: EventEmitter<string> = new EventEmitter<string>();
 
   // Search in selects
   searchText: any;
@@ -35,18 +43,16 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
 
   constructor(
     public filterService: StudiesFilterService,
-    public apiService: ApiService
+    public apiService: ApiService,
+    private readonly cdRef: ChangeDetectorRef,
   ) {
     super(apiService, filterService);
     this.filtersForm = new FormGroup({
-      modelOrganismSelect: new FormControl([
-        [],
-        [null],
-      ]),
+      modelOrganismSelect: new FormControl([null, null]),
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // FILTERS
     // Age-related processes
     this.modelOrganismsModel = this.populateSelect(
@@ -73,7 +79,11 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
     this.filterService
       .getFilterState()
       .subscribe((data: any) => {
-        this.predefinedModelOrganisms = data.bySpecies;
+        if (data) {
+          this.predefinedModelOrganisms = data.bySpecies;
+        }
+        this.cdRef.markForCheck();
+        this.cdRef.detectChanges();
       });
   }
 
@@ -94,22 +104,13 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
     this.getState();
   }
 
-  // public toggleSwitchAndFilter(filterType: ApiResearchSearchParameters, $event): void {
-  //   this.listSettings.ifShowExperimentsStats = $event.checked;
-  //   this.filterService.applyFilter(filterType, Number(this.listSettings[filterType]));
-  //   this.getState();
-  // }
-
   /**
    * Form reset
    */
-  public resetForm(formControlName: string = null): void {
+  public resetForm(formControlName: formControls = null): void {
     if (formControlName) {
-      switch (formControlName) {
-        case 'modelOrganismSelect':
-          this.filterService.clearFilters('bySpecies');
-          break;
-      }
+      this.filterService.clearFilters(formControlToFilter[formControlName]);
+      this.filtersForm.controls[formControlName].reset();
     } else {
       this.filtersForm.reset();
       this.filterService.clearFilters();

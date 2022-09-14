@@ -8,34 +8,40 @@
   margin-bottom: 20px;
 }
 
-.view-content {
-  width: 100%;
-  max-width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  margin-bottom: 20px; // для кнопки подгрузки
+@include scrollable-container;
 
-  @include item;
-  @include table;
+.view {
+  margin-bottom: 20px; // for preload button
 
-  &--as-table {
-    display: block;
-    overflow: auto;
-    font-size: 14px;
-    line-height: 1.5;
-    border-radius: 5px;
-  }
+  &__content {
+    max-width: 100%;
 
-  &--as-cards {
-    $card-spacing: 20px;
+    @include item;
 
-    display: flex;
-    flex-flow: row wrap;
-    align-items: stretch;
-    justify-content: space-between;
-    margin-top: -#{$card-spacing};
+    @include table;
+
+    &--as-table {
+      display: block;
+      overflow: auto;
+      @include hide-scrollbar;
+      font-size: 14px;
+      line-height: 1.5;
+      border-radius: 5px;
+    }
+
+    &--as-cards {
+      $card-spacing: 20px;
+
+      display: flex;
+      flex-flow: row wrap;
+      align-items: stretch;
+      justify-content: flex-start;
+      margin-top: -#{$card-spacing};
+    }
   }
 }
+
+
 
 .view-panel {
   // You can switch the view only on the desktop.
@@ -56,7 +62,7 @@
   align-content: flex-start;
   justify-items: flex-start;
   justify-content: flex-start;
-  margin-bottom: 10px;
+  margin-bottom: $padding-large;
 
   & > * {
     display: contents;

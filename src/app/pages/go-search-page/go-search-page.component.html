@@ -83,13 +83,12 @@
             ></app-search-counter>
 
             <app-search
-              class="__mt-20 __mb-10"
-              [searchHintsList]="searchedGenes"
+              class="__mb-10"
               [isDisabled]="genesListIsLoading"
               placeholder="search_field_tap_search"
               [showProgressBar]="showProgressBar"
-              (isAnyQueryToSubmit)="updateGenesList($event)"
-              (searchQuery)="setSearchQuery($event)"
+              (queryChange)="setSearchQuery($event)"
+              (search)="updateGenesList($event)"
             ></app-search>
 
             <app-genes-list
@@ -97,7 +96,8 @@
               (loading)="setLoader($event)"
               (errorStatus)="errorStatus = $event"
               (itemsNumber)="itemsQuantity = $event"
-              [genesList]="confirmedGenesList"
+              [genesList]="results"
+              [viewport]="viewport"
               [isMobile]="isMobile"
               [showFiltersPanel]="false">
             </app-genes-list>

@@ -14,12 +14,14 @@ $element-base-color: $color-general;
 }
 
 .filter {
+  $height: $ui-base-height;
+  $icon-size: 20px;
   display: block;
   float: left;
   width: auto;
-  height: 26px;
+  height: $height;
   position: relative;
-  line-height: 26px;
+  line-height: $height;
   font-size: 12px;
   transition: background-color .15s ease-in;
   cursor: pointer;
@@ -32,18 +34,14 @@ $element-base-color: $color-general;
     color: $color-white;
   }
 
-  .fa {
-    height: 26px;
-    line-height: inherit;
-    font-size: 16px;
+  .icon {
     position: relative;
     top: -1px;
     vertical-align: middle;
-    margin-left: 5px;
-
-    &.fa-sort-down {
-      line-height: 20px;
-    }
+    margin-left: 2px;
+    font-size: $icon-size;
+    height: $icon-size;
+    width: $icon-size;
   }
 
   &:hover {

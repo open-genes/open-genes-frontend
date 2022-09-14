@@ -23,11 +23,11 @@
     </button>
 
     <div class="search-form__wrapper">
-      <button *ngIf="clearFieldButton"
+      <button *ngIf="clearButton"
               mat-icon-button
               type="button"
               class="clear-search-button"
-              (click)="clearSearch()">
+              (click)="cancelSearch()">
         <mat-icon>
           close
         </mat-icon>
@@ -37,7 +37,7 @@
         mat-icon-button
         class="search-form__submit search-form__submit--active"
         type="submit"
-        (click)="onSearch()">
+        (click)="submitSearch()">
         <span class="fa fal fa-search"></span>
       </button>
 
@@ -46,7 +46,7 @@
         type="text"
         placeholder="{{ placeholder | translate }}"
         class="field search-form__field"
-        (keyup.enter)="onSearch()"
+        (keyup.enter)="submitSearch()"
       >
       <mat-progress-bar
         *ngIf="showProgressBar"
@@ -55,15 +55,15 @@
       ></mat-progress-bar>
     </div>
 
-    <div *ngIf="showSearchHints && clearFieldButton"
+    <div *ngIf="showSearchHints && clearButton"
          class="search-form__autocomplete-list">
       <ng-container *ngFor="let gene of searchedData; let i = index">
         <button
           *ngIf="i < 5"
           class="search-form__autocomplete-item"
           tabindex="0"
-          [routerLink]="['/gene', gene.symbol]">
-
+          [value]="gene.symbol"
+          (click)="patchValue($event, multiple, _patchValueSideEffects.bind(this))">
           <span class="item__symbol"
                 appHighlight
                 [highlightText]="highlightText"
@@ -85,12 +85,6 @@
                   [innerHTML]="item.value">
             </span>
           </ng-container>
-
-          <mat-icon
-            class="item__go-icon"
-            [matTooltip]="'go_to_gene_page' | translate"
-          >chevron_right
-          </mat-icon>
         </button>
       </ng-container>
     </div>

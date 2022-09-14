@@ -9,9 +9,9 @@ import {
   Output,
 } from '@angular/core';
 import { ResearchArguments, ResearchTypes } from '../../../../core/models/open-genes-api/researches.model';
-import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, map, switchMap, takeUntil } from 'rxjs/operators';
 import { ApiResponse, PageOptions } from '../../../../core/models/api-response.model';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
 import { AdditionalInterventionResolver } from 'src/app/core/utils/additional-intervention-resolver';
 import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack-bar.component';
@@ -46,7 +46,10 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public genesList: Pick<Genes, 'id' | 'symbol' | 'name' | 'ensembl'>[] = [];
   public showProgressBar: boolean;
 
-  private subscription$ = new Subject();
+  private cachedData: ResearchTypes[] = [];
+  private router$ = new Subject();
+  private genes$ = new Subject();
+  private studies$ = new ReplaySubject(1);
   private itemsPerPage = 20;
 
   constructor(
@@ -61,29 +64,37 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   }
 
   ngOnInit(): void {
-    this.setInitialState();
     this.activatedRoute?.queryParams
-      .pipe(takeUntil(this.subscription$))
+      .pipe(takeUntil(this.router$))
       .subscribe((params) => {
       if (Object.keys(params).length) {
         for (const key in params) {
           if (params[key] !== this.filterService.filters[key].toString()) {
+            if (key === 'byGeneSymbol') {
+              this.query = params[key];
+              this.showProgressBar = false;
+              this.cdRef.markForCheck();
+            }
             this.filterService.applyFilter(key, params[key]);
           }
         }
       }
     });
+    this.setInitialState();
+    this.cachedData = this.studies;
   }
 
   ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
+    this.router$.unsubscribe();
+    this.studies$.unsubscribe();
+    this.slice.unsubscribe();
     this.filterService.clearFilters();
-    this.slice.complete();
-    this.snackBar.dismiss();
+    this.snackBar = undefined;
   }
 
-  private setInitialState(): void {
+  public setInitialState(): void {
     this.query = null;
+    this.cachedData = [];
     this.studies = [];
     this.resetPagination();
     this.isNotFound = false;
@@ -96,8 +107,8 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public setSearchQuery(query: string): void {
     if (query && query.length > 1) {
       this.query = query.toLocaleLowerCase().trim();
+      this.searchGenes(query);
     }
-    this.searchGenes(query);
   }
 
   private searchGenes(query: string): void {
@@ -105,7 +116,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
       this.showProgressBar = true;
       this.apiService
         .getGenesMatchByString(query, this.query.length > 1 ? 'input' : undefined)
-        .pipe(takeUntil(this.subscription$))
+        .pipe(takeUntil(this.genes$))
         .subscribe(
           (searchData) => {
             this.genesList = searchData.items; // If nothing found, will return empty array
@@ -124,7 +135,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public updateStudiesList(isSubmit?: boolean): void {
     if (isSubmit) {
       this.filterService.clearFilters('byGeneSymbol');
-      this.getStudies(this.studyType);
+      this.getStudies(this.studyType, (res) => this.openSnackBar(res));
     } else {
       this.studies = null;
     }
@@ -137,7 +148,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   }
 
   private openSnackBar(res: ApiResponse<any>): void {
-    if (res?.options) {
+    if (res?.options && this.snackBar) {
       this.snackBar.openFromComponent(SnackBarComponent, {
         data: {
           title: 'items_found',
@@ -148,7 +159,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     }
   }
 
-  public getStudies(researchType: ResearchArguments, callback?: () => void): void {
+  public getStudies(researchType: ResearchArguments, callback?: (res?: ApiResponse<ResearchTypes>) => void): void {
     this.isLoading = true;
     if (this.currentPage === 1) {
       this.studies = [];
@@ -160,29 +171,37 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
 
     this.filterService.filterResult
       .pipe(
-        takeUntil(this.subscription$),
+        distinctUntilChanged(),
+        takeUntil(this.studies$),
         switchMap(() => {
           // Subscribing to any filters update and return getSortedAndFilteredStudies method to subscribe
           return this.filterService.getSortedAndFilteredStudies(this.studyType);
-        })
-      )
-      .pipe(
-        takeUntil(this.subscription$),
+        }),
         map((r: ApiResponse<ResearchTypes>) => {
           if (researchType === 'lifespan-change') {
-            r.items = r.items.filter((s: any) => this.resolveAdditionalIntervention(s));
+            r.items = r.items.filter((r: any) => this.resolveAdditionalIntervention(r));
           }
           return r;
-        })
-      )
+        }
+      ))
       .subscribe(
         (res) => {
-          this.studies.push(...res.items);
+
+          if (this.currentPage === 1) {
+            this.cachedData = [];
+          }
+
+          if (res.items?.length) {
+            this.cachedData.push(...res.items);
+            this.studies = [...this.cachedData];
+          }
           this.options = res.options;
-          this.openSnackBar(res);
           this.isLoading = false;
           this.isNotFound = res.items?.length === 0;
           this.cdRef.markForCheck();
+          if (callback) {
+            callback(res);
+          }
         },
         (err) => {
           this.error.isError = true;
@@ -192,9 +211,6 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
         }
       );
     this.dataLoaded.emit();
-    if (callback) {
-      callback();
-    }
   }
 
   public showMore(researchType: ResearchArguments): void {
@@ -204,10 +220,5 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.slice.next(this.studies.length + this.itemsPerPage);
     this.getStudies(researchType);
     this.cdRef.detectChanges();
-  }
-
-  public cancelSearch() {
-    this.filterService.clearFilters();
-    this.setInitialState();
   }
 }

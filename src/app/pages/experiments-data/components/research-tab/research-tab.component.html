@@ -1,13 +1,15 @@
 <div [ngSwitch]="studyType"
      class="research">
-  <app-search [searchHintsList]="genesList"
+  <app-search [predefinedValue]="query"
+              [searchHintsList]="genesList"
               [isDisabled]="error.isError"
               placeholder="search_field_by_comma"
-              (isAnyQueryToSubmit)="updateStudiesList($event)"
-              (searchQuery)="setSearchQuery($event)"
-              (cancel)="cancelSearch()"
+              (search)="updateStudiesList($event)"
+              (queryChange)="setSearchQuery($event)"
+              (cancel)="setInitialState()"
               [fixOnTopOnMobile]="false"
               [showProgressBar]="showProgressBar"
+              [showClearButton]="isNotFound"
               class="__mb-30">
   </app-search>
 
@@ -39,6 +41,15 @@
       ></app-intervention-affects-aging-process>
     </section>
 
+    <section *ngSwitchCase="'associations-with-lifespan'">
+      <app-gene-associated-with-longevity-effects
+        [geneColumnOn]="true"
+        [numberColumn]="true"
+        [items]="studies"
+        [slice]="slice | async"
+      ></app-gene-associated-with-longevity-effects>
+    </section>
+
     <section *ngSwitchCase="'gene-regulation'">
       <app-protein-regulates-other-genes
         [geneColumnOn]="true"
@@ -55,15 +66,6 @@
         [items]="studies"
         [slice]="slice | async"
       ></app-gene-associated-with-progeria-syndromes>
-    </section>
-
-    <section *ngSwitchCase="'associations-with-lifespan'">
-      <app-gene-associated-with-longevity-effects
-        [geneColumnOn]="true"
-        [numberColumn]="true"
-        [items]="studies"
-        [slice]="slice | async"
-      ></app-gene-associated-with-longevity-effects>
     </section>
 
     <section *ngSwitchCase="'other-evidence'">

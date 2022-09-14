@@ -4,3 +4,8 @@
 @include modal-window('comment');
 @import "../styles/table";
 @import "../styles/publication-info-modal";
+@include scrollable-container;
+
+.view__content {
+  @include hide-scrollbar;
+}

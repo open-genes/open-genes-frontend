@@ -229,6 +229,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
     this.routeSubscribe.unsubscribe();
+    this.snackBar.dismiss();
     this.bottomSheet.dismiss();
   }
 
@@ -244,10 +245,6 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
   public applyFilter(filterType: string, id: number | string): void {
     const queryParams = {};
     queryParams[filterType] = id;
-
-    if (this.retrievedSettings.searchMode === this.searchModeEnum.searchByGoTerms) {
-      this.settingsService.setSettings('searchMode', this.searchModeEnum.searchByGenes);
-    }
 
     void this.router.navigate(['genes'], {
       queryParams: queryParams,

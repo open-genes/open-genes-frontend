@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ResearchArguments } from '../../core/models/open-genes-api/researches.model';
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
@@ -10,12 +10,12 @@ interface Tab {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-experiments-data-page',
   templateUrl: './experiments-data-page.component.html',
   styleUrls: ['./experiments-data-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExperimentsDataPageComponent extends WindowWidth implements OnInit {
+export class ExperimentsDataPageComponent extends WindowWidth implements OnInit, OnDestroy {
   public tabs: Tab[] = [
     {
       title: 'gene_page_research_data_lifespan',
@@ -33,9 +33,9 @@ export class ExperimentsDataPageComponent extends WindowWidth implements OnInit 
       param: 'gene-activity-change-impact',
     },
     {
-      title: 'gene_page_research_data_protein_regulates_genes',
-      cssClass: 'tab--protein-to-gene',
-      param: 'gene-regulation',
+      title: 'gene_page_research_data_longevity_effects',
+      cssClass: 'tab--gene-to-longevity-effect',
+      param: 'associations-with-lifespan',
     },
     {
       title: 'gene_page_research_data_progeria',
@@ -43,10 +43,11 @@ export class ExperimentsDataPageComponent extends WindowWidth implements OnInit 
       param: 'association-with-accelerated-aging',
     },
     {
-      title: 'gene_page_research_data_longevity_effects',
-      cssClass: 'tab--gene-to-longevity-effect',
-      param: 'associations-with-lifespan',
+      title: 'gene_page_research_data_protein_regulates_genes',
+      cssClass: 'tab--protein-to-gene',
+      param: 'gene-regulation',
     },
+
     // {
     //   title: 'gene_page_research_data_additional_evidence',
     //   cssClass: 'tab--gene-to-additional-evidence',
@@ -66,6 +67,11 @@ export class ExperimentsDataPageComponent extends WindowWidth implements OnInit 
     if (localStorage.getItem('researchesActiveTab')) {
       this.activeTabIndex = Number(localStorage.getItem('researchesActiveTab'));
     }
+  }
+
+  ngOnDestroy(): void {
+    this.activeTabIndex = null;
+    this.tabs = [];
   }
 
   public setIsListLoaded(): void {

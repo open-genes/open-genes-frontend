@@ -43,6 +43,7 @@
               <app-sidebar-item *ngIf="!isMobile">
                 <div content class="filters-wrapper">
                   <app-gene-filters-panel
+                    [isLoading]="genesListIsLoading"
                     [lastChangedFilter]="lastChangedFilter"
                   ></app-gene-filters-panel>
                 </div>
@@ -51,18 +52,27 @@
           </div>
 
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
+            <div class="main-page__search-tips">
+              <p>
+                <span class="fa far fa-info-circle"></span> {{
+                (queryLength > 1
+                  ? "search_for_genes_desc_hint"
+                  : "search_for_genes_desc") | translate }}
+              </p>
+            </div>
             <app-search-counter
               [quantity]="itemsQuantity"
               [title]="'main_page_total'"
             ></app-search-counter>
 
             <app-search
-              class="__mt-20 __mb-10"
+              class="__mb-10"
+              [multiple]="queryLength > 1"
               [searchHintsList]="searchedGenes"
               [isDisabled]="genesListIsLoading"
-              [placeholder]="searchMode === 'searchByGenesList' ? 'search_field_by_comma': 'search_field_start_typing'"
-              (isAnyQueryToSubmit)="updateGenesList($event)"
-              (searchQuery)="setSearchQuery($event)"
+              placeholder="search_field_start_typing"
+              (search)="updateGenesList($event)"
+              (queryChange)="setSearchQuery($event)"
               (cancel)="$cancelSearch.next()"
               [showProgressBar]="showProgressBar"
             ></app-search>
@@ -73,6 +83,7 @@
               (itemsNumber)="itemsQuantity = $event"
               (filterChanged)="updateOnFilterChange($event)"
               [genesList]="confirmedQuery"
+              [viewport]="viewport"
               [isMobile]="isMobile"
               [setSearchMode]="searchMode"
               [showFiltersPanel]="true"

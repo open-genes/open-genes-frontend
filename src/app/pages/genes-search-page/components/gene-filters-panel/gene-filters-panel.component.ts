@@ -77,12 +77,12 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
   public predefinedFamilyOrigin: any[] = [];
   public predefinedConservativeIn: any[] = [];
   // Experiments
-  public predefinedExperimentsStats: boolean;
+  public ifShowExperimentsStats = false;
 
+  @Input() isLoading = false;
   @Input() set lastChangedFilter(filter: appliedFilter) {
     // Change detection workaround
     if (filter.name) {
-      console.log('@Input(): ', filter);
       this.getState();
     }
   }
@@ -98,17 +98,14 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
     super(apiService, filterService);
     this.filtersForm = new FormGroup({
       diseasesSelect: new FormControl([[], [null]]),
-      diseaseCategoriesSelect: new FormControl([[], [null],]),
-      selectionCriteriaSelect: new FormControl([[], [null],]),
+      diseaseCategoriesSelect: new FormControl([[], [null]]),
+      selectionCriteriaSelect: new FormControl([[], [null]]),
       agingMechanismsSelect: new FormControl([[], [null]]),
       proteinClassesSelect: new FormControl([[], [null]]),
       originSelect: new FormControl([[], [null]]),
       familyOriginSelect: new FormControl([[], [null]]),
       conservativeInSelect: new FormControl([[], [null]]),
-      experimentsStatsCheckbox: new FormControl([
-        false,
-        [null],
-      ]),
+      experimentsStatsCheckbox: new FormControl(false),
     });
   }
 
@@ -124,45 +121,50 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
     // TODO: These two endpoints should output an array of objects
 
     // Diseases
-    this.diseasesModel = this.getEntities('diseases');
+    this.diseasesModel = this.populateSelect('diseases');
     this.diseasesModel
+      .pipe(takeUntil(this.subscription$))
       .subscribe((data: any[]) => {
-        console.log('diseases', data);
         this.diseases = data;
         this.cachedDiseases = data;
       });
 
     // Disease categories
-    this.diseaseCategoriesModel = this.getEntities('disease-categories');
+    this.diseaseCategoriesModel = this.populateSelect('disease-categories');
     this.diseaseCategoriesModel
+      .pipe(takeUntil(this.subscription$))
       .subscribe((data: any[]) => {
         this.diseaseCategories = data;
       });
 
     // Selection criteria
-    this.selectionCriteriaModel = this.getEntities('criteria');
+    this.selectionCriteriaModel = this.populateSelect('criteria');
     this.selectionCriteriaModel
+      .pipe(takeUntil(this.subscription$))
       .subscribe((data: any[]) => {
         this.selectionCriteria = data;
       });
 
     // Aging mechanisms
-    this.agingMechanismsModel = this.getEntities('mechanisms');
+    this.agingMechanismsModel = this.populateSelect('mechanisms');
     this.agingMechanismsModel
+      .pipe(takeUntil(this.subscription$))
       .subscribe((data: any[]) => {
         this.agingMechanisms = data;
       });
 
     // Protein classes
-    this.proteinClassesModel = this.getEntities('classes');
+    this.proteinClassesModel = this.populateSelect('classes');
     this.proteinClassesModel
+      .pipe(takeUntil(this.subscription$))
       .subscribe((data: any[]) => {
         this.proteinClasses = data;
       });
 
     // Gene origin and homology
-    this.phylumModel = this.getEntities('phylum');
+    this.phylumModel = this.populateSelect('phylum');
     this.phylumModel
+      .pipe(takeUntil(this.subscription$))
       .pipe(
         map((data: any) =>
           data.sort((a, b) => a.order - b.order)
@@ -184,7 +186,6 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
    * Retrieve filters state to a component
    */
   private getState(): void {
-    console.log('GeneFiltersPanelComponent.getState()')
     this.filterService
       .getFilterState()
       .subscribe((data: any) => {
@@ -197,10 +198,10 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
           this.predefinedOrigin = data.byOrigin;
           this.predefinedFamilyOrigin = data.byFamilyOrigin;
           this.predefinedConservativeIn = data.byConservativeIn;
-          this.listSettings.ifShowExperimentsStats = !!data.researches;
+
+          this.ifShowExperimentsStats = !!data.researches ?? false;
+          this.filtersForm.controls.experimentsStatsCheckbox.patchValue(!!data.researches);
         }
-        console.log('filters', this.filterService.filters);
-        console.log('predefinedDiseases', this.predefinedDiseases);
         this.cdRef.markForCheck();
         this.cdRef.detectChanges();
       });
@@ -209,7 +210,7 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
   /**
    * Wrap abstract class methods to update view on state change
    */
-  private getEntities(key: string): Observable<any[]> {
+  private populateSelect(key: string): Observable<any[]> {
     const r = this.getEntitiesList(key);
     this.filterApplied.emit(key);
     // TODO: use to display skeleton loader
@@ -230,7 +231,6 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
       filterType,
       Number(this.listSettings.ifShowExperimentsStats)
     );
-    this.getState();
   }
 
   /**

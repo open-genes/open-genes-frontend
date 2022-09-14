@@ -43,6 +43,15 @@
     .menu {
       width: 100%;
       max-width: 600px;
+
+      &__item {
+        border: 1px solid $color-borders;
+        border-radius: $border-radius-medium;
+      }
+    }
+
+    .menu__item + .menu__item {
+      margin-top: $padding-regular;
     }
   }
 
@@ -74,6 +83,10 @@
       width: 100%;
       padding-left: $padding-medium;
       padding-right: $padding-medium;
+    }
+
+    .menu {
+      margin-top: $padding-medium;
     }
   }
 }

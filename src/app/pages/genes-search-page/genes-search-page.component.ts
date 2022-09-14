@@ -92,8 +92,8 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
    * Search
    */
 
-  public updateGenesList(query): void {
-    if (query) {
+  public updateGenesList(isSubmit?: boolean): void {
+    if (isSubmit) {
       this.confirmedQuery = this.searchedQuery;
     } else {
       this.confirmedQuery = null;
@@ -102,7 +102,7 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
   }
 
   public setSearchQuery(query: string): void {
-    this.queryLength = query.split(',').length;
+    this.queryLength = query?.length? query.split(',').length : 0;
     this.searchedQuery = query;
 
     if (this.queryLength > 1) {

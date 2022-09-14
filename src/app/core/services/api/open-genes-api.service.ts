@@ -58,8 +58,8 @@ export class ApiService {
     return this.http.get<SearchModel>(`/api/gene/suggestions`, { params });
   }
 
-  getGoTermMatchByString(request: string): Observable<Genes[]> {
-    return this.http.get<Genes[]>(`/api/gene/by-go-term/${request}`);
+  getGoTermMatchByString(request: string): Observable<ApiResponse<Genes>> {
+    return this.http.get<ApiResponse<Genes>>(`/api/gene/by-go-term/${request}`);
   }
 
   getGenesWLifespanResearches(): Observable<GenesWLifespanResearches[]> {

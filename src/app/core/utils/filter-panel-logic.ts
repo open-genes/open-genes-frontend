@@ -44,7 +44,6 @@ export abstract class FilterPanelLogic {
               }
             }
           });
-        console.log('getEntitiesList diseases', diseases);
         return of(diseases);
       case 'disease-categories':
         this.api
@@ -52,7 +51,6 @@ export abstract class FilterPanelLogic {
           .pipe(
             takeUntil(this.subscription$),
             map((d) => {
-              console.log('map', d);
               return d;
             }),
           )
@@ -77,7 +75,6 @@ export abstract class FilterPanelLogic {
 
   public apply(filterType: any, $event: MatSelectChange | MatCheckboxChange): void {
     let value;
-    console.log(`apply(${filterType})`);
     if ($event instanceof MatCheckboxChange) {
       value = $event.checked;
     } else if ($event instanceof MatSelectChange) {

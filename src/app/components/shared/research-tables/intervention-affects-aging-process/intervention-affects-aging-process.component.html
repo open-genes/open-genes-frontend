@@ -1,117 +1,130 @@
 <section *ngIf="items?.length !== 0">
   <h4>{{ "gene_page_intervention_moderates_aging" | translate }}</h4>
-  <div class="table-section __mt-20 __w-content-fluid">
-    <table class="table table--zebra table--sticky table--gene-intervention-to-vital-processes">
-      <thead>
-      <th *ngIf="numberColumn">
-        #
-      </th>
-      <th *ngIf="geneColumnOn">
-        {{ "main_page_table_name" | translate }}
-      </th>
-      <th class="__cell-width-small">
-        {{ "gene_intervention_type" | translate }}
-      </th>
-      <th class="__cell-width-small">
-        {{ "gene_intervention_result" | translate }}
-      </th>
-      <th>{{ "research_data_object" | translate }}</th>
-      <th>{{ "research_data_age" | translate }}<sup>*</sup></th>
-      <th>{{ "research_data_sex" | translate }}</th>
-      <th>{{ "research_data_line" | translate }}</th>
-      <th>{{ "research_data_genotype" | translate }}</th>
-      <th>
-        {{ "research_data_comment" | translate }}
-      </th>
-      </thead>
-      <tbody>
-      <tr
-        *ngFor="let item of items | slice: 0:slice let i = index">
-        <td *ngIf="numberColumn"
-            class="number-column">
-          <div class="number-column__inner">{{ i + 1 }}</div>
-        </td>
-        <td *ngIf="geneColumnOn"
-            class="__cell-width-medium">
-          <div *ngIf="item.hasOwnProperty('geneSymbol')"
-               class="title">
-            <a [routerLink]="['/gene', item.geneSymbol]" class="link link--gray">
-              <b>{{ item.geneSymbol }}</b> {{ item.geneName }}
-            </a>
+  <div class="view __w-content-fluid __mt-20">
+    <div class="view__fadeout view__fadeout--l view__fadeout--hidden"></div>
+    <div class="view__fadeout view__fadeout--r view__fadeout--hidden"></div>
+    <div appScrollableContainer
+         class="view__content table-section __w-content-fluid">
+      <table class="table table--zebra table--sticky table--gene-intervention-to-vital-processes">
+        <thead>
+        <th *ngIf="numberColumn">
+          #
+        </th>
+        <th *ngIf="geneColumnOn">
+          {{ "main_page_table_name" | translate }}
+        </th>
+        <th class="__cell-width-small">
+          {{ "gene_intervention_type" | translate }}
+        </th>
+        <th class="__cell-width-small">
+          {{ "gene_intervention_result" | translate }}
+        </th>
+        <th>{{ "research_data_object" | translate }}</th>
+        <th>
+          <div class="__nowrap">
+            {{ "research_data_age" | translate }}
+            <app-info-button
+              (click)="openCommentModal('clarification', null, ageDescription)"
+            ></app-info-button>
           </div>
-        </td>
-        <td>
-          <ng-container *ngIf="item.geneIntervention; else dash">
-            {{ item.geneIntervention }}
-          </ng-container>
-        </td>
-        <td>
-          <ng-container
-            *ngIf="item?.interventionDeteriorates?.length !== 0 || item?.interventionImproves?.length !== 0;
-              else dash">
-            <ng-container *ngIf="item?.interventionImproves.length !== 0">
-              <ul class="list list--terms-w-p">
-                <li *ngFor="let result of item.interventionImproves"
-                    class="term-w-p term-w-p--positive">
-                  {{ 'research_data_improves' | translate }} {{ result.name }}
-                </li>
-              </ul>
+        </th>
+        <th>{{ "research_data_sex" | translate }}</th>
+        <th>{{ "research_data_line" | translate }}</th>
+        <th>{{ "research_data_genotype" | translate }}</th>
+        <th>
+          {{ "research_data_comment" | translate }}
+        </th>
+        </thead>
+        <tbody>
+        <tr
+          *ngFor="let item of items | slice: 0:slice let i = index">
+          <td *ngIf="numberColumn"
+              class="number-column">
+            <div class="number-column__inner">{{ i + 1 }}</div>
+          </td>
+          <td *ngIf="geneColumnOn"
+              class="__cell-width-medium">
+            <div *ngIf="item.hasOwnProperty('geneSymbol')"
+                 class="title">
+              <a [routerLink]="['/gene', item.geneSymbol]" class="link link--gray">
+                <b>{{ item.geneSymbol }}</b> {{ item.geneName }}
+              </a>
+            </div>
+          </td>
+          <td>
+            <ng-container *ngIf="item.geneIntervention; else dash">
+              {{ item.geneIntervention }}
             </ng-container>
+          </td>
+          <td>
+            <ng-container
+              *ngIf="item?.interventionDeteriorates?.length !== 0 || item?.interventionImproves?.length !== 0;
+                else dash">
+              <ng-container *ngIf="item?.interventionImproves.length !== 0">
+                <ul class="list list--terms-w-p">
+                  <li *ngFor="let result of item.interventionImproves"
+                      class="term-w-p term-w-p--positive">
+                    {{ 'research_data_improves' | translate }} {{ result.name }}
+                  </li>
+                </ul>
+              </ng-container>
 
-            <ng-container *ngIf="item?.interventionDeteriorates.length !== 0">
-              <ul class="list list--terms-w-p">
-                <li *ngFor="let result of item.interventionDeteriorates"
-                    class="term-w-p term-w-p--negative">
-                  {{ 'research_data_deteriorates' | translate }} {{ result.name }}
-                </li>
-              </ul>
+              <ng-container *ngIf="item?.interventionDeteriorates.length !== 0">
+                <ul class="list list--terms-w-p">
+                  <li *ngFor="let result of item.interventionDeteriorates"
+                      class="term-w-p term-w-p--negative">
+                    {{ 'research_data_deteriorates' | translate }} {{ result.name }}
+                  </li>
+                </ul>
+              </ng-container>
             </ng-container>
-          </ng-container>
-        </td>
+          </td>
 
-        <td class="__nowrap">
-          <ng-container *ngIf="item.modelOrganism ; else dash">
-            {{ item.modelOrganism }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.age ; else dash">
-            {{ item.age }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.sex ; else dash">
-            {{ item.sex }}
-          </ng-container>
-        </td>
-        <td>
-          <ng-container *ngIf="item.organismLine ; else dash">
-            {{ item.organismLine }}
-          </ng-container>
-        </td>
-        <td class="__nowrap">
-          <ng-container *ngIf="item.genotype ; else dash">
-            {{ item.genotype }}
-          </ng-container>
-        </td>
-        <td>
-          <button class="btn btn--small btn--purple btn--flat"
-                  (click)="openCommentModal('research_data_comment', item, links)"
-          >
-            {{ "research_data_comment_button" | translate }}
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+          <td class="__nowrap">
+            <ng-container *ngIf="item.modelOrganism ; else dash">
+              {{ item.modelOrganism }}
+            </ng-container>
+          </td>
+          <td class="__nowrap">
+            <ng-container *ngIf="item.age ; else dash">
+              {{ item.age }}
+            </ng-container>
+          </td>
+          <td class="__nowrap">
+            <ng-container *ngIf="item.sex ; else dash">
+              {{ item.sex }}
+            </ng-container>
+          </td>
+          <td>
+            <ng-container *ngIf="item.organismLine ; else dash">
+              {{ item.organismLine }}
+            </ng-container>
+          </td>
+          <td class="__nowrap">
+            <ng-container *ngIf="item.genotype ; else dash">
+              {{ item.genotype }}
+            </ng-container>
+          </td>
+          <td>
+            <button class="btn btn--small btn--purple btn--flat"
+                    (click)="openCommentModal('research_data_comment', item, links)"
+            >
+              {{ "research_data_comment_button" | translate }}
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <legend class="reference">
-    <sup>*</sup>{{ "gene_page_research_data_lifespan_hint1" | translate }}
-  </legend>
 </section>
 
 <ng-template #dash>
   <span class="table__dash"></span>
+</ng-template>
+
+<ng-template #ageDescription>
+  {{ "gene_page_research_data_lifespan_hint1" | translate }}
 </ng-template>
 
 <ng-template #links let-item="item">

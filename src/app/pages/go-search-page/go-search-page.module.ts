@@ -15,7 +15,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { WizardModule } from '../../components/shared/wizard/wizard.module';
 import { NoContentModule } from '../../components/shared/no-content/no-content.module';
 import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
-import { ToggleSearchModeModule } from '../../components/shared/toggle-search-mode/toggle-search-mode.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SearchModule } from '../../components/shared/search/search.module';
 import { MiniCardsModule } from '../../components/mini-cards/mini-cards.module';
@@ -40,7 +39,6 @@ const routes: Routes = [{ path: '', component: GoSearchPageComponent }];
     WizardModule,
     NoContentModule,
     IconModule,
-    ToggleSearchModeModule,
     MatProgressBarModule,
     SearchModule,
     MiniCardsModule,

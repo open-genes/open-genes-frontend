@@ -1,50 +1,55 @@
 <section *ngIf="items?.length !== 0">
   <h4>{{ "gene_page_research_data_progeria" | translate }}</h4>
-  <div class="table-section __mt-20 __w-content-fluid">
-  <table class="table table--zebra table--sticky table--gene-to-progeria">
-    <thead>
-    <th *ngIf="numberColumn">
-      #
-    </th>
-    <th *ngIf="geneColumnOn">
-      {{ "main_page_table_name" | translate }}
-    </th>
-    <th>{{ "progeria_syndrome" | translate }}</th>
-    <th>
-      {{ "research_data_comment" | translate }}
-    </th>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of items | slice: 0:slice let i = index">
-      <td *ngIf="numberColumn"
-          class="number-column">
-        <div class="number-column__inner">{{ i + 1 }}</div>
-      </td>
-      <td *ngIf="geneColumnOn"
-          class="__cell-width-medium">
-        <div *ngIf="item.hasOwnProperty('geneSymbol')"
-             class="title">
-          <a [routerLink]="['/gene', item.geneSymbol]" class="link link--gray">
-            <b>{{ item.geneSymbol }}</b> {{ item.geneName }}
-          </a>
-        </div>
-      </td>
-      <td>
-        <ng-container *ngIf="item.progeriaSyndrome ; else dash">
-          {{ item.progeriaSyndrome }}
-        </ng-container>
-      </td>
-      <td>
-        <button class="btn btn--small btn--purple btn--flat"
-                (click)="openCommentModal('research_data_comment', item, links)"
-        >
-          {{ "research_data_comment_button" | translate }}
-        </button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+  <div class="view __w-content-fluid __mt-20">
+    <div class="view__fadeout view__fadeout--l view__fadeout--hidden"></div>
+    <div class="view__fadeout view__fadeout--r view__fadeout--hidden"></div>
+    <div appScrollableContainer
+         class="view__content table-section __w-content-fluid">
+      <table class="table table--zebra table--sticky table--gene-to-progeria">
+        <thead>
+        <th *ngIf="numberColumn">
+          #
+        </th>
+        <th *ngIf="geneColumnOn">
+          {{ "main_page_table_name" | translate }}
+        </th>
+        <th>{{ "progeria_syndrome" | translate }}</th>
+        <th>
+          {{ "research_data_comment" | translate }}
+        </th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of items | slice: 0:slice let i = index">
+          <td *ngIf="numberColumn"
+              class="number-column">
+            <div class="number-column__inner">{{ i + 1 }}</div>
+          </td>
+          <td *ngIf="geneColumnOn"
+              class="__cell-width-medium">
+            <div *ngIf="item.hasOwnProperty('geneSymbol')"
+                 class="title">
+              <a [routerLink]="['/gene', item.geneSymbol]" class="link link--gray">
+                <b>{{ item.geneSymbol }}</b> {{ item.geneName }}
+              </a>
+            </div>
+          </td>
+          <td>
+            <ng-container *ngIf="item.progeriaSyndrome ; else dash">
+              {{ item.progeriaSyndrome }}
+            </ng-container>
+          </td>
+          <td>
+            <button class="btn btn--small btn--purple btn--flat"
+                    (click)="openCommentModal('research_data_comment', item, links)"
+            >
+              {{ "research_data_comment_button" | translate }}
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </section>
 
 <ng-template #dash>

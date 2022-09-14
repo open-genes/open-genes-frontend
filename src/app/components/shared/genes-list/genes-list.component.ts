@@ -26,6 +26,7 @@ import { ApiResponse, PageOptions } from '../../../core/models/api-response.mode
 import { SearchModel } from '../../../core/models/open-genes-api/search.model';
 import { SortEnum } from '../../../core/services/filters/filter-types.enum';
 import { appliedFilter } from './genes-list-settings.model';
+import { Viewport } from '../../../core/utils/window-width';
 
 @Component({
   selector: 'app-genes-list',
@@ -34,6 +35,7 @@ import { appliedFilter } from './genes-list-settings.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenesListComponent implements OnInit, OnDestroy {
+  @Input() viewport: Viewport;
   @Input() cancelSearch: Observable<void>;
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
@@ -127,6 +129,11 @@ export class GenesListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    if (this.viewport) {
+      // 3 in a row vs 2 in a row
+      this.itemsPerPage = this.viewport === 'widescreen' ? 21 : 20;
+      this.filterService.pagination.pageSize = this.itemsPerPage;
+    }
     this.activatedRoute?.queryParams
       .pipe(takeUntil(this.subscription$))
       .subscribe((params) => {
@@ -256,7 +263,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
    * Filter reset
    */
   public clearFilters(filterName?: ApiGeneSearchParameters): void {
-    console.log(`clearFilters(${filterName})`);
     this.filterService.clearFilters(filterName);
     this.filterChanged.emit({ name: filterName, value: null });
     this.cdRef.markForCheck();

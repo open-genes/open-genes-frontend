@@ -5,7 +5,7 @@
       <app-eye-checkbox
         matPrefix
         (changeEvent)="toggleGenesListSettings('diseases')"
-        [switch]="listSettings.ifShowDiseases"></app-eye-checkbox>
+        [switch]="listSettings?.ifShowDiseases"></app-eye-checkbox>
       <mat-label>{{ "filters_modal_placeholder_diseases" | translate }}</mat-label>
       <mat-select formControlName="diseasesSelect"
                   multiple="true"
@@ -35,7 +35,7 @@
       <app-eye-checkbox
         matPrefix
         (changeEvent)="toggleGenesListSettings('disease-categories')"
-        [switch]="listSettings.ifShowDiseaseCategories"></app-eye-checkbox>
+        [switch]="listSettings?.ifShowDiseaseCategories"></app-eye-checkbox>
       <mat-label>{{ "filters_modal_placeholder_disease_categories" | translate }}</mat-label>
       <mat-select formControlName="diseaseCategoriesSelect"
                   multiple="true"
@@ -60,7 +60,7 @@
       <app-eye-checkbox
         matPrefix
         (changeEvent)="toggleGenesListSettings('criteria')"
-        [switch]="listSettings.ifShowCriteria"></app-eye-checkbox>
+        [switch]="listSettings?.ifShowCriteria"></app-eye-checkbox>
       <mat-label>{{ "filters_modal_placeholder_criteria" | translate }}</mat-label>
       <mat-select formControlName="selectionCriteriaSelect"
                   multiple="true"
@@ -81,7 +81,7 @@
       <app-eye-checkbox
         matPrefix
         (changeEvent)="toggleGenesListSettings('mechanisms')"
-        [switch]="listSettings.ifShowAgingMechanisms"></app-eye-checkbox>
+        [switch]="listSettings?.ifShowAgingMechanisms"></app-eye-checkbox>
 
       <mat-label>{{ "filters_modal_placeholder_aging_mechanisms" | translate }}</mat-label>
       <mat-select formControlName="agingMechanismsSelect"
@@ -103,7 +103,7 @@
       <app-eye-checkbox
         matPrefix
         (changeEvent)="toggleGenesListSettings('classes')"
-        [switch]="listSettings.ifShowProteinClasses">
+        [switch]="listSettings?.ifShowProteinClasses">
       </app-eye-checkbox>
 
       <mat-label>{{ "filters_modal_placeholder_protein_classes" | translate }}</mat-label>
@@ -125,7 +125,7 @@
     <mat-checkbox
       color="primary"
       class="checkbox"
-      [checked]="listSettings.ifShowAge"
+      [checked]="listSettings?.ifShowAge"
       (change)="toggleGenesListSettings('gene-age')">
       {{ "gene_list_evolutionary_age" | translate }}
     </mat-checkbox>
@@ -182,13 +182,13 @@
     </mat-form-field>
   </div>
 
-  <div class="body__row __mb-10 hidden">
+  <div class="body__row __mb-10">
     <mat-checkbox
       color="primary"
       formControlName="experimentsStatsCheckbox"
       class="checkbox"
-      [(ngModel)]="listSettings.ifShowExperimentsStats"
-      [checked]="predefinedExperimentsStats"
+      [(ngModel)]="ifShowExperimentsStats"
+      [disabled]="isLoading"
       (change)="toggleSwitchAndFilter('researches', $event)">
       {{ "filters_modal_placeholder_show_research_data" | translate }}
     </mat-checkbox>
