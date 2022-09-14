@@ -29,7 +29,7 @@
     }
   }
 
-  :host-context(.view-content--widescreen) {
+  :host-context(.view__content--widescreen) {
     flex: 0 0 calc(#{100% / 3} - #{$card-spacing / 1.5});
     margin-right: #{$card-spacing};
 
@@ -38,7 +38,7 @@
     }
   }
 
-  :host-context(.view-content--desktop) {
+  :host-context(.view__content--desktop) {
     flex: 0 0 calc(50% - #{$card-spacing / 2});
     margin-right: #{$card-spacing};
 
@@ -47,7 +47,7 @@
     }
   }
 
-  :host-context(.view-content--tablet) {
+  :host-context(.view__content--tablet) {
     flex: 0 0 calc(50% - #{$card-spacing / 2});
     margin-right: #{$card-spacing};
 
@@ -56,7 +56,7 @@
     }
   }
 
-  :host-context(.view-content--smartphone) {
+  :host-context(.view__content--smartphone) {
     flex: 0 0 100%;
   }
 

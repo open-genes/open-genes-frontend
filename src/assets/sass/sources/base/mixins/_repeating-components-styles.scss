@@ -471,5 +471,16 @@
   }
 }
 
+@mixin hide-scrollbar {
+  // IE, Edge, FF
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  // Chrome, Safari, Opera
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 
 

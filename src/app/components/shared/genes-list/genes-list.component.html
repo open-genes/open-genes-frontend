@@ -40,75 +40,81 @@
 </div>
 
 <!-- Content -->
-<section
-  *ngIf="resultingList?.length"
-  class="view-content"
-  [ngClass]="{
-  'view-content--as-table': isTableView && !isMobile,
-  'view-content--as-cards': !isTableView || isMobile,
-  'view-content--widescreen': viewport === 'widescreen',
-  'view-content--desktop': viewport === 'desktop',
-  'view-content--tablet': viewport === 'tablet',
-  'view-content--smartphone': viewport === 'smartphone'
+<div class="view">
+  <div class="view__fadeout view__fadeout--l view__fadeout--hidden"></div>
+  <div class="view__fadeout view__fadeout--r view__fadeout--hidden"></div>
+  <section
+    *ngIf="resultingList?.length"
+    appScrollableContainer
+    class="view__content"
+    [ngClass]="{
+  'view__content--as-table': isTableView && !isMobile,
+  'view__content--as-cards': !isTableView || isMobile,
+  'view__content--widescreen': viewport === 'widescreen',
+  'view__content--desktop': viewport === 'desktop',
+  'view__content--tablet': viewport === 'tablet',
+  'view__content--smartphone': viewport === 'smartphone'
   }">
-  <!-- Table view -->
-  <ng-container *ngIf="isTableView && !isMobile">
-    <table>
-      <thead>
-      <app-genes-table-header *ngIf="!isGoTermsMode"></app-genes-table-header>
-      <app-genes-annotations-table-header
-        *ngIf="isGoTermsMode && isGoSearchPerformed "></app-genes-annotations-table-header>
-      </thead>
+    <!-- Table view -->
+    <ng-container *ngIf="isTableView && !isMobile">
+      <table>
+        <thead>
+        <app-genes-table-header *ngIf="!isGoTermsMode"></app-genes-table-header>
+        <app-genes-annotations-table-header
+          *ngIf="isGoTermsMode && isGoSearchPerformed "></app-genes-annotations-table-header>
+        </thead>
 
-      <ng-container *ngIf="isGoTermsMode && isGoSearchPerformed ; else table">
-        <app-gene-annotations-table-row
+        <ng-container *ngIf="isGoTermsMode && isGoSearchPerformed ; else table">
+          <app-gene-annotations-table-row
+            *ngFor="let rowData of resultingList"
+            [item]="rowData"
+            [isAdded]="isFaved(rowData.id)"
+            (unFav)="unFavItem($event)"
+            (fav)="favItem($event)"
+          ></app-gene-annotations-table-row>
+        </ng-container>
+
+        <ng-template #table>
+          <app-gene-table-row
+            *ngFor="let rowData of resultingList"
+            [item]="rowData"
+            [isAdded]="isFaved(rowData.id)"
+            (unFav)="unFavItem($event)"
+            (fav)="favItem($event)"
+            (filterChanged)="filterChanged.emit($event)"
+          ></app-gene-table-row>
+        </ng-template>
+      </table>
+    </ng-container>
+
+    <!-- Card view -->
+    <ng-container *ngIf="!isTableView || isMobile">
+      <ng-container *ngIf="isGoTermsMode && isGoSearchPerformed ; else card">
+        <app-gene-annotations-card
+          class="card"
           *ngFor="let rowData of resultingList"
           [item]="rowData"
           [isAdded]="isFaved(rowData.id)"
           (unFav)="unFavItem($event)"
           (fav)="favItem($event)"
-        ></app-gene-annotations-table-row>
+        ></app-gene-annotations-card>
       </ng-container>
 
-      <ng-template #table>
-        <app-gene-table-row
+      <ng-template #card>
+        <app-gene-card
+          class="card"
           *ngFor="let rowData of resultingList"
           [item]="rowData"
           [isAdded]="isFaved(rowData.id)"
           (unFav)="unFavItem($event)"
           (fav)="favItem($event)"
           (filterChanged)="filterChanged.emit($event)"
-        ></app-gene-table-row>
+        ></app-gene-card>
       </ng-template>
-    </table>
-  </ng-container>
-
-  <!-- Card view -->
-  <ng-container *ngIf="!isTableView || isMobile">
-    <ng-container *ngIf="isGoTermsMode && isGoSearchPerformed ; else card">
-      <app-gene-annotations-card
-        class="card"
-        *ngFor="let rowData of resultingList"
-        [item]="rowData"
-        [isAdded]="isFaved(rowData.id)"
-        (unFav)="unFavItem($event)"
-        (fav)="favItem($event)"
-      ></app-gene-annotations-card>
     </ng-container>
+  </section>
+</div>
 
-    <ng-template #card>
-      <app-gene-card
-        class="card"
-        *ngFor="let rowData of resultingList"
-        [item]="rowData"
-        [isAdded]="isFaved(rowData.id)"
-        (unFav)="unFavItem($event)"
-        (fav)="favItem($event)"
-        (filterChanged)="filterChanged.emit($event)"
-      ></app-gene-card>
-    </ng-template>
-  </ng-container>
-</section>
 
 <!-- Show more Button -->
 <div

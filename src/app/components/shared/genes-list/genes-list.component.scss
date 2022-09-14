@@ -8,34 +8,65 @@
   margin-bottom: 20px;
 }
 
-.view-content {
+.view {
+  position: relative;
   width: 100%;
   max-width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  margin-bottom: 20px; // для кнопки подгрузки
+  margin-bottom: 20px; // for preload button
 
-  @include item;
-  @include table;
-
-  &--as-table {
+  &__fadeout {
     display: block;
-    overflow: auto;
-    font-size: 14px;
-    line-height: 1.5;
-    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
+    width: 24px;
+
+    &--r {
+      right: 0;
+      background: linear-gradient(to right, rgba($color-white, 0), $color-white);
+    }
+
+    &--l {
+      left: 0;
+      background: linear-gradient(to left, rgba($color-white, 0), $color-white);
+    }
+
+    &--hidden {
+      visibility: hidden;
+    }
   }
 
-  &--as-cards {
-    $card-spacing: 20px;
+  &__content {
+    width: 100%;
+    max-width: 100%;
 
-    display: flex;
-    flex-flow: row wrap;
-    align-items: stretch;
-    justify-content: flex-start;
-    margin-top: -#{$card-spacing};
+    @include item;
+
+    @include table;
+
+    &--as-table {
+      display: block;
+      overflow: auto;
+      @include hide-scrollbar;
+      font-size: 14px;
+      line-height: 1.5;
+      border-radius: 5px;
+    }
+
+    &--as-cards {
+      $card-spacing: 20px;
+
+      display: flex;
+      flex-flow: row wrap;
+      align-items: stretch;
+      justify-content: flex-start;
+      margin-top: -#{$card-spacing};
+    }
   }
 }
+
+
 
 .view-panel {
   // You can switch the view only on the desktop.
