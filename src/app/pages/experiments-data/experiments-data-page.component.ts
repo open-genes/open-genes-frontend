@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { ResearchArguments } from '../../core/models/open-genes-api/researches.model';
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
+import { BehaviorSubject } from 'rxjs';
 
 interface Tab {
   title: string;
@@ -55,6 +56,7 @@ export class ExperimentsDataPageComponent extends WindowWidth implements OnInit,
     // },
   ];
   public activeTabIndex: number;
+  public isMobile$ = new BehaviorSubject<boolean>(this.isMobile);
 
   constructor(
     private readonly cdRef: ChangeDetectorRef,
@@ -67,6 +69,14 @@ export class ExperimentsDataPageComponent extends WindowWidth implements OnInit,
     if (localStorage.getItem('researchesActiveTab')) {
       this.activeTabIndex = Number(localStorage.getItem('researchesActiveTab'));
     }
+
+    this.initWindowWidth(() => {
+      this.isMobile$.next(this.isMobile);
+    });
+
+    this.detectWindowWidth(() => {
+      this.isMobile$.next(this.isMobile);
+    });
   }
 
   ngOnDestroy(): void {

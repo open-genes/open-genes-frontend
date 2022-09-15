@@ -36,8 +36,13 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
   // Search in selects
   searchText: any;
 
-  // Age-related processes
-  public modelOrganisms: any[] = []; // TODO: typing
+  // Selection criteria
+  public selectionCriteria: any[] = []; // TODO: typing
+  public predefinedSelectionCriteria: any[] = [];
+  public selectionCriteriaModel: Observable<any[]>;
+
+  // Model organism
+  public modelOrganisms: any[] = [];
   public predefinedModelOrganisms: any[] = [];
   public modelOrganismsModel: Observable<any[]>;
 
@@ -48,13 +53,22 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
   ) {
     super(apiService, filterService);
     this.filtersForm = new FormGroup({
+      selectionCriteriaSelect: new FormControl([[], [null]]),
       modelOrganismSelect: new FormControl([null, null]),
     });
   }
 
   ngOnInit(): void {
     // FILTERS
-    // Age-related processes
+    // Selection criteria
+    this.selectionCriteriaModel = this.populateSelect('criteria');
+    this.selectionCriteriaModel
+      .pipe(takeUntil(this.subscription$))
+      .subscribe((data: any[]) => {
+        this.selectionCriteria = data;
+      });
+
+    // Model organism
     this.modelOrganismsModel = this.populateSelect(
       'model-organisms'
     );

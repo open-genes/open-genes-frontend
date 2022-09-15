@@ -16,8 +16,8 @@ import { ApiService } from '../api/open-genes-api.service';
   providedIn: 'root',
 })
 export class StudiesFilterService {
-  private listOfFields$ = new BehaviorSubject<any>('');
-  private filterChanges$ = new BehaviorSubject<any>([]);
+  public listOfFields$ = new BehaviorSubject<any>('');
+  public filterChanges$ = new BehaviorSubject<any>([]);
   public currentFields: Observable<GenesListSettings> = this.listOfFields$.asObservable();
   public filterResult: Observable<ApiResearchFilter> = this.filterChanges$.asObservable();
   public twoOrMoreFiltersApplied = new BehaviorSubject<boolean>(false);
@@ -103,6 +103,7 @@ export class StudiesFilterService {
       return;
     }
 
+    this.filterChanges$.next(this.filters);
     this.areMoreThan2FiltersApplied();
   }
 

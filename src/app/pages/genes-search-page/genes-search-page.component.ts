@@ -9,6 +9,8 @@ import { takeUntil } from 'rxjs/operators';
 import { WindowWidth } from '../../core/utils/window-width';
 import { Subject } from 'rxjs';
 import { appliedFilter } from '../../components/shared/genes-list/genes-list-settings.model';
+import { CommonModalComponent } from '../../components/ui-components/components/modals/common-modal/common-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-genes-search-page',
@@ -41,16 +43,23 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
     public windowService: WindowService,
     private wizardService: WizardService,
     private readonly apiService: ApiService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
+    private dialog: MatDialog,
   ) {
     super(windowService);
   }
 
   ngOnInit(): void {
     this.initWindowWidth(() => {
+      if (!this.isMobile) {
+        this.dialog.closeAll();
+      }
       this.cdRef.markForCheck();
     });
     this.detectWindowWidth(() => {
+      if (!this.isMobile) {
+        this.dialog.closeAll();
+      }
       this.cdRef.markForCheck();
     });
 
@@ -59,7 +68,6 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
-
   }
 
   /**
@@ -153,5 +161,18 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
 
   private loadWizard() {
     this.wizardService.openOnce();
+  }
+
+  /**
+   * Opening modal for filters and fields settings
+   */
+  public openFiltersModal(title, body, template = null): void {
+    this.dialog.open(CommonModalComponent, {
+      data: { title: title, body: body, template: template },
+      panelClass: 'filters-modal',
+      minWidth: '320px',
+      maxWidth: '768px',
+      autoFocus: false,
+    });
   }
 }

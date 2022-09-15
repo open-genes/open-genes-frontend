@@ -1,6 +1,24 @@
 <form class="filters-modal__body"
       [formGroup]="filtersForm">
   <div class="body__row">
+    <mat-form-field appearance="fill">
+
+      <mat-label>{{ "filters_modal_placeholder_criteria" | translate }}</mat-label>
+      <mat-select formControlName="selectionCriteriaSelect"
+                  multiple="true"
+                  [disabled]="selectionCriteria?.length === 0"
+                  [(ngModel)]="predefinedSelectionCriteria"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="applyAndUpdate('bySelectionCriteria', $event)">
+        <ng-container *ngIf="selectionCriteria?.length !== 0">
+          <mat-option *ngFor="let i of selectionCriteria"
+                      [value]="i.id">{{ i.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
     <mat-form-field appearance="fill" color="primary">
       <mat-label>{{ "filters_modal_placeholder_model_organisms" | translate }}</mat-label>
       <mat-select formControlName="modelOrganismSelect"
@@ -19,7 +37,7 @@
 
 
   <div class="reset-button-wrapper">
-    <button class="btn btn--fill btn--gray reset-button"
+    <button class="btn btn--fill btn--big btn--gray reset-button"
             (click)="resetForm()">
       {{ "filters_reset" | translate }}
     </button>

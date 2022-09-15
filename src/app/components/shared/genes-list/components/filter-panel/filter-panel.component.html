@@ -1,9 +1,3 @@
-<button *ngIf="!isGoTermsMode && isMobile"
-        class="modal-button btn btn--small btn--icon-only btn--purple"
-        (click)="openFiltersModal('filters_modal_title', null, GeneFieldsModalTemplate)">
-  <span class="fa far fa-sliders-h"></span>
-</button>
-
 <ng-container matSort
      (matSortChange)="sortBy($event)"
      class="filters-group">
@@ -107,7 +101,4 @@
   <mat-icon class="icon">close</mat-icon>
 </button>
 
-<ng-template #GeneFieldsModalTemplate>
-  <app-gene-filters-panel></app-gene-filters-panel>
-</ng-template>
 

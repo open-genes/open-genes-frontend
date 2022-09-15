@@ -75,7 +75,15 @@
               (queryChange)="setSearchQuery($event)"
               (cancel)="$cancelSearch.next()"
               [showProgressBar]="showProgressBar"
-            ></app-search>
+            >
+              <button *ngIf="isMobile"
+                      prefix
+                      mat-icon-button
+                      color="primary"
+                      (click)="openFiltersModal('filters_modal_title', null, fieldsModalTemplate)">
+                <mat-icon>tune</mat-icon>
+              </button>
+            </app-search>
 
             <app-genes-list
               (loading)="setLoader($event)"
@@ -134,5 +142,9 @@
       </button>
     </ng-container>
   </app-hint>
+</ng-template>
+
+<ng-template #fieldsModalTemplate>
+  <app-gene-filters-panel></app-gene-filters-panel>
 </ng-template>
 

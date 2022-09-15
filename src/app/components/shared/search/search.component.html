@@ -41,6 +41,10 @@
         <span class="fa fal fa-search"></span>
       </button>
 
+      <div class="search-form__prefix">
+        <ng-content select="[prefix]"></ng-content>
+      </div>
+
       <input
         formControlName="searchField"
         type="text"

@@ -16,27 +16,20 @@
 
         <div class="container-fluid search-page-container">
           <div class="row">
-            <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 sidebar-column"
-                 [ngClass]="isMobile? 'sidebar-column--mobile' : 'sidebar-column--desktop'">
+            <div class="col-12">
+              <div *ngIf="isMobile"
+                   class="__mb-20">
+                <ng-container [ngTemplateOutlet]="banner"></ng-container>
+              </div>
+            </div>
+            <div
+              *ngIf="!isMobile"
+              class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 sidebar-column">
               <app-sidebar>
                 <app-sidebar-item>
                   <div content class="hint-wrapper">
-                    <app-hint hintType="emphasized">
-                      <ng-container title>
-                        <span class="fa far fa-magic"></span>&nbsp;{{ 'experiments_page_download_title' | translate }}
-                      </ng-container>
-
-                      <ng-container description>
-                        {{ "experiments_page_download_description" | translate }}
-                      </ng-container>
-
-                      <ng-container button>
-                        <button class="btn btn--fill btn--small btn--white"
-                                routerLink="/download">
-                          {{ 'experiments_page_download_button' | translate }}
-                        </button>
-                      </ng-container>
-                    </app-hint>
+                    <ng-container [ngTemplateOutlet]="banner"
+                    ></ng-container>
                   </div>
                 </app-sidebar-item>
 
@@ -67,6 +60,7 @@
                     <app-research-tab
                       class="tab__content"
                       [studyType]="tab.param"
+                      [isMobile]="isMobile$"
                       (dataLoaded)="setIsListLoaded()"
                     ></app-research-tab>
                   </ng-template>
@@ -89,3 +83,22 @@
     </ng-template>
   </div>
 </div>
+
+<ng-template #banner>
+  <app-hint hintType="emphasized">
+    <ng-container title>
+      <span class="fa far fa-magic"></span>&nbsp;{{ 'experiments_page_download_title' | translate }}
+    </ng-container>
+
+    <ng-container description>
+      {{ "experiments_page_download_description" | translate }}
+    </ng-container>
+
+    <ng-container button>
+      <button class="btn btn--fill btn--small btn--white"
+              routerLink="/download">
+        {{ 'experiments_page_download_button' | translate }}
+      </button>
+    </ng-container>
+  </app-hint>
+</ng-template>

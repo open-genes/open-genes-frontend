@@ -9,17 +9,19 @@ import {
   Output,
 } from '@angular/core';
 import { ResearchArguments, ResearchTypes } from '../../../../core/models/open-genes-api/researches.model';
-import { distinctUntilChanged, map, switchMap, takeUntil } from 'rxjs/operators';
+import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { ApiResponse, PageOptions } from '../../../../core/models/api-response.model';
 import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
 import { AdditionalInterventionResolver } from 'src/app/core/utils/additional-intervention-resolver';
 import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { SearchMode } from '../../../../core/models/settings.model';
 import { Genes } from '../../../../core/models';
 import { StudiesFilterService } from '../../../../core/services/filters/studies-filter.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModalComponent } from '../../../../components/ui-components/components/modals/common-modal/common-modal.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,6 +31,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ResearchTabComponent extends AdditionalInterventionResolver implements OnInit, OnDestroy {
   @Input() studyType: ResearchArguments;
+  @Input() isMobile: BehaviorSubject<boolean>;
   @Output() dataLoaded: EventEmitter<never> = new EventEmitter<never>();
 
   public query: string;
@@ -57,6 +60,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     private readonly cdRef: ChangeDetectorRef,
     private router: Router,
     private snackBar: MatSnackBar,
+    private dialog: MatDialog,
     private filterService: StudiesFilterService,
     private activatedRoute: ActivatedRoute
   ) {
@@ -82,6 +86,12 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     });
     this.setInitialState();
     this.cachedData = this.studies;
+
+    this.isMobile.subscribe((r) => {
+      if (!r) {
+        this.dialog.closeAll();
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -171,9 +181,8 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
 
     this.filterService.filterResult
       .pipe(
-        distinctUntilChanged(),
         takeUntil(this.studies$),
-        switchMap(() => {
+        switchMap((_) => {
           // Subscribing to any filters update and return getSortedAndFilteredStudies method to subscribe
           return this.filterService.getSortedAndFilteredStudies(this.studyType);
         }),
@@ -182,7 +191,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
             r.items = r.items.filter((r: any) => this.resolveAdditionalIntervention(r));
           }
           return r;
-        }
+        },
       ))
       .subscribe(
         (res) => {
@@ -220,5 +229,18 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.slice.next(this.studies.length + this.itemsPerPage);
     this.getStudies(researchType);
     this.cdRef.detectChanges();
+  }
+
+  /**
+   * Opening modal for filters and fields settings
+   */
+  public openFiltersModal(title, body, template = null): void {
+    this.dialog.open(CommonModalComponent, {
+      data: { title: title, body: body, template: template },
+      panelClass: 'filters-modal',
+      minWidth: '320px',
+      maxWidth: '768px',
+      autoFocus: false,
+    });
   }
 }

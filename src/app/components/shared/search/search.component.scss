@@ -1,8 +1,9 @@
 @import "../../styles";
 
 $search-input-height: 50px;
-$search-switch-width: 50px;
-$mobile-container-vertical-padding: 5px;
+$search-button-size: 40px;
+$search-prefix-width: 20px;
+$mobile-container-vertical-padding: 7px;
 $input-border-radius: 5px;
 
 :host {
@@ -112,26 +113,44 @@ $input-border-radius: 5px;
     }
   }
 
+  &__prefix {
+    width: $search-prefix-width;
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    transform: translateY(-50%);
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .search-form__prefix:not(:empty) + .search-form__field {
+    padding-left: $search-prefix-width + 20px;
+  }
+
   .clear-search-button {
     color: $color-gray;
     position: absolute;
     top: 5px;
     z-index: 1;
-    right: $search-input-height;
+    right: $search-button-size;
   }
 
   &__cancel {
     display: block;
-    width: $search-input-height;
-    height: $search-input-height;
+    width: $search-button-size;
+    height: $search-button-size;
     color: $color-gray;
     line-height: normal;
-    font-size: $search-input-height / 2;
+    font-size: $search-button-size / 1.5;
     text-align: center;
     position: absolute;
-    top: 0;
+    top: 50%;
+    right: $search-button-size;
+    transform: translateY(-50%);
     z-index: 1;
-    right: $search-input-height + 10px;
+
 
     .fa {
       position: relative;

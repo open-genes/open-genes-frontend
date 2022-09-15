@@ -346,20 +346,10 @@
 
   .body__row {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
     width: 100%;
     font-size: 11px; // regulates mat-select size
     margin-bottom: 10px;
-
-    .inline-button {
-      font-size: 1.2em;
-      color: $color-black-light;
-      line-height: 3.2em;
-    }
-
-    .checkbox {
-      font-size: 1.2em;
-    }
 
     mat-form-field {
       width: 100%;
@@ -393,6 +383,33 @@
         padding-top: 0.4em;
       }
     }
+
+    &--checkbox {
+      align-items: center;
+
+      .checkbox {
+        font-size: 1.2em;
+      }
+    }
+  }
+
+  .body__title {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    font-size: $font-size-small;
+    color: $color-gray;
+    margin-bottom: .5em;
+
+    &::after {
+      content: ' ';
+      display: none;
+      width: 100%;
+      height: 1px;
+      position: absolute;
+      bottom: -4px;
+      background-color: $color-borders;
+    }
   }
 
   .separator {
@@ -415,7 +432,7 @@
     .filters-modal__body {
       display: grid;
       align-content: space-between;
-      align-items: start;
+      align-items: center;
       justify-items: start;
       grid-gap: 10px;
       justify-content: center;
@@ -431,6 +448,13 @@
         .reset-button-wrapper {
           grid-column-start: 1;
           grid-column-end: 3;
+        }
+
+        .body__title {
+          grid-column: 1 / -1;
+          &::after {
+            display: block;
+          }
         }
       }
 

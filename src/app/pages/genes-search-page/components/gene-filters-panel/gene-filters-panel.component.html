@@ -1,5 +1,69 @@
 <form class="filters-modal__body"
       [formGroup]="filtersForm">
+
+  <div class="body__title">
+    {{ "filters_modal_title_group1" | translate }} Evidence of association with aging
+  </div>
+
+  <div class="body__row">
+    <mat-form-field appearance="fill">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="toggleGenesListSettings('criteria')"
+        [switch]="listSettings?.ifShowCriteria"></app-eye-checkbox>
+      <mat-label>{{ "filters_modal_placeholder_criteria" | translate }}</mat-label>
+      <mat-select formControlName="selectionCriteriaSelect"
+                  multiple="true"
+                  [disabled]="selectionCriteria?.length === 0"
+                  [(ngModel)]="predefinedSelectionCriteria"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="applyAndUpdate('bySelectionCriteria', $event)">
+        <ng-container *ngIf="selectionCriteria?.length !== 0">
+          <mat-option *ngFor="let i of selectionCriteria"
+                      [value]="i.id">{{ i.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row body__row--checkbox">
+    <mat-checkbox
+      color="primary"
+      formControlName="experimentsStatsCheckbox"
+      class="checkbox"
+      [(ngModel)]="ifShowExperimentsStats"
+      [disabled]="isLoading"
+      (change)="toggleSwitchAndFilter('researches', $event)">
+      {{ "filters_modal_placeholder_show_research_data" | translate }}
+    </mat-checkbox>
+  </div>
+
+  <div class="body__title">
+    {{ "filters_modal_title_group2" | translate }} Gene data
+  </div>
+
+  <div class="body__row">
+    <mat-form-field appearance="fill">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="toggleGenesListSettings('mechanisms')"
+        [switch]="listSettings?.ifShowAgingMechanisms"></app-eye-checkbox>
+
+      <mat-label>{{ "filters_modal_placeholder_aging_mechanisms" | translate }}</mat-label>
+      <mat-select formControlName="agingMechanismsSelect"
+                  multiple="true"
+                  [disabled]="agingMechanisms?.length === 0"
+                  [(ngModel)]="predefinedAgingMechanisms"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="applyAndUpdate('byAgingMechanism', $event)">
+        <ng-container *ngIf="agingMechanisms?.length !== 0">
+          <mat-option *ngFor="let i of agingMechanisms"
+                      [value]="i.id">{{ i.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <div class="body__row">
     <mat-form-field appearance="fill">
       <app-eye-checkbox
@@ -59,49 +123,6 @@
     <mat-form-field appearance="fill">
       <app-eye-checkbox
         matPrefix
-        (changeEvent)="toggleGenesListSettings('criteria')"
-        [switch]="listSettings?.ifShowCriteria"></app-eye-checkbox>
-      <mat-label>{{ "filters_modal_placeholder_criteria" | translate }}</mat-label>
-      <mat-select formControlName="selectionCriteriaSelect"
-                  multiple="true"
-                  [disabled]="selectionCriteria?.length === 0"
-                  [(ngModel)]="predefinedSelectionCriteria"
-                  [compareWith]="compareSelectValues"
-                  (selectionChange)="applyAndUpdate('bySelectionCriteria', $event)">
-        <ng-container *ngIf="selectionCriteria?.length !== 0">
-          <mat-option *ngFor="let i of selectionCriteria"
-                      [value]="i.id">{{ i.name }}</mat-option>
-        </ng-container>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div class="body__row">
-    <mat-form-field appearance="fill">
-      <app-eye-checkbox
-        matPrefix
-        (changeEvent)="toggleGenesListSettings('mechanisms')"
-        [switch]="listSettings?.ifShowAgingMechanisms"></app-eye-checkbox>
-
-      <mat-label>{{ "filters_modal_placeholder_aging_mechanisms" | translate }}</mat-label>
-      <mat-select formControlName="agingMechanismsSelect"
-                  multiple="true"
-                  [disabled]="agingMechanisms?.length === 0"
-                  [(ngModel)]="predefinedAgingMechanisms"
-                  [compareWith]="compareSelectValues"
-                  (selectionChange)="applyAndUpdate('byAgingMechanism', $event)">
-        <ng-container *ngIf="agingMechanisms?.length !== 0">
-          <mat-option *ngFor="let i of agingMechanisms"
-                      [value]="i.id">{{ i.name }}</mat-option>
-        </ng-container>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div class="body__row">
-    <mat-form-field appearance="fill">
-      <app-eye-checkbox
-        matPrefix
         (changeEvent)="toggleGenesListSettings('classes')"
         [switch]="listSettings?.ifShowProteinClasses">
       </app-eye-checkbox>
@@ -121,7 +142,11 @@
     </mat-form-field>
   </div>
 
-  <div class="body__row __mb-10">
+  <div class="body__title">
+    {{ "filters_modal_title_group3" | translate }} Evolution
+  </div>
+
+  <div class="body__row body__row--checkbox">
     <mat-checkbox
       color="primary"
       class="checkbox"
@@ -182,20 +207,8 @@
     </mat-form-field>
   </div>
 
-  <div class="body__row __mb-10">
-    <mat-checkbox
-      color="primary"
-      formControlName="experimentsStatsCheckbox"
-      class="checkbox"
-      [(ngModel)]="ifShowExperimentsStats"
-      [disabled]="isLoading"
-      (change)="toggleSwitchAndFilter('researches', $event)">
-      {{ "filters_modal_placeholder_show_research_data" | translate }}
-    </mat-checkbox>
-  </div>
-
   <div class="reset-button-wrapper">
-    <button class="btn btn--fill btn--gray reset-button"
+    <button class="btn btn--fill btn--big btn--gray reset-button"
             (click)="resetForm()">
       {{ "filters_reset" | translate }}
     </button>

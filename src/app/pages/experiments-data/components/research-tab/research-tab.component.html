@@ -1,6 +1,7 @@
 <div [ngSwitch]="studyType"
      class="research">
   <app-search-counter
+    *ngIf="options"
     [quantity]="options.objTotal"
     [title]="'main_page_total'"
   ></app-search-counter>
@@ -16,6 +17,13 @@
               [showProgressBar]="showProgressBar"
               [showClearButton]="isNotFound"
               class="__mb-30">
+    <button *ngIf="isMobile | async"
+            prefix
+            mat-icon-button
+            color="primary"
+            (click)="openFiltersModal('filters_modal_title', null, fieldsModalTemplate)">
+      <mat-icon>tune</mat-icon>
+    </button>
   </app-search>
 
   <ng-container *ngIf="!isNotFound">
@@ -116,3 +124,7 @@
     </app-no-content>
   </section>
 </div>
+
+<ng-template #fieldsModalTemplate>
+  <app-research-filters-panel></app-research-filters-panel>
+</ng-template>
