@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AdditionalInterventionResolver } from '../utils/additional-intervention-resolver';
-import { PurpleTable } from '../models/open-genes-api/researches.model';
+import { PurpleTable } from '../models/open-genes-api/studies.model';
 
 @Injectable({
   providedIn: 'root',

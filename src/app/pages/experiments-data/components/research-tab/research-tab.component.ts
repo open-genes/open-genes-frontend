@@ -8,7 +8,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { ResearchArguments, ResearchTypes } from '../../../../core/models/open-genes-api/researches.model';
+import { StudiesArguments, StudyTypes } from '../../../../core/models/open-genes-api/studies.model';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { ApiResponse, PageOptions } from '../../../../core/models/api-response.model';
 import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
@@ -30,13 +30,13 @@ import { CommonModalComponent } from '../../../../components/ui-components/compo
   styleUrls: ['./research-tab.component.scss'],
 })
 export class ResearchTabComponent extends AdditionalInterventionResolver implements OnInit, OnDestroy {
-  @Input() studyType: ResearchArguments;
+  @Input() studyType: StudiesArguments;
   @Input() isMobile: BehaviorSubject<boolean>;
   @Output() dataLoaded: EventEmitter<never> = new EventEmitter<never>();
 
   public query: string;
   public searchMode: SearchMode = 'searchByGenes';
-  public studies: ResearchTypes[] = [];
+  public studies: StudyTypes[] = [];
   public options: PageOptions;
   public isNotFound = false;
   public currentPage = 1;
@@ -49,7 +49,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   public genesList: Pick<Genes, 'id' | 'symbol' | 'name' | 'ensembl'>[] = [];
   public showProgressBar: boolean;
 
-  private cachedData: ResearchTypes[] = [];
+  private cachedData: StudyTypes[] = [];
   private router$ = new Subject();
   private genes$ = new Subject();
   private studies$ = new ReplaySubject(1);
@@ -169,7 +169,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     }
   }
 
-  public getStudies(researchType: ResearchArguments, callback?: (res?: ApiResponse<ResearchTypes>) => void): void {
+  public getStudies(researchType: StudiesArguments, callback?: (res?: ApiResponse<StudyTypes>) => void): void {
     this.isLoading = true;
     if (this.currentPage === 1) {
       this.studies = [];
@@ -186,7 +186,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
           // Subscribing to any filters update and return getSortedAndFilteredStudies method to subscribe
           return this.filterService.getSortedAndFilteredStudies(this.studyType);
         }),
-        map((r: ApiResponse<ResearchTypes>) => {
+        map((r: ApiResponse<StudyTypes>) => {
           if (researchType === 'lifespan-change') {
             r.items = r.items.filter((r: any) => this.resolveAdditionalIntervention(r));
           }
@@ -222,7 +222,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.dataLoaded.emit();
   }
 
-  public showMore(researchType: ResearchArguments): void {
+  public showMore(researchType: StudiesArguments): void {
     this.currentPage++;
     this.filterService.pagination.page = this.currentPage;
     this.filterService.onLoadMoreGenes(this.options?.pagination?.pagesTotal);

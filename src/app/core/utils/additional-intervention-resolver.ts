@@ -1,4 +1,4 @@
-import { PurpleTable } from '../models/open-genes-api/researches.model';
+import { PurpleTable } from '../models/open-genes-api/studies.model';
 
 export abstract class AdditionalInterventionResolver {
   resolveAdditionalIntervention(research: PurpleTable, targetGene = research.geneId): boolean {

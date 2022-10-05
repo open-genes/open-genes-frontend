@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AdditionalInterventionResolver } from '../../../core/utils/additional-intervention-resolver';
 
 @Directive()
-export abstract class ResearchTables extends AdditionalInterventionResolver {
+export abstract class StudyTables extends AdditionalInterventionResolver {
   @Input() items: any;
   @Input() numberColumn: boolean;
   @Input() geneColumnOn: boolean;

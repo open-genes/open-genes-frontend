@@ -9,7 +9,7 @@ import { SettingsService } from '../settings.service';
 import { Sort } from '@angular/material/sort';
 import { ApiResponse } from '../../models/api-response.model';
 import { GenesListSettings } from '../../../components/shared/genes-list/genes-list-settings.model';
-import { ResearchArguments, ResearchTypes } from '../../models/open-genes-api/researches.model';
+import { StudiesArguments, StudyTypes } from '../../models/open-genes-api/studies.model';
 import { ApiService } from '../api/open-genes-api.service';
 
 @Injectable({
@@ -175,7 +175,7 @@ export class StudiesFilterService {
     this.areMoreThan2FiltersApplied();
   }
 
-  public getSortedAndFilteredStudies(studyType: ResearchArguments): Observable<ApiResponse<ResearchTypes>> {
+  public getSortedAndFilteredStudies(studyType: StudiesArguments): Observable<ApiResponse<StudyTypes>> {
     let params = new HttpParams()
       .set('lang', this.translate.currentLang)
       .set('page', this.pagination.page)

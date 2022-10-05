@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ResearchTables } from '../research-tables';
+import { StudyTables } from '../research-tables';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './gene-associated-with-progeria-syndromes.component.html',
   styleUrls: ['./gene-associated-with-progeria-syndromes.component.scss'],
 })
-export class GeneAssociatedWithProgeriaSyndromesComponent extends ResearchTables {
+export class GeneAssociatedWithProgeriaSyndromesComponent extends StudyTables {
 
   constructor(protected dialog: MatDialog) {
     super(dialog);

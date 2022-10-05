@@ -15,7 +15,7 @@ import { GenesFilterService } from '../../core/services/filters/genes-filter.ser
 import { Gene, Ortholog } from '../../core/models';
 import { ApiGeneSearchFilter } from '../../core/models/filters/filter.model';
 import { Utils } from '../../core/utils/utils.mixin';
-import { Studies } from 'src/app/core/models/open-genes-api/researches.model';
+import { Studies } from 'src/app/core/models/open-genes-api/studies.model';
 
 @Component({
   selector: 'app-gene-page',
@@ -42,7 +42,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
   public isAnyGoCategory: boolean;
   public isHpa: boolean;
   public isAnyResearchFilled: boolean;
-  public isAnyStrongResearchFilled: boolean;
+  public isAnyStrongStudyFilled: boolean;
   public isGeneCandidate = false;
   public isUiHintsSettingOn: boolean;
   public isInFavourites: boolean;
@@ -128,7 +128,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
           });
           this.isAnyResearchFilled = Math.max(...researchesLengths) !== 0;
 
-          const strongResearchTypes = [
+          const strongStudyTypes = [
             compoundResearches.increaseLifespan,
             compoundResearches.ageRelatedChangesOfGene,
             compoundResearches.interventionToGeneImprovesVitalProcesses,
@@ -136,17 +136,17 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
             compoundResearches.geneAssociatedWithLongevityEffects,
           ];
 
-          if (strongResearchTypes.length !== 0) {
-            const strongResearchTypesLengths = [];
-            strongResearchTypes.forEach((value) => {
-              strongResearchTypesLengths.push(Number(Object.entries(value).length));
+          if (strongStudyTypes.length !== 0) {
+            const strongStudyTypesLengths = [];
+            strongStudyTypes.forEach((value) => {
+              strongStudyTypesLengths.push(Number(Object.entries(value).length));
             });
-            this.isAnyStrongResearchFilled = Math.max(...strongResearchTypesLengths) !== 0;
+            this.isAnyStrongStudyFilled = Math.max(...strongStudyTypesLengths) !== 0;
           } else {
-            this.isAnyStrongResearchFilled = false;
+            this.isAnyStrongStudyFilled = false;
           }
 
-          if (this.isAnyStrongResearchFilled) {
+          if (this.isAnyStrongStudyFilled) {
             this.isGeneCandidate = false;
           } else if (
             (!!this.gene.researches?.proteinRegulatesOtherGenes &&

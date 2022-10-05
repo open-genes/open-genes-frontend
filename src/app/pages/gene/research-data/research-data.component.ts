@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Studies } from '../../../core/models/open-genes-api/researches.model';
+import { Studies } from '../../../core/models/open-genes-api/studies.model';
 
 @Component({
   selector: 'app-research-data',

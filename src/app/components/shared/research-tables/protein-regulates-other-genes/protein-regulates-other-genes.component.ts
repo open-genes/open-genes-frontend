@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ResearchTables } from '../research-tables';
+import { StudyTables } from '../research-tables';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './protein-regulates-other-genes.component.html',
   styleUrls: ['./protein-regulates-other-genes.component.scss'],
 })
-export class ProteinRegulatesOtherGenesComponent extends ResearchTables {
+export class ProteinRegulatesOtherGenesComponent extends StudyTables {
 
   constructor(protected dialog: MatDialog) {
     super(dialog);

@@ -24,7 +24,7 @@ import { GeneReferenceModule } from '../../components/shared/gene-reference/gene
 import { PublicationInfoModule } from '../../components/shared/publication-info/publication-info.module';
 import { AssociatedDiseasesModule } from '../../components/shared/associated-diseases/associated-diseases.module';
 import { AssociatedDiseaseCategoriesModule } from '../../components/shared/associated-disease-categories/associated-disease-categories.module';
-import { ResearchTablesModule } from '../../components/shared/research-tables/research-tables.module';
+import { StudyTablesModule } from '../../components/shared/research-tables/research-tables.module';
 import { GeneLocationComponent } from '../../components/shared/gene-location/gene-location.component';
 
 @NgModule({
@@ -57,7 +57,7 @@ import { GeneLocationComponent } from '../../components/shared/gene-location/gen
     AssociatedDiseasesModule,
     AssociatedDiseaseCategoriesModule,
     NgSplitPipeModule,
-    ResearchTablesModule,
+    StudyTablesModule,
   ],
 })
 export class GeneModule {}

@@ -41,4 +41,4 @@ const components = [
   ],
   exports: [...components],
 })
-export class ResearchTablesModule {}
+export class StudyTablesModule {}

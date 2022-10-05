@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '@angular/core';
-import { Studies } from '../../../core/models/open-genes-api/researches.model';
+import { Studies } from '../../../core/models/open-genes-api/studies.model';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CommonBottomSheetComponent } from '../../ui-components/components/modals/common-bottom-sheet/common-bottom-sheet.component';
 

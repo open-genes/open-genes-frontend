@@ -13,7 +13,7 @@ import { NoContentModule } from '../../components/shared/no-content/no-content.m
 import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
 import { MaterialModule } from '../../modules/vendors/material.module';
 import { NgCapitalizePipeModule, NgTrimPipeModule } from 'angular-pipes';
-import { ResearchTablesModule } from '../../components/shared/research-tables/research-tables.module';
+import { StudyTablesModule } from '../../components/shared/research-tables/research-tables.module';
 import { ResearchTabComponent } from './components/research-tab/research-tab.component';
 import { ResearchFiltersPanelModule } from './components/filters-panel/research-filters-panel.module';
 import { SearchModule } from '../../components/shared/search/search.module';
@@ -35,7 +35,7 @@ import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
     MaterialModule,
     NgCapitalizePipeModule,
     NgTrimPipeModule,
-    ResearchTablesModule,
+    StudyTablesModule,
     ResearchFiltersPanelModule,
     SearchModule,
     SidebarModule,

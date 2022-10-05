@@ -1,4 +1,4 @@
-import { PurpleTable } from './researches.model';
+import { PurpleTable } from './studies.model';
 
 export interface GenesWLifespanResearches {
   id: number;

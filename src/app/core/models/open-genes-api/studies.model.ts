@@ -1,4 +1,4 @@
-export type ResearchArguments =
+export type StudiesArguments =
   | 'lifespan-change'
   | 'age-related-changes'
   | 'gene-activity-change-impact'
@@ -8,7 +8,7 @@ export type ResearchArguments =
   | 'other-evidence';
 
 // Fields that present in the request in api/research endpoints
-interface ResearchOptionalFields {
+interface StudyOptional {
   geneId?: number;
   geneNcbiId?: number;
   geneName?: string;
@@ -16,7 +16,7 @@ interface ResearchOptionalFields {
   geneAliases?: string[];
 }
 
-export interface Research extends ResearchOptionalFields {
+export interface Study extends StudyOptional {
   doi: string;
   pmid: string;
   comment: string;
@@ -56,7 +56,7 @@ interface InterventionResult {
   name: string;
 }
 
-export interface PurpleTable extends Research {
+export interface PurpleTable extends Study {
   modelOrganism: string;
   organismLine: string;
   sex: string;
@@ -96,7 +96,7 @@ export interface PurpleTable extends Research {
 }
 
 // blue form
-export interface BlueTable extends Research {
+export interface BlueTable extends Study {
   modelOrganism: string;
   organismLine: string;
   sample: string;
@@ -122,7 +122,7 @@ export interface BlueTable extends Research {
 }
 
 //  green form
-export interface GreenTable extends Research {
+export interface GreenTable extends Study {
   geneIntervention: string;
   modelOrganism: string; // TODO: backend: rename to 'object'
   organismLine: string; // TODO: backend: rename to 'line'
@@ -136,7 +136,7 @@ export interface GreenTable extends Research {
 }
 
 // yellow form
-export interface YellowTable extends Research {
+export interface YellowTable extends Study {
   proteinActivity: string;
   regulationType: string;
   regulatedGene: {
@@ -148,12 +148,12 @@ export interface YellowTable extends Research {
 }
 
 // orange form
-export interface OrangeTable extends Research {
+export interface OrangeTable extends Study {
   progeriaSyndrome: string;
 }
 
 // pink form
-export interface PinkTable extends Research {
+export interface PinkTable extends Study {
   polymorphismId: string | null; // example: 'rs4130113'
   associatedAllele: string | null; // example: 'AA, GG'
   changeType: string | null; // example: decreased gene expression
@@ -183,7 +183,7 @@ export interface PinkTable extends Research {
 }
 
 // gray form
-export type GrayTable = Research;
+export type GrayTable = Study;
 
 // TODO: backend: misleading names of researches
 export interface Studies {
@@ -196,7 +196,7 @@ export interface Studies {
   additionalEvidences: GrayTable[];
 }
 
-export type ResearchTypes =
+export type StudyTypes =
   | PurpleTable[]
   | BlueTable[]
   | GreenTable[]

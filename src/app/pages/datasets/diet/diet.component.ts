@@ -63,7 +63,7 @@ export class DietComponent implements OnInit, OnDestroy {
   }
 
   private setInitialState(): void {
-    forkJoin([this.apiService.getGenesForDiet(), this.apiService.getGenesForDiet(this.pagination)])
+    forkJoin([this.apiService.getGenesInCrStudies(), this.apiService.getGenesInCrStudies(this.pagination)])
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (res) => {
@@ -82,7 +82,7 @@ export class DietComponent implements OnInit, OnDestroy {
   public onPaginationChange(event: Pagination): void {
     this.isPageDataLoading = true;
     this.apiService
-      .getGenesForDiet(event)
+      .getGenesInCrStudies(event)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (res) => {

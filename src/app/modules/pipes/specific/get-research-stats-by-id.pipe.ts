@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 
-interface IResearchTypes {
+interface IStudyTypes {
   [n: number]: any;
 }
 
@@ -10,7 +10,7 @@ interface IResearchTypes {
   pure: false,
 })
 export class getResearchStatsById implements PipeTransform {
-  private researchStatsObj: IResearchTypes;
+  private researchStatsObj: IStudyTypes;
 
   constructor(private apiService: ApiService) {}
 

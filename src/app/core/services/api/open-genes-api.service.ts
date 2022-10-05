@@ -18,8 +18,8 @@ import { ApiResponse } from '../../models/api-response.model';
 import { SearchModel } from '../../models/open-genes-api/search.model';
 import { Pagination } from '../../models/settings.model';
 import { Diet } from '../../models/open-genes-api/diet.model';
-import { Research, ResearchArguments, ResearchTypes } from '../../models/open-genes-api/researches.model';
 import { ModelOrganism } from '../../models/open-genes-api/model-organism.model';
+import { StudiesArguments, StudyTypes } from '../../models/open-genes-api/studies.model';
 
 @Injectable({
   providedIn: 'root',
@@ -84,11 +84,11 @@ export class ApiService {
     return this.http.get<ApiResponse<string>>(`/api/gene/symbols`);
   }
 
-  getStudies(studyType: ResearchArguments, params?: HttpParams): Observable<ApiResponse<ResearchTypes>> {
-    return this.http.get<ApiResponse<ResearchTypes>>(`/api/research/${studyType}`, { params });
+  getStudies(studyType: StudiesArguments, params?: HttpParams): Observable<ApiResponse<StudyTypes>> {
+    return this.http.get<ApiResponse<StudyTypes>>(`/api/research/${studyType}`, { params });
   }
 
-  getGenesForDiet(pagination?: Pagination): Observable<ApiResponse<Diet>> {
+  getGenesInCrStudies(pagination?: Pagination): Observable<ApiResponse<Diet>> {
     let params = new HttpParams();
 
     if (pagination) {

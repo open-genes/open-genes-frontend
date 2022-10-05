@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ResearchTables } from '../research-tables';
+import { StudyTables } from '../research-tables';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './additional-evidences.component.html',
   styleUrls: ['./additional-evidences.component.scss'],
 })
-export class AdditionalEvidencesComponent extends ResearchTables {
+export class AdditionalEvidencesComponent extends StudyTables {
   constructor(protected dialog: MatDialog) {
     super(dialog);
   }
