@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, ReplaySubject } from 'rxjs';
 import { ApiResearchFilter } from '../../models/filters/filter.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,10 +16,8 @@ import { ApiService } from '../api/open-genes-api.service';
   providedIn: 'root',
 })
 export class StudiesFilterService {
-  public listOfFields$ = new BehaviorSubject<any>('');
-  public filterChanges$ = new BehaviorSubject<any>([]);
-  public currentFields: Observable<GenesListSettings> = this.listOfFields$.asObservable();
-  public filterResult: Observable<ApiResearchFilter> = this.filterChanges$.asObservable();
+  public listOfFields$ = new ReplaySubject<GenesListSettings>(1);
+  public filterChanges$ = new ReplaySubject<ApiResearchFilter>(1);
   public twoOrMoreFiltersApplied = new BehaviorSubject<boolean>(false);
   public sortParams: Sort;
 

@@ -1,15 +1,15 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
+  Component, ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
-  Output,
+  Output, ViewChild,
 } from '@angular/core';
 import { ResearchArguments, ResearchTypes } from '../../../../core/models/open-genes-api/researches.model';
-import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, switchMap, takeUntil } from 'rxjs/operators';
 import { ApiResponse, PageOptions } from '../../../../core/models/api-response.model';
 import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
@@ -22,6 +22,7 @@ import { Genes } from '../../../../core/models';
 import { StudiesFilterService } from '../../../../core/services/filters/studies-filter.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModalComponent } from '../../../../components/ui-components/components/modals/common-modal/common-modal.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,6 +34,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
   @Input() studyType: ResearchArguments;
   @Input() isMobile: BehaviorSubject<boolean>;
   @Output() dataLoaded: EventEmitter<never> = new EventEmitter<never>();
+  @ViewChild('newPageMessageTemplate') newPageMessageTemplate: ElementRef;
 
   public query: string;
   public searchMode: SearchMode = 'searchByGenes';
@@ -126,7 +128,9 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
       this.showProgressBar = true;
       this.apiService
         .getGenesMatchByString(query, this.query.length > 1 ? 'input' : undefined)
-        .pipe(takeUntil(this.genes$))
+        .pipe(
+          takeUntil(this.genes$)
+        )
         .subscribe(
           (searchData) => {
             this.genesList = searchData.items; // If nothing found, will return empty array
@@ -144,8 +148,19 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
 
   public updateStudiesList(isSubmit?: boolean): void {
     if (isSubmit) {
+      this.currentPage = 1;
       this.filterService.clearFilters('byGeneSymbol');
-      this.getStudies(this.studyType, (res) => this.openSnackBar(res));
+      this.getStudies(this.studyType, () => {
+        if (this.options && this.snackBar) {
+          this.snackBar.openFromComponent(SnackBarComponent, {
+            data: {
+              title: 'items_found',
+              length: this.options.objTotal,
+            },
+            duration: 1200,
+          });
+        }
+      });
     } else {
       this.studies = null;
     }
@@ -157,37 +172,23 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.slice.next(20);
   }
 
-  private openSnackBar(res: ApiResponse<any>): void {
-    if (res?.options && this.snackBar) {
-      this.snackBar.openFromComponent(SnackBarComponent, {
-        data: {
-          title: 'items_found',
-          length: res.options.objTotal,
-        },
-        duration: 1200,
-      });
-    }
-  }
-
-  public getStudies(researchType: ResearchArguments, callback?: (res?: ApiResponse<ResearchTypes>) => void): void {
+  public getStudies(studyType: ResearchArguments, callback?: (res?: ApiResponse<ResearchTypes>) => void): void {
     this.isLoading = true;
-    if (this.currentPage === 1) {
-      this.studies = [];
-      this.filterService.clearFilters('byGeneSymbol');
-    }
     if (this.query) {
       this.filterService.applyFilter('byGeneSymbol', this.query);
     }
 
-    this.filterService.filterResult
+    this.filterService.filterChanges$
       .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
         takeUntil(this.studies$),
         switchMap((_) => {
           // Subscribing to any filters update and return getSortedAndFilteredStudies method to subscribe
           return this.filterService.getSortedAndFilteredStudies(this.studyType);
         }),
         map((r: ApiResponse<ResearchTypes>) => {
-          if (researchType === 'lifespan-change') {
+          if (studyType === 'lifespan-change') {
             r.items = r.items.filter((r: any) => this.resolveAdditionalIntervention(r));
           }
           return r;
@@ -195,14 +196,8 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
       ))
       .subscribe(
         (res) => {
-
-          if (this.currentPage === 1) {
-            this.cachedData = [];
-          }
-
           if (res.items?.length) {
-            this.cachedData.push(...res.items);
-            this.studies = [...this.cachedData];
+            this.studies = res.items;
           }
           this.options = res.options;
           this.isLoading = false;
@@ -222,13 +217,19 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
     this.dataLoaded.emit();
   }
 
-  public showMore(researchType: ResearchArguments): void {
-    this.currentPage++;
+  public pageEventHandler(event: PageEvent): void {
+    this.currentPage = event.pageIndex;
+    console.log(this.currentPage, event.pageIndex)
     this.filterService.pagination.page = this.currentPage;
     this.filterService.onLoadMoreGenes(this.options?.pagination?.pagesTotal);
     this.slice.next(this.studies.length + this.itemsPerPage);
-    this.getStudies(researchType);
     this.cdRef.detectChanges();
+    this.getStudies(this.studyType);
+    this.snackBar.open(this.newPageMessageTemplate.nativeElement.textContent, '', {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      duration: 600,
+    });
   }
 
   /**

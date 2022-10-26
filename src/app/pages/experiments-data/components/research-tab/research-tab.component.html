@@ -30,7 +30,7 @@
     <section *ngSwitchCase="'lifespan-change'">
       <app-increase-lifespan
         [geneColumnOn]="true"
-        [numberColumn]="true"
+        [numberColumn]="false"
         [items]="studies"
         [slice]="slice | async"
       ></app-increase-lifespan>
@@ -39,7 +39,7 @@
     <section *ngSwitchCase="'age-related-changes'">
       <app-age-related-changes
         [geneColumnOn]="true"
-        [numberColumn]="true"
+        [numberColumn]="false"
         [items]="studies"
         [slice]="slice | async"
       ></app-age-related-changes>
@@ -48,7 +48,7 @@
     <section *ngSwitchCase="'gene-activity-change-impact'">
       <app-intervention-affects-aging-process
         [geneColumnOn]="true"
-        [numberColumn]="true"
+        [numberColumn]="false"
         [items]="studies"
         [slice]="slice | async"
       ></app-intervention-affects-aging-process>
@@ -57,7 +57,7 @@
     <section *ngSwitchCase="'associations-with-lifespan'">
       <app-gene-associated-with-longevity-effects
         [geneColumnOn]="true"
-        [numberColumn]="true"
+        [numberColumn]="false"
         [items]="studies"
         [slice]="slice | async"
       ></app-gene-associated-with-longevity-effects>
@@ -66,7 +66,7 @@
     <section *ngSwitchCase="'gene-regulation'">
       <app-protein-regulates-other-genes
         [geneColumnOn]="true"
-        [numberColumn]="true"
+        [numberColumn]="false"
         [items]="studies"
         [slice]="slice | async"
       ></app-protein-regulates-other-genes>
@@ -75,7 +75,7 @@
     <section *ngSwitchCase="'association-with-accelerated-aging'">
       <app-gene-associated-with-progeria-syndromes
         [geneColumnOn]="true"
-        [numberColumn]="true"
+        [numberColumn]="false"
         [items]="studies"
         [slice]="slice | async"
       ></app-gene-associated-with-progeria-syndromes>
@@ -84,7 +84,7 @@
     <section *ngSwitchCase="'other-evidence'">
       <app-additional-evidences
         [geneColumnOn]="true"
-        [numberColumn]="true"
+        [numberColumn]="false"
         [items]="studies"
         [slice]="slice | async"
       ></app-additional-evidences>
@@ -97,11 +97,14 @@
 
   <ng-container *ngIf="options">
     <div *ngIf="!isNotFound && (studies?.length < options?.objTotal || currentPage < options?.pagination.pagesTotal)"
-         class="btn-wrap show-more __mt-20">
-      <button (click)="showMore(studyType)"
-              class="btn show-more__button">
-        {{ "show_more" | translate }} <span class="spinner fas fa-circle-notch fa-spin"></span>
-      </button>
+         class="pagination">
+      <mat-paginator
+        [length]="options?.objTotal"
+        [pageIndex]="currentPage"
+        [pageSize]="options.pagination.pageSize"
+        (page)="pageEventHandler($event)"
+        aria-label="Select page">
+      </mat-paginator>
     </div>
   </ng-container>
 
@@ -128,3 +131,9 @@
 <ng-template #fieldsModalTemplate>
   <app-research-filters-panel></app-research-filters-panel>
 </ng-template>
+
+<div
+  #newPageMessageTemplate
+  class="hidden">
+  {{ 'page' | translate }} {{currentPage}}
+</div>
