@@ -24,8 +24,7 @@
   hyphens: auto;
   @if $whole-height != "" {
     height: $whole-height;
-  }
-  @else {
+  } @else {
     max-height: ($font-line-height * $font-size * $lines) + $additional;
   }
   overflow: hidden;
@@ -34,6 +33,7 @@
 
 @mixin list {
   width: 100%;
+
 
   li {
     width: 100%;
@@ -218,6 +218,11 @@
       font-size: 14px;
     }
 
+    b,
+    strong {
+      font-weight: $font-weight-medium;
+    }
+
     h1,
     h2,
     h3,
@@ -227,6 +232,7 @@
       width: 100%;
       color: $color-indent;
       font-weight: $font-weight-medium;
+
     }
 
     h1 {
@@ -264,7 +270,9 @@
     * + h5,
     * + h6,
     * + p,
-    * + .list,
+    * + ul,
+    * + ol,
+    * + blockquote,
     * + app-code-block {
       margin-top: 2.5ex;
     }
@@ -272,7 +280,8 @@
     h3 + *,
     h4 + *,
     h5 + *,
-    h6 + * {
+    h6 + *,
+    blockquote + * {
       margin-top: 2ex;
     }
 
@@ -288,6 +297,16 @@
         color: lighten(mix($color-general, $color-blue, 5%), 3%);
       }
     }
+  }
+
+  blockquote {
+    display: inline-block;
+    width: 100%;
+    padding: $padding-medium;
+    background-color: $color-general-light;
+    border-left: 4px solid $color-general-semi;
+    color: $color-black;
+    font-size: calc(0.2vw + 14px);
   }
 
   article + article, // TODO: Change it to one class common for article, section and components tags
@@ -308,7 +327,9 @@
     font-size: 80%;
     margin-top: 1em;
 
-    p + p {
+    p + p,
+    ul + p ,
+    ol + p, {
       margin-top: .8em;
     }
   }

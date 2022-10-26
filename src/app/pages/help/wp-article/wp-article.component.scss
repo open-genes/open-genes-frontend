@@ -1,40 +1,45 @@
 @import "../../styles";
 
 .guideline-page {
-  article::ng-deep {
-    @include margin-clamp-fix;
+  article {
+    display: inline-block;
+    width: 100%;
 
-    figure {
-      width: 100%;
-      float: left;
-      text-align: center;
+    &::ng-deep {
+      @include margin-clamp-fix;
 
-      img {
+      figure {
         display: inline-block;
-        width: 60%;
-        height: auto;
+        width: 100%;
+        text-align: center;
+
+        img {
+          display: inline-block;
+          width: 60%;
+          height: auto;
+        }
       }
-    }
 
-    ul, ol, dl {
-      @include list;
-    }
+      ul, ol, dl {
+        @include list;
+      }
 
-    ul {
-      @include ul;
-    }
+      ul {
+        @include ul;
+      }
 
-    dl {
-      @include dl;
-    }
+      dl {
+        @include dl;
+      }
 
-    a {
-      @include base-link;
-      @include blue-link;
-    }
+      a {
+        @include base-link;
+        @include blue-link;
+      }
 
-    a[href^="#"] {
-      @include anchor-link;
+      a[href^="#"] {
+        @include anchor-link;
+      }
     }
   }
 }
