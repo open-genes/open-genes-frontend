@@ -182,7 +182,7 @@ $input-border-radius: 5px;
   &__autocomplete-list {
     position: absolute;
     top: 100%;
-    max-height: (39px * 5) + 18px;
+    max-height: (40px * 3) + 2px;
     width: 100%;
     overflow-y: scroll;
     background: $color-white;
@@ -191,7 +191,6 @@ $input-border-radius: 5px;
 
     &:not(:empty) {
       border: 1px solid $color-borders;
-      padding: 8px 0;
       box-shadow: 0 5px 5px 0 rgba($color-black, .15);
     }
 
@@ -275,7 +274,7 @@ $input-border-radius: 5px;
       left: 0;
       min-height: 60px;
       margin: 0;
-      background-color: #fff;
+      background-color: $color-white;
       z-index: z('search');
       box-shadow: 0 5px 5px 0 rgba($color-black, .15);
 
@@ -293,7 +292,7 @@ $input-border-radius: 5px;
 
         .search-form__autocomplete-list {
           position: fixed;
-          top: 50px;
+          top: $header-height;
           left: 0;
           border: 0;
         }

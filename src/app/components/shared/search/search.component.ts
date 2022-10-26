@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { Genes } from '../../../core/models';
 import { FormControl, FormGroup } from '@angular/forms';
-import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { ToMap } from '../../../core/utils/to-map';
@@ -116,6 +116,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
         return this.showSearchHints;
       }),
       distinctUntilChanged(),
+      debounceTime(300),
       takeUntil(this.subscription$),
     ).subscribe((query: string) => {
         this.queryChange.emit(query);
