@@ -63,7 +63,7 @@
          class="search-form__autocomplete-list">
       <ng-container *ngFor="let gene of searchedData; let i = index">
         <button
-          *ngIf="i < 5"
+          *ngIf="i < 3"
           class="search-form__autocomplete-item"
           tabindex="0"
           [value]="gene.symbol"
