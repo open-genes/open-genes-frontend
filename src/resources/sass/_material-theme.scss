@@ -109,3 +109,14 @@ a.mat-flat-button {
   line-height: 40px;
 }
 
+// - Checkbox
+// fix checkbox position for multiline labels
+.mat-checkbox {
+  .mat-checkbox-label {
+    white-space: normal;
+  }
+
+  .mat-checkbox-inner-container {
+    margin-top: 4px;
+  }
+}
