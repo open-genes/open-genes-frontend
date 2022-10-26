@@ -84,6 +84,12 @@
                 </a>
 
                 <a mat-list-item
+                   *ngIf="gene?.expression.length > 0"
+                   [routerLink]="['/gene', symbol]" fragment="expression">
+                  {{ "gene_page_title_expression" | translate }}
+                </a>
+
+                <a mat-list-item
                    *ngIf="isHpa"
                    [routerLink]="['/gene', symbol]" fragment="human-protein-atlas">
                   Human Protein Atlas
@@ -131,16 +137,6 @@
                     <ng-template #noData>
                       {{'gene_page_no_data' | translate}}
                     </ng-template>
-                  </div>
-                </div>
-
-                <div class="row no-gutters annotation__row">
-                  <div class="row__title col-xs-12 col-md-5">
-                    {{ 'gene_page_research_data_age_related_changes_human' | translate }}:
-                  </div>
-
-                  <div class="row__value col">
-                    {{ getExpressionLocaleKey(gene.expressionChange) | translate }}
                   </div>
                 </div>
 
@@ -333,6 +329,11 @@
                       [component]="geneOntologyComponentMap"
                       [activity]="geneOntologyActivityMap"
                     ></app-gene-ontology>
+                  </section>
+
+                  <section *ngIf="gene.expression.length > 0"
+                           id="expression">
+                    <app-expression [gene]="gene"></app-expression>
                   </section>
 
                   <section class="wrapper" id="human-protein-atlas"
