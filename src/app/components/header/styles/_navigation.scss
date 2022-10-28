@@ -17,7 +17,7 @@
     align-items: center;
     justify-content: center;
     height: 45px;
-    padding: 0 5px;
+    padding: 0 1px;
 
     .item__link {
       position: relative;
@@ -25,26 +25,14 @@
       align-content: center;
       align-items: center;
       justify-content: center;
-      min-width: 40px;
+      min-width: 8ch;
       height: 100%;
-      font-size: $font-size;
+      font-size: calc(0.1vw + #{$font-size-smaller});
       font-weight: $font-weight-regular;
       color: $color-black;
-      padding: 0 10px;
+      padding: 0 calc(0.2vw + 4px);
 
-      @include ripple;
-
-      &:active {
-        color: $color-general-dark;
-      }
-
-      &.__current {
-        @include ripple($border-radius-medium, $color-gray-halfing);
-
-        &::after {
-          opacity: 1;
-        }
-      }
+      @include menu-item;
     }
   }
 }

@@ -21,111 +21,112 @@
        (OnSwipeRight)="toggleMenu()"
        class="menu__panel">
     <div class="panel__header">
+      <ul class="panel__links">
+        <li class="panel__link">
+          <a [routerLink]="'/favourites'"
+             routerLinkActive="__current"
+          >
+            <span class="icon fa far fa-star"></span>
+            <span
+              [matBadge]="favsCounter"
+              [matBadgeHidden]="favsCounter === '0'"
+              matBadgeColor="accent"
+              matBadgeOverlap="false"
+            >{{ 'header_menu_favourites' | translate }}</span>
+          </a>
+        </li>
+      </ul>
     </div>
 
     <ul class="panel__links">
       <li class="panel__link">
         <a [routerLink]="'/genes'"
            routerLinkActive="__current">
-          <span class="fa far fa-dna"></span>
+          <span class="icon fa far fa-dna"></span>
           {{ "toggler_genes" | translate }}</a>
       </li>
+
+      <li
+        class="panel__link">
+        <a [routerLink]="'/experiments'"
+           routerLinkActive="__current">
+          <span class="icon fa far fa-book"></span>
+          {{ "toggler_studies" | translate }}</a>
+      </li>
+
       <li
         class="panel__link">
         <a [routerLink]="'/annotations'"
            routerLinkActive="__current"
         >
-          <span class="fa far fa-dna"></span>
+          <app-icon class="icon" icon="gene-ontology"></app-icon>
           {{ "toggler_annotations" | translate }}</a>
       </li>
-      <li
-        class="panel__link">
-        <a [routerLink]="'/experiments'"
-           routerLinkActive="__current">
-          <span class="fa far fa-book"></span>
-          {{ "toggler_studies" | translate }}</a>
-      </li>
-      <li
-        class="panel__link">
-        <a [routerLink]="'/datasets'"
-           routerLinkActive="__current">
-          <span class="fa far fa-database"></span>
-          {{ "toggler_datasets" | translate }}
-        </a>
-      </li>
 
-      <li class="panel__separator"></li>
+      <li class="panel__link">
+        <a [routerLink]="'/help'"
+           routerLinkActive="__current"
+        >
+          <span class="icon fa far fa-question-circle"></span>
+          {{ 'header_menu_help' | translate }}</a>
+      </li>
 
       <li class="panel__link">
         <a [routerLink]="'/download'"
            routerLinkActive="__current">
-          <span class="fa far fa-download">
+          <span class="icon fa far fa-download">
           </span> {{ 'header_menu_download' | translate }}
         </a>
       </li>
 
       <li class="panel__separator"></li>
 
-      <li class="panel__link">
-        <a [routerLink]="'/about'"
-           routerLinkActive="__current"
-        >
-          <span class="fa far fa-info-circle"></span>
-          {{ 'header_menu_about' | translate }}</a>
-      </li>
-      <li class="panel__link">
-        <a [routerLink]="'/help'"
-           routerLinkActive="__current"
-        >
-          <span class="fa far fa-question-circle"></span>
-          {{ 'header_menu_help' | translate }}</a>
-      </li>
-      <li class="panel__link">
-        <a [routerLink]="'/favourites'"
-           routerLinkActive="__current"
-        >
-          <span class="fa far fa-star"></span>
-          <span
-            [matBadge]="favsCounter"
-            [matBadgeHidden]="favsCounter === '0'"
-            matBadgeColor="accent"
-            matBadgeOverlap="false"
-          >{{ 'header_menu_favourites' | translate }}</span>
+      <li
+        class="panel__link">
+        <a [routerLink]="'/datasets'"
+           routerLinkActive="__current">
+          <span class="icon fa far fa-database"></span>
+          {{ "header_menu_datasets" | translate }}
         </a>
       </li>
+
       <li class="panel__link">
         <a [routerLink]="'/news'"
            routerLinkActive="__current"
         >
-          <span class="fa far fa-newspaper"></span>
+          <span class="icon fa far fa-newspaper"></span>
           {{ 'header_menu_news' | translate }}</a>
       </li>
+
       <li class="panel__link">
         <a href="/api/docs"
            target="_blank">
-          <span class="fa far fa-terminal">
+          <span class="icon fa far fa-terminal">
           </span> {{ 'header_menu_api' | translate }}&nbsp;<span class="fa far fa-external-link"></span>
         </a>
       </li>
+
       <li class="panel__link">
         <a [routerLink]="'/settings'"
            routerLinkActive="__current"
         >
-          <span class="fa far fa-cog"></span>
+          <span class="icon fa far fa-cog"></span>
           {{ 'header_menu_settings' | translate }}</a>
       </li>
+
       <li class="panel__link">
         <a [routerLink]="'/contributors'"
            routerLinkActive="__current"
         >
-          <span class="fa far fa-users"></span>
+          <span class="icon fa far fa-users"></span>
           {{ 'header_menu_contributors' | translate }}</a>
       </li>
+
       <li class="panel__link">
         <a [routerLink]="'/timeline'"
            routerLinkActive="__current"
         >
-          <span class="fa far fa-clock"></span>
+          <span class="icon fa far fa-clock"></span>
           {{ 'header_menu_timeline' | translate }}</a>
       </li>
     </ul>

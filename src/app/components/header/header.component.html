@@ -29,14 +29,6 @@
         <li
           class="navigation-list__item">
           <a class="item__link"
-             [routerLink]="'/annotations'"
-             routerLinkActive="__current"
-          >{{ "header_annotations" | translate }}</a>
-        </li>
-
-        <li
-          class="navigation-list__item">
-          <a class="item__link"
              [routerLink]="'/experiments'"
              routerLinkActive="__current"
           >{{ "header_studies" | translate }}</a>
@@ -45,9 +37,17 @@
         <li
           class="navigation-list__item">
           <a class="item__link"
-                [routerLink]="'/datasets'"
-                routerLinkActive="__current"
-          >{{ "header_datasets" | translate }}
+             [routerLink]="'/annotations'"
+             routerLinkActive="__current"
+          >{{ "header_annotations" | translate }}</a>
+        </li>
+
+        <li
+          class="navigation-list__item">
+          <a class="item__link"
+             [routerLink]="'/help'"
+             routerLinkActive="__current"
+          >{{ "header_help" | translate }}
           </a>
         </li>
 
@@ -57,15 +57,6 @@
              [routerLink]="'/download'"
              routerLinkActive="__current"
           >{{ "header_download" | translate }}
-          </a>
-        </li>
-
-        <li
-          class="navigation-list__item">
-          <a class="item__link"
-             [routerLink]="'/help'"
-             routerLinkActive="__current"
-          >{{ "header_help" | translate }}
           </a>
         </li>
       </ul>

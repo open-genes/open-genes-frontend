@@ -6,10 +6,6 @@ $padding-medium: 15px;
 $padding-large: 25px;
 $border-radius-regular: 5px;
 $border-radius-medium: 10px;
-$box-shadow: 0 1px 4px 0 rgba(5, 5, 5, .14);
-$box-shadow-to-bottom: $box-shadow;
-$box-shadow-to-top: 0 -1px 4px 0 rgba(5, 5, 5, .14);
-$box-shadow-layer-1: 0px 0px 8px 0px rgba(5, 5, 5, .14);
 
 // Fonts
 // TODO: replace with atomic values like: font-size-100, font-size-200, etc.
@@ -125,6 +121,10 @@ $color-clickable-200: #e4d1fd;
 $color-clickable-100: #f2e9fe;
 
 // SHADOWS
+$box-shadow: 0 1px 4px 0 rgba(5, 5, 5, .14);
+$box-shadow-to-bottom: $box-shadow;
+$box-shadow-to-top: 0 -1px 4px 0 rgba(5, 5, 5, .14);
+$box-shadow-layer-1: 0px 0px 8px 0px rgba(5, 5, 5, .14);
 $shadow-for-panel: 0 24px 48px 0 rgb(230, 235, 245, .4), 0 1px 4px 0 $color-gray-light;
 
 // PATHS

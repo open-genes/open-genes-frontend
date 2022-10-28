@@ -1,7 +1,7 @@
 // Ripple effect
 @mixin ripple(
   $border-radius: $border-radius-medium,
-  $color: $color-base,
+  $color: $color-general,
 ) {
   &:after {
     content: ' ';
@@ -21,14 +21,44 @@
   &:hover,
   &:focus {
     &:after {
-      opacity: 1;
+      opacity: 0.85;
     }
   }
 
   &:active {
     &:after {
-      opacity: .85;
+      opacity: 0.75;
     }
+  }
+}
+
+// Menu link
+@mixin menu-item() {
+  position: relative;
+  display: flex;
+  border-radius: $border-radius-medium;
+  padding: 12px 10px 10px;
+  transition: background, color .15s ease-out;
+
+  &:link,
+  &:visited {
+    color: $color-black;
+  }
+
+  &:hover,
+  &:focus {
+    color: rgba($color-general, 0.85);
+    background: rgba($color-general, 0.08);
+  }
+
+  &:active {
+    color: rgba($color-general, 0.75);
+    background: rgba($color-general, 0.15);
+  }
+
+  &.__current {
+    color: $color-general;
+    background: rgba($color-general, 0.15);
   }
 }
 
