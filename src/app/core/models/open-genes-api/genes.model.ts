@@ -44,6 +44,11 @@ interface GeneralGeneInfo {
   methylationCorrelation: MethylationCorrelation;
 }
 
+export interface Symbols {
+  id: number;
+  symbol: string;
+}
+
 export interface Genes extends GeneralGeneInfo {
   researches?: Studies; // if `researches=1` query parameter passed
   terms?: TermsLegacy;

@@ -8,7 +8,7 @@ import {
   Genes,
   Phylum,
   ProteinClasses,
-  SelectionCriteria,
+  SelectionCriteria, Symbols,
 } from '../../models';
 import { TranslateService } from '@ngx-translate/core';
 import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/open-genes-api/associated-diseases.model';
@@ -80,8 +80,8 @@ export class ApiService {
     return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });
   }
 
-  getSymbols(): Observable<ApiResponse<string>> {
-    return this.http.get<ApiResponse<string>>(`/api/gene/symbols`);
+  getSymbols(): Observable<Symbols[]> {
+    return this.http.get<Symbols[]>(`/api/gene/symbols`);
   }
 
   getStudies(studyType: ResearchArguments, params?: HttpParams): Observable<ApiResponse<ResearchTypes>> {
