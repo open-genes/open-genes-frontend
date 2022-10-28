@@ -99,7 +99,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
     let resultingString = '';
     const fetchedItems = await CsvExportService.FetchData('https://open-genes.com/api/gene/symbols', 0, 1, {});
     const resItems = await fetchedItems.json();
-    items = resItems.items;
+    items = resItems.map((gene) => gene.symbol);
     const csvHeader = this.makeRow(['HGNC', 'tissue or organ', 'rpkm']);
     resultingString = resultingString + csvHeader;
 
@@ -130,7 +130,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
     let resultingString = '';
     const fetchedItems = await CsvExportService.FetchData('https://open-genes.com/api/gene/symbols', 0, 1, {});
     const resItems = await fetchedItems.json();
-    items = resItems.items;
+    items = resItems.map((gene) => gene.symbol);
     const csvHeader = this.makeRow(['HGNC', 'GO biological process', 'GO molecular activity', 'GO cellular component']);
     resultingString = resultingString + csvHeader;
 

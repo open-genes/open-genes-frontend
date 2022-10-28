@@ -68,9 +68,9 @@
     <div *ngFor="let gene of favourites; let i = index"
          class="col-12 faved-gene">
       <div class="faved-gene__title">
-        <a [routerLink]="['/gene', gene.symbol]">
-          <span class="tag">{{ gene.symbol }}</span>
-          <span class="link link--gray">{{ gene.name | capitalize }}</span>
+        <a [routerLink]="['/gene', gene.symbol]"
+           class="link">
+          {{ gene.symbol }}
         </a>
       </div>
       <div *ngIf="!isSharedList"
