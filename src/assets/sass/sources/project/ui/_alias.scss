@@ -1,4 +1,5 @@
 // ALias
+$a: '.alias';
 .alias {
   display: inline-block;
   vertical-align: middle;
@@ -12,6 +13,7 @@
   margin: 0 5px 5px 0;
   background-color: $color-gray-soft;
   user-select: none;
+  transition: color, background-color, .15s;
 
   // optional nested block for text truncation
   &__overflow {
@@ -22,18 +24,8 @@
 
   &--small {
     min-width: 20px;
+    padding: 2px 4px;
     font-size: 10px;
-    padding: 3px 2px;
-  }
-
-  &--approval {
-    background-color: lighten($color-green-light, 20%);
-    color: $color-green-dark;
-  }
-
-  &--warning {
-    background-color: $color-orange-100;
-    color: $color-orange-400;
   }
 
   @include resolution_smartphone-and-tablet {
@@ -42,20 +34,80 @@
     font-weight: $font-weight-bold;
   }
 
-  // Класс для skeleton screens
+  // Class for skeleton screens
   &.__skeletal {
     height: 23px;
     min-width: 100px;
   }
 }
 
-a.alias,
-button.alias {
+a#{$a},
+button#{$a} {
   color: $color-general;
   background-color: lighten($color-hover, 3%);
+  cursor: pointer;
 
   &:hover,
   &:active {
     background-color: $color-hover;
   }
 }
+
+#{$a}#{$a}--green,
+#{$a}#{$a}--approval {
+  &,
+  &:hover,
+  &:active {
+    background-color: lighten($color-green-light, 20%);
+    color: $color-black-light;
+  }
+}
+
+#{$a}#{$a}--orange,
+#{$a}#{$a}--warning {
+  &,
+  &:hover,
+  &:active {
+    background-color: lighten($color-orange-200, 5);
+    color: $color-black-light;
+  }
+}
+
+#{$a}#{$a}--error,
+#{$a}#{$a}--red {
+  &,
+  &:hover,
+  &:active {
+    background-color: lighten($color-accent, 15);
+    color: $color-black-light;
+  }
+}
+
+#{$a}#{$a}--pine {
+  &,
+  &:hover,
+  &:active {
+    background-color: lighten(#ABE5C6, 15);
+    color: $color-black-light;
+  }
+}
+
+#{$a}#{$a}--blue {
+  &,
+  &:hover,
+  &:active {
+    background-color: lighten(#9FC5E8, 5);;
+    color: $color-black-light;
+  }
+}
+
+#{$a}#{$a}--gray {
+  &,
+  &:hover,
+  &:active {
+    background-color: $color-gray-light;
+    color: $color-black-light;
+  }
+}
+
+

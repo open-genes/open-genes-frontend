@@ -3,3 +3,7 @@
 
 @include item;
 @include card;
+
+.card__controls.card__controls--tags {
+  font-size: 11px;
+}

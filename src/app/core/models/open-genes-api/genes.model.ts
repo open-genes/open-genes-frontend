@@ -29,6 +29,10 @@ interface GeneralGeneInfo {
   agingMechanisms: AgingMechanisms[];
   aliases: string[];
   commentCause?: SelectionCriteria[];
+  confidenceLevel: {
+    id: number;
+    name: string;
+  };
   diseaseCategories?: AssociatedDiseaseCategories[];
   diseases?: AssociatedDiseases[];
   expressionChange?: number;

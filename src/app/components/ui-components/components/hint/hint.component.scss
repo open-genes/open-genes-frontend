@@ -17,7 +17,7 @@
   padding: 12px 10px;
   border-radius: $border-radius-regular;
   background-color: $color-general-light;
-  font-size: $font-size;
+  font-size: $font-size-smaller;
   color: adjust-hue($color-general, 10);
 
   &__text {

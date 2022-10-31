@@ -3,3 +3,15 @@
 
 @include item;
 @include table-row;
+
+.name {
+  display: inline-block;
+  margin-top: -4px;
+  line-height: 1.8;
+}
+
+.cell--tags {
+  app-tag {
+    font-size: 11px;
+  }
+}

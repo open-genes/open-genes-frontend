@@ -78,6 +78,10 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
   public predefinedConservativeIn: any[] = [];
   // Experiments
   public ifShowExperimentsStats = false;
+  // Tags
+  public tags: any[] = []; // TODO: typing
+  public predefinedTags: any[] = [];
+  public processesModel: Observable<any[]>;
 
   @Input() isLoading = false;
   @Input() set lastChangedFilter(filter: appliedFilter) {
@@ -106,6 +110,7 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
       familyOriginSelect: new FormControl([[], [null]]),
       conservativeInSelect: new FormControl([[], [null]]),
       experimentsStatsCheckbox: new FormControl(false),
+      ageRelatedProcessesSelect: new FormControl([[], [null]]),
     });
   }
 
@@ -174,6 +179,12 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
         this.phylum = data;
       });
 
+    // Tags
+    this.processesModel = this.getEntitiesList('processes');
+    this.processesModel.pipe(takeUntil(this.subscription$)).subscribe((data: any[]) => {
+      this.tags = data;
+    });
+
     // Set the values that user has already selected in the genes list
     this.getState();
   }
@@ -198,7 +209,7 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
           this.predefinedOrigin = data.byOrigin;
           this.predefinedFamilyOrigin = data.byFamilyOrigin;
           this.predefinedConservativeIn = data.byConservativeIn;
-
+          this.predefinedTags = data.byAgeRelatedProcess;
           this.ifShowExperimentsStats = !!data.researches ?? false;
           this.filtersForm.controls.experimentsStatsCheckbox.patchValue(!!data.researches);
         }
@@ -293,6 +304,10 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
       case 'classes':
         this.listSettings.ifShowProteinClasses = !this
           .listSettings.ifShowProteinClasses;
+        break;
+      case 'tags':
+        this.listSettings.ifShowTags = !this
+          .listSettings.ifShowTags;
         break;
       default:
         break;

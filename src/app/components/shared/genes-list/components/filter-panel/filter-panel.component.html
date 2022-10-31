@@ -93,6 +93,14 @@
 </button>
 
 <button
+  *ngIf="filters.byAgeRelatedProcess.length"
+  class="filter __active"
+  (click)="clearFilters('byAgeRelatedProcess')">
+  {{ "entities_age_related_processes" | translate }}
+  <span class="fa fal fa-times"></span>
+</button>
+
+<button
   *ngIf="twoOrMoreFiltersApplied | async"
   class="filter"
   (click)="clearFilters()"

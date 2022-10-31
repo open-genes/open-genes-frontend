@@ -207,6 +207,26 @@
     </mat-form-field>
   </div>
 
+  <div class="body__row">
+    <mat-form-field appearance="fill" color="primary">
+      <app-eye-checkbox
+        matPrefix
+        (changeEvent)="toggleGenesListSettings('tags')"
+        [switch]="listSettings?.ifShowTags"></app-eye-checkbox>
+      <mat-label>{{ "filters_modal_placeholder_age_related_processes" | translate }}</mat-label>
+      <mat-select formControlName="ageRelatedProcessesSelect"
+                  multiple="true"
+                  [disabled]="tags?.length === 0"
+                  [(ngModel)]="predefinedTags"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="apply('byAgeRelatedProcess', $event)">
+        <ng-container *ngIf="tags?.length !== 0">
+          <mat-option *ngFor="let i of tags" [value]="i.id">{{ i.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <div class="reset-button-wrapper">
     <button class="btn btn--fill btn--big btn--gray reset-button"
             (click)="resetForm()">

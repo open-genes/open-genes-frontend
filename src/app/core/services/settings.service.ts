@@ -22,6 +22,7 @@ export class SettingsService {
     ifShowAgingMechanisms: true,
     ifShowProteinClasses: true,
     ifShowExperimentsStats: false,
+    ifShowTags: true,
   };
 
   constructor() {
