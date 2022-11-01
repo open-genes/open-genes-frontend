@@ -20,12 +20,14 @@ export class FilterPanelComponent {
   @Output() clearFilterItem: EventEmitter<any> = new EventEmitter();
 
   public filters: ApiGeneSearchFilter = this.filterService.filters;
+  public sortParams: Sort = this.filterService.sortParams;
   public sortEnum = SortEnum;
 
   constructor(
     private filterService: GenesFilterService,
     private cdRef: ChangeDetectorRef,
-  ) {}
+  ) {
+  }
 
   /**
    * Emit event when resetting a filter

@@ -1,5 +1,7 @@
 <ng-container matSort
-     (matSortChange)="sortBy($event)"
+              (matSortChange)="sortBy($event)"
+              [matSortActive]="sortParams.active"
+              matSortDirection="asc"
      class="filters-group">
   <button
     class="filter"
@@ -29,8 +31,7 @@
 <button
   *ngIf="filters.byDiseases?.length"
   class="filter __active"
-  (click)="clearFilters('byDiseases')"
->
+  (click)="clearFilters('byDiseases')">
   {{ "gene_list_diseases" | translate }}
   <mat-icon class="icon">close</mat-icon>
 </button>

@@ -13,6 +13,7 @@ import { SettingsService } from '../settings.service';
 import { Sort } from '@angular/material/sort';
 import { ApiResponse } from '../../models/api-response.model';
 import { Router } from '@angular/router';
+import { SortEnum } from './filter-types.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,11 @@ export class GenesFilterService {
   public twoOrMoreFiltersApplied = new BehaviorSubject<boolean>(
     false
   );
-  public sortParams: Sort;
+  public sortParams: Sort = {
+    // Default:
+    active: SortEnum.byConfidenceLevel,
+    direction: 'asc'
+  };
 
   // TODO: it's bad that the one can directly change filters state here
   public filters: ApiGeneSearchFilter = {
