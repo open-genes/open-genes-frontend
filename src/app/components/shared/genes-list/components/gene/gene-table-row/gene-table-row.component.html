@@ -56,6 +56,7 @@
       class="cell">
     <div class="overflow">
       <app-associated-diseases
+        class="cell__accordion"
         [geneDiseases]="item.diseases"
         [activeListItem]="filters.byDiseases"
         (clickEvent)="applyFilter('byDiseases', $event)"
@@ -67,6 +68,7 @@
       class="cell">
     <div class="overflow">
       <app-associated-disease-categories
+        class="cell__accordion"
         [geneDiseaseCategories]="item.diseaseCategories"
         [activeListItem]="filters.byDiseaseCategories"
         (clickEvent)="applyFilter('byDiseaseCategories', $event)"
@@ -78,6 +80,7 @@
     <td class="cell cell--mechanisms">
       <div class="overflow">
         <app-aging-mechanisms
+          class="cell__accordion"
           [geneAgingMechanisms]="item.agingMechanisms"
           [activeListItem]="filters.byAgingMechanism"
           (clickEvent)="applyFilter('byAgingMechanism', $event)"
@@ -90,6 +93,7 @@
        class="cell cell--classes">
     <div class="overflow">
       <app-protein-classes
+        class="cell__accordion"
         *ngIf="item?.proteinClasses"
         [geneProteinClasses]="item.proteinClasses"
         [activeListItem]="filters.byProteinClass"
@@ -102,6 +106,7 @@
       class="cell cell--criteria">
     <div class="overflow">
       <app-selection-criteria
+        class="cell__accordion"
         [geneCriteria]="item.commentCause"
         [activeListItem]="filters.bySelectionCriteria"
         (clickEvent)="applyFilter('bySelectionCriteria', $event)"

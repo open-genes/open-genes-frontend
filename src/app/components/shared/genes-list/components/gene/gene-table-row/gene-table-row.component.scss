@@ -10,8 +10,18 @@
   line-height: 1.8;
 }
 
-.cell--tags {
-  app-tag {
-    font-size: 11px;
+.cell {
+  &__accordion {
+    position: relative;
+    top: -5px; // align baseline for all lines of text in a table row
+  }
+
+  &--tags {
+    app-tag {
+      font-size: 11px;
+    }
   }
 }
+
+
+
