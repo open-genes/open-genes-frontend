@@ -17,6 +17,7 @@ export interface ApiGeneSearchFilter {
   byFamilyOrigin: string[];
   byConservativeIn: string[];
   researches: number; // send researches in response
+  confidenceLevel: number;
 }
 
 export type ApiGeneSearchParameters =

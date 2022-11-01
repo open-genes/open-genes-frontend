@@ -44,6 +44,7 @@ export class GenesFilterService {
     byGeneId: null,
     byGeneSymbol: [],
     bySuggestions: '',
+    confidenceLevel: null,
   };
 
   public pagination: Pagination = {
@@ -180,6 +181,9 @@ export class GenesFilterService {
       case 'bySuggestions':
         this.filters.bySuggestions = '';
         break;
+      case 'confidenceLevel':
+        this.filters.confidenceLevel = null;
+        break;
       default:
         this.filters.byAgeRelatedProcess = [];
         this.filters.byDiseases = [];
@@ -195,7 +199,7 @@ export class GenesFilterService {
         this.filters.byGeneId = null;
         this.filters.byGeneSymbol = [];
         this.filters.bySuggestions = '';
-
+        this.filters.confidenceLevel = null;
     }
 
     this.pagination.page = 1;

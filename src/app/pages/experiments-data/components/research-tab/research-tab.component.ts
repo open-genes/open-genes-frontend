@@ -219,7 +219,6 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
 
   public pageEventHandler(event: PageEvent): void {
     this.currentPage = event.pageIndex;
-    console.log(this.currentPage, event.pageIndex)
     this.filterService.pagination.page = this.currentPage;
     this.filterService.onLoadMoreGenes(this.options?.pagination?.pagesTotal);
     this.slice.next(this.studies.length + this.itemsPerPage);

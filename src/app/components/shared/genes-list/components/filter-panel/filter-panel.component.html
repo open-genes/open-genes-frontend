@@ -18,6 +18,12 @@
     [mat-sort-header]="sortEnum.byCriteriaQuantity">
     {{ "main_page_table_criteria_quantity" | translate }}
   </button>
+
+  <button
+    class="filter"
+    [mat-sort-header]="sortEnum.byConfidenceLevel">
+    {{ "confidence_level" | translate }}
+  </button>
 </ng-container>
 
 <button
@@ -97,7 +103,15 @@
   class="filter __active"
   (click)="clearFilters('byAgeRelatedProcess')">
   {{ "entities_age_related_processes" | translate }}
-  <span class="fa fal fa-times"></span>
+  <mat-icon class="icon">close</mat-icon>
+</button>
+
+<button
+  *ngIf="filters.confidenceLevel"
+  class="filter __active"
+  (click)="clearFilters('confidenceLevel')">
+  {{ "confidence_level" | translate }}
+  <mat-icon class="icon">close</mat-icon>
 </button>
 
 <button
