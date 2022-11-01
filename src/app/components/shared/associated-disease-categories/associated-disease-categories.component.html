@@ -5,9 +5,9 @@
       <li *ngFor="let disease of filteredItems"
           [class.__active]="activeListItem?.includes(disease.id)"
           (click)="emitOnClick(disease.id)">
-        <ng-container *ngIf="disease.icdCategoryName.length > 0; else noTranslation">
-          {{ disease.icdCategoryName.length }}
-        </ng-container>
+        {{ disease.icdCategoryName.length > 0
+        ? disease.icdCategoryName
+        : "icd" | translate }}
       </li>
     </ul>
   </ng-container>
@@ -24,8 +24,10 @@
           <li *ngFor="let disease of geneDiseaseCategories | slice: 0:maxItemsToShow"
               [class.__active]="activeListItem?.includes(disease.id)"
               (click)="emitOnClick(disease.id)">
-            <ng-container *ngIf="disease.icdCategoryName.length > 0; else noTranslation">
-              {{ disease.icdCategoryName.length }}
+            <ng-container *ngIf="disease.icdCategoryName.length > 0">
+              {{ disease.icdCategoryName.length > 0
+              ? disease.icdCategoryName
+              : "icd" | translate }}
             </ng-container>
           </li>
         </ul>
@@ -40,16 +42,14 @@
           <li *ngFor="let disease of geneDiseaseCategories | slice: maxItemsToShow"
               [class.__active]="activeListItem?.includes(disease.id)"
               (click)="emitOnClick(disease.id)">
-            <ng-container *ngIf="disease.icdCategoryName.length > 0; else noTranslation">
-              {{ disease.icdCategoryName.length }}
-            </ng-container>
+            {{ disease.icdCategoryName.length > 0
+            ? disease.icdCategoryName
+            : "icd" | translate }}
           </li>
         </ul>
       </div>
-
     </app-accordion>
   </ng-template>
-
 </ng-container>
 
 <ng-template #noDisease>
@@ -58,6 +58,3 @@
   </div>
 </ng-template>
 
-<ng-template #noTranslation let-disease=disease>
-  {{ "icd" | translate }}-{{ disease?.icdCode }}
-</ng-template>
