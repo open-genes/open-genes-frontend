@@ -1,5 +1,7 @@
 <ng-container matSort
-     (matSortChange)="sortBy($event)"
+              (matSortChange)="sortBy($event)"
+              [matSortActive]="sortParams.active"
+              matSortDirection="asc"
      class="filters-group">
   <button
     class="filter"
@@ -18,13 +20,18 @@
     [mat-sort-header]="sortEnum.byCriteriaQuantity">
     {{ "main_page_table_criteria_quantity" | translate }}
   </button>
+
+  <button
+    class="filter"
+    [mat-sort-header]="sortEnum.byConfidenceLevel">
+    {{ "confidence_level" | translate }}
+  </button>
 </ng-container>
 
 <button
   *ngIf="filters.byDiseases?.length"
   class="filter __active"
-  (click)="clearFilters('byDiseases')"
->
+  (click)="clearFilters('byDiseases')">
   {{ "gene_list_diseases" | translate }}
   <mat-icon class="icon">close</mat-icon>
 </button>
@@ -89,6 +96,22 @@
   (click)="clearFilters('byConservativeIn')"
 >
   {{ "filters_modal_placeholder_conservative" | translate }}
+  <mat-icon class="icon">close</mat-icon>
+</button>
+
+<button
+  *ngIf="filters.byAgeRelatedProcess.length"
+  class="filter __active"
+  (click)="clearFilters('byAgeRelatedProcess')">
+  {{ "entities_age_related_processes" | translate }}
+  <mat-icon class="icon">close</mat-icon>
+</button>
+
+<button
+  *ngIf="filters.confidenceLevel"
+  class="filter __active"
+  (click)="clearFilters('confidenceLevel')">
+  {{ "confidence_level" | translate }}
   <mat-icon class="icon">close</mat-icon>
 </button>
 

@@ -116,6 +116,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   private genesFromInput: Genes[];
   private itemsPerPage = 20;
   private snackBarRef: MatSnackBarRef<SnackBarComponent>;
+  private sortingOnFrontend = ['name'];
 
   constructor(
     public filterService: GenesFilterService,
@@ -276,11 +277,11 @@ export class GenesListComponent implements OnInit, OnDestroy {
   /**
    * Sorting genes list
    */
-  // TODO: remove sort on frontend
   public sortBy(sort: Sort): void {
     const unSortedData = this.resultingList.slice();
-
-    if (sort.active !== this.sortEnum.byCriteriaQuantity) {
+    // TODO: remove sort on frontend
+    // Some filters may still exist only on frontend
+    if (this.sortingOnFrontend.includes(sort.active)) {
       if (!sort.active || sort.direction === '') {
         this.resultingList = this.cachedData;
         return;
@@ -290,8 +291,6 @@ export class GenesListComponent implements OnInit, OnDestroy {
         switch (sort.active) {
           case this.sortEnum.byName:
             return this.compare((a.symbol + a.name).toLowerCase(), (b.symbol + b.name).toLowerCase(), isAsc);
-          case this.sortEnum.byAge:
-            return this.compare(a.familyOrigin?.order, b.familyOrigin?.order, isAsc);
           default:
             return 0;
         }

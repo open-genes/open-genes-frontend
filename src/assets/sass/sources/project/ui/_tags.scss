@@ -1,29 +1,32 @@
 // Tags
 
+:host {
+  font-size: $font-size-smaller;
+}
+
 .tag {
   display: inline-block;
   vertical-align: middle;
-  padding: 0 8px;
-  border: 1px solid #ddd;
-  font-size: 12px;
-  color: #444;
+  padding: 0 0.4em;
+  border: 1px solid $color-borders;
+  font-size: 1em;
+  color: $color-black-light;
   border-radius: 4px;
   cursor: pointer;
   user-select: none;
-  background-color: #fff;
+  background-color: $color-white;
   margin: 0 5px 5px 0;
 
   &__inner {
     display: block;
     width: 100%;
-    min-width: 40px;
-    max-width: 50ex; // 50 symbols
-    font-size: $font-size-small;
+    min-width: 10ch;
+    max-width: 50ch; // 50 symbols
   }
 
   &:not(.tag--multiline) {
     .tag__inner {
-      line-height: $ui-base-height;
+      line-height: 2.16em;
       @include text-overflow;
       text-align: center;
     }

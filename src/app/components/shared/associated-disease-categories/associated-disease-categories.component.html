@@ -2,10 +2,12 @@
 
   <ng-container *ngIf="!isAccordion; else accordion">
     <ul class="list list--bulletted">
-      <li *ngFor="let disease of geneDiseaseCategories"
+      <li *ngFor="let disease of filteredItems"
           [class.__active]="activeListItem?.includes(disease.id)"
           (click)="emitOnClick(disease.id)">
-        {{ disease.icdCategoryName }}
+        {{ disease.icdCategoryName.length > 0
+        ? disease.icdCategoryName
+        : "icd" | translate }}
       </li>
     </ul>
   </ng-container>
@@ -22,7 +24,11 @@
           <li *ngFor="let disease of geneDiseaseCategories | slice: 0:maxItemsToShow"
               [class.__active]="activeListItem?.includes(disease.id)"
               (click)="emitOnClick(disease.id)">
-            {{ disease.icdCategoryName }}
+            <ng-container *ngIf="disease.icdCategoryName.length > 0">
+              {{ disease.icdCategoryName.length > 0
+              ? disease.icdCategoryName
+              : "icd" | translate }}
+            </ng-container>
           </li>
         </ul>
         <button (click)="toggleAccordion()"
@@ -36,14 +42,14 @@
           <li *ngFor="let disease of geneDiseaseCategories | slice: maxItemsToShow"
               [class.__active]="activeListItem?.includes(disease.id)"
               (click)="emitOnClick(disease.id)">
-            {{ disease.icdCategoryName }}
+            {{ disease.icdCategoryName.length > 0
+            ? disease.icdCategoryName
+            : "icd" | translate }}
           </li>
         </ul>
       </div>
-
     </app-accordion>
   </ng-template>
-
 </ng-container>
 
 <ng-template #noDisease>
@@ -51,3 +57,4 @@
     {{ 'no_disease_categories' | translate }}
   </div>
 </ng-template>
+

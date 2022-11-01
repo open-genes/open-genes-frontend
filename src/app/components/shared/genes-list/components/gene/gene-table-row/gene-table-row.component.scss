@@ -3,3 +3,25 @@
 
 @include item;
 @include table-row;
+
+.name {
+  display: inline-block;
+  margin-top: -4px;
+  line-height: 1.8;
+}
+
+.cell {
+  &__accordion {
+    position: relative;
+    top: -5px; // align baseline for all lines of text in a table row
+  }
+
+  &--tags {
+    app-tag {
+      font-size: 11px;
+    }
+  }
+}
+
+
+

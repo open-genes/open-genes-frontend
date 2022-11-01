@@ -11,4 +11,5 @@ export interface GenesListSettings {
   ifShowAgingMechanisms: boolean;
   ifShowProteinClasses: boolean;
   ifShowExperimentsStats: boolean;
+  ifShowTags: boolean;
 }
