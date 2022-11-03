@@ -1,0 +1,150 @@
+<div class="page main-page">
+  <div class="page__inner __pb-60">
+    <div class="wrapper main-page__header">
+      <div class="container-fluid">
+        <div class="row no-gutters">
+          <div class="col col-12">
+            <div class="page__title">
+              <h1 class="notranslate">{{ "product_name" | translate }}</h1>
+            </div>
+            <div class="header__description">
+              {{ "main_page_header_description" | translate }}
+            </div>
+            <div class="header__button">
+              <a mat-flat-button color="secondary" routerLink="/about">
+                {{"main_page_header_button" | translate}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid search-page-container">
+      <div class="row">
+        <ng-container *ngIf="!errorStatus; else errorMessage">
+          <div class="col-12">
+            <div *ngIf="isMobile"
+                 class="__mb-20">
+              <ng-container [ngTemplateOutlet]="wizardBanner"></ng-container>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 sidebar-column"
+               [ngClass]="isMobile? 'sidebar-column--mobile' : 'sidebar-column--desktop'">
+            <app-sidebar>
+              <app-sidebar-item *ngIf="!isMobile">
+                <div content class="wizard-banner-wrapper">
+                  <ng-container [ngTemplateOutlet]="wizardBanner"
+                  ></ng-container>
+                </div>
+              </app-sidebar-item>
+
+              <app-sidebar-item *ngIf="!isMobile">
+                <div content class="filters-wrapper">
+                  <app-gene-filters-panel
+                    [isLoading]="genesListIsLoading"
+                    [lastChangedFilter]="lastChangedFilter"
+                  ></app-gene-filters-panel>
+                </div>
+              </app-sidebar-item>
+            </app-sidebar>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
+            <div class="main-page__search-tips">
+              <p>
+                <span class="fa far fa-info-circle"></span> {{
+                (queryLength > 1
+                  ? "search_for_genes_desc_hint"
+                  : "search_for_genes_desc") | translate }}
+              </p>
+            </div>
+            <app-search-counter
+              [quantity]="itemsQuantity"
+              [title]="'main_page_total'"
+            ></app-search-counter>
+
+            <app-search
+              class="__mb-10"
+              [multiple]="queryLength > 1"
+              [searchHintsList]="searchedGenes"
+              [isDisabled]="genesListIsLoading"
+              placeholder="search_field_start_typing"
+              (search)="updateGenesList($event)"
+              (queryChange)="setSearchQuery($event)"
+              (cancel)="$cancelSearch.next()"
+              [showProgressBar]="showProgressBar"
+            >
+              <button *ngIf="isMobile"
+                      prefix
+                      mat-icon-button
+                      color="primary"
+                      (click)="openFiltersModal('filters_modal_title', null, fieldsModalTemplate)">
+                <mat-icon>tune</mat-icon>
+              </button>
+            </app-search>
+
+            <app-genes-list
+              (loading)="setLoader($event)"
+              (errorStatus)="errorStatus = $event"
+              (itemsNumber)="itemsQuantity = $event"
+              (filterChanged)="updateOnFilterChange($event)"
+              [genesList]="confirmedQuery"
+              [viewport]="viewport"
+              [isMobile]="isMobile"
+              [setSearchMode]="searchMode"
+              [showFiltersPanel]="true"
+              [cancelSearch]="$cancelSearch.asObservable()"
+            ></app-genes-list>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #errorMessage>
+  <section class="col-12">
+    <app-no-content
+      size="small"
+      [title]="'error_connection'">
+      <ng-container icon>
+        <app-icon
+          icon="default"
+          size="custom"
+          customWidth="100%"
+          customHeight="100%"
+        ></app-icon>
+      </ng-container>
+      <ng-container description>
+        <p>({{ errorStatus }})</p>
+      </ng-container>
+    </app-no-content>
+  </section>
+</ng-template>
+
+<ng-template #wizardBanner let-classes>
+  <app-hint class="{{ classes }}"
+            hintType="emphasized">
+    <ng-container title>
+      <span class="fa far fa-magic"></span>&nbsp;{{ 'wizard_where_to_start_title' | translate }}
+    </ng-container>
+
+    <ng-container description>
+      {{ 'wizard_where_to_start_description' | translate }}
+    </ng-container>
+
+    <ng-container button>
+      <button class="btn btn--fill btn--small btn--white"
+              (click)="openWizard()">
+        {{ 'wizard_where_to_start_button' | translate }}
+      </button>
+    </ng-container>
+  </app-hint>
+</ng-template>
+
+<ng-template #fieldsModalTemplate>
+  <app-gene-filters-panel></app-gene-filters-panel>
+</ng-template>
+

@@ -1,14 +1,7 @@
-export interface TermLegacy {
-  object: {
-    n: number;
-    string;
-  };
-}
-
 export interface TermsLegacy {
-  biological_process: TermLegacy[];
-  cellular_component: TermLegacy[];
-  molecular_activity: TermLegacy[];
+  biological_process: ReadonlyMap<any, string>;
+  cellular_component: ReadonlyMap<any, string>;
+  molecular_activity: ReadonlyMap<any, string>;
 }
 
 export interface Term {

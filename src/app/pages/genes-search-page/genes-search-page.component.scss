@@ -1,0 +1,17 @@
+@import '../styles';
+
+.wizard-banner-wrapper {
+  width: 100%;
+  padding: 0 5px;
+  margin-bottom: 5px;
+}
+
+@include search-page-styles();
+
+.main-page {
+  &__search-tips {
+    font-size: $font-size;
+    color: $color-gray;
+    margin-bottom: 1em;
+  }
+}

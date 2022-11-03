@@ -1,8 +1,9 @@
 @import "../../styles";
 
 $search-input-height: 50px;
-$search-switch-width: 50px;
-$mobile-container-vertical-padding: 5px;
+$search-button-size: 40px;
+$search-prefix-width: 20px;
+$mobile-container-vertical-padding: 7px;
 $input-border-radius: 5px;
 
 :host {
@@ -32,7 +33,6 @@ $input-border-radius: 5px;
 
   &,
   &__panel,
-  &__quantity,
   &__wrapper {
     width: 100%;
     flex: 0 0 100%;
@@ -44,13 +44,6 @@ $input-border-radius: 5px;
     align-items: flex-start;
     justify-content: center;
     position: relative;
-  }
-
-  &__quantity {
-    display: flex;
-    font-size: $font-size-smaller;
-    color: $color-gray;
-    margin-bottom: 8px;
   }
 
   &__wrapper {
@@ -120,26 +113,44 @@ $input-border-radius: 5px;
     }
   }
 
+  &__prefix {
+    width: $search-prefix-width;
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    transform: translateY(-50%);
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .search-form__prefix:not(:empty) + .search-form__field {
+    padding-left: $search-prefix-width + 20px;
+  }
+
   .clear-search-button {
     color: $color-gray;
     position: absolute;
     top: 5px;
     z-index: 1;
-    right: $search-input-height;
+    right: $search-button-size;
   }
 
   &__cancel {
     display: block;
-    width: $search-input-height;
-    height: $search-input-height;
+    width: $search-button-size;
+    height: $search-button-size;
     color: $color-gray;
     line-height: normal;
-    font-size: $search-input-height / 2;
+    font-size: $search-button-size / 1.5;
     text-align: center;
     position: absolute;
-    top: 0;
+    top: 50%;
+    right: $search-button-size;
+    transform: translateY(-50%);
     z-index: 1;
-    right: $search-input-height + 10px;
+
 
     .fa {
       position: relative;
@@ -171,7 +182,7 @@ $input-border-radius: 5px;
   &__autocomplete-list {
     position: absolute;
     top: 100%;
-    max-height: (39px * 5) + 18px;
+    max-height: (40px * 3) + 2px;
     width: 100%;
     overflow-y: scroll;
     background: $color-white;
@@ -180,7 +191,6 @@ $input-border-radius: 5px;
 
     &:not(:empty) {
       border: 1px solid $color-borders;
-      padding: 8px 0;
       box-shadow: 0 5px 5px 0 rgba($color-black, .15);
     }
 
@@ -189,15 +199,21 @@ $input-border-radius: 5px;
       background: $color-gray-halfing;
     }
 
+    ::-webkit-scrollbar-track {
+      background-color: $color-gray-very-light;
+      border-radius: 100px;
+    }
+
     ::-webkit-scrollbar-thumb {
-      background: $color-gray;
+      background: $color-borders;
     }
   }
 
   &__autocomplete-item {
+    position: relative;
     display: block;
     width: 100%;
-    padding: 10px;
+    padding: $padding-regular 25px $padding-regular $padding-regular;
     font-size: 14px;
     white-space: nowrap;
     overflow: hidden;
@@ -211,6 +227,15 @@ $input-border-radius: 5px;
 
     .item__name {
       color: $color-gray;
+    }
+
+    .item__go-icon {
+      position: absolute;
+      top: 50%;
+      right: $padding-regular;
+      z-index: 0;
+      transform: translateY(-50%);
+      color: $color-general;
     }
 
     .item__name,
@@ -249,7 +274,7 @@ $input-border-radius: 5px;
       left: 0;
       min-height: 60px;
       margin: 0;
-      background-color: #fff;
+      background-color: $color-white;
       z-index: z('search');
       box-shadow: 0 5px 5px 0 rgba($color-black, .15);
 
@@ -267,7 +292,7 @@ $input-border-radius: 5px;
 
         .search-form__autocomplete-list {
           position: fixed;
-          top: 50px;
+          top: $header-height;
           left: 0;
           border: 0;
         }

@@ -10,6 +10,7 @@ import { UiComponentsModule } from '../../../components/ui-components/ui-compone
 import { GenesListModule } from '../../../components/shared/genes-list/genes-list.module';
 import { DietTableComponent } from './components/diet-table/diet-table.component';
 import { MaterialModule } from '../../../modules/vendors/material.module';
+import { SearchModule } from "../../../components/shared/search/search.module";
 
 const HOME_ROUTES: Routes = [{ path: '', component: DietComponent }];
 
@@ -25,6 +26,7 @@ const HOME_ROUTES: Routes = [{ path: '', component: DietComponent }];
     UiComponentsModule,
     GenesListModule,
     MaterialModule,
-  ],
+    SearchModule
+  ]
 })
 export class DietModule {}

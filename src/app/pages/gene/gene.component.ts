@@ -11,12 +11,11 @@ import { SearchModeEnum, Settings } from '../../core/models/settings.model';
 import { FavouritesService } from '../../core/services/favourites.service';
 import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FilterService } from '../../components/shared/genes-list/services/filter.service';
-import { FilterTypesEnum } from '../../components/shared/genes-list/services/filter-types.enum';
+import { GenesFilterService } from '../../core/services/filters/genes-filter.service';
 import { Gene, Ortholog } from '../../core/models';
-import { Filter } from '../../core/models/filters/filter.model';
+import { ApiGeneSearchFilter } from '../../core/models/filters/filter.model';
 import { Utils } from '../../core/utils/utils.mixin';
-import { Researches } from 'src/app/core/models/open-genes-api/researches.model';
+import { Studies } from 'src/app/core/models/open-genes-api/researches.model';
 
 @Component({
   selector: 'app-gene-page',
@@ -47,11 +46,10 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
   public isGeneCandidate = false;
   public isUiHintsSettingOn: boolean;
   public isInFavourites: boolean;
-  public filterTypes = FilterTypesEnum;
-  public filters: Filter = this.filterService.filters;
+  public filters: ApiGeneSearchFilter = this.filterService.filters;
   public orthologsMaxItemsToShow = 9;
   public orthologsMaxItems: number = this.orthologsMaxItemsToShow;
-  public researches: Observable<Researches>;
+  public researches: Observable<Studies>;
 
   private ngUnsubscribe = new Subject();
   private routeSubscribe: Subscription;
@@ -64,7 +62,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
     private activateRoute: ActivatedRoute,
     private router: Router,
     private bottomSheet: MatBottomSheet,
-    private filterService: FilterService,
+    private filterService: GenesFilterService,
     private settingsService: SettingsService,
     private apiService: ApiService,
     private favouritesService: FavouritesService,
@@ -130,7 +128,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
           });
           this.isAnyResearchFilled = Math.max(...researchesLengths) !== 0;
 
-          const strongResearches = [
+          const strongResearchTypes = [
             compoundResearches.increaseLifespan,
             compoundResearches.ageRelatedChangesOfGene,
             compoundResearches.interventionToGeneImprovesVitalProcesses,
@@ -138,12 +136,12 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
             compoundResearches.geneAssociatedWithLongevityEffects,
           ];
 
-          if (strongResearches.length !== 0) {
-            const strongResearchesLengths = [];
-            strongResearches.forEach((value) => {
-              strongResearchesLengths.push(Number(Object.entries(value).length));
+          if (strongResearchTypes.length !== 0) {
+            const strongResearchTypesLengths = [];
+            strongResearchTypes.forEach((value) => {
+              strongResearchTypesLengths.push(Number(Object.entries(value).length));
             });
-            this.isAnyStrongResearchFilled = Math.max(...strongResearchesLengths) !== 0;
+            this.isAnyStrongResearchFilled = Math.max(...strongResearchTypesLengths) !== 0;
           } else {
             this.isAnyStrongResearchFilled = false;
           }
@@ -162,7 +160,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
           this.ortholog = this.gene.ortholog.sort((a, b) => {
             return (
               (a.species.latinName > b.species.latinName ? 1 : -1) &&
-              (a.species.latinName.includes('Drosophila') ? -1 : 1)
+              (a.species.latinName?.includes('Drosophila') ? -1 : 1)
             );
           });
 
@@ -231,6 +229,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
     this.routeSubscribe.unsubscribe();
+    this.snackBar.dismiss();
     this.bottomSheet.dismiss();
   }
 
@@ -247,11 +246,7 @@ export class GeneComponent extends Utils implements OnInit, AfterViewInit, OnDes
     const queryParams = {};
     queryParams[filterType] = id;
 
-    if (this.retrievedSettings.searchMode === this.searchModeEnum.searchByGoTerms) {
-      this.settingsService.setSettings('searchMode', this.searchModeEnum.searchByGenes);
-    }
-
-    this.router.navigate([''], {
+    void this.router.navigate(['genes'], {
       queryParams: queryParams,
     });
   }

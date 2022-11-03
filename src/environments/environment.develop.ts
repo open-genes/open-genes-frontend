@@ -6,6 +6,7 @@ export const environment = {
   pubmedUrl: 'https://www.ncbi.nlm.nih.gov/pubmed/',
   proteinAtlasUrl: 'https://www.proteinatlas.org/',
   openLongevity80LevelCMS: 'https://openlongevity.com/',
+  wordpressApiUrl: 'https://content.open-genes.com/wp-json/wp/v2/',
   debugMode: false,
   languages: ['ru', 'en', 'zh'],
   mockJsonUrl: ['assets/data/articles-page-1.mock.json', 'assets/data/articles-page-2.mock.json'],

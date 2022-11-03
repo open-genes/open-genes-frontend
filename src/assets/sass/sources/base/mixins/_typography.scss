@@ -1,11 +1,18 @@
-// Обрезка текста
+// Text truncation
 @mixin text-overflow {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-// Обрезка многострочного текста
+// Line break
+@mixin break-string($length: 80%) {
+  display: block;
+  width: $length;
+  word-break: break-all;
+}
+
+// Multiline text truncation
 @mixin overflow-lines($font-size, $font-line-height, $lines, $additional, $whole-height:"") {
   display: block;
   display: -webkit-box;
@@ -17,199 +24,102 @@
   hyphens: auto;
   @if $whole-height != "" {
     height: $whole-height;
-  }
-  @else {
+  } @else {
     max-height: ($font-line-height * $font-size * $lines) + $additional;
   }
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+@mixin list {
+  width: 100%;
+
+
+  li {
+    width: 100%;
+    position: relative;
+    word-break: break-word;
+    hyphens: auto;
+
+    .alias {
+      vertical-align: top;
+    }
+
+    .callout {
+      display: block;
+      float: left;
+    }
+  }
+
+  li + li,
+  li > ul,
+  li > ol {
+    margin-top: .8ex;
+  }
+}
+
+@mixin ul {
+  li {
+    padding-left: 1.8ex;
+
+    &:before {
+      content: " ";
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: $color-general;
+      position: absolute;
+      left: 0;
+      top: 1ex;
+      z-index: 0;
+    }
+  }
+}
+
+@mixin dl {
+  display: inline-block;
+  width: 100%;
+
+  dt, dd {
+    float: left;
+  }
+
+  dt {
+    clear: left;
+    margin-right: 1ch;
+    font-weight: $font-weight-medium;
+
+    span {
+      font-weight: $font-weight-regular;
+    }
+  }
+
+  dt:not(:first-of-type),
+  dd:not(:first-of-type) {
+    margin-top: .8ex;
+  }
+}
+
 @mixin lists {
   ul, ol {
     &.list {
-      width: 100%;
-
-      li {
-        width: 100%;
-        position: relative;
-
-        .alias {
-          vertical-align: top;
-        }
-
-        .callout {
-          display: block;
-          float: left;
-        }
-      }
-
-      li + li {
-        margin-top: .8ex;
-      }
+      @include list;
     }
   }
 
   ul.list--bulletted {
-    li {
-      padding-left: 1.8ex;
-
-      &:before {
-        content: " ";
-        display: block;
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background-color: $color-general;
-        position: absolute;
-        left: 0;
-        top: 1ex;
-        z-index: 0;
-      }
-    }
+    @include ul;
   }
 
   dl.list {
-    display: inline-block;
-    width: 100%;
-
-    dt, dd {
-      float: left;
-    }
-
-    dt {
-      clear: left;
-      margin-right: 1ch;
-      font-weight: $font-weight-medium;
-
-      span {
-        font-weight: $font-weight-regular;
-      }
-    }
-
-    dt:not(:first-of-type),
-    dd:not(:first-of-type) {
-      margin-top: .8ex;
-    }
+    @include dl;
 
     &--stacked {
       dt,
       dd {
         width: 100%;
       }
-    }
-  }
-}
-
-@mixin typography {
-  @include lists;
-
-  article,
-  section {
-    width: 100%;
-    @include resolution_desktop-and-up {
-      font-size: calc(0.2vw + 13px);
-    }
-    @include resolution_tablet {
-      font-size: 15px;
-    }
-    @include resolution_smartphone {
-      font-size: 14px;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      width: 100%;
-      color: $color-indent;
-      font-weight: $font-weight-medium;
-    }
-
-    h1 {
-      font-size: calc(0.2vw + 25px);
-      color: $color-indent;
-    }
-
-    h2 {
-      font-size: calc(0.2vw + 20px);
-    }
-
-    h3 {
-      font-size: calc(0.2vw + 16px);
-    }
-
-    h4 {
-      font-size: calc(0.2vw + 14px);
-    }
-
-    h5 {
-      font-size: calc(0.2vw + 13px);
-    }
-
-    h6 {
-      font-size: $font-size;
-    }
-
-    * + h1,
-    * + h2 {
-      margin-top: 3ex;
-    }
-
-    * + h3,
-    * + h4,
-    * + h5,
-    * + h6,
-    * + p,
-    * + .list,
-    * + app-code-block {
-      margin-top: .8ex;
-    }
-
-    h3 + *,
-    h4 + *,
-    h5 + *,
-    h6 + * {
-      margin-top: 2ex;
-    }
-
-    article + h3 {
-      margin-top: 3ex;
-    }
-
-    // It's made in order to not affect styled links.
-    // Links in the text received from endpoint don't have classes
-    & > a:not(.btn),
-    & > p a:not(.btn) {
-      font-weight: $font-weight-medium;
-      color: $color-general;
-
-      &:hover,
-      &:active {
-        color: lighten(mix($color-general, $color-blue, 5%), 3%);
-      }
-    }
-  }
-
-  article + article, // TODO: Change it to one class common for article, section and components tags
-  article + section,
-  section + section,
-  section + article,
-  h1 + section,
-  h1 + article,
-  h2 + section,
-  h2 + article {
-    margin-top: 30px;
-  }
-
-  .reference {
-    font-size: 80%;
-    margin-top: 1em;
-
-    p + p {
-      margin-top: .8em;
     }
   }
 }
@@ -248,6 +158,15 @@
   }
 }
 
+@mixin underlined-link {
+  text-decoration: underline;
+}
+
+@mixin anchor-link {
+  @include gray-link;
+  border-bottom: 1px dashed currentColor;
+}
+
 .link {
   @include base-link;
   @include blue-link;
@@ -261,16 +180,157 @@
   }
 
   &--underline {
-    text-decoration: underline;
+    @include underlined-link;
   }
 
   &--anchor,
   &--term {
-    @include gray-link;
-    border-bottom: 1px dashed currentColor;
+    @include anchor-link;
   }
 
   &--term {
     font-style: italic;
+  }
+}
+
+@mixin margin-clamp-fix {
+  p,
+  h1, h2, h3, h4, h5, h6,
+  ul, ol, dl {
+    width: 100%;
+    float: left;
+  }
+}
+
+@mixin typography {
+  @include lists;
+
+  article,
+  section {
+    width: 100%;
+    @include resolution_desktop-and-up {
+      font-size: calc(0.2vw + 13px);
+    }
+    @include resolution_tablet {
+      font-size: 15px;
+    }
+    @include resolution_smartphone {
+      font-size: 14px;
+    }
+
+    b,
+    strong {
+      font-weight: $font-weight-medium;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      width: 100%;
+      color: $color-indent;
+      font-weight: $font-weight-medium;
+
+    }
+
+    h1 {
+      font-size: calc(0.2vw + 25px);
+      color: $color-indent;
+    }
+
+    h2 {
+      font-size: calc(0.2vw + 20px);
+    }
+
+    h3 {
+      font-size: calc(0.2vw + 16px);
+    }
+
+    h4 {
+      font-size: calc(0.2vw + 14px);
+    }
+
+    h5 {
+      font-size: calc(0.2vw + 13px);
+    }
+
+    h6 {
+      font-size: $font-size;
+    }
+
+    * + h1,
+    * + h2 {
+      margin-top: 3ex;
+    }
+
+    * + h3,
+    * + h4,
+    * + h5,
+    * + h6,
+    * + p,
+    * + ul,
+    * + ol,
+    * + blockquote,
+    * + app-code-block {
+      margin-top: 2.5ex;
+    }
+
+    h3 + *,
+    h4 + *,
+    h5 + *,
+    h6 + *,
+    blockquote + * {
+      margin-top: 2ex;
+    }
+
+    // It's made in order to not affect styled links.
+    // Links in the text received from endpoint don't have classes
+    & > a:not(.btn),
+    & > p a:not(.btn) {
+      font-weight: $font-weight-medium;
+      color: $color-general;
+
+      &:hover,
+      &:active {
+        color: lighten(mix($color-general, $color-blue, 5%), 3%);
+      }
+    }
+  }
+
+  blockquote {
+    display: inline-block;
+    width: 100%;
+    padding: $padding-medium;
+    background-color: $color-general-light;
+    border-left: 4px solid $color-general-semi;
+    color: $color-black;
+    font-size: calc(0.2vw + 14px);
+  }
+
+  article + article, // TODO: Change it to one class common for article, section and components tags
+  article + section,
+  section + section,
+  section + article,
+  h1 + section,
+  h1 + article,
+  h2 + section,
+  h2 + article {
+    margin-top: 30px;
+  }
+  article + h3 {
+    margin-top: 3ex;
+  }
+
+  .reference {
+    font-size: 80%;
+    margin-top: 1em;
+
+    p + p,
+    ul + p ,
+    ol + p, {
+      margin-top: .8em;
+    }
   }
 }

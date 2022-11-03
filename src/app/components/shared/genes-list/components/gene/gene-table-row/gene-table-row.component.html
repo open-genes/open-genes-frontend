@@ -19,9 +19,29 @@
           ></span>
         </button>
       </div>
-      <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
-        <b>{{ item.symbol }}</b> {{ item.name }}
-      </a>
+      <div class="name">
+        <a [routerLink]="['/gene', item.symbol]"
+           [matTooltip]="'go_to_gene_page' | translate"
+           class="link link--gray">
+          <b>{{ item.symbol }}</b> {{ item.name }}</a>
+
+        <button
+          *ngIf="item?.confidenceLevel"
+          class="alias alias--small confidence-level"
+          [matTooltip]="'confidence_level' | translate"
+          (click)="applyFilter('confidenceLevel', item.confidenceLevel.id)"
+          [class.__active]="isAgeRelatedProcessActive(item.confidenceLevel.id.toString())"
+          [ngClass]="{
+              'alias--red' : item.confidenceLevel.id === 1,
+              'alias--orange' : item.confidenceLevel.id === 2,
+              'alias--pine' : item.confidenceLevel.id === 3,
+              'alias--blue' : item.confidenceLevel.id === 4,
+              'alias--gray' : item.confidenceLevel.id === 5
+          }"
+        >
+          {{ item.confidenceLevel.name }}
+        </button>
+      </div>
     </div>
   </td>
 
@@ -36,9 +56,10 @@
       class="cell">
     <div class="overflow">
       <app-associated-diseases
+        class="cell__accordion"
         [geneDiseases]="item.diseases"
         [activeListItem]="filters.byDiseases"
-        (clickEvent)="applyFilter(filterTypes.disease, $event)"
+        (clickEvent)="applyFilter('byDiseases', $event)"
       ></app-associated-diseases>
     </div>
   </td>
@@ -47,9 +68,10 @@
       class="cell">
     <div class="overflow">
       <app-associated-disease-categories
+        class="cell__accordion"
         [geneDiseaseCategories]="item.diseaseCategories"
         [activeListItem]="filters.byDiseaseCategories"
-        (clickEvent)="applyFilter(filterTypes.disease_categories, $event)"
+        (clickEvent)="applyFilter('byDiseaseCategories', $event)"
       ></app-associated-disease-categories>
     </div>
   </td>
@@ -58,9 +80,10 @@
     <td class="cell cell--mechanisms">
       <div class="overflow">
         <app-aging-mechanisms
+          class="cell__accordion"
           [geneAgingMechanisms]="item.agingMechanisms"
           [activeListItem]="filters.byAgingMechanism"
-          (clickEvent)="applyFilter(filterTypes.aging_mechanism, $event)"
+          (clickEvent)="applyFilter('byAgingMechanism', $event)"
         ></app-aging-mechanisms>
       </div>
     </td>
@@ -70,25 +93,12 @@
        class="cell cell--classes">
     <div class="overflow">
       <app-protein-classes
+        class="cell__accordion"
         *ngIf="item?.proteinClasses"
         [geneProteinClasses]="item.proteinClasses"
         [activeListItem]="filters.byProteinClass"
-        (clickEvent)="applyFilter(filterTypes.protein_classes, $event)"
+        (clickEvent)="applyFilter('byProteinClass', $event)"
       ></app-protein-classes>
-    </div>
-  </td>
-
-  <td *ngIf="listSettings.ifShowExpression"
-      class="cell cell--expression">
-    <div class="overflow">
-      <app-tag
-        (click)="applyFilter(filterTypes.expression_change, item.expressionChange)"
-        [isDisabled]="item.expressionChange === 0"
-        [isActive]="
-            filters.byExpressionChange === item.expressionChange &&
-            item.expressionChange !== 0"
-      >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
-      </app-tag>
     </div>
   </td>
 
@@ -96,30 +106,19 @@
       class="cell cell--criteria">
     <div class="overflow">
       <app-selection-criteria
+        class="cell__accordion"
         [geneCriteria]="item.commentCause"
         [activeListItem]="filters.bySelectionCriteria"
-        (clickEvent)="applyFilter(filterTypes.selection_criteria, $event)"
+        (clickEvent)="applyFilter('bySelectionCriteria', $event)"
       ></app-selection-criteria>
     </div>
   </td>
 
-  <td *ngIf="listSettings.ifShowMethylation"
-      class="cell cell--methylation">
-    <div class="overflow">
-      <app-tag
-        *ngIf="item.methylationCorrelation !== ''"
-        (click)="applyFilter(filterTypes.methylation_change, item.methylationCorrelation)"
-        [isActive]="filters.byMethylationChange === item.methylationCorrelation"
-      >{{ item.methylationCorrelation }}
-      </app-tag>
-    </div>
-  </td>
-
-  <td *ngIf="listSettings.ifShowResearches"
+  <td *ngIf="listSettings.ifShowExperimentsStats"
       class="cell">
     <div class="overflow">
       <app-experiments-stats
-      [researches]="item.researches"></app-experiments-stats>
+      [experiments]="item.researches"></app-experiments-stats>
     </div>
   </td>
 
@@ -133,18 +132,17 @@
       ></app-gene-menu>
     </div>
   </td>
-
 </tr>
 
 <tr class="item">
-  <td *ngIf="item.functionalClusters.length !== 0 && listSettings.ifShowFuncClusters"
+  <td *ngIf="item.functionalClusters.length !== 0 && listSettings?.ifShowTags"
       colspan="100%"
-      class="cell cell--functions">
+      class="cell cell--tags">
     <app-tag
       *ngFor="let item of item.functionalClusters"
-      (click)="applyFilter(filterTypes.age_related_processes, item.id)"
-      [isActive]="filters.byAgeRelatedProcess.includes(item.id)">
-      {{ item.name }}
+      (click)="applyFilter('byAgeRelatedProcess', item.id)"
+      [isActive]="isAgeRelatedProcessActive(item.id)">
+      #{{ item.name }}
     </app-tag>
   </td>
 </tr>

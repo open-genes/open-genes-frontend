@@ -2,21 +2,17 @@
       class="search-form"
       [ngClass]="
       {'search-form--disabled': formDisabled,
-      'search-form--active': showSearchResult,
+      'search-form--active': showSearchHints,
       'search-form--fix-on-top': fixOnTopOnMobile}">
-  <div *ngIf="showTitle"
-       class="search-form__quantity">
-    <span *ngIf="genesLength">{{ 'main_page_total' | translate: { number: genesLength } }}</span>
-  </div>
 
-  <div *ngIf="showSearchResult"
+  <div *ngIf="showSearchHints"
        class="search-backdrop"
-       (click)="closeSearchTipsDropdown($event)">
+       (click)="closeSearchHintsDropdown($event)">
   </div>
 
   <div class="search-form__panel">
     <button
-      (click)="closeSearchTipsDropdown($event)"
+      (click)="closeSearchHintsDropdown($event)"
       mat-icon-button
       color="primary"
       type="button"
@@ -27,11 +23,11 @@
     </button>
 
     <div class="search-form__wrapper">
-      <button *ngIf="clearFieldButton"
+      <button *ngIf="clearButton"
               mat-icon-button
               type="button"
               class="clear-search-button"
-              (click)="clearSearch()">
+              (click)="cancelSearch()">
         <mat-icon>
           close
         </mat-icon>
@@ -41,21 +37,21 @@
         mat-icon-button
         class="search-form__submit search-form__submit--active"
         type="submit"
-        (click)="onSearch()">
+        (click)="submitSearch()">
         <span class="fa fal fa-search"></span>
       </button>
 
-      <!-- TODO: Use matNativeControl -->
-      <ng-container *ngFor="let item of inputData">
-        <input
-          *ngIf="searchMode === item.searchMode"
-          formControlName="searchField"
-          type="text"
-          placeholder="{{ item.placeholder | translate }}"
-          class="field search-form__field"
-          (keyup.enter)="onSearch()"
-        >
-      </ng-container>
+      <div class="search-form__prefix">
+        <ng-content select="[prefix]"></ng-content>
+      </div>
+
+      <input
+        formControlName="searchField"
+        type="text"
+        placeholder="{{ placeholder | translate }}"
+        class="field search-form__field"
+        (keyup.enter)="submitSearch()"
+      >
       <mat-progress-bar
         *ngIf="showProgressBar"
         mode="indeterminate"
@@ -63,15 +59,15 @@
       ></mat-progress-bar>
     </div>
 
-    <div *ngIf="showSearchResult && clearFieldButton"
+    <div *ngIf="showSearchHints && clearButton"
          class="search-form__autocomplete-list">
       <ng-container *ngFor="let gene of searchedData; let i = index">
         <button
-          *ngIf="i < 5"
+          *ngIf="i < 3"
           class="search-form__autocomplete-item"
           tabindex="0"
-          [routerLink]="['/gene', gene.symbol]">
-
+          [value]="gene.symbol"
+          (click)="patchValue($event, multiple, _patchValueSideEffects.bind(this))">
           <span class="item__symbol"
                 appHighlight
                 [highlightText]="highlightText"
@@ -93,7 +89,6 @@
                   [innerHTML]="item.value">
             </span>
           </ng-container>
-
         </button>
       </ng-container>
     </div>

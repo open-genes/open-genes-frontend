@@ -5,18 +5,19 @@
       class="__mb-10"
       [isMobile]="isMobile"
       [isGoTermsMode]="isGoTermsMode"
+      [twoOrMoreFiltersApplied]="filterService.twoOrMoreFiltersApplied"
       (sortItem)="sortBy($event)"
       (clearFilterItem)="clearFilters($event)"
     ></app-filter-panel>
     <app-search-view-panel
-      [ngClass]="isGoTermsMode && searchedData?.length === 0 ? 'hidden' : ''"
+      [ngClass]="isGoTermsMode && resultingList?.length === 0 ? 'hidden' : ''"
       [isMobile]="isMobile"
       [downloadJsonLink]="downloadJsonLink"
       (tableView)="toggleGenesView($event)"
     ></app-search-view-panel>
 </div>
 
-<div *ngIf="searchedData?.length"
+<div *ngIf="resultingList?.length"
      class="genes-info">
   <div class="genes-info__group" *ngIf="foundAndNotFoundGenes?.found.length">
     <div class="genes-info__title">
@@ -29,7 +30,7 @@
   </div>
   <div class="genes-info__group" *ngIf="foundAndNotFoundGenes?.notFound.length">
     <div class="genes-info__title">
-      {{ 'items_found' | translate }} {{ foundAndNotFoundGenes?.notFound.length }}:
+      {{ 'items_not_found' | translate }} {{ foundAndNotFoundGenes?.notFound.length }}:
     </div>
     <ng-container
       *ngFor="let geneName of foundAndNotFoundGenes?.notFound;  let last = last">
@@ -39,76 +40,86 @@
 </div>
 
 <!-- Content -->
-<section
-  *ngIf="searchedData?.length"
-  class="view-content"
-  [ngClass]="isTableView && !isMobile ? 'view-content--as-table' : 'view-content--as-cards'"
->
-  <!-- Table view -->
-  <ng-container *ngIf="isTableView && !isMobile">
-    <table>
-      <thead>
-      <app-genes-table-header *ngIf="!isGoTermsMode"></app-genes-table-header>
-      <app-genes-annotations-table-header
-        *ngIf="isGoTermsMode && isGoSearchPerformed "></app-genes-annotations-table-header>
-      </thead>
+<div class="view">
+  <div class="view__fadeout view__fadeout--l view__fadeout--hidden"></div>
+  <div class="view__fadeout view__fadeout--r view__fadeout--hidden"></div>
+  <section
+    *ngIf="resultingList?.length"
+    appScrollableContainer
+    class="view__content"
+    [ngClass]="{
+  'view__content--as-table': isTableView && !isMobile,
+  'view__content--as-cards': !isTableView || isMobile,
+  'view__content--widescreen': viewport === 'widescreen',
+  'view__content--desktop': viewport === 'desktop',
+  'view__content--tablet': viewport === 'tablet',
+  'view__content--smartphone': viewport === 'smartphone'
+  }">
+    <!-- Table view -->
+    <ng-container *ngIf="isTableView && !isMobile">
+      <table>
+        <thead>
+        <app-genes-table-header *ngIf="!isGoTermsMode"></app-genes-table-header>
+        <app-genes-annotations-table-header
+          *ngIf="isGoTermsMode && isGoSearchPerformed "></app-genes-annotations-table-header>
+        </thead>
 
-      <ng-container *ngIf="isGoTermsMode && isGoSearchPerformed ; else table">
-        <app-gene-annotations-table-row
-          *ngFor="let rowData of searchedData"
-          [item]="rowData"
-          [isAdded]="isFaved(rowData.id)"
-          (unFav)="unFavItem($event)"
-          (fav)="favItem($event)"
-        >
-        </app-gene-annotations-table-row>
-      </ng-container>
+        <ng-container *ngIf="isGoTermsMode && isGoSearchPerformed ; else table">
+          <app-gene-annotations-table-row
+            *ngFor="let rowData of resultingList"
+            [item]="rowData"
+            [isAdded]="isFaved(rowData.id)"
+            (unFav)="unFavItem($event)"
+            (fav)="favItem($event)"
+          ></app-gene-annotations-table-row>
+        </ng-container>
 
-      <ng-template #table>
-        <app-gene-table-row
-          *ngFor="let rowData of searchedData"
-          [item]="rowData"
-          [isAdded]="isFaved(rowData.id)"
-          (unFav)="unFavItem($event)"
-          (fav)="favItem($event)"
-        >
-        </app-gene-table-row>
-      </ng-template>
-    </table>
-  </ng-container>
-
-  <!-- Card view -->
-  <ng-container *ngIf="!isTableView || isMobile">
-    <ng-container *ngIf="isGoTermsMode && isGoSearchPerformed ; else card">
-      <app-gene-annotations-card
-        class="card"
-        *ngFor="let rowData of searchedData"
-        [item]="rowData"
-        [isAdded]="isFaved(rowData.id)"
-        (unFav)="unFavItem($event)"
-        (fav)="favItem($event)"
-      >
-      </app-gene-annotations-card>
+        <ng-template #table>
+          <app-gene-table-row
+            *ngFor="let rowData of resultingList"
+            [item]="rowData"
+            [isAdded]="isFaved(rowData.id)"
+            (unFav)="unFavItem($event)"
+            (fav)="favItem($event)"
+            (filterChanged)="filterChanged.emit($event)"
+          ></app-gene-table-row>
+        </ng-template>
+      </table>
     </ng-container>
 
-    <ng-template #card>
-      <app-gene-card
-        class="card"
-        *ngFor="let rowData of searchedData"
-        [item]="rowData"
-        [isAdded]="isFaved(rowData.id)"
-        (unFav)="unFavItem($event)"
-        (fav)="favItem($event)"
-      >
-      </app-gene-card>
-    </ng-template>
-  </ng-container>
-</section>
+    <!-- Card view -->
+    <ng-container *ngIf="!isTableView || isMobile">
+      <ng-container *ngIf="isGoTermsMode && isGoSearchPerformed ; else card">
+        <app-gene-annotations-card
+          class="card"
+          *ngFor="let rowData of resultingList"
+          [item]="rowData"
+          [isAdded]="isFaved(rowData.id)"
+          (unFav)="unFavItem($event)"
+          (fav)="favItem($event)"
+        ></app-gene-annotations-card>
+      </ng-container>
+
+      <ng-template #card>
+        <app-gene-card
+          class="card"
+          *ngFor="let rowData of resultingList"
+          [item]="rowData"
+          [isAdded]="isFaved(rowData.id)"
+          (unFav)="unFavItem($event)"
+          (fav)="favItem($event)"
+          (filterChanged)="filterChanged.emit($event)"
+        ></app-gene-card>
+      </ng-template>
+    </ng-container>
+  </section>
+</div>
+
 
 <!-- Show more Button -->
 <div
   class="btn-wrap show-more"
-  *ngIf="searchedData.length >= pagination?.pageSize && currentPage < pagination?.pagesTotal">
+  *ngIf="resultingList.length >= options?.pagination?.pageSize && currentPage < options?.pagination?.pagesTotal">
   <button (click)="loadMoreGenes()"
           class="btn show-more__button">
     {{ "show_more" | translate }}
@@ -118,7 +129,7 @@
 <ng-container *ngIf="isGoTermsMode; else geneSearchMode">
   <ng-container *ngIf="isGoSearchPerformed">
     <!-- GO search mode no content error message -->
-    <ng-container *ngIf="!isLoading && searchedData?.length === 0">
+    <ng-container *ngIf="!isLoading && resultingList?.length === 0">
       <app-no-content [title]="'nothing_found'">
         <ng-container icon>
           <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
@@ -141,7 +152,7 @@
 </ng-container>
 
 <ng-template #geneSearchMode>
-  <ng-container *ngIf="!isLoading && searchedData?.length === 0">
+  <ng-container *ngIf="!isLoading && resultingList?.length === 0">
     <app-no-content [title]="'nothing_found'">
       <ng-container icon>
         <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>

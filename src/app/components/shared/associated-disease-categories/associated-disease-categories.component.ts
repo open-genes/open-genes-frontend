@@ -9,6 +9,7 @@ import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap
 })
 export class AssociatedDiseaseCategoriesComponent extends WrapIntoAccordion implements OnInit {
   @Input() geneDiseaseCategories: AssociatedDiseaseCategories[];
+  public filteredItems: AssociatedDiseaseCategories[];
   @Input() activeListItem: number[];
   @Output() clickEvent: EventEmitter<number> = new EventEmitter();
 
@@ -17,8 +18,11 @@ export class AssociatedDiseaseCategoriesComponent extends WrapIntoAccordion impl
   }
 
   ngOnInit(): void {
-    this.setListLength(this.geneDiseaseCategories);
-    this.putItemsIntoAccordion(this.geneDiseaseCategories);
+    this.filteredItems = this.geneDiseaseCategories.filter((d) => {
+      return d.icdCategoryName.length > 0 || d.icdCode.length > 0
+    });
+    this.setListLength(this.filteredItems);
+    this.putItemsIntoAccordion(this.filteredItems);
   }
 
   public emitOnClick(disCategoriesId: number): void {

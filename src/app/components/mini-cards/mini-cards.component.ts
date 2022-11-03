@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Output } from '@angular/core';
 import { Genes } from '../../core/models';
 import { Router } from '@angular/router';
 import { SessionStorageService } from '../../core/services/session-storage.service';

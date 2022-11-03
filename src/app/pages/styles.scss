@@ -1,1 +1,32 @@
 @import "../../assets/sass/dependencies";
+
+@mixin search-page-styles {
+  .search-page-container {
+    $bootstrap-widescreen: 1400px - .02px;
+    @media only screen and (min-width: $widescreen) and (max-width: $bootstrap-widescreen) {
+      max-width: 1185px;
+    }
+  }
+
+  .sidebar-column {
+    &--mobile {
+      order: 2;
+    }
+
+    &--desktop {
+      padding-right: 0;
+    }
+  }
+
+  .hint-wrapper,
+  .filters-wrapper {
+    width: 100%;
+    min-width: 0;
+    padding: 0 5px;
+    margin-bottom: 10px;
+
+    .skeleton {
+      margin: 0;
+    }
+  }
+}

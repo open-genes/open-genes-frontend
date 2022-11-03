@@ -1,0 +1,104 @@
+<div class="page studies-page">
+  <div class="page__inner __pb-60">
+    <div class="page favourites-page">
+      <div class="page__inner __pb-60">
+        <div class="text-page__header wrapper">
+          <div class="container">
+            <div class="row no-gutters">
+              <div class="col-12">
+                <div class="page__title">
+                  <h1>{{ "search_by_research_data" | translate }}</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container-fluid search-page-container">
+          <div class="row">
+            <div class="col-12">
+              <div *ngIf="isMobile"
+                   class="__mb-20">
+                <ng-container [ngTemplateOutlet]="banner"></ng-container>
+              </div>
+            </div>
+            <div
+              *ngIf="!isMobile"
+              class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 sidebar-column">
+              <app-sidebar>
+                <app-sidebar-item>
+                  <div content class="hint-wrapper">
+                    <ng-container [ngTemplateOutlet]="banner"
+                    ></ng-container>
+                  </div>
+                </app-sidebar-item>
+
+                <app-sidebar-item *ngIf="!isMobile">
+                  <div content class="filters-wrapper">
+                    <app-research-filters-panel></app-research-filters-panel>
+                  </div>
+                </app-sidebar-item>
+              </app-sidebar>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
+              <h2 class="studies-page__subtitle">{{ 'studies_page_study_types' | translate }}</h2>
+              <mat-tab-group
+                [disablePagination]="true"
+                [selectedIndex]="activeTabIndex"
+                (selectedTabChange)="setActiveTab($event)"
+                animationDuration="0ms">
+                <mat-tab *ngFor="let tab of tabs">
+                  <ng-template mat-tab-label>
+                    <div
+                      class="tab"
+                      [class]="tab.cssClass">
+                      {{ tab.title | translate }}
+                    </div>
+                  </ng-template>
+                  <ng-template matTabContent>
+                    <app-research-tab
+                      class="tab__content"
+                      [studyType]="tab.param"
+                      [isMobile]="isMobile$"
+                      (dataLoaded)="setIsListLoaded()"
+                    ></app-research-tab>
+                  </ng-template>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #errorMessage>
+      <section class="col-12">
+        <app-no-content size="small" [title]="'error_connection'">
+          <ng-container icon>
+            <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+          </ng-container>
+        </app-no-content>
+      </section>
+    </ng-template>
+  </div>
+</div>
+
+<ng-template #banner>
+  <app-hint hintType="emphasized">
+    <ng-container title>
+      <span class="fa far fa-magic"></span>&nbsp;{{ 'experiments_page_download_title' | translate }}
+    </ng-container>
+
+    <ng-container description>
+      {{ "experiments_page_download_description" | translate }}
+    </ng-container>
+
+    <ng-container button>
+      <button class="btn btn--fill btn--small btn--white"
+              routerLink="/download">
+        {{ 'experiments_page_download_button' | translate }}
+      </button>
+    </ng-container>
+  </app-hint>
+</ng-template>

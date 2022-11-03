@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "open-genes-frontend",
   "version": "0.5.0",
   "scripts": {
     "spriteset-general": "svg-sprite --symbol --dest=src/assets/images/icons/sprites src/assets/images/icons/source/general/*.svg --symbol-sprite=general.sprite.svg",
@@ -37,7 +37,6 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "angular-pipes": "^10.0.0",
     "bootstrap": "^4.4.1",
-    "d3": "^7.0.1",
     "font-awesome": "^4.7.0",
     "ngx-google-analytics": "^11.2.1",
     "rxjs": "^6.6.2",

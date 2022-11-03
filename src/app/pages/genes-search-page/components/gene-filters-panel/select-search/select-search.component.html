@@ -1,0 +1,29 @@
+<mat-form-field appearance="fill">
+  <mat-label>{{ placeholder | translate }}</mat-label>
+  <mat-select formControlName="selectWithSearch"
+              multiple="true"
+              [disabled]="!items"
+              [(ngModel)]="predefinedItems"
+              [compareWith]="compareSelectValues"
+              (selectionChange)="apply(filterType, $event)">
+    <div class="search-bar">
+      <input class="search-bar__input"
+             #input
+             [placeholder]="'search' | translate"
+             (keydown)="filter($event)">
+    </div>
+
+    <ng-container *ngIf="items?.size; else notFound">
+      <mat-option *ngFor="let i of items | keyvalue" [value]="i.key">
+          <span appHighlight
+                [highlightText]="input.value"
+                [innerHTML]="i?.value['name']"></span>
+      </mat-option>
+    </ng-container>
+  </mat-select>
+</mat-form-field>
+
+
+<ng-template #notFound>
+  <span>{{'items_not_found' | translate}}</span>
+</ng-template>

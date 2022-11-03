@@ -3,3 +3,9 @@
 
 @include item;
 @include card;
+
+.card__controls.card__controls--tags {
+  app-tag {
+    font-size: 11px;
+  }
+}

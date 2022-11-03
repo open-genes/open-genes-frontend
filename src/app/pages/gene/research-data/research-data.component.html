@@ -1,0 +1,48 @@
+<!-- Purple -->
+<section *ngIf="isIncreaseLifespan">
+  <app-increase-lifespan
+    [slice]="slice"
+    [items]="studies.increaseLifespan"></app-increase-lifespan>
+</section>
+
+<!-- Blue -->
+<section *ngIf="isAgeRelatedChanges">
+  <app-age-related-changes
+    [slice]="slice"
+    [items]="studies.ageRelatedChangesOfGene"></app-age-related-changes>
+</section>
+
+<!-- Green -->
+<section *ngIf="isInterventionAffectsAgingProcess">
+  <app-intervention-affects-aging-process
+    [slice]="slice"
+    [items]="studies.interventionToGeneImprovesVitalProcesses"></app-intervention-affects-aging-process>
+</section>
+
+<!-- Pink -->
+<section *ngIf="isGeneAssociatedWithLongevityEffects">
+  <app-gene-associated-with-longevity-effects
+    [slice]="slice"
+    [items]="studies.geneAssociatedWithLongevityEffects"></app-gene-associated-with-longevity-effects>
+</section>
+
+<!-- Orange -->
+<section *ngIf="isGeneAssociatedWithProgeriaSyndromes">
+  <app-gene-associated-with-progeria-syndromes
+    [slice]="slice"
+    [items]="studies.geneAssociatedWithProgeriaSyndromes"></app-gene-associated-with-progeria-syndromes>
+</section>
+
+<!-- Yellow -->
+<section *ngIf="isProteinRegulatesOtherGenes">
+  <app-protein-regulates-other-genes
+    [slice]="slice"
+    [items]="studies.proteinRegulatesOtherGenes"></app-protein-regulates-other-genes>
+</section>
+
+<!-- Gray -->
+<section *ngIf="isAdditionalEvidences">
+  <app-additional-evidences
+    [slice]="slice"
+    [items]="studies.additionalEvidences"></app-additional-evidences>
+</section>

@@ -8,7 +8,7 @@ import {
   Genes,
   Phylum,
   ProteinClasses,
-  SelectionCriteria,
+  SelectionCriteria, Symbols,
 } from '../../models';
 import { TranslateService } from '@ngx-translate/core';
 import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/open-genes-api/associated-diseases.model';
@@ -18,7 +18,8 @@ import { ApiResponse } from '../../models/api-response.model';
 import { SearchModel } from '../../models/open-genes-api/search.model';
 import { Pagination } from '../../models/settings.model';
 import { Diet } from '../../models/open-genes-api/diet.model';
-import { ResearchArguments } from '../../models/open-genes-api/researches.model';
+import { Research, ResearchArguments, ResearchTypes } from '../../models/open-genes-api/researches.model';
+import { ModelOrganism } from '../../models/open-genes-api/model-organism.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +37,6 @@ export class ApiService {
   }
 
   // Legacy API
-
   getLastEditedGene(): Observable<Genes[]> {
     return this.http.get<Genes[]>(`/api/gene/by-latest`);
   }
@@ -55,12 +55,11 @@ export class ApiService {
 
   getGenesMatchByString(request: string, param: string = 'input'): Observable<SearchModel> {
     const params = new HttpParams().set(`${param}`, `${request}`);
-
     return this.http.get<SearchModel>(`/api/gene/suggestions`, { params });
   }
 
-  getGoTermMatchByString(request: string): Observable<Genes[]> {
-    return this.http.get<Genes[]>(`/api/gene/by-go-term/${request}`);
+  getGoTermMatchByString(request: string): Observable<ApiResponse<Genes>> {
+    return this.http.get<ApiResponse<Genes>>(`/api/gene/by-go-term/${request}`);
   }
 
   getGenesWLifespanResearches(): Observable<GenesWLifespanResearches[]> {
@@ -69,6 +68,24 @@ export class ApiService {
 
   getGenesInHorvathClock(): Observable<GenesInHorvathClock[]> {
     return this.http.get<GenesInHorvathClock[]>(`/api/methylation?lang=${this.currentLang}`);
+  }
+
+  /* @Deprecated */
+  getGenes(): Observable<Genes[]> {
+    return this.http.get<Genes[]>(`/api/gene?lang=${this.currentLang}`);
+  }
+
+  // New API
+  getGenesV2(params?: HttpParams): Observable<ApiResponse<Genes>> {
+    return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });
+  }
+
+  getSymbols(): Observable<Symbols[]> {
+    return this.http.get<Symbols[]>(`/api/gene/symbols`);
+  }
+
+  getStudies(studyType: ResearchArguments, params?: HttpParams): Observable<ApiResponse<ResearchTypes>> {
+    return this.http.get<ApiResponse<ResearchTypes>>(`/api/research/${studyType}`, { params });
   }
 
   getGenesForDiet(pagination?: Pagination): Observable<ApiResponse<Diet>> {
@@ -82,23 +99,6 @@ export class ApiService {
     }
 
     return this.http.get<ApiResponse<Diet>>(`/api/diet`, { params });
-  }
-
-  getGenes(): Observable<Genes[]> {
-    return this.http.get<Genes[]>(`/api/gene?lang=${this.currentLang}`);
-  }
-
-  // New API
-  getGenesV2(pagination?: Pagination): Observable<ApiResponse<Genes>> {
-    let params = new HttpParams();
-
-    if (pagination) {
-      params = params
-        .set('lang', this.translate.currentLang)
-        .set('page', pagination?.page)
-        .set('pageSize', pagination?.pageSize);
-    }
-    return this.http.get<ApiResponse<Genes>>(`/api/gene/search`, { params });
   }
 
   getDiseases(): Observable<AssociatedDiseases[]> {
@@ -129,7 +129,7 @@ export class ApiService {
     return this.http.get<Phylum[]>(`/api/phylum?lang=${this.currentLang}`);
   }
 
-  getResearches(research: ResearchArguments, page: number, pageSize?: number): Observable<any> {
-    return this.http.get<any[]>(`/api/research/${research}?lang=${this.currentLang}&page=${page}`);
+  getModelOrganisms(): Observable<ModelOrganism[]> {
+    return this.http.get<ModelOrganism[]>(`/api/model-organism?lang=${this.currentLang}`);
   }
 }

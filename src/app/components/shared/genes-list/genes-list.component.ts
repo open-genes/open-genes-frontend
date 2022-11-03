@@ -8,23 +8,25 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { EMPTY, Observable, of, Subject } from 'rxjs';
+import { EMPTY, Observable, of, Subject, Subscription } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { Genes } from '../../../core/models';
-import { FilterService } from './services/filter.service';
-import { FilterTypesEnum, SortEnum } from './services/filter-types.enum';
+import { GenesFilterService } from '../../../core/services/filters/genes-filter.service';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { FileExportService } from '../../../core/services/browser/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
-import { Filter } from '../../../core/models/filters/filter.model';
-import { Pagination, SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
+import { ApiGeneSearchParameters } from '../../../core/models/filters/filter.model';
+import { SearchMode, SearchModeEnum, Settings } from '../../../core/models/settings.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { FavouritesService } from '../../../core/services/favourites.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Sort } from '@angular/material/sort';
-import { ApiResponse } from '../../../core/models/api-response.model';
+import { ApiResponse, PageOptions } from '../../../core/models/api-response.model';
 import { SearchModel } from '../../../core/models/open-genes-api/search.model';
+import { SortEnum } from '../../../core/services/filters/filter-types.enum';
+import { appliedFilter } from './genes-list-settings.model';
+import { Viewport } from '../../../core/utils/window-width';
 
 @Component({
   selector: 'app-genes-list',
@@ -33,9 +35,10 @@ import { SearchModel } from '../../../core/models/open-genes-api/search.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenesListComponent implements OnInit, OnDestroy {
+  @Input() viewport: Viewport;
+  @Input() cancelSearch: Observable<void>;
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
-
   @Input() set setSearchMode(searchMode: SearchMode) {
     if (searchMode) {
       this.searchMode = searchMode;
@@ -44,58 +47,56 @@ export class GenesListComponent implements OnInit, OnDestroy {
       this.clearFilters();
     }
   }
-
   @Input() set genesList(query: Genes[] | string) {
     if (query) {
       if (this.isGoTermsMode) {
-        this.searchedData = query as Genes[];
+        this.resultingList = query as Genes[];
       } else {
         if (query.length > 1) {
           const length = (query as string).split(',').length;
           if (length > 1) {
-            delete this.filterService.filters.bySuggestions;
-            this.arrayOfWords = (query as string)
+            delete this.filterService.filters.bySuggestions; // TODO: don't delete but set default value
+            this.querySubstrings = (query as string)
               .split(',')
               .map((query) => query.trim())
               .filter((q) => q);
-            this.filterService.filters.byGeneSymbol = this.arrayOfWords;
+            this.filterService.filters.byGeneSymbol = this.querySubstrings;
           } else {
-            this.arrayOfWords = [];
+            this.querySubstrings = [];
             delete this.filterService.filters.byGeneSymbol;
             this.filterService.filters.bySuggestions = query as string;
           }
 
           this.filterService.updateList(this.filterService.filters);
         } else {
-          this.searchedData = [];
+          this.resultingList = [];
         }
       }
 
-      if (this.searchedData.length) {
+      if (this.resultingList.length) {
         this.openSnackBar();
       }
 
       this.isGoSearchPerformed = this.isGoTermsMode;
     } else {
       if (this.isGoTermsMode) {
-        this.searchedData = [];
+        this.resultingList = [];
         this.isGoSearchPerformed = false;
         return;
       }
-      this.arrayOfWords = [];
+      this.querySubstrings = [];
       this.clearFilters();
     }
 
-    this.downloadSearch(this.searchedData);
+    this.downloadSearch(this.resultingList);
   }
-
   @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() errorStatus: EventEmitter<string> = new EventEmitter<string>();
-  @Output() genesLength: EventEmitter<number> = new EventEmitter<number>();
+  @Output() itemsNumber: EventEmitter<number> = new EventEmitter<number>();
+  @Output() filterChanged: EventEmitter<appliedFilter> = new EventEmitter<appliedFilter>();
 
-  public searchedData: Genes[] = [];
+  public resultingList: Genes[] = [];
   public foundAndNotFoundGenes: Omit<SearchModel, 'items'>;
-  public filterTypes = FilterTypesEnum;
   public sortEnum = SortEnum;
   public searchMode: SearchMode;
   public isTableView: boolean;
@@ -103,43 +104,68 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public isGoSearchPerformed: boolean;
   public downloadJsonLink: string | SafeResourceUrl = '#';
   public currentPage: number;
-  public pagination: Pagination;
+  public options: PageOptions;
   public isLoading = false;
 
+  private cancelSearchSubscription$: Subscription;
   private cachedData: Genes[] = [];
-  private arrayOfWords: string[] = [];
+  private querySubstrings: string[] = [];
   private retrievedSettings: Settings;
   private searchModeEnum = SearchModeEnum;
   private subscription$ = new Subject();
   private genesFromInput: Genes[];
-  private genesPerPage = 20;
+  private itemsPerPage = 20;
   private snackBarRef: MatSnackBarRef<SnackBarComponent>;
+  private sortingOnFrontend = ['name'];
 
   constructor(
-    private filterService: FilterService,
+    public filterService: GenesFilterService,
+    public activatedRoute: ActivatedRoute,
+    private router: Router,
     private settingsService: SettingsService,
     private favouritesService: FavouritesService,
     private fileExportService: FileExportService,
     private cdRef: ChangeDetectorRef,
-    private snackBar: MatSnackBar,
-    private aRoute: ActivatedRoute
-  ) {
-  }
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
-    this.aRoute.queryParams.subscribe((params) => {
-      if (Object.keys(params).length) {
-        for (const key in params) {
-          if (params[key] !== this.filterService.filters[key].toString()) {
-            this.filterService.applyFilter(key, params[key]);
+    if (this.viewport) {
+      // 3 in a row vs 2 in a row
+      this.itemsPerPage = this.viewport === 'widescreen' ? 21 : 20;
+      this.filterService.pagination.pageSize = this.itemsPerPage;
+    }
+    this.activatedRoute?.queryParams
+      .pipe(takeUntil(this.subscription$))
+      .subscribe((params) => {
+        if (Object.keys(params).length) {
+          for (const key in params) {
+            if (
+              params[key] !==
+              this.filterService.filters[key].toString()
+            ) {
+              this.filterService.applyFilter(
+                key,
+                params[key]
+              );
+            }
           }
         }
-      }
-    });
-
+      });
     this.favouritesService.getItems();
     this.setInitSettings();
     this.setInitialState();
+
+    this.cancelSearchSubscription$ = this.cancelSearch?.subscribe(() => {
+      this.filterService.clearFilters();
+      this.setInitialState();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.cancelSearchSubscription$?.unsubscribe();
+    this.subscription$.unsubscribe();
+    this.filterService.clearFilters();
   }
 
   private setInitSettings(): void {
@@ -150,15 +176,15 @@ export class GenesListComponent implements OnInit, OnDestroy {
   /**
    * Get genes list
    */
-  setInitialState(): void {
+  public setInitialState(): void {
     this.filterService.filterResult
       .pipe(
         takeUntil(this.subscription$),
-        switchMap((filters: Filter) => {
+        switchMap(() => {
           this.isLoading = !this.isGoTermsMode;
           this.loading.emit(!this.isGoTermsMode);
           this.isGoSearchPerformed = !this.isGoTermsMode;
-          this.searchedData = [];
+          this.resultingList = [];
 
           return this.isGoTermsMode ? EMPTY : this.filterService.getSortedAndFilteredGenes();
         })
@@ -173,20 +199,23 @@ export class GenesListComponent implements OnInit, OnDestroy {
 
           if (res.items?.length) {
             this.cachedData.push(...res.items);
-            this.searchedData = [...this.cachedData];
+            this.resultingList = [...this.cachedData];
           }
 
-          if (this.filterService.filters.byGeneSymbol || this.filterService.filters.bySuggestions) {
-            this.openSnackBar();
+          if (
+            this.filterService.filters.byGeneSymbol?.length !== 0 ||
+            this.filterService.filters.bySuggestions?.length !== 0
+          ) {
+            this.resetPagination();
           }
 
-          this.downloadSearch(this.searchedData);
+          this.downloadSearch(this.resultingList);
           this.setFoundAndNotFound();
 
-          this.pagination = res.options.pagination;
+          this.options = res.options;
           this.isLoading = false;
           this.loading.emit(false);
-          this.genesLength.emit(res.options.objTotal);
+          this.itemsNumber.emit(res.options.objTotal);
           this.cdRef.markForCheck();
         },
         (error) => {
@@ -204,16 +233,16 @@ export class GenesListComponent implements OnInit, OnDestroy {
    */
   public loadMoreGenes(): void {
     if (!this.isGoTermsMode) {
-      this.filterService.onLoadMoreGenes(this.pagination.pagesTotal);
+      this.filterService.onLoadMoreGenes(this.options?.pagination?.pagesTotal);
       return;
     }
 
-    if (this.genesFromInput?.length >= this.genesPerPage) {
+    if (this.genesFromInput?.length >= this.itemsPerPage) {
       this.currentPage++;
-      const end = this.currentPage * this.genesPerPage;
-      const start = end - this.genesPerPage;
+      const end = this.currentPage * this.itemsPerPage;
+      const start = end - this.itemsPerPage;
       const nextPageData = this.genesFromInput.slice(start, end);
-      this.searchedData.push(...nextPageData);
+      this.resultingList.push(...nextPageData);
     }
   }
 
@@ -234,30 +263,34 @@ export class GenesListComponent implements OnInit, OnDestroy {
   /**
    * Filter reset
    */
-  public clearFilters(filterName?: string): void {
-    delete this.filterService.filters.bySuggestions;
-    delete this.filterService.filters.byGeneSymbol;
-    this.filterService.clearFilters(filterName ? filterName : null);
+  public clearFilters(filterName?: ApiGeneSearchParameters): void {
+    this.filterService.clearFilters(filterName);
+    this.filterChanged.emit({ name: filterName, value: null });
+    this.cdRef.markForCheck();
+  }
+
+  public resetPagination(): void {
+    this.filterService.pagination.page = 1;
+    this.currentPage = this.filterService.pagination.page;
   }
 
   /**
    * Sorting genes list
    */
   public sortBy(sort: Sort): void {
-    const unSortedData = this.searchedData.slice();
-
-    if (sort.active !== this.sortEnum.byCriteriaQuantity) {
+    const unSortedData = this.resultingList.slice();
+    // TODO: remove sort on frontend
+    // Some filters may still exist only on frontend
+    if (this.sortingOnFrontend.includes(sort.active)) {
       if (!sort.active || sort.direction === '') {
-        this.searchedData = this.cachedData;
+        this.resultingList = this.cachedData;
         return;
       }
-      this.searchedData = unSortedData.sort((a, b) => {
+      this.resultingList = unSortedData.sort((a, b) => {
         const isAsc = sort.direction === 'asc';
         switch (sort.active) {
           case this.sortEnum.byName:
             return this.compare((a.symbol + a.name).toLowerCase(), (b.symbol + b.name).toLowerCase(), isAsc);
-          case this.sortEnum.byAge:
-            return this.compare(a.familyOrigin?.order, b.familyOrigin?.order, isAsc);
           default:
             return 0;
         }
@@ -265,14 +298,12 @@ export class GenesListComponent implements OnInit, OnDestroy {
     } else {
       this.filterService.sortParams = sort;
       this.isLoading = true;
-      this.searchedData = [];
-      this.filterService
-        .getSortedAndFilteredGenes()
-        .subscribe((sortedGenes) => {
-          this.searchedData = sortedGenes.items;
-          this.isLoading = false;
-          this.cdRef.markForCheck();
-        });
+      this.resultingList = [];
+      this.filterService.getSortedAndFilteredGenes().subscribe((sortedGenes) => {
+        this.resultingList = sortedGenes.items;
+        this.isLoading = false;
+        this.cdRef.markForCheck();
+      });
     }
   }
 
@@ -311,37 +342,32 @@ export class GenesListComponent implements OnInit, OnDestroy {
   /**
    * Error handling
    */
-  private errorLogger(context: any, error: any) {
-    console.warn(context, error);
-  }
+  // private errorLogger(context: any, error: any) {
+  //   console.warn(context, error);
+  // }
 
   private openSnackBar(): void {
     this.snackBarRef = this.snackBar.openFromComponent(SnackBarComponent, {
       data: {
         title: 'items_found',
-        length: this.searchedData ? this.searchedData.length : 0,
+        length: this.options ? this.options.objTotal : 0,
       },
-      duration: 600,
+      duration: 1200,
     });
   }
 
   private setFoundAndNotFound(): void {
-    if (this.arrayOfWords.length) {
+    if (this.querySubstrings.length) {
       const notFoundGenes = [];
       let foundGenes = [];
-
-      const uniqWords = [...new Set(this.arrayOfWords)];
-
+      const uniqWords = [...new Set(this.querySubstrings)];
       if (uniqWords.length !== 0) {
         foundGenes = uniqWords.filter((symbol) => {
-          const foundGene = this.searchedData.find((gene) => symbol === gene.symbol.toLowerCase());
-
+          const foundGene = this.resultingList.find((gene) => symbol === gene.symbol.toLowerCase());
           foundGene ? foundGenes.push(foundGene) : notFoundGenes.push(symbol);
-
           return !!foundGene;
         });
       }
-
       this.foundAndNotFoundGenes = {
         found: foundGenes,
         notFound: notFoundGenes,
@@ -352,10 +378,5 @@ export class GenesListComponent implements OnInit, OnDestroy {
         notFound: [],
       };
     }
-  }
-
-  ngOnDestroy(): void {
-    this.subscription$.next();
-    this.subscription$.complete();
   }
 }

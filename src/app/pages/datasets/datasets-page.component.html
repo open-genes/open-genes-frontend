@@ -1,7 +1,7 @@
 <div *ngIf="isParentRoute"
      class="wrapper custom-container">
   <article class="custom-container__abstract">
-    <h1>Датасеты</h1>
+    <h1>{{ "datasets_page_title" | translate }}</h1>
     <p>
       {{ "datasets_page_description" | translate }}
     </p>
@@ -9,11 +9,13 @@
   <nav class="custom-container__menu">
     <mat-nav-list class="menu">
       <a mat-list-item
-         routerLink="horvath-clock">
+         routerLink="horvath-clock"
+         class="menu__item">
         {{ "horvath_clock_page_title" | translate }}
       </a>
       <a mat-list-item
-         routerLink="calorie-restriction">
+         routerLink="calorie-restriction"
+         class="menu__item">
         {{ "diet_page_title" | translate }}
       </a>
     </mat-nav-list>

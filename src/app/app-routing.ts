@@ -45,8 +45,18 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/download/download.module').then((m) => m.DownloadModule),
   },
   {
-    path: 'researches',
-    loadChildren: () => import('./pages/researches/researches-page.module').then((m) => m.ResearchesPageModule),
+    path: 'experiments',
+    loadChildren: () =>
+      import('./pages/experiments-data/experiments-data-page.module').then((m) => m.ExperimentsDataPageModule),
+  },
+  {
+    path: 'genes',
+    loadChildren: () =>
+      import('./pages/genes-search-page/genes-search-page.module').then((m) => m.GenesSearchPageModule),
+  },
+  {
+    path: 'annotations',
+    loadChildren: () => import('./pages/go-search-page/go-search-page.module').then((m) => m.GoSearchPageModule),
   },
   {
     path: 'datasets',
@@ -72,4 +82,6 @@ export const APP_ROUTES: Routes = [
 export const ROUTER_OPTIONS: ExtraOptions = {
   anchorScrolling: 'enabled',
   relativeLinkResolution: 'legacy',
+  onSameUrlNavigation: 'reload',
+  scrollPositionRestoration: 'top'
 };

@@ -21,7 +21,7 @@
     }
   }
 
-  @each $class, $color in $research-tables {
+  @each $class, $color in $experiment-tables {
     &--#{$class} > thead > th:first-child::before,
     &--#{$class} > thead tr:first-child > th:first-child::before {
       background: $color;

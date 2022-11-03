@@ -20,7 +20,9 @@
           ></span>
         </button>
       </div>
-      <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
+      <a [routerLink]="['/gene', item.symbol]"
+         [matTooltip]="'go_to_gene_page' | translate"
+         class="link link--gray">
         <b>{{ item.symbol }}</b> {{ item.name }}
       </a>
     </div>

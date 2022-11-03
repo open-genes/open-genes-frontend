@@ -2,7 +2,7 @@
   <ng-container *ngIf="!isAccordion; else accordion">
     <ul class="list list--bulletted">
       <li *ngFor="let proteinClass of geneProteinClasses"
-          [class.__active]="activeListItem.includes(proteinClass.id)"
+          [class.__active]="activeListItem?.includes(proteinClass.id)"
           (click)="emitOnClick(proteinClass.id)">
         {{ proteinClass.name }}
       </li>
@@ -19,7 +19,7 @@
       <div class="protein-classes-accordion__header" accordion-header>
         <ul class="list list--bulletted">
           <li *ngFor="let proteinClass of geneProteinClasses | slice: 0:maxItemsToShow"
-              [class.__active]="activeListItem.includes(proteinClass.id)"
+              [class.__active]="activeListItem?.includes(proteinClass.id)"
               (click)="emitOnClick(proteinClass.id)">
             {{ proteinClass.name }}
           </li>
@@ -32,7 +32,7 @@
       <div class="protein-classes-accordion__body" accordion-body>
         <ul class="list list--bulletted">
           <li *ngFor="let proteinClass of geneProteinClasses | slice: maxItemsToShow"
-              [class.__active]="activeListItem.includes(proteinClass.id)"
+              [class.__active]="activeListItem?.includes(proteinClass.id)"
               (click)="emitOnClick(proteinClass.id)">
             {{ proteinClass.name }}
           </li>

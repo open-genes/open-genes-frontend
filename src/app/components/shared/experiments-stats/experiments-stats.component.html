@@ -1,24 +1,24 @@
-<div class="researches" *ngIf="researches"
-     (click)="openBottomSheet($event, researchStatsHint)">
+<div class="experiments" *ngIf="experiments"
+     (click)="openBottomSheet($event, experimentStatsHint)">
   <ng-container
-    *ngFor="let research of researches | keyvalue"
+    *ngFor="let experiment of experiments | keyvalue"
     [ngTemplateOutlet]="bar"
-    [ngTemplateOutletContext]="{ research: research.key }"
+    [ngTemplateOutletContext]="{ experiment: experiment.key }"
   ></ng-container>
 </div>
 
-<ng-template #bar let-research="research">
-  <div *ngIf="research !== 'additionalEvidences'"
-       class="research"
-       [ngClass]="research | setClassName">
-      <span class="research__scale"
-            [style.height.%]="(researches[research]?.length * 100) / maxValue"
+<ng-template #bar let-experiment="experiment">
+  <div *ngIf="experiment !== 'additionalEvidences'"
+       class="experiment"
+       [ngClass]="experiment | setClassName">
+      <span class="experiment__scale"
+            [style.height.%]="(experiments[experiment]?.length * 100) / maxValue"
       ></span>
-    <span class="research__value">{{researches[research]?.length}}</span>
+    <span class="experiment__value">{{experiments[experiment]?.length}}</span>
   </div>
 </ng-template>
 
-<ng-template #researchStatsHint>
+<ng-template #experimentStatsHint>
   <div class="legend-container">
     <div *ngFor="let item of legend"
          class="legend-container__item"

@@ -1,0 +1,50 @@
+@import "../../styles";
+
+$a: "article";
+$articles-gap-s: 5px;
+$articles-gap-l: 10px;
+
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  justify-items: stretch;
+  min-width: 100%;
+
+  &:empty {
+    display: none; // фикс для момента во время подгрузки
+  }
+
+  .no-articles {
+    width: 100%;
+  }
+
+  .article {
+    width: 100%;
+    padding: 10px 20% 11px 10px;
+    border-radius: $border-radius-regular;
+    cursor: pointer;
+
+    h3 {
+      font-size: calc(0.2vw + 18px);
+      color: inherit;
+      font-weight: $font-weight-medium;
+    }
+
+    color: rgba($color-general, 0.85);
+    background: rgba($color-general, 0.08);
+
+    &:hover {
+      color: rgba($color-general, 0.75);
+      background: rgba($color-general, 0.15);
+    }
+
+    &:active {
+      color: $color-general;
+      background: rgba($color-general, 0.15);
+    }
+  }
+
+  .article + .article {
+    margin-top: $padding-regular;
+  }
+}

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Settings } from '../../../../../core/models/settings.model';
 import { SettingsService } from '../../../../../core/services/settings.service';
@@ -12,7 +12,7 @@ import { Sort } from '@angular/material/sort';
   templateUrl: './genes-methylation-list.component.html',
   styleUrls: ['./genes-methylation-list.component.scss'],
 })
-export class GenesMethylationListComponent implements OnInit {
+export class GenesMethylationListComponent implements OnInit, OnDestroy {
   @Input() set genesList(genes: GenesInHorvathClock[]) {
     if (genes) {
       this.searchedData = genes;
@@ -92,7 +92,7 @@ export class GenesMethylationListComponent implements OnInit {
         title: 'items_found',
         length: this.searchedData ? this.searchedData.length : 0,
       },
-      duration: 600,
+      duration: 1200,
     });
   }
 

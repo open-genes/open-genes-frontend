@@ -1,22 +1,28 @@
 @import "../../../styles";
+
+$banner-paddings: 15px;
+
 :host{
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: rgba($color-white, .95);
-  box-shadow: $box-shadow-to-top;
+  bottom: $banner-paddings;
+  right: $banner-paddings;
+  width: $smartphone - ($banner-paddings * 2);
   z-index: z('alert');
 }
 
 .banner {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  align-content: flex-end;
+  align-items: flex-end;
   padding: $padding-regular $padding-medium;
-  min-width: $smartphone;
   font-size: $font-size-small;
   color: $color-black;
+  background-color: $color-white;
+  box-sizing: border-box;
+  border: 1px solid $color-borders;
+  border-radius: $border-radius-medium;
+  box-shadow: $box-shadow-layer-1;
 
   &__content {
     display: flex;
@@ -33,5 +39,11 @@
     }
   }
 
-  &__button { }
+  &__button {
+    margin-top: $padding-regular;
+
+    ::ng-deep button {
+      min-width: 100px;
+    }
+  }
 }

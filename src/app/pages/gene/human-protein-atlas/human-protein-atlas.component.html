@@ -1,4 +1,19 @@
 <div class="panel human-protein-atlas">
+  <div *ngIf="gene.proteinClasses"
+       class="panel__group row">
+    <div class="col-sm-3">
+      <h6>{{ 'protein_classes' | translate }}</h6>
+    </div>
+    <div class="panel__item col">
+      <button *ngFor="let item of gene.proteinClasses"
+              matTooltip="{{ item.name }}"
+              class="alias"
+              (click)="applyFilterFn('byProteinClass', item.id)">
+        <div class="alias__overflow">{{item.name}}</div>
+      </button>
+    </div>
+  </div>
+
   <div *ngIf="hpa?.BiologicalProcess"
        class="panel__group row">
     <div class="col-sm-3">

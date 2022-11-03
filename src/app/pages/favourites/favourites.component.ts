@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { Genes } from 'src/app/core/models';
 import { FavouritesService } from 'src/app/core/services/favourites.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { EMPTY, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { Symbols } from '../../core/models';
 
 @Component({
   selector: 'app-favourites-page',
@@ -13,8 +13,8 @@ import { ActivatedRoute } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FavouritesComponent implements OnInit, OnDestroy {
-  public favouriteGenes: Genes[];
-  public genes: Genes[];
+  public favouriteGenes: Symbols[];
+  public genes: Symbols[];
   public error: number;
   public isSharedList = false;
 
@@ -45,8 +45,7 @@ export class FavouritesComponent implements OnInit, OnDestroy {
           if (idList) {
             this.favouriteGenesIds = idList;
             this.cdRef.markForCheck();
-
-            return this.apiService.getGenesV2();
+            return this.apiService.getSymbols();
           }
 
           return EMPTY;
@@ -54,20 +53,23 @@ export class FavouritesComponent implements OnInit, OnDestroy {
         takeUntil(this.subscription$)
       )
       .subscribe(
-        (filteredGenes) => {
-          this.genes = filteredGenes.items;
-          const queryParamsId = this.route.snapshot.queryParams.selected;
-          const queryParamsIdSplit = queryParamsId?.split(',');
-          if (queryParamsId) {
-            this.favouriteGenes = filteredGenes.items.filter((gene) => queryParamsIdSplit.includes(gene.id.toString()));
-            this.isSharedList = true;
-          } else {
-            this.favouriteGenes = filteredGenes.items.filter((gene) => this.favouriteGenesIds.includes(gene.id));
+        (res) => {
+          if (res?.length > 0) {
+            this.genes = res;
+            const queryParamsId = this.route.snapshot.queryParams.selected;
+            const queryParamsIdSplit = queryParamsId?.split(',');
+            if (queryParamsIdSplit) {
+              this.favouriteGenes = res.filter((g) => queryParamsIdSplit.includes(g.id.toString()));
+              this.isSharedList = true;
+            } else {
+              this.favouriteGenes = res.filter((g) => this.favouriteGenesIds.includes(g.id));
+            }
+            this.cdRef.markForCheck();
           }
-          this.cdRef.markForCheck();
         },
         (err) => {
           this.error = err;
+          this.favouriteGenes = [];
         }
       );
   }

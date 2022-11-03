@@ -12,12 +12,12 @@ import {
 } from '@angular/core';
 import { Genes } from '../../../core/models';
 import { FormControl, FormGroup } from '@angular/forms';
-import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { ToMap } from '../../../core/utils/to-map';
 import { SettingsService } from '../../../core/services/settings.service';
-import { SearchMode, SearchModeEnum } from '../../../core/models/settings.model';
+import { SearchMode } from '../../../core/models/settings.model';
 
 @Component({
   selector: 'app-search',
@@ -27,9 +27,27 @@ import { SearchMode, SearchModeEnum } from '../../../core/models/settings.model'
 })
 export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Inject(Document) public document: Document;
-  @Input() genesLength: number;
-  @Input() showTitle: boolean;
+
+  // Legacy search mode support
+  @Input() multiple = false;
+  // TODO: Refactor: this component shouldn't know about it
+  @Input() set searchMode(value: SearchMode) {
+    if (value) {
+      this.mode = value;
+      this.searchedData = [];
+      this.searchForm.get('searchField').setValue('');
+    }
+  }
+
+  // UI element behavior
   @Input() showProgressBar: boolean;
+  // TODO: Refactor: move it out of component and activate in parent component on event
+  @Input() set showClearButton(value: boolean) {
+    if (value !== undefined) {
+      this.alwaysShowClearButton = value;
+    }
+  }
+  @Input() fixOnTopOnMobile = true;
   @Input() set isDisabled(value: boolean) {
     this.formDisabled = value;
     if (value) {
@@ -39,56 +57,39 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     }
   }
 
+  // Values
+  @Input() set predefinedValue(value: string) {
+    if (value) {
+      this.searchForm.get('searchField').setValue(value);
+    }
+  }
   @Input() set searchHintsList(genes: any) {
     if (genes) {
       this.searchedData = genes;
     }
   }
+  @Input() placeholder: string;
 
-  @Input() set setSearchMode(value: SearchMode) {
-    if (value) {
-      this.searchMode = value;
-      this.searchedData = [];
-      this.searchForm.get('searchField').setValue('');
-    }
-  }
-
-  @Input() fixOnTopOnMobile = true; // TODO: move it out of component and activate in parent component on event
-
-  @Output() searchQuery: EventEmitter<string> = new EventEmitter<string>();
-  @Output() confirmedQuery: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() queryChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() search: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public searchedData: Partial<Genes[]>;
   public searchForm: FormGroup;
-  public searchMode: SearchMode;
+  public mode: SearchMode;
   public formDisabled: boolean;
-  public clearFieldButton: boolean;
-  public showSearchResult = false;
+  public clearButton: boolean;
+  public showSearchHints = false;
   public highlightText: string;
 
-  public inputData = [
-    {
-      searchMode: SearchModeEnum.searchByGenes,
-      placeholder: 'search_field_start_typing',
-    },
-    {
-      searchMode: SearchModeEnum.searchByGoTerms,
-      placeholder: 'search_field_tap_search',
-    },
-    {
-      searchMode: SearchModeEnum.searchByGenesList,
-      placeholder: 'search_field_by_comma',
-    },
-  ];
-
+  private alwaysShowClearButton = false;
   private subscription$ = new Subject();
 
   constructor(
     private renderer: Renderer2,
     private apiService: ApiService,
     private settingsService: SettingsService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
   ) {
     super();
     this.searchForm = new FormGroup({
@@ -97,60 +98,83 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subsToSearchFieldChanges();
+    this.searchForm
+      .get('searchField')
+      .valueChanges.pipe(
+      map((query: string) => query?.toLowerCase().replace(/-/g, '')),
+      filter((query: string) => {
+        this.clearButton = this.alwaysShowClearButton? this.alwaysShowClearButton : !!query;
+        this.highlightText = query;
+        this.showSearchHints = query?.length > 1;
+
+        if (this.showSearchHints && this.fixOnTopOnMobile) {
+          this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
+        } else {
+          this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
+        }
+
+        return this.showSearchHints;
+      }),
+      distinctUntilChanged(),
+      debounceTime(300),
+      takeUntil(this.subscription$),
+    ).subscribe((query: string) => {
+        this.queryChange.emit(query);
+        this.cdRef.markForCheck();
+      });
   }
 
   ngOnDestroy(): void {
     this.subscription$.next();
     this.subscription$.complete();
-    this.closeSearchTipsDropdown();
+    this.closeSearchHintsDropdown();
   }
 
-  private subsToSearchFieldChanges(): void {
-    this.searchForm
-      .get('searchField')
-      .valueChanges.pipe(
-        map((query: string) => query.toLowerCase().replace(/-/g, '')),
-        filter((query: string) => {
-          this.clearFieldButton = !!query;
-          this.highlightText = query;
-          this.showSearchResult = query?.length > 1;
-
-          if (this.showSearchResult && this.fixOnTopOnMobile) {
-            this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
-          } else {
-            this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
-          }
-
-          return this.showSearchResult;
-        }),
-        distinctUntilChanged(),
-        takeUntil(this.subscription$)
-      )
-      .subscribe((query: string) => {
-        this.searchQuery.emit(query);
-        this.cdRef.markForCheck();
-      });
-  }
-
-  public onSearch(): void {
-    this.confirmedQuery.emit(!!this.highlightText);
-  }
-
-  public closeSearchTipsDropdown(event?): void {
+  public closeSearchHintsDropdown(event?): void {
     event?.stopPropagation();
-    this.showSearchResult = false;
+    this.showSearchHints = false;
     if (this.fixOnTopOnMobile) {
       this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
     }
   }
 
-  public clearSearch(): void {
+  public patchValue(event: MouseEvent, multiple: boolean, callback?: () => void): void {
+    const target = event.target as HTMLTextAreaElement;
+    const newValue = target.getAttribute('value');
+
+    if (multiple === false) {
+      this.searchForm.get('searchField').setValue(newValue);
+    } else if (multiple) {
+      const arr = [this.searchForm.get('searchField').value].push(newValue);
+      this.searchForm.get('searchField').setValue(arr);
+    } else {
+      return;
+    }
+
+    if (callback) {
+      callback();
+    }
+  }
+
+  public _patchValueSideEffects() {
+    this.queryChange.emit(this.searchForm.get('searchField').value);
+    this.closeSearchHintsDropdown();
+    this.search.emit(true);
+  }
+
+  public submitSearch(): void {
+    this.search.emit(this.searchForm.get('searchField').value.length !== 0);
+    if (this.searchForm.get('searchField').value.length === 0) {
+      this.cancelSearch();
+    }
+  }
+
+  public cancelSearch(): void {
+    this.alwaysShowClearButton = false;
     this.searchForm.get('searchField').setValue('');
-    const query: string = this.searchForm.get('searchField').value;
-    this.searchQuery.emit(query);
-    this.confirmedQuery.emit(false);
+    this.queryChange.emit(this.searchForm.get('searchField').value);
+    this.search.emit(false);
     this.cancel.emit(true);
-    this.closeSearchTipsDropdown();
+    this.closeSearchHintsDropdown();
   }
 }

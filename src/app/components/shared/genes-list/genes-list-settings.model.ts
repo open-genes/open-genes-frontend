@@ -1,12 +1,15 @@
+export interface appliedFilter {
+  name: string;
+  value: any | any[];
+}
+
 export interface GenesListSettings {
   ifShowAge: boolean;
-  ifShowFuncClusters: boolean;
   ifShowDiseases: boolean;
   ifShowDiseaseCategories: boolean;
-  ifShowExpression: boolean;
   ifShowCriteria: boolean;
-  ifShowMethylation: boolean;
   ifShowAgingMechanisms: boolean;
   ifShowProteinClasses: boolean;
-  ifShowResearches: boolean;
+  ifShowExperimentsStats: boolean;
+  ifShowTags: boolean;
 }

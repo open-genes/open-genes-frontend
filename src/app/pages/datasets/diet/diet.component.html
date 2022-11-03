@@ -18,11 +18,12 @@
           <div class="row">
             <ng-container>
               <div class="col-12">
-                <app-search [showTitle]="false"
-                            [searchHintsList]="searchedGenesList"
-                            [setSearchMode]="searchMode"
-                            (confirmedQuery)="updateGenesList($event)"
-                            (searchQuery)="setSearchQuery($event)"
+                <app-search [searchHintsList]="searchedGenesList"
+                            placeholder="search_field_start_typing"
+                            searchMode="searchByGenes"
+                            (search)="updateGenesList($event)"
+                            (queryChange)="setSearchQuery($event)"
+                            [showClearButton]="isNotFound"
                             class="__mb-30">
                 </app-search>
 

@@ -10,21 +10,19 @@ export class SettingsService {
     showUiHints: false,
     searchMode: SearchModeEnum.searchByGenes,
     isTableView: true,
-    showCookieBanner: false, // TODO: when OG-772 is ready and GDPR text is on the website, set to true
+    showCookieBanner: false, // TODO: set to "true" when main page and Genes page will be separated, too many popups
   };
 
   public genesListSettings: GenesListSettings = {
     // Default:
     ifShowAge: true,
-    ifShowFuncClusters: true,
-    ifShowExpression: true,
     ifShowDiseases: false,
     ifShowDiseaseCategories: true,
     ifShowCriteria: false,
-    ifShowMethylation: false,
     ifShowAgingMechanisms: true,
     ifShowProteinClasses: true,
-    ifShowResearches: false,
+    ifShowExperimentsStats: false,
+    ifShowTags: true,
   };
 
   constructor() {

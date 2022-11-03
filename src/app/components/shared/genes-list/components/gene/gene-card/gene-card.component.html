@@ -19,9 +19,28 @@
       </button>
     </div>
     <div class="title">
-      <a [routerLink]="['/gene', item.symbol]" class="link link--gray">
+      <a [routerLink]="['/gene', item.symbol]"
+         [matTooltip]="'go_to_gene_page' | translate"
+         class="link link--gray">
         <b>{{ item.symbol }}</b> {{ item.name }}
       </a>
+
+      <button
+        *ngIf="item?.confidenceLevel"
+        class="alias alias--small confidence-level"
+        [matTooltip]="'confidence_level' | translate"
+        (click)="applyFilter('confidenceLevel', item.confidenceLevel.id)"
+        [class.__active]="isAgeRelatedProcessActive(item.confidenceLevel.id.toString())"
+        [ngClass]="{
+            'alias--red' : item.confidenceLevel.id === 1,
+            'alias--orange' : item.confidenceLevel.id === 2,
+            'alias--pine' : item.confidenceLevel.id === 3,
+            'alias--blue' : item.confidenceLevel.id === 4,
+            'alias--gray' : item.confidenceLevel.id === 5
+        }"
+      >
+        {{ item.confidenceLevel.name }}
+      </button>
     </div>
 
     <div class="card__actions">
@@ -60,7 +79,7 @@
       <app-aging-mechanisms
         [geneAgingMechanisms]="item.agingMechanisms"
         [activeListItem]="filters.byAgingMechanism"
-        (clickEvent)="applyFilter(filterTypes.aging_mechanism, $event)"
+        (clickEvent)="applyFilter('byAgingMechanism', $event)"
       ></app-aging-mechanisms>
     </div>
   </ng-container>
@@ -75,7 +94,7 @@
       <app-protein-classes
         [geneProteinClasses]="item.proteinClasses"
         [activeListItem]="filters.byProteinClass"
-        (clickEvent)="applyFilter(filterTypes.protein_classes, $event)"
+        (clickEvent)="applyFilter('byProteinClass', $event)"
       ></app-protein-classes>
     </div>
   </ng-container>
@@ -88,7 +107,7 @@
     <app-associated-diseases
       [geneDiseases]="item.diseases"
       [activeListItem]="filters.byDiseases"
-      (clickEvent)="applyFilter(filterTypes.disease, $event)"
+      (clickEvent)="applyFilter('byDiseases', $event)"
     ></app-associated-diseases>
   </div>
 
@@ -100,17 +119,17 @@
     <app-associated-disease-categories
       [geneDiseaseCategories]="item.diseaseCategories"
       [activeListItem]="filters.byDiseaseCategories"
-      (clickEvent)="applyFilter(filterTypes.disease_categories, $event)"
+      (clickEvent)="applyFilter('byDiseaseCategories', $event)"
     ></app-associated-disease-categories>
   </div>
 
-  <div *ngIf="listSettings.ifShowResearches"
+  <div *ngIf="listSettings.ifShowExperimentsStats"
       class="card__section">
     <span class="label __mb-0">
-      {{ "gene_list_researches_number" | translate }}
+      {{ "gene_list_research_data_number" | translate }}
     </span>
     <app-experiments-stats
-      [researches]="item.researches">
+      [experiments]="item.researches">
     </app-experiments-stats>
   </div>
 
@@ -122,13 +141,13 @@
     <app-selection-criteria
       [geneCriteria]="item.commentCause"
       [activeListItem]="filters.bySelectionCriteria"
-      (clickEvent)="applyFilter(filterTypes.selection_criteria, $event)"
+      (clickEvent)="applyFilter('bySelectionCriteria', $event)"
     ></app-selection-criteria>
   </div>
 </div>
 
-<div class="card__controls">
-  <div *ngIf="item.functionalClusters.length !== 0 && listSettings.ifShowFuncClusters"
+<div class="card__controls card__controls--tags">
+  <div *ngIf="item.functionalClusters.length !== 0 && listSettings?.ifShowTags"
        class="card__section">
     <span class="label">
       {{ "entities_age_related_processes" | translate }}
@@ -136,43 +155,10 @@
 
     <app-tag
       *ngFor="let cluster of item.functionalClusters"
-      (click)="applyFilter(filterTypes.age_related_processes, cluster['id'])"
-      [isActive]="filters.byAgeRelatedProcess.includes(cluster['id'])"
+      (click)="applyFilter('byAgeRelatedProcess', cluster['id'])"
+      [isActive]="isAgeRelatedProcessActive(cluster['id'])"
     >
-      {{ cluster["name"] }}
+      #{{ cluster["name"] }}
     </app-tag>
   </div>
-
-  <div *ngIf="listSettings.ifShowExpression"
-       class="card__section">
-    <span class="label">
-      {{ "main_page_table_expression" | translate }}
-    </span>
-
-    <app-tag
-      (click)="applyFilter(filterTypes.expression_change, item.expressionChange)"
-      [isDisabled]="item.expressionChange === 0"
-      [isActive]="
-              filters.byExpressionChange === item.expressionChange &&
-              item.expressionChange !== 0"
-    >{{ getExpressionLocaleKey(item.expressionChange) | translate }}
-    </app-tag>
-  </div>
-
-
-  <div *ngIf="listSettings.ifShowMethylation"
-       class="card__section">
-    <span class="label">
-      {{ "main_page_table_methylation" | translate }}
-    </span>
-
-    <app-tag
-      *ngIf="item.methylationCorrelation !== ''"
-      (click)="applyFilter(filterTypes.methylation_change, item.methylationCorrelation)"
-      [isActive]="filters.byMethylationChange === item.methylationCorrelation"
-    >
-      {{ item.methylationCorrelation }}
-    </app-tag>
-  </div>
-
 </div>

@@ -120,7 +120,7 @@ export class DietComponent implements OnInit, OnDestroy {
         title: 'items_found',
         length: this.confirmedGenesList ? this.confirmedGenesList.length : 0,
       },
-      duration: 600,
+      duration: 1200,
     });
   }
 

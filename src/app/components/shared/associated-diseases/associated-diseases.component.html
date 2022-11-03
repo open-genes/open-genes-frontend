@@ -3,7 +3,7 @@
   <ng-container *ngIf="!isAccordion; else accordion">
     <ul class="list list--bulletted">
       <li *ngFor="let disease of geneDiseases"
-          [class.__active]="activeListItem.includes(disease.id)"
+          [class.__active]="activeListItem?.includes(disease.id)"
           (click)="emitOnClick(disease.id)">
         {{ disease?.name}}
       </li>
@@ -20,7 +20,7 @@
       <div class="diseases-accordion__header" accordion-header>
         <ul class="list list--bulletted">
           <li *ngFor="let disease of geneDiseases | slice: 0:maxItemsToShow"
-              [class.__active]="activeListItem.includes(disease.id)"
+              [class.__active]="activeListItem?.includes(disease.id)"
               (click)="emitOnClick(disease.id)">
             {{ disease?.name}}
           </li>
@@ -35,7 +35,7 @@
       <div class="diseases-accordion__body" accordion-body>
         <ul class="list list--bulletted">
           <li *ngFor="let disease of geneDiseases | slice: maxItemsToShow"
-              [class.__active]="activeListItem.includes(disease.id)"
+              [class.__active]="activeListItem?.includes(disease.id)"
               (click)="emitOnClick(disease.id)">
             {{ disease?.name}}
           </li>

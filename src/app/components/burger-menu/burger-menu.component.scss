@@ -65,10 +65,12 @@
   }
 
   .panel__header {
-    display: block;
+    display: flex;
+    align-items: center;
     height: $header-height;
     top: 0;
     background-color: $color-white;
+    padding-right: 60px;
   }
 
   .panel__links {
@@ -96,35 +98,20 @@
       margin: 2px 0;
 
       a {
-        position: relative;
-        display: flex;
-        border-radius: $border-radius-medium;
-        padding: 12px 10px 10px;
-        transition: background, color .15s ease-out;
-
-        .fa {
-          margin: 2px 8px 0 0;
+        // TODO: replace all icons here with app-icon component
+        .icon {
+          position: relative;
+        }
+        .fa.icon {
+          margin-right: 8px;
+          top: 3px;
+        }
+        app-icon.icon {
+          margin-right: 1px;
+          left: -1px;
         }
 
-        &:link,
-        &:visited {
-          color: $color-black;
-        }
-
-        &:hover {
-          color: rgba($color-general, 0.85);
-          background: rgba($color-general, 0.08);
-        }
-
-        &:active {
-          color: rgba($color-general, 0.75);
-          background: rgba($color-general, 0.15);
-        }
-
-        &.__current {
-          color: $color-general;
-          background: rgba($color-general, 0.15);
-        }
+        @include menu-item;
       }
 
       &--emphasized {
@@ -134,6 +121,19 @@
             background-color: $color-orange-100;
           }
         }
+      }
+    }
+  }
+
+  .panel__header .panel__links {
+    display: inline-block;
+    height: auto;
+    width: auto;
+
+    .panel__link a {
+      min-width: 130px;
+      &:not(:hover, :active, .__current) {
+        box-shadow: $box-shadow-to-bottom;
       }
     }
   }

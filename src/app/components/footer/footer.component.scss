@@ -23,10 +23,11 @@
 
 footer.wrapper {
   background-color: $color-black;
-  color: $color-gray-semi;
 }
 
 .footer {
+  color: $color-gray-semi;
+
   &__row {
     display: flex;
     align-content: flex-start;
@@ -40,7 +41,7 @@ footer.wrapper {
     padding: 0 1.33em;
 
     &:not(:last-child) {
-      padding-right: 4.6em;
+      padding-right: 2em;
     }
 
     &--language {
@@ -53,15 +54,27 @@ footer.wrapper {
     font-weight: $font-weight-medium;
   }
 
+  p {
+    font-size: .9em;
+  }
+
   &__links { // ul
     width: 100%;
 
     li {
       display: list-item;
       width: 100%;
-      margin-top: 1em;
       font-size: 1em;
+      color: $color-gray-semi;
     }
+  }
+
+  ul + p,
+  li + li,
+  p + ul,
+  h4 + p,
+  h4 + ul {
+    margin-top: 1em;
   }
 
   a {
@@ -84,6 +97,7 @@ footer.wrapper {
   }
 
   &__language {
-    margin-top: -.8em;
+    margin: -10px;
+    color: $color-black;
   }
 }

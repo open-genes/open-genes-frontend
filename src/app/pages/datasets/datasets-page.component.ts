@@ -15,7 +15,6 @@ export class DatasetsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.router);
     //this.isParentRoute = this.aRoute.parent === 'datasets';
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       this.isParentRoute = this.router.url === '/datasets';

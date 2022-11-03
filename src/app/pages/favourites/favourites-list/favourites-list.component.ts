@@ -6,7 +6,7 @@ import {
   Input,
   ViewChild,
 } from '@angular/core';
-import { Genes } from '../../../core/models';
+import { Symbols } from '../../../core/models';
 import { FavouritesService } from '../../../core/services/favourites.service';
 import { FileExportService } from '../../../core/services/browser/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
@@ -19,12 +19,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FavouritesListComponent {
-  public favourites: Genes[] = [];
+  public favourites: Symbols[] = [];
   public downloadLink: string | SafeResourceUrl = '#';
   public link: string;
   public isPopoverOpen = false;
 
-  @Input() set favouriteGenes(_genes: Genes[]) {
+  @Input() set favouriteGenes(_genes: Symbols[]) {
     this.favourites = _genes;
   }
   @Input() isSharedList = false;

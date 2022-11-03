@@ -24,11 +24,11 @@
           <div class="row">
             <ng-container *ngIf="isAvailable; else errorMessage">
               <div class="col-12">
-                <app-search [showTitle]="false"
-                            [searchHintsList]="searchedGenes"
-                            [setSearchMode]="searchMode"
-                            (confirmedQuery)="updateGenesList($event)"
-                            (searchQuery)="setSearchQuery($event)">
+                <app-search [searchHintsList]="searchedGenes"
+                            placeholder="search_field_start_typing"
+                            searchMode="searchByGenes"
+                            (search)="updateGenesList($event)"
+                            (queryChange)="setSearchQuery($event)">
                 </app-search>
 
                 <app-genes-methylation-list

@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
+  @Input() buildNumber: string;
   @ViewChild('walletAddressCopied') walletAddressCopied: ElementRef;
   public donationWallet = '0x863E5Cd3F747bB3e0DB223E50184965355A10682';
 

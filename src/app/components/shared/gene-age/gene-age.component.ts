@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Gene } from '../../../core/models';
+import { Genes } from '../../../core/models';
 import { GenePhylaClass } from './gene-phyla.class';
 import { Phylum } from './phylum.model';
 import { ShowOptionsEnum } from './show-options.enum';
@@ -10,11 +10,12 @@ import { ShowOptionsEnum } from './show-options.enum';
   styleUrls: ['./gene-age.component.scss'],
 })
 export class GeneAgeComponent extends GenePhylaClass implements OnInit {
+  public phylumFamilyOrigin: Phylum;
   public phylumOrigin: Phylum;
   public phylumHomolog: Phylum;
   public isShowOnlyOrigin = false;
   public isShowOnlyHomologs = false;
-  @Input() gene: Gene;
+  @Input() gene: Genes;
   @Input() show: ShowOptionsEnum;
 
   constructor() {
@@ -22,7 +23,8 @@ export class GeneAgeComponent extends GenePhylaClass implements OnInit {
   }
 
   ngOnInit(): void {
-    this.phylumOrigin = this.getPhylumDataByID(this.gene.familyOrigin?.id);
+    this.phylumFamilyOrigin = this.getPhylumDataByID(this.gene.familyOrigin?.id);
+    this.phylumOrigin = this.getPhylumDataByID(this.gene.origin?.id);
     this.phylumHomolog = this.getPhylumDataByName(this.gene.homologueTaxon);
     this.isShowOnlyOrigin = this.show === ShowOptionsEnum['origin'];
     this.isShowOnlyHomologs = this.show === ShowOptionsEnum['homologs'];

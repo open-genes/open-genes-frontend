@@ -1,0 +1,35 @@
+<ng-container *ngIf="articlesList.length">
+  <ng-container *ngFor="let article of articlesList">
+      <div [routerLink]="'articles/' + article.slug"
+           class="article">
+        <h3>
+          {{ article.title.rendered }}
+        </h3>
+    </div>
+  </ng-container>
+</ng-container>
+
+<div *ngIf="showMoreButtonVisible"
+     class="__mt-5 btn-wrap show-more">
+  <button class="btn show-more__button"
+          (click)="showMore()">
+    {{ "show_more" | translate }}
+  </button>
+</div>
+
+<section *ngIf="articlesList.length === 0 && !showSkeleton"
+         class="no-articles">
+  <app-no-content
+    [size]="'medium'"
+    [title]="'news_page_no_wp_articles'">
+    <ng-container icon>
+      <app-icon
+        icon="language"
+        size="custom"
+        customWidth="100%"
+        customHeight="100%"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
+</section>
+
