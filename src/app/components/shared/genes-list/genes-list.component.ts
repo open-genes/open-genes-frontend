@@ -55,7 +55,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
         if (query.length > 1) {
           const length = (query as string).split(',').length;
           if (length > 1) {
-            delete this.filterService.filters.bySuggestions; // TODO: don't delete but set default value
+            this.filterService.clearFilters('bySuggestions'); // TODO: don't delete but set default value
             this.querySubstrings = (query as string)
               .split(',')
               .map((query) => query.trim())
@@ -233,7 +233,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
    */
   public loadMoreGenes(): void {
     if (!this.isGoTermsMode) {
-      this.filterService.onLoadMoreGenes(this.options?.pagination?.pagesTotal);
+      this.filterService.onLoadNextPage(this.options?.pagination?.pagesTotal);
       return;
     }
 
