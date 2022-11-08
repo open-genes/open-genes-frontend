@@ -30,19 +30,21 @@
                     class="alias">{{item}}</span>
               </div>
 
-              <time class="title__updated" dateTime="{{timestamp | unixTimeFormatter}}">
-                {{ timestamp | unixTimeFormatter | localizedDate:'d MMMM yyyy'}}
-              </time>
+              <div class="title__updated">
+                <p>{{ "updated" | translate }}:</p>
+                <time dateTime="{{timestamp | unixTimeFormatter}}">
+                  {{ timestamp | unixTimeFormatter | localizedDate:'d MMMM yyyy'}}
+                </time>
+              </div>
 
             </div>
             <div class="col col-12 header__short-comment">
-            <span class="str_source-GeneAge">
-              {{gene.name}}
+              <span class="short-comment__group">id: {{ gene.id }}</span>
+              <span class="short-comment__group">{{gene.name}}</span>
               <span *ngIf="isGeneCandidate"
                     class="alias alias--small alias--warning">
                 {{ "gene_candidate" | translate }}
               </span>
-            </span>
             </div>
           </div>
         </div>

@@ -77,12 +77,17 @@
       }
 
       .title__updated { // date always remains on top right corner
-        flex: 0 0 20ch;
-        justify-content: flex-end;
+        flex: 0 0;
+        justify-content: flex-start;
         font-size: $font-size-very-small;
         color: $color-gray;
-        text-align: right;
+        text-align: left;
         white-space: nowrap;
+
+        p,
+        time {
+          width: 100%;
+        }
       }
 
       @include resolution_tablet-and-up {
@@ -98,6 +103,10 @@
       font-size: $font-size-bigger;
       color: $color-gray;
       margin-bottom: 15px;
+
+      .short-comment__group + .short-comment__group {
+        margin-left: 1em;
+      }
     }
 
     @include resolution_tablet-and-up {
