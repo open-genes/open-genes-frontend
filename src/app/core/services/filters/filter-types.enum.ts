@@ -1,6 +1,6 @@
 export enum SortEnum {
   byName = 'name',
-  byAge = 'age',
+  byAge = 'familyPhylum',
   byCriteriaQuantity = 'criteriaQuantity',
   byConfidenceLevel = 'byConfidenceLevel',
 }
