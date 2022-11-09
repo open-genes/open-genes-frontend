@@ -187,7 +187,17 @@ export class DownloadComponent {
     const res = await this.csvExportService.generateSummarizedResearchResults();
     if (res.length !== 0) {
       this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-      this.currentDatasetName = 'summarized-research-criteria';
+      this.currentDatasetName = 'summarized-criteria';
+      this.openDownloadModal(this.downLoadLinkTemplate);
+    }
+  }
+
+  public async generateGeneCriteriaTsv() {
+    this.isProcessing = true;
+    const res = await this.csvExportService.generateGeneCriteriaTable();
+    if (res.length !== 0) {
+      this.currentDownloadLink = this.fileExportService.downloadCsv(res);
+      this.currentDatasetName = 'gene-criteria';
       this.openDownloadModal(this.downLoadLinkTemplate);
     }
   }

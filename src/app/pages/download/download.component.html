@@ -60,41 +60,53 @@
             <h4>{{ "download_page_datasets_research_data" | translate }}</h4>
             <ul class="list">
               <li>
-                <button class="link link--blue link--underline link-button"
-                        (click)="downloadYellowTablesTsv()"
-                >{{ "gene_page_research_data_protein_regulates_genes" | translate }}</button>
-              </li>
-              <li>
-                <button class="link link--blue link--underline link-button"
-                        (click)="downloadPinkTablesTsv()"
-                >{{ "gene_page_research_data_longevity_effects" | translate }}</button>
-              </li>
-              <li>
+                <span class="study-mark study-mark--increase-lifespan"></span>
                 <button class="link link--blue link--underline link-button"
                         (click)="downloadPurpleTablesTsv()"
                 >{{ "gene_page_research_data_lifespan" | translate }}</button>
               </li>
               <li>
-                <button class="link link--blue link--underline link-button"
-                        (click)="generateGreenTableTsv()"
-                >{{ "gene_page_intervention_moderates_aging" | translate }}</button>
-              </li>
-              <li>
+                <span class="study-mark study-mark--age-related-change"></span>
                 <button class="link link--blue link--underline link-button"
                         (click)="generateBlueTableTsv()"
                 >{{ "gene_page_research_data_age_related_changes" | translate }}</button>
               </li>
               <li>
+                <span class="study-mark study-mark--gene-intervention-to-vital-processes"></span>
+                <button class="link link--blue link--underline link-button"
+                        (click)="generateGreenTableTsv()"
+                >{{ "gene_page_intervention_moderates_aging" | translate }}</button>
+              </li>
+              <li>
+                <span class="study-mark study-mark--gene-to-longevity-effect"></span>
+                <button class="link link--blue link--underline link-button"
+                        (click)="downloadPinkTablesTsv()"
+                >{{ "gene_page_research_data_longevity_effects" | translate }}</button>
+              </li>
+              <li>
+                <span class="study-mark study-mark--protein-to-gene"></span>
+                <button class="link link--blue link--underline link-button"
+                        (click)="downloadYellowTablesTsv()"
+                >{{ "gene_page_research_data_protein_regulates_genes" | translate }}</button>
+              </li>
+              <!--
+              <li>
                 <button class="link link--blue link--underline link-button"
                         (click)="generateSummarizedResearchResultsTsv()"
                 >{{ "download_page_summarized_research_results" | translate }}</button>
               </li>
+              -->
             </ul>
           </section>
 
           <section class="col-xs-12 col-md-6 variant">
             <h4>{{ "download_page_datasets_general" | translate }}</h4>
             <ul class="list">
+              <li>
+                <button class="link link--blue link--underline link-button"
+                        (click)="generateGeneCriteriaTsv()"
+                >{{ "download_page_selection_criteria" | translate }}</button>
+              </li>
               <li>
                 <button class="link link--blue link--underline link-button"
                         (click)="downloadDiseaseTsv()"

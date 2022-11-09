@@ -573,5 +573,27 @@
   }
 }
 
+@mixin study-type-mark-pseudo() {
+  &::before {
+    content: ' ';
+    display: block;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background: #cbcbef;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    border: .5px solid rgba($color-black, .15);
+  }
+
+  @each $class, $color in $experiment-tables {
+    &--#{$class}::before {
+      background: $color;
+    }
+  }
+}
+
 
 

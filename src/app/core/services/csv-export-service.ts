@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AdditionalInterventionResolver } from '../utils/additional-intervention-resolver';
 import { PurpleTable } from '../models/open-genes-api/researches.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
   private maxPageSize = 0;
   private del = '\t'; // delimiter
   private eol = '\r'; // end of the line
+  private apiUrl = environment.apiUrl;
 
   constructor() {
     super();
@@ -53,7 +55,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
   private async generateSimplePairCsv(csvHeader: string, field: any, filterFn?: (gene: any) => any) {
     let resultingString = '';
     const response = await CsvExportService.FetchData(
-      `https://open-genes.com/api/gene/search?pageSize=${this.maxPageSize}`,
+      `${(this.apiUrl)}/api/gene/search?pageSize=${this.maxPageSize}`,
       0,
       1,
       {}
@@ -97,7 +99,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
   public async generateGeneTissueRpkmTable() {
     let items = [];
     let resultingString = '';
-    const fetchedItems = await CsvExportService.FetchData('https://open-genes.com/api/gene/symbols', 0, 1, {});
+    const fetchedItems = await CsvExportService.FetchData(`${this.apiUrl}/api/gene/symbols`, 0, 1, {});
     const resItems = await fetchedItems.json();
     items = resItems.map((gene) => gene.symbol);
     const csvHeader = this.makeRow(['HGNC', 'tissue or organ', 'rpkm']);
@@ -105,7 +107,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
 
     if (items.length !== 0) {
       for (const hgnc of items) {
-        const response = await CsvExportService.FetchData(`https://open-genes.com/api/gene/${hgnc}`, 1000, 3, {});
+        const response = await CsvExportService.FetchData(`${this.apiUrl}/api/gene/${hgnc}`, 1000, 3, {});
         const res = await response;
 
         const resJson = await res.json();
@@ -128,7 +130,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
     // TODO: DRY
     let items = [];
     let resultingString = '';
-    const fetchedItems = await CsvExportService.FetchData('https://open-genes.com/api/gene/symbols', 0, 1, {});
+    const fetchedItems = await CsvExportService.FetchData(`${this.apiUrl}/api/gene/symbols`, 0, 1, {});
     const resItems = await fetchedItems.json();
     items = resItems.map((gene) => gene.symbol);
     const csvHeader = this.makeRow(['HGNC', 'GO biological process', 'GO molecular activity', 'GO cellular component']);
@@ -136,7 +138,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
 
     if (items.length !== 0) {
       for (const hgnc of items) {
-        const response = await CsvExportService.FetchData(`https://open-genes.com/api/gene/${hgnc}`, 1000, 3, {});
+        const response = await CsvExportService.FetchData(`${this.apiUrl}/api/gene/${hgnc}`, 1000, 3, {});
         const res = await response;
 
         const resJson = await res.json();
@@ -186,7 +188,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
     resultingString = resultingString + csvHeader;
 
     const response = await CsvExportService.FetchData(
-      `https://open-genes.com/api/research/associations-with-lifespan?pageSize=${this.maxPageSize}`,
+      `${this.apiUrl}/api/research/associations-with-lifespan?pageSize=${this.maxPageSize}`,
       0,
       1,
       {}
@@ -246,7 +248,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
     resultingString = resultingString + csvHeader;
 
     const response = await CsvExportService.FetchData(
-      `https://open-genes.com/api/research/gene-regulation?pageSize=${this.maxPageSize}`,
+      `${this.apiUrl}/api/research/gene-regulation?pageSize=${this.maxPageSize}`,
       0,
       1,
       {}
@@ -326,7 +328,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
 
     // TODO: OG-811
     const response = await CsvExportService.FetchData(
-      `https://open-genes.com/api/research/lifespan-change?pageSize=${this.maxPageSize}`,
+      `${this.apiUrl}/api/research/lifespan-change?pageSize=${this.maxPageSize}`,
       0,
       1,
       {}
@@ -519,7 +521,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
     resultingString = resultingString + csvHeader;
 
     const response = await CsvExportService.FetchData(
-      `https://open-genes.com/api/research/gene-activity-change-impact?pageSize=${this.maxPageSize}`,
+      `${this.apiUrl}/api/research/gene-activity-change-impact?pageSize=${this.maxPageSize}`,
       0,
       1,
       {}
@@ -617,7 +619,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
     resultingString = resultingString + csvHeader;
 
     const response = await CsvExportService.FetchData(
-      `https://open-genes.com/api/research/age-related-changes?pageSize=${this.maxPageSize}`,
+      `${this.apiUrl}/api/research/age-related-changes?pageSize=${this.maxPageSize}`,
       0,
       1,
       {}
@@ -686,6 +688,38 @@ export class CsvExportService extends AdditionalInterventionResolver {
     return null;
   }
 
+  public async generateGeneCriteriaTable() {
+    let resultingString = '';
+    const csvHeader = this.makeRow([
+      'HGNC',
+      'criteria',
+    ]);
+    resultingString = resultingString + csvHeader;
+    const response = await CsvExportService.FetchData(
+      `${this.apiUrl}/api/gene/search?pageSize=${this.maxPageSize}`,
+      0,
+      1,
+      {}
+    );
+    if (response) {
+      const resJson = await response.json();
+      const genes = resJson.items;
+      if (genes) {
+        resultingString = resultingString + String(csvHeader);
+        let items;
+        for (const gene of genes) {
+          items = gene.commentCause.map((d) => `'${d.name}'`);
+          for (const item of items) {
+            const csvRow = `"${gene.symbol}"${this.del}"${item}"${this.eol}`;
+            resultingString = resultingString + csvRow;
+          }
+        }
+        return resultingString;
+      }
+    }
+    return null;
+  }
+
   public async generateSummarizedResearchResults() {
     let resultingString = '';
     const csvHeader = this.makeRow([
@@ -702,7 +736,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
     resultingString = resultingString + csvHeader;
 
     const response = await CsvExportService.FetchData(
-      `https://open-genes.com/api/gene/search?researches=1&pageSize=${this.maxPageSize}`,
+      `${this.apiUrl}/api/gene/search?researches=1&pageSize=${this.maxPageSize}`,
       0,
       1,
       {}
@@ -852,7 +886,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
     let items = [];
     let resultingString = '';
     const fetchedItems = await CsvExportService.FetchData(
-      `https://open-genes.com/api/gene/search?pageSize=${this.maxPageSize}`,
+      `${this.apiUrl}/api/gene/search?pageSize=${this.maxPageSize}`,
       0,
       1,
       {}

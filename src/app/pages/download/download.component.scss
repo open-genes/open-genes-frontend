@@ -67,3 +67,18 @@
     margin-top: 1em;
   }
 }
+
+.list {
+  li {
+    display: flex;
+  }
+  .study-mark {
+    position: relative;
+    min-width: 13px;
+    width: 13px;
+    height: 13px;
+    margin-right: 8px;
+    top: 2px;
+    @include study-type-mark-pseudo;
+  }
+}
