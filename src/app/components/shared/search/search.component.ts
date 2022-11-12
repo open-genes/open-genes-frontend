@@ -142,15 +142,14 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     if (multiple === false) {
       this.searchForm.get('searchField').setValue(newValue);
     } else if (multiple) {
-      const arr = [this.searchForm.get('searchField').value].push(newValue);
-      this.searchForm.get('searchField').setValue(arr);
+      const queryArray = this.searchForm.get('searchField').value.split(',').map(q => q.trim());
+      queryArray[queryArray.length - 1] = newValue;
+      this.searchForm.get('searchField').setValue(queryArray.join(", "));
     } else {
       return;
     }
 
-    if (callback) {
-      callback();
-    }
+    callback && callback();
   }
 
   public _patchValueSideEffects() {
