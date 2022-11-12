@@ -138,10 +138,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     }
   }
 
-  public patchValue(event: MouseEvent, multiple: boolean, callback?: () => void): void {
-    const target = event.target as HTMLTextAreaElement;
-    const newValue = target.getAttribute('value');
-
+  public patchValue(newValue: string, multiple: boolean, callback?: () => void): void {
     if (multiple === false) {
       this.searchForm.get('searchField').setValue(newValue);
     } else if (multiple) {
