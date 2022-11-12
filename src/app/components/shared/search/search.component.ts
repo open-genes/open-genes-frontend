@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { Genes } from '../../../core/models';
 import { FormControl, FormGroup } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, pairwise, startWith, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { ToMap } from '../../../core/utils/to-map';
@@ -100,28 +100,36 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.searchForm
       .get('searchField')
-      .valueChanges.pipe(
-      map((query: string) => query?.toLowerCase().replace(/-/g, '')),
-      filter((query: string) => {
-        this.clearButton = this.alwaysShowClearButton? this.alwaysShowClearButton : !!query;
-        this.highlightText = query;
-        this.showSearchHints = query?.length > 1;
+      .valueChanges
+      .pipe(startWith(null as string), pairwise())
+      .pipe(
+        map(([prevQuery, nextQuery]: [string, string]) => [
+          prevQuery?.toLowerCase().replace(/-/g, ''),
+          nextQuery?.toLowerCase().replace(/-/g, '')]),
+        filter(([prevQuery, nextQuery]: [string, string]) => {
+          if (prevQuery === nextQuery) {
+            return false;
+          }
 
-        if (this.showSearchHints && this.fixOnTopOnMobile) {
-          this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
-        } else {
-          this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
-        }
+          this.clearButton = this.alwaysShowClearButton ? this.alwaysShowClearButton : !!nextQuery;
+          this.highlightText = nextQuery;
+          this.showSearchHints = nextQuery?.length > 1;
 
-        return this.showSearchHints;
-      }),
-      distinctUntilChanged(),
-      debounceTime(300),
-      takeUntil(this.subscription$),
-    ).subscribe((query: string) => {
-        this.queryChange.emit(query);
-        this.cdRef.markForCheck();
-      });
+          if (this.showSearchHints && this.fixOnTopOnMobile) {
+            this.renderer.addClass(document.body, 'body--search-on-main-page-is-active');
+          } else {
+            this.renderer.removeClass(document.body, 'body--search-on-main-page-is-active');
+          }
+
+          return this.showSearchHints;
+        }),
+        distinctUntilChanged(),
+        debounceTime(300),
+        takeUntil(this.subscription$),
+      ).subscribe(([prevQuery, nextQuery]: [string, string]) => {
+      this.queryChange.emit(nextQuery);
+      this.cdRef.markForCheck();
+    });
   }
 
   ngOnDestroy(): void {
@@ -144,7 +152,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     } else if (multiple) {
       const queryArray = this.searchForm.get('searchField').value.split(',').map(q => q.trim());
       queryArray[queryArray.length - 1] = newValue;
-      this.searchForm.get('searchField').setValue(queryArray.join(", "));
+      this.searchForm.get('searchField').setValue(queryArray.join(', '));
     } else {
       return;
     }
