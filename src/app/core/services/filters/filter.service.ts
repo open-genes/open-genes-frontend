@@ -3,20 +3,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { Pagination } from '../../models/settings.model';
 import { SettingsService } from '../settings.service';
-import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { ApiService } from '../api/open-genes-api.service';
-import { SortEnum } from './filter-types.enum';
 
 export abstract class FilterService {
   listOfFields$ = new BehaviorSubject<any>('');
   filterChanges$ = new BehaviorSubject<any>([]);
   public twoOrMoreFiltersApplied = new BehaviorSubject<boolean>(false);
-  public sortParams: Sort = {
-    // Default:
-    active: SortEnum.byConfidenceLevel,
-    direction: 'asc'
-  };
 
   public pagination: Pagination = {
     page: 1,
@@ -119,12 +112,6 @@ export abstract class FilterService {
       );
     }
 
-    if (this.sortParams && this.sortParams.direction) {
-      params = params
-        .set('sortBy', this.sortParams.active)
-        .set('sortOrder', this.sortParams.direction.toUpperCase());
-    }
-
     return params;
   }
 
@@ -136,7 +123,8 @@ export abstract class FilterService {
         [...defaultFilters[filterName]] : defaultFilters[filterName];
     } else {
       Object.getOwnPropertyNames(filters).forEach(function (prop) {
-        filters[prop] = defaultFilters[prop];
+        filters[prop] = Array.isArray(defaultFilters[prop]) ?
+          [...defaultFilters[prop]] : defaultFilters[prop];
       });
     }
 

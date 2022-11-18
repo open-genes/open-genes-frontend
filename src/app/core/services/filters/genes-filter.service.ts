@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { FilterService } from './filter.service';
 import { ApiService } from '../api/open-genes-api.service';
 import { GenesListSettings } from '../../../components/shared/genes-list/genes-list-settings.model';
+import { Sort } from '@angular/material/sort';
+import { SortEnum } from './filter-types.enum';
 
 type GenesFilter = Record<'byAgeRelatedProcess' |
   'byDiseases' |
@@ -51,9 +53,14 @@ const defaultFilters: GenesFilter = {
   providedIn: 'root',
 })
 export class GenesFilterService extends FilterService {
-  public filters = { ...defaultFilters };
+  public filters = JSON.parse(JSON.stringify(defaultFilters));
   public currentFields: Observable<GenesListSettings> = this.listOfFields$.asObservable();
   public filterResult: Observable<ApiGeneSearchFilter> = this.filterChanges$.asObservable();
+  public sortParams: Sort = {
+    // Default:
+    active: SortEnum.byConfidenceLevel,
+    direction: 'asc',
+  };
 
   constructor(
     http: HttpClient,
@@ -80,7 +87,13 @@ export class GenesFilterService extends FilterService {
   }
 
   public getSortedAndFilteredGenes(): Observable<ApiResponse<Genes>> {
-    const params = this.getSortedAndFilteredParams();
+    let params = this.getSortedAndFilteredParams();
+
+    if (this.sortParams && this.sortParams.direction) {
+      params = params.set('sortBy', this.sortParams.active)
+        .set('sortOrder', this.sortParams.direction.toUpperCase());
+    }
+
     return this.apiService.getGenesV2(params);
   }
 }

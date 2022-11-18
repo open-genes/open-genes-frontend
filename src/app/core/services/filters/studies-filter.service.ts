@@ -52,7 +52,7 @@ const defaultFilters: StudiesFilter = {
   providedIn: 'root',
 })
 export class StudiesFilterService extends FilterService {
-  public filters: StudiesFilter = {...defaultFilters};
+  public filters: StudiesFilter = JSON.parse(JSON.stringify(defaultFilters));
 
   constructor(
     http: HttpClient,
