@@ -17,7 +17,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Create temporary .env file and print a build number
         run: |
           touch .env
@@ -31,7 +31,7 @@ jobs:
         run: |
           rm .env
       - name: Upload project artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           path: dist/
           name: project
