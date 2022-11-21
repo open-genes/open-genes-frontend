@@ -21,7 +21,6 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
   @ViewChild(GeneFiltersPanelComponent) filterPanel!: GeneFiltersPanelComponent;
 
   public searchedGenes: Pick<Genes, 'id' | 'name' | 'symbol' | 'aliases' | 'ensembl'>[] | Genes[] = [];
-  public confirmedGenesList: Genes[];
   public confirmedQuery: string;
   public searchedQuery: string;
   public itemsQuantity: number;
@@ -105,20 +104,20 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
       this.confirmedQuery = this.searchedQuery;
     } else {
       this.confirmedQuery = null;
-      this.confirmedGenesList = null;
     }
   }
 
   public setSearchQuery(query: string): void {
-    this.queryLength = query?.length? query.split(',').length : 0;
+    this.queryLength = query?.length ? query.split(',').length : 0;
     this.searchedQuery = query;
 
     if (this.queryLength > 1) {
-      query = query
+      const filteredQueryArray = query
         .split(',')
-        .filter((q) => q)
-        .map((q) => q.trim())
-        .toString();
+        .filter(q => q)
+        .map(q => q.trim());
+
+      query = filteredQueryArray[filteredQueryArray.length - 1];
     }
 
     this.searchGenes(query);
@@ -127,14 +126,13 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
   public setSearchMode(searchMode: SearchMode): void {
     this.searchMode = searchMode;
     this.confirmedQuery = null;
-    this.confirmedGenesList = null;
   }
 
   private searchGenes(query: string): void {
     if (query && query.length > 1) {
       this.showProgressBar = true;
       this.apiService
-        .getGenesMatchByString(query, this.queryLength > 1 ? 'byGeneSymbol' : undefined)
+        .getGenesMatchByString(query, undefined)
         .pipe(takeUntil(this.subscription$))
         .subscribe(
           (searchData) => {

@@ -66,8 +66,7 @@
           *ngIf="i < 3"
           class="search-form__autocomplete-item"
           tabindex="0"
-          [value]="gene.symbol"
-          (click)="patchValue($event, multiple, _patchValueSideEffects.bind(this))">
+          (click)="patchValue(gene.symbol, multiple, _patchValueSideEffects.bind(this))">
           <span class="item__symbol"
                 appHighlight
                 [highlightText]="highlightText"
