@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { appliedFilter, GenesListSettings } from '../../../../components/shared/genes-list/genes-list-settings.model';
-import { ApiGeneSearchParameters, ApiResearchSearchParameters } from '../../../../core/models/filters/filter.model';
+import { ApiGeneSearchParameters } from '../../../../core/models/filters/filter.model';
 import { SettingsService } from '../../../../core/services/settings.service';
 import { GenesFilterService } from '../../../../core/services/filters/genes-filter.service';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
@@ -82,6 +82,9 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
   public tags: any[] = []; // TODO: typing
   public predefinedTags: any[] = [];
   public processesModel: Observable<any[]>;
+  //Confidence level
+  public predefinedConfidenceLevel: any;
+  public confidenceLevel: any[];
 
   @Input() isLoading = false;
   @Input() set lastChangedFilter(filter: appliedFilter) {
@@ -185,6 +188,16 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
       this.tags = data;
     });
 
+    // Confidence level
+    // TODO: remove this hardcode when backend will have an endpoint
+    this.confidenceLevel = [
+      { id: 1, name: 'confidence_highest' },
+      { id: 2, name: 'confidence_high' },
+      { id: 3, name: 'confidence_moderate' },
+      { id: 4, name: 'confidence_low' },
+      { id: 5, name: 'confidence_lowest' }
+  ];
+
     // Set the values that user has already selected in the genes list
     this.getState();
   }
@@ -229,7 +242,7 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
   }
 
   public applyAndUpdate(
-    filterType: ApiResearchSearchParameters,
+    filterType: ApiGeneSearchParameters,
     $event: MatSelectChange | MatCheckboxChange): void {
     this.apply(filterType, $event);
     this.getState();

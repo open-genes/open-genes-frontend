@@ -357,7 +357,7 @@
                     </h3>
                     <app-tag *ngFor="let item of gene.functionalClusters"
                             (click)="applyFilter('byAgeRelatedProcess', item.id)">
-                      #{{item.name}}
+                      {{item.name}}
                     </app-tag>
                   </section>
                 </div>

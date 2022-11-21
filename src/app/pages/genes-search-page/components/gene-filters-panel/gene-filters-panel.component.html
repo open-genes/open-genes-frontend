@@ -7,6 +7,21 @@
 
   <div class="body__row">
     <mat-form-field appearance="fill">
+      <mat-label>{{ "filters_modal_placeholder_confidence" | translate }}</mat-label>
+      <mat-select formControlName="confidenceLevelSelect"
+                  [(ngModel)]="predefinedConfidenceLevel"
+                  [compareWith]="compareSelectValues"
+                  (selectionChange)="applyAndUpdate('confidenceLevel', $event)">
+        <ng-container *ngIf="confidenceLevel?.length !== 0">
+          <mat-option *ngFor="let i of confidenceLevel"
+                      [value]="i.id">{{ i.name | translate }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="body__row">
+    <mat-form-field appearance="fill">
       <app-eye-checkbox
         matPrefix
         (changeEvent)="toggleGenesListSettings('criteria')"

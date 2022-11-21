@@ -142,7 +142,7 @@
       *ngFor="let item of item.functionalClusters"
       (click)="applyFilter('byAgeRelatedProcess', item.id)"
       [isActive]="isAgeRelatedProcessActive(item.id)">
-      #{{ item.name }}
+      {{ item.name }}
     </app-tag>
   </td>
 </tr>

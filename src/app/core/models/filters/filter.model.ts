@@ -32,7 +32,8 @@ export type ApiGeneSearchParameters =
   | 'byOrigin'
   | 'byFamilyOrigin'
   | 'byConservativeIn'
-  | 'researches';
+  | 'researches'
+  | 'confidenceLevel';
 
 export interface ISort {
   byName: boolean; // by gene name

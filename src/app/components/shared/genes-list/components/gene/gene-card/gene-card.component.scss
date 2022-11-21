@@ -4,6 +4,10 @@
 @include item;
 @include card;
 
+.alias.confidence-level {
+  min-width: 42px;
+}
+
 .card__controls.card__controls--tags {
   app-tag {
     font-size: 11px;

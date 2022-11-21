@@ -59,7 +59,7 @@ button#{$a} {
   &:hover,
   &:active {
     background-color: lighten($color-green-light, 20%);
-    color: $color-black-light;
+    color: desaturate($color-green, 10%);
   }
 }
 
@@ -69,7 +69,7 @@ button#{$a} {
   &:hover,
   &:active {
     background-color: lighten($color-orange-200, 5);
-    color: $color-black-light;
+    color: $color-orange-400;
   }
 }
 
@@ -78,8 +78,8 @@ button#{$a} {
   &,
   &:hover,
   &:active {
-    background-color: lighten($color-accent, 15);
-    color: $color-black-light;
+    background-color: lighten($color-accent, 20);
+    color: #985d4b;
   }
 }
 
@@ -88,7 +88,7 @@ button#{$a} {
   &:hover,
   &:active {
     background-color: lighten(#ABE5C6, 15);
-    color: $color-black-light;
+    color: darken(desaturate(#ABE5C6, 10%), 25%);
   }
 }
 
@@ -96,8 +96,8 @@ button#{$a} {
   &,
   &:hover,
   &:active {
-    background-color: lighten(#9FC5E8, 5);;
-    color: $color-black-light;
+    background-color: lighten(#9FC5E8, 15);
+    color: darken(desaturate(#9FC5E8, 10%), 15%);
   }
 }
 
