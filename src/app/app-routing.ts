@@ -10,7 +10,7 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/gene/gene.module').then((m) => m.GeneModule),
   },
   {
-    path: 'about',
+    path: 'landing',
     loadChildren: () => import('./pages/about/about.module').then((m) => m.AboutModule),
   },
   {
@@ -18,7 +18,7 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/news/news.module').then((m) => m.NewsModule),
   },
   {
-    path: 'favourites',
+    path: 'favorites',
     loadChildren: () => import('./pages/favourites/favourites.module').then((m) => m.FavouritesModule),
   },
   {
@@ -26,7 +26,7 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/settings/settings.module').then((m) => m.SettingsModule),
   },
   {
-    path: 'help',
+    path: 'about',
     loadChildren: () => import('./pages/help/help.module').then((m) => m.HelpModule),
     data: {
       breadcrumb: 'header_menu_help',

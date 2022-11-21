@@ -10,12 +10,12 @@
         </p>
         <ul class="footer__links">
           <li>
-            <a routerLink="/about"
+            <a routerLink="/landing"
             >
               {{ 'header_menu_about' | translate }}</a>
           </li>
           <li>
-            <a routerLink="/help"
+            <a routerLink="/about"
             >
               {{ 'header_menu_help' | translate }}</a>
           </li>
@@ -43,7 +43,7 @@
               {{ 'diet_page_title' | translate }}</a>
           </li>
           <li>
-            <a [routerLink]="'/favourites'"
+            <a [routerLink]="'/favorites'"
                routerLinkActive="current"
             >
               {{ 'header_menu_favourites' | translate }}
@@ -137,7 +137,7 @@
             {{ "build" | translate }} {{ buildNumber }}
           </li>
           <li>
-            <a routerLink="/help/articles/cookies-policy"
+            <a routerLink="/about/articles/cookies-policy"
                target="_blank"
             >{{ "footer_cookie_link" | translate }}</a>
           </li>
