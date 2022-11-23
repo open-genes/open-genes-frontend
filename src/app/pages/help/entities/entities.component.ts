@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
-import { takeUntil } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -36,29 +36,28 @@ export class EntitiesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     switch (this.router.url) {
-      case '/help/entities/age-related-processes':
+      case '/about/entities/age-related-processes':
         this.source$ = this.apiService.getAgeRelatedProcesses();
         this.title = 'entities_age_related_processes';
         break;
-      case '/help/entities/aging-mechanisms':
+      case '/about/entities/aging-mechanisms':
         this.source$ = this.apiService.getAgingMechanisms();
         this.title = 'entities_aging_mechanisms';
         break;
-      case '/help/entities/selection-criteria':
+      case '/about/entities/selection-criteria':
         this.source$ = this.apiService.getSelectionCriteria();
         this.title = 'entities_selection_criteria';
         break;
-      // case '/help/diseases':
-      //   this.source$ = this.apiService.getDiseases();
-      //   this.title = 'entities_diseases';
-      //   // TODO: diseases have a different structure than other entities
-      //   break;
-      // case '/help/disease-categories':
-      //   this.source$ = this.apiService.getDiseaseCategories();
-      //   this.title = 'entities_disease_categories';
-      //   break;
+      case '/about/entities/diseases':
+        this.source$ = this.apiService.getDiseases();
+        this.title = 'entities_diseases';
+        break;
+      case '/about/entities/disease-categories':
+        this.source$ = this.apiService.getDiseaseCategories();
+        this.title = 'entities_disease_categories';
+        break;
       default:
-        this.router.navigate(['**']);
+        void this.router.navigate(['**']);
         break;
     }
 
@@ -66,6 +65,12 @@ export class EntitiesComponent implements OnInit, OnDestroy {
       this.source$.pipe(takeUntil(this.unsubscribe$))
       .subscribe((items) => {
         this.data = Object.values(items);
+        if ('icdName' in this.data[0]) {
+          this.data.map((d: any) => d.name = d.name ?? d.icdName);
+        }
+        if ('icdCategoryName' in this.data[0]) {
+          this.data.map((d: any) => d.name = d.icdCategoryName);
+        }
         this.list = this.data.slice(0, this.itemsPerPage);
         this.cdRef.markForCheck();
       });

@@ -33,7 +33,7 @@
       <ng-container *ngIf="list">
         <section class="col-12 variant">
           <h3>{{ title | translate }}</h3>
-          <ol class="list" start="{{ currentPage !== 1 ? (currentPage * itemsPerPage) + 1 : 1 }}">
+          <ol class="list" start="{{ currentPage !== 1 ? ((currentPage * itemsPerPage) - itemsPerPage) + 1 : 1 }}">
             <li *ngFor="let item of list">{{ item.name }}</li>
           </ol>
         </section>
