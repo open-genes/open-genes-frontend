@@ -23,7 +23,7 @@ export abstract class FilterService {
     private router: Router,
     public apiService: ApiService,
   ) {
-    this.filterChanges$.next(this.getFilters());
+    this.updateList(this.getFilters());
   }
 
   abstract getFilters(): Record<string, any>;
@@ -72,7 +72,7 @@ export abstract class FilterService {
     } else {
       return;
     }
-    this.filterChanges$.next(this.getFilters());
+    this.updateList(this.getFilters());
     this.areMoreThan2FiltersApplied();
   }
 
@@ -84,7 +84,7 @@ export abstract class FilterService {
   }
 
   public updateList(filterParams: Record<string, any>): void {
-    this.filterChanges$.next(filterParams);
+    filterParams && this.filterChanges$.next(JSON.parse(JSON.stringify(filterParams)));
   }
 
   //Observable<ApiResponse<Genes>>
@@ -122,7 +122,7 @@ export abstract class FilterService {
       filters[filterName] = Array.isArray(defaultFilters[filterName]) ?
         [...defaultFilters[filterName]] : defaultFilters[filterName];
     } else {
-      Object.getOwnPropertyNames(filters).forEach(function (prop) {
+      Object.getOwnPropertyNames(filters).forEach(function(prop) {
         filters[prop] = Array.isArray(defaultFilters[prop]) ?
           [...defaultFilters[prop]] : defaultFilters[prop];
       });
