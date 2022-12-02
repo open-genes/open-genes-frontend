@@ -30,7 +30,6 @@
         class="alias alias--small confidence-level"
         [matTooltip]="'confidence_level' | translate"
         (click)="applyFilter('confidenceLevel', item.confidenceLevel.id)"
-        [class.__active]="isAgeRelatedProcessActive(item.confidenceLevel.id.toString())"
         [ngClass]="{
             'alias--red' : item.confidenceLevel.id === 1,
             'alias--orange' : item.confidenceLevel.id === 2,
