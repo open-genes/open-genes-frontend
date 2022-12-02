@@ -28,7 +28,7 @@
         </div>
 
         <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-8">
-          <section  id="articles" class="row no-gutters">
+          <section id="articles" class="row no-gutters">
             <h1 class="col col-12">
               {{ "news_page_articles_title" | translate }}
             </h1>
@@ -36,7 +36,7 @@
             <app-articles-list
               [showSkeleton] = 'showCardSkeleton'
               (showSkeletonChange)='showCardSkeleton = $event'
-              class="__mt-10"
+              class="articles-list"
             ></app-articles-list>
 
             <app-skeleton

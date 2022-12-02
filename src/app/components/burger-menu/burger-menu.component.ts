@@ -9,6 +9,7 @@ import {
 import { FavouritesService } from '../../core/services/favourites.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-burger-menu',
@@ -23,7 +24,8 @@ export class BurgerMenuComponent implements OnInit, OnDestroy {
 
   @Output() favsCounterUpdate: EventEmitter<null> = new EventEmitter();
 
-  constructor(
+  constructor(   
+    public translate: TranslateService,
     private favouritesService: FavouritesService
   ) {}
 

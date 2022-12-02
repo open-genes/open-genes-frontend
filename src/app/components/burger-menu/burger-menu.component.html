@@ -90,7 +90,8 @@
         </a>
       </li>
 
-      <li class="panel__link">
+      <li *ngIf="translate.currentLang === 'ru'"
+          class="panel__link">
         <a [routerLink]="'/news'"
            routerLinkActive="__current"
         >

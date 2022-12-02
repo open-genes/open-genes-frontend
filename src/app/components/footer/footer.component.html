@@ -84,7 +84,7 @@
               </button>
             </div>
           </li>
-          <li>
+          <li *ngIf="translate.currentLang === 'ru'">
             <a [routerLink]="'/news'"
                routerLinkActive="current"
             >
