@@ -1,4 +1,5 @@
-<div class="page text-page contributors-page">
+<div *ngIf="res"
+     class="page text-page contributors-page">
   <div class="page__inner __pb-120">
     <div class="wrapper text-page__header">
       <div class="container-fluid">
@@ -12,14 +13,19 @@
       </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
       <div class="row no-gutters">
-        <article class="col-12 contributors-block">
-          <span *ngFor="let name of members"
-                class="contributor">{{ name }}
-          </span>
-        </article>
+        <app-skeleton
+          *ngIf="showSkeletonChange | async"
+          [view]="'card'"
+          [groups]="3"
+        ></app-skeleton>
+        <div class="col col-12">
+          <article *ngIf="(showSkeletonChange | async) === false"
+                   [innerHTML]="res?.content.rendered | safe: 'html'"></article>
+        </div>
       </div>
     </div>
   </div>
 </div>
+

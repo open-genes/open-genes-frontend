@@ -25,6 +25,11 @@
     <div class="container">
       <div class="row no-gutters">
         <div class="col col-12">
+          <app-skeleton
+            *ngIf="showSkeletonChange | async"
+            [view]="'line'"
+            [groups]="3"
+          ></app-skeleton>
           <article appDynamicContentAnchors
                    id="dynamic-content"
                    [innerHTML]="res?.content.rendered | safe: 'html'"></article>

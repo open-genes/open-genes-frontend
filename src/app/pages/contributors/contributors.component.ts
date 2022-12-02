@@ -1,39 +1,36 @@
-import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, OnInit } from '@angular/core';
+import { takeUntil } from 'rxjs/operators';
+import { WordpressApiService } from '../../core/services/api/wordpress-api.service';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { Article } from '../../core/models/wordpress/article.model';
 
 @Component({
   selector: 'app-contributors-page',
   templateUrl: './contributors.component.html',
   styleUrls: ['./contributors.component.scss'],
 })
-export class ContributorsComponent {
-  constructor(public translate: TranslateService) {
-  }
+export class ContributorsComponent implements OnInit {
+  public res: Article;
+  private unsubscribe$ = new Subject();
+  public showSkeletonChange: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  constructor(
+    public wpApiService: WordpressApiService,
+    private router: Router,
+  ) {}
 
-  public members = [
-    'Mikhail Batin',
-    'Konstantin Rafikov',
-    'Ekaterina Rafikova',
-    'Olga Spiridonova',
-    'Anastasia Egorova',
-    'Nikolay Nemirovich-Danchenko',
-    'Konstantin Dryomov',
-    'Sergey Pushkin',
-    'Dmitry Glubokov',
-    'Yuri Ledovskiy',
-    'Anna Parfenenkova',
-    'Isoboy Komilzoda',
-    'Said Kamolov',
-    'Naim Hakimov',
-    'Polina Tzabai',
-    'Tatiana Skvortzova',
-    'Nadejda Ivanova',
-    'Mariya Stepanova',
-    'Oksana Antonenko',
-    'Anna Kalinina',
-    'Olga Brovkina',
-    'Anastasiya Poznyak',
-    'Julia Belova',
-    'Sergey Zheldokas',
-  ];
+  ngOnInit(): void {
+    this.wpApiService
+      .getArticleBySlug(this.router.url.split('/').pop())
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (res) => {
+          this.res = res[0];
+          this.showSkeletonChange.next(false);
+        },
+        (error) => {
+          this.showSkeletonChange.next(false);
+        }
+      );
+  }
 }
