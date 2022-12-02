@@ -63,19 +63,17 @@ $skeleton-field-height: 40px;
   }
 
   &__cards-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-right: -5px;
-    margin-left: -5px;
+    display: grid;
+    grid-gap: 20px;
 
-    &:not(:last-of-type) {
-      margin-bottom: ($skeleton-line-height / 1.5);
+    @include resolution_smartphone {
+      grid-template-columns: 1fr;
+    }
+    @include resolution_tablet-and-up {
+      grid-template-columns: 1fr 1fr 1fr;
     }
 
     .skeleton__card {
-      padding: 5px;
-
       .card__inner {
         width: 100%;
         padding-bottom: 60%;
@@ -88,21 +86,10 @@ $skeleton-field-height: 40px;
           @include skeleton-animation;
         }
       }
+    }
 
-      @include resolution_tablet-and-up {
-        flex-wrap: nowrap;
-        flex: 1 1;
-      }
-
-      @include resolution_tablet {
-        flex-wrap: nowrap;
-        flex: 0 0 50%
-      }
-
-      @include resolution_smartphone {
-        flex-wrap: wrap;
-        flex: 0 0 100%;
-      }
+    & + & {
+      margin-top: 20px;
     }
   }
 
@@ -135,7 +122,7 @@ $skeleton-field-height: 40px;
     }
 
     & + & {
-      margin-top: 10px;
+      margin-top: 20px;
     }
   }
 }
