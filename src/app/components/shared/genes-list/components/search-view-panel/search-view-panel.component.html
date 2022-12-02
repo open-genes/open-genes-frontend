@@ -7,7 +7,7 @@
 
 <button
   *ngIf="!isMobile"
-  class="toggler __ml-10"
+  class="toggler"
   (click)="toggleGenesView()"
   [ngClass]="isTableView ? 'toggler--def' : 'toggler--alt'"
   matTooltip="{{ 'gene_list_view' | translate }}">

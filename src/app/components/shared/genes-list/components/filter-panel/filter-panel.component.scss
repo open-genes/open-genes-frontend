@@ -5,7 +5,8 @@
   display: inline-block;
 
   a,
-  button {
+  button,
+  .spacer {
     margin: 0 5px 5px 0;
   }
 
@@ -13,9 +14,14 @@
     display: contents;
   }
 
-
   button.modal-button {
     margin-right: 10px;
+  }
+
+  .spacer {
+    display: inline-block;
+    width: 5px;
+    height: 26px;
   }
 
   // - Sort header fix

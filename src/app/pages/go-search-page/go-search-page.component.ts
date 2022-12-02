@@ -45,6 +45,7 @@ export class GoSearchPageComponent extends WindowWidth implements OnInit, OnDest
     this.detectWindowWidth(() => {
       this.cdRef.markForCheck();
     });
+    this.searchGenesByGoTerm('response to heat');
   }
 
   /**

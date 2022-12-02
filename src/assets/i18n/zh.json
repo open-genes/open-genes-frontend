@@ -267,7 +267,7 @@
   "search_by_research_data_hint_go": "试试看",
   "search_field_by_comma": "HGNC 逗号分隔基因",
   "search_field_start_typing": "HGNC, name or Ensembl",
-  "search_field_tap_search": "通过注释，例如：\"细胞因子\"",
+  "search_field_tap_search": "Try \"response to heat\"",
   "search_for_genes": "按基因名称搜索",
   "search_for_genes_by_list": "按基因列表搜索",
   "search_for_genes_by_list_desc": "按基因列表搜索",
