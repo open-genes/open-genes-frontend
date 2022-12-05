@@ -335,7 +335,9 @@
 
                   <section *ngIf="gene.expression.length > 0"
                            id="expression">
-                    <app-expression [gene]="gene"></app-expression>
+                    <app-expression [gene]="gene"
+                                    [max]="expressionMaxValue"
+                    ></app-expression>
                   </section>
 
                   <section class="wrapper" id="human-protein-atlas"
