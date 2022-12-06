@@ -2,8 +2,9 @@
 <router-outlet></router-outlet>
 <app-footer
   *ngIf="isFooterVisible"
-  [buildNumber]="app.build"
-></app-footer>
+  [buildNumber]="app.build">
+  <div [innerHTML]="footerContent"></div>
+</app-footer>
 
 <ng-container *ngIf="showCookieBanner">
   <app-banner>

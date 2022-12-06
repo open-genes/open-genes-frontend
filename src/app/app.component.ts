@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { IpRegistryService } from './core/services/api/ipregistry.service';
 import { Settings, SettingsEnum } from './core/models/settings.model';
 import { SettingsService } from './core/services/settings.service';
+import { WordpressApiService } from './core/services/api/wordpress-api.service';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
   public region: string;
   public isFooterVisible = true;
   public showCookieBanner = false;
+  public footerContent: any;
 
   private retrievedSettings: Settings;
   private settingsKey = SettingsEnum;
@@ -33,7 +35,8 @@ export class AppComponent implements OnInit {
     private readonly ipRegistryService: IpRegistryService,
     private settingsService: SettingsService,
     private translate: TranslateService,
-    private router: Router
+    private router: Router,
+    private wpApiService: WordpressApiService,
   ) {
     // TODO: OG-953
     // Set app language
@@ -55,6 +58,7 @@ export class AppComponent implements OnInit {
     this.handleRouterState();
     this.setRegion();
     this.setCookieBannerState();
+    setTimeout(() => this.getFooterContent(), 0);
   }
 
   ngOnDestroy(): void {
@@ -100,6 +104,19 @@ export class AppComponent implements OnInit {
   private setCookieBannerState(): void {
     this.showCookieBanner =
       this.retrievedSettings.showCookieBanner === undefined || this.retrievedSettings.showCookieBanner === true;
+  }
+
+  private getFooterContent(): void {
+    this.wpApiService
+      .getArticleBySlug('footer')
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
+        (res) => {
+          if (res) {
+            this.footerContent = res[0].content?.rendered;
+          }
+        }
+      );
   }
 
   public acceptCookies(): void {
