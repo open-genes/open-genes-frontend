@@ -175,7 +175,6 @@
     <mat-form-field appearance="fill">
       <mat-label>{{ "filters_modal_placeholder_origin" | translate }}</mat-label>
       <mat-select formControlName="originSelect"
-                  multiple="true"
                   [disabled]="phylum?.length === 0"
                   [(ngModel)]="predefinedOrigin"
                   [compareWith]="compareSelectValues"
@@ -192,7 +191,6 @@
     <mat-form-field appearance="fill">
       <mat-label>{{ "filters_modal_placeholder_family_origin" | translate }}</mat-label>
       <mat-select formControlName="familyOriginSelect"
-                  multiple="true"
                   [disabled]="phylum?.length === 0"
                   [(ngModel)]="predefinedFamilyOrigin"
                   [compareWith]="compareSelectValues"
@@ -209,14 +207,13 @@
     <mat-form-field appearance="fill">
       <mat-label>{{ "filters_modal_placeholder_conservative" | translate }}</mat-label>
       <mat-select formControlName="conservativeInSelect"
-                  multiple="true"
                   [disabled]="phylum?.length === 0"
                   [(ngModel)]="predefinedConservativeIn"
                   [compareWith]="compareSelectValues"
                   (selectionChange)="applyAndUpdate('byConservativeIn', $event)">
         <ng-container *ngIf="phylum?.length !== 0">
           <mat-option *ngFor="let i of phylum"
-                      [value]="i.name">{{ i.name }}</mat-option>
+                      [value]="i.id">{{ i.name }}</mat-option>
         </ng-container>
       </mat-select>
     </mat-form-field>
