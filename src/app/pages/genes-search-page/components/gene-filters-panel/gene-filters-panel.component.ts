@@ -114,6 +114,7 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
       conservativeInSelect: new FormControl([[], [null]]),
       experimentsStatsCheckbox: new FormControl(false),
       ageRelatedProcessesSelect: new FormControl([[], [null]]),
+      confidenceLevelSelect: new FormControl([[], [null]]),
     });
   }
 
