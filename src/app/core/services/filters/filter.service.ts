@@ -72,7 +72,7 @@ export abstract class FilterService {
     } else {
       return;
     }
-    this.updateList(this.getFilters());
+    this.updateList(filters);
     this.areMoreThan2FiltersApplied();
   }
 
@@ -118,7 +118,7 @@ export abstract class FilterService {
   public clearFilters(filterName?: string): void {
     const defaultFilters = this.getDefaultFilters();
     const filters = this.getFilters();
-    if (filterName && defaultFilters[filterName]) {
+    if (filterName && (filterName in defaultFilters)) {
       filters[filterName] = Array.isArray(defaultFilters[filterName]) ?
         [...defaultFilters[filterName]] : defaultFilters[filterName];
     } else {
@@ -148,10 +148,9 @@ export abstract class FilterService {
 
   private applyQueryParams(filterParams: Record<string, any>): void {
     const queryParams = {};
-    const filters = this.getFilters();
     for (const key in filterParams) {
-      const filterValue = filters[key];
-      if (filterValue && filterValue.length > 0) {
+      const filterValue = filterParams[key];
+      if (filterValue && ((typeof filterValue === 'number') || filterValue.length > 0)) {
         if (Array.isArray(filterValue)) {
           if (Array(filterValue).length) {
             queryParams[key] = Array(filterValue).join();

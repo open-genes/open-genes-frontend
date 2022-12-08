@@ -51,13 +51,6 @@ export type StudiesSortPurple =
 
 type StudiesSortGeneral = 'criteriaQuantity' | 'familyPhylum';
 
-export type StudiesSortBlue = StudiesSortGeneral;
-export type StudiesSortGreen = StudiesSortGeneral;
-export type StudiesSortYellow = StudiesSortGeneral;
-export type StudiesSortOrange = StudiesSortGeneral;
-export type StudiesSortPink = StudiesSortGeneral;
-export type StudiesSortGray = StudiesSortGeneral;
-
 export interface ApiResearchFilter {
   sortBy: StudiesSortPurple | StudiesSortGeneral | '';
   sortOrder: 'ASC' | 'DESC' | '';

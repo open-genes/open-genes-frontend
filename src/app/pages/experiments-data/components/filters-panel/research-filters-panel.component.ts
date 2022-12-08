@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -16,12 +8,6 @@ import { ApiResearchSearchParameters } from '../../../../core/models/filters/fil
 import { FilterPanelLogic } from '../../../../core/utils/filter-panel-logic';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
 import { StudiesFilterService } from '../../../../core/services/filters/studies-filter.service';
-
-type formControls = 'bySpecies';
-
-enum formControlToFilter {
-  'model-organisms' = 'bySpecies',
-}
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -69,9 +55,7 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
       });
 
     // Model organism
-    this.modelOrganismsModel = this.populateSelect(
-      'model-organisms'
-    );
+    this.modelOrganismsModel = this.populateSelect('model-organisms');
     this.modelOrganismsModel
       .pipe(takeUntil(this.subscription$))
       .subscribe((data: any[]) => {
@@ -95,6 +79,7 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
       .subscribe((data: any) => {
         if (data) {
           this.predefinedModelOrganisms = data.bySpecies;
+          this.predefinedSelectionCriteria = data.bySelectionCriteria;
         }
         this.cdRef.markForCheck();
         this.cdRef.detectChanges();
@@ -121,13 +106,8 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
   /**
    * Form reset
    */
-  public resetForm(formControlName: formControls = null): void {
-    if (formControlName) {
-      this.filterService.clearFilters(formControlToFilter[formControlName]);
-      this.filtersForm.controls[formControlName].reset();
-    } else {
-      this.filtersForm.reset();
-      this.filterService.clearFilters();
-    }
+  public resetForm(): void {
+    this.filtersForm.reset();
+    this.filterService.clearFilters();
   }
 }
