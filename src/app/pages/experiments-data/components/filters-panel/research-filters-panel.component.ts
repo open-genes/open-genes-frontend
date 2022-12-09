@@ -9,6 +9,11 @@ import { FilterPanelLogic } from '../../../../core/utils/filter-panel-logic';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
 import { StudiesFilterService } from '../../../../core/services/filters/studies-filter.service';
 
+enum formControlToFilter {
+  'selectionCriteriaSelect'= 'bySelectionCriteria',
+  'modelOrganismSelect' = 'bySpecies'
+}
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-research-filters-panel',
