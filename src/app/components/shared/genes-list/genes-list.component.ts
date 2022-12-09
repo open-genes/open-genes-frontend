@@ -142,7 +142,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
           for (const key in params) {
             if (
               params[key] !==
-              this.filterService.filters[key].toString()
+              this.filterService.filters[key]?.toString()
             ) {
               this.filterService.applyFilter(
                 key,

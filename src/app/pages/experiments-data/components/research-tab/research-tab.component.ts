@@ -75,7 +75,7 @@ export class ResearchTabComponent extends AdditionalInterventionResolver impleme
       .subscribe((params) => {
       if (Object.keys(params).length) {
         for (const key in params) {
-          if (params[key] !== this.filterService.filters[key].toString()) {
+          if (params[key] !== this.filterService.filters[key]?.toString()) {
             if (key === 'byGeneSymbol') {
               this.query = params[key];
               this.showProgressBar = false;

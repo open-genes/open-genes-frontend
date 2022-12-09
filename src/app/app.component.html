@@ -3,7 +3,9 @@
 <app-footer
   *ngIf="isFooterVisible"
   [buildNumber]="app.build">
-  <div [innerHTML]="footerContent"></div>
+  <ng-container *ngIf="$footerContent | async as data">
+    <div [innerHTML]="data[0]?.content?.rendered"></div>
+  </ng-container>
 </app-footer>
 
 <ng-container *ngIf="showCookieBanner">
