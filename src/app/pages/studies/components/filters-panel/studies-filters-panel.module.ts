@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { ResearchDataFiltersPanelComponent } from './research-filters-panel.component';
+import { StudiesDataFiltersPanelComponent } from './studies-filters-panel.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../../modules/vendors/material.module';
 import { UiComponentsModule } from '../../../../components/ui-components/ui-components.module';
@@ -9,7 +9,7 @@ import { PipesModule } from '../../../../modules/pipes/pipes.module';
 import { DirectivesModule } from '../../../../directives/directives.module';
 
 @NgModule({
-  declarations: [ResearchDataFiltersPanelComponent],
+  declarations: [StudiesDataFiltersPanelComponent],
   imports: [
     CommonModule,
     TranslateModule,
@@ -21,6 +21,6 @@ import { DirectivesModule } from '../../../../directives/directives.module';
     FormsModule,
     DirectivesModule,
   ],
-  exports: [ResearchDataFiltersPanelComponent],
+  exports: [StudiesDataFiltersPanelComponent],
 })
-export class ResearchFiltersPanelModule {}
+export class StudiesFiltersPanelModule {}

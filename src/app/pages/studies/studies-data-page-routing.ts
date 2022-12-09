@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { ExperimentsDataPageComponent } from './experiments-data-page.component';
+import { StudiesDataPageComponent } from './studies-data-page.component';
 
 export const RESEARCHES_ROUTES: Routes = [
   {
     path: '',
-    component: ExperimentsDataPageComponent,
+    component: StudiesDataPageComponent,
     data: {
       breadcrumb: 'search_by_research_data',
     },

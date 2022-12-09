@@ -27,10 +27,10 @@ import { PageEvent } from '@angular/material/paginator';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-research-tab',
-  templateUrl: './research-tab.component.html',
-  styleUrls: ['./research-tab.component.scss'],
+  templateUrl: './studies-list.component.html',
+  styleUrls: ['./studies-list.component.scss'],
 })
-export class ResearchTabComponent extends AdditionalInterventionResolver implements OnInit, OnDestroy {
+export class StudiesListComponent extends AdditionalInterventionResolver implements OnInit, OnDestroy {
   @Input() studyType: ResearchArguments;
   @Input() isMobile: BehaviorSubject<boolean>;
   @Output() dataLoaded: EventEmitter<never> = new EventEmitter<never>();

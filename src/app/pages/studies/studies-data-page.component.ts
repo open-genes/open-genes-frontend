@@ -13,10 +13,10 @@ interface Tab {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-experiments-data-page',
-  templateUrl: './experiments-data-page.component.html',
-  styleUrls: ['./experiments-data-page.component.scss'],
+  templateUrl: './studies-data-page.component.html',
+  styleUrls: ['./studies-data-page.component.scss'],
 })
-export class ExperimentsDataPageComponent extends WindowWidth implements OnInit, OnDestroy {
+export class StudiesDataPageComponent extends WindowWidth implements OnInit, OnDestroy {
   public tabs: Tab[] = [
     {
       title: 'gene_page_research_data_lifespan',

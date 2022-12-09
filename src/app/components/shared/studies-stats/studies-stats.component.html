@@ -1,7 +1,7 @@
-<div class="experiments" *ngIf="experiments"
+<div class="studies" *ngIf="studies"
      (click)="openBottomSheet($event, experimentStatsHint)">
   <ng-container
-    *ngFor="let experiment of experiments | keyvalue"
+    *ngFor="let experiment of studies | keyvalue"
     [ngTemplateOutlet]="bar"
     [ngTemplateOutletContext]="{ experiment: experiment.key }"
   ></ng-container>
@@ -9,12 +9,12 @@
 
 <ng-template #bar let-experiment="experiment">
   <div *ngIf="experiment !== 'additionalEvidences'"
-       class="experiment"
+       class="study"
        [ngClass]="experiment | setClassName">
       <span class="experiment__scale"
-            [style.height.%]="(experiments[experiment]?.length * 100) / maxValue"
+            [style.height.%]="(studies[experiment]?.length * 100) / maxValue"
       ></span>
-    <span class="experiment__value">{{experiments[experiment]?.length}}</span>
+    <span class="experiment__value">{{studies[experiment]?.length}}</span>
   </div>
 </ng-template>
 

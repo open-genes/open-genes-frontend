@@ -4,13 +4,13 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CommonBottomSheetComponent } from '../../ui-components/components/modals/common-bottom-sheet/common-bottom-sheet.component';
 
 @Component({
-  selector: 'app-experiments-stats',
-  templateUrl: './experiments-stats.component.html',
-  styleUrls: ['./experiments-stats.component.scss'],
+  selector: 'app-studies-stats',
+  templateUrl: './studies-stats.component.html',
+  styleUrls: ['./studies-stats.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExperimentsStatsComponent implements OnInit {
-  @Input() experiments: Studies;
+export class StudiesStatsComponent implements OnInit {
+  @Input() studies: Studies;
   public maxValue: number;
   public legend = [
     {
@@ -51,8 +51,8 @@ export class ExperimentsStatsComponent implements OnInit {
   }
 
   private findMaxValue(): number {
-    if (this.experiments) {
-      const arr: number[] = Object.values(this.experiments).map((entry) => entry.length);
+    if (this.studies) {
+      const arr: number[] = Object.values(this.studies).map((entry) => entry.length);
       const max = Math.max(...arr);
       return max <= 0 ? 1 : max;
     }

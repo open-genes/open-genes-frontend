@@ -16,11 +16,11 @@ enum formControlToFilter {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-research-filters-panel',
-  templateUrl: './research-filters-panel.component.html',
-  styleUrls: ['./research-filters-panel.component.scss'],
+  selector: 'app-studies-filters-panel',
+  templateUrl: './studies-filters-panel.component.html',
+  styleUrls: ['./studies-filters-panel.component.scss'],
 })
-export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implements OnInit, OnDestroy {
+export class StudiesDataFiltersPanelComponent extends FilterPanelLogic implements OnInit, OnDestroy {
   public filtersForm: FormGroup;
   @Output() filterReady: EventEmitter<string> = new EventEmitter<string>();
 

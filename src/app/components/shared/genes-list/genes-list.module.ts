@@ -25,7 +25,7 @@ import { GenesAnnotationsTableHeaderComponent } from './components/genes-annotat
 import { SearchViewPanelComponent } from './components/search-view-panel/search-view-panel.component';
 import { AgingMechanismsModule } from '../aging-mechanisms/aging-mechanisms.module';
 import { ProteinClassesModule } from '../protein-classes/protein-classes.module';
-import { ExperimentsStatsModule } from '../experiments-stats/experiments-stats.module';
+import { StudiesStatsModule } from '../studies-stats/studies-stats.module';
 import { FilterPanelModule } from './components/filter-panel/filter-panel.module';
 
 @NgModule({
@@ -58,7 +58,7 @@ import { FilterPanelModule } from './components/filter-panel/filter-panel.module
     AgingMechanismsModule,
     ProteinClassesModule,
     FilterPanelModule,
-    ExperimentsStatsModule,
+    StudiesStatsModule,
   ],
   providers: [WindowService],
   exports: [GenesListComponent, GeneCardComponent, GeneTableRowComponent],

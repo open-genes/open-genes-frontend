@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExperimentsStatsComponent } from './experiments-stats.component';
+import { StudiesStatsComponent } from './studies-stats.component';
 import { SetClassNamePipe } from './set-class-name.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [ExperimentsStatsComponent, SetClassNamePipe],
+  declarations: [StudiesStatsComponent, SetClassNamePipe],
   imports: [CommonModule, TranslateModule],
-  exports: [ExperimentsStatsComponent],
+  exports: [StudiesStatsComponent],
 })
-export class ExperimentsStatsModule {}
+export class StudiesStatsModule {}

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExperimentsDataPageComponent } from './experiments-data-page.component';
+import { StudiesDataPageComponent } from './studies-data-page.component';
 import { RouterModule } from '@angular/router';
-import { RESEARCHES_ROUTES } from './experiments-data-page-routing';
+import { RESEARCHES_ROUTES } from './studies-data-page-routing';
 import { GenesListModule } from '../../components/shared/genes-list/genes-list.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '../../modules/pipes/pipes.module';
@@ -14,13 +14,13 @@ import { IconModule } from '../../components/ui-components/components/icon/app-i
 import { MaterialModule } from '../../modules/vendors/material.module';
 import { NgCapitalizePipeModule, NgTrimPipeModule } from 'angular-pipes';
 import { ResearchTablesModule } from '../../components/shared/research-tables/research-tables.module';
-import { ResearchTabComponent } from './components/research-tab/research-tab.component';
-import { ResearchFiltersPanelModule } from './components/filters-panel/research-filters-panel.module';
+import { StudiesListComponent } from './components/studies-list/studies-list.component';
+import { StudiesFiltersPanelModule } from './components/filters-panel/studies-filters-panel.module';
 import { SearchModule } from '../../components/shared/search/search.module';
 import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 
 @NgModule({
-  declarations: [ExperimentsDataPageComponent, ResearchTabComponent],
+  declarations: [StudiesDataPageComponent, StudiesListComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(RESEARCHES_ROUTES),
@@ -36,10 +36,10 @@ import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
     NgCapitalizePipeModule,
     NgTrimPipeModule,
     ResearchTablesModule,
-    ResearchFiltersPanelModule,
+    StudiesFiltersPanelModule,
     SearchModule,
     SidebarModule,
   ],
   exports: [PipesModule],
 })
-export class ExperimentsDataPageModule {}
+export class StudiesDataPageModule {}
