@@ -93,6 +93,7 @@ export class DietComponent implements OnInit, OnDestroy {
           this.cdRef.markForCheck();
         },
         (error) => {
+          console.warn(error);
           this.isPageDataLoading = false;
           this.isNotFound = false;
           this.cdRef.markForCheck();

@@ -18,7 +18,7 @@ import { ApiResponse } from '../../models/api-response.model';
 import { SearchModel } from '../../models/open-genes-api/search.model';
 import { Pagination } from '../../models/settings.model';
 import { Diet } from '../../models/open-genes-api/diet.model';
-import { Research, ResearchArguments, ResearchTypes } from '../../models/open-genes-api/researches.model';
+import { ResearchArguments, ResearchTypes } from '../../models/open-genes-api/researches.model';
 import { ModelOrganism } from '../../models/open-genes-api/model-organism.model';
 
 @Injectable({

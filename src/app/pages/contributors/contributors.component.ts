@@ -29,6 +29,7 @@ export class ContributorsComponent implements OnInit {
           this.showSkeletonChange.next(false);
         },
         (error) => {
+          console.warn(error);
           this.showSkeletonChange.next(false);
         }
       );

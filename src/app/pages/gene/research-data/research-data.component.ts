@@ -18,8 +18,6 @@ export class ResearchDataComponent implements OnInit {
   public isGeneAssociatedWithLongevityEffects: boolean;
   public isAdditionalEvidences: boolean;
 
-  constructor() {}
-
   ngOnInit() {
     this.isIncreaseLifespan =
       this.studies?.increaseLifespan &&

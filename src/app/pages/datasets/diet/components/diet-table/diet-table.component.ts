@@ -45,8 +45,6 @@ export class DietTableComponent {
     'isoform',
   ];
 
-  constructor() {}
-
   public pageEventHandler(event: PageEvent): void {
     this.pagination.page = event.pageIndex + 1;
     this.pagination.pageSize = event.pageSize;

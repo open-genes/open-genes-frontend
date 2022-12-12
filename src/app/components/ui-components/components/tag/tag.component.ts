@@ -9,6 +9,4 @@ export class TagComponent {
   @Input() isMultiline: boolean;
   @Input() isActive: boolean;
   @Input() isDisabled: boolean;
-
-  constructor() {}
 }

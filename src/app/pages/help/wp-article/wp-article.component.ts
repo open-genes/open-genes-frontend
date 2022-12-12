@@ -44,6 +44,7 @@ export class WpArticleComponent implements OnInit, OnDestroy {
           this.cdRef.markForCheck();
         },
         (error) => {
+          console.warn(error);
           this.showSkeletonChange.next(false);
           this.cdRef.markForCheck();
         }

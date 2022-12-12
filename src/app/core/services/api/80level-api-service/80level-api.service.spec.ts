@@ -14,10 +14,10 @@ describe('EightyLevelService', () => {
     const service = TestBed.get(EightyLevelService);
     service
       .getArticles(null)
-      .subscribe(async (response: I80levelResponseAllArticles) => {
+      .subscribe((response: I80levelResponseAllArticles) => {
         const articles = response.articles;
-        expect(articles).toContain('total');
-        expect(articles).toContain('items');
+        void expect(articles).toContain('total');
+        void expect(articles).toContain('items');
       });
   });
 });

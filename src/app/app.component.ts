@@ -8,7 +8,6 @@ import { Subject } from 'rxjs';
 import { IpRegistryService } from './core/services/api/ipregistry.service';
 import { Settings, SettingsEnum } from './core/models/settings.model';
 import { SettingsService } from './core/services/settings.service';
-import { WordpressApiService } from './core/services/api/wordpress-api.service';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +34,6 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private wpApiService: WordpressApiService,
   ) {
     // TODO: OG-953
     // Set app language

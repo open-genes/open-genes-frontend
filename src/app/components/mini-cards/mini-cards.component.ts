@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Genes } from '../../core/models';
 import { Router } from '@angular/router';
 import { SessionStorageService } from '../../core/services/session-storage.service';
@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
   templateUrl: './mini-cards.component.html',
   styleUrls: ['./mini-cards.component.scss'],
 })
-export class MiniCardsComponent {
+export class MiniCardsComponent implements OnInit {
   public subscription$ = new Subject();
   public error: number;
   public lastGenes: Genes[];
