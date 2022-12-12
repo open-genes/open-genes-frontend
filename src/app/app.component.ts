@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
 import { DOCUMENT } from '@angular/common';
-import { NavigationEnd, RouteConfigLoadEnd, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, RouteConfigLoadEnd, Router, RouterEvent } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { IpRegistryService } from './core/services/api/ipregistry.service';
@@ -22,13 +22,11 @@ export class AppComponent implements OnInit {
   public region: string;
   public isFooterVisible = true;
   public showCookieBanner = false;
-  public footerContent: any;
-
   private retrievedSettings: Settings;
   private settingsKey = SettingsEnum;
   private subscription$ = new Subject();
   private currentRoute = '';
-  private readonly lang: string;
+  private lang: string;
 
   constructor(
     @Inject(DOCUMENT) public document: Document,
@@ -36,53 +34,56 @@ export class AppComponent implements OnInit {
     private settingsService: SettingsService,
     private translate: TranslateService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private wpApiService: WordpressApiService,
   ) {
     // TODO: OG-953
     // Set app language
-    // this.translate.addLangs(environment.languages);
-    // if (localStorage.getItem('lang')) {
-    //   this.lang = localStorage.getItem('lang');
-    // } else if (navigator.language.substring(0, 2) === 'en' || navigator.language.substring(0, 2) === 'ru') {
-    //   this.lang = navigator.language.substring(0, 2);
-    // } else {
-    //   this.lang = environment.languages[1];
-    // }
-    this.lang = environment.languages[1];
+    this.translate.addLangs(environment.languages);
+    if (localStorage.getItem('lang')) {
+      this.lang = localStorage.getItem('lang');
+    } else if (navigator.language.substring(0, 2) === 'en' || navigator.language.substring(0, 2) === 'ru') {
+      this.lang = navigator.language.substring(0, 2);
+    } else {
+      this.lang = environment.languages[1];
+    }
     this.translate.use(this.lang);
     this.retrievedSettings = this.settingsService.getSettings();
   }
 
   ngOnInit(): void {
     this.outputVersion();
-    this.handleRouterState();
+
+    this.router.events.pipe(takeUntil(this.subscription$)).subscribe((event: RouterEvent) => {
+      if (event instanceof NavigationEnd || event instanceof RouteConfigLoadEnd) {
+        // Display/hide footer
+        this.currentRoute = event.url;
+        if (this.currentRoute === '/404') {
+          this.isFooterVisible = false;
+        }
+        // Hide progress spinner on router event
+        this.document.body.classList.remove('body--loading');
+      }
+    });
+
+    // Set language from query parameter
+    this.activatedRoute?.queryParams
+      .pipe(takeUntil(this.subscription$))
+      .subscribe((params) => {
+        if (params['language']) {
+          this.lang = params['language'];
+          this.translate.use(this.lang);
+          localStorage.setItem('lang', this.lang);
+        }
+      })
+
     this.setRegion();
     this.setCookieBannerState();
-    setTimeout(() => this.getFooterContent(), 0);
-  }
-
-  ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
   }
 
   private outputVersion(): void {
     console.log(`version: ${this.app.version} \nbuild: ${this.app.build}`);
     // TODO: add output for logger
-  }
-
-  private handleRouterState(): void {
-    this.router.events.pipe(takeUntil(this.subscription$)).subscribe((event: RouterEvent) => {
-      if (event instanceof NavigationEnd || event instanceof RouteConfigLoadEnd) {
-        // Hide progress spinner or progress bar
-        this.currentRoute = event.url;
-        if (this.currentRoute === '/404') {
-          this.isFooterVisible = false;
-        }
-        setTimeout(() => {
-          this.document.body.classList.remove('body--loading');
-        }, 2000);
-      }
-    });
   }
 
   private setRegion(): void {
@@ -104,19 +105,6 @@ export class AppComponent implements OnInit {
   private setCookieBannerState(): void {
     this.showCookieBanner =
       this.retrievedSettings.showCookieBanner === undefined || this.retrievedSettings.showCookieBanner === true;
-  }
-
-  private getFooterContent(): void {
-    this.wpApiService
-      .getArticleBySlug('footer')
-      .pipe(takeUntil(this.subscription$))
-      .subscribe(
-        (res) => {
-          if (res) {
-            this.footerContent = res[0].content?.rendered;
-          }
-        }
-      );
   }
 
   public acceptCookies(): void {
