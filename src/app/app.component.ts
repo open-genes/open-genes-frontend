@@ -4,11 +4,12 @@ import { environment } from '../environments/environment';
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, RouteConfigLoadEnd, Router, RouterEvent } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { IpRegistryService } from './core/services/api/ipregistry.service';
 import { Settings, SettingsEnum } from './core/models/settings.model';
 import { SettingsService } from './core/services/settings.service';
 import { WordpressApiService } from './core/services/api/wordpress-api.service';
+import { Article } from './core/models/wordpress/article.model';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,8 @@ export class AppComponent implements OnInit {
   public region: string;
   public isFooterVisible = true;
   public showCookieBanner = false;
+  public $footerContent: Observable<Article>;
+
   private retrievedSettings: Settings;
   private settingsKey = SettingsEnum;
   private subscription$ = new Subject();
@@ -79,6 +82,7 @@ export class AppComponent implements OnInit {
 
     this.setRegion();
     this.setCookieBannerState();
+    this.$footerContent = this.wpApiService.getArticleBySlug('footer');
   }
 
   private outputVersion(): void {
