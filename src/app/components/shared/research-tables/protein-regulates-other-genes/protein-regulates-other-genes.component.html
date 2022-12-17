@@ -71,7 +71,7 @@
 </ng-template>
 
 <ng-template #links let-item="item">
-  <p *ngIf="item?.comment.length !== 0">
+  <p *ngIf="item?.comment?.length !== 0">
     {{ item?.comment }}
   </p>
 
