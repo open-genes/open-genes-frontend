@@ -4,7 +4,7 @@
   width: 100%;
 
   &:empty {
-    display: none; // фикс для момента во время подгрузки
+    display: none; // fix for the layout while content is loading
   }
 
   .show-more {

@@ -1,6 +1,4 @@
-// Стили скелетон-скрина перенесены в компонент
-
-// Класс-модификатор, который делает неподгрузившийся элемент плейсхолдером
+// A modifier class that gives an element placeholder styling
 .__skeletal {
   font-size: 0;
   color: $color-gray;

@@ -66,7 +66,7 @@ $sizes: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 80, 100, 120);
 }
 
 
-// фикс для таблиц и другуго контента, который расширяет страницу
+// fix for tables and other content that can make a page wider
 .__w-content {
   @include resolution_widescreen {
     $a: ($widescreen / 12) * 3;

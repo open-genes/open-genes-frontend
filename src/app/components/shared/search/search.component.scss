@@ -82,7 +82,7 @@ $input-border-radius: 5px;
     box-shadow: $shadow-for-panel;
 
     &::-ms-clear {
-      display: none !important; // скрываем иконку очистки поля на IE/Edge
+      display: none !important; // hide default "clear" button on IE/Edge
     }
 
     $prefixed-selectors: (
