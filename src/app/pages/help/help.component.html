@@ -41,8 +41,8 @@
             </h2>
             <app-wp-articles
               class="faq__section"
-              [showSkeleton] = 'showCardSkeleton'
-              (showSkeletonChange)='showCardSkeleton = $event'
+              [showSkeleton]="showCardSkeleton"
+              (showSkeletonChange)="showCardSkeleton = $event"
             ></app-wp-articles>
 
             <app-skeleton
@@ -68,25 +68,23 @@
               <article *ngIf="translate.currentLang === 'ru'">
                 <p>
                   Open Genes — это некоммерческая курируемая биологическая база данных генов человека, ассоциированных со
-                  старением и
-                  продолжительностью жизни.
-                  Она представляет собой веб-приложение, хранящее данные о генах в СУБД.
+                  старением и продолжительностью жизни.
                 </p>
                 <p>
-                  Наша база данных призвана помочь исследователям в&nbsp;изучении генетики старения и&nbsp;связанных с&nbsp;ним
-                  процессов. Мы&nbsp;вручную собираем информацию об&nbsp;эволюции гена. его функциях и&nbsp;методах
-                  определения ассоциации гена со&nbsp;старением и&nbsp;продолжительностью жизни.
+                  <a [routerLink]="'articles/what-is-open-genes'">
+                    см. "What is Open Genes and what is its main feature"
+                  </a>
                 </p>
               </article>
               <article *ngIf="translate.currentLang !== 'ru'">
                 <p>
                   Open Genes is a non-profit curated biological database of human genes associated with aging and
-                  longevity. It is a web application that stores data about genes in a DB.
+                  longevity.
                 </p>
                 <p>
-                  Our database is designed to help researchers study the genetics of aging and related processes. We
-                  manually collect information about the evolution of a gene, its functions and methods for determining
-                  the association of a gene with aging and longevity.
+                  <a [routerLink]="'articles/what-is-open-genes'">
+                    see "What is Open Genes and what is its main feature"
+                  </a>
                 </p>
               </article>
             </mat-expansion-panel>
@@ -98,37 +96,75 @@
                     Что такое признаки старения?
                   </ng-container>
                   <ng-container *ngIf="translate.currentLang !== 'ru'">
-                    What are the mechanisms of aging?
+                    What is the Hallmarks of Aging?
                   </ng-container>
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <article *ngIf="translate.currentLang === 'ru'">
                 <p>
-                  Признаки старения — отличительные черты или признаки старения. Это биологические процессы, системы и
+                  Признаки старения (Hallmarks of Aging) — отличительные черты или признаки старения. Это биологические процессы, системы и
                   элементы биологических систем, нарушения в которых связаны с глобальными изменениями, происходящими при
                   старении.
                 </p>
                 <p>
-                  Признаки старения (Hallmarks of aging) для каждого гена предсказаны на основании GO Terms, связанных с геном.
+                  Признаки старения для каждого гена предсказаны на основании GO Terms, связанных с геном.
                 </p>
+
                 <p>
-                  <a [routerLink]="'age-related-processes'">
-                    см. «Признаки старения»
+                  Мы рассмотрели 20 признаков старения, предложенных Лемуаном [1], добавили «отключение макроаутофагии» из последнего обзора Лопеса-Отина и др. [2],
+                  а также дополнили этот список еще двумя дополнительными признаками старения, предложенными в недавней публикации (Pun F. W. и др.) [3].
+                </p>
+
+                <ul class="list list--bulletted">
+                  <li>
+                    Lemoine M. The Evolution of the Hallmarks of Aging. Frontiers Genetics 12:693071 (2021).
+                  </li>
+                  <li>
+                    López-Otín, C., Blasco M. A., Partridge L., Serrano M., & Kroemer G. Hallmarks of aging: An expanding universe.
+                    Cell 186 (2), 243–278 (2023).
+                  </li>
+                  <li>
+                    Pun F. W., Geoffrey Ho Duen Leung, Hoi Wing Leung … Zhavoronkov A. Hallmarks of aging-based dual-purpose disease
+                    and age-associated targets predicted using PandaOmics AI-powered discovery engine. Aging (Albany NY) 14(6), 2475–2506 (2022).
+                  </li>
+                </ul>
+
+                <p>
+                  <a [routerLink]="'entities/aging-mechanisms'">
+                    см. «{{ 'entities_aging_mechanisms' | translate }}»
                   </a>
                 </p>
               </article>
               <article *ngIf="translate.currentLang !== 'ru'">
                 <p>
-                  Aging mechanisms are the hallmarks or signs of aging. These are biological processes, systems and
-                  elements of biological systems, violations in which are associated with global changes occurring during
-                  aging.
+                  Hallmarks of Aging are biological processes, systems, and elements of biological systems that, when impaired, cause global
+                  changes occurring with aging.
                 </p>
                 <p>
-                  The mechanisms of aging for each gene are predicted based on the GO Terms associated with the gene.
+                  The hallmarks for each gene are predicted based on the GO Terms associated with the gene.
                 </p>
+
                 <p>
-                  <a [routerLink]="'age-related-processes'">
-                    see "Aging mechanisms"
+                  We considered 20 aging hallmarks offered by Lemoine [1], added “disabled macroautophagy” from the last review by López-Otín et al.[2],
+                  and completed this list with another two additional hallmarks of aging suggested in the recent publication of Pun F. W. et al.[3].
+                </p>
+
+                <ul class="list list--bulletted">
+                  <li>
+                    Lemoine M. The Evolution of the Hallmarks of Aging. Frontiers Genetics 12:693071 (2021).
+                  </li>
+                  <li>
+                    López-Otín, C., Blasco M. A., Partridge L., Serrano M., & Kroemer G. Hallmarks of aging: An expanding universe.
+                    Cell 186 (2), 243–278 (2023).
+                  </li>
+                  <li>
+                    Pun F. W., Geoffrey Ho Duen Leung, Hoi Wing Leung … Zhavoronkov A. Hallmarks of aging-based dual-purpose disease
+                    and age-associated targets predicted using PandaOmics AI-powered discovery engine. Aging (Albany NY) 14(6), 2475–2506 (2022).
+                  </li>
+                </ul>
+                <p>
+                  <a [routerLink]="'entities/aging-mechanisms'">
+                    see "{{ 'entities_aging_mechanisms' | translate }}"
                   </a>
                 </p>
               </article>
@@ -141,33 +177,32 @@
                     По каким критериям мы отбираем гены?
                   </ng-container>
                   <ng-container *ngIf="translate.currentLang !== 'ru'">
-                    By what criteria do we select genes?
+                    What criteria do we use to select genes?
                   </ng-container>
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <article *ngIf="translate.currentLang === 'ru'">
                 <p>
                   Мы добавляем ген в базу данных, если проводились исследования, которые показали влияние этого гена на
-                  продолжительность жизни у человека или модельных организмов. Мы выделили типы исследований на эту
-                  тему, прямо или косвенно подтверждающих ассоциацию гена с продолжительностью жизни и старением. Если в
+                  продолжительность жизни у человека или модельных организмов. Мы выделили типы исследований, прямо
+                  или косвенно подтверждающих ассоциацию гена с продолжительностью жизни и старением. Если в
                   отношении гена проводилось хотя бы одно из этих исследований, он окажется в нашей базе данных.
                 </p>
                 <p>
-                  <a [routerLink]="['selection-criteria']">
-                    см. «Критерии отбора генов»
+                  <a [routerLink]="'entities/selection-criteria'">
+                    см. «{{ 'entities_selection_criteria' | translate }}»
                   </a>
                 </p>
               </article>
               <article *ngIf="translate.currentLang !== 'ru'">
                 <p>
-                  We add a gene to the database if studies have shown a gene's effect on lifespan in humans or model
-                  organisms. We have identified types of studies on this topic, directly or indirectly confirming the
-                  association of the gene with life expectancy and aging. If at least one of these studies was done on a
-                  gene, it would appear in our database.
+                  We add a gene to the database if studies have shown an effect of the gene on lifespan in humans or model organisms.
+                  We have identified types of studies directly or indirectly confirming the association of the gene with
+                  life expectancy and aging. If at least one of these studies has been conducted, a gene would be included in our database.
                 </p>
                 <p>
-                  <a [routerLink]="['selection-criteria']">
-                    see "Gene selection criteria"
+                  <a [routerLink]="'entities/selection-criteria'">
+                    see "{{ 'entities_selection_criteria' | translate }}"
                   </a>
                 </p>
               </article>
@@ -180,7 +215,7 @@
                     Каковы возможные области применения Open Genes?
                   </ng-container>
                   <ng-container *ngIf="translate.currentLang !== 'ru'">
-                    What is the possible usage of Open Genes?
+                    What are some potential uses of Open Genes?
                   </ng-container>
                 </mat-panel-title>
               </mat-expansion-panel-header>
