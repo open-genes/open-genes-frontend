@@ -419,7 +419,7 @@
   "research_data_n_of_control_and_experiment": "N of control and experiment groups",
   "research_data_ethnicity": "Ethnicity",
   "research_data_associtated_allele": "Associated allele",
-  "research_data_non_associtated_allele": "Non-associtated allele",
+  "research_data_non_associtated_allele": "Non-associated allele",
   "research_data_associated_and_non_associated": "Associated and non-associated alleles",
   "research_data_associated_and_non_associated_percent": "Associated and non-associated alleles frequency in control and experiment groups, %",
   "research_data_research_type": "Research type",
