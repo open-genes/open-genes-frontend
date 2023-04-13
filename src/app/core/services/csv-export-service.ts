@@ -180,6 +180,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
       'amino acid substitution',
       'polymorphism — other',
       'effect',
+      'data type',
       'association type',
       'significance',
       'p value',
@@ -195,8 +196,8 @@ export class CsvExportService extends AdditionalInterventionResolver {
       'ethnicity',
       'associated allele',
       'non-associated allele',
-      'allelic frequency in controls',
-      'allelic frequency in experiment',
+      'associated allele in controls',
+      'associated allele in experiment',
       'study type',
       'sex',
       'doi',
@@ -212,6 +213,26 @@ export class CsvExportService extends AdditionalInterventionResolver {
       {}
     );
     if (response) {
+      const fixDataType = (dataType: string) => {
+        switch (dataType) {
+          case '1en':
+            return 'genomic';
+          case '2en':
+            return 'transcriptomic';
+          case '3en':
+            return 'proteomic';
+          default:
+            return dataType;
+        }
+      }
+      const fixSignificance = (significance: string | number) => {
+        if (significance === '0' || significance === '1') {
+          const s = Number(significance);
+          return s ? 'Significant' : 'Non-significant';
+        }
+
+        return significance;
+      }
       const resJson = await response.json();
       const researches = resJson.items;
       if (researches) {
@@ -228,8 +249,11 @@ export class CsvExportService extends AdditionalInterventionResolver {
             const aminoAcidChange = this.checkBlankValues(form?.aminoAcidChange);
             const polymorphismOther  = this.checkBlankValues(form?.polymorphismOther);
             const longevityEffect = this.checkBlankValues(form?.longevityEffect);
-            const dataType = this.checkBlankValues(form?.dataType);
-            const significance = this.checkBlankValues(form?.significance);
+            const d = fixDataType(form?.dataType);
+            const dataType = this.checkBlankValues(d);
+            const position = this.checkBlankValues(form?.position);
+            const s = fixSignificance(form?.significance);
+            const significance = this.checkBlankValues(s);
             const pValue = this.checkBlankValues(form?.pValue);
             const changeType = this.checkBlankValues(form?.changeType);
             const nOfControls  = this.checkBlankValues(form?.nOfControls);
@@ -255,8 +279,9 @@ export class CsvExportService extends AdditionalInterventionResolver {
               nucleotideChange,
               aminoAcidChange,
               polymorphismOther,
-              dataType,
               longevityEffect,
+              dataType,
+              position,
               significance,
               pValue,
               changeType,
