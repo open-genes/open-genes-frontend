@@ -66,6 +66,10 @@ export const APP_ROUTES: Routes = [
     },
   },
   {
+    path: 'participate',
+    loadChildren: () => import('./pages/participate/participate.module').then((m) => m.ParticipateModule)
+  },
+  {
     path: '404',
     loadChildren: () => import('./pages/404/404.module').then((m) => m.Error404Module),
   },
