@@ -174,16 +174,34 @@ export class CsvExportService extends AdditionalInterventionResolver {
     let resultingString = '';
     const csvHeader = this.makeRow([
       'HGNC',
-      'comment',
+      'polymorphism type',
+      'polymorphism id',
+      'nucleotide substitution',
+      'amino acid substitution',
+      'polymorphism — other',
+      'effect',
+      'association type',
+      'significance',
+      'p value',
+      'change type',
+      'control cohort size',
+      'experiment cohort size',
+      'control lifespan - min',
+      'control lifespan - mean',
+      'control lifespan - max',
+      'experiment lifespan - min',
+      'experiment lifespan - mean',
+      'experiment lifespan - max',
+      'ethnicity',
+      'associated allele',
+      'non-associated allele',
+      'allelic frequency in controls',
+      'allelic frequency in experiment',
+      'study type',
+      'sex',
       'doi',
       'pmid',
-      'dataType',
-      'changeType',
-      'modelOrganism',
-      'allelicVariant',
-      'allelicPolymorphism',
-      'longevityEffect',
-      'sex',
+      'comment',
     ]);
     resultingString = resultingString + csvHeader;
 
@@ -204,26 +222,62 @@ export class CsvExportService extends AdditionalInterventionResolver {
             const doi = this.checkBlankValues(form?.doi);
             const pmid = this.checkBlankValues(form?.pmid);
             const geneSymbol = this.checkBlankValues(form?.geneSymbol);
-            const dataType = this.checkBlankValues(form?.dataType);
-            const changeType = this.checkBlankValues(form?.changeType);
-            const modelOrganism = this.checkBlankValues(form?.modelOrganism);
-            const allelicVariant = this.checkBlankValues(form?.allelicVariant);
-            const allelicPolymorphism = this.checkBlankValues(form?.allelicPolymorphism);
+            const polymorphismType = this.checkBlankValues(form?.polymorphismType);
+            const polymorphismId = this.checkBlankValues(form?.polymorphismId);
+            const nucleotideChange = this.checkBlankValues(form?.nucleotideChange);
+            const aminoAcidChange = this.checkBlankValues(form?.aminoAcidChange);
+            const polymorphismOther  = this.checkBlankValues(form?.polymorphismOther);
             const longevityEffect = this.checkBlankValues(form?.longevityEffect);
+            const dataType = this.checkBlankValues(form?.dataType);
+            const significance = this.checkBlankValues(form?.significance);
+            const pValue = this.checkBlankValues(form?.pValue);
+            const changeType = this.checkBlankValues(form?.changeType);
+            const nOfControls  = this.checkBlankValues(form?.nOfControls);
+            const nOfExperiment = this.checkBlankValues(form?.nOfExperiment);
+            const minAgeOfControls = this.checkBlankValues(form?.minAgeOfControls);
+            const meanAgeOfControls = this.checkBlankValues(form?.meanAgeOfControls);
+            const maxAgeOfControls = this.checkBlankValues(form?.maxAgeOfControls);
+            const minAgeOfExperiment = this.checkBlankValues(form?.minAgeOfExperiment);
+            const meanAgeOfExperiment = this.checkBlankValues(form?.meanAgeOfExperiment);
+            const maxAgeOfExperiment = this.checkBlankValues(form?.maxAgeOfExperiment);
+            const ethnicity = this.checkBlankValues(form?.ethnicity);
+            const associatedAllele = this.checkBlankValues(form?.associatedAllele);
+            const nonAssociatedAllele = this.checkBlankValues(form?.nonAssociatedAllele);
+            const frequencyControls = this.checkBlankValues(form?.frequencyControls, '', '%');
+            const frequencyExperiment = this.checkBlankValues(form?.frequencyExperiment, '', '%');
+            const studyType = this.checkBlankValues(form?.studyType);
             const sex = this.checkBlankValues(form?.sex);
 
             const row = this.makeRow([
               geneSymbol,
-              comment,
+              polymorphismType,
+              polymorphismId,
+              nucleotideChange,
+              aminoAcidChange,
+              polymorphismOther,
+              dataType,
+              longevityEffect,
+              significance,
+              pValue,
+              changeType,
+              nOfControls,
+              nOfExperiment,
+              minAgeOfControls,
+              meanAgeOfControls,
+              maxAgeOfControls,
+              minAgeOfExperiment,
+              meanAgeOfExperiment,
+              maxAgeOfExperiment,
+              ethnicity,
+              associatedAllele,
+              nonAssociatedAllele,
+              frequencyControls,
+              frequencyExperiment,
+              studyType,
+              sex,
               doi,
               pmid,
-              dataType,
-              changeType,
-              modelOrganism,
-              allelicVariant,
-              allelicPolymorphism,
-              longevityEffect,
-              sex,
+              comment,
             ]);
             resultingString = resultingString + row;
           }
@@ -241,9 +295,9 @@ export class CsvExportService extends AdditionalInterventionResolver {
       'comment',
       'doi',
       'pmid',
-      'proteinActivity',
-      'regulatedGene',
-      'regulationType',
+      'protein activity',
+      'regulated gene',
+      'regulation type',
     ]);
     resultingString = resultingString + csvHeader;
 
@@ -843,7 +897,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
           const pink = gene.researches?.geneAssociatedWithLongevityEffects;
           if (pink) {
             pink?.forEach((form) => {
-              // розовая форма — фенотип + аллельный полиморфизм
+              // pink — phenotype + allelic polymorphism
               const doi = this.checkBlankValues(form?.doi);
               const pmid = this.checkBlankValues(form?.pmid);
               const longevityEffect = this.checkBlankValues(form?.longevityEffect);
