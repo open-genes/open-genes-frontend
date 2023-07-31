@@ -148,7 +148,7 @@
   "age_related_processes": "Tags",
   "datasets_page_title": "Additional data",
   "datasets_page_description": "These are datasets with additional data that may be of interest for studying genes associated with aging.\n However, not all genes from these datasets are associated with aging.",
-  "gene": "Ген",
+  "gene": "Gene",
   "gene_candidate": "Candidate gene",
   "gene_intervention_result": "Result",
   "gene_intervention_type": "Method",
