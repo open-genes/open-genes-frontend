@@ -13,7 +13,7 @@
       text-align: center;
     }
 
-    .page__title { // переиспользуем
+    .page__title { // TODO: DRY
       h1 {
         color: #fff;
       }

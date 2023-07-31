@@ -29,7 +29,7 @@ code {
   counter-reset: code-lines;
   counter-set: code-lines;
 
-  ::ng-deep { // Чтобы применить стили к innerHTML
+  ::ng-deep {
     .value {
       color: $color-gray-light;
     }

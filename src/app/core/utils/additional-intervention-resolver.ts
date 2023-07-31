@@ -7,7 +7,7 @@ export abstract class AdditionalInterventionResolver {
     if (typeof research !== undefined) {
       if (research.interventions.controlAndExperiment.length === 0 && research.interventions.experiment.length === 1) {
         isNoAdditionalIntervention = true;
-        // временный костыль
+        // this fix exists until we establish API format for additional interventions
         if (research.interventions.experiment[0]?.gene !== targetGene) {
           isNoAdditionalIntervention = false;
         }

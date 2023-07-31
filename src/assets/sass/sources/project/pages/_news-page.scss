@@ -1,10 +1,10 @@
 .news-page {
   &__news.col {
-    font-size: 18px; // делаем блоки новостей крупнее
+    font-size: 18px;
 
     // TODO: no encapsulated styles redefinition
     app-news-list .news__item {
-      animation: fadeIn .5s linear forwards; // при рендеринге/подгрузке элемент мингнет
+      animation: fadeIn .5s linear forwards; // element should blink when it's being updated
     }
 
     .news__skeleton {

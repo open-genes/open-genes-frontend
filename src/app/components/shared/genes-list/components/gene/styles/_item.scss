@@ -2,7 +2,7 @@
 
 @mixin item {
   .item {
-    animation: fadeIn .5s linear forwards; // при рендеринге/подгрузке элемент мингнет
+    animation: fadeIn .5s linear forwards; // element should blink when it's being updated
 
     .title {
       font-weight: $font-weight-medium;
