@@ -20,6 +20,7 @@
     "storybook": "npm run docs:json && start-storybook -p 6006",
     "build-storybook": "npm run docs:json && build-storybook",
     "deploy-storybook": "storybook-to-ghpages",
+    "versioning": "node versioning.js",
     "version-and-changelog": "node update-version-and-changelog.js",
     "update-changelog": "node generate-changelog.js"
   },

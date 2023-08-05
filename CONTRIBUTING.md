@@ -5,10 +5,16 @@ Remember to set an app version and add changes to a changelog after working on a
 Then run:
 
 ```
+npm run versioning
+``` 
+
+You can also use the following tasks to do the same thing manually:
+
+```
 npm run version-and-changelog 2.0.1
 ``` 
 
-to change the version in package.json and update the changelog
+to write any version to package.json and update the changelog
 
 or 
 
@@ -16,9 +22,13 @@ or
 npm run update-changelog 2.0.1
 ``` 
 
-to only update the changelog
+to only update the changelog.
 
+---
+
+<small>
 Replace examples with your own version. Please specify the version number without any prefix, such as "v".
+</small>
 
 ## Version Numbers
 
