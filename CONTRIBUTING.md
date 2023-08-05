@@ -1,14 +1,24 @@
 # Release cycle
 
 ## Before Making a PR
-After working on a feature branch or fixing a bug don't forget to set a version and add your changes to a changelog.
-This process is automatized, all you need to do is to run:
+Remember to set an app version and add changes to a changelog after working on a feature branch or fixing a bug. This process is automated. All you need to do is set a tag for the first commit preceding the other commits that should be in the release.
+Then run:
 
-- `npm run version-and-changelog 2.0.1` — to change the version in package.json and update the changelog
-- or `npm run update-changelog 2.0.1` — only update the changelog
+```
+npm run version-and-changelog 2.0.1
+``` 
 
-Substitute your version instead of the version given in the examples above.
-Make sure you specify only the version number without "v" or other prefix.
+to change the version in package.json and update the changelog
+
+or 
+
+```
+npm run update-changelog 2.0.1
+``` 
+
+to only update the changelog
+
+Replace examples with your own version. Please specify the version number without any prefix, such as "v".
 
 ## Version Numbers
 
