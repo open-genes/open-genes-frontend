@@ -32,7 +32,7 @@ Replace examples with your own version. Please specify the version number withou
 
 ## Version Numbers
 
-Version numbers follow a pattern known as Semantic Versioning (SemVer), which consists of three components: `major.minor.patch`.
+Version numbers follow a pattern known as Semantic Versioning ([SemVer](https://semver.org/)), which consists of three components: `major.minor.patch`.
 
 - **Major Version**: This number increases when there are significant changes that might introduce backward-incompatible features or major restructuring. New major versions may require you to update your code to accommodate these changes.
 

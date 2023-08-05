@@ -1,6 +1,6 @@
 /* eslint-env es6 */
 const fs = require('fs');
-const version = require('./package.json').version;
+const version = require('../package.json').version;
 const buildNumber = fs.readFileSync('.env', 'utf8');
 
 const build = buildNumber.replace(/(\r\n|\n|\r)/gm, '').replace(/,/gm);

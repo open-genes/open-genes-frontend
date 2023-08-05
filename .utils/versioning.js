@@ -8,9 +8,10 @@ const rl = readline.createInterface({
 });
 
 rl.question('What type of commit did you stage? (bug fix (B) / feature (F)): ', (answer) => {
-  if (answer.toLowerCase() === 'B') {
+  const lowerCaseAnswer = answer.toLowerCase();
+  if (lowerCaseAnswer === 'b') {
     updateVersion('patch');
-  } else if (answer.toLowerCase() === 'F') {
+  } else if (lowerCaseAnswer === 'f') {
     updateVersion('minor');
   } else {
     console.log('Invalid input. Please provide either "B" or "F".');
