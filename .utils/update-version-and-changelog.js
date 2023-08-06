@@ -3,7 +3,7 @@ const fs = require('fs');
 const { exec } = require('child_process');
 
 if (process.argv.length < 3) {
-  console.error('Usage: node update-version-and-changelog.js <version>');
+  console.error('Usage: node .utils/update-version-and-changelog.js <version>');
   process.exit(1);
 }
 
@@ -26,8 +26,8 @@ fs.readFile('package.json', 'utf8', (err, data) => {
       process.exit(1);
     }
 
-    // Run the generate-changelog script with the new version
-    exec(`node generate-changelog.js ${newVersion}`, (error, stdout, stderr) => {
+    // Run the generate-changelog.js script with the new version
+    exec(`node .utils/generate-changelog.js ${newVersion}`, (error, stdout, stderr) => {
       if (error) {
         console.error(`Error running generate-changelog.js: ${error.message}`);
         process.exit(1);

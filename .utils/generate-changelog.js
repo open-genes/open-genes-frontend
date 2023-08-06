@@ -19,11 +19,10 @@ exec(`git log ${tag}..HEAD --pretty=format:"- %s" --no-merges`, (error, stdout, 
     console.error(`Error: ${stderr}`);
     process.exit(1);
   }
+  const strippedText = stdout.replace(/#/g, ''); // Remove '#' symbols
+  const changelogContent = `\n#Release v${tag}\n\n${strippedText}\n`;
 
-  const changelogContent = `\n#Release v${tag}\n\n${stdout}\n`;
-  const cleanedChangelog = changelogContent.replace(/#/g, ''); // Remove '#' symbols
-
-  fs.appendFileSync(changelogFile, cleanedChangelog);
+  fs.appendFileSync(changelogFile, changelogContent);
 
   console.log(`Changelog has been updated and saved to ${changelogFile}`);
 });
