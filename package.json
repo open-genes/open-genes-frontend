@@ -1,6 +1,6 @@
 {
   "name": "open-genes-frontend",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "scripts": {
     "spriteset-general": "svg-sprite --symbol --dest=src/assets/images/icons/sprites src/assets/images/icons/source/general/*.svg --symbol-sprite=general.sprite.svg",
     "spriteset-no-content": "svg-sprite --symbol --dest=src/assets/images/icons/sprites src/assets/images/icons/source/no-content/*.svg --symbol-sprite=no-content.sprite.svg",
