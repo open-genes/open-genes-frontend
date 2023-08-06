@@ -22,7 +22,7 @@ jobs:
       - name: Build
         run: |
           npm install
-          node setversion.js
+          node .utils/write-build-number.js
           npm run build-prod
       - name: Delete temporary files
         run: |
