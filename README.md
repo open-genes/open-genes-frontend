@@ -2,7 +2,6 @@
 
 [Changelog](CHANGELOG.md)
 
-
 # Open Genes — Frontend
 
 # Start locally
