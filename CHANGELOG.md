@@ -11,3 +11,9 @@
 
 - Fixed a wrong code archive in the release
 - Added DOI badge
+
+#Release v1.1.2
+
+- Set english language by default, set language explicitly
+
+
