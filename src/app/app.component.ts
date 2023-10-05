@@ -38,13 +38,7 @@ export class AppComponent implements OnInit {
     // TODO: OG-953
     // Set app language
     this.translate.addLangs(environment.languages);
-    if (localStorage.getItem('lang')) {
-      this.lang = localStorage.getItem('lang');
-    } else if (navigator.language.substring(0, 2) === 'en' || navigator.language.substring(0, 2) === 'ru') {
-      this.lang = navigator.language.substring(0, 2);
-    } else {
-      this.lang = environment.languages[1];
-    }
+    this.lang = environment.languages[1]; // English is a default language
     this.translate.use(this.lang);
     this.retrievedSettings = this.settingsService.getSettings();
   }
