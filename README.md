@@ -1,5 +1,8 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8218199.svg)](https://doi.org/10.5281/zenodo.8218199)
 
+[Changelog](CHANGELOG.md)
+
+
 # Open Genes — Frontend
 
 # Start locally
