@@ -1,11 +1,12 @@
 <ng-container *ngIf="articlesList.length">
   <ng-container *ngFor="let article of articlesList">
-      <div [routerLink]="'articles/' + article.slug"
-           class="article">
-        <h3>
-          {{ article.title.rendered }}
-        </h3>
-    </div>
+    <a [routerLink]="'articles/' + article.slug"
+       href="{{'articles/' + article.slug}}"
+       class="article">
+      <h3>
+        {{ article.title.rendered }}
+      </h3>
+    </a>
   </ng-container>
 </ng-container>
 
