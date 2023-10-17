@@ -11,7 +11,7 @@
     <article class="__mt-15">
       <ul class="list">
         <li *ngFor="let term of process | keyvalue | slice: 0:biologicalProcessMaxItems">
-          <a href="https://www.ebi.ac.uk/QuickGO/term/{{ term.key | zero }}"
+          <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
              title="QuickGO"
              class="alias">{{ term.key | zero }}</a> {{ term.value }}
         </li>
@@ -43,7 +43,7 @@
     <article class="__mt-15">
       <ul class="list">
         <li *ngFor="let term of component | keyvalue | slice: 0:cellularComponentMaxItems">
-          <a href="https://www.ebi.ac.uk/QuickGO/term/{{ term.key | zero }}"
+          <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
              title="QuickGO"
              class="alias">{{ term.key | zero }}</a> {{ term.value }}
         </li>
@@ -75,7 +75,7 @@
     <article class="__mt-15">
       <ul class="list">
         <li *ngFor="let term of activity | keyvalue | slice: 0:molecularActivityMaxItems">
-          <a href="https://www.ebi.ac.uk/QuickGO/term/{{ term.key | zero }}"
+          <a href="https://www.ebi.ac.uk/QuickGO/term/GO:{{ term.key | zero }}"
              title="QuickGO"
              class="alias">{{ term.key | zero }}</a> {{ term.value }}
         </li>
