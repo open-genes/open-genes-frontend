@@ -61,8 +61,6 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
       }
       this.cdRef.markForCheck();
     });
-
-    this.loadWizard();
   }
 
   ngOnDestroy(): void {
