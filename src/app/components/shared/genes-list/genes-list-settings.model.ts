@@ -8,7 +8,7 @@ export interface GenesListSettings {
   ifShowDiseases: boolean;
   ifShowDiseaseCategories: boolean;
   ifShowCriteria: boolean;
-  ifShowAgingMechanisms: boolean;
+  ifShowHallmarks: boolean;
   ifShowProteinClasses: boolean;
   ifShowExperimentsStats: boolean;
   ifShowTags: boolean;

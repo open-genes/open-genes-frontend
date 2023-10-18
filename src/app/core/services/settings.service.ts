@@ -17,9 +17,9 @@ export class SettingsService {
     // Default:
     ifShowAge: true,
     ifShowDiseases: false,
-    ifShowDiseaseCategories: true,
-    ifShowCriteria: false,
-    ifShowAgingMechanisms: true,
+    ifShowDiseaseCategories: false,
+    ifShowCriteria: true,
+    ifShowHallmarks: true,
     ifShowProteinClasses: true,
     ifShowExperimentsStats: false,
     ifShowTags: true,
