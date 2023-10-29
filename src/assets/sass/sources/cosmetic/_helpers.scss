@@ -102,6 +102,14 @@ $sizes: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 80, 100, 120);
   }
 }
 
+.hidden {
+  display: none !important;
+}
+
 .__disabled {
   pointer-events: none;
+}
+
+.__hoverable {
+  @include ripple;
 }

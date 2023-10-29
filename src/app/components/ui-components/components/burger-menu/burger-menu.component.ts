@@ -6,10 +6,10 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FavouritesService } from '../../core/services/favourites.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { FavouritesService } from '../../../../core/services/favourites.service';
 
 @Component({
   selector: 'app-burger-menu',

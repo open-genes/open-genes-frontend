@@ -18,15 +18,13 @@ import { AppComponent } from './app.component';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { LanguageComponent } from './components/language/language.component';
-import { BurgerMenuComponent } from './components/burger-menu/burger-menu.component';
+import { HeaderComponent } from './components/layout/header/header.component';
+import { FooterComponent } from './components/layout/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './modules/vendors/material.module';
+import { MaterialModule } from './vendors/material.module';
 import { IconModule } from './components/ui-components/components/icon/app-icon.module';
-import { GoogleAnalyticsModule } from './modules/vendors/google-analytics.module';
-import { DirectivesModule } from './directives/directives.module';
+import { GoogleAnalyticsModule } from './vendors/google-analytics.module';
+import { DirectivesModule } from './core/directives/directives.module';
 import { TermHintModule } from './components/shared/terms/term-hint.module';
 import { SnackBarModule } from './components/shared/snack-bar/snack-bar.module';
 import { MatPaginatorIntl } from '@angular/material/paginator';
@@ -44,8 +42,6 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    LanguageComponent,
-    BurgerMenuComponent,
   ],
   imports: [
     BrowserModule,

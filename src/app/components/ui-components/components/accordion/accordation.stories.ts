@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { moduleMetadata, Story } from '@storybook/angular';
-import { SafePipe } from '../../../../modules/pipes/general/safe.pipe';
+import { SafePipe } from '../../../../core/pipes/general/safe.pipe';
 import { AccordionComponent } from './accordion.component';
 
 export default {

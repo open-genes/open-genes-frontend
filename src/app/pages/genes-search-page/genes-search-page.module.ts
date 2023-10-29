@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { GenesListModule } from '../../components/shared/genes-list/genes-list.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgStripTagsPipeModule } from 'angular-pipes';
-import { PipesModule } from '../../modules/pipes/pipes.module';
+import { PipesModule } from '../../core/pipes/pipes.module';
 import { MatButtonModule } from '@angular/material/button';
 import { NewsListModule } from '../../components/shared/news-list/news-list.module';
 import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
@@ -18,7 +18,6 @@ import { IconModule } from '../../components/ui-components/components/icon/app-i
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { GeneFiltersPanelModule } from './components/gene-filters-panel/gene-filters-panel.module';
 import { SearchModule } from '../../components/shared/search/search.module';
-import { MiniCardsModule } from '../../components/mini-cards/mini-cards.module';
 
 const routes: Routes = [{ path: '', component: GenesSearchPageComponent }];
 
@@ -43,7 +42,6 @@ const routes: Routes = [{ path: '', component: GenesSearchPageComponent }];
     MatProgressBarModule,
     GeneFiltersPanelModule,
     SearchModule,
-    MiniCardsModule,
   ],
   exports: [PipesModule],
 })

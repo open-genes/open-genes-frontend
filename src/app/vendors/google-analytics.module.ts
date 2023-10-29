@@ -4,7 +4,7 @@ import {
 } from 'ngx-google-analytics'
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-import { environment } from '../../../environments/environment'
+import { environment } from '../../environments/environment';
 
 @NgModule({
   imports: [

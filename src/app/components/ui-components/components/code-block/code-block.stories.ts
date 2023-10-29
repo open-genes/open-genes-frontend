@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { moduleMetadata, Story } from '@storybook/angular';
 import { CodeBlockComponent } from './code-block.component';
-import { SafePipe } from '../../../../modules/pipes/general/safe.pipe';
+import { SafePipe } from '../../../../core/pipes/general/safe.pipe';
 
 export default {
   title: 'Example/CodeBlock',

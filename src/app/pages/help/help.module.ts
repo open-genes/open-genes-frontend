@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HelpComponent } from './help.component';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../../modules/vendors/material.module';
+import { MaterialModule } from '../../vendors/material.module';
 import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
 import { EntitiesComponent } from './entities/entities.component';
 import { HELP_ROUTES } from './help-routing';
@@ -12,9 +12,9 @@ import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 import { WpArticlesComponent } from './wp-articles/wp-articles.component';
 import { NoContentModule } from '../../components/shared/no-content/no-content.module';
 import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
-import { PipesModule } from '../../modules/pipes/pipes.module';
+import { PipesModule } from '../../core/pipes/pipes.module';
 import { WpArticleComponent } from './wp-article/wp-article.component';
-import { DirectivesModule } from "../../directives/directives.module";
+import { DirectivesModule } from "../../core/directives/directives.module";
 
 @NgModule({
   declarations: [HelpComponent, EntitiesComponent, WpArticlesComponent, WpArticleComponent],

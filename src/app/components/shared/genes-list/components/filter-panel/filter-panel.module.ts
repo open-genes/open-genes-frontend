@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FilterPanelComponent } from './filter-panel.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../../../../../modules/vendors/material.module';
+import { MaterialModule } from '../../../../../vendors/material.module';
 
 @NgModule({
   declarations: [

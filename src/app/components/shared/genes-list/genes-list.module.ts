@@ -5,11 +5,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { SearchModule } from '../search/search.module';
-import { PipesModule } from '../../../modules/pipes/pipes.module';
-import { DirectivesModule } from '../../../directives/directives.module';
 import { UiComponentsModule } from '../../ui-components/ui-components.module';
 import { WindowService } from '../../../core/services/browser/window.service';
-import { MaterialModule } from '../../../modules/vendors/material.module';
+import { MaterialModule } from '../../../vendors/material.module';
 import { GeneMenuComponent } from './components/gene/menu/gene-menu.component';
 import { SelectionCriteriaModule } from '../selection-criteria/selection-criteria.module';
 import { GenesTableHeaderComponent } from './components/genes-table-header/genes-table-header.component';
@@ -27,6 +25,8 @@ import { AgingMechanismsModule } from '../aging-mechanisms/aging-mechanisms.modu
 import { ProteinClassesModule } from '../protein-classes/protein-classes.module';
 import { ExperimentsStatsModule } from '../experiments-stats/experiments-stats.module';
 import { FilterPanelModule } from './components/filter-panel/filter-panel.module';
+import { PipesModule } from '../../../core/pipes/pipes.module';
+import { DirectivesModule } from '../../../core/directives/directives.module';
 
 @NgModule({
   declarations: [

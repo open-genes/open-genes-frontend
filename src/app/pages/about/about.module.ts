@@ -3,8 +3,8 @@ import { CommonModule } from "@angular/common";
 import { AboutComponent } from "./about.component";
 import { RouterModule, Routes } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
-import { MaterialModule } from "../../modules/vendors/material.module";
 import { IconModule } from "../../components/ui-components/components/icon/app-icon.module";
+import { MaterialModule } from '../../vendors/material.module';
 
 const routes: Routes = [{ path: "", component: AboutComponent }];
 

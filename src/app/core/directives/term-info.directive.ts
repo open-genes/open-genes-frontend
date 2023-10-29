@@ -1,13 +1,13 @@
 import { AfterViewInit, Directive, ElementRef, HostListener, OnDestroy } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { HttpClient } from '@angular/common/http';
-import { TermHintComponent } from '../components/shared/terms/term-hint.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { AliasTerm, BasicTerm, Terms } from '../core/models/terms.model';
-import { SettingsService } from '../core/services/settings.service';
+import { AliasTerm, BasicTerm, Terms } from '../models/terms.model';
+import { SettingsService } from '../services/settings.service';
+import { TermHintComponent } from '../../components/shared/terms/term-hint.component';
 
 @Directive({
   selector: '[appTermInfo]',

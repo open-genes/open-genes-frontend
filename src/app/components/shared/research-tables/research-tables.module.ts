@@ -9,12 +9,13 @@ import { GeneAssociatedWithLongevityEffectsComponent } from './gene-associated-w
 import { ProteinRegulatesOtherGenesComponent } from './protein-regulates-other-genes/protein-regulates-other-genes.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PublicationInfoModule } from '../publication-info/publication-info.module';
-import { PipesModule } from '../../../modules/pipes/pipes.module';
 import { RouterModule } from '@angular/router';
 import { UiComponentsModule } from '../../ui-components/ui-components.module';
-import { MaterialModule } from 'src/app/modules/vendors/material.module';
 import { NgCapitalizePipeModule } from "angular-pipes";
-import { DirectivesModule } from "../../../directives/directives.module";
+import { PipesModule } from '../../../core/pipes/pipes.module';
+import { MaterialModule } from '../../../vendors/material.module';
+import { DirectivesModule } from '../../../core/directives/directives.module';
+
 
 const components = [
   AdditionalEvidencesComponent,

@@ -3,26 +3,20 @@ html {
 }
 
 body {
-  display: table;
+  display: grid;
   height: 100%;
   width: 100%;
+  min-height: calc(100vh - #{$header-height});
   min-width: $smartphone;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding-top: $header-height;
+  grid-template-columns: 1fr;
+    grid-template-rows: minmax($header-height, auto) min-content;
 
   &, * {
     box-sizing: border-box;
   }
 
   app-root {
-    display: grid;
-    height: 100%;
-    min-height: calc(100vh - #{$header-height});
-    grid-template-rows: 0 auto min-content;
+    display: contents;
   }
 
   .preloader {
@@ -74,20 +68,6 @@ body {
   }
 }
 
-app-header,
-.app-header { // the class is used on static pages
-  display: block;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: z('header');
-}
-
-.__hoverable {
-  @include ripple;
-}
-
 .wrapper {
   width: 100%;
 }
@@ -101,66 +81,8 @@ app-header,
   }
 }
 
-.items-section {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-}
-
-.tabs {
-  &__tabs {
-    width: 100%;
-    height: 50px;
-    font-size: 0;
-    white-space: nowrap;
-    margin-bottom: 10px;
-    border-bottom: 1px solid $color-borders;
-  }
-
-  &__tab {
-    display: inline-block;
-    height: 50px;
-    font-size: 14px;
-    color: $color-general;
-    vertical-align: top;
-    text-align: center;
-    white-space: normal;
-    word-wrap: break-word;
-    line-height: normal;
-    max-width: (300px / 3);
-    position: relative;
-    cursor: pointer;
-    margin-bottom: -2px;
-    padding: 8px 5px 16px 8px;
-
-    &:before {
-      content: ' ';
-      display: block;
-      height: 3px;
-      background-color: $color-general;
-      opacity: 0;
-      position: absolute;
-      bottom: 0;
-      left: 5px;
-      right: 5px;
-      z-index: 0;
-    }
-
-    &--active:before,
-    &:hover:before {
-      opacity: 1;
-    }
-  }
-
-  &__content {
-    padding: 2px 10px;
-    max-height: 200px;
-    overflow: scroll;
-  }
-}
-
-.hidden {
-  display: none !important;
+table {
+  border-collapse: collapse;
 }
 
 @keyframes animation__appear {
@@ -172,7 +94,4 @@ app-header,
   }
 }
 
-table {
-  border-collapse: collapse;
-}
 

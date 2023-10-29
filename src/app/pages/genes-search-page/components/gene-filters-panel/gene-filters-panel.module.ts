@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../../../../modules/vendors/material.module';
+import { MaterialModule } from '../../../../vendors/material.module';
 import { GeneFiltersPanelComponent } from './gene-filters-panel.component';
 import { UiComponentsModule } from '../../../../components/ui-components/ui-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PipesModule } from '../../../../modules/pipes/pipes.module';
-import { DirectivesModule } from '../../../../directives/directives.module';
+import { PipesModule } from '../../../../core/pipes/pipes.module';
 import { SelectSearchComponent } from './select-search/select-search.component';
+import { DirectivesModule } from '../../../../core/directives/directives.module';
 
 @NgModule({
   declarations: [GeneFiltersPanelComponent, SelectSearchComponent],
