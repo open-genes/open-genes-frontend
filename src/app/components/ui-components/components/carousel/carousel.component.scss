@@ -1,0 +1,37 @@
+@import "../../../../../assets/sass/dependencies";
+
+.carousel-container {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  transition: transform 0.5s ease-in-out;
+  white-space: nowrap;
+
+  &::ng-deep > * {
+    display: none;
+    width: 100%;
+
+    &.active {
+      display: inline-block;
+    }
+  }
+}
+
+.dot-container {
+  text-align: center;
+  margin-top: 10px;
+
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba($color-base, .5);
+    margin: 0 5px;
+    cursor: pointer;
+
+    &.active {
+      background-color: $color-base;
+    }
+  }
+}

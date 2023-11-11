@@ -26,7 +26,7 @@
           <div class="col-12">
             <div *ngIf="isMobile"
                  class="__mb-20">
-              <ng-container [ngTemplateOutlet]="wizardBanner"></ng-container>
+              <ng-container [ngTemplateOutlet]="sidebarCarousel"></ng-container>
             </div>
           </div>
 
@@ -35,7 +35,7 @@
             <app-sidebar>
               <app-sidebar-item *ngIf="!isMobile">
                 <div content class="wizard-banner-wrapper">
-                  <ng-container [ngTemplateOutlet]="wizardBanner"
+                  <ng-container [ngTemplateOutlet]="sidebarCarousel"
                   ></ng-container>
                 </div>
               </app-sidebar-item>
@@ -124,24 +124,12 @@
   </section>
 </ng-template>
 
-<ng-template #wizardBanner let-classes>
-  <app-hint class="{{ classes }}"
-            hintType="emphasized">
-    <ng-container title>
-      <span class="fa far fa-magic"></span>&nbsp;{{ 'wizard_where_to_start_title' | translate }}
-    </ng-container>
+<ng-template #sidebarCarousel let-classes>
+  <app-carousel [autoPlayInterval]="0">
+    <div appCarouselItem><h1>Hello</h1></div>
+    <div appCarouselItem><h1>World</h1></div>
+  </app-carousel>
 
-    <ng-container description>
-      {{ 'wizard_where_to_start_description' | translate }}
-    </ng-container>
-
-    <ng-container button>
-      <button class="btn btn--fill btn--small btn--white"
-              (click)="openWizard()">
-        {{ 'wizard_where_to_start_button' | translate }}
-      </button>
-    </ng-container>
-  </app-hint>
 </ng-template>
 
 <ng-template #fieldsModalTemplate>
