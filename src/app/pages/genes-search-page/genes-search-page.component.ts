@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 import { appliedFilter } from '../../components/shared/genes-list/genes-list-settings.model';
 import { CommonModalComponent } from '../../components/ui-components/components/modals/common-modal/common-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { WordpressApiService } from '../../core/services/api/wordpress-api.service';
 
 @Component({
   selector: 'app-genes-search-page',
@@ -37,6 +38,8 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
   public placeholder: string;
   public $cancelSearch: Subject<void> = new Subject<void>();
   public lastChangedFilter: appliedFilter;
+  public sidebarContent: unknown;
+  private dynamicContent$ = new Subject<void>();
 
   constructor(
     public windowService: WindowService,
@@ -44,6 +47,7 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
     private readonly apiService: ApiService,
     private readonly cdRef: ChangeDetectorRef,
     private dialog: MatDialog,
+    private wpApiService: WordpressApiService,
   ) {
     super(windowService);
   }
@@ -61,6 +65,12 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
       }
       this.cdRef.markForCheck();
     });
+
+    this.wpApiService.getSectionContent('sidebar')
+      .pipe(takeUntil(this.dynamicContent$))
+      .subscribe((content) => {
+        this.sidebarContent = content;
+      });
   }
 
   ngOnDestroy(): void {
