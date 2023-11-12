@@ -22,7 +22,13 @@ export class CarouselComponent implements AfterContentInit {
     this.items.forEach((_, i) => this.dots.push(i));
     if (this.autoPlayInterval > 0) {
       const nextSlideIndex = (this.currentIndex + 1) % this.items.length;
-      setInterval(() => this.changeSlide(nextSlideIndex), this.autoPlayInterval);
+      setInterval(() => {
+        if (this.currentIndex === this.items.length - 1) {
+          this.changeSlide(0)
+        } else  {
+          this.changeSlide(nextSlideIndex)
+        }
+      }, this.autoPlayInterval);
     }
   }
 
