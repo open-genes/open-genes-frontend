@@ -125,29 +125,22 @@
 </ng-template>
 
 <ng-template #sidebarCarousel let-classes>
-  <app-carousel [autoPlayInterval]="0">
-    <app-hint class="{{ classes }}"
-              appCarouselItem
-              hintType="emphasized">
-      <ng-container title>
-        <span class="fa far fa-magic"></span>&nbsp;{{ 'wizard_where_to_start_title' | translate }}
-      </ng-container>
-
-      <ng-container description>
-        {{ 'wizard_where_to_start_description' | translate }}
-      </ng-container>
-
-      <ng-container button>
-        <button class="btn btn--fill btn--small btn--white"
-                (click)="openWizard()">
-          {{ 'wizard_where_to_start_button' | translate }}
+  <app-carousel [autoPlayInterval]="9000">
+    <div appCarouselItem>
+      <div class="hint-panel">
+        <div class="hint-panel__title">
+          {{ 'wizard_where_to_start_description' | translate }}
+        </div>
+        <button (click)="openWizard()"
+                class="hint-panel__button"
+        >{{ 'wizard_where_to_start_button' | translate }}
         </button>
-      </ng-container>
-    </app-hint>
+      </div>
+    </div>
 
-    <div appCarouselItem [innerHTML]="sidebarContent | safe: 'html'"></div>
+    <div appCarouselItem
+         [innerHTML]="sidebarContent | safe: 'html'"></div>
   </app-carousel>
-
 </ng-template>
 
 <ng-template #fieldsModalTemplate>

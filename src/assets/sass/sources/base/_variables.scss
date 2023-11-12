@@ -81,8 +81,7 @@ $experiment-tables: (
 );
 
 // Gradients
-$orange-gradient1: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, $color-orange-200 100%);
-$orange-gradient2: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, $color-orange-200 100%);
+$orange-gradient: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, $color-orange-200 100%);
 $pink-blue-gradient: linear-gradient(90deg, #91cefd, #9bb5fa 20%, #a4a4f7 40%, #c2adf5 60%, #d9b5f3 80%, #ebbdf2);
 
 // States variables
