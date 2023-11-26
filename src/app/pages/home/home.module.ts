@@ -5,9 +5,10 @@ import { RouterModule } from '@angular/router';
 import { HOME_ROUTES } from './home-routing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../../modules/vendors/material.module';
+import {SearchModule} from "../../components/shared/search/search.module";
 
 @NgModule({
   declarations: [HomeComponent],
-  imports: [CommonModule, RouterModule.forChild(HOME_ROUTES), TranslateModule, MaterialModule],
+    imports: [CommonModule, RouterModule.forChild(HOME_ROUTES), TranslateModule, MaterialModule, SearchModule],
 })
 export class HomeModule {}

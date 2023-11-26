@@ -24,6 +24,7 @@ import { InfoButtonComponent } from './components/info-button/info-button.compon
 import { BannerComponent } from './components/banner/banner.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { CarouselItemDirective } from './components/carousel/carousel-item.directive';
+import {DirectivesModule} from "../../directives/directives.module";
 
 const components = [
   AccordionComponent,
@@ -49,6 +50,6 @@ const components = [
 @NgModule({
   declarations: [...components, CarouselItemDirective],
   exports: [...components, CarouselItemDirective],
-  imports: [CommonModule, IconModule, PipesModule, TranslateModule, MaterialModule, RouterModule],
+    imports: [CommonModule, IconModule, PipesModule, TranslateModule, MaterialModule, RouterModule, DirectivesModule],
 })
 export class UiComponentsModule {}

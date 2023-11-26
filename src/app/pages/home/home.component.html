@@ -1,6 +1,75 @@
 <div class="page main-page">
-  <div class="page__inner __pb-60">
-    <div class="container-fluid home-container">
+  <div class="page__inner">
+    <div class="wrapper main-page__cover">
+      <div class="container">
+        <div class="row no-gutters">
+          <div class="col col-12 main-page__header">
+            <div class="main-page__title">
+              <h1 class="notranslate">{{ "product_name" | translate }}</h1>
+            </div>
+            <div class="main-page__description">
+              {{ "main_page_header_description" | translate }}
+            </div>
+          </div>
+
+          <div class="col col-12 main-page__search">
+            <app-search
+              [fixOnTopOnMobile]="false"
+              [showProgressBar]="showProgressBar"
+              [searchHintsList]="geneHints"
+              placeholder="search_field_start_typing"
+              (search)="goToGenesPage(query)"
+              (queryChange)="onQueryChange($event)"></app-search>
+          </div>
+
+          <div class="col col-12 main-page__section main-page__buttons">
+            <button
+              [routerLink]="'/genes'"
+              class="btn btn--big btn--fill btn--white">
+              All genes
+            </button>
+
+            <button
+              (click)="searchByRandomGene()"
+              class="btn btn--big btn--fill btn--purple">
+
+              Search for a random gene
+            </button>
+          </div>
+
+          <div class="col col-12 main-page__section main-page__meta">
+            <span>
+              DOI:
+              <a href="https://doi.org/10.1093/nar/gkad712"
+                 class="link link--underline"
+                 target="_blank"
+              >10.1093/nar/gkad712 <span class="fa far fa-external-link"></span>
+              </a>
+            </span>
+
+            <span>{{ "build" | translate: { val: appData.build }  }}</span>
+
+            <span>{{ "version" | translate: { val: appData.version }  }}</span>
+          </div>
+
+          <div class="col col-12 main-page__section main-page__genes-title">
+            <h2>
+              {{ "main_page_total_genes" | translate: { number: genesCounter } }}
+            </h2>
+            <h2>
+              {{ "main_page_last" | translate }}:
+            </h2>
+          </div>
+
+          <div class="col col-12 main-page__section main-page__last-updated">
+            <a
+              *ngFor="let item of lastGenes"
+              [routerLink]="['/gene', item.symbol]"
+              class="alias"
+            >{{ item.symbol }}</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

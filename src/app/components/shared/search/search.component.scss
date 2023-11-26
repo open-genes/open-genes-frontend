@@ -77,7 +77,7 @@ $input-border-radius: 5px;
     color: $color-black;
     background-color: $color-white;
     border-radius: $input-border-radius;
-    border: 1px solid $color-borders;
+    border: 1px solid rgba($color-black, .05);
     transition: border .15s linear;
     box-shadow: $shadow-for-panel;
 

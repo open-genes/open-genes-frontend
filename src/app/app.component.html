@@ -2,7 +2,7 @@
 <router-outlet></router-outlet>
 <app-footer
   *ngIf="isFooterVisible"
-  [buildNumber]="app.build">
+  [appData]="app">
   <div [innerHTML]="footerContent"></div>
 </app-footer>
 

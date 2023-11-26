@@ -1,25 +1,5 @@
 <div class="page main-page">
-  <div class="page__inner __pb-60">
-    <div class="wrapper main-page__header">
-      <div class="container-fluid">
-        <div class="row no-gutters">
-          <div class="col col-12">
-            <div class="page__title">
-              <h1 class="notranslate">{{ "product_name" | translate }}</h1>
-            </div>
-            <div class="header__description">
-              {{ "main_page_header_description" | translate }}
-            </div>
-            <div class="header__button">
-              <a mat-flat-button color="secondary" routerLink="/about">
-                {{"main_page_header_button" | translate}}
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+  <div class="page__inner __pt-20 __pb-60">
     <div class="container-fluid search-page-container">
       <div class="row">
         <ng-container *ngIf="!errorStatus; else errorMessage">
@@ -68,13 +48,14 @@
             <app-search
               class="__mb-10"
               [multiple]="queryLength > 1"
-              [searchHintsList]="searchedGenes"
+              [searchHintsList]="geneHints"
               [isDisabled]="genesListIsLoading"
               placeholder="search_field_start_typing"
               (search)="updateGenesList($event)"
               (queryChange)="setSearchQuery($event)"
               (cancel)="$cancelSearch.next()"
               [showProgressBar]="showProgressBar"
+              [predefinedValue]="queryFromRoute"
             >
               <button *ngIf="isMobile"
                       prefix
@@ -125,7 +106,8 @@
 </ng-template>
 
 <ng-template #sidebarCarousel>
-  <app-carousel [autoPlayInterval]="30000">
+  <app-carousel
+    [autoPlayInterval]="30000">
     <div appCarouselItem>
       <div class="hint-panel">
         <div class="hint-panel__title">
