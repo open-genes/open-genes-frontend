@@ -26,14 +26,13 @@
             <button
               [routerLink]="'/genes'"
               class="btn btn--big btn--fill btn--white">
-              All genes
+              {{ "main_page_all_genes" | translate }}
             </button>
 
             <button
-              (click)="searchByRandomGene()"
+              (click)="goToGenesPage(randomHGNC)"
               class="btn btn--big btn--fill btn--purple">
-
-              Search for a random gene
+              {{ "main_page_random_gene" | translate }}
             </button>
           </div>
 
@@ -47,14 +46,14 @@
               </a>
             </span>
 
-            <span>{{ "build" | translate: { val: appData.build }  }}</span>
+            <span>{{ "build" | translate: {val: appData.build}  }}</span>
 
-            <span>{{ "version" | translate: { val: appData.version }  }}</span>
+            <span>{{ "version" | translate: {val: appData.version}  }}</span>
           </div>
 
           <div class="col col-12 main-page__section main-page__genes-title">
             <h2>
-              {{ "main_page_total_genes" | translate: { number: genesCounter } }}
+              {{ "main_page_total_genes" | translate: {number: genesCounter} }}
             </h2>
             <h2>
               {{ "main_page_last" | translate }}:

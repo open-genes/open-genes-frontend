@@ -14,6 +14,7 @@ import { HttpParams } from '@angular/common/http';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  private genesList: string[] = [];
   public appData = {
     build: environment.build,
     version: environment.version,
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit {
   public error: number;
   public genesCounter: number;
   public lastGenes: Genes[];
+  public randomHGNC = 'sirt1';
   public query: string;
   public geneHints: Pick<Genes, 'id' | 'name' | 'symbol' | 'aliases' | 'ensembl'>[] | Genes[] = [];
   public showProgressBar = false;
@@ -36,18 +38,33 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     if (this.sessionStorageService.getStorageValue('genesCounter')) {
       this.genesCounter = this.sessionStorageService.getStorageValue('genesCounter');
+      if (!this.genesCounter) {
+        this.getGenesCount();
+      }
     } else {
-      this.getGenesCount(new HttpParams().set('pageSize', 1));
+      this.getGenesCount();
     }
 
     if (this.sessionStorageService.getStorageValue('byLatest')) {
       this.lastGenes = this.sessionStorageService.getStorageValue('byLatest');
+      if (this.lastGenes.length === 0) {
+        this.getLastEditedGenes();
+      }
     } else {
       this.getLastEditedGenes();
     }
+
+    if (this.sessionStorageService.getStorageValue('genesList')) {
+      this.genesList = this.sessionStorageService.getStorageValue('genesList');
+      if (this.genesList.length === 0) {
+        this.getGenesForRandomQuery();
+      }
+    } else {
+      this.getGenesForRandomQuery();
+    }
   }
 
-  private getGenesCount(params: HttpParams): void {
+  private getGenesCount(params: HttpParams = new HttpParams().set('pageSize', 1)): void {
     this.apiService.getGenesV2(params)
       .pipe(takeUntil(this.subscription$))
       .subscribe(data => {
@@ -56,19 +73,15 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  public getLastEditedGenes(): void {
-    this.apiService
-      .getLastEditedGene()
+  private getGenesForRandomQuery(): void {
+    this.apiService.getSymbols()
       .pipe(takeUntil(this.subscription$))
-      .subscribe(
-        (genes) => {
-          this.lastGenes = genes;
-          this.sessionStorageService.setStorage('byLatest', genes);
-        },
-        (error) => {
-          this.error = error;
+      .subscribe((gene) => {
+        this.genesList = gene.map((g) => g.symbol);
+        if (this.genesList.length > 0) {
+          this.randomHGNC = this.genesList[Math.floor(Math.random() * this.genesList.length)];
         }
-      );
+    });
   }
 
   private getHints(query: string): void {
@@ -85,17 +98,31 @@ export class HomeComponent implements OnInit {
           (error) => {
             console.warn(error);
             this.showProgressBar = false;
-          }
+          },
         );
     } else {
       this.geneHints = [];
     }
   }
 
+  public getLastEditedGenes(): void {
+    this.apiService
+      .getLastEditedGene()
+      .pipe(takeUntil(this.subscription$))
+      .subscribe(
+        (genes) => {
+          this.lastGenes = genes;
+          this.sessionStorageService.setStorage('byLatest', genes);
+        },
+        (error) => {
+          this.error = error;
+        },
+      );
+  }
+
   public onQueryChange(query: string): void {
     const queryLength = query?.length ? query.split(',').length : 0;
     this.query = query;
-
     if (queryLength > 1) {
       const filteredQueryArray = query
         .split(',')
@@ -104,7 +131,6 @@ export class HomeComponent implements OnInit {
 
       query = filteredQueryArray[filteredQueryArray.length - 1];
     }
-
     this.getHints(query);
   }
 
@@ -112,15 +138,5 @@ export class HomeComponent implements OnInit {
     if (query && query.length > 0) {
       void this.router.navigate(['/genes'], { queryParams: { bySuggestions: query } });
     }
-  }
-
-  public searchByRandomGene() {
-    this.apiService.getSymbols()
-      .pipe(takeUntil(this.subscription$))
-      .subscribe((gene) => {
-        const list = gene.map((g) => g.symbol);
-        const randomHGNC = list[Math.floor(Math.random() * list.length)];
-        this.goToGenesPage(randomHGNC)
-      });
   }
 }
