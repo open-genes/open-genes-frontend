@@ -45,7 +45,7 @@ export class WordpressApiService {
     return this.http.get<any>(`${this.url}posts`, { params });
   }
 
-  public getSectionContent(section: 'footer' | 'sidebar'): Observable<unknown> {
+  public getSectionContent(section: 'footer' | 'sidebar'): Observable<string> {
     return this.getArticleBySlug(section).pipe(
       take(1),
       switchMap((res) => {
@@ -53,10 +53,10 @@ export class WordpressApiService {
           const content = res[0].content?.rendered;
           if (section === 'footer') {
             this.footerContentSubject.next(content);
-            return this.getFooterContent$();
+            return this.getFooterContent$() as Observable<string>;
           } else if (section === 'sidebar') {
             this.sidebarContentSubject.next(content);
-            return this.getSidebarContent$();
+            return this.getSidebarContent$() as Observable<string>;
           }
         }
       })

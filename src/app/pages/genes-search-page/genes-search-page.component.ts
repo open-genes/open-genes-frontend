@@ -40,7 +40,7 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
   public placeholder: string;
   public $cancelSearch: Subject<void> = new Subject<void>();
   public lastChangedFilter: appliedFilter;
-  public sidebarContent: unknown;
+  public sidebarContent: string;
   private dynamicContent$ = new Subject<void>();
 
   constructor(
