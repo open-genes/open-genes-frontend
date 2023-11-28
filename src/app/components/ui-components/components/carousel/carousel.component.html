@@ -1,4 +1,9 @@
-<div class="carousel-container" [style.width]="width">
+<div class="carousel-container"
+     appSwipeHorizontal
+     [insensitiveDistance]="1"
+     (OnSwipeRight)="nextSlide()"
+     (OnSwipeLeft)="prevSlide()"
+     [style.width]="width">
   <ng-content select="[appCarouselItem]"></ng-content>
 </div>
 <div class="dot-container">

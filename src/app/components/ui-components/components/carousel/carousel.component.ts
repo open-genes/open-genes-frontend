@@ -38,6 +38,16 @@ export class CarouselComponent implements AfterContentInit {
     this.slideChange.emit(index);
   }
 
+  public nextSlide() {
+    const nextSlideIndex = (this.currentIndex + 1) % this.items.length;
+    this.changeSlide(nextSlideIndex);
+  }
+
+  public prevSlide() {
+    const prevSlideIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
+    this.changeSlide(prevSlideIndex);
+  }
+
   private showOnlyCurrentSlide() {
     this.items.forEach((item, i) => {
       const shouldDisplay = i === this.currentIndex;
@@ -46,6 +56,5 @@ export class CarouselComponent implements AfterContentInit {
         this.renderer.addClass(item.elementRef.nativeElement, 'active');
       }
     });
-    console.log(this.currentIndex);
   }
 }
