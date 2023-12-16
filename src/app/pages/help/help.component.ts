@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./help.component.scss'],
 })
 export class HelpComponent {
-  public showCardSkeleton = true;
+  public showArticlesLoader = true;
 
   constructor(public translate: TranslateService) {}
 }
