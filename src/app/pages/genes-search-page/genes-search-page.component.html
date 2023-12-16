@@ -107,7 +107,8 @@
 
 <ng-template #sidebarCarousel>
   <app-carousel
-    [autoPlayInterval]="30000">
+    class="main-page__carousel"
+    [autoPlayInterval]="0">
     <div appCarouselItem>
       <div class="hint-panel">
         <div class="hint-panel__title">
@@ -121,7 +122,12 @@
     </div>
 
     <div appCarouselItem
-         [innerHTML]="sidebarContent | safe: 'html'"></div>
+         class="carousel__placeholder"
+         [innerHTML]="sidebarContent | safe: 'html'">
+      <app-skeleton *ngIf="!sidebarContent"
+                    view="inline"
+      ></app-skeleton>
+    </div>
   </app-carousel>
 </ng-template>
 

@@ -5,6 +5,7 @@
   display: block;
   overflow: hidden;
   transition: transform 0.5s ease-in-out;
+  font-size: 0;
   white-space: nowrap;
 
   &::ng-deep > * {
