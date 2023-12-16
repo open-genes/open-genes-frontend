@@ -20,35 +20,46 @@ $skeleton-field-height: 40px;
 :host {
   display: block;
   width: 100%;
+  // don't add position: relative here, it will break the inline skeleton
 }
 
 .skeleton {
+  $p: &;
   padding: inherit;
 
   * {
     box-sizing: border-box;
   }
 
-  &__lines-row {
-    width: 100%;
-    display: inline-block;
+  &__bone {
+    position: relative;
+    background-color: $color-gray-soft;
+    border-radius: $border-radius-regular;
+    overflow: hidden;
 
-    .skeleton__line {
-      position: relative;
-      background-color: $color-gray-soft;
+    &::after {
+      @include skeleton-animation;
+    }
+  }
+
+  &--lines {
+    #{$p}__row {
+      width: 100%;
+      display: inline-block;
+    }
+
+    #{$p}__row + #{$p}__row {
+      margin-top: $skeleton-line-height;
+    }
+
+    #{$p}__bone {
       height: $skeleton-line-height;
-      border-radius: $border-radius-regular;
-      overflow: hidden;
 
-      &::after {
-        @include skeleton-animation;
-      }
-
-      &--1 {
+      &:nth-child(odd) {
         width: 100%
       }
 
-      &--2 {
+      &:nth-child(even) {
         width: 80%;
       }
 
@@ -56,73 +67,60 @@ $skeleton-field-height: 40px;
         margin-bottom: ($skeleton-line-height / 1.5);
       }
     }
-
-    & + & {
-      margin-top: $skeleton-line-height;
-    }
   }
 
-  &__cards-row {
-    display: grid;
-    grid-gap: 20px;
+  &--cards {
+    #{$p}__row {
+      display: grid;
+      grid-gap: 20px;
 
-    @include resolution_smartphone {
-      grid-template-columns: 1fr;
-    }
-    @include resolution_tablet-and-up {
-      grid-template-columns: 1fr 1fr 1fr;
+      @include resolution_smartphone {
+        grid-template-columns: 1fr;
+      }
+      @include resolution_tablet-and-up {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
     }
 
-    .skeleton__card {
-      .card__inner {
+    #{$p}__row + #{$p}__row {
+      margin-top: 20px;
+    }
+
+    #{$p}__bone {
+      #{$p}__card {
         width: 100%;
         padding-bottom: 60%;
-        background: $color-gray-soft;
-        border-radius: $border-radius-regular;
-        position: relative;
-        overflow: hidden;
-
-        &::after {
-          @include skeleton-animation;
-        }
       }
-    }
-
-    & + & {
-      margin-top: 20px;
     }
   }
 
-  &__fields-row {
-    width: 100%;
-    display: inline-block;
-
-    .skeleton__field {
-      position: relative;
-      background-color: $color-gray-soft;
-      height: $skeleton-field-height;
-      border-radius: $border-radius-regular;
-      overflow: hidden;
-
-      &::after {
-        @include skeleton-animation;
-      }
-
-      &--1 {
-        width: 100%
-      }
-
-      &--2 {
-        width: 80%;
-      }
-
-      &:not(:last-of-type) {
-        margin-bottom: 10px;
-      }
+  &--panels {
+    #{$p}__row {
+      width: 100%;
+      display: inline-block;
     }
 
-    & + & {
-      margin-top: 20px;
+    #{$p}__row + #{$p}__row {
+      margin-top: 10px;
+    }
+
+    #{$p}__bone {
+      height: 48px;
+      width: 100%;
+    }
+  }
+
+  &--inline {
+    position: absolute; // a parent element of a component must have `position: relative`
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    #{$p}__bone {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: block;
     }
   }
 }

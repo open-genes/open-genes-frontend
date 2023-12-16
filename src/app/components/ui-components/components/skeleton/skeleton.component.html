@@ -1,24 +1,35 @@
-<div class="skeleton">
-  <ng-container *ngIf="view === 'line'">
-    <div class="skeleton__lines-row" *ngFor="let i of row(groups)">
-      <div class="skeleton__line skeleton__line--1"></div>
-      <div class="skeleton__line skeleton__line--2"></div>
+<div class="skeleton"
+     [ngClass]="{
+     'skeleton--lines': view === 'line',
+     'skeleton--cards': view === 'card',
+     'skeleton--panels': view === 'panel',
+     'skeleton--inline': view === 'inline'
+     }"
+     [ngSwitch]="view">
+
+  <ng-container *ngSwitchCase="'line'">
+    <div class="skeleton__row" *ngFor="let i of row(groups)">
+      <div class="skeleton__bone"></div>
+      <div class="skeleton__bone"></div>
     </div>
   </ng-container>
 
-  <ng-container *ngIf="view === 'card'">
-    <div class="skeleton__cards-row" *ngFor="let r of row(groups)">
-      <div class="skeleton__card" *ngFor="let r of row(itemsInRow)">
-        <div class="card__inner"></div>
+  <ng-container *ngSwitchCase="'card'">
+    <div class="skeleton__row" *ngFor="let r of row(groups)">
+      <div class="skeleton__bone" *ngFor="let r of row(itemsInRow)">
+        <div class="skeleton__card"></div>
       </div>
     </div>
   </ng-container>
 
-  <ng-container *ngIf="view === 'field'">
-    <div class="skeleton__fields-row" *ngFor="let r of row(groups)">
-      <div class="skeleton__field" *ngFor="let r of row(itemsInRow)">
-        <div class="field__inner"></div>
-      </div>
+  <ng-container *ngSwitchCase="'panel'">
+    <div class="skeleton__row" *ngFor="let i of row(groups)">
+      <div class="skeleton__bone"></div>
     </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'inline'">
+    <div class="skeleton__bone"></div>
   </ng-container>
 </div>
+
