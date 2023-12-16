@@ -9,6 +9,8 @@ import { environment } from '../../../../environments/environment';
 import { Article } from '../../models/wordpress/article.model';
 import { switchMap, take } from 'rxjs/operators';
 
+type DynamicContentSections = 'footer' | 'sidebar' | 'wizard' | string;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -16,6 +18,8 @@ export class WordpressApiService {
   private url = environment.wordpressApiUrl;
   private footerContentSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   private sidebarContentSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  private wizardContentSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  private otherContentSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
   constructor(private http: HttpClient, private translate: TranslateService) {
   }
@@ -26,6 +30,10 @@ export class WordpressApiService {
 
   private getSidebarContent$(): Observable<unknown> {
     return this.sidebarContentSubject.asObservable();
+  }
+
+  private getWizardContent$(): Observable<unknown> {
+    return this.wizardContentSubject.asObservable();
   }
 
   public getCategories(language?: string): Observable<Category[]> {
@@ -45,18 +53,25 @@ export class WordpressApiService {
     return this.http.get<any>(`${this.url}posts`, { params });
   }
 
-  public getSectionContent(section: 'footer' | 'sidebar'): Observable<string> {
+  public getSectionContent(section: DynamicContentSections): Observable<string> {
     return this.getArticleBySlug(section).pipe(
       take(1),
       switchMap((res) => {
         if (res) {
           const content = res[0].content?.rendered;
-          if (section === 'footer') {
-            this.footerContentSubject.next(content);
-            return this.getFooterContent$() as Observable<string>;
-          } else if (section === 'sidebar') {
-            this.sidebarContentSubject.next(content);
-            return this.getSidebarContent$() as Observable<string>;
+          switch (section) {
+            case 'footer':
+              this.footerContentSubject.next(content);
+              return this.getFooterContent$() as Observable<string>;
+            case 'sidebar':
+              this.sidebarContentSubject.next(content);
+              return this.getSidebarContent$() as Observable<string>;
+            case 'wizard':
+              this.wizardContentSubject.next(content);
+              return this.getWizardContent$() as Observable<string>;
+            default:
+              this.otherContentSubject.next(content);
+              return this.otherContentSubject.asObservable();
           }
         }
       })
