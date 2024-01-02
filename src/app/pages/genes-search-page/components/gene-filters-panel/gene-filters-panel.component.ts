@@ -312,8 +312,8 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
           .listSettings.ifShowCriteria;
         break;
       case 'mechanisms':
-        this.listSettings.ifShowAgingMechanisms = !this
-          .listSettings.ifShowAgingMechanisms;
+        this.listSettings.ifShowHallmarks = !this
+          .listSettings.ifShowHallmarks;
         break;
       case 'classes':
         this.listSettings.ifShowProteinClasses = !this

@@ -10,16 +10,16 @@ export class SettingsService {
     showUiHints: false,
     searchMode: SearchModeEnum.searchByGenes,
     isTableView: true,
-    showCookieBanner: false, // TODO: set to "true" when main page and Genes page will be separated, too many popups
+    showCookieBanner: true,
   };
 
   public genesListSettings: GenesListSettings = {
     // Default:
     ifShowAge: true,
     ifShowDiseases: false,
-    ifShowDiseaseCategories: true,
-    ifShowCriteria: false,
-    ifShowAgingMechanisms: true,
+    ifShowDiseaseCategories: false,
+    ifShowCriteria: true,
+    ifShowHallmarks: true,
     ifShowProteinClasses: true,
     ifShowExperimentsStats: false,
     ifShowTags: true,
