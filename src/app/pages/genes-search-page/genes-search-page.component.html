@@ -1,6 +1,17 @@
-<div class="page main-page">
+<div class="page genes-search-page">
   <div class="page__inner __pt-20 __pb-60">
     <div class="container-fluid search-page-container">
+      <div class="row">
+        <div class="col col-12 genes-search-page__header">
+          <h1 class="genes-search-page__title">{{ "search_by_genes" | translate }}</h1>
+          <p class="genes-search-page__search-tips">
+            <span class="fa far fa-info-circle"></span> {{
+            (queryLength > 1
+              ? "search_for_genes_desc_hint"
+              : "search_for_genes_desc") | translate }}
+          </p>
+        </div>
+      </div>
       <div class="row">
         <ng-container *ngIf="!errorStatus; else errorMessage">
           <div class="col-12">
@@ -32,14 +43,6 @@
           </div>
 
           <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
-            <div class="main-page__search-tips">
-              <p>
-                <span class="fa far fa-info-circle"></span> {{
-                (queryLength > 1
-                  ? "search_for_genes_desc_hint"
-                  : "search_for_genes_desc") | translate }}
-              </p>
-            </div>
             <app-search-counter
               [quantity]="itemsQuantity"
               [title]="'main_page_total'"
@@ -107,7 +110,7 @@
 
 <ng-template #sidebarCarousel>
   <app-carousel
-    class="main-page__carousel"
+    class="genes-search-page__carousel"
     [autoPlayInterval]="0">
     <div appCarouselItem>
       <div class="hint-panel">

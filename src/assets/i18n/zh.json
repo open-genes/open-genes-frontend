@@ -281,6 +281,7 @@
   "research_data_result": "结果",
   "research_data_sex": "性别",
   "search": "搜索",
+  "search_by_genes": "通过与衰老相关的基因搜索",
   "search_by_research_data": "年龄相关基因研究",
   "search_by_research_data_hint_go": "试试看",
   "search_field_by_comma": "HGNC 逗号分隔基因",

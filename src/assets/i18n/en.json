@@ -437,7 +437,7 @@
   "restriction_percent": "Percentage of calorie restriction",
   "restriction_time": "Diet duration",
   "search": "Search...",
-  "search_by_genes": "Search by genes",
+  "search_by_genes": "Search by genes associated with aging",
   "search_by_annotations": "Search by annotations",
   "search_by_research_data": "Age-related genes studies",
   "search_by_research_data_hint_go": "Try it",

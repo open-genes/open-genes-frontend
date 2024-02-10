@@ -437,7 +437,7 @@
   "restriction_percent": "Процент сокращения калорийности питания",
   "restriction_time": "Продолжительности диеты",
   "search": "Поиск...",
-  "search_by_genes": "Поиск по генам",
+  "search_by_genes": "Поиск по генам ассоциированным со старением",
   "search_by_annotations": "Поиск по аннотациям",
   "search_by_research_data": "Исследования по генам, связанным со старением",
   "search_by_research_data_hint_go": "Попробовать",
