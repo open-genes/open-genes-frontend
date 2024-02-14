@@ -1,63 +1,6 @@
-.page {
-  display: table;
-  width: 100%;
-  height: 100%;
-  position: relative;
-
-  @include typography;
-
-  &__inner {
-    display: table-cell;
-    vertical-align: top;
-
-    .page__title {
-      margin-bottom: 15px;
-
-      h1 {
-        font-size: 28px;
-        color: $color-gray-500;
-      }
-
-      p {
-        font-size: $font-size;
-        color: $color-gray;
-      }
-
-      .hint {
-        margin-top: 5px;
-      }
-    }
-
-    .page__subtitle {
-      font-size: 16px;
-      color: $color-black;
-      font-weight: $font-weight-medium;
-      margin-bottom: 8px;
-    }
-  }
-
-  &--dummy {
-  // TODO: remove this crutch solution and refactor base blocks styles
-  min-height: calc(80vh - #{$header-height});
-
-    .page__inner {
-      vertical-align: middle;
-    }
-  }
-
-  app-sidebar {
-    @include resolution_widescreen {
-      position: sticky;
-      top: 70px;
-      margin-bottom: 60px;
-    }
-    @include resolution_all-but-widescreen {
-      flex: 0 0 100%;
-      margin-bottom: 20px;
-    }
-  }
-}
-
 // TODO: Move into separate components styles
+@import '../base/grid';
+@import "pages/general";
 @import "pages/text-page";
 @import "pages/news-page";
+@import "pages/search-page";

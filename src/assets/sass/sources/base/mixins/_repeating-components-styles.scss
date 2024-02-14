@@ -369,6 +369,10 @@
     display: block;
   }
 
+  .filters-modal__body {
+    font-size: 0; // inline-blocks fix
+  }
+
   .disabled {
     pointer-events: none;
     user-select: none;

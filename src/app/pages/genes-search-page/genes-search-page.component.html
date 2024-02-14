@@ -1,86 +1,87 @@
-<div class="page genes-search-page">
-  <div class="page__inner __pt-20 __pb-60">
-    <div class="container-fluid search-page-container">
+<div class="page search-page genes-search-page">
+  <div class="page__inner">
+    <div class="container-fluid search-page__container">
       <div class="row">
-        <div class="col col-12 genes-search-page__header">
-          <h1 class="genes-search-page__title">{{ "search_by_genes" | translate }}</h1>
-          <p class="genes-search-page__search-tips">
+        <div *ngIf="isMobile"
+             class="col-12">
+          <ng-container [ngTemplateOutlet]="sidebarCarousel"></ng-container>
+        </div>
+        <div class="col-12 search-page__header">
+          <app-page-subtitle title="search_by_genes">
             <span class="fa far fa-info-circle"></span> {{
             (queryLength > 1
               ? "search_for_genes_desc_hint"
               : "search_for_genes_desc") | translate }}
-          </p>
+          </app-page-subtitle>
         </div>
       </div>
+
       <div class="row">
         <ng-container *ngIf="!errorStatus; else errorMessage">
           <div class="col-12">
-            <div *ngIf="isMobile"
-                 class="__mb-20">
-              <ng-container [ngTemplateOutlet]="sidebarCarousel"></ng-container>
+            <div class="grid-container">
+              <div class="grid-container__sidebar-column"
+                   [ngClass]="isMobile? 'grid-container__sidebar-column--mobile' : 'grid-container__sidebar-column--desktop'">
+                <app-sidebar>
+                  <app-sidebar-item *ngIf="!isMobile">
+                    <div content class="filters-wrapper">
+                      <app-gene-filters-panel
+                        [isLoading]="genesListIsLoading"
+                        [lastChangedFilter]="lastChangedFilter"
+                      ></app-gene-filters-panel>
+                    </div>
+                  </app-sidebar-item>
+
+                  <app-sidebar-item *ngIf="!isMobile">
+                    <div content class="wizard-banner-wrapper">
+                      <ng-container [ngTemplateOutlet]="sidebarCarousel"
+                      ></ng-container>
+                    </div>
+                  </app-sidebar-item>
+                </app-sidebar>
+              </div>
+
+              <div class="grid-container__content-column">
+                <app-search-counter
+                  [quantity]="itemsQuantity"
+                  [title]="'main_page_total'"
+                ></app-search-counter>
+
+                <app-search
+                  class="__mb-10"
+                  [multiple]="queryLength > 1"
+                  [searchHintsList]="geneHints"
+                  [isDisabled]="genesListIsLoading"
+                  placeholder="search_field_start_typing"
+                  (search)="updateGenesList($event)"
+                  (queryChange)="setSearchQuery($event)"
+                  (cancel)="$cancelSearch.next()"
+                  [showProgressBar]="showProgressBar"
+                  [predefinedValue]="queryFromRoute"
+                >
+                  <button *ngIf="isMobile"
+                          prefix
+                          mat-icon-button
+                          color="primary"
+                          (click)="openFiltersModal('filters_modal_title', null, fieldsModalTemplate)">
+                    <mat-icon>tune</mat-icon>
+                  </button>
+                </app-search>
+
+                <app-genes-list
+                  (loading)="setLoader($event)"
+                  (errorStatus)="errorStatus = $event"
+                  (itemsNumber)="itemsQuantity = $event"
+                  (filterChanged)="updateOnFilterChange($event)"
+                  [genesList]="confirmedQuery"
+                  [viewport]="viewport"
+                  [isMobile]="isMobile"
+                  [setSearchMode]="searchMode"
+                  [showFiltersPanel]="true"
+                  [cancelSearch]="$cancelSearch.asObservable()"
+                ></app-genes-list>
+              </div>
             </div>
-          </div>
-
-          <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2 sidebar-column"
-               [ngClass]="isMobile? 'sidebar-column--mobile' : 'sidebar-column--desktop'">
-            <app-sidebar>
-              <app-sidebar-item *ngIf="!isMobile">
-                <div content class="wizard-banner-wrapper">
-                  <ng-container [ngTemplateOutlet]="sidebarCarousel"
-                  ></ng-container>
-                </div>
-              </app-sidebar-item>
-
-              <app-sidebar-item *ngIf="!isMobile">
-                <div content class="filters-wrapper">
-                  <app-gene-filters-panel
-                    [isLoading]="genesListIsLoading"
-                    [lastChangedFilter]="lastChangedFilter"
-                  ></app-gene-filters-panel>
-                </div>
-              </app-sidebar-item>
-            </app-sidebar>
-          </div>
-
-          <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-10">
-            <app-search-counter
-              [quantity]="itemsQuantity"
-              [title]="'main_page_total'"
-            ></app-search-counter>
-
-            <app-search
-              class="__mb-10"
-              [multiple]="queryLength > 1"
-              [searchHintsList]="geneHints"
-              [isDisabled]="genesListIsLoading"
-              placeholder="search_field_start_typing"
-              (search)="updateGenesList($event)"
-              (queryChange)="setSearchQuery($event)"
-              (cancel)="$cancelSearch.next()"
-              [showProgressBar]="showProgressBar"
-              [predefinedValue]="queryFromRoute"
-            >
-              <button *ngIf="isMobile"
-                      prefix
-                      mat-icon-button
-                      color="primary"
-                      (click)="openFiltersModal('filters_modal_title', null, fieldsModalTemplate)">
-                <mat-icon>tune</mat-icon>
-              </button>
-            </app-search>
-
-            <app-genes-list
-              (loading)="setLoader($event)"
-              (errorStatus)="errorStatus = $event"
-              (itemsNumber)="itemsQuantity = $event"
-              (filterChanged)="updateOnFilterChange($event)"
-              [genesList]="confirmedQuery"
-              [viewport]="viewport"
-              [isMobile]="isMobile"
-              [setSearchMode]="searchMode"
-              [showFiltersPanel]="true"
-              [cancelSearch]="$cancelSearch.asObservable()"
-            ></app-genes-list>
           </div>
         </ng-container>
       </div>

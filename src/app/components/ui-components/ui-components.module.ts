@@ -24,7 +24,8 @@ import { InfoButtonComponent } from './components/info-button/info-button.compon
 import { BannerComponent } from './components/banner/banner.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { CarouselItemDirective } from './components/carousel/carousel-item.directive';
-import {DirectivesModule} from "../../directives/directives.module";
+import { DirectivesModule } from "../../directives/directives.module";
+import { PageSubtitleComponent } from './components/page-subtitle/page-subtitle.component';
 
 const components = [
   AccordionComponent,
@@ -45,6 +46,7 @@ const components = [
   InfoButtonComponent,
   BannerComponent,
   CarouselComponent,
+  PageSubtitleComponent,
 ];
 
 @NgModule({
