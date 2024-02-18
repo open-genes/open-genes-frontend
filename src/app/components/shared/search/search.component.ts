@@ -11,7 +11,7 @@ import {
   Renderer2,
 } from '@angular/core';
 import { Genes } from '../../../core/models';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, filter, map, pairwise, startWith, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
@@ -75,7 +75,7 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
   @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public searchedData: Partial<Genes[]>;
-  public searchForm: FormGroup;
+  public searchForm: UntypedFormGroup;
   public mode: SearchMode;
   public formDisabled: boolean;
   public clearButton: boolean;
@@ -92,8 +92,8 @@ export class SearchComponent extends ToMap implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
   ) {
     super();
-    this.searchForm = new FormGroup({
-      searchField: new FormControl(''),
+    this.searchForm = new UntypedFormGroup({
+      searchField: new UntypedFormControl(''),
     });
   }
 

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { ApiResearchSearchParameters } from '../../../../core/models/filters/filter.model';
@@ -30,7 +30,7 @@ enum formControlToFilter {
   styleUrls: ['./research-filters-panel.component.scss'],
 })
 export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implements OnInit, OnDestroy {
-  public filtersForm: FormGroup;
+  public filtersForm: UntypedFormGroup;
   @Output() filterReady: EventEmitter<string> = new EventEmitter<string>();
 
   // Search in selects
@@ -52,9 +52,9 @@ export class ResearchDataFiltersPanelComponent extends FilterPanelLogic implemen
     private readonly cdRef: ChangeDetectorRef,
   ) {
     super(apiService, filterService);
-    this.filtersForm = new FormGroup({
-      selectionCriteriaSelect: new FormControl([[], [null]]),
-      modelOrganismSelect: new FormControl([null, null]),
+    this.filtersForm = new UntypedFormGroup({
+      selectionCriteriaSelect: new UntypedFormControl([[], [null]]),
+      modelOrganismSelect: new UntypedFormControl([null, null]),
     });
   }
 
