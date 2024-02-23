@@ -48,7 +48,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     BurgerMenuComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     RouterModule.forRoot(APP_ROUTES, ROUTER_OPTIONS),
     HttpClientModule,
     // ngx-translate and the loader module
