@@ -1,7 +1,7 @@
 <app-header [region]="region"></app-header>
 <router-outlet></router-outlet>
 <app-footer
-  *ngIf="isFooterVisible"
+  *ngIf="!isErrorPage && isFooterVisible"
   [appData]="app">
   <div [innerHTML]="footerContent"></div>
 </app-footer>
