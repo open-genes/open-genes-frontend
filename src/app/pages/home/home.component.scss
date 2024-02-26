@@ -30,7 +30,7 @@
       bottom: 0;
       left: 0;
       z-index: 1;
-      background: $pink-blue-gradient;
+      background: $color-white;
       opacity: .95;
     }
 
@@ -42,7 +42,7 @@
   }
 
   &__header {
-    margin-top: -#{$gutter*2};
+    margin-top: -#{$gutter*4};
   }
 
   &__title,
@@ -52,14 +52,18 @@
   }
 
   &__title {
-    font-size: calc(0.2vw + 30px);
-    font-weight: $font-weight-medium;
+    font-size: 0;
+    margin-bottom: $gutter;
+  }
+
+  &__logo {
+    position: relative;
+    left: -5px;
+    display: inline-block;
   }
 
   &__description {
-    font-size: calc(0.2vw + $font-size-bigger);
     font-weight: $font-weight-regular;
-    margin-top: $gutter;
   }
 
   &__section {
@@ -73,9 +77,7 @@
     margin-top: $gutter;
   }
 
-  &__search {
-    margin-top: $gutter*3;
-  }
+  // &__search {}
 
   // &__buttons {}
 
@@ -97,8 +99,13 @@
   }
 
   &__last-updated {
-    .alias {
-      margin: 0;
+    .last-gene {
+      display: inline-block;
+      font-size: 1em;
+      padding: .1em .4em;
+      border-radius: $border-radius-regular;
+      background-color: $color-black;
+      color: $color-white;
     }
   }
 }

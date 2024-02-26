@@ -5,10 +5,13 @@
         <div class="row no-gutters">
           <div class="col col-12 main-page__header">
             <div class="main-page__title">
-              <h1 class="notranslate">{{ "product_name" | translate }}</h1>
-            </div>
-            <div class="main-page__description">
-              {{ "main_page_header_description" | translate }}
+              <app-icon
+                class="main-page__logo"
+                staticSrc="/assets/images/logo.svg"
+                size="custom"
+                customWidth="160px"
+                customHeight="85px"
+              ></app-icon>
             </div>
           </div>
 
@@ -25,7 +28,7 @@
           <div class="col col-12 main-page__section main-page__buttons">
             <button
               [routerLink]="'/genes'"
-              class="btn btn--big btn--fill btn--white">
+              class="btn btn--big btn--purple">
               {{ "main_page_all_genes" | translate }}
             </button>
 
@@ -51,12 +54,13 @@
             <span>{{ "version" | translate: {val: appData.version}  }}</span>
           </div>
 
+          <div class="main-page__section main-page__description">
+            {{ "main_page_header_description" | translate }}
+          </div>
+
           <div class="col col-12 main-page__section main-page__genes-title">
             <h2>
-              {{ "main_page_total_genes" | translate: {number: genesCounter} }}
-            </h2>
-            <h2>
-              {{ "main_page_last" | translate }}:
+              {{ "main_page_total_genes" | translate: {number: genesCounter} }}; {{ "main_page_last" | translate }}:
             </h2>
           </div>
 
@@ -64,7 +68,7 @@
             <a
               *ngFor="let item of lastGenes"
               [routerLink]="['/gene', item.symbol]"
-              class="alias"
+              class="last-gene"
             >{{ item.symbol }}</a>
           </div>
         </div>

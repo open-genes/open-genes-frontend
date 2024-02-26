@@ -21,7 +21,9 @@ export class AppComponent implements OnInit, OnDestroy {
     version: environment.version,
   };
   public region: string;
+  public isScrolled = false;
   public isFooterVisible = false;
+  public isHomePage = false;
   public isErrorPage = false;
   public showCookieBanner = false;
   public footerContent: unknown;
@@ -60,6 +62,11 @@ export class AppComponent implements OnInit, OnDestroy {
         this.currentRoute = event.url;
         if (this.currentRoute === '/404') {
           this.isErrorPage = true;
+        } else if (this.currentRoute === '/home') {
+          this.isHomePage = true;
+        } else {
+          this.isErrorPage = false;
+          this.isHomePage = false;
         }
         // Hide progress spinner on router event
         this.document.body.classList.remove('body--loading');
@@ -81,11 +88,22 @@ export class AppComponent implements OnInit, OnDestroy {
     this.setCookieBannerState();
 
     // Handle scroll events
+    const hasVerticalScrollbar = this.document.documentElement.scrollHeight > this.document.documentElement.clientHeight;
+    if (!hasVerticalScrollbar) {
+      this.isFooterVisible = true;
+    }
+
     this.scrollSubscription$ = this.windowService.scroll$
       .subscribe((scrollPosition) => {
         const totalHeight = this.document.documentElement.scrollHeight - this.document.documentElement.clientHeight;
         const scrollPercentage = (scrollPosition / totalHeight) * 100;
-        this.isFooterVisible = scrollPercentage > 60;
+
+        if (hasVerticalScrollbar) {
+          this.isFooterVisible = scrollPercentage > 60;
+        } else {
+          this.isFooterVisible = true;
+        }
+        this.isScrolled = scrollPercentage > 1;
       });
 
     // Get dynamic content for some sections
