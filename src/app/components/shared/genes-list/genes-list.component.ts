@@ -25,7 +25,7 @@ import { Sort } from '@angular/material/sort';
 import { ApiResponse, PageOptions } from '../../../core/models/api-response.model';
 import { SearchModel } from '../../../core/models/open-genes-api/search.model';
 import { SortEnum } from '../../../core/services/filters/filter-types.enum';
-import { appliedFilter } from './genes-list-settings.model';
+import { appliedFilter, GenesListSettings } from './genes-list-settings.model';
 import { Viewport } from '../../../core/utils/window-width';
 
 @Component({
@@ -39,6 +39,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   @Input() cancelSearch: Observable<void>;
   @Input() isMobile: boolean;
   @Input() showFiltersPanel: boolean;
+
   @Input() set setSearchMode(searchMode: SearchMode) {
     if (searchMode) {
       this.searchMode = searchMode;
@@ -106,11 +107,12 @@ export class GenesListComponent implements OnInit, OnDestroy {
   public currentPage: number;
   public options: PageOptions;
   public isLoading = false;
-
+  public retrievedSettings: Settings;
+  public genesListSettings: GenesListSettings;
+  private listSettingsSubscription$: Subscription;
   private cancelSearchSubscription$: Subscription;
   private cachedData: Genes[] = [];
   private querySubstrings: string[] = [];
-  private retrievedSettings: Settings;
   private searchModeEnum = SearchModeEnum;
   private subscription$ = new Subject();
   private genesFromInput: Genes[];
@@ -153,6 +155,10 @@ export class GenesListComponent implements OnInit, OnDestroy {
       });
     this.favouritesService.getItems();
     this.setInitSettings();
+    // Subscribe to get visible fields settings update
+    this.listSettingsSubscription$ = this.settingsService.genesListSettings$.subscribe((settings) => {
+      this.genesListSettings = settings;
+    });
     this.setInitialState();
 
     this.cancelSearchSubscription$ = this.cancelSearch?.subscribe(() => {
@@ -162,6 +168,7 @@ export class GenesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.listSettingsSubscription$.unsubscribe();
     this.cancelSearchSubscription$?.unsubscribe();
     this.subscription$.unsubscribe();
     this.filterService.clearFilters();

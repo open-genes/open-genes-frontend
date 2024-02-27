@@ -43,13 +43,13 @@
 
   <div class="body__row body__row--checkbox">
     <mat-checkbox
-      color="primary"
-      formControlName="experimentsStatsCheckbox"
       class="checkbox"
-      [(ngModel)]="ifShowExperimentsStats"
+      color="primary"
       [disabled]="isLoading"
-      (change)="toggleSwitchAndFilter('researches', $event)">
-      {{ "filters_modal_placeholder_show_research_data" | translate }}
+      formControlName="experimentsStatsCheckbox"
+      [(ngModel)]="ifShowExperimentsStats"
+      (change)="toggleExperimentsStats(!$event.checked)"
+    >{{ "filters_modal_placeholder_show_research_data" | translate }}
     </mat-checkbox>
   </div>
 

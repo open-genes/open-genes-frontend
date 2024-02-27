@@ -5,9 +5,10 @@ import { Pagination } from '../../models/settings.model';
 import { SettingsService } from '../settings.service';
 import { Router } from '@angular/router';
 import { ApiService } from '../api/open-genes-api.service';
+import { GenesListSettings } from '../../../components/shared/genes-list/genes-list-settings.model';
 
 export abstract class FilterService {
-  listOfFields$ = new BehaviorSubject<any>('');
+  listOfFields$ = new BehaviorSubject<GenesListSettings>(null);
   filterChanges$ = new BehaviorSubject<any>([]);
   public twoOrMoreFiltersApplied = new BehaviorSubject<boolean>(false);
 
@@ -40,7 +41,7 @@ export abstract class FilterService {
   }
 
   // Filter
-  public applyFilter(filterType: string, filterValue: any): void {
+  public applyFilter(filterType: string, filterValue: any, callback?: () => void): void {
     const filters = this.getFilters();
     if (filterValue) {
       if (Array.isArray(filters[filterType])) {
@@ -74,6 +75,9 @@ export abstract class FilterService {
     }
     this.updateList(this.getFilters());
     this.areMoreThan2FiltersApplied();
+    if (callback instanceof Function) {
+      callback();
+    }
   }
 
   public onLoadNextPage(pagesTotal: number): void {

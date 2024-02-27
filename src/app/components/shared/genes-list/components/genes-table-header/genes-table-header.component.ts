@@ -1,12 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, TemplateRef } from '@angular/core';
-import { GenesFilterService } from '../../../../../core/services/filters/genes-filter.service';
-import { GeneTableCardLogic } from '../../../../../core/utils/gene-table-card-logic';
-import { FavouritesService } from '../../../../../core/services/favourites.service';
+import { ChangeDetectionStrategy, Component, Input, TemplateRef } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Settings } from '../../../../../core/models/settings.model';
-import { SettingsService } from '../../../../../core/services/settings.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CommonBottomSheetComponent } from '../../../../ui-components/components/modals/common-bottom-sheet/common-bottom-sheet.component';
+import { GenesListSettings } from '../../genes-list-settings.model';
 
 @Component({
   selector: 'app-genes-table-header',
@@ -14,25 +10,16 @@ import { CommonBottomSheetComponent } from '../../../../ui-components/components
   styleUrls: ['./genes-table-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GenesTableHeaderComponent extends GeneTableCardLogic {
-  public isUiHintsSettingOn: boolean;
-
-  private retrievedSettings: Settings;
+export class GenesTableHeaderComponent {
+  @Input() listSettings: GenesListSettings;
+  @Input() isUiHintsSettingOn: boolean;
 
   constructor(
-    protected _filterService: GenesFilterService,
-    protected _favouritesService: FavouritesService,
-    protected _snackBar: MatSnackBar,
-    protected cdRef: ChangeDetectorRef,
-    protected settingsService: SettingsService,
-    protected bottomSheet: MatBottomSheet
-  ) {
-    super(_filterService, _favouritesService, _snackBar, cdRef);
-    this.retrievedSettings = this.settingsService.getSettings();
-    this.isUiHintsSettingOn = this.retrievedSettings.showUiHints;
-  }
+    private snackBar: MatSnackBar,
+    private bottomSheet: MatBottomSheet
+  ) {}
 
-  public openBottomSheet(ev: MouseEvent, template: TemplateRef<any> = null): void {
+  public openHintSheet(ev: MouseEvent, template: TemplateRef<any> = null): void {
     this.bottomSheet.open(CommonBottomSheetComponent, {
       data: {
         template: template,

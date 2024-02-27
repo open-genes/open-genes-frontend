@@ -59,7 +59,10 @@
     <ng-container *ngIf="isTableView && !isMobile">
       <table>
         <thead>
-        <app-genes-table-header *ngIf="!isGoTermsMode"></app-genes-table-header>
+        <app-genes-table-header *ngIf="!isGoTermsMode"
+                                [listSettings]="genesListSettings"
+                                [isUiHintsSettingOn]="retrievedSettings.showUiHints"
+        ></app-genes-table-header>
         <app-genes-annotations-table-header
           *ngIf="isGoTermsMode && isGoSearchPerformed "></app-genes-annotations-table-header>
         </thead>

@@ -86,6 +86,8 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
   public predefinedConfidenceLevel: any;
   public confidenceLevel: any[];
 
+  private experimentsStatsCheckbox: FormControl;
+
   @Input() isLoading = false;
   @Input() set lastChangedFilter(filter: appliedFilter) {
     // Change detection workaround
@@ -224,8 +226,11 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
           this.predefinedFamilyOrigin = data.byFamilyOrigin;
           this.predefinedConservativeIn = data.byConservativeIn;
           this.predefinedTags = data.byAgeRelatedProcess;
-          this.ifShowExperimentsStats = !!data.researches ?? false;
-          this.filtersForm.controls.experimentsStatsCheckbox.patchValue(!!data.researches);
+
+          // From http param to settings service then directly patch from control
+          this.ifShowExperimentsStats = Boolean(data.researches);
+          this.settingsService.updateVisibleField('ifShowExperimentsStats', this.ifShowExperimentsStats);
+          this.filtersForm.controls.experimentsStatsCheckbox.patchValue(this.ifShowExperimentsStats);
         }
         this.cdRef.markForCheck();
         this.cdRef.detectChanges();
@@ -250,11 +255,15 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
     this.filterLoaded.emit();
   }
 
-  public toggleSwitchAndFilter(filterType: ApiGeneSearchParameters, $event): void {
-    this.listSettings.ifShowExperimentsStats = $event.checked;
+  public toggleExperimentsStats(checked: boolean): void {
     this.filterService.applyFilter(
-      filterType,
-      Number(this.listSettings.ifShowExperimentsStats)
+      'researches',
+      Number(checked),
+      () => {
+        this.settingsService.genesListSettings.ifShowExperimentsStats = checked;
+        this.updateVisibleFields();
+        this.cdRef.markForCheck();
+      }
     );
   }
 
@@ -273,12 +282,14 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
    * Update list view
    */
   private updateVisibleFields(): void {
+    console.log('updateVisibleFields');
     this.filterService.currentFields
       .pipe(takeUntil(this.subscription$))
       .subscribe(
-        (fields) => {
-          this.settingsService.setFieldsForShow(fields);
+        (fields: GenesListSettings) => {
           this.listSettings = fields;
+          this.settingsService.setVisibleFields(this.listSettings);
+          this.settingsService.updateVisibleFields(this.listSettings);
         },
         (error) => {
           console.warn(error);
