@@ -110,6 +110,21 @@ $skeleton-field-height: 40px;
     }
   }
 
+  &--aliases {
+    #{$p}__row {
+      width: 100%;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    #{$p}__bone {
+      display: inline-block;
+      height: 22px;
+      width: 60px;
+      margin: 0 5px 5px 0;
+    }
+  }
+
   &--inline {
     position: absolute; // a parent element of a component must have `position: relative`
     width: 100%;

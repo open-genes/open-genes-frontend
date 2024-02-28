@@ -65,11 +65,16 @@
           </div>
 
           <div class="col col-12 main-page__section main-page__last-updated">
-            <a
-              *ngFor="let item of lastGenes"
-              [routerLink]="['/gene', item.symbol]"
-              class="last-gene"
-            >{{ item.symbol }}</a>
+            <ng-container *ngIf="lastGenes; else lastGenesLoader">
+              <a
+                *ngFor="let item of lastGenes"
+                [routerLink]="['/gene', item.symbol]"
+                class="alias"
+              >{{ item.symbol }}</a>
+            </ng-container>
+            <ng-template #lastGenesLoader>
+              <app-skeleton view="aliases" [itemsInRow]="4"></app-skeleton>
+            </ng-template>
           </div>
         </div>
       </div>

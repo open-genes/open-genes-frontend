@@ -5,11 +5,12 @@ import { RouterModule } from '@angular/router';
 import { HOME_ROUTES } from './home-routing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../../modules/vendors/material.module';
-import {SearchModule} from "../../components/shared/search/search.module";
-import {IconModule} from "../../components/ui-components/components/icon/app-icon.module";
+import { SearchModule } from "../../components/shared/search/search.module";
+import { IconModule } from "../../components/ui-components/components/icon/app-icon.module";
+import { UiComponentsModule } from "../../components/ui-components/ui-components.module";
 
 @NgModule({
   declarations: [HomeComponent],
-    imports: [CommonModule, RouterModule.forChild(HOME_ROUTES), TranslateModule, MaterialModule, SearchModule, IconModule],
+    imports: [CommonModule, RouterModule.forChild(HOME_ROUTES), TranslateModule, MaterialModule, SearchModule, IconModule, UiComponentsModule],
 })
 export class HomeModule {}

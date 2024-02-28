@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GeneFiltersPanelComponent } from './components/gene-filters-panel/gene-filters-panel.component';
 import { Genes } from '../../core/models';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
@@ -51,6 +51,7 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
     private dialog: MatDialog,
     private wpApiService: WordpressApiService,
     private route: ActivatedRoute,
+    private ngZone: NgZone,
   ) {
     super(windowService);
   }
@@ -81,11 +82,15 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
       }
     });
 
-    this.wpApiService.getSectionContent('sidebar')
-      .pipe(takeUntil(this.dynamicContent$))
-      .subscribe((content) => {
-        this.sidebarContent = content;
-      });
+    this.ngZone.runOutsideAngular(() => {
+      this.wpApiService.getSectionContent('sidebar')
+        .pipe(takeUntil(this.dynamicContent$))
+        .subscribe((content) => {
+          this.sidebarContent = content;
+        }, error => {
+          console.warn(error);
+        });
+    });
   }
 
   ngOnDestroy(): void {

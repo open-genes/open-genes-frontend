@@ -24,18 +24,6 @@ export class WordpressApiService {
   constructor(private http: HttpClient, private translate: TranslateService) {
   }
 
-  private getFooterContent$(): Observable<unknown> {
-    return this.footerContentSubject.asObservable();
-  }
-
-  private getSidebarContent$(): Observable<unknown> {
-    return this.sidebarContentSubject.asObservable();
-  }
-
-  private getWizardContent$(): Observable<unknown> {
-    return this.wizardContentSubject.asObservable();
-  }
-
   public getCategories(language?: string): Observable<Category[]> {
     const params = new HttpParams().set('slug', language ? language : this.translate.currentLang);
     return this.http.get<Category[]>(`${this.url}categories`, { params });
@@ -62,13 +50,13 @@ export class WordpressApiService {
           switch (section) {
             case 'footer':
               this.footerContentSubject.next(content);
-              return this.getFooterContent$() as Observable<string>;
+              return this.footerContentSubject.asObservable();
             case 'sidebar':
               this.sidebarContentSubject.next(content);
-              return this.getSidebarContent$() as Observable<string>;
+              return this.sidebarContentSubject.asObservable();
             case 'wizard':
               this.wizardContentSubject.next(content);
-              return this.getWizardContent$() as Observable<string>;
+              return this.wizardContentSubject.asObservable();
             default:
               this.otherContentSubject.next(content);
               return this.otherContentSubject.asObservable();

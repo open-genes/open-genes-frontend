@@ -99,14 +99,7 @@
   }
 
   &__last-updated {
-    .last-gene {
-      display: inline-block;
-      font-size: 1em;
-      padding: .1em .4em;
-      border-radius: $border-radius-regular;
-      background-color: $color-black;
-      color: $color-white;
-    }
+    gap: 0;
   }
 }
 

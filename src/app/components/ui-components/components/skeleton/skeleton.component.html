@@ -3,19 +3,22 @@
      'skeleton--lines': view === 'line',
      'skeleton--cards': view === 'card',
      'skeleton--panels': view === 'panel',
+     'skeleton--aliases': view === 'aliases',
      'skeleton--inline': view === 'inline'
      }"
      [ngSwitch]="view">
 
   <ng-container *ngSwitchCase="'line'">
-    <div class="skeleton__row" *ngFor="let i of row(groups)">
+    <div *ngFor="let i of row(groups)"
+         class="skeleton__row">
       <div class="skeleton__bone"></div>
       <div class="skeleton__bone"></div>
     </div>
   </ng-container>
 
   <ng-container *ngSwitchCase="'card'">
-    <div class="skeleton__row" *ngFor="let r of row(groups)">
+    <div *ngFor="let r of row(groups)"
+         class="skeleton__row">
       <div class="skeleton__bone" *ngFor="let r of row(itemsInRow)">
         <div class="skeleton__card"></div>
       </div>
@@ -23,8 +26,16 @@
   </ng-container>
 
   <ng-container *ngSwitchCase="'panel'">
-    <div class="skeleton__row" *ngFor="let i of row(groups)">
+    <div *ngFor="let i of row(groups)"
+         class="skeleton__row">
       <div class="skeleton__bone"></div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'aliases'">
+    <div class="skeleton__row">
+      <div *ngFor="let r of row(itemsInRow)"
+           class="skeleton__bone"></div>
     </div>
   </ng-container>
 

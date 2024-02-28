@@ -3,7 +3,7 @@
     <div class="container-fluid search-page__container">
       <div class="row">
         <div *ngIf="isMobile"
-             class="col-12">
+             class="col-12 carousel-inside carousel-inside--mobile">
           <ng-container [ngTemplateOutlet]="sidebarCarousel"></ng-container>
         </div>
         <div class="col-12 search-page__header">
@@ -24,7 +24,8 @@
                    [ngClass]="isMobile? 'grid-container__sidebar-column--mobile' : 'grid-container__sidebar-column--desktop'">
                 <app-sidebar>
                   <app-sidebar-item *ngIf="!isMobile">
-                    <div content class="filters-wrapper">
+                    <div content
+                         class="filters-wrapper">
                       <app-gene-filters-panel
                         [isLoading]="genesListIsLoading"
                         [lastChangedFilter]="lastChangedFilter"
@@ -33,7 +34,8 @@
                   </app-sidebar-item>
 
                   <app-sidebar-item *ngIf="!isMobile">
-                    <div content class="wizard-banner-wrapper">
+                    <div content
+                         class="wizard-banner-wrapper carousel-inside carousel-inside--desktop">
                       <ng-container [ngTemplateOutlet]="sidebarCarousel"
                       ></ng-container>
                     </div>
@@ -126,8 +128,8 @@
     </div>
 
     <div appCarouselItem
-         class="carousel__placeholder"
-         [innerHTML]="sidebarContent | safe: 'html'">
+         class="carousel__placeholder">
+      <span [innerHTML]="sidebarContent | safe: 'html'"></span>
       <app-skeleton *ngIf="!sidebarContent"
                     view="inline"
       ></app-skeleton>
