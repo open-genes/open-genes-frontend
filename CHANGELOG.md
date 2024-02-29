@@ -25,3 +25,20 @@
 - #300. Fix broken QuickGO links
 - Noissue. Fix opening a link in a new tab on the /about page
 - Noissue. Fix expandable panels width on the /about page
+
+# Release v1.2.0
+
+## Features
+- #253. Add dynamic content to pages
+    - Pass data from content API to a wizard and footer section
+    - Optimize data loading for dynamic content
+    - Render footer section on scroll past 50%
+    - Search pages refactor
+    - Refactor skeleton component layout, add new types
+    - New main page
+    - Add random gene search
+    - Carousel for dynamic content in the sidebar
+    - Layout for static and dynamic hints in the carousel
+
+
+
