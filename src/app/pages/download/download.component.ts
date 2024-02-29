@@ -8,6 +8,7 @@ import { CommonModalComponent } from 'src/app/components/ui-components/component
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: 'app-download-page',
@@ -32,7 +33,8 @@ export class DownloadComponent {
     private router: Router,
     private matDialog: MatDialog,
     private csvExportService: CsvExportService,
-    private fileExportService: FileExportService
+    private fileExportService: FileExportService,
+    private googleAnalyticsService: GoogleAnalyticsService
   ) {}
 
   public openDownloadModal(template): void {
@@ -55,160 +57,74 @@ export class DownloadComponent {
     });
   }
 
-  public async downloadDiseaseTsv() {
+  private async trackDownload(datasetName: string) {
+    try {
+      await this.googleAnalyticsService.event('Download', 'click', datasetName);
+    } catch (error) {
+      console.error('Error tracking download event:', error);
+    }
+  }
+
+  private async downloadCsv(datasetName: string, generateFunction: () => Promise<any>) {
     try {
       this.isProcessing = true;
-      const res = await this.csvExportService.generateGenesDiseasesTable();
+      const res = await generateFunction();
       if (res.length !== 0) {
-        // TODO: pass status, and handle if status ok
         this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'gene-diseases';
+        this.currentDatasetName = datasetName;
+        await this.trackDownload(datasetName);
         this.openDownloadModal(this.downLoadLinkTemplate);
       }
     } catch {
       this.openDownloadModal(this.errorTemplate);
     }
+  }
+
+  public async downloadDiseaseTsv() {
+    await this.downloadCsv('gene-diseases', () => this.csvExportService.generateGenesDiseasesTable());
   }
 
   public async downloadAgingMechanismsTsv() {
-    try {
-      this.isProcessing = true;
-      const res = await this.csvExportService.generateGenesAgingMechanismsTable();
-      if (res.length !== 0) {
-        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'gene-aging-mechanisms';
-        this.openDownloadModal(this.downLoadLinkTemplate);
-      }
-    } catch {
-      this.openDownloadModal(this.errorTemplate);
-    }
+    await this.downloadCsv('gene-aging-mechanisms', () => this.csvExportService.generateGenesAgingMechanismsTable());
   }
 
-  public async generateGeneTissueRpkmTsv() {
-    try {
-      this.isProcessing = true;
-      const res = await this.csvExportService.generateGeneTissueRpkmTable();
-      if (res.length !== 0) {
-        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'gene-tissue-rpkm';
-        this.openDownloadModal(this.downLoadLinkTemplate);
-      }
-    } catch {
-      this.openDownloadModal(this.errorTemplate);
-    }
+  public async downloadGeneTissueRpkmTsv() {
+    await this.downloadCsv('gene-tissue-rpkm', () => this.csvExportService.generateGeneTissueRpkmTable());
   }
 
   public async downloadGoTermsTsv() {
-    try {
-      this.isProcessing = true;
-      const res = await this.csvExportService.generateGeneAndGoTermsTable();
-      if (res.length !== 0) {
-        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'gene-go-terms';
-        this.openDownloadModal(this.downLoadLinkTemplate);
-      }
-    } catch {
-      this.openDownloadModal(this.errorTemplate);
-    }
+    await this.downloadCsv('gene-go-terms', () => this.csvExportService.generateGeneAndGoTermsTable());
   }
 
   public async downloadYellowTablesTsv() {
-    try {
-      this.isProcessing = true;
-      const res = await this.csvExportService.generateYellowTable();
-      if (res.length !== 0) {
-        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'gene-regulation';
-        this.openDownloadModal(this.downLoadLinkTemplate);
-      }
-    } catch {
-      this.openDownloadModal(this.errorTemplate);
-    }
+    await this.downloadCsv('gene-regulation', () => this.csvExportService.generateYellowTable());
   }
 
   public async downloadPinkTablesTsv() {
-    try {
-      this.isProcessing = true;
-      const res = await this.csvExportService.generatePinkTable();
-      if (res.length !== 0) {
-        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'associations-with-lifespan';
-        this.openDownloadModal(this.downLoadLinkTemplate);
-      }
-    } catch {
-      this.openDownloadModal(this.errorTemplate);
-    }
+    await this.downloadCsv('associations-with-lifespan', () => this.csvExportService.generatePinkTable());
   }
 
   public async downloadPurpleTablesTsv() {
-    try {
-      this.isProcessing = true;
-      const res = await this.csvExportService.generatePurpleTable();
-      if (res.length !== 0) {
-        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'lifespan-change';
-        this.openDownloadModal(this.downLoadLinkTemplate);
-      }
-    } catch {
-      this.openDownloadModal(this.errorTemplate);
-    }
+    await this.downloadCsv('lifespan-change', () => this.csvExportService.generatePurpleTable());
   }
 
-  public async generateGreenTableTsv() {
-    try {
-      this.isProcessing = true;
-      const res = await this.csvExportService.generateGreenTable();
-      if (res.length !== 0) {
-        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'age-related-processes-change';
-        this.openDownloadModal(this.downLoadLinkTemplate);
-      }
-    } catch {
-      this.openDownloadModal(this.errorTemplate);
-    }
+  public async downloadGreenTableTsv() {
+    await this.downloadCsv('age-related-processes-change', () => this.csvExportService.generateGreenTable());
   }
 
-  public async generateBlueTableTsv() {
-    try {
-      this.isProcessing = true;
-      const res = await this.csvExportService.generateBlueTable();
-      if (res.length !== 0) {
-        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = 'age-related-changes';
-        this.openDownloadModal(this.downLoadLinkTemplate);
-      }
-    } catch {
-      this.openDownloadModal(this.errorTemplate);
-    }
+  public async downloadBlueTableTsv() {
+    await this.downloadCsv('age-related-changes', () => this.csvExportService.generateBlueTable());
   }
 
-  public async generateSummarizedResearchResultsTsv() {
-    this.isProcessing = true;
-    const res = await this.csvExportService.generateSummarizedResearchResults();
-    if (res.length !== 0) {
-      this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-      this.currentDatasetName = 'summarized-criteria';
-      this.openDownloadModal(this.downLoadLinkTemplate);
-    }
+  public async downloadSummarizedResearchResultsTsv() {
+    await this.downloadCsv('summarized-criteria', () => this.csvExportService.generateSummarizedResearchResults());
   }
 
-  public async generateGeneCriteriaTsv() {
-    this.isProcessing = true;
-    const res = await this.csvExportService.generateGeneCriteriaTable();
-    if (res.length !== 0) {
-      this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-      this.currentDatasetName = 'gene-criteria';
-      this.openDownloadModal(this.downLoadLinkTemplate);
-    }
+  public async downloadGeneCriteriaTsv() {
+    await this.downloadCsv('gene-criteria', () => this.csvExportService.generateGeneCriteriaTable());
   }
 
-  public async generateGeneEvolutionTsv() {
-    this.isProcessing = true;
-    const res = await this.csvExportService.generateGeneEvolutionTable();
-    if (res.length !== 0) {
-      this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-      this.currentDatasetName = 'gene-evolution';
-      this.openDownloadModal(this.downLoadLinkTemplate);
-    }
+  public async downloadGeneEvolutionTsv() {
+    await this.downloadCsv('gene-evolution', () => this.csvExportService.generateGeneEvolutionTable());
   }
 }

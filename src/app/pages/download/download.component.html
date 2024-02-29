@@ -22,8 +22,7 @@
             <a href="/open_genes_sql_dump.zip"
                target="_blank"
                class="btn btn--fill btn--big btn--purple"
-            ><span class="fa far fa-download"></span>&nbsp;{{ "download_page_variant_button_download" | translate }}</a
-            >
+            ><span class="fa far fa-download"></span>&nbsp;{{ "download_page_variant_button_download" | translate }}</a>
           </section>
           <section class="col-xs-12 col-md-4 variant variant--w-button">
             <h3>{{ "download_page_variant_2_title" | translate }}  <span class="alias alias--small">JSON</span></h3>
@@ -68,13 +67,13 @@
               <li>
                 <span class="study-mark study-mark--age-related-change"></span>
                 <button class="link link--blue link--underline link-button"
-                        (click)="generateBlueTableTsv()"
+                        (click)="downloadBlueTableTsv()"
                 >{{ "gene_page_research_data_age_related_changes" | translate }}</button>
               </li>
               <li>
                 <span class="study-mark study-mark--gene-intervention-to-vital-processes"></span>
                 <button class="link link--blue link--underline link-button"
-                        (click)="generateGreenTableTsv()"
+                        (click)="downloadGreenTableTsv()"
                 >{{ "gene_page_intervention_moderates_aging" | translate }}</button>
               </li>
               <li>
@@ -92,7 +91,7 @@
               <!--
               <li>
                 <button class="link link--blue link--underline link-button"
-                        (click)="generateSummarizedResearchResultsTsv()"
+                        (click)="downloadSummarizedResearchResultsTsv()"
                 >{{ "download_page_summarized_research_results" | translate }}</button>
               </li>
               -->
@@ -104,7 +103,7 @@
             <ul class="list">
               <li>
                 <button class="link link--blue link--underline link-button"
-                        (click)="generateGeneCriteriaTsv()"
+                        (click)="downloadGeneCriteriaTsv()"
                 >{{ "download_page_selection_criteria" | translate }}</button>
               </li>
               <li>
@@ -127,13 +126,13 @@
               </li>
               <li>
                 <button class="link link--blue link--underline link-button"
-                        (click)="generateGeneTissueRpkmTsv()"
+                        (click)="downloadGeneTissueRpkmTsv()"
                 >{{ "download_page_datasets_general_4" | translate }}
                 </button>
               </li>
               <li>
                 <button class="link link--blue link--underline link-button"
-                        (click)="generateGeneEvolutionTsv()"
+                        (click)="downloadGeneEvolutionTsv()"
                 >{{ "download_page_datasets_general_5" | translate }}
                 </button>
               </li>
