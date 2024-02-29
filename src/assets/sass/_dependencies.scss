@@ -1,5 +1,5 @@
-// Export project dependencies into components incapsulated styles.
-// Generally it's not UI elements styles itself, but code snippets used to avoid repeating.
+// Project dependencies for components encapsulated styles.
+// Only mixins, functions, and variables should be exported.
 @import "sources/base/variables";
 @import "sources/base/mixins";
 @import "sources/base/functions";

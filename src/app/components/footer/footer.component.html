@@ -132,7 +132,8 @@
       <div class="col-xs-12 col-md-2 col-lg-2 footer__column footer__column--language">
         <ul class="footer__links">
           <li>
-            {{ "build" | translate }} {{ buildNumber }}
+            {{ "build" | translate: { val: appData.build }  }}<br>
+            {{ "version" | translate: { val: appData.version }  }}
           </li>
           <li>
             <a routerLink="/about/articles/cookies-policy"

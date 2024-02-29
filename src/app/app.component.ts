@@ -1,29 +1,37 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, RouteConfigLoadEnd, Router, RouterEvent } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { IpRegistryService } from './core/services/api/ipregistry.service';
 import { Settings, SettingsEnum } from './core/models/settings.model';
 import { SettingsService } from './core/services/settings.service';
+import { WordpressApiService } from './core/services/api/wordpress-api.service';
+import { WindowService } from './core/services/browser/window.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   public app = {
     build: environment.build,
     version: environment.version,
   };
   public region: string;
-  public isFooterVisible = true;
+  public isScrolled = false;
+  public isFooterVisible = false;
+  public isHomePage = false;
+  public isErrorPage = false;
   public showCookieBanner = false;
+  public footerContent: unknown;
   private retrievedSettings: Settings;
   private settingsKey = SettingsEnum;
   private subscription$ = new Subject();
+  private scrollSubscription$: Subscription;
+  private dynamicContent$ = new Subject<void>();
   private currentRoute = '';
   private lang: string;
 
@@ -34,6 +42,8 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private wpApiService: WordpressApiService,
+    private windowService: WindowService,
   ) {
     // TODO: OG-953
     // Set app language
@@ -51,7 +61,12 @@ export class AppComponent implements OnInit {
         // Display/hide footer
         this.currentRoute = event.url;
         if (this.currentRoute === '/404') {
-          this.isFooterVisible = false;
+          this.isErrorPage = true;
+        } else if (this.currentRoute === '/home') {
+          this.isHomePage = true;
+        } else {
+          this.isErrorPage = false;
+          this.isHomePage = false;
         }
         // Hide progress spinner on router event
         this.document.body.classList.remove('body--loading');
@@ -71,6 +86,38 @@ export class AppComponent implements OnInit {
 
     this.setRegion();
     this.setCookieBannerState();
+
+    // Handle scroll events
+    const hasVerticalScrollbar = this.document.documentElement.scrollHeight > this.document.documentElement.clientHeight;
+    if (!hasVerticalScrollbar) {
+      this.isFooterVisible = true;
+    }
+
+    this.scrollSubscription$ = this.windowService.scroll$
+      .subscribe((scrollPosition) => {
+        const totalHeight = this.document.documentElement.scrollHeight - this.document.documentElement.clientHeight;
+        const scrollPercentage = (scrollPosition / totalHeight) * 100;
+
+        if (hasVerticalScrollbar) {
+          this.isFooterVisible = scrollPercentage > 60;
+        } else {
+          this.isFooterVisible = true;
+        }
+        this.isScrolled = scrollPercentage > 1;
+      });
+
+    // Get dynamic content for some sections
+    this.wpApiService.getSectionContent('footer')
+      .pipe(takeUntil(this.dynamicContent$))
+      .subscribe((content) => {
+        this.footerContent = content;
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.scrollSubscription$) {
+      this.scrollSubscription$.unsubscribe();
+    }
   }
 
   private outputVersion(): void {

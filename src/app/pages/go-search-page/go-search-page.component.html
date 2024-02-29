@@ -1,6 +1,12 @@
-<div class="page main-page">
-  <div class="page__inner __pt-30 __pb-60">
-    <div class="container-fluid search-page-container">
+<div class="page search-page go-search-page">
+  <div class="page__inner">
+    <div class="container-fluid search-page__container">
+      <div class="row">
+        <div class="col-12 search-page__header">
+          <app-page-subtitle title="search_by_annotations"></app-page-subtitle>
+        </div>
+      </div>
+
       <div class="row">
         <ng-container *ngIf="!errorStatus; else errorMessage">
           <div class="col-xs-12 col-sm-12 col-lg-12">

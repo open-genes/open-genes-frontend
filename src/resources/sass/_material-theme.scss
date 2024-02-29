@@ -92,15 +92,15 @@ $open-genes-theme:   mat-light-theme($open-genes-primary, $open-genes-accent);
 }
 
 // - Bottom sheet
-// Set paddings
-mat-bottom-sheet-container.mat-bottom-sheet-container {
-  max-height: calc(100vh - #{$header-height});
-  overflow: hidden;
-}
+mat-bottom-sheet-container {
+  &.mat-bottom-sheet-container {
+    max-height: calc(100vh - #{$header-height});
+    overflow: hidden;
+  }
 
-mat-step-header.mat-step-header {
-  padding-top: $ui-base-height / 2;
-  padding-bottom: $ui-base-height / 2;
+  &.mat-bottom-sheet-size-fix {
+    max-width: 600px;
+  }
 }
 
 // - Button

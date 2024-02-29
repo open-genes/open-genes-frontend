@@ -29,7 +29,7 @@
   align-items: stretch;
   margin: 0 -5px; // TODO: use css variables for this margin and margins for content blocks
 
-  ::ng-deep app-skeleton {
+  ::ng-deep > app-skeleton {
     margin-left: 5px;
     margin-right: 5px;
   }

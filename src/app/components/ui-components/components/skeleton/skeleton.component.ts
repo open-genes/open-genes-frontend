@@ -6,9 +6,9 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./skeleton.component.scss'],
 })
 export class SkeletonLoaderComponent {
-  @Input() groups: number;
-  @Input() view?: 'line' | 'card' | 'field' = 'line';
-  @Input() itemsInRow?: number = 3;
+  @Input() groups? = 1;
+  @Input() view?: 'line' | 'card' | 'panel' | 'aliases' | 'inline' = 'line';
+  @Input() itemsInRow? = 3;
 
   public row(n: number): Array<number> {
     return Array(n);

@@ -18,7 +18,6 @@ import { IconModule } from '../../components/ui-components/components/icon/app-i
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { GeneFiltersPanelModule } from './components/gene-filters-panel/gene-filters-panel.module';
 import { SearchModule } from '../../components/shared/search/search.module';
-import { MiniCardsModule } from '../../components/mini-cards/mini-cards.module';
 
 const routes: Routes = [{ path: '', component: GenesSearchPageComponent }];
 
@@ -43,7 +42,6 @@ const routes: Routes = [{ path: '', component: GenesSearchPageComponent }];
     MatProgressBarModule,
     GeneFiltersPanelModule,
     SearchModule,
-    MiniCardsModule,
   ],
   exports: [PipesModule],
 })

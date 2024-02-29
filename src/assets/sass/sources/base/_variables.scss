@@ -81,8 +81,7 @@ $experiment-tables: (
 );
 
 // Gradients
-$orange-gradient1: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, $color-orange-200 100%);
-$orange-gradient2: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, $color-orange-200 100%);
+$orange-gradient: linear-gradient(to right, darken(#FFAC5F, 10%) 0%, $color-orange-200 100%);
 $pink-blue-gradient: linear-gradient(90deg, #91cefd, #9bb5fa 20%, #a4a4f7 40%, #c2adf5 60%, #d9b5f3 80%, #ebbdf2);
 
 // States variables
@@ -125,7 +124,7 @@ $box-shadow: 0 1px 4px 0 rgba(5, 5, 5, .14);
 $box-shadow-to-bottom: $box-shadow;
 $box-shadow-to-top: 0 -1px 4px 0 rgba(5, 5, 5, .14);
 $box-shadow-layer-1: 0px 0px 8px 0px rgba(5, 5, 5, .14);
-$shadow-for-panel: 0 24px 48px 0 rgb(230, 235, 245, .4), 0 1px 4px 0 $color-gray-light;
+$shadow-for-panel: 0 15px 30px 0 rgb(230, 235, 245, .4), 0 1px 4px 0 rgba($color-black-500, .05);
 
 // PATHS
 $path-images: '/assets/images';

@@ -1,8 +1,11 @@
+:host-context(.app-header--fixed) {
+  box-shadow: $box-shadow;
+}
+
 .header {
   width: 100%;
   color: $color-base;
   background-color: $color-white;
-  box-shadow: $box-shadow;
   min-height: $header-height;
 
   &__centering {

@@ -39,17 +39,19 @@
             <h2 class="col col-12">
               {{ "help_page_articles_title" | translate }}
             </h2>
-            <app-wp-articles
-              class="faq__section"
-              [showSkeleton]="showCardSkeleton"
-              (showSkeletonChange)="showCardSkeleton = $event"
-            ></app-wp-articles>
 
-            <app-skeleton
-              *ngIf="showCardSkeleton"
-              [view]="'card'"
-              [groups]="3"
-            ></app-skeleton>
+            <div class="faq__section">
+              <app-wp-articles
+                [showSkeleton]="showArticlesLoader"
+                (showSkeletonChange)="showArticlesLoader = $event"
+              ></app-wp-articles>
+
+              <app-skeleton
+                *ngIf="showArticlesLoader"
+                [view]="'panel'"
+                [groups]="6"
+              ></app-skeleton>
+            </div>
           </section>
 
           <section class="row no-gutters">
