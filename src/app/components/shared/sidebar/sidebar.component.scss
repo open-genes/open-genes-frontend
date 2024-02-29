@@ -30,8 +30,8 @@
   width: 100%;
   font-size: $font-size;
 
-  ::ng-deep app-sidebar-item {
-    padding-bottom: 10px;
+  ::ng-deep app-sidebar-item ~ app-sidebar-item {
+    margin-top: 10px;
   }
 
   @include resolution_widescreen {

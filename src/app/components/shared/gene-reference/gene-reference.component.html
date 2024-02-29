@@ -11,7 +11,7 @@
           [isMiniMode]="true"
           [showDates]="true"
           [showSkeleton] = 'showNewsListSkeleton'
-          (skeletonState)='showNewsListSkeleton = $event'
+          (showSkeletonChange)='showNewsListSkeleton = $event'
         ></app-news-list>
 
         <app-skeleton

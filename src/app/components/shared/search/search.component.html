@@ -46,6 +46,7 @@
       </div>
 
       <input
+        autofocus
         formControlName="searchField"
         type="text"
         placeholder="{{ placeholder | translate }}"
@@ -55,7 +56,7 @@
       <mat-progress-bar
         *ngIf="showProgressBar"
         mode="indeterminate"
-        class="search-form__progress"
+        class="search-form__progress-bar"
       ></mat-progress-bar>
     </div>
 

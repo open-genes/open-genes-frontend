@@ -3,6 +3,10 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { WindowWidth } from '../../../../core/utils/window-width';
 import { WindowService } from '../../../../core/services/browser/window.service';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { WizardService } from '../wizard-service.service';
+import { WordpressApiService } from '../../../../core/services/api/wordpress-api.service';
 
 @Component({
   selector: 'app-wizard-sheet',
@@ -17,9 +21,14 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardSheetComponent extends WindowWidth implements OnInit {
+  private dynamicContent$ = new Subject<void>();
+  public wizardContent: string;
+
   constructor(
     public windowService: WindowService,
-    private bottomSheetRef: MatBottomSheetRef,
+    public bottomSheetRef: MatBottomSheetRef,
+    private wizardService: WizardService,
+    private wpApiService: WordpressApiService,
     private readonly cdRef: ChangeDetectorRef,
   ) {
     super(windowService);
@@ -32,14 +41,21 @@ export class WizardSheetComponent extends WindowWidth implements OnInit {
     this.detectWindowWidth(() => {
       this.cdRef.markForCheck();
     });
-  }
 
-  public close(): void {
-    this.bottomSheetRef.dismiss();
-    this.alwaysHide();
+    this.wpApiService.getSectionContent('wizard')
+      .pipe(takeUntil(this.dynamicContent$))
+      .subscribe((content) => {
+        this.wizardContent = content;
+        this.cdRef.markForCheck();
+      });
   }
 
   public alwaysHide(): void {
     localStorage.setItem('showWizardSheet', JSON.stringify(false));
+  }
+
+  public close(): void {
+    this.wizardService.close(this.bottomSheetRef);
+    this.alwaysHide();
   }
 }

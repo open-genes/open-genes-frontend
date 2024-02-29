@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
-  @Input() buildNumber: string;
+  @Input() appData: { build: string; version: string };
   @ViewChild('walletAddressCopied') walletAddressCopied: ElementRef;
   public donationWallet = '0x863E5Cd3F747bB3e0DB223E50184965355A10682';
 

@@ -1,0 +1,11 @@
+<div class="carousel-container"
+     appSwipeHorizontal
+     [insensitiveDistance]="1"
+     (OnSwipeRight)="nextSlide()"
+     (OnSwipeLeft)="prevSlide()"
+     [style.width]="width">
+  <ng-content select="[appCarouselItem]"></ng-content>
+</div>
+<div class="dot-container">
+  <span *ngFor="let dot of dots; let i = index" [class.active]="i === currentIndex" (click)="changeSlide(i)" class="dot"></span>
+</div>

@@ -4,7 +4,7 @@ $search-input-height: 50px;
 $search-button-size: 40px;
 $search-prefix-width: 20px;
 $mobile-container-vertical-padding: 7px;
-$input-border-radius: 5px;
+$input-border-radius: 25px;
 
 :host {
   display: block;
@@ -54,12 +54,13 @@ $input-border-radius: 5px;
     justify-content: flex-start;
   }
 
-  &__progress {
-    width: 100%;
+  &__progress-bar {
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: $input-border-radius / 2;
+    right: $input-border-radius / 2;
     z-index: 1;
+    width: auto;
     border-radius: 0 0 3px 3px;
   }
 
@@ -75,11 +76,10 @@ $input-border-radius: 5px;
     font-size: $font-size + 1;
     font-weight: $font-weight-medium;
     color: $color-black;
-    background-color: $color-white;
+    background-color: $color-gray-very-light;
     border-radius: $input-border-radius;
     border: 1px solid $color-borders;
     transition: border .15s linear;
-    box-shadow: $shadow-for-panel;
 
     &::-ms-clear {
       display: none !important; // скрываем иконку очистки поля на IE/Edge
@@ -102,14 +102,13 @@ $input-border-radius: 5px;
     }
 
     @include placeholder-color {
-      color: $color-gray-halfing;
+      color: $color-gray;
     }
 
-    &:focus {
+    &:hover,
+    &:focus,
+    &:active {
       border-color: $color-borders-active;
-      @include placeholder-color {
-        color: transparent;
-      }
     }
   }
 

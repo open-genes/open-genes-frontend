@@ -1,7 +1,7 @@
 @import '../styles';
 
 .studies-page {
-  &__subtitle {
+  &__tab-group {
     font-size: $font-size-big;
     font-weight: $font-weight-medium;
     color: $color-black;
@@ -79,6 +79,4 @@
       }
     }
   }
-
-  @include search-page-styles();
 }

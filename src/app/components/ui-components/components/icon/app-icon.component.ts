@@ -1,12 +1,20 @@
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
-import { IconService } from "./services/app-icon.service";
-import { ICON_SIZE, ICON_SIZE_ENUM_TO_TYPE } from "./core/icon-size.enum";
-import { IconStyles } from "./core/icon-styles.interface";
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+import { IconService } from './services/app-icon.service';
+import {
+  ICON_SIZE,
+  ICON_SIZE_ENUM_TO_TYPE,
+} from './core/icon-size.enum';
+import { IconStyles } from './core/icon-styles.interface';
 
 @Component({
-  selector: "app-icon",
-  templateUrl: "./app-icon.component.html",
-  styleUrls: ["./app-icon.component.scss"],
+  selector: 'app-icon',
+  templateUrl: './app-icon.component.html',
+  styleUrls: ['./app-icon.component.scss'],
 })
 export class IconComponent implements OnChanges {
   @Input()
@@ -15,20 +23,17 @@ export class IconComponent implements OnChanges {
   }
   iconSrc: string;
 
-  @Input()
-  staticSrc = "";
+  @Input() staticSrc = '';
 
-  @Input()
-  size: ICON_SIZE_ENUM_TO_TYPE = ICON_SIZE.small;
+  @Input() size: ICON_SIZE_ENUM_TO_TYPE = ICON_SIZE.small;
 
-  @Input()
-  rotateDeg = 0;
+  @Input() rotateDeg = 0;
 
-  @Input()
-  customWidth = "";
+  @Input() customWidth = '';
 
-  @Input()
-  customHeight = "";
+  @Input() customHeight = '';
+
+  @Input() alt = 'Icon';
 
   SizeEnum = ICON_SIZE;
   customStyles: IconStyles = {};
@@ -43,7 +48,8 @@ export class IconComponent implements OnChanges {
     }
 
     if (changes.customHeight) {
-      this.styles.height = changes.customHeight.currentValue;
+      this.styles.height =
+        changes.customHeight.currentValue;
     }
 
     if (changes.rotateDeg) {

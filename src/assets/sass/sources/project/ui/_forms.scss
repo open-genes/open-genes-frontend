@@ -9,10 +9,6 @@
       display: inline-flex;
     }
 
-    & > * * {
-      flex: none;
-    }
-
     &--h {
       flex-wrap: nowrap;
       justify-content: space-between;

@@ -3,6 +3,11 @@ import { ExtraOptions, Routes } from '@angular/router';
 export const APP_ROUTES: Routes = [
   {
     path: '',
+    pathMatch: 'full', // Ensure a full match for the empty path
+    redirectTo: 'genes',
+  },
+  {
+    path: 'home',
     loadChildren: () => import('./pages/home/home.module').then((m) => m.HomeModule),
   },
   {
