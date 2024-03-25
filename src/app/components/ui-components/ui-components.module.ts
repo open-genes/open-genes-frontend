@@ -22,8 +22,12 @@ import { EyeCheckboxComponent } from './components/eye-checkbox/eye-checkbox.com
 import { CommonBottomSheetComponent } from './components/modals/common-bottom-sheet/common-bottom-sheet.component';
 import { InfoButtonComponent } from './components/info-button/info-button.component';
 import { BannerComponent } from './components/banner/banner.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { CarouselItemDirective } from './components/carousel/carousel-item.directive';
+import { DirectivesModule } from "../../directives/directives.module";
+import { PageSubtitleComponent } from './components/page-subtitle/page-subtitle.component';
 
-const modules = [
+const components = [
   AccordionComponent,
   ArticleModalComponent,
   CodeBlockComponent,
@@ -41,11 +45,13 @@ const modules = [
   CommonBottomSheetComponent,
   InfoButtonComponent,
   BannerComponent,
+  CarouselComponent,
+  PageSubtitleComponent,
 ];
 
 @NgModule({
-  declarations: [...modules],
-  exports: [...modules],
-  imports: [CommonModule, IconModule, PipesModule, TranslateModule, MaterialModule, RouterModule],
+  declarations: [...components, CarouselItemDirective],
+  exports: [...components, CarouselItemDirective],
+    imports: [CommonModule, IconModule, PipesModule, TranslateModule, MaterialModule, RouterModule, DirectivesModule],
 })
 export class UiComponentsModule {}

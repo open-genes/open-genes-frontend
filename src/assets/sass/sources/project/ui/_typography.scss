@@ -1,0 +1,5 @@
+@import "../../base/mixins/typography";
+
+.typography {
+  @include typography;
+}

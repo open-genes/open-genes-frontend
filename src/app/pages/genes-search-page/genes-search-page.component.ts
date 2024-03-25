@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GeneFiltersPanelComponent } from './components/gene-filters-panel/gene-filters-panel.component';
 import { Genes } from '../../core/models';
 import { SearchMode, SearchModeEnum } from '../../core/models/settings.model';
@@ -11,6 +11,8 @@ import { Subject } from 'rxjs';
 import { appliedFilter } from '../../components/shared/genes-list/genes-list-settings.model';
 import { CommonModalComponent } from '../../components/ui-components/components/modals/common-modal/common-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { WordpressApiService } from '../../core/services/api/wordpress-api.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-genes-search-page',
@@ -20,7 +22,8 @@ import { MatDialog } from '@angular/material/dialog';
 export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnDestroy {
   @ViewChild(GeneFiltersPanelComponent) filterPanel!: GeneFiltersPanelComponent;
 
-  public searchedGenes: Pick<Genes, 'id' | 'name' | 'symbol' | 'aliases' | 'ensembl'>[] | Genes[] = [];
+  public geneHints: Pick<Genes, 'id' | 'name' | 'symbol' | 'aliases' | 'ensembl'>[] | Genes[] = [];
+  public queryFromRoute;
   public confirmedQuery: string;
   public searchedQuery: string;
   public itemsQuantity: number;
@@ -37,6 +40,8 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
   public placeholder: string;
   public $cancelSearch: Subject<void> = new Subject<void>();
   public lastChangedFilter: appliedFilter;
+  public sidebarContent: string;
+  private dynamicContent$ = new Subject<void>();
 
   constructor(
     public windowService: WindowService,
@@ -44,6 +49,9 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
     private readonly apiService: ApiService,
     private readonly cdRef: ChangeDetectorRef,
     private dialog: MatDialog,
+    private wpApiService: WordpressApiService,
+    private route: ActivatedRoute,
+    private ngZone: NgZone,
   ) {
     super(windowService);
   }
@@ -60,6 +68,28 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
         this.dialog.closeAll();
       }
       this.cdRef.markForCheck();
+    });
+
+    this.route.queryParams.subscribe((params) => {
+      if ('bySuggestions' in params && params.bySuggestions !== '') {
+        this.queryFromRoute = params.bySuggestions;
+        const list = params.bySuggestions.split(',');
+        this.setSearchMode(list.length > 1? 'searchByGenesList' : 'searchByGenes');
+        this.setSearchQuery(params.bySuggestions);
+        this.confirmedQuery = params.bySuggestions;
+        this.updateGenesList(true);
+        this.cdRef.markForCheck();
+      }
+    });
+
+    this.ngZone.runOutsideAngular(() => {
+      this.wpApiService.getSectionContent('sidebar')
+        .pipe(takeUntil(this.dynamicContent$))
+        .subscribe((content) => {
+          this.sidebarContent = content;
+        }, error => {
+          console.warn(error);
+        });
     });
   }
 
@@ -118,7 +148,7 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
       query = filteredQueryArray[filteredQueryArray.length - 1];
     }
 
-    this.searchGenes(query);
+    this.getHints(query);
   }
 
   public setSearchMode(searchMode: SearchMode): void {
@@ -126,7 +156,7 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
     this.confirmedQuery = null;
   }
 
-  private searchGenes(query: string): void {
+  private getHints(query: string): void {
     if (query && query.length > 1) {
       this.showProgressBar = true;
       this.apiService
@@ -134,7 +164,7 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
         .pipe(takeUntil(this.subscription$))
         .subscribe(
           (searchData) => {
-            this.searchedGenes = searchData.items; // If nothing found, will return empty array
+            this.geneHints = searchData.items; // If nothing found, will return empty array
             this.showProgressBar = false;
           },
           (error) => {
@@ -143,7 +173,7 @@ export class GenesSearchPageComponent extends WindowWidth implements OnInit, OnD
           }
         );
     } else {
-      this.searchedGenes = [];
+      this.geneHints = [];
     }
   }
 

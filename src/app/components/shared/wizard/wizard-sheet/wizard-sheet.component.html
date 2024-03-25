@@ -1,4 +1,4 @@
-<div class="wizard" appSwipeVertical (OnSwipeDown)="close()">
+<div class="wizard typography" appSwipeVertical (OnSwipeDown)="close()">
   <div class="wizard__header">
     <span class="fa far fa-magic"></span>&nbsp;{{ 'wizard_header' | translate }}
 
@@ -8,31 +8,26 @@
     <button mat-icon-button
             class="wizard__close-button"
             (click)="close()"
-            aria-label="Закрыть">
+            [attr.aria-label]="'button_close' | translate">
       <span class="fa fal fa-times"></span>
     </button>
   </div>
-  <div class="wizard__title">
-    {{ 'wizard_title' | translate }}
-  </div>
-  <div class="wizard__steps">
-    <mat-vertical-stepper>
-      <mat-step
-        label="{{ 'wizard_1_title' | translate }}"
-      >{{ 'wizard_1_description' | translate }}
-      </mat-step>
 
-      <mat-step
-        label="{{ 'wizard_2_title' | translate }}"
-      >{{ 'wizard_2_description' | translate }}
-      </mat-step>
-
-      <mat-step
-        label="{{ 'wizard_3_title' | translate }}"
-      >{{ 'wizard_3_description' | translate }}
-      </mat-step>
-    </mat-vertical-stepper>
-  </div>
+  <article *ngIf="wizardContent; else noContent"
+           class="wizard__content typography"
+           [innerHTML]="wizardContent | safe: 'html'"
+  ></article>
 </div>
+
+<ng-template #noContent>
+  <app-no-content
+    size="medium"
+    [title]="'error_connection'"
+    [isPanel]="false">
+    <ng-container icon>
+      <app-icon icon="default" size="custom" customWidth="100%" customHeight="100%"></app-icon>
+    </ng-container>
+  </app-no-content>
+</ng-template>
 
 
