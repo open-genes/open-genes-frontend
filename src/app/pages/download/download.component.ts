@@ -80,6 +80,10 @@ export class DownloadComponent {
     }
   }
 
+  public async downloadGeneConfidenceLevel() {
+    await this.downloadCsv('gene-confidence-level', () => this.csvExportService.generateGenesConfidenceLevelTable());
+  }
+
   public async downloadDiseaseTsv() {
     await this.downloadCsv('gene-diseases', () => this.csvExportService.generateGenesDiseasesTable());
   }
@@ -126,5 +130,9 @@ export class DownloadComponent {
 
   public async downloadGeneEvolutionTsv() {
     await this.downloadCsv('gene-evolution', () => this.csvExportService.generateGeneEvolutionTable());
+  }
+
+  public async downloadGeneConfidenceLevelTsv() {
+    await this.downloadCsv('gene-confidence-level', () => this.csvExportService.generateGenesConfidenceLevelTable());
   }
 }

@@ -38,6 +38,7 @@
     - Add random gene search
     - Carousel for dynamic content in the sidebar
     - Layout for static and dynamic hints in the carousel
+- Added a new dataset for downloading — "Genes and confidence level"
 
 
 
