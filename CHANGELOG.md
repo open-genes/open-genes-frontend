@@ -32,7 +32,6 @@
 - #253. Add dynamic content to pages
     - Pass data from content API to a wizard and footer section
     - Optimize data loading for dynamic content
-    - Render footer section on scroll past 50%
     - Search pages refactor
     - Refactor skeleton component layout, add new types
     - New main page

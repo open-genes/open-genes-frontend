@@ -3,7 +3,7 @@
 ></app-header>
 <router-outlet></router-outlet>
 <app-footer
-  *ngIf="!isErrorPage && !isHomePage && isFooterVisible"
+  *ngIf="!isErrorPage && !isHomePage"
   [appData]="app">
   <div [innerHTML]="footerContent"></div>
 </app-footer>
