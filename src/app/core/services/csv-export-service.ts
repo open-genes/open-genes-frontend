@@ -85,6 +85,12 @@ export class CsvExportService extends AdditionalInterventionResolver {
     return await this.generateSimplePairCsv(`"HGNC", "diseases"${this.eol}`, 'diseases');
   }
 
+  public async generateGenesConfidenceLevelTable() {
+    return await this.generateSimplePairCsv(`"HGNC", "confidence level"${this.eol}`, 'confidenceLevel', (g) => {
+      return g.confidenceLevel.name;
+    });
+  }
+
   public async generateGenesAgingMechanismsTable() {
     return await this.generateSimplePairCsv(`"HGNC", "aging mechanisms"${this.eol}`, 'agingMechanisms', (g) => {
       // Filter duplicates from backend

@@ -103,6 +103,11 @@
             <ul class="list">
               <li>
                 <button class="link link--blue link--underline link-button"
+                        (click)="downloadGeneConfidenceLevelTsv()"
+                >{{ "download_page_confidence_level" | translate }}</button>
+              </li>
+              <li>
+                <button class="link link--blue link--underline link-button"
                         (click)="downloadGeneCriteriaTsv()"
                 >{{ "download_page_selection_criteria" | translate }}</button>
               </li>
