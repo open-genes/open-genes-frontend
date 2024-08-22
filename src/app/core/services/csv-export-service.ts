@@ -40,7 +40,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
   }
 
   private sanitize(string) {
-    // TODO: make sanitization for tsv format
+    string = string.replace('\t', ' ')
     return string;
   }
 
@@ -349,7 +349,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
       'control cohort size',
       'experiment cohort size',
       'quantity of animals in a cage or container',
-      'containment temperature (Celcius)',
+      'containment temperature (Celsius)',
       'diet',
       'target gene expression change',
       'control lifespan - min',
@@ -362,13 +362,13 @@ export class CsvExportService extends AdditionalInterventionResolver {
       'experiment lifespan - max',
       'lifespan time unit',
       'lifespan % change - min',
-      'significance',
+      'significance - min',
       'lifespan % change - mean',
-      'significance',
+      'significance - mean',
       'lifespan % change - median',
-      'significance',
+      'significance - median',
       'lifespan % change - max',
-      'significance',
+      'significance - max',
       'intervention deteriorates',
       'intervention improves',
       'main effect on lifespan',
