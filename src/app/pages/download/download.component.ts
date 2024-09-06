@@ -105,7 +105,7 @@ export class DownloadComponent {
   }
 
   public async downloadPinkTablesTsv() {
-    await this.downloadCsv('associations-with-lifespan', () => this.csvExportService.generatePinkTable());
+    await this.downloadCsv('associations-with-longevity', () => this.csvExportService.generatePinkTable());
   }
 
   public async downloadPurpleTablesTsv() {

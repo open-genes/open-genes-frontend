@@ -208,7 +208,7 @@
   "gene_page_research_data_lifespan": "Влияние изменения активности гена на продолжительность жизни",
   "gene_page_research_data_lifespan_hint1": "Возраст на момент вмешательства в работу гена/продукта",
   "gene_page_research_data_lifespan_hint2": "Степень увеличения продолжительности жизни по сравнению с контролем",
-  "gene_page_research_data_longevity_effects": "Геномные, транскриптомные и протеомные ассоциации с продолжительностью жизни/возрастным фенотипом",
+  "gene_page_research_data_longevity_effects": "Ассоциации генетических вариантов или экспрессии гена с долголетием",
   "gene_page_research_data_progeria": "Ассоциация гена с ускоренным старением у человека",
   "gene_page_research_data_protein_regulates_genes": "Участие продукта гена в регуляции генов, связанных со старением",
   "gene_page_research_data_transcriptome_proteome": "Характеристики транскриптома/протеома",
