@@ -52,7 +52,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
     }
   }
 
-  private async generateSimplePairCsv(csvHeader: string, field: any, filterFn?: (gene: any) => any) {
+  private async generateSimplePairCsv(header: string[], field: any, filterFn?: (gene: any) => any) {
     let resultingString = '';
     const response = await CsvExportService.FetchData(
       `${(this.apiUrl)}/api/gene/search?pageSize=${this.maxPageSize}`,
@@ -64,6 +64,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
       const resJson = await response.json();
       const genes = resJson.items;
       if (genes) {
+        const csvHeader = `"${header.join(this.del)}"${this.eol}`;
         resultingString = resultingString + String(csvHeader);
         let items;
         for (const gene of genes) {
@@ -82,17 +83,17 @@ export class CsvExportService extends AdditionalInterventionResolver {
   }
 
   public async generateGenesDiseasesTable() {
-    return await this.generateSimplePairCsv(`"HGNC", "diseases"${this.eol}`, 'diseases');
+    return await this.generateSimplePairCsv(["HGNC", "diseases"], 'diseases');
   }
 
   public async generateGenesConfidenceLevelTable() {
-    return await this.generateSimplePairCsv(`"HGNC", "confidence level"${this.eol}`, 'confidenceLevel', (g) => {
+    return await this.generateSimplePairCsv(["HGNC", "confidence level"], 'confidenceLevel', (g) => {
       return g.confidenceLevel.name;
     });
   }
 
   public async generateGenesAgingMechanismsTable() {
-    return await this.generateSimplePairCsv(`"HGNC", "aging mechanisms"${this.eol}`, 'agingMechanisms', (g) => {
+    return await this.generateSimplePairCsv(["HGNC", "aging mechanisms"], 'agingMechanisms', (g) => {
       // Filter duplicates from backend
       const mappedMechanisms = new Map();
       g.agingMechanisms.forEach((e) => {
