@@ -93,7 +93,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
   }
 
   public async generateGenesAgingMechanismsTable() {
-    return await this.generateSimplePairCsv(["HGNC", "aging mechanisms"], 'agingMechanisms', (g) => {
+    return await this.generateSimplePairCsv(["HGNC", "hallmarks of aging"], 'agingMechanisms', (g) => {
       // Filter duplicates from backend
       const mappedMechanisms = new Map();
       g.agingMechanisms.forEach((e) => {
@@ -378,7 +378,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
       'intervention method',
       'genotype',
       'tissue',
-      'tissue specific promoter',
+      'promoter/driver',
       'induction by drug withdrawal',
       'drug',
       'treatment start',
