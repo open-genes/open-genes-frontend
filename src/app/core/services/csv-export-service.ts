@@ -11,7 +11,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
   // private researches: any[]; // TODO: add typing from OG-724
   private emptyCellValue = 'n/a';
   private maxPageSize = 0;
-  private del = '\t'; // delimiter
+  private del = '\t'; // delimiter - tab symbol
   private eol = '\r'; // end of the line
   private apiUrl = environment.apiUrl;
 
@@ -39,9 +39,9 @@ export class CsvExportService extends AdditionalInterventionResolver {
     return arr.map((i) => `"${i}"`).join(this.del) + this.eol;
   }
 
-  private sanitize(string) {
-    string = string.replace('\t', ' ')
+  private sanitize(string): string {
     return string;
+    // return string.replace(/\t/g, ' ');
   }
 
   private checkBlankValues(field, prepend = '', append = '', isReplacementValue = true) {
