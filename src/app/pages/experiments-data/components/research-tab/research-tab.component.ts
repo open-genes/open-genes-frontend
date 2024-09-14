@@ -8,7 +8,7 @@ import {
   OnInit,
   Output, ViewChild,
 } from '@angular/core';
-import { ResearchArguments, ResearchTypes } from '../../../../core/models/open-genes-api/researches.model';
+import { ResearchArguments, ResearchTypes } from '../../../../core/models/open-genes-api/studies.model';
 import { debounceTime, distinctUntilChanged, map, switchMap, takeUntil } from 'rxjs/operators';
 import { ApiResponse, PageOptions } from '../../../../core/models/api-response.model';
 import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';

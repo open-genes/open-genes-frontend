@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ResearchTables } from '../research-tables';
 import { MatDialog } from '@angular/material/dialog';
-import { PurpleTable } from '../../../../core/models/open-genes-api/researches.model';
+import { PurpleTable } from '../../../../core/models/open-genes-api/studies.model';
 
 @Component({
   selector: 'app-increase-lifespan',

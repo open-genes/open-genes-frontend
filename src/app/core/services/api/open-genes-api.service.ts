@@ -12,13 +12,13 @@ import {
 } from '../../models';
 import { TranslateService } from '@ngx-translate/core';
 import { AssociatedDiseaseCategories, AssociatedDiseases } from '../../models/open-genes-api/associated-diseases.model';
-import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with-increase-lifespan-researches.model';
+import { GenesWLifespanResearches } from '../../models/open-genes-api/genes-with-increase-lifespan-studies.model';
 import { GenesInHorvathClock } from '../../models/open-genes-api/genes-in-horvath-clock.model';
 import { ApiResponse } from '../../models/api-response.model';
 import { SearchModel } from '../../models/open-genes-api/search.model';
 import { Pagination } from '../../models/settings.model';
 import { Diet } from '../../models/open-genes-api/diet.model';
-import { ResearchArguments, ResearchTypes } from '../../models/open-genes-api/researches.model';
+import { ResearchArguments, ResearchTypes } from '../../models/open-genes-api/studies.model';
 import { ModelOrganism } from '../../models/open-genes-api/model-organism.model';
 
 @Injectable({

@@ -15,7 +15,7 @@ import { GenesFilterService } from '../../core/services/filters/genes-filter.ser
 import { Gene, Ortholog } from '../../core/models';
 import { ApiGeneSearchFilter } from '../../core/models/filters/filter.model';
 import { Utils } from '../../core/utils/utils.mixin';
-import { Studies } from 'src/app/core/models/open-genes-api/researches.model';
+import { Studies } from 'src/app/core/models/open-genes-api/studies.model';
 
 @Component({
   selector: 'app-gene-page',

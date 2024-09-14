@@ -1,4 +1,4 @@
-import { Studies } from './researches.model';
+import { Studies } from './studies.model';
 import { Origin } from './origin.model';
 import { Terms, TermsLegacy } from './gene-ontology.model';
 import { HumanProteinAtlas } from './human-protein-atlas.model';

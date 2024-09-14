@@ -1,6 +1,6 @@
 import { ToMap } from './to-map';
 import { AdditionalInterventionResolver } from './additional-intervention-resolver';
-import { PurpleTable } from '../models/open-genes-api/researches.model';
+import { PurpleTable } from '../models/open-genes-api/studies.model';
 
 function applyUtils(derivedConstructor: any, baseConstructors: any[]) {
   baseConstructors.forEach((baseConstructor) => {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AdditionalInterventionResolver } from '../utils/additional-intervention-resolver';
-import { PurpleTable } from '../models/open-genes-api/researches.model';
+import { PurpleTable } from '../models/open-genes-api/studies.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment';
 })
 export class CsvExportService extends AdditionalInterventionResolver {
   // private genes: Genes[]; // TODO: save cached response here
-  // private researches: any[]; // TODO: add typing from OG-724
+  // private studies: any[]; // TODO: add typing from OG-724
   private emptyCellValue = 'n/a';
   private maxPageSize = 0;
   private del = '\t'; // delimiter - tab symbol

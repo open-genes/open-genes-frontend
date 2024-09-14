@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ResearchArguments } from '../../core/models/open-genes-api/researches.model';
+import { ResearchArguments } from '../../core/models/open-genes-api/studies.model';
 import { WindowWidth } from '../../core/utils/window-width';
 import { WindowService } from '../../core/services/browser/window.service';
 import { BehaviorSubject } from 'rxjs';

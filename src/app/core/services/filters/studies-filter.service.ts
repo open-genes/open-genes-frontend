@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { SettingsService } from '../settings.service';
 import { ApiResponse } from '../../models/api-response.model';
-import { ResearchArguments, ResearchTypes } from '../../models/open-genes-api/researches.model';
+import { ResearchArguments, ResearchTypes } from '../../models/open-genes-api/studies.model';
 import { ApiService } from '../api/open-genes-api.service';
 import { FilterService } from './filter.service';
 
