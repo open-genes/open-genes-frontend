@@ -78,11 +78,21 @@ export class HomeComponent implements OnInit {
       .pipe(takeUntil(this.subscription$))
       .subscribe((gene) => {
         this.genesList = gene.map((g) => g.symbol);
-        if (this.genesList.length > 0) {
-          this.randomHGNC = this.genesList[Math.floor(Math.random() * this.genesList.length)];
+
+        if (this.genesList.length !== 0) {
+          const n = 5;
+          const repeatCount = Math.floor(Math.random() * n) + 1;
+          const strArr = [];
+          for (let i = 0; i < repeatCount; i++) {
+            const randomGene = this.genesList[Math.floor(Math.random() * this.genesList.length)];
+            strArr.push(randomGene);
+          }
+
+          this.randomHGNC = strArr.join(',');
         }
-    });
+      });
   }
+
 
   private getHints(query: string): void {
     if (query && query.length > 1) {
