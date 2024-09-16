@@ -28,13 +28,13 @@
           <div class="col col-12 main-page__section main-page__buttons">
             <button
               [routerLink]="'/genes'"
-              class="btn btn--big btn--purple">
+              class="btn btn--big btn--fill btn--purple">
               {{ "main_page_all_genes" | translate }}
             </button>
 
             <button
               (click)="goToGenesPage(randomHGNC)"
-              class="btn btn--big btn--fill btn--purple">
+              class="btn btn--big btn--purple">
               {{ "main_page_random_gene" | translate }}
             </button>
           </div>
