@@ -145,10 +145,10 @@
     justify-content: center;
     height: $header-height;
     bottom: 0;
-    background-color: $color-black;
-    font-size: $font-size-bigger;
+    font-size: $font-size-smaller;
     font-weight: $font-weight-medium;
-    color: $color-white;
+    color: $color-gray-halfing;
+    border-top: 1px solid $color-borders;
 
     .fa {
       margin-right: .3em;
