@@ -28,7 +28,6 @@
 
 # Release v1.2.0
 
-## Features
 - #253. Add dynamic content to pages
     - Pass data from content API to a wizard and footer section
     - Optimize data loading for dynamic content
@@ -40,5 +39,18 @@
     - Layout for static and dynamic hints in the carousel
 - Added a new dataset for downloading — "Genes and confidence level"
 
+# Release v1.2.1
 
-
+- #310. Multiple fixes for datasets downloading
+  - Fix. Correct dataset name
+  - Fix. Column names in snake case
+  - Fix. Correct column names
+  - Fix. Generate correct table headers
+  - Disable strings sanitization
+  - Fix temperature columns, use two columns instead one
+- Small improvements
+    - Noissue. Short logo in header
+    - Noissue. Search by multiple random genes
+    - Noissue. Highlight Genes button
+    - Noissue. Remove a link to an outdated project board
+    - Noissue. Add support chat
