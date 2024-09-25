@@ -100,6 +100,14 @@ $color-borders: $color-gray-light;
 $color-border-light: #e3e4e8;
 $color-borders-active: darken($color-hover, 10%);
 
+// - links
+$color-link-blue: #1b75d0;
+$color-link-blue-hover: #3275b8;
+$color-link-blue-visited: $color-general-dark;
+$color-link-blue-active: #1b75cf;
+
+// - buttons
+
 // - header
 $header-announcement-height: $ui-base-height;
 $header-height: 64px;

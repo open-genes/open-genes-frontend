@@ -132,11 +132,14 @@
 }
 
 @mixin blue-link {
-  color: $color-general;
+  color: $color-link-blue;
 
-  &:hover,
+  &:hover {
+    color: $color-link-blue-hover;
+  }
+
   &:active {
-    color: lighten(mix($color-general, $color-blue, 5%), 3%);
+    color: $color-link-blue-active;
   }
 }
 
@@ -190,6 +193,10 @@
 
   &--term {
     font-style: italic;
+  }
+
+  &--gene {
+    font-weight: $font-weight-bold;
   }
 }
 
