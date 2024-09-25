@@ -5,14 +5,13 @@
     animation: fadeIn .5s linear forwards; // при рендеринге/подгрузке элемент мингнет
 
     .title {
+      font-size: calc(0.1vw + #{$font-size});
       font-weight: $font-weight-medium;
-      color: $color-gray;
       line-height: 1;
 
       .link {
         vertical-align: middle;
         margin-right: 5px;
-        text-decoration: underline;
       }
 
       .alias {

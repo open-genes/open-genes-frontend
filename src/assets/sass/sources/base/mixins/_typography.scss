@@ -131,6 +131,15 @@
   position: relative;
 }
 
+@mixin purple-link {
+  color: $color-general;
+
+  &:hover,
+  &:active {
+    color: lighten(mix($color-general, $color-blue, 5%), 3%);
+  }
+}
+
 @mixin blue-link {
   color: $color-link-blue;
 
@@ -172,7 +181,7 @@
 
 .link {
   @include base-link;
-  @include blue-link;
+  @include purple-link;
 
   &--gray {
     @include gray-link;
@@ -196,7 +205,9 @@
   }
 
   &--gene {
+    @include blue-link;
     font-weight: $font-weight-bold;
+    text-decoration: underline;
   }
 }
 
