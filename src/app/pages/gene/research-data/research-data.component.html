@@ -1,48 +1,139 @@
 <!-- Purple -->
-<section *ngIf="isIncreaseLifespan">
+<mat-expansion-panel
+  *ngIf="isIncreaseLifespan"
+  [expanded]="true"
+  class="experiments-accordion">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <h4>
+        <span class="study-mark study-mark--increase-lifespan"></span>
+        {{ 'gene_page_research_data_lifespan' | translate }}
+      </h4>
+      <span class="counter">{{ studies.increaseLifespan.length }}</span>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
   <app-increase-lifespan
     [slice]="slice"
+    [showTitle]="false"
     [items]="studies.increaseLifespan"></app-increase-lifespan>
-</section>
+</mat-expansion-panel>
 
 <!-- Blue -->
-<section *ngIf="isAgeRelatedChanges">
+<mat-expansion-panel
+  *ngIf="isAgeRelatedChanges"
+  [expanded]="true"
+  class="experiments-accordion">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <h4>
+        <span class="study-mark study-mark--age-related-change"></span>
+        {{ 'gene_page_research_data_age_related_changes' | translate }}
+      </h4>
+      <span class="counter">{{ studies.ageRelatedChangesOfGene.length }}</span>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
   <app-age-related-changes
     [slice]="slice"
+    [showTitle]="false"
     [items]="studies.ageRelatedChangesOfGene"></app-age-related-changes>
-</section>
+</mat-expansion-panel>
 
 <!-- Green -->
-<section *ngIf="isInterventionAffectsAgingProcess">
+<mat-expansion-panel
+  *ngIf="isInterventionAffectsAgingProcess"
+  [expanded]="true"
+  class="experiments-accordion">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <h4>
+        <span class="study-mark study-mark--gene-intervention-to-vital-processes"></span>
+        {{ 'gene_page_intervention_moderates_aging' | translate }}
+      </h4>
+      <span class="counter">{{ studies.interventionToGeneImprovesVitalProcesses.length }}</span>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
   <app-intervention-affects-aging-process
     [slice]="slice"
+    [showTitle]="false"
     [items]="studies.interventionToGeneImprovesVitalProcesses"></app-intervention-affects-aging-process>
-</section>
+</mat-expansion-panel>
 
 <!-- Pink -->
-<section *ngIf="isGeneAssociatedWithLongevityEffects">
+<mat-expansion-panel
+  *ngIf="isInterventionAffectsAgingProcess"
+  [expanded]="true"
+  class="experiments-accordion">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <h4>
+        <span class="study-mark study-mark--gene-to-longevity-effect"></span>
+        {{ 'gene_page_research_data_longevity_effects' | translate }}
+      </h4>
+      <span class="counter">{{ studies.geneAssociatedWithLongevityEffects.length }}</span>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
   <app-gene-associated-with-longevity-effects
     [slice]="slice"
+    [showTitle]="false"
     [items]="studies.geneAssociatedWithLongevityEffects"></app-gene-associated-with-longevity-effects>
-</section>
+</mat-expansion-panel>
 
 <!-- Orange -->
-<section *ngIf="isGeneAssociatedWithProgeriaSyndromes">
+<mat-expansion-panel
+  *ngIf="isGeneAssociatedWithProgeriaSyndromes"
+  [expanded]="true"
+  class="experiments-accordion">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <h4>
+        <span class="study-mark study-mark--gene-to-progeria"></span>
+        {{ 'gene_page_research_data_progeria' | translate }}
+      </h4>
+      <span class="counter">{{ studies.geneAssociatedWithProgeriaSyndromes.length }}</span>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
   <app-gene-associated-with-progeria-syndromes
     [slice]="slice"
+    [showTitle]="false"
     [items]="studies.geneAssociatedWithProgeriaSyndromes"></app-gene-associated-with-progeria-syndromes>
-</section>
+</mat-expansion-panel>
 
 <!-- Yellow -->
-<section *ngIf="isProteinRegulatesOtherGenes">
+<mat-expansion-panel
+  *ngIf="isProteinRegulatesOtherGenes"
+  [expanded]="true"
+  class="experiments-accordion">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <h4>
+        <span class="study-mark study-mark--protein-to-gene"></span>
+        {{ 'gene_page_research_data_protein_regulates_genes' | translate }}
+      </h4>
+      <span class="counter">{{ studies.proteinRegulatesOtherGenes.length }}</span>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
   <app-protein-regulates-other-genes
     [slice]="slice"
+    [showTitle]="false"
     [items]="studies.proteinRegulatesOtherGenes"></app-protein-regulates-other-genes>
-</section>
+</mat-expansion-panel>
 
 <!-- Gray -->
-<section *ngIf="isAdditionalEvidences">
+<mat-expansion-panel
+  *ngIf="isAdditionalEvidences"
+  [expanded]="true"
+  class="experiments-accordion">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <h4>
+        <span class="study-mark study-mark--gene-to-additional-evidence"></span>
+        {{ 'gene_page_research_data_additional_evidence' | translate }}
+      </h4>
+      <span class="counter">{{ studies.additionalEvidences.length }}</span>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
   <app-additional-evidences
     [slice]="slice"
+    [showTitle]="false"
     [items]="studies.additionalEvidences"></app-additional-evidences>
-</section>
+</mat-expansion-panel>
