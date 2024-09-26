@@ -8,6 +8,7 @@ export abstract class ResearchTables extends AdditionalInterventionResolver {
   @Input() items: any;
   @Input() numberColumn: boolean;
   @Input() geneColumnOn: boolean;
+  @Input() showTitle = true;
   @Input() slice: number;
 
   protected constructor(protected dialog: MatDialog) {

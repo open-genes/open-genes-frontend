@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ResearchTables } from '../research-tables';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./age-related-changes.component.scss'],
 })
 export class AgeRelatedChangesComponent extends ResearchTables {
-
   constructor(protected dialog: MatDialog) {
     super(dialog);
   }

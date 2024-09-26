@@ -1,0 +1,30 @@
+@import "../../styles";
+
+.experiments-accordion {
+  mat-panel-title {
+    align-items: center;
+
+    h4 {
+      display: flex;
+      margin: 0 1em 0 0;
+
+      .study-mark {
+        display: inline-block;
+        position: relative;
+        min-width: 13px;
+        width: 13px;
+        height: 13px;
+        margin: 1px 8px 0 0;
+        @include study-type-mark-pseudo();
+      }
+    }
+
+    .counter {
+      margin: 0;
+    }
+  }
+}
+
+.experiments-accordion + .experiments-accordion {
+  margin-top: 10px;
+}
