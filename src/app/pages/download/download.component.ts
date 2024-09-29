@@ -2,28 +2,20 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CsvExportService } from '../../core/services/csv-export-service';
 import { FileExportService } from 'src/app/core/services/browser/file-export.service';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { CommonModalComponent } from 'src/app/components/ui-components/components/modals/common-modal/common-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { DatasetsDownload } from '../../core/utils/datasets-download';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-download-page',
   templateUrl: './download.component.html',
   styleUrls: ['./download.component.scss'],
 })
-export class DownloadComponent {
-  private subscription$ = new Subject();
-  private initialDownloadLinkVal = '#';
-  private initialDatasetName = 'export';
-
-  public currentDownloadLink: string | SafeResourceUrl = this.initialDownloadLinkVal;
-  public currentDatasetName = this.initialDatasetName;
-  public isProcessing = false;
-
+export class DownloadComponent extends DatasetsDownload {
   @ViewChild('downLoadLinkTemplate') downLoadLinkTemplate: TemplateRef<any>;
   @ViewChild('errorTemplate') errorTemplate: TemplateRef<any>;
 
@@ -31,14 +23,20 @@ export class DownloadComponent {
     public translate: TranslateService,
     private sanitizer: DomSanitizer,
     private router: Router,
-    private matDialog: MatDialog,
-    private csvExportService: CsvExportService,
-    private fileExportService: FileExportService,
-    private googleAnalyticsService: GoogleAnalyticsService
-  ) {}
+    private _matDialog: MatDialog,
+    private _csvExportService: CsvExportService,
+    private _fileExportService: FileExportService,
+    private _googleAnalyticsService: GoogleAnalyticsService
+  ) {
+    super(_matDialog, _csvExportService, _fileExportService, _googleAnalyticsService);
+  }
 
-  public openDownloadModal(template): void {
-    this.matDialog.open(CommonModalComponent, {
+  protected getDownloadLinkTemplate(): TemplateRef<any> {
+    return this.downLoadLinkTemplate;
+  }
+
+  protected openDownloadModal(template: any): void {
+    this._matDialog.open(CommonModalComponent, {
       data: {
         title: 'download',
         body: null,
@@ -57,31 +55,8 @@ export class DownloadComponent {
     });
   }
 
-  private async trackDownload(datasetName: string) {
-    try {
-      await this.googleAnalyticsService.event('Download', 'click', datasetName);
-    } catch (error) {
-      console.error('Error tracking download event:', error);
-    }
-  }
-
-  private async downloadCsv(datasetName: string, generateFunction: () => Promise<any>) {
-    try {
-      this.isProcessing = true;
-      const res = await generateFunction();
-      if (res.length !== 0) {
-        this.currentDownloadLink = this.fileExportService.downloadCsv(res);
-        this.currentDatasetName = datasetName;
-        await this.trackDownload(datasetName);
-        this.openDownloadModal(this.downLoadLinkTemplate);
-      }
-    } catch {
-      this.openDownloadModal(this.errorTemplate);
-    }
-  }
-
-  public async downloadGeneConfidenceLevel() {
-    await this.downloadCsv('gene-confidence-level', () => this.csvExportService.generateGenesConfidenceLevelTable());
+  protected handleError(): void {
+    this.openDownloadModal(this.errorTemplate);
   }
 
   public async downloadDiseaseTsv() {
@@ -101,23 +76,23 @@ export class DownloadComponent {
   }
 
   public async downloadYellowTablesTsv() {
-    await this.downloadCsv('gene-regulation', () => this.csvExportService.generateYellowTable());
+    await this.downloadCsv('gene-regulation', () => this.csvExportService.fetchYellowTable());
   }
 
   public async downloadPinkTablesTsv() {
-    await this.downloadCsv('associations-with-longevity', () => this.csvExportService.generatePinkTable());
+    await this.downloadCsv('associations-with-longevity', () => this.csvExportService.fetchPinkTable());
   }
 
   public async downloadPurpleTablesTsv() {
-    await this.downloadCsv('lifespan-change', () => this.csvExportService.generatePurpleTable());
+    await this.downloadCsv('lifespan-change', () => this.csvExportService.fetchPurpleTable());
   }
 
   public async downloadGreenTableTsv() {
-    await this.downloadCsv('age-related-processes-change', () => this.csvExportService.generateGreenTable());
+    await this.downloadCsv('age-related-processes-change', () => this.csvExportService.fetchGreenTable());
   }
 
   public async downloadBlueTableTsv() {
-    await this.downloadCsv('age-related-changes', () => this.csvExportService.generateBlueTable());
+    await this.downloadCsv('age-related-changes', () => this.csvExportService.fetchBlueTable());
   }
 
   public async downloadSummarizedResearchResultsTsv() {

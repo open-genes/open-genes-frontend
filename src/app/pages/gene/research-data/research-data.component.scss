@@ -14,9 +14,15 @@
         min-width: 13px;
         width: 13px;
         height: 13px;
-        margin: 3px 8px 0 0;
+        margin: 2px 8px 0 0;
         @include study-type-mark-pseudo();
       }
+    }
+
+    .btn {
+      margin: 0 10px 0 0;
+      min-width: 80px;
+      font-size: 16px;
     }
 
     .counter {
@@ -32,4 +38,20 @@
 
 .experiments-accordion + .experiments-accordion {
   margin-top: 10px;
+}
+
+.file-download-sheet {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 0 30px 0;
+  font-family: sans-serif;
+  text-align: center;
+
+  p {
+    color: $color-gray;
+  }
+
+  .btn {
+    margin-top: 1em;
+  }
 }

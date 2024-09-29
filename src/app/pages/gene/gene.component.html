@@ -278,8 +278,19 @@
 
                   <section *ngIf="isAnyResearchFilled">
                     <h2 class="__mb-15">{{ 'gene_page_title_research_data' | translate }}</h2>
-                    <app-research-data [studies]="researches | async"
-                                    [slice]="undefined"
+
+                    <p class="__mb-30">
+                      We distinguished six types of studies in order to remain objective and precise while linking a particular gene to human aging.
+                      Each study represented with a corresponding data table placed into the expandable panel. We did it as for some genes data can be
+                      extensive. We also provided datasets for download. You can also download this experiment data for all genes in the database on a Download page.
+                      Before analysing our data we highly recommend you to read the paper
+                      <a href="https://academic.oup.com/nar/article/52/D1/D950/7259277">Open Genes—a new comprehensive database of human genes associated with aging and longevity</a>
+                    </p>
+
+                    <app-research-data
+                      [geneName]="gene.symbol"
+                      [studies]="researches | async"
+                      [slice]="undefined"
                     ></app-research-data>
                   </section>
 

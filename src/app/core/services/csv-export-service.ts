@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AdditionalInterventionResolver } from '../utils/additional-intervention-resolver';
-import { PurpleTable } from '../models/open-genes-api/studies.model';
+import { BlueTable, GreenTable, PinkTable, PurpleTable, YellowTable } from '../models/open-genes-api/studies.model';
 import { environment } from '../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
     super();
   }
 
+  // Basic service functionality
   static wait(delay) {
     return new Promise((resolve) => setTimeout(resolve, delay));
   }
@@ -82,6 +84,21 @@ export class CsvExportService extends AdditionalInterventionResolver {
     return null;
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  public async fetchStudyFromEndpoint(url: string, fn: Function): Promise<void> {
+    const response: Response = await CsvExportService.FetchData(
+      url,
+      0,
+      1,
+      {}
+    );
+    if (response) {
+      const resJson = await response.json();
+      fn(resJson.items)
+    }
+  }
+
+  // Other datasets
   public async generateGenesDiseasesTable() {
     return await this.generateSimplePairCsv(["hgnc", "diseases"], 'diseases');
   }
@@ -177,7 +194,73 @@ export class CsvExportService extends AdditionalInterventionResolver {
     return null;
   }
 
-  public async generatePinkTable() {
+  public async generateGeneEvolutionTable() {
+    let items = [];
+    let resultingString = '';
+    const fetchedItems = await CsvExportService.FetchData(
+      `${this.apiUrl}/api/gene/search?pageSize=${this.maxPageSize}`,
+      0,
+      1,
+      {}
+    );
+    const resItems = await fetchedItems.json();
+    items = resItems.items;
+    const csvHeader = this.makeRow(['hgnc', 'gene_origin', 'gene_family_origin', 'conservative_in']);
+    resultingString = resultingString + csvHeader;
+
+    if (items.length !== 0) {
+      for (const gene of items) {
+        const origin = this.checkBlankValues(gene.origin?.phylum);
+        const familyOrigin = this.checkBlankValues(gene.familyOrigin?.phylum);
+        const conservativeIn = this.checkBlankValues(gene.homologueTaxon);
+        const arrRow = this.makeRow([gene.symbol, origin, familyOrigin, conservativeIn]);
+        resultingString = resultingString + arrRow;
+      }
+      return resultingString;
+    }
+    return null;
+  }
+
+  // Studies
+  // - Fetch data
+
+  public async fetchPinkTable(): Promise<void> {
+    await this.fetchStudyFromEndpoint(
+      `${this.apiUrl}/api/research/associations-with-lifespan?pageSize=${this.maxPageSize}`,
+      this.generatePinkTable.bind(CsvExportService)
+    );
+  }
+
+  public async fetchPurpleTable(): Promise<void> {
+    await this.fetchStudyFromEndpoint(
+      `${this.apiUrl}/api/research/lifespan-change?pageSize=${this.maxPageSize}`,
+      this.generatePurpleTable.bind(CsvExportService)
+    );
+  }
+
+  public async fetchGreenTable(): Promise<void> {
+    await this.fetchStudyFromEndpoint(
+      `${this.apiUrl}/api/research/gene-activity-change-impact?pageSize=${this.maxPageSize}`,
+      this.generateGreenTable.bind(CsvExportService)
+    );
+  }
+
+  public async fetchBlueTable(): Promise<void> {
+    await this.fetchStudyFromEndpoint(
+      `${this.apiUrl}/api/research/age-related-changes?pageSize=${this.maxPageSize}`,
+      this.generateBlueTable.bind(CsvExportService)
+    );
+  }
+
+  public async fetchYellowTable(): Promise<void> {
+    await this.fetchStudyFromEndpoint(
+      `${this.apiUrl}/api/research/gene-regulation?pageSize=${this.maxPageSize}`,
+      this.generateYellowTable.bind(CsvExportService)
+    );
+  }
+
+  // - Generate datasets
+  public generatePinkTable(studies: PinkTable[]) {
     let resultingString = '';
     const csvHeader = this.makeRow([
       'hgnc',
@@ -212,17 +295,8 @@ export class CsvExportService extends AdditionalInterventionResolver {
     ]);
     resultingString = resultingString + csvHeader;
 
-    const response = await CsvExportService.FetchData(
-      `${this.apiUrl}/api/research/associations-with-lifespan?pageSize=${this.maxPageSize}`,
-      0,
-      1,
-      {}
-    );
-    if (response) {
-      const resJson = await response.json();
-      const researches = resJson.items;
-      if (researches) {
-        for (const form of researches) {
+    if (studies) {
+        for (const form of studies) {
           if (typeof form !== undefined) {
             let comment = this.sanitize(form?.comment);
             comment = this.checkBlankValues(comment);
@@ -291,11 +365,11 @@ export class CsvExportService extends AdditionalInterventionResolver {
         }
         return resultingString;
       }
-    }
+
     return null;
   }
 
-  public async generateYellowTable() {
+  public generateYellowTable(studies: YellowTable[]) {
     let resultingString = '';
     const csvHeader = this.makeRow([
       'hgnc',
@@ -308,17 +382,8 @@ export class CsvExportService extends AdditionalInterventionResolver {
     ]);
     resultingString = resultingString + csvHeader;
 
-    const response = await CsvExportService.FetchData(
-      `${this.apiUrl}/api/research/gene-regulation?pageSize=${this.maxPageSize}`,
-      0,
-      1,
-      {}
-    );
-    if (response) {
-      const resJson = await response.json();
-      const researches = resJson.items;
-      if (researches) {
-        for (const form of researches) {
+    if (studies) {
+        for (const form of studies) {
           if (typeof form !== undefined) {
             let comment = this.sanitize(form?.comment);
             comment = this.checkBlankValues(comment);
@@ -335,11 +400,11 @@ export class CsvExportService extends AdditionalInterventionResolver {
         }
         return resultingString;
       }
-    }
+
     return null;
   }
 
-  public async generatePurpleTable() {
+  public generatePurpleTable(studies: PurpleTable[]) {
     let resultingString = '';
     const csvHeader = this.makeRow([
       'hgnc',
@@ -388,18 +453,8 @@ export class CsvExportService extends AdditionalInterventionResolver {
     ]);
     resultingString = resultingString + csvHeader;
 
-    // TODO: OG-811
-    const response = await CsvExportService.FetchData(
-      `${this.apiUrl}/api/research/lifespan-change?pageSize=${this.maxPageSize}`,
-      0,
-      1,
-      {}
-    );
-    if (response) {
-      const resJson = await response.json();
-      const researches: PurpleTable[] = resJson.items;
-      if (researches) {
-        for (const form of researches) {
+    if (studies) {
+        for (const form of studies) {
           if (typeof form !== undefined) {
             const isNoAdditionalIntervention = this.resolveAdditionalIntervention(form);
 
@@ -553,16 +608,18 @@ export class CsvExportService extends AdditionalInterventionResolver {
                 pmid,
               ]);
               resultingString = resultingString + csvRow;
+            } else {
+              resultingString = 'All experiments contain additional interventions. Generation of datasets with additional interventions is not yet implemented.'
             }
           }
         }
         return resultingString;
       }
-    }
+
     return null;
   }
 
-  public async generateGreenTable() {
+  public generateGreenTable(studies: GreenTable[]) {
     let resultingString = '';
     const csvHeader = this.makeRow([
       'hgnc',
@@ -582,17 +639,8 @@ export class CsvExportService extends AdditionalInterventionResolver {
     ]);
     resultingString = resultingString + csvHeader;
 
-    const response = await CsvExportService.FetchData(
-      `${this.apiUrl}/api/research/gene-activity-change-impact?pageSize=${this.maxPageSize}`,
-      0,
-      1,
-      {}
-    );
-    if (response) {
-      const resJson = await response.json();
-      const researches = resJson.items;
-      if (researches) {
-        for (const form of researches) {
+    if (studies) {
+        for (const form of studies) {
           if (typeof form !== undefined) {
             const geneSymbol = this.sanitize(form?.geneSymbol);
             let comment = this.sanitize(form?.comment);
@@ -647,11 +695,11 @@ export class CsvExportService extends AdditionalInterventionResolver {
         }
         return resultingString;
       }
-    }
+
     return null;
   }
 
-  public async generateBlueTable() {
+  public generateBlueTable(studies: BlueTable[]) {
     let resultingString = '';
     const csvHeader = this.makeRow([
       'hgnc',
@@ -680,17 +728,8 @@ export class CsvExportService extends AdditionalInterventionResolver {
     ]);
     resultingString = resultingString + csvHeader;
 
-    const response = await CsvExportService.FetchData(
-      `${this.apiUrl}/api/research/age-related-changes?pageSize=${this.maxPageSize}`,
-      0,
-      1,
-      {}
-    );
-    if (response) {
-      const resJson = await response.json();
-      const researches = resJson.items;
-      if (researches) {
-        for (const form of researches) {
+    if (studies) {
+        for (const form of studies) {
           if (typeof form !== undefined) {
             const geneSymbol = this.sanitize(form?.geneSymbol);
             let comment = this.sanitize(form?.comment);
@@ -746,7 +785,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
         }
         return resultingString;
       }
-    }
+
     return null;
   }
 
@@ -940,33 +979,6 @@ export class CsvExportService extends AdditionalInterventionResolver {
         }
         return resultingString;
       }
-    }
-    return null;
-  }
-
-  public async generateGeneEvolutionTable() {
-    let items = [];
-    let resultingString = '';
-    const fetchedItems = await CsvExportService.FetchData(
-      `${this.apiUrl}/api/gene/search?pageSize=${this.maxPageSize}`,
-      0,
-      1,
-      {}
-    );
-    const resItems = await fetchedItems.json();
-    items = resItems.items;
-    const csvHeader = this.makeRow(['hgnc', 'gene_origin', 'gene_family_origin', 'conservative_in']);
-    resultingString = resultingString + csvHeader;
-
-    if (items.length !== 0) {
-      for (const gene of items) {
-        const origin = this.checkBlankValues(gene.origin?.phylum);
-        const familyOrigin = this.checkBlankValues(gene.familyOrigin?.phylum);
-        const conservativeIn = this.checkBlankValues(gene.homologueTaxon);
-        const arrRow = this.makeRow([gene.symbol, origin, familyOrigin, conservativeIn]);
-        resultingString = resultingString + arrRow;
-      }
-      return resultingString;
     }
     return null;
   }

@@ -180,6 +180,8 @@ export interface PinkTable extends Research {
   ethnicity: string | null;
   studyType: string | null;
   location?: string | null; // TODO: Will be added according to OG-809
+  significance?: string | null;
+  pValue?: string | null;
 }
 
 // gray form

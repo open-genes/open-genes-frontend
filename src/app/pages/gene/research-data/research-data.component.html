@@ -1,7 +1,11 @@
+<div class="btn-wrap">
+
+</div>
+
 <!-- Purple -->
 <mat-expansion-panel
   *ngIf="isIncreaseLifespan"
-  [expanded]="true"
+  [expanded]="false"
   class="experiments-accordion">
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -9,6 +13,9 @@
         <span class="study-mark study-mark--increase-lifespan"></span>
         {{ 'gene_page_research_data_lifespan' | translate }}
       </h4>
+      <button class="btn btn--flat btn--purple btn--small" (click)="downloadPurpleTablesTsv($event)">
+        <span class="far fa-download"></span> TSV
+      </button>
       <span class="counter">{{ studies.increaseLifespan.length }}</span>
     </mat-panel-title>
   </mat-expansion-panel-header>
@@ -21,7 +28,7 @@
 <!-- Blue -->
 <mat-expansion-panel
   *ngIf="isAgeRelatedChanges"
-  [expanded]="true"
+  [expanded]="false"
   class="experiments-accordion">
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -29,6 +36,9 @@
         <span class="study-mark study-mark--age-related-change"></span>
         {{ 'gene_page_research_data_age_related_changes' | translate }}
       </h4>
+      <button class="btn btn--flat btn--purple btn--small" (click)="downloadBlueTableTsv($event)">
+        <span class="far fa-download"></span> TSV
+      </button>
       <span class="counter">{{ studies.ageRelatedChangesOfGene.length }}</span>
     </mat-panel-title>
   </mat-expansion-panel-header>
@@ -41,7 +51,7 @@
 <!-- Green -->
 <mat-expansion-panel
   *ngIf="isInterventionAffectsAgingProcess"
-  [expanded]="true"
+  [expanded]="false"
   class="experiments-accordion">
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -49,6 +59,9 @@
         <span class="study-mark study-mark--gene-intervention-to-vital-processes"></span>
         {{ 'gene_page_intervention_moderates_aging' | translate }}
       </h4>
+      <button class="btn btn--flat btn--purple btn--small" (click)="downloadGreenTableTsv($event)">
+        <span class="far fa-download"></span> TSV
+      </button>
       <span class="counter">{{ studies.interventionToGeneImprovesVitalProcesses.length }}</span>
     </mat-panel-title>
   </mat-expansion-panel-header>
@@ -61,7 +74,7 @@
 <!-- Pink -->
 <mat-expansion-panel
   *ngIf="isInterventionAffectsAgingProcess"
-  [expanded]="true"
+  [expanded]="false"
   class="experiments-accordion">
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -69,6 +82,9 @@
         <span class="study-mark study-mark--gene-to-longevity-effect"></span>
         {{ 'gene_page_research_data_longevity_effects' | translate }}
       </h4>
+      <button class="btn btn--flat btn--purple btn--small" (click)="downloadPinkTablesTsv($event)">
+        <span class="far fa-download"></span> TSV
+      </button>
       <span class="counter">{{ studies.geneAssociatedWithLongevityEffects.length }}</span>
     </mat-panel-title>
   </mat-expansion-panel-header>
@@ -81,7 +97,7 @@
 <!-- Orange -->
 <mat-expansion-panel
   *ngIf="isGeneAssociatedWithProgeriaSyndromes"
-  [expanded]="true"
+  [expanded]="false"
   class="experiments-accordion">
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -101,7 +117,7 @@
 <!-- Yellow -->
 <mat-expansion-panel
   *ngIf="isProteinRegulatesOtherGenes"
-  [expanded]="true"
+  [expanded]="false"
   class="experiments-accordion">
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -109,6 +125,9 @@
         <span class="study-mark study-mark--protein-to-gene"></span>
         {{ 'gene_page_research_data_protein_regulates_genes' | translate }}
       </h4>
+      <button class="btn btn--flat btn--purple btn--small" (click)="downloadYellowTablesTsv($event)">
+        <span class="far fa-download"></span> TSV
+      </button>
       <span class="counter">{{ studies.proteinRegulatesOtherGenes.length }}</span>
     </mat-panel-title>
   </mat-expansion-panel-header>
@@ -121,7 +140,7 @@
 <!-- Gray -->
 <mat-expansion-panel
   *ngIf="isAdditionalEvidences"
-  [expanded]="true"
+  [expanded]="false"
   class="experiments-accordion">
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -137,3 +156,31 @@
     [showTitle]="false"
     [items]="studies.additionalEvidences"></app-additional-evidences>
 </mat-expansion-panel>
+
+<ng-template #downLoadLinkTemplate>
+  <section class="file-download-sheet">
+    <p>
+      {{ currentDatasetName }}.tsv
+    </p>
+    <a class="btn btn--big btn--fill btn--purple"
+       [href]="currentDownloadLink"
+       target="_blank"
+       [download]="currentDatasetName + '.tsv'"
+    ><span class="fa far fa-download"></span> {{ "download" | translate }}</a>
+  </section>
+</ng-template>
+
+<ng-template #errorTemplate>
+  <app-no-content
+    [title]="'download_error'"
+    [isPanel]="false">
+    <ng-container icon>
+      <app-icon
+        icon="file"
+        size="custom"
+        customWidth="100%"
+        customHeight="100%"
+      ></app-icon>
+    </ng-container>
+  </app-no-content>
+</ng-template>
