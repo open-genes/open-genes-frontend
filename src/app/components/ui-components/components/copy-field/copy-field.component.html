@@ -1,0 +1,9 @@
+<div class="copy-field">
+  <input type="text" readonly [value]="value">
+  <button (click)="copyToClipboard()">
+    <span class="fa far fa-copy"></span>
+  </button>
+</div>
+<div #copiedMessage class="hidden">
+  {{ 'footer_donation_copied' | translate }}
+</div>
