@@ -33,7 +33,7 @@ export class WpArticlesComponent implements OnInit, OnDestroy {
   public showMoreButtonVisible = false;
   private unsubscribe$ = new Subject();
   // Slugs of articles which are required on a website but should be hidden in a main list
-  private hiddenArticles = ['cookies-policy'];
+  private hiddenArticles = ['cookies-policy', 'donate-us'];
 
   constructor(private wpApiService: WordpressApiService, private cdRef: ChangeDetectorRef) {}
 
