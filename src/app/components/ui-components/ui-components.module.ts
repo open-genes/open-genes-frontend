@@ -26,6 +26,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { CarouselItemDirective } from './components/carousel/carousel-item.directive';
 import { DirectivesModule } from "../../directives/directives.module";
 import { PageSubtitleComponent } from './components/page-subtitle/page-subtitle.component';
+import { CopyFieldComponent } from './components/copy-field/copy-field.component';
 
 const components = [
   AccordionComponent,
@@ -47,6 +48,7 @@ const components = [
   BannerComponent,
   CarouselComponent,
   PageSubtitleComponent,
+  CopyFieldComponent,
 ];
 
 @NgModule({
