@@ -80,20 +80,19 @@
         <h4>{{ "footer_title_community" | translate }}</h4>
         <ul class="footer__links">
           <li>
-            <h6>{{ 'footer_donation_text' | translate }}</h6>
-            <div class="footer__donation-field">
-              <input type="text" readonly [value]="donationWallet">
-              <button
-                (click)="copyLink()">
-                <span class="fa far fa-copy"></span>
-              </button>
-            </div>
-          </li>
-          <li *ngIf="translate.currentLang === 'ru'">
-            <a [routerLink]="'/news'"
+            <a href="https://github.com/open-genes/.github/wiki/Contributing-guide"
                routerLinkActive="current"
+               target="_blank"
             >
-              {{ 'header_menu_news' | translate }}</a>
+              {{ 'about_page_contribute_title' | translate }}&nbsp;<span class="fa far fa-external-link"></span></a>
+          </li>
+          <li>
+            <a
+              [routerLink]="'about/articles/donate-us'"
+              class="btn btn--fill btn--purple"
+              target="_blank"
+            >{{ 'about_page_donation_button' | translate }}
+            </a>
           </li>
         </ul>
       </div>

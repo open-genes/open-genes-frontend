@@ -87,7 +87,7 @@ footer.wrapper {
     margin-top: 1em;
   }
 
-  a {
+  a:not(.btn) {
     transition: color .15s linear;
 
     &:link,
@@ -99,15 +99,5 @@ footer.wrapper {
     &:active {
       color: $color-gray-halfing;
     }
-  }
-
-  &__donation-field {
-    margin-top: 10px;
-    @include copy-field(30px, $color-gray, $color-white, $color-gray-very-light);
-  }
-
-  &__language {
-    margin: -10px;
-    color: $color-black;
   }
 }
