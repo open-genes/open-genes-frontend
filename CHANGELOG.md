@@ -54,3 +54,10 @@
     - Noissue. Highlight Genes button
     - Noissue. Remove a link to an outdated project board
     - Noissue. Add support chat
+
+# Release v1.3.0
+
+- Noissue. Emphasize link to a gene page
+- Noissue. Update Donation sections
+- Noissue. Update links in the footer
+- 314. Wrap data tables in expandable panels
