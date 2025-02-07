@@ -28,7 +28,7 @@ jobs:
         run: |
           rm .env
       - name: Upload project artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: dist/
           name: project
