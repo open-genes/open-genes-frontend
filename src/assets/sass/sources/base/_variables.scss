@@ -71,13 +71,13 @@ $color-red: #FF4E1A;
 $color-red-dark: darken($color-red, 5%);
 
 $experiment-tables: (
-  increase-lifespan: #cbcbef,
-  age-related-change: #c8e5fd, // Возрастные изменения экспрессии гена или активности белка
-  gene-intervention-to-vital-processes: #c1e2aa, // Влияние модуляции активности гена на возрастной процесс
-  protein-to-gene: #fbea95, // Участие продукта гена в регуляции генов, связанных со старением
-  gene-to-progeria: #ffd8a9, // Ассоциация гена с ускоренным старением у человека
-  gene-to-longevity-effect: #f5c3c2, // Геномные, транскриптомные и протеомные ассоциации с продолжительностью жизни/возрастным фенотипом
-  gene-to-additional-evidence: #cacaca // Другие подтверждения ассоциации гена со старением
+  increase-lifespan: #cbcbef, // Changes in gene activity affect model organism lifespan
+  age-related-change: #c8e5fd, // Age-related changes in gene expression, methylation or protein activity
+  gene-intervention-to-vital-processes: #c1e2aa, // Changes in gene activity affect the age-related process
+  protein-to-gene: #fbea95, // Regulation of genes associated with aging
+  gene-to-progeria: #ffd8a9, // Association of the gene with accelerated aging in humans
+  gene-to-longevity-effect: #f5c3c2, // Association of gene variants or expression levels with longevity
+  gene-to-additional-evidence: #cacaca // Other evidence of gene association with aging
 );
 
 // Gradients
@@ -99,6 +99,14 @@ $color-indent: #575757;
 $color-borders: $color-gray-light;
 $color-border-light: #e3e4e8;
 $color-borders-active: darken($color-hover, 10%);
+
+// - links
+$color-link-blue: #1b75d0;
+$color-link-blue-hover: #3275b8;
+$color-link-blue-visited: $color-general-dark;
+$color-link-blue-active: #1b75cf;
+
+// - buttons
 
 // - header
 $header-announcement-height: $ui-base-height;

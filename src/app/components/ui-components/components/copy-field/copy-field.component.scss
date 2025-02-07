@@ -1,0 +1,5 @@
+@import "../../../styles";
+
+.copy-field {
+  @include copy-field(30px, $color-gray, $color-white, $color-gray-very-light);
+}

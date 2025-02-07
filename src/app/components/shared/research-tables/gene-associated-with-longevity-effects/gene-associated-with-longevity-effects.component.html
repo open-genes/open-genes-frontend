@@ -1,5 +1,7 @@
 <section *ngIf="items?.length !== 0">
-  <h4>{{ "gene_page_research_data_longevity_effects" | translate }}</h4>
+  <h4 *ngIf="showTitle">
+    {{ "gene_page_research_data_longevity_effects" | translate }}
+  </h4>
   <div class="view __w-content-fluid __mt-20">
     <div class="view__fadeout view__fadeout--l view__fadeout--hidden"></div>
     <div class="view__fadeout view__fadeout--r view__fadeout--hidden"></div>

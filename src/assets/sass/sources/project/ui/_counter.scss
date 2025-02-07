@@ -1,0 +1,15 @@
+.counter {
+  $counter-size: $ui-base-height;
+  display: block;
+  padding: 0 5px;
+  height: $counter-size;
+  width: auto;
+  min-width: $counter-size;
+  white-space: nowrap;
+  line-height: $counter-size;
+  text-align: center;
+  background-color: $color-red;
+  color: $color-white;
+  font-size: $font-size;
+  border-radius: $counter-size / 2;
+}
