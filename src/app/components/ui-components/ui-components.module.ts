@@ -13,7 +13,6 @@ import { PopoverComponent } from './components/popover/popover.component';
 import { HintComponent } from './components/hint/hint.component';
 import { MaterialModule } from '../../modules/vendors/material.module'; // TODO: exclude
 import { CommonModalComponent } from './components/modals/common-modal/common-modal.component';
-import { ArticleModalComponent } from './components/modals/article-modal/article-modal.component';
 import { ConfirmModalComponent } from './components/modals/confirm-modal/confirm-modal.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { RouterModule } from '@angular/router';
@@ -30,7 +29,6 @@ import { CopyFieldComponent } from './components/copy-field/copy-field.component
 
 const components = [
   AccordionComponent,
-  ArticleModalComponent,
   CodeBlockComponent,
   SkeletonLoaderComponent,
   SpinnerComponent,

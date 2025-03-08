@@ -15,14 +15,6 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/gene/gene.module').then((m) => m.GeneModule),
   },
   {
-    path: 'landing',
-    loadChildren: () => import('./pages/about/about.module').then((m) => m.AboutModule),
-  },
-  {
-    path: 'news',
-    loadChildren: () => import('./pages/news/news.module').then((m) => m.NewsModule),
-  },
-  {
     path: 'favorites',
     loadChildren: () => import('./pages/favourites/favourites.module').then((m) => m.FavouritesModule),
   },
