@@ -49,6 +49,39 @@
               ></app-skeleton>
             </div>
           </section>
+
+          <section id="entities"
+                   class="row no-gutters faq__section">
+          <h2>{{ 'help_page_title_entities' | translate }}</h2>
+
+          <ul class="list">
+            <li>
+              <a [routerLink]="'entities/age-related-processes'"
+                 class="link">
+                {{ 'entities_age_related_processes' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="'entities/aging-mechanisms'"
+                 class="link">
+                {{ 'entities_aging_mechanisms' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="'entities/selection-criteria'"
+                 class="link">
+                {{ 'entities_selection_criteria' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="'entities/disease-categories'"
+                 class="link">
+                {{ 'entities_disease_categories' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="'entities/diseases'"
+                 class="link">
+                {{ 'entities_diseases' | translate }}</a>
+            </li>
+          </ul>
+          </section>
         </div>
       </div>
     </div>
