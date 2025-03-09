@@ -6,7 +6,7 @@ import { ApiGeneSearchParameters } from '../../../../core/models/filters/filter.
 import { SettingsService } from '../../../../core/services/settings.service';
 import { GenesFilterService } from '../../../../core/services/filters/genes-filter.service';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { FilterPanelLogic } from '../../../../core/utils/filter-panel-logic';
@@ -41,7 +41,7 @@ enum formControlToFilter {
   styleUrls: ['./gene-filters-panel.component.scss'],
 })
 export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnChanges, OnInit, OnDestroy {
-  public filtersForm: FormGroup;
+  public filtersForm: UntypedFormGroup;
 
   // FIELDS VISIBILITY
   public listSettings: GenesListSettings;
@@ -103,18 +103,18 @@ export class GeneFiltersPanelComponent extends FilterPanelLogic implements OnCha
     private readonly cdRef: ChangeDetectorRef,
   ) {
     super(apiService, filterService);
-    this.filtersForm = new FormGroup({
-      diseasesSelect: new FormControl([[], [null]]),
-      diseaseCategoriesSelect: new FormControl([[], [null]]),
-      selectionCriteriaSelect: new FormControl([[], [null]]),
-      agingMechanismsSelect: new FormControl([[], [null]]),
-      proteinClassesSelect: new FormControl([[], [null]]),
-      originSelect: new FormControl([[], [null]]),
-      familyOriginSelect: new FormControl([[], [null]]),
-      conservativeInSelect: new FormControl([[], [null]]),
-      experimentsStatsCheckbox: new FormControl(false),
-      ageRelatedProcessesSelect: new FormControl([[], [null]]),
-      confidenceLevelSelect: new FormControl([[], [null]]),
+    this.filtersForm = new UntypedFormGroup({
+      diseasesSelect: new UntypedFormControl([[], [null]]),
+      diseaseCategoriesSelect: new UntypedFormControl([[], [null]]),
+      selectionCriteriaSelect: new UntypedFormControl([[], [null]]),
+      agingMechanismsSelect: new UntypedFormControl([[], [null]]),
+      proteinClassesSelect: new UntypedFormControl([[], [null]]),
+      originSelect: new UntypedFormControl([[], [null]]),
+      familyOriginSelect: new UntypedFormControl([[], [null]]),
+      conservativeInSelect: new UntypedFormControl([[], [null]]),
+      experimentsStatsCheckbox: new UntypedFormControl(false),
+      ageRelatedProcessesSelect: new UntypedFormControl([[], [null]]),
+      confidenceLevelSelect: new UntypedFormControl([[], [null]]),
     });
   }
 
