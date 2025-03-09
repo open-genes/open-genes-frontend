@@ -45,7 +45,7 @@ export class CsvExportService extends AdditionalInterventionResolver {
   }
 
   private checkBlankValues(field, prepend = '', append = '', isReplacementValue = true) {
-    if (field === undefined || field === null || field === '' || field === []) {
+    if (field === undefined || field === null || field === '' || (Array.isArray(field) && field.length === 0)) {
       return isReplacementValue ? this.emptyCellValue : '';
     } else {
       return `${prepend}${field}${append}`;
