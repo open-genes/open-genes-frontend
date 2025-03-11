@@ -1,0 +1,45 @@
+@import "../../styles";
+
+:host {
+  display: block;
+}
+
+.breadcrumbs {
+  display: inline-block;
+  width: 100%;
+  font-size: $font-size;
+
+  a,
+  span {
+    cursor: pointer;
+    color: $color-gray;
+
+    &:hover {
+      color: $color-black-light;
+      text-decoration: underline;
+    }
+  }
+
+  .breadcrumb {
+    list-style: none;
+    display: block;
+    float: left;
+    min-height: 2em;
+    line-height: 2em;
+
+    a,
+    &__arrow {
+      vertical-align: middle;
+    }
+
+    &__arrow {
+      display: inline-block;
+      color: $color-base;
+
+      &::before {
+        content: ">"
+      }
+    }
+  }
+}
+

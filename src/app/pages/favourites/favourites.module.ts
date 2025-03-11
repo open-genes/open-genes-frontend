@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FavouritesComponent } from './favourites.component';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { PipesModule } from '../../modules/pipes/pipes.module';
-import { MaterialModule } from '../../modules/vendors/material.module';
+import { PipesModule } from '../../core/pipes/pipes.module';
 import { NgCapitalizePipeModule, NgToArrayPipeModule } from 'angular-pipes';
 import { FavouritesListComponent } from './favourites-list/favourites-list.component';
-import { NoContentModule } from '../../components/shared/no-content/no-content.module';
-import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
-import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
+import { SpinnerComponent } from '../../components/ui-components/spinner/spinner.component';
+import { IconComponent } from '../../components/ui-components/icon/app-icon.component';
+import { MaterialModule } from '../../modules/third-party/material.module';
+import { PopoverComponent } from '../../components/ui-components/popover/popover.component';
+import { NoContentComponent } from '../../components/shared/no-content/no-content.component';
 
 const routes: Routes = [{ path: '', component: FavouritesComponent }];
 
@@ -20,12 +21,13 @@ const routes: Routes = [{ path: '', component: FavouritesComponent }];
     RouterModule.forChild(routes),
     TranslateModule,
     PipesModule,
-    MaterialModule,
     NgToArrayPipeModule,
     NgCapitalizePipeModule,
-    NoContentModule,
-    IconModule,
-    UiComponentsModule,
+    SpinnerComponent,
+    IconComponent,
+    MaterialModule,
+    PopoverComponent,
+    NoContentComponent,
   ],
   providers: [],
 })

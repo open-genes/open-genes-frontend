@@ -5,28 +5,30 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { SearchModule } from '../search/search.module';
-import { PipesModule } from '../../../modules/pipes/pipes.module';
+import { PipesModule } from '../../../core/pipes/pipes.module';
 import { DirectivesModule } from '../../../directives/directives.module';
-import { UiComponentsModule } from '../../ui-components/ui-components.module';
 import { WindowService } from '../../../core/services/browser/window.service';
-import { MaterialModule } from '../../../modules/vendors/material.module';
+import { MaterialModule } from '../../../modules/third-party/material.module';
 import { GeneMenuComponent } from './components/gene/menu/gene-menu.component';
 import { SelectionCriteriaModule } from '../selection-criteria/selection-criteria.module';
 import { GenesTableHeaderComponent } from './components/genes-table-header/genes-table-header.component';
-import { AssociatedDiseasesModule } from '../associated-diseases/associated-diseases.module';
-import { AssociatedDiseaseCategoriesModule } from '../associated-disease-categories/associated-disease-categories.module';
-import { NoContentModule } from '../no-content/no-content.module';
-import { IconModule } from '../../ui-components/components/icon/app-icon.module';
 import { GeneCardComponent } from './components/gene/gene-card/gene-card.component';
 import { GeneTableRowComponent } from './components/gene/gene-table-row/gene-table-row.component';
 import { GeneAnnotationsCardComponent } from './components/gene/gene-annotations-card/gene-annotations-card.component';
 import { GeneAnnotationsTableRowComponent } from './components/gene/gene-annotations-table-row/gene-annotations-table-row.component';
 import { GenesAnnotationsTableHeaderComponent } from './components/genes-annotations-table-header/genes-annotations-table-header.component';
 import { SearchViewPanelComponent } from './components/search-view-panel/search-view-panel.component';
-import { AgingMechanismsModule } from '../aging-mechanisms/aging-mechanisms.module';
 import { ProteinClassesModule } from '../protein-classes/protein-classes.module';
-import { ExperimentsStatsModule } from '../experiments-stats/experiments-stats.module';
 import { FilterPanelModule } from './components/filter-panel/filter-panel.module';
+import { SpinnerComponent } from '../../ui-components/spinner/spinner.component';
+import { IconComponent } from '../../ui-components/icon/app-icon.component';
+import {GeneAgeComponent} from "../gene-age/gene-age.component";
+import { TagComponent } from '../../ui-components/tag/tag.component';
+import { AgingMechanismsComponent } from '../aging-mechanisms/aging-mechanisms.component';
+import { AssociatedDiseaseCategoriesComponent } from '../associated-disease-categories/associated-disease-categories.component';
+import { AssociatedDiseasesComponent } from '../associated-diseases/associated-diseases.component';
+import { ExperimentsStatsComponent } from '../experiments-stats/experiments-stats.component';
+import { NoContentComponent } from '../no-content/no-content.component';
 
 @NgModule({
   declarations: [
@@ -48,17 +50,19 @@ import { FilterPanelModule } from './components/filter-panel/filter-panel.module
     SearchModule,
     PipesModule,
     DirectivesModule,
-    UiComponentsModule,
     SelectionCriteriaModule,
     MaterialModule,
-    AssociatedDiseasesModule,
-    AssociatedDiseaseCategoriesModule,
-    NoContentModule,
-    IconModule,
-    AgingMechanismsModule,
     ProteinClassesModule,
     FilterPanelModule,
-    ExperimentsStatsModule,
+    SpinnerComponent,
+    IconComponent,
+    GeneAgeComponent,
+    TagComponent,
+    AgingMechanismsComponent,
+    AssociatedDiseaseCategoriesComponent,
+    AssociatedDiseasesComponent,
+    ExperimentsStatsComponent,
+    NoContentComponent,
   ],
   providers: [WindowService],
   exports: [GenesListComponent, GeneCardComponent, GeneTableRowComponent],

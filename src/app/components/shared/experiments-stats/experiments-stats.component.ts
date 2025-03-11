@@ -1,13 +1,25 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { Studies } from '../../../core/models/open-genes-api/studies.model';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { CommonBottomSheetComponent } from '../../ui-components/components/modals/common-bottom-sheet/common-bottom-sheet.component';
+import { CommonBottomSheetComponent } from '../../ui-components/modals/common-bottom-sheet/common-bottom-sheet.component';
+import { KeyValuePipe, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { SetClassNamePipe } from './set-class-name.pipe';
 
 @Component({
   selector: 'app-experiments-stats',
   templateUrl: './experiments-stats.component.html',
   styleUrls: ['./experiments-stats.component.scss'],
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    KeyValuePipe,
+    NgTemplateOutlet,
+    NgIf,
+    NgClass,
+    TranslateModule,
+    SetClassNamePipe,
+  ],
 })
 export class ExperimentsStatsComponent implements OnInit {
   @Input() experiments: Studies;

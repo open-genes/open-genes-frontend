@@ -6,11 +6,33 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../../../../components/shared/snack-bar/snack-bar.component';
 import { GenesInHorvathClock } from '../../../../../core/models/open-genes-api/genes-in-horvath-clock.model';
 import { Sort } from '@angular/material/sort';
+import { NgClass, NgForOf, NgIf, SlicePipe } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MaterialModule } from '../../../../../modules/third-party/material.module';
+import { RouterLinkWithHref } from '@angular/router';
+import { NgTrimPipeModule } from 'angular-pipes';
+import { IconComponent } from '../../../../../components/ui-components/icon/app-icon.component';
+import { SpinnerComponent } from '../../../../../components/ui-components/spinner/spinner.component';
+import { NoContentComponent } from '../../../../../components/shared/no-content/no-content.component';
 
 @Component({
-  selector: 'app-genes-methylation-list',
-  templateUrl: './genes-methylation-list.component.html',
-  styleUrls: ['./genes-methylation-list.component.scss'],
+    selector: 'app-genes-methylation-list',
+    templateUrl: './genes-methylation-list.component.html',
+    styleUrls: ['./genes-methylation-list.component.scss'],
+    standalone: true,
+  imports: [
+    NgClass,
+    TranslateModule,
+    NgIf,
+    MaterialModule,
+    NgForOf,
+    SlicePipe,
+    RouterLinkWithHref,
+    NgTrimPipeModule,
+    IconComponent,
+    SpinnerComponent,
+    NoContentComponent,
+  ],
 })
 export class GenesMethylationListComponent implements OnInit, OnDestroy {
   @Input() set genesList(genes: GenesInHorvathClock[]) {

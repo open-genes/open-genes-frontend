@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProteinClasses } from '../../../core/models/open-genes-api/genes.model';
-import { WrapIntoAccordion } from '../../ui-components/components/accordion/wrap-into-accordion';
+import { WrapIntoAccordion } from '../../ui-components/accordion/wrap-into-accordion';
 
 @Component({
   selector: 'app-protein-classes',

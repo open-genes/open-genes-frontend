@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { DietComponent } from './diet.component';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { PipesModule } from '../../../modules/pipes/pipes.module';
-import { IconModule } from '../../../components/ui-components/components/icon/app-icon.module';
-import { NoContentModule } from '../../../components/shared/no-content/no-content.module';
-import { UiComponentsModule } from '../../../components/ui-components/ui-components.module';
+import { PipesModule } from '../../../core/pipes/pipes.module';
 import { GenesListModule } from '../../../components/shared/genes-list/genes-list.module';
 import { DietTableComponent } from './components/diet-table/diet-table.component';
-import { MaterialModule } from '../../../modules/vendors/material.module';
 import { SearchModule } from "../../../components/shared/search/search.module";
+import { IconComponent } from '../../../components/ui-components/icon/app-icon.component';
+import { SpinnerComponent } from '../../../components/ui-components/spinner/spinner.component';
+import {MaterialModule} from "../../../modules/third-party/material.module";
+import { NoContentComponent } from '../../../components/shared/no-content/no-content.component';
 
 const HOME_ROUTES: Routes = [{ path: '', component: DietComponent }];
 
@@ -21,12 +21,12 @@ const HOME_ROUTES: Routes = [{ path: '', component: DietComponent }];
     RouterModule.forChild(HOME_ROUTES),
     TranslateModule,
     PipesModule,
-    IconModule,
-    NoContentModule,
-    UiComponentsModule,
     GenesListModule,
+    SearchModule,
+    IconComponent,
+    SpinnerComponent,
     MaterialModule,
-    SearchModule
-  ]
+    NoContentComponent,
+  ],
 })
 export class DietModule {}

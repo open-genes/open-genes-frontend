@@ -1,0 +1,141 @@
+@import "../../styles";
+
+$skeleton-line-height: ($ui-base-height / 2);
+$skeleton-field-height: 40px;
+
+@mixin skeleton-animation {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: block;
+  animation: blockTextShine 3s linear infinite forwards;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: linear-gradient(to right, $color-gray-soft 0%, $color-gray-very-light 20%, $color-gray-soft 40%, $color-gray-soft 100%);
+}
+
+:host {
+  display: block;
+  width: 100%;
+  // don't add position: relative here, it will break the inline skeleton
+}
+
+.skeleton {
+  $p: &;
+  padding: inherit;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &__bone {
+    position: relative;
+    background-color: $color-gray-soft;
+    border-radius: $border-radius-regular;
+    overflow: hidden;
+
+    &::after {
+      @include skeleton-animation;
+    }
+  }
+
+  &--lines {
+    #{$p}__row {
+      width: 100%;
+      display: inline-block;
+    }
+
+    #{$p}__row + #{$p}__row {
+      margin-top: $skeleton-line-height;
+    }
+
+    #{$p}__bone {
+      height: $skeleton-line-height;
+
+      &:nth-child(odd) {
+        width: 100%
+      }
+
+      &:nth-child(even) {
+        width: 80%;
+      }
+
+      &:not(:last-of-type) {
+        margin-bottom: ($skeleton-line-height / 1.5);
+      }
+    }
+  }
+
+  &--cards {
+    #{$p}__row {
+      display: grid;
+      grid-gap: 20px;
+
+      @include resolution_smartphone {
+        grid-template-columns: 1fr;
+      }
+      @include resolution_tablet-and-up {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    #{$p}__row + #{$p}__row {
+      margin-top: 20px;
+    }
+
+    #{$p}__bone {
+      #{$p}__card {
+        width: 100%;
+        padding-bottom: 60%;
+      }
+    }
+  }
+
+  &--panels {
+    #{$p}__row {
+      width: 100%;
+      display: inline-block;
+    }
+
+    #{$p}__row + #{$p}__row {
+      margin-top: 10px;
+    }
+
+    #{$p}__bone {
+      height: 48px;
+      width: 100%;
+    }
+  }
+
+  &--aliases {
+    #{$p}__row {
+      width: 100%;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    #{$p}__bone {
+      display: inline-block;
+      height: 22px;
+      width: 60px;
+      margin: 0 5px 5px 0;
+    }
+  }
+
+  &--inline {
+    position: absolute; // a parent element of a component must have `position: relative`
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    #{$p}__bone {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
+}

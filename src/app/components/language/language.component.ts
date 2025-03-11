@@ -1,11 +1,19 @@
 import { Component, Input } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../environments/environment';
+import { MaterialModule } from '../../modules/third-party/material.module';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-language',
   templateUrl: './language.component.html',
   styleUrls: ['./language.component.scss'],
+  standalone: true,
+  imports: [
+    MaterialModule,
+    NgClass,
+    TranslateModule,
+  ],
 })
 export class LanguageComponent {
   @Input() theme: 'light' | 'dark' = 'dark';

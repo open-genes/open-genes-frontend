@@ -32,7 +32,7 @@
       <div class="aging-mechanisms-accordion__body" accordion-body>
         <ul class="list list--bulletted">
           <li *ngFor="let mechanism of geneAgingMechanisms | slice: maxItemsToShow"
-              [class.__active]="activeListItem == mechanism.id"
+              [class.__active]="activeListItem === mechanism.id"
               (click)="emitOnClick(mechanism.id)">
             {{ mechanism.name }}
           </li>

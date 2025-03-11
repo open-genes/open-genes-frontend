@@ -9,12 +9,12 @@ import { GeneAssociatedWithLongevityEffectsComponent } from './gene-associated-w
 import { ProteinRegulatesOtherGenesComponent } from './protein-regulates-other-genes/protein-regulates-other-genes.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PublicationInfoModule } from '../publication-info/publication-info.module';
-import { PipesModule } from '../../../modules/pipes/pipes.module';
+import { PipesModule } from '../../../core/pipes/pipes.module';
 import { RouterModule } from '@angular/router';
-import { UiComponentsModule } from '../../ui-components/ui-components.module';
-import { MaterialModule } from 'src/app/modules/vendors/material.module';
+import { MaterialModule } from 'src/app/modules/third-party/material.module';
 import { NgCapitalizePipeModule } from "angular-pipes";
 import { DirectivesModule } from "../../../directives/directives.module";
+import {InfoButtonComponent} from "../../ui-components/info-button/info-button.component";
 
 const components = [
   AdditionalEvidencesComponent,
@@ -28,17 +28,17 @@ const components = [
 
 @NgModule({
   declarations: [...components],
-  imports: [
-    CommonModule,
-    TranslateModule,
-    PipesModule,
-    PublicationInfoModule,
-    RouterModule,
-    UiComponentsModule,
-    MaterialModule,
-    NgCapitalizePipeModule,
-    DirectivesModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        PipesModule,
+        PublicationInfoModule,
+        RouterModule,
+        MaterialModule,
+        NgCapitalizePipeModule,
+        DirectivesModule,
+        InfoButtonComponent
+    ],
   exports: [...components],
 })
 export class ResearchTablesModule {}

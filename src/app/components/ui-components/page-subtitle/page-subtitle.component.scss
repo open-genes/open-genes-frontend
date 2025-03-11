@@ -1,0 +1,24 @@
+@import "../../styles";
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.page-subtitle {
+  &__title {
+    font-size: calc(0.5vw + 18px);
+    font-weight: $font-weight-medium;
+    margin-bottom: 0.15em;
+  }
+
+  &__custom-content {
+    font-size: $font-size;
+    color: $color-gray;
+    margin: 0;
+
+    &:empty {
+      display: none;
+    }
+  }
+}

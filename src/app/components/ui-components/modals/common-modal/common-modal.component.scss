@@ -1,0 +1,21 @@
+@import "../../../styles";
+@include modal-window('comment');
+
+:host {
+  .common-modal__header {
+    position: relative;
+    padding-right: 40px;
+    margin-top: -5px;
+    margin-bottom: 15px;
+
+    .close-button {
+      @include close-button(-10px, 15px);
+    }
+  }
+
+  .common-modal__body {
+    ::ng-deep {
+      @include typography;
+    }
+  }
+}

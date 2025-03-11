@@ -9,12 +9,28 @@ import {
 import { FavouritesService } from '../../core/services/favourites.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {NgIf} from "@angular/common";
+import { RouterLink, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
+import { DirectivesModule } from '../../directives/directives.module';
+import { MaterialModule } from '../../modules/third-party/material.module';
+import { IconComponent } from '../ui-components/icon/app-icon.component';
 
 @Component({
-  selector: 'app-burger-menu',
-  templateUrl: './burger-menu.component.html',
-  styleUrls: ['./burger-menu.component.scss'],
+    selector: 'app-burger-menu',
+    templateUrl: './burger-menu.component.html',
+    styleUrls: ['./burger-menu.component.scss'],
+    standalone: true,
+  imports: [
+    NgIf,
+    RouterLink,
+    RouterLinkActive,
+    RouterLinkWithHref,
+    TranslateModule,
+    DirectivesModule,
+    MaterialModule,
+    IconComponent,
+  ],
 })
 export class BurgerMenuComponent implements OnInit, OnDestroy {
   @Inject(Document) public document: Document;

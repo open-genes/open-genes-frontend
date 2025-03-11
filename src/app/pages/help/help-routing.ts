@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
-import { HelpComponent } from './help.component';
+import { HelpPageComponent } from './help-page.component';
 import { EntitiesComponent } from './entities/entities.component';
 import { WpArticleComponent } from './wp-article/wp-article.component';
 
 export const HELP_ROUTES: Routes = [
   {
     path: '',
-    component: HelpComponent,
+    component: HelpPageComponent,
   },
   {
     path: 'entities/:slug',

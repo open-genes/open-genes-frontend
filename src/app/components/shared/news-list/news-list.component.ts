@@ -16,12 +16,19 @@ import {
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { SessionStorageService } from '../../../core/services/session-storage.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { PipesModule } from '../../../core/pipes/pipes.module';
+import { IconComponent } from '../../ui-components/icon/app-icon.component';
+import { NgForOf, NgIf } from '@angular/common';
+import { NoContentComponent } from '../no-content/no-content.component';
 
 @Component({
   selector: 'app-news-list',
   templateUrl: './news-list.component.html',
   styleUrls: ['./news-list.component.scss'],
+  standalone: true,
+  imports: [TranslateModule, PipesModule, RouterModule, IconComponent, NgForOf, NgIf, NoContentComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewsListComponent implements OnInit, OnDestroy {

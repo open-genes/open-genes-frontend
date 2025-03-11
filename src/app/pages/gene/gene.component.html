@@ -260,7 +260,7 @@
                           {{ "show_less" | translate }}
                         </button>
 
-                        <button *ngIf="orthologsMaxItems == orthologsMaxItemsToShow"
+                        <button *ngIf="orthologsMaxItems === orthologsMaxItemsToShow"
                                 class="btn show-more__button"
                                 (click)="orthologsMaxItems = gene.ortholog.length">
                           {{ "show_more" | translate }}
