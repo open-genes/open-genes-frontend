@@ -36,7 +36,6 @@
                   (paginationChange)="onPaginationChange($event)"
                   ></app-diet-table>
 
-                <!-- When content is not ready -->
                 <app-spinner *ngIf="!confirmedGenesList?.length && !isNotFound" class="__mt-10 __mb-10"></app-spinner>
 
                 <section *ngIf="isNotFound">

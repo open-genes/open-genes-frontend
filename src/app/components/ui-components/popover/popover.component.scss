@@ -1,0 +1,78 @@
+@import "../../styles";
+
+$popover-size: 8px;
+
+@mixin popover-arrow-constructor($size, $color) {
+  margin-left: -#{$size};
+  border-bottom: #{$size - 1} solid $color;
+  border-right: $size solid transparent;
+  border-left: $size solid transparent;
+}
+
+.popover {
+  display: block;
+  position: absolute;
+  background-color: $color-white;
+  border: 1px solid $color-borders;
+  border-radius: $border-radius-regular;
+  box-shadow: $box-shadow;
+  min-width: 200px;
+
+  @include resolution_smartphone {
+    max-width: $smartphone - 20px;
+  }
+
+  &__arrow {
+    position: absolute;
+    top: -#{$popover-size - 1};
+    z-index: 0;
+    @include popover-arrow-constructor($popover-size, $color-borders);
+
+    &,
+    &:before {
+      content: ' ';
+      display: block;
+      width: 0;
+      height: 0;
+    }
+
+    &:before {
+      position: relative;
+      top: 2px;
+      left: 0;
+      z-index: 1;
+      @include popover-arrow-constructor(($popover-size - 2), $color-white);
+    }
+  }
+
+  &__header {
+    width: 100%;
+    font-size: 15px;
+    color: $color-indent;
+    font-weight: bold;
+    padding: 20px 20px 10px 20px;
+  }
+
+  &__content {
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0 20px 20px;
+
+    &:empty {
+      display: none;
+    }
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: none;
+      width: 4px;
+      border-radius: 2px;
+      background-color: $color-gray-semi;
+    }
+
+    &::-webkit-scrollbar {
+      width: 4px;
+      background-color: $color-gray-soft;
+    }
+  }
+}

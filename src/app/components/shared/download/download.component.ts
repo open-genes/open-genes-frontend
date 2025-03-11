@@ -1,16 +1,22 @@
 import { Component, Inject, Input, OnDestroy, SecurityContext, ViewEncapsulation } from '@angular/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FileExportService } from '../../../core/services/browser/file-export.service';
 import { ApiService } from '../../../core/services/api/open-genes-api.service';
-import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-download',
   templateUrl: './download.component.html',
   styleUrls: ['./download.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  providers: [FileExportService, ApiService],
+  imports: [
+    TranslateModule,
+  ],
 })
 export class DownloadComponent implements OnDestroy {
   @Input() data: string;

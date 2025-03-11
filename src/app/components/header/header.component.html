@@ -1,8 +1,7 @@
 <header class="header">
-  <div *ngIf="showAnnouncement && region !== 'Russian Federation'"
+  <div *ngIf="showAnnouncement"
      target="_blank"
      class="header__announcement">
-    <b>{{ "support_us_gitcoin" | translate }}</b>
   </div>
   <div class="header__centering">
     <a href="/home"

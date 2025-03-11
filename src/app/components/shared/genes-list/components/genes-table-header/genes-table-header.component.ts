@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Settings } from '../../../../../core/models/settings.model';
 import { SettingsService } from '../../../../../core/services/settings.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { CommonBottomSheetComponent } from '../../../../ui-components/components/modals/common-bottom-sheet/common-bottom-sheet.component';
+import { CommonBottomSheetComponent } from '../../../../ui-components/modals/common-bottom-sheet/common-bottom-sheet.component';
 
 @Component({
   selector: 'app-genes-table-header',

@@ -21,7 +21,7 @@ import { SearchMode } from '../../../../core/models/settings.model';
 import { Genes } from '../../../../core/models';
 import { StudiesFilterService } from '../../../../core/services/filters/studies-filter.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModalComponent } from '../../../../components/ui-components/components/modals/common-modal/common-modal.component';
+import { CommonModalComponent } from '../../../../components/ui-components/modals/common-modal/common-modal.component';
 import { PageEvent } from '@angular/material/paginator';
 
 @Component({

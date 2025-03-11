@@ -5,41 +5,41 @@ import { RouterModule } from '@angular/router';
 import { RESEARCHES_ROUTES } from './experiments-data-page-routing';
 import { GenesListModule } from '../../components/shared/genes-list/genes-list.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { PipesModule } from '../../modules/pipes/pipes.module';
+import { PipesModule } from '../../core/pipes/pipes.module';
 import { MatButtonModule } from '@angular/material/button';
-import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
 import { MatIconModule } from '@angular/material/icon';
-import { NoContentModule } from '../../components/shared/no-content/no-content.module';
-import { IconModule } from '../../components/ui-components/components/icon/app-icon.module';
-import { MaterialModule } from '../../modules/vendors/material.module';
 import { NgCapitalizePipeModule, NgTrimPipeModule } from 'angular-pipes';
 import { ResearchTablesModule } from '../../components/shared/research-tables/research-tables.module';
 import { ResearchTabComponent } from './components/research-tab/research-tab.component';
 import { ResearchFiltersPanelModule } from './components/filters-panel/research-filters-panel.module';
 import { SearchModule } from '../../components/shared/search/search.module';
 import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
+import { PageSubtitleComponent } from '../../components/ui-components/page-subtitle/page-subtitle.component';
+import { MaterialModule } from '../../modules/third-party/material.module';
+import { IconComponent } from '../../components/ui-components/icon/app-icon.component';
+import {SpinnerComponent} from "../../components/ui-components/spinner/spinner.component";
 
 @NgModule({
   declarations: [ExperimentsDataPageComponent, ResearchTabComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(RESEARCHES_ROUTES),
-    GenesListModule,
-    TranslateModule,
-    PipesModule,
-    MatButtonModule,
-    UiComponentsModule,
-    MatIconModule,
-    NoContentModule,
-    IconModule,
-    MaterialModule,
-    NgCapitalizePipeModule,
-    NgTrimPipeModule,
-    ResearchTablesModule,
-    ResearchFiltersPanelModule,
-    SearchModule,
-    SidebarModule,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(RESEARCHES_ROUTES),
+        GenesListModule,
+        TranslateModule,
+        PipesModule,
+        MatButtonModule,
+        MatIconModule,
+        NgCapitalizePipeModule,
+        NgTrimPipeModule,
+        ResearchTablesModule,
+        ResearchFiltersPanelModule,
+        SearchModule,
+        SidebarModule,
+        PageSubtitleComponent,
+        MaterialModule,
+        IconComponent,
+        SpinnerComponent,
+    ],
   exports: [PipesModule],
 })
 export class ExperimentsDataPageModule {}

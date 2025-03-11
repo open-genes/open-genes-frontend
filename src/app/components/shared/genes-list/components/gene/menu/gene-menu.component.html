@@ -15,7 +15,7 @@
           (click)="unFavItem(gene['id'])"
   >{{ 'favourites_remove' | translate }}</button>
   <button mat-menu-item
-          *ngIf="!(this.isAdded | async)"
+          *ngIf="(this.isAdded | async) === false"
           (click)="favItem(gene['id'])"
   >{{ 'favourites_add' | translate }}</button>
 </mat-menu>

@@ -5,19 +5,19 @@ import { RouterModule } from '@angular/router';
 import { HOME_ROUTES } from './horvath-clock-routing';
 import { GenesListModule } from '../../../components/shared/genes-list/genes-list.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { PipesModule } from '../../../modules/pipes/pipes.module';
+import { PipesModule } from '../../../core/pipes/pipes.module';
 import { MatButtonModule } from '@angular/material/button';
-import { UiComponentsModule } from '../../../components/ui-components/ui-components.module';
 import { MatIconModule } from '@angular/material/icon';
-import { NoContentModule } from '../../../components/shared/no-content/no-content.module';
-import { IconModule } from '../../../components/ui-components/components/icon/app-icon.module';
 import { GenesMethylationListComponent } from './components/genes-methylation-list/genes-methylation-list.component';
-import { MaterialModule } from '../../../modules/vendors/material.module';
 import { NgCapitalizePipeModule, NgTrimPipeModule } from 'angular-pipes';
 import { SearchModule } from '../../../components/shared/search/search.module';
+import { MaterialModule } from '../../../modules/third-party/material.module';
+import { SpinnerComponent } from '../../../components/ui-components/spinner/spinner.component';
+import { IconComponent } from '../../../components/ui-components/icon/app-icon.component';
+import { NoContentComponent } from '../../../components/shared/no-content/no-content.component';
 
 @NgModule({
-  declarations: [HorvathClockComponent, GenesMethylationListComponent],
+  declarations: [HorvathClockComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(HOME_ROUTES),
@@ -25,14 +25,16 @@ import { SearchModule } from '../../../components/shared/search/search.module';
     TranslateModule,
     PipesModule,
     MatButtonModule,
-    UiComponentsModule,
     MatIconModule,
-    NoContentModule,
-    IconModule,
     MaterialModule,
     NgCapitalizePipeModule,
     NgTrimPipeModule,
-    SearchModule
+    SearchModule,
+    MaterialModule,
+    GenesMethylationListComponent,
+    SpinnerComponent,
+    IconComponent,
+    NoContentComponent,
   ],
   exports: [PipesModule],
 })

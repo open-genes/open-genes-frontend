@@ -81,13 +81,15 @@
                 [innerHTML]="gene.name">
           </span>&nbsp;
 
-          <ng-container *ngFor="let term of gene?.terms | keyvalue">
+          <ng-container *ngIf="gene?.terms">
+          <ng-container *ngFor="let term of gene.terms | keyvalue">
             <span *ngFor="let item of term?.value | keyvalue"
                   class="item__name"
                   appHighlight
                   [highlightText]="highlightText"
                   [innerHTML]="item.value">
             </span>
+          </ng-container>
           </ng-container>
         </button>
       </ng-container>
