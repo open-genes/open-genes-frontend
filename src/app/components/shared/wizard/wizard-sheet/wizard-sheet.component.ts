@@ -11,13 +11,15 @@ import { DirectivesModule } from '../../../../directives/directives.module';
 import { PipesModule } from '../../../../core/pipes/pipes.module';
 import { IconComponent } from '../../../ui-components/icon/app-icon.component';
 import { NoContentComponent } from '../../no-content/no-content.component';
+import { NgIf } from '@angular/common';
+import { MaterialModule } from '../../../../modules/third-party/material.module';
 
 @Component({
   selector: 'app-wizard-sheet',
   templateUrl: './wizard-sheet.component.html',
   styleUrls: ['./wizard-sheet.component.scss'],
   standalone: true,
-  imports: [TranslateModule, DirectivesModule, PipesModule, IconComponent, NoContentComponent],
+  imports: [TranslateModule, DirectivesModule, PipesModule, IconComponent, NoContentComponent, NgIf, MaterialModule],
   providers: [WindowService, WordpressApiService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

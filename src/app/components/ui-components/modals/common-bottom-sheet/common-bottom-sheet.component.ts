@@ -9,7 +9,7 @@ import {
 } from '@angular/material/bottom-sheet';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { NgTemplateOutlet } from '@angular/common';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-common-bottom-sheet',
@@ -20,6 +20,7 @@ import { NgTemplateOutlet } from '@angular/common';
     TranslateModule,
     MatButtonModule,
     NgTemplateOutlet,
+    NgIf,
   ],
 })
 export class CommonBottomSheetComponent {
