@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '
 import { Studies } from '../../../core/models/open-genes-api/studies.model';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CommonBottomSheetComponent } from '../../ui-components/modals/common-bottom-sheet/common-bottom-sheet.component';
-import { KeyValuePipe, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
+import { KeyValuePipe, NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { SetClassNamePipe } from './set-class-name.pipe';
 
@@ -19,6 +19,7 @@ import { SetClassNamePipe } from './set-class-name.pipe';
     NgClass,
     TranslateModule,
     SetClassNamePipe,
+    NgForOf,
   ],
 })
 export class ExperimentsStatsComponent implements OnInit {

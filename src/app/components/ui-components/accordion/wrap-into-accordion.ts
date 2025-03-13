@@ -6,6 +6,7 @@ export abstract class WrapIntoAccordion {
 
   protected setListLength(list): void {
     if (list) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       this.listLength = Object.keys(list).length;
     }
   }

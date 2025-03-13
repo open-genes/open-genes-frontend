@@ -2,13 +2,14 @@ import { Component, Inject, TemplateRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { MaterialModule } from '../../../../modules/third-party/material.module';
 
 @Component({
   selector: 'app-common-modal',
   templateUrl: './common-modal.component.html',
   styleUrls: ['./common-modal.component.scss'],
   standalone: true,
-  imports: [TranslateModule, MatDialogModule, NgTemplateOutlet, NgIf],
+  imports: [TranslateModule, MatDialogModule, NgTemplateOutlet, NgIf, MaterialModule],
 })
 export class CommonModalComponent {
   constructor(

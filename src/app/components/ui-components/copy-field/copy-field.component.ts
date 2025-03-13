@@ -5,14 +5,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-copy-field',
   templateUrl: './copy-field.component.html',
   styleUrls: ['./copy-field.component.scss'],
   standalone: true,
-  imports: [MatSnackBar],
+  imports: [MatSnackBar, TranslateModule],
 })
 export class CopyFieldComponent {
   @Input() value = '';
@@ -28,6 +28,7 @@ export class CopyFieldComponent {
       .writeText(this.value)
       .then(() => {
         this.snackBar.open(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           this.copiedMessage.nativeElement.textContent,
           '',
           {
