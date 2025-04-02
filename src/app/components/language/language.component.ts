@@ -1,54 +1,50 @@
-import { Component, Input } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {
+  Component,
+  Input,
+  ViewEncapsulation,
+} from '@angular/core';
+import {
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
 import { environment } from '../../../environments/environment';
 import { MaterialModule } from '../../modules/third-party/material.module';
-import { NgClass } from '@angular/common';
+import { NgClass, NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-language',
   templateUrl: './language.component.html',
-  styleUrls: ['./language.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
     MaterialModule,
     NgClass,
     TranslateModule,
+    NgForOf,
   ],
 })
 export class LanguageComponent {
   @Input() theme: 'light' | 'dark' = 'dark';
-
-  public languages = environment.languages;
-  public currentIndex = environment.languages.indexOf(this.translate.currentLang);
-  public nextIndex = (this.currentIndex + 1) % environment.languages.length;
+  public languages = environment.languages.sort();
+  public localesMap: { [key: string]: string } = {
+    cs: 'Čeština',
+    en: 'English',
+    pt: 'Português',
+    uk: 'Українська',
+    es: 'Español',
+    ru: 'Русский',
+    zh: '中文',
+  };
 
   constructor(public translate: TranslateService) {}
 
-  changeLanguage(language) {
-    const currentIndex = environment.languages.indexOf(this.translate.currentLang);
-    const nextIndex = (currentIndex + 1) % environment.languages.length;
-    const nextLang = environment.languages[nextIndex];
+  changeLanguage(language: string) {
+    console.log(`Chosen language: ${language}`);
+    if (!this.languages.includes(language)) {
+      return;
+    }
 
-    const languageSelector = (lang: string) => {
-      if (lang === 'ru') {
-        return environment.languages[0];
-      }
-
-      if (lang === 'en') {
-        return environment.languages[1];
-      }
-
-      if (lang === 'zh') {
-        return environment.languages[2];
-      }
-
-      return nextLang;
-    };
-
-    const languageSet = languageSelector(language);
-
-    this.translate.use(languageSet);
-    localStorage.setItem('lang', languageSet);
-    window.location.reload();
+    this.translate.use(language);
+    localStorage.setItem('lang', language);
   }
 }

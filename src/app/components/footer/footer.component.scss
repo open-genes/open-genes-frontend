@@ -17,7 +17,7 @@
   }
 
   @include resolution_smartphone {
-    display: none;
+    font-size: $font-size-small;
   }
 }
 
@@ -87,9 +87,11 @@ footer.wrapper {
     margin-top: 1em;
   }
 
-  a:not(.btn) {
+  a:not(.btn),
+  &::ng-deep .language {
     transition: color .15s linear;
 
+    &,
     &:link,
     &:visited {
       color: $color-gray;
@@ -99,5 +101,22 @@ footer.wrapper {
     &:active {
       color: $color-gray-halfing;
     }
+  }
+
+  &::ng-deep .language {
+    margin-right: 1ch;
+
+    &[disabled] {
+      font-weight: $font-weight-medium;
+      color: $color-gray-semi;
+      cursor: default;
+    }
+  }
+
+  hr {
+    height: 1px;
+    border-width: 0;
+    background-color: $color-gray;
+    margin: 1.2em 0 .8em 0;
   }
 }

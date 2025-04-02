@@ -62,6 +62,10 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/404/404.module').then((m) => m.Error404Module),
   },
   {
+    path: '/',
+    redirectTo: '/home',
+  },
+  {
     path: '**',
     redirectTo: '/404',
   },

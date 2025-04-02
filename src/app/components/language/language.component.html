@@ -1,35 +1,9 @@
 <button
-  [matMenuTriggerFor]="languageMenu"
-  [ngClass]="theme === 'light' ? 'language-switcher--light' : 'language-switcher--dark'"
-  aria-label="Выбор языка"
-  class="language-switcher"
-  mat-icon-button>
-
-  <span class="language-switcher__inner">
-    {{ translate.currentLang }}
-  </span>
+  *ngFor="let lang of languages"
+  class="language"
+  aria-label="Language selection"
+  (click)="changeLanguage(lang)"
+  [disabled]="translate.currentLang === lang">
+  {{ localesMap[lang] }}
 </button>
 
-<mat-menu #languageMenu>
-  <button
-    mat-menu-item
-    (click)="changeLanguage('ru')"
-    [disabled]="currentIndex === 0">
-    {{ "language_ru" | translate }}
-  </button>
-
-  <button
-    mat-menu-item
-    (click)="changeLanguage('en')"
-    [disabled]="currentIndex === 1">
-    {{ "language_en" | translate }}
-  </button>
-
-  <button
-    mat-menu-item
-    class="hidden"
-    (click)="changeLanguage('zh')"
-    [disabled]="currentIndex === 2">
-    {{ "language_zh" | translate }}
-  </button>
-</mat-menu>
