@@ -82,15 +82,6 @@
         </a>
       </li>
 
-      <li *ngIf="translate.currentLang === 'ru'"
-          class="panel__link">
-        <a [routerLink]="'/news'"
-           routerLinkActive="__current"
-        >
-          <span class="icon fa far fa-newspaper"></span>
-          {{ 'header_menu_news' | translate }}</a>
-      </li>
-
       <li class="panel__link">
         <a href="/api/docs"
            target="_blank">
