@@ -32,7 +32,8 @@ export class AppComponent implements OnInit, OnDestroy {
   private scrollSubscription$: Subscription;
   private dynamicContent$ = new Subject<void>();
   private currentRoute = '';
-  private lang: string;
+  private language: string;
+  private defaultLanguage = 'en';
 
   constructor(
     @Inject(DOCUMENT) public document: Document,
@@ -44,11 +45,15 @@ export class AppComponent implements OnInit, OnDestroy {
     private wpApiService: WordpressApiService,
     private windowService: WindowService,
   ) {
-    // TODO: OG-953
+
     // Set app language
     this.translate.addLangs(environment.languages);
-    this.lang = environment.languages[1]; // English is a default language
-    this.translate.use(this.lang);
+    if (localStorage.getItem('lang')) {
+      this.language = localStorage.getItem('lang');
+    } else {
+      this.language = this.defaultLanguage;
+    }
+    this.translate.use(this.language);
     this.retrievedSettings = this.settingsService.getSettings();
   }
 
@@ -61,7 +66,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.currentRoute = event.url;
         if (this.currentRoute === '/404') {
           this.isErrorPage = true;
-        } else if (this.currentRoute === '/home') {
+        } else if (this.currentRoute === '' || this.currentRoute === 'home') {
           this.isHomePage = true;
         } else {
           this.isErrorPage = false;
@@ -77,9 +82,9 @@ export class AppComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.subscription$))
       .subscribe((params) => {
         if (params['language']) {
-          this.lang = params['language'];
-          this.translate.use(this.lang);
-          localStorage.setItem('lang', this.lang);
+          this.language = params['language'];
+          this.translate.use(this.language);
+          localStorage.setItem('lang', this.language);
         }
       })
 
