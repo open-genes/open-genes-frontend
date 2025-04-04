@@ -16,6 +16,9 @@ type DynamicContentSections = 'footer' | 'sidebar' | 'wizard' | string;
 })
 export class WordpressApiService {
   private url = environment.wordpressApiUrl;
+  // TODO: Add translations to the database
+  // private currentLang = this.translate.currentLang;
+  private currentLang = 'en';
   private footerContentSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   private sidebarContentSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   private wizardContentSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
@@ -25,7 +28,7 @@ export class WordpressApiService {
   }
 
   public getCategories(language?: string): Observable<Category[]> {
-    const params = new HttpParams().set('slug', language ? language : this.translate.currentLang);
+    const params = new HttpParams().set('slug', language ? language : this.currentLang);
     return this.http.get<Category[]>(`${this.url}categories`, { params });
   }
 

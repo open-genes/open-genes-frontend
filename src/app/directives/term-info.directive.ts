@@ -45,7 +45,7 @@ export class TermInfoDirective implements AfterViewInit, OnDestroy {
   getTermsByLang(): void {
     const lang = this.translateService.currentLang;
     this.http
-      .get(environment.termsJsonUrl[lang === 'en' || lang === 'zh' ? 0 : 1])
+      .get(environment.termsJsonUrl[lang])
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((terms: Terms) => {
         this.terms = terms;
