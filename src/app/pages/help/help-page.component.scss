@@ -5,6 +5,10 @@
   margin-top: 12px;
 }
 
+.faq__section + .faq__section {
+  margin-top: 24px;
+}
+
 mat-panel-title {
   font-weight: $font-weight-medium;
 }

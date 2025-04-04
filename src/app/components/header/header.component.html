@@ -1,7 +1,6 @@
 <header class="header">
-  <div *ngIf="showAnnouncement"
-     target="_blank"
-     class="header__announcement">
+  <div class="header__announcement">
+    <ng-content></ng-content>
   </div>
   <div class="header__centering">
     <a href="/"
