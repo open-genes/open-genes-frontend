@@ -41,36 +41,37 @@ export class GeneLocationComponent {
 
     if (this.geneLength < 15 && this.geneLength !== 0) {
       const l = ` (${this.geneLength}kb < 15kb)`;
-      this.lengthText = this.translate.currentLang === 'ru' ? 'короткий' + l : 'short' + l;
+      this.lengthText = `${this.translate.instant('gene_length_short')} ${l}`;
     }
 
     if (this.geneLength > 15 && this.geneLength < 100) {
       const l = ` (15kb < ${this.geneLength}kb < 100kb)`;
-      this.lengthText = this.translate.currentLang === 'ru' ? 'средний' + l : 'midlength' + l;
+      this.lengthText = `${this.translate.instant('gene_length_midlength')} ${l}`;
     }
 
     if (this.geneLength > 100) {
       const l = ` (${this.geneLength}kb > 100kb)`;
-      this.lengthText = this.translate.currentLang === 'ru' ? this.lengthText = 'длинный' + l : 'long' + l;
+      this.lengthText = `${this.translate.instant('gene_length_long')} ${l}`;
     }
   }
 
   setMarkerPosition(): void {
     const shortBand = this.location.band.split('-')[0];
+
     if (shortBand.includes('p')) {
       const chromosome = shortBand.split('p');
       this.bandTranscript = {
         chromosome: chromosome[0],
-        arm: this.translate.currentLang === 'ru' ? 'коротком (p) плече' : 'short (p) arm',
+        arm: this.translate.instant('chromosome_short_arm'),
         position: 50 - Number(chromosome[1]),
       };
     }
 
-    if (shortBand.includes('с')) {
+    if (shortBand.includes('c')) {
       const chromosome = shortBand.split('c');
       this.bandTranscript = {
         chromosome: chromosome[0],
-        arm: this.translate.currentLang === 'ru' ? 'центромере' : 'centromere (с)',
+        arm: this.translate.instant('chromosome_centromere'),
         position: Number(chromosome[1]),
       };
     }
@@ -79,11 +80,12 @@ export class GeneLocationComponent {
       const chromosome = shortBand.split('q');
       this.bandTranscript = {
         chromosome: chromosome[0],
-        arm: this.translate.currentLang === 'ru' ? 'длинном (q) плече' : 'long (q) arm',
+        arm: this.translate.instant('chromosome_long_arm'),
         position: 50 + Number(chromosome[1]),
       };
     }
   }
+
 
   showMoreDetails(title, body, template = null): void {
     this.dialog.open(CommonModalComponent, {
