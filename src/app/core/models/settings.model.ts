@@ -3,6 +3,7 @@ export interface Settings {
   searchMode: SearchMode;
   isTableView: boolean;
   showCookieBanner: boolean;
+  language: string;
 }
 
 export enum SettingsEnum {

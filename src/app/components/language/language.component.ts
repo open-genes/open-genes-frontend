@@ -10,6 +10,7 @@ import {
 import { environment } from '../../../environments/environment';
 import { MaterialModule } from '../../modules/third-party/material.module';
 import { NgClass, NgForOf } from '@angular/common';
+import { localesMap } from '../../core/maps/languages.map';
 
 @Component({
   selector: 'app-language',
@@ -26,15 +27,7 @@ import { NgClass, NgForOf } from '@angular/common';
 export class LanguageComponent {
   @Input() theme: 'light' | 'dark' = 'dark';
   public languages = environment.languages.sort();
-  public localesMap: { [key: string]: string } = {
-    cs: 'Čeština',
-    en: 'English',
-    pt: 'Português',
-    uk: 'Українська',
-    es: 'Español',
-    ru: 'Русский',
-    zh: '中文',
-  };
+  public locales = localesMap;
 
   constructor(public translate: TranslateService) {}
 

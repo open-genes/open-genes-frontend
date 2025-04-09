@@ -5,8 +5,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SwitchComponent } from '../../components/ui-components/switch/switch.component';
+import {MaterialModule} from "../../modules/third-party/material.module";
+import { NgKeysPipeModule } from 'angular-pipes';
 
 const settingsRoutes: Routes = [{ path: '', component: SettingsComponent }];
 
@@ -19,6 +21,9 @@ const settingsRoutes: Routes = [{ path: '', component: SettingsComponent }];
     TranslateModule,
     SidebarModule,
     MatCheckboxModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    NgKeysPipeModule,
   ],
 })
 export class SettingsModule {}

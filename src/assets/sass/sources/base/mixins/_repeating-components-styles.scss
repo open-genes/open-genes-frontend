@@ -364,6 +364,36 @@
   }
 }
 
+@mixin mat-form-field-customization() {
+  &::ng-deep {
+    app-eye-checkbox {
+      margin-left: -2px;
+    }
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+
+    .mat-form-field-prefix {
+      top: -0.4em;
+      margin-left: -6px;
+    }
+
+    .mat-form-field-underline {
+      display: none;
+    }
+
+    .mat-form-field-flex {
+      border-radius: $border-radius-regular;
+      background-color: rgba($color-general, .10);
+    }
+
+    .mat-select-arrow-wrapper {
+      height: 1em;
+    }
+  }
+}
+
 @mixin filter-panel {
   :host {
     max-width: 100%;
@@ -392,33 +422,7 @@
       max-width: 100%;
     }
 
-    ::ng-deep {
-      app-eye-checkbox {
-        margin-left: -2px;
-      }
-
-      .mat-form-field-wrapper {
-        padding-bottom: 0;
-      }
-
-      .mat-form-field-prefix {
-        top: -0.4em;
-        margin-left: -6px;
-      }
-
-      .mat-form-field-underline {
-        display: none;
-      }
-
-      .mat-form-field-flex {
-        border-radius: $border-radius-regular;
-        background-color: rgba($color-general, .10);
-      }
-
-      .mat-select-arrow-wrapper {
-        padding-top: 0.4em;
-      }
-    }
+    @include mat-form-field-customization();
 
     &--checkbox {
       align-items: center;

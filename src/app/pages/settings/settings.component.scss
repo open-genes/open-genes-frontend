@@ -5,6 +5,24 @@
     padding: 20px 10%;
   }
 
+  h3 {
+    font-size: $font-size-big;
+    font-weight: $font-weight-medium;
+    margin-bottom: .6em;
+  }
+
+  &__row {
+    @include mat-form-field-customization();
+    ::ng-deep {
+      .mat-form-field-flex {
+        padding-top: 0;
+      }
+      .mat-select-arrow-wrapper {
+        margin-top: 0.7em;
+      }
+    }
+  }
+
   &__panel {
     position: relative;
     display: flex;
@@ -36,11 +54,6 @@
       font-size: inherit;
     }
 
-    h3 {
-      font-weight: $font-weight-medium;
-      margin-bottom: .6em;
-    }
-
     &--emphasized {
       background-color: #FFEDCF;
       color: $color-orange-400;
@@ -49,5 +62,5 @@
 }
 
 .setting-items__row + .setting-items__row {
-  margin-top: 10px;
+  margin-top: 1em;
 }

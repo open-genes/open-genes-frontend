@@ -32,8 +32,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private scrollSubscription$: Subscription;
   private dynamicContent$ = new Subject<void>();
   private currentRoute = '';
-  private language: string;
-  private defaultLanguage = 'en';
 
   constructor(
     @Inject(DOCUMENT) public document: Document,
@@ -45,15 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private wpApiService: WordpressApiService,
     private windowService: WindowService,
   ) {
-
-    // Set app language
-    this.translate.addLangs(environment.languages);
-    if (localStorage.getItem('lang')) {
-      this.language = localStorage.getItem('lang');
-    } else {
-      this.language = this.defaultLanguage;
-    }
-    this.translate.use(this.language);
+    this.settingsService.setLanguage();
     this.retrievedSettings = this.settingsService.getSettings();
   }
 
@@ -82,9 +72,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.subscription$))
       .subscribe((params) => {
         if (params['language']) {
-          this.language = params['language'];
-          this.translate.use(this.language);
-          localStorage.setItem('lang', this.language);
+          this.settingsService.updateLanguage(params['language']);
         }
       })
 

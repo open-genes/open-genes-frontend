@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
 import { SearchModeEnum, Settings } from '../models/settings.model';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
+import { environment } from '../../../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
+  private defaultLanguage = 'en';
   private settings: Settings = {
     showUiHints: false,
     searchMode: SearchModeEnum.searchByGenes,
     isTableView: true,
     showCookieBanner: true,
+    language: this.defaultLanguage,
   };
 
   public genesListSettings: GenesListSettings = {
-    // Default:
     ifShowAge: true,
     ifShowDiseases: false,
     ifShowDiseaseCategories: false,
@@ -25,7 +28,9 @@ export class SettingsService {
     ifShowTags: true,
   };
 
-  constructor() {
+  constructor(
+      private translate: TranslateService,
+    ) {
     if (!localStorage.getItem('settings')) {
       localStorage.setItem('settings', JSON.stringify(this.settings));
     } else {
@@ -39,10 +44,9 @@ export class SettingsService {
     }
   }
 
-  setSettings(settingKey: string, value: any): void {
+  public setSettings(settingKey: string, value: any): void {
     // TODO: change to enum type
-    // eslint-disable-next-line no-prototype-builtins
-    if (this.settings.hasOwnProperty(settingKey)) {
+    if (settingKey in this.settings) {
       this.settings[settingKey] = value;
     }
 
@@ -50,15 +54,36 @@ export class SettingsService {
     localStorage.setItem('settings', JSON.stringify(this.settings));
   }
 
-  getSettings(): Settings {
+  public getSettings(): Settings {
     return JSON.parse(localStorage.getItem('settings'));
   }
 
-  setFieldsForShow(fields: GenesListSettings): void {
+  // Legacy:
+  public setFieldsForShow(fields: GenesListSettings): void {
     localStorage.setItem('fieldsForShow', JSON.stringify(fields));
   }
 
-  getFieldsForShow(): GenesListSettings {
+  public getFieldsForShow(): GenesListSettings {
     return JSON.parse(localStorage.getItem('fieldsForShow'));
+  }
+
+  public setLanguage(): void {
+    this.translate.addLangs(environment.languages);
+    if (localStorage.getItem('lang')) {
+      this.settings.language = localStorage.getItem('lang');
+    } else {
+      this.settings.language = this.defaultLanguage;
+    }
+    this.translate.use(this.settings.language);
+  }
+
+  public getLanguage(): string {
+    return this.settings.language;
+  }
+
+  public updateLanguage(language: string): void {
+    this.settings.language = language;
+    localStorage.setItem('lang', this.settings.language);
+    this.translate.use(this.settings.language);
   }
 }
