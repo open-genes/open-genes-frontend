@@ -2,51 +2,20 @@
 
 :host {
   display: block;
-  width: 100%;
 
-  @include resolution_widescreen {
-    font-size: $font-size;
+  .wrapper {
+    background-color: $color-black;
   }
-
-  @include resolution_desktop {
-    font-size: $font-size-smaller;
-  }
-
-  @include resolution_tablet {
-    font-size: $font-size-small;
-  }
-
-  @include resolution_smartphone {
-    font-size: $font-size-small;
-  }
-}
-
-footer.wrapper {
-  background-color: $color-black;
 }
 
 .footer {
+  display: grid;
+  grid-gap: 1.33em;
+  width: 100%;
   color: $color-gray-semi;
 
-  &__row {
-    display: flex;
-    align-content: flex-start;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding-bottom: 2em;
-  }
-
   &__column {
-    margin-top: 2em;
-    padding: 0 1.33em;
-
-    &:not(:last-child) {
-      padding-right: 2em;
-    }
-
-    &--language {
-      color: $color-black;
-    }
+    margin: 2em 0;
   }
 
   h4 {
@@ -82,8 +51,7 @@ footer.wrapper {
   ul + p,
   li + li,
   p + ul,
-  h4 + p,
-  h4 + ul {
+  h4 + * {
     margin-top: 1em;
   }
 
@@ -104,6 +72,7 @@ footer.wrapper {
   }
 
   &::ng-deep .language {
+    display: inline-block;
     margin-right: 1ch;
 
     &[disabled] {
@@ -113,10 +82,33 @@ footer.wrapper {
     }
   }
 
-  hr {
-    height: 1px;
-    border-width: 0;
-    background-color: $color-gray;
-    margin: 1.2em 0 .8em 0;
+  @include resolution_widescreen {
+    font-size: $font-size;
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  @include resolution_desktop {
+    font-size: $font-size-smaller;
+    grid-template-columns: repeat(5, auto);
+  }
+
+  @include resolution_tablet {
+    font-size: $font-size-small;
+    grid-template-columns: 1fr auto auto;
+
+    .footer__column--build {
+      grid-column: 2 / -1;
+      column-count: 2;
+
+      .footer__dynamic-content {
+        position: relative;
+        top: -1em;
+      }
+    }
+  }
+
+  @include resolution_smartphone {
+    font-size: $font-size;
+    grid-template-columns: 1fr;
   }
 }
