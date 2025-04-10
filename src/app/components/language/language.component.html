@@ -4,6 +4,6 @@
   aria-label="Language selection"
   (click)="changeLanguage(lang)"
   [disabled]="translate.currentLang === lang">
-  {{ locales[lang] }}
+  {{ languageNameFromIsoCode[lang] }}
 </button>
 

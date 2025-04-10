@@ -1,3 +1,5 @@
+import { localesMap } from '../app/core/maps/languages.map';
+
 export const environment = {
   name: 'prod',
   production: true,
@@ -8,7 +10,7 @@ export const environment = {
   openLongevity80LevelCMS: 'https://openlongevity.com/',
   wordpressApiUrl: 'https://content.open-genes.com/wp-json/wp/v2/',
   debugMode: false,
-  languages: ['ru', 'en', 'zh', 'es', 'cs', 'uk', 'pt'],
+  languages: Object.keys(localesMap),
   mockJsonUrl: ['../data/articles-1.json', '../data/articles-2.json'],
   termsJsonUrl: ['assets/i18n/terms-en.json', 'assets/i18n/terms-ru.json'],
   gaTrackingCode: 'G-825YYNSJFC',

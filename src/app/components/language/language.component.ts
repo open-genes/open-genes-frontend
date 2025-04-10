@@ -1,6 +1,5 @@
 import {
   Component,
-  Input,
   ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -11,6 +10,8 @@ import { environment } from '../../../environments/environment';
 import { MaterialModule } from '../../modules/third-party/material.module';
 import { NgClass, NgForOf } from '@angular/common';
 import { localesMap } from '../../core/maps/languages.map';
+import { LocaleKeyType } from '../../core/models/languages.model';
+import { SettingsService } from '../../core/services/settings.service';
 
 @Component({
   selector: 'app-language',
@@ -25,19 +26,15 @@ import { localesMap } from '../../core/maps/languages.map';
   ],
 })
 export class LanguageComponent {
-  @Input() theme: 'light' | 'dark' = 'dark';
   public languages = environment.languages.sort();
-  public locales = localesMap;
+  public languageNameFromIsoCode = localesMap;
 
-  constructor(public translate: TranslateService) {}
+  constructor(
+    public translate: TranslateService,
+    private settingsService: SettingsService
+  ) {}
 
-  changeLanguage(language: string) {
-    console.log(`Chosen language: ${language}`);
-    if (!this.languages.includes(language)) {
-      return;
-    }
-
-    this.translate.use(language);
-    localStorage.setItem('lang', language);
+  public changeLanguage(language: LocaleKeyType): void {
+    this.settingsService.updateLanguage(language);
   }
 }

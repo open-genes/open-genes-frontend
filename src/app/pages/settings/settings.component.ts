@@ -6,6 +6,7 @@ import { localesMap } from '../../core/maps/languages.map';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { LocaleKeyType } from '../../core/models/languages.model';
 
 @Component({
   selector: 'app-settings-page',
@@ -15,7 +16,6 @@ import { Subject } from 'rxjs';
 export class SettingsComponent implements OnInit {
   public retrievedSettings: Settings;
   private settingsKey = SettingsEnum;
-  private successMessage = this.translate.getStreamOnTranslationChange('settings_settings_changed');
   public selectedLanguage: string;
   public locales = localesMap;
   private successMessageTranslation$ = new Subject<void>();
@@ -47,7 +47,7 @@ export class SettingsComponent implements OnInit {
     this.showSuccessMessage();
   }
 
-  public changeLanguageSettings(language: string): void {
+  public changeLanguageSettings(language: LocaleKeyType): void {
     this.settingsService.updateLanguage(language);
     this.selectedLanguage = this.settingsService.getLanguage();
     this.showSuccessMessage();

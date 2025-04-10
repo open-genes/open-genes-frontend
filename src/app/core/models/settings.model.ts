@@ -1,9 +1,11 @@
+import { LocaleKeyType } from './languages.model';
+
 export interface Settings {
   showUiHints: boolean;
   searchMode: SearchMode;
   isTableView: boolean;
   showCookieBanner: boolean;
-  language: string;
+  language: LocaleKeyType;
 }
 
 export enum SettingsEnum {

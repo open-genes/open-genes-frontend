@@ -2,6 +2,8 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { localesMap } from '../app/core/maps/languages.map';
+
 export const environment = {
   name: 'default',
   production: false,
@@ -12,7 +14,7 @@ export const environment = {
   openLongevity80LevelCMS: 'https://openlongevity.com/',
   wordpressApiUrl: 'https://content.open-genes.com/wp-json/wp/v2/',
   debugMode: true,
-  languages: ['ru', 'en', 'zh', 'es', 'cs', 'uk', 'pt'],
+  languages: Object.keys(localesMap),
   mockJsonUrl: ['data/articles-1.json', 'data/articles-2.json'],
   termsJsonUrl: ['assets/i18n/terms-en.json', 'assets/i18n/terms-ru.json'],
   gaTrackingCode: 'G-825YYNSJFC',

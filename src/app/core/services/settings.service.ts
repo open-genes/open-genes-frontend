@@ -3,12 +3,13 @@ import { SearchModeEnum, Settings } from '../models/settings.model';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
 import { environment } from '../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
+import { LocaleKeyType } from '../models/languages.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
-  private defaultLanguage = 'en';
+  private defaultLanguage: LocaleKeyType = 'en';
   private settings: Settings = {
     showUiHints: false,
     searchMode: SearchModeEnum.searchByGenes,
@@ -81,7 +82,11 @@ export class SettingsService {
     return this.settings.language;
   }
 
-  public updateLanguage(language: string): void {
+  public updateLanguage(language: LocaleKeyType): void {
+    if (!environment.languages) {
+      return;
+    }
+
     this.settings.language = language;
     localStorage.setItem('lang', this.settings.language);
     this.translate.use(this.settings.language);
