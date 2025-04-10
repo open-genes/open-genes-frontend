@@ -5,6 +5,7 @@
 
   .wrapper {
     background-color: $color-black;
+    padding: 2em 0;
   }
 }
 
@@ -15,7 +16,12 @@
   color: $color-gray-semi;
 
   &__column {
-    margin: 2em 0;
+    word-wrap: normal;
+    hyphens: auto;
+
+    & > * {
+      max-width: 75%;
+    }
   }
 
   h4 {
@@ -71,9 +77,14 @@
     }
   }
 
+  button {
+    white-space: nowrap;
+  }
+
   &::ng-deep .language {
     display: inline-block;
-    margin-right: 1ch;
+    hyphens: none;
+    margin: 0 .8em .8em 0 ;
 
     &[disabled] {
       font-weight: $font-weight-medium;

@@ -17,9 +17,8 @@
     align-items: center;
     min-height: calc(100vh - #{$header-height});
     color: $color-black-500;
-    background: $color-general-light url($background) center center / cover no-repeat;
+    background: $color-general-light url($background) center center / cover no-repeat fixed;
     padding: 30px 0 35px 0;
-    text-shadow: 1px 0 2px 1px $color-black;
 
     &::before {
       content: ' ';
@@ -36,7 +35,8 @@
 
     .container {
       max-width: 580px;
-      position: relative;
+      position: sticky;
+      top: $header-height;
       z-index: 2;
     }
   }
