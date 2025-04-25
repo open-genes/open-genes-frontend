@@ -16,6 +16,7 @@ export class SettingsService {
     isTableView: true,
     showCookieBanner: true,
     language: this.defaultLanguage,
+    showNewReleaseNotification: true,
   };
 
   public genesListSettings: GenesListSettings = {

@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
 import { DOCUMENT } from '@angular/common';
@@ -10,12 +10,13 @@ import { Settings, SettingsEnum } from './core/models/settings.model';
 import { SettingsService } from './core/services/settings.service';
 import { WordpressApiService } from './core/services/api/wordpress-api.service';
 import { WindowService } from './core/services/browser/window.service';
+import { AlertItem, AlertService } from './core/services/alert.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   public app = {
     build: environment.build,
     version: environment.version,
@@ -28,10 +29,13 @@ export class AppComponent implements OnInit, OnDestroy {
   public footerContent: unknown;
   private retrievedSettings: Settings;
   private settingsKey = SettingsEnum;
+  private showNewReleaseNotification: boolean;
   private subscription$ = new Subject();
   private scrollSubscription$: Subscription;
   private dynamicContent$ = new Subject<void>();
   private currentRoute = '';
+  @ViewChild('alertsContainer', { read: ViewContainerRef })
+  alertsContainer: ViewContainerRef;
 
   constructor(
     @Inject(DOCUMENT) public document: Document,
@@ -42,6 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private wpApiService: WordpressApiService,
     private windowService: WindowService,
+    private alertService: AlertService,
   ) {
     this.settingsService.setLanguage();
     this.retrievedSettings = this.settingsService.getSettings();
@@ -78,6 +83,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.setRegion();
     this.setCookieBannerState();
+    this.setNewReleaseNotificationState();
 
     // Handle scroll events
     this.scrollSubscription$ = this.windowService.scroll$
@@ -93,6 +99,12 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe((content) => {
         this.footerContent = content;
       });
+  }
+
+  ngAfterViewInit(): void {
+    if (this.showNewReleaseNotification) {
+      this.showNewReleaseNotifications();
+    }
   }
 
   ngOnDestroy(): void {
@@ -114,6 +126,7 @@ export class AppComponent implements OnInit, OnDestroy {
         .subscribe((data) => {
           if (data) {
             this.region = data.location?.country?.name;
+            // TODO: settings service
             localStorage.setItem('region', this.region);
           }
         });
@@ -131,5 +144,35 @@ export class AppComponent implements OnInit, OnDestroy {
     this.retrievedSettings.showCookieBanner = false;
     this.settingsService.setSettings(this.settingsKey.showCookieBanner, false);
     this.setCookieBannerState();
+  }
+
+  private setNewReleaseNotificationState(): void {
+    this.showNewReleaseNotification =
+      this.retrievedSettings.showNewReleaseNotification === undefined || this.retrievedSettings.showNewReleaseNotification === true;
+  }
+
+  public dontShowNewReleaseNotifications(): void {
+    this.retrievedSettings.showNewReleaseNotification = false;
+    this.settingsService.setSettings(this.settingsKey.releaseNotifications, false);
+    this.setNewReleaseNotificationState();
+  }
+
+  private showNewReleaseNotifications(): void {
+    const notifications: AlertItem[] = [
+      {
+        attachTo: this.alertsContainer,
+        message: 'New site release! Read about the latest changes on <a href="https://github.com/open-genes/open-genes-frontend/releases" target="_blank">GitHub</a>',
+        hasCloseButton: true,
+        timer: 5 * 1000 * 60,
+      },
+      {
+        attachTo: this.alertsContainer,
+        message: 'We have added new languages to our site. If you encounter any mistakes or would like to request a language, please let us know <a href="https://localazy.com/p/open-genes-website" target="_blank">Translations</a>',
+        hasCloseButton: true,
+      },
+    ];
+    this.alertService.pushAlertsToQueue(notifications);
+    this.alertService.popAlertFromQueue();
+    this.dontShowNewReleaseNotifications();
   }
 }

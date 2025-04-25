@@ -1,6 +1,8 @@
 <app-header [region]="region"
             [class.app-header--fixed]="isScrolled"
-></app-header>
+>
+  <ng-container #alertsContainer></ng-container>
+</app-header>
 <router-outlet></router-outlet>
 <app-footer
   *ngIf="!isErrorPage"
@@ -11,9 +13,8 @@
 <ng-container *ngIf="showCookieBanner">
   <app-banner>
     <ng-container text>
-        {{ "cookie_banner_text" | translate }}
-      <a routerLink="/about/articles/cookies-policy"
-         target="_blank"
+      {{ "cookie_banner_text" | translate }}
+      <a routerLink="/about/articles/cookies-policy" target="_blank"
       >{{ "cookie_banner_link" | translate }}</a>
     </ng-container>
     <ng-container button>
