@@ -1,0 +1,55 @@
+@import "../../styles";
+
+:host {
+  display: block;
+  animation: fadeIn .2s 1
+}
+
+.alert {
+  $min-height: 26px;
+  $close-btn-size: 24px;
+  $paddings-v: 4px;
+  $paddings-h: 10px;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  background: $color-clickable-200;
+  color: $color-clickable-500;
+  font-size: $font-size-smaller;
+  padding-left: $close-btn-size + ($paddings-h * 2);
+
+  &__content {
+    display: flex;
+    width: 100%;
+    min-height: 26px;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: $paddings-v 0;
+
+    &::ng-deep {
+      a {
+        @include base-link;
+        @include underlined-link;
+      }
+    }
+  }
+
+  &__close {
+    display: flex;
+    flex: 0 0 $close-btn-size;
+    width: $close-btn-size;
+    color: $color-clickable-500;
+    transition: color .15s ease-in;
+    margin: 0 $paddings-h;
+
+    &:hover,
+    &:focus {
+      color: $color-base;
+    }
+  }
+}

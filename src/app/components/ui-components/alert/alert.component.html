@@ -1,0 +1,12 @@
+<div class="alert">
+  <div class="alert__content">
+    <ng-content></ng-content>
+  </div>
+  <button *ngIf="hasCloseButton"
+          tabindex="0"
+          class="alert__close"
+          aria-label="Close"
+          (click)="closeEvent.emit()"
+  ><mat-icon class="icon">close</mat-icon>
+  </button>
+</div>
