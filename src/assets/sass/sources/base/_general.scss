@@ -1,5 +1,5 @@
 html {
-  min-height: 460px
+  min-height: 460px;
 }
 
 body {
@@ -12,7 +12,6 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  padding-top: $header-height;
 
   &, * {
     box-sizing: border-box;
@@ -21,8 +20,12 @@ body {
   app-root {
     display: grid;
     height: 100%;
-    min-height: calc(100vh - #{$header-height});
-    grid-template-rows: 0 auto min-content;
+    min-height: 100vh;
+    grid-template-rows: min-content 1fr min-content;
+  }
+
+  router-outlet {
+    display: contents;
   }
 
   .preloader {
@@ -74,16 +77,6 @@ body {
   }
 }
 
-app-header,
-.app-header { // the class is used on static pages
-  display: block;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: z('header');
-}
-
 .__hoverable {
   @include ripple;
 }
@@ -95,10 +88,6 @@ app-header,
 .container {
   text-align: left;
   position: relative;
-
-  & > header {
-    text-align: center;
-  }
 }
 
 .items-section {

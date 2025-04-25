@@ -1,5 +1,9 @@
-:host-context(.app-header--fixed) {
-  box-shadow: $box-shadow;
+@import "../../styles";
+
+:host {
+  display: block;
+  width: 100%;
+  z-index: z('header');
 }
 
 .header {
@@ -50,5 +54,14 @@
       position: relative;
       width: 55px;
     }
+  }
+}
+
+:host-context(.app-header--fixed) {
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: $box-shadow;
   }
 }
