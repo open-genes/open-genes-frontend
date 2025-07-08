@@ -44,7 +44,7 @@ body {
     bottom: 0;
     z-index: z('overlay');
     background-color: rgba($color-general-dark, .15);
-    @include fadeIn;
+    animation: fadeIn 1s both;
   }
 
   &.body--still {

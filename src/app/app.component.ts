@@ -88,9 +88,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     // Handle scroll events
     this.scrollSubscription$ = this.windowService.scroll$
       .subscribe((scrollPosition) => {
-        const totalHeight = this.document.documentElement.scrollHeight - this.document.documentElement.clientHeight;
-        const scrollPercentage = (scrollPosition / totalHeight) * 100;
-        this.isScrolled = scrollPercentage > 1;
+        const scrollThreshold = 20;
+        this.isScrolled = scrollPosition > scrollThreshold;
       });
 
     // Get dynamic content for some sections

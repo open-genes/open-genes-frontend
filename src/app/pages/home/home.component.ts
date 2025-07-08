@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Genes } from '../../core/models';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Router } from '@angular/router';
 import { SessionStorageService } from '../../core/services/session-storage.service';
 import { takeUntil } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
+import { WindowService } from '../../core/services/browser/window.service';
 
 @Component({
   selector: 'app-home-page',
@@ -15,11 +16,13 @@ import { HttpParams } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
   private genesList: string[] = [];
+  private subscription$ = new Subject();
+  private scrollSubscription$: Subscription;
   public appData = {
     build: environment.build,
     version: environment.version,
   };
-  public subscription$ = new Subject();
+  public isScrolled = false;
   public error: number;
   public genesCounter: number;
   public lastGenes: Genes[];
@@ -32,6 +35,7 @@ export class HomeComponent implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private readonly sessionStorageService: SessionStorageService,
+    private windowService: WindowService,
   ) {
   }
 
@@ -62,6 +66,12 @@ export class HomeComponent implements OnInit {
     } else {
       this.getGenesForRandomQuery();
     }
+
+    this.scrollSubscription$ = this.windowService.scroll$
+      .subscribe((scrollPosition) => {
+        const scrollThreshold = 20;
+        this.isScrolled = scrollPosition > scrollThreshold;
+      });
   }
 
   private getGenesCount(params: HttpParams = new HttpParams().set('pageSize', 1)): void {

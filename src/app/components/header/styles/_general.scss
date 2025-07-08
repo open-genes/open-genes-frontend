@@ -2,15 +2,18 @@
 
 :host {
   display: block;
-  width: 100%;
   z-index: z('header');
+
+  &,
+  .header {
+    width: 100%;
+    min-height: $header-height;
+  }
 }
 
 .header {
-  width: 100%;
   color: $color-base;
   background-color: $color-white;
-  min-height: $header-height;
 
   &__centering {
     display: flex;

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { fromEvent, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { DOCUMENT } from '@angular/common';
 export class WindowService {
   public windowWidth$: Observable<number>;
   public scroll$: Observable<number>;
+  public scrollPercentage$: Observable<number>;
 
   constructor(@Inject(DOCUMENT) public document: Document) {
     this.windowWidth$ = fromEvent(window, 'resize').pipe(
@@ -26,6 +27,15 @@ export class WindowService {
 
     this.scroll$ = fromEvent(window, 'scroll').pipe(
       map(() => window.scrollY || this.document.documentElement.scrollTop)
+    );
+
+    this.scrollPercentage$ = fromEvent(window, 'scroll').pipe(
+      map(() => window.scrollY || this.document.documentElement.scrollTop),
+      tap((scrollPosition) => {
+        const totalHeight = this.document.documentElement.scrollHeight - this.document.documentElement.clientHeight;
+        const scrollPercentage = (scrollPosition / totalHeight) * 100;
+        return of(scrollPercentage);
+      })
     );
   }
 
