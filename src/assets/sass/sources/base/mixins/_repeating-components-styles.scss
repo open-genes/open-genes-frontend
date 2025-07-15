@@ -537,14 +537,15 @@
 
 @mixin hide-scrollbar {
   // IE, Edge, FF
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  //-ms-overflow-style: none;
+  //scrollbar-width: none;
 
   // Chrome, Safari, Opera
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  //&::-webkit-scrollbar {
+  //  display: none;
+  //}
 }
+// TODO: Customize scrollbar instead of hiding it
 
 @mixin scrollable-container($bg-color: $color-white) {
   .view {
