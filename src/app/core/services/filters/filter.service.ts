@@ -10,7 +10,9 @@ export abstract class FilterService {
   listOfFields$ = new BehaviorSubject<any>('');
   filterChanges$ = new BehaviorSubject<any>([]);
   public twoOrMoreFiltersApplied = new BehaviorSubject<boolean>(false);
-
+  // TODO: Add translations to the database
+  // public currentLang = this.translate.currentLang;
+  public currentLang = 'en';
   public pagination: Pagination = {
     page: 1,
     pageSize: 20,
@@ -90,7 +92,7 @@ export abstract class FilterService {
   //Observable<ApiResponse<Genes>>
   public getSortedAndFilteredParams(): HttpParams {
     let params = new HttpParams()
-      .set('lang', this.translate.currentLang)
+      .set('lang', this.currentLang)
       .set('page', this.pagination.page)
       .set('pageSize', this.pagination.pageSize);
 

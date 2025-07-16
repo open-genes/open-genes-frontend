@@ -1,12 +1,19 @@
-:host-context(.app-header--fixed) {
-  box-shadow: $box-shadow;
+@import "../../styles";
+
+:host {
+  display: block;
+  z-index: z('header');
+
+  &,
+  .header {
+    width: 100%;
+    min-height: $header-height;
+  }
 }
 
 .header {
-  width: 100%;
   color: $color-base;
   background-color: $color-white;
-  min-height: $header-height;
 
   &__centering {
     display: flex;
@@ -50,5 +57,14 @@
       position: relative;
       width: 55px;
     }
+  }
+}
+
+:host-context(.app-header--fixed) {
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: $box-shadow;
   }
 }

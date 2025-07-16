@@ -4,12 +4,20 @@ import { RouterModule } from '@angular/router';
 import { APP_ROUTES, ROUTER_OPTIONS } from './app-routing';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
+import localeCs from '@angular/common/locales/cs';
 import localeEn from '@angular/common/locales/en';
+import localeUk from '@angular/common/locales/uk';
+import localeEs from '@angular/common/locales/es';
+import localePt from '@angular/common/locales/pt';
 import localeRu from '@angular/common/locales/ru';
 import localeZh from '@angular/common/locales/zh';
 
-registerLocaleData(localeRu, 'ru');
+registerLocaleData(localeCs, 'cs');
 registerLocaleData(localeEn, 'en');
+registerLocaleData(localeUk, 'uk');
+registerLocaleData(localeEs, 'es');
+registerLocaleData(localePt, 'pt');
+registerLocaleData(localeRu, 'ru');
 registerLocaleData(localeZh, 'zh');
 
 import { AppComponent } from './app.component';

@@ -11,6 +11,13 @@ import { SkeletonLoaderComponent } from '../../components/ui-components/skeleton
 
 @NgModule({
   declarations: [HomeComponent],
-  imports: [CommonModule, RouterModule.forChild(HOME_ROUTES), TranslateModule, SearchModule, IconComponent, SkeletonLoaderComponent],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(HOME_ROUTES),
+    TranslateModule,
+    SearchModule,
+    IconComponent,
+    SkeletonLoaderComponent,
+  ],
 })
 export class HomeModule {}

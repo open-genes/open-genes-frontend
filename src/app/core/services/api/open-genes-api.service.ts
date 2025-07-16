@@ -28,12 +28,9 @@ export class ApiService {
   private readonly currentLang: string;
 
   constructor(private http: HttpClient, private translate: TranslateService) {
-    this.currentLang = this.translate.currentLang;
-
-    // API doesn't have Chinese language
-    if (this.translate.currentLang === 'zh') {
-      this.currentLang = 'en';
-    }
+    // TODO: Add translations to the database
+    // this.currentLang = this.translate.currentLang;
+    this.currentLang = 'en';
   }
 
   // Legacy API
@@ -93,7 +90,7 @@ export class ApiService {
 
     if (pagination) {
       params = params
-        .set('lang', this.translate.currentLang)
+        .set('lang', this.currentLang)
         .set('page', pagination?.page)
         .set('pageSize', pagination?.pageSize);
     }

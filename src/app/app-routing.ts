@@ -2,7 +2,7 @@ import { ExtraOptions, Routes } from '@angular/router';
 
 export const APP_ROUTES: Routes = [
   {
-    path: 'home',
+    path: '',
     loadChildren: () => import('./pages/home/home.module').then((m) => m.HomeModule),
   },
   {
@@ -62,6 +62,10 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/404/404.module').then((m) => m.Error404Module),
   },
   {
+    path: 'home',
+    redirectTo: '',
+  },
+  {
     path: '**',
     redirectTo: '/404',
   },
@@ -71,5 +75,6 @@ export const ROUTER_OPTIONS: ExtraOptions = {
   anchorScrolling: 'enabled',
   relativeLinkResolution: 'legacy',
   onSameUrlNavigation: 'reload',
-  scrollPositionRestoration: 'top'
+  scrollPositionRestoration: 'top',
+  enableTracing: true,
 };
