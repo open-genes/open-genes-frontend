@@ -62,6 +62,15 @@
 - Noissue. Update links in the footer
 - 314. Wrap data tables in expandable panels
 
+# Release v2.0.0
+
+- Update project to Angular 14
+- Update Angular Material
+- Update project dependencies
+- Remove obsolete unused functionality
+- Remove outdated dependency: Storybook and docs generation, Protractor
+- Use standalone components
+- 330. Fix. Annotation pop-up shows duplicated descriptions
 
 #Release v2.1.0
 
@@ -87,3 +96,4 @@
 - Noissue. Fix breadcrumbs appearance
 - Noissue. Page scroll and smooth animations
 - Noissue. Fix support chat z-index
+

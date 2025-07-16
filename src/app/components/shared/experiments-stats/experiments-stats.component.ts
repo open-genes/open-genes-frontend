@@ -35,7 +35,7 @@ export class ExperimentsStatsComponent implements OnInit {
       cssClass: 'legend-container__item--age-related-change',
     },
     {
-      title: 'gene_page_research_data_lifespan',
+      title: 'gene_page_intervention_moderates_aging',
       cssClass: 'legend-container__item--gene-intervention-to-vital-processes',
     },
     {
