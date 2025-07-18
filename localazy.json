@@ -1,0 +1,13 @@
+{
+  "readKey": "read-key",
+  "writeKey": "write-key",
+
+  "upload": {
+    "type": "json",
+    "files": "src/assets/i18n/en.json"
+  },
+
+  "download": {
+    "files": "locales/${lang}.json"
+  }
+}

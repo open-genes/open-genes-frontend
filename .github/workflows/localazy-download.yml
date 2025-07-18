@@ -10,6 +10,10 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       - uses: localazy/download@v1
+        with:
+          read_key: ${{ secrets.LOCALAZY_READ_KEY }}
+          write_key: ${{ secrets.LOCALAZY_WRITE_KEY }}
+          workdir: assets/i18n/
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Commit latest translations from Localazy.
