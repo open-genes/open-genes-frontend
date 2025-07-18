@@ -72,7 +72,7 @@
 - Use standalone components
 - 330. Fix. Annotation pop-up shows duplicated descriptions
 
-#Release v2.1.0
+# Release v2.1.0
 
 - 319. i18n. Add Czech (contributed by @trendspotter on [https://localazy.com/p/open-genes-website])
 - i18n. Add Portuguese
@@ -97,3 +97,7 @@
 - Noissue. Page scroll and smooth animations
 - Noissue. Fix support chat z-index
 
+# Release v2.1.2
+
+- i18n. Fix misspelled terms and align spelling in en.json
+- Noissue. Fix elements alignment across the UI
