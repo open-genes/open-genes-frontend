@@ -1,4 +1,4 @@
-export const localesMap: { [key: string]: string } = {
+export const localesMap: Record<string, string> = {
   cs: 'Čeština',
   de: 'Deutsch',
   en: 'English',

@@ -16,7 +16,7 @@ import { LocaleKeyType } from '../../core/models/languages.model';
 export class SettingsComponent implements OnInit {
   public retrievedSettings: Settings;
   private settingsKey = SettingsEnum;
-  public selectedLanguage: string;
+  public selectedLanguage: keyof typeof localesMap;
   public locales = localesMap;
   private successMessageTranslation$ = new Subject<void>();
 

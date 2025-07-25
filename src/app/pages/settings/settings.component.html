@@ -13,7 +13,8 @@
     </div>
 
     <form class="container setting-items">
-      <div class="row setting-items__row">
+      <div *ngIf="selectedLanguage === 'en'"
+           class="row setting-items__row">
         <div class="col-12">
           <div class="setting-items__panel setting-items__panel--emphasized">
             <app-switch [switch]="retrievedSettings.showUiHints"
