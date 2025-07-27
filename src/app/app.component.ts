@@ -157,21 +157,24 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private showNewReleaseNotifications(): void {
-    const notifications: AlertItem[] = [
-      {
-        attachTo: this.alertsContainer,
-        message: 'New site release! Read about the latest changes on <a href="https://github.com/open-genes/open-genes-frontend/releases" target="_blank">GitHub</a>',
-        hasCloseButton: true,
-        timer: 5 * 1000 * 60,
-      },
-      {
-        attachTo: this.alertsContainer,
-        message: 'We have added new languages to our site. If you encounter any mistakes or would like to request a language, please let us know <a href="https://localazy.com/p/open-genes-website" target="_blank">Translations</a>',
-        hasCloseButton: true,
-      },
-    ];
-    this.alertService.pushAlertsToQueue(notifications);
-    this.alertService.popAlertFromQueue();
-    this.dontShowNewReleaseNotifications();
+    this.translate.get(['notification_new_language', 'notification_new_release']).subscribe(translations => {
+      const notifications: AlertItem[] = [
+        {
+          attachTo: this.alertsContainer,
+          message: `${translations['notification_new_language']} <a href="https://localazy.com/p/open-genes-website" target="_blank">Localazy</a>`,
+          hasCloseButton: true,
+          timer: 5 * 1000 * 60,
+        },
+        {
+          attachTo: this.alertsContainer,
+          message: `${translations['notification_new_release']} <a href="https://github.com/open-genes/open-genes-frontend/releases" target="_blank">GitHub</a>`,
+          hasCloseButton: true,
+        },
+      ];
+
+      this.alertService.pushAlertsToQueue(notifications);
+      this.alertService.popAlertFromQueue();
+      this.dontShowNewReleaseNotifications();
+    });
   }
 }
