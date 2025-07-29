@@ -90,7 +90,7 @@
 - i18n. Language selection
 - i18n. Update header styles
 - i18n. Show notifications about recent changes
-- i8n. Alerts, service with a queue of alerts and a factory
+- i18n. Alerts, service with a queue of alerts and a factory
 - Noissue. Fix languages configuration
 - Noissue. Fix routing and navigation
 - Noissue. Fix breadcrumbs appearance
@@ -101,3 +101,7 @@
 
 - i18n. Fix misspelled terms and align spelling in en.json
 - Noissue. Fix elements alignment across the UI
+
+# Release v2.2.0
+
+- i18n. Translate notifications about new languages
