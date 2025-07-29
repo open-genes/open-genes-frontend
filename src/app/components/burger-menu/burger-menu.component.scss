@@ -48,6 +48,7 @@
   z-index: 1;
   background-color: $color-white;
   box-shadow: -1px 0 4px 0 rgba(5, 5, 5, 0.3);
+  animation: fadeIn .15s linear forwards;
 
   @include resolution_tablet-and-up {
     width: 320px;

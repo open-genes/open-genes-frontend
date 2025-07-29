@@ -62,3 +62,46 @@
 - Noissue. Update links in the footer
 - 314. Wrap data tables in expandable panels
 
+# Release v2.0.0
+
+- Update project to Angular 14
+- Update Angular Material
+- Update project dependencies
+- Remove obsolete unused functionality
+- Remove outdated dependency: Storybook and docs generation, Protractor
+- Use standalone components
+- 330. Fix. Annotation pop-up shows duplicated descriptions
+
+# Release v2.1.0
+
+- 319. i18n. Add Czech (contributed by @trendspotter on [https://localazy.com/p/open-genes-website])
+- i18n. Add Portuguese
+- i18n. Add Spanish
+- i18n. Add Ukrainian
+- i18n. Add Hindi
+- i18n. Add German
+- i18n. Add Swedish
+- i18n. Environments, typing, settings
+- i18n. Language settings
+- i18n. Language in footer, layout
+- i18n. Gene length and location on chromosome
+- i18n. Update and fix localization for the footer section
+- i18n. Multiple languages support and temporary API limitations
+- i18n. Language selection
+- i18n. Update header styles
+- i18n. Show notifications about recent changes
+- i18n. Alerts, service with a queue of alerts and a factory
+- Noissue. Fix languages configuration
+- Noissue. Fix routing and navigation
+- Noissue. Fix breadcrumbs appearance
+- Noissue. Page scroll and smooth animations
+- Noissue. Fix support chat z-index
+
+# Release v2.1.2
+
+- i18n. Fix misspelled terms and align spelling in en.json
+- Noissue. Fix elements alignment across the UI
+
+# Release v2.2.0
+
+- i18n. Translate notifications about new languages

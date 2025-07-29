@@ -1,23 +1,26 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { WindowWidth } from '../../../../core/utils/window-width';
 import { WindowService } from '../../../../core/services/browser/window.service';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { takeUntil } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { WizardService } from '../wizard-service.service';
 import { WordpressApiService } from '../../../../core/services/api/wordpress-api.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { DirectivesModule } from '../../../../directives/directives.module';
+import { PipesModule } from '../../../../core/pipes/pipes.module';
+import { IconComponent } from '../../../ui-components/icon/app-icon.component';
+import { NoContentComponent } from '../../no-content/no-content.component';
+import { NgIf } from '@angular/common';
+import { MaterialModule } from '../../../../modules/third-party/material.module';
 
 @Component({
   selector: 'app-wizard-sheet',
   templateUrl: './wizard-sheet.component.html',
   styleUrls: ['./wizard-sheet.component.scss'],
-  providers: [
-    {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { displayDefaultIndicatorType: false },
-    },
-  ],
+  standalone: true,
+  imports: [TranslateModule, DirectivesModule, PipesModule, IconComponent, NoContentComponent, NgIf, MaterialModule],
+  providers: [WindowService, WordpressApiService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardSheetComponent extends WindowWidth implements OnInit {

@@ -1,7 +1,7 @@
 import { Directive, Input } from '@angular/core';
-import { CommonModalComponent } from '../../ui-components/components/modals/common-modal/common-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AdditionalInterventionResolver } from '../../../core/utils/additional-intervention-resolver';
+import { CommonModalComponent } from '../../ui-components/modals/common-modal/common-modal.component';
 
 @Directive()
 export abstract class ResearchTables extends AdditionalInterventionResolver {

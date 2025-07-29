@@ -3,9 +3,8 @@ import { CommonModule } from "@angular/common";
 import { ContributorsComponent } from "./contributors.component";
 import { RouterModule, Routes } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
-import { MaterialModule } from "../../modules/vendors/material.module";
-import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
-import { PipesModule } from '../../modules/pipes/pipes.module';
+import { PipesModule } from '../../core/pipes/pipes.module';
+import { SkeletonLoaderComponent } from '../../components/ui-components/skeleton/skeleton.component';
 
 const routes: Routes = [{ path: "", component: ContributorsComponent }];
 
@@ -15,9 +14,8 @@ const routes: Routes = [{ path: "", component: ContributorsComponent }];
     CommonModule,
     RouterModule.forChild(routes),
     TranslateModule,
-    MaterialModule,
-    UiComponentsModule,
-    PipesModule
+    PipesModule,
+    SkeletonLoaderComponent,
   ],
 })
 export class ContributorsModule {}

@@ -3,7 +3,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ApiService } from '../../core/services/api/open-genes-api.service';
 import { Subject } from 'rxjs';
 import { Genes } from '../../core/models';
-import { LocalizedDatePipe } from '../../modules/pipes/general/i18n-date.pipe';
+import { LocalizedDatePipe } from '../../core/pipes/general/i18n-date.pipe';
 
 interface GenesArrayByDate {
   genes: Genes[];

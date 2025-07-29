@@ -1,0 +1,41 @@
+@import "../../styles";
+
+:host {
+  display: block;
+}
+
+.breadcrumbs {
+  display: inline-block;
+  width: 100%;
+  font-size: $font-size;
+
+  a,
+  span {
+    cursor: pointer;
+    color: $color-gray;
+
+    &:hover {
+      color: $color-black-light;
+      text-decoration: underline;
+    }
+  }
+
+  .breadcrumb {
+    list-style: none;
+    display: block;
+    float: left;
+    margin-right: .3em;
+
+    a {
+      display: inline-block;
+      height: 2em;
+      line-height: 2em;
+      font-size: $font-size;
+      padding: 0 1em;
+      border-radius: 2em;
+      user-select: none;
+      background-color: $color-gray-soft;
+    }
+  }
+}
+

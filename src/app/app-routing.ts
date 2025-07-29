@@ -3,24 +3,11 @@ import { ExtraOptions, Routes } from '@angular/router';
 export const APP_ROUTES: Routes = [
   {
     path: '',
-    pathMatch: 'full', // Ensure a full match for the empty path
-    redirectTo: 'genes',
-  },
-  {
-    path: 'home',
     loadChildren: () => import('./pages/home/home.module').then((m) => m.HomeModule),
   },
   {
     path: 'gene/:id',
     loadChildren: () => import('./pages/gene/gene.module').then((m) => m.GeneModule),
-  },
-  {
-    path: 'landing',
-    loadChildren: () => import('./pages/about/about.module').then((m) => m.AboutModule),
-  },
-  {
-    path: 'news',
-    loadChildren: () => import('./pages/news/news.module').then((m) => m.NewsModule),
   },
   {
     path: 'favorites',
@@ -32,7 +19,7 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'about',
-    loadChildren: () => import('./pages/help/help.module').then((m) => m.HelpModule),
+    loadChildren: () => import('./pages/help/help-page.module').then((m) => m.HelpPageModule),
     data: {
       breadcrumb: 'header_menu_help',
     },
@@ -47,7 +34,7 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'download',
-    loadChildren: () => import('./pages/download/download.module').then((m) => m.DownloadModule),
+    loadChildren: () => import('./pages/download/download-page.module').then((m) => m.DownloadPageModule),
   },
   {
     path: 'experiments',
@@ -75,6 +62,10 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/404/404.module').then((m) => m.Error404Module),
   },
   {
+    path: 'home',
+    redirectTo: '',
+  },
+  {
     path: '**',
     redirectTo: '/404',
   },
@@ -84,5 +75,6 @@ export const ROUTER_OPTIONS: ExtraOptions = {
   anchorScrolling: 'enabled',
   relativeLinkResolution: 'legacy',
   onSameUrlNavigation: 'reload',
-  scrollPositionRestoration: 'top'
+  scrollPositionRestoration: 'top',
+  enableTracing: true,
 };

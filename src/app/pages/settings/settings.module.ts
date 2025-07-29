@@ -5,13 +5,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FormsModule } from '@angular/forms';
-import { UiComponentsModule } from '../../components/ui-components/ui-components.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SwitchComponent } from '../../components/ui-components/switch/switch.component';
+import {MaterialModule} from "../../modules/third-party/material.module";
+import { NgKeysPipeModule } from 'angular-pipes';
 
 const settingsRoutes: Routes = [{ path: '', component: SettingsComponent }];
 
 @NgModule({
-  declarations: [SettingsComponent],
+  declarations: [SettingsComponent, SwitchComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(settingsRoutes),
@@ -19,7 +21,9 @@ const settingsRoutes: Routes = [{ path: '', component: SettingsComponent }];
     TranslateModule,
     SidebarModule,
     MatCheckboxModule,
-    UiComponentsModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    NgKeysPipeModule,
   ],
 })
 export class SettingsModule {}

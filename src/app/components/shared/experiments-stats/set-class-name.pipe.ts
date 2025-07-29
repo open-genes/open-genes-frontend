@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'setClassName',
+  standalone: true,
 })
 export class SetClassNamePipe implements PipeTransform {
   transform(experimentName: string): string {

@@ -2,16 +2,14 @@
         class="burger-button"
         (click)="toggleMenu()"
         [class.active]="isMenuVisible"
-        aria-label="Меню">
+        aria-label="site menu">
   <span *ngIf="!isMenuVisible"
         class="fa fal fa-bars">
         <span *ngIf="favsCounter !== '0'"
               class="burger-button__update-marker"
         ></span>
   </span>
-  <span *ngIf="isMenuVisible"
-    class="fa fal fa-times"></span>
-  <!-- TODO: use MatIconRegistry to use icon set -->
+  <span *ngIf="isMenuVisible" class="fa fal fa-times"></span>
 </button>
 
 <div class="header__menu"
@@ -80,15 +78,6 @@
           <span class="icon fa far fa-database"></span>
           {{ "header_menu_datasets" | translate }}
         </a>
-      </li>
-
-      <li *ngIf="translate.currentLang === 'ru'"
-          class="panel__link">
-        <a [routerLink]="'/news'"
-           routerLinkActive="__current"
-        >
-          <span class="icon fa far fa-newspaper"></span>
-          {{ 'header_menu_news' | translate }}</a>
       </li>
 
       <li class="panel__link">

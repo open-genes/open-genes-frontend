@@ -1,13 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Genes } from '../../../core/models';
+import { GeneralGeneInfo } from '../../../core/models';
 import { GenePhylaClass } from './gene-phyla.class';
 import { Phylum } from './phylum.model';
 import { ShowOptionsEnum } from './show-options.enum';
+import { NgIf } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-gene-age',
   templateUrl: './gene-age.component.html',
   styleUrls: ['./gene-age.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    TranslateModule,
+  ],
 })
 export class GeneAgeComponent extends GenePhylaClass implements OnInit {
   public phylumFamilyOrigin: Phylum;
@@ -15,7 +22,7 @@ export class GeneAgeComponent extends GenePhylaClass implements OnInit {
   public phylumHomolog: Phylum;
   public isShowOnlyOrigin = false;
   public isShowOnlyHomologs = false;
-  @Input() gene: Genes;
+  @Input() gene: GeneralGeneInfo;
   @Input() show: ShowOptionsEnum;
 
   constructor() {

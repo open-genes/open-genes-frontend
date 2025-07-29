@@ -12,8 +12,9 @@
       </div>
     </div>
 
-    <div class="container setting-items">
-      <div class="row">
+    <form class="container setting-items">
+      <div *ngIf="selectedLanguage === 'en'"
+           class="row setting-items__row">
         <div class="col-12">
           <div class="setting-items__panel setting-items__panel--emphasized">
             <app-switch [switch]="retrievedSettings.showUiHints"
@@ -30,11 +31,23 @@
           </div>
         </div>
       </div>
-    </div>
+
+      <div class="row setting-items__row">
+        <div class="col-12">
+          <h3>
+            {{ 'language' | translate }}
+          </h3>
+          <mat-form-field appearance="fill"
+                          class="notranslate">
+            <mat-label></mat-label>
+            <mat-select [(ngModel)]="selectedLanguage"
+                        (selectionChange)="changeLanguageSettings(selectedLanguage)">
+              <mat-option *ngFor="let language of locales | keyvalue" [value]="language.key">{{ language.value }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
 
-<div #settingsChanged
-     class="hidden">
-  {{ "settings_settings_changed" | translate }}
-</div>

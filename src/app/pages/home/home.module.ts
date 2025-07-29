@@ -4,13 +4,20 @@ import { HomeComponent } from './home.component';
 import { RouterModule } from '@angular/router';
 import { HOME_ROUTES } from './home-routing';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../../modules/vendors/material.module';
 import { SearchModule } from "../../components/shared/search/search.module";
-import { IconModule } from "../../components/ui-components/components/icon/app-icon.module";
-import { UiComponentsModule } from "../../components/ui-components/ui-components.module";
+import { IconComponent } from '../../components/ui-components/icon/app-icon.component';
+import { SkeletonLoaderComponent } from '../../components/ui-components/skeleton/skeleton.component';
+
 
 @NgModule({
   declarations: [HomeComponent],
-    imports: [CommonModule, RouterModule.forChild(HOME_ROUTES), TranslateModule, MaterialModule, SearchModule, IconModule, UiComponentsModule],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(HOME_ROUTES),
+    TranslateModule,
+    SearchModule,
+    IconComponent,
+    SkeletonLoaderComponent,
+  ],
 })
 export class HomeModule {}

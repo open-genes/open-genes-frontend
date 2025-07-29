@@ -1,137 +1,132 @@
 <footer class="wrapper">
   <div class="container-fluid footer">
-    <div class="row no-gutters footer__row">
-      <div class="col-xs-6 col-md-3 col-lg-3 footer__column">
-        <h4>{{ "footer_title_about" | translate }}</h4>
-        <p>
-          DOI:&nbsp;<a href="https://doi.org/10.1093/nar/gkad712"
-             class="link link--underline"
-             target="_blank">10.1093/nar/gkad712 <span class="fa far fa-external-link"></span></a>
-        </p>
-        <p>{{ 'footer_about' | translate }} <a
-          href="{{ 'about_page_about_section_title_link' | translate }}"
-          class="link link--underline"
-          target="_blank">Open&nbsp;Longevity&nbsp;<span class="fa far fa-external-link"></span></a>
-        </p>
-        <ul class="footer__links">
-          <li>
-            <a routerLink="/landing"
-            >
-              {{ 'header_menu_about' | translate }}</a>
-          </li>
-          <li>
-            <a routerLink="/about"
-            >
-              {{ 'header_menu_help' | translate }}</a>
-          </li>
-          <li>
-            <a routerLink="/contributors"
-            >
-              {{ 'header_menu_contributors' | translate }}</a>
-          </li>
-        </ul>
-      </div>
+    <div class="footer__column footer__column--about">
+      <h4>{{ "footer_title_about" | translate }}</h4>
+      <p>
+        DOI:&nbsp;<a href="https://doi.org/10.1093/nar/gkad712"
+                     class="link link--underline"
+                     target="_blank">10.1093/nar/gkad712 <span class="fa far fa-external-link"></span></a>
+      </p>
+      <p>{{ 'footer_about' | translate }} <a
+        href="{{ 'about_page_about_section_title_link' | translate }}"
+        class="link link--underline"
+        target="_blank">Open&nbsp;Longevity&nbsp;<span class="fa far fa-external-link"></span></a>
+      </p>
+      <ul class="footer__links">
+        <li>
+          <a routerLink="/about"
+          >
+            {{ 'header_menu_help' | translate }}</a>
+        </li>
+        <li>
+          <a routerLink="/contributors"
+          >
+            {{ 'header_menu_contributors' | translate }}</a>
+        </li>
+      </ul>
+    </div>
 
-      <div class="col-xs-6 col-md-3 col-lg-3 footer__column">
-        <h4>{{ "footer_title_data" | translate }}</h4>
-        <ul class="footer__links">
-          <li>
-            <a [routerLink]="'/datasets/horvath-clock'"
-               routerLinkActive="current"
-            >
-              {{ 'search_genes_in_horvath_clock' | translate }}</a>
-          </li>
-          <li>
-            <a [routerLink]="'/datasets/calorie-restriction'"
-               routerLinkActive="current"
-            >
-              {{ 'diet_page_title' | translate }}</a>
-          </li>
-          <li>
-            <a [routerLink]="'/favorites'"
-               routerLinkActive="current"
-            >
-              {{ 'header_menu_favourites' | translate }}
-            </a>
-          </li>
-          <li>
-            <a [routerLink]="'/download'"
-               routerLinkActive="current">
+    <div class="footer__column footer__column--data">
+      <h4>{{ "footer_title_data" | translate }}</h4>
+      <ul class="footer__links">
+        <li>
+          <a [routerLink]="'/datasets/horvath-clock'"
+             routerLinkActive="current"
+          >
+            {{ 'search_genes_in_horvath_clock' | translate }}</a>
+        </li>
+        <li>
+          <a [routerLink]="'/datasets/calorie-restriction'"
+             routerLinkActive="current"
+          >
+            {{ 'diet_page_title' | translate }}</a>
+        </li>
+        <li>
+          <a [routerLink]="'/favorites'"
+             routerLinkActive="current"
+          >
+            {{ 'header_menu_favourites' | translate }}
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="'/download'"
+             routerLinkActive="current">
           <span class="fa far fa-download">
           </span> {{ 'header_menu_download' | translate }}
-            </a>
-          </li>
-          <li>
-            <a href="/api/docs"
-               target="_blank">
-              {{ 'header_menu_api' | translate }}&nbsp;<span class="fa far fa-external-link"></span>
-            </a>
-          </li>
-          <li>
-            <a [routerLink]="'/timeline'"
-               routerLinkActive="current"
-            >
-              {{ 'header_menu_timeline' | translate }}</a>
-          </li>
-        </ul>
-      </div>
+          </a>
+        </li>
+        <li>
+          <a href="/api/docs"
+             target="_blank">
+            {{ 'header_menu_api' | translate }}&nbsp;<span class="fa far fa-external-link"></span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="'/timeline'"
+             routerLinkActive="current"
+          >
+            {{ 'header_menu_timeline' | translate }}</a>
+        </li>
+      </ul>
+    </div>
 
-      <div class="col-xs-6 col-md-2 col-lg-2 footer__column">
-        <h4>{{ "footer_title_community" | translate }}</h4>
-        <ul class="footer__links">
-          <li>
-            <a href="https://github.com/open-genes/.github/wiki/Contributing-guide"
-               routerLinkActive="current"
-               target="_blank"
-            >
-              {{ 'about_page_contribute_title' | translate }}&nbsp;<span class="fa far fa-external-link"></span></a>
-          </li>
-          <li>
-            <a
-              [routerLink]="'about/articles/donate-us'"
-              class="btn btn--fill btn--purple"
-              target="_blank"
-            >{{ 'about_page_donation_button' | translate }}
-            </a>
-          </li>
-        </ul>
-      </div>
+    <div class="footer__column footer__column--community">
+      <h4>{{ "footer_title_community" | translate }}</h4>
+      <ul class="footer__links">
+        <li>
+          <a href="https://github.com/open-genes/.github/wiki/Contributing-guide"
+             routerLinkActive="current"
+             target="_blank"
+          >
+            {{ 'about_page_contribute_title' | translate }}&nbsp;<span class="fa far fa-external-link"></span></a>
+        </li>
+        <li>
+          <a
+            href="https://bsky.app/profile/open-genes.bsky.social"
+            target="_blank"
+          >Bluesky</a
+          >
+        </li>
+        <li>
+          <a href="https://github.com/orgs/open-genes/"
+             target="_blank"
+          >GitHub</a
+          >
+        </li>
+        <li>
+          <a
+            [routerLink]="'about/articles/donate-us'"
+            class="btn btn--fill btn--purple"
+            target="_blank"
+          >{{ 'about_page_donation_button' | translate }}
+          </a>
+        </li>
+      </ul>
+    </div>
 
-      <div class="col-xs-5 col-md-2 col-lg-2 footer__column">
-        <h4>{{ "footer_title_links" | translate }}</h4>
-        <ul class="footer__links __nowrap">
-          <li>
-            <a
-              href="https://bsky.app/profile/open-genes.bsky.social"
-              target="_blank"
-            >Bluesky</a
-            >
-          </li>
-          <li>
-            <a href="https://github.com/orgs/open-genes/"
-               target="_blank"
-            >GitHub</a
-            >
-          </li>
-        </ul>
-      </div>
+    <div class="footer__column footer__column--language">
+      <h4>{{ "language" | translate }}</h4>
 
-      <div class="col-xs-12 col-md-2 col-lg-2 footer__column footer__column--language">
-        <ul class="footer__links">
-          <li>
-            {{ "build" | translate: { val: appData.build }  }}<br>
-            {{ "version" | translate: { val: appData.version }  }}
-          </li>
-          <li>
-            <a routerLink="/about/articles/cookies-policy"
-               target="_blank"
-            >{{ "footer_cookie_link" | translate }}</a>
-          </li>
-          <li class="footer__dynamic-content">
-            <ng-content></ng-content>
-          </li>
-        </ul>
+      <div class="languages">
+        <app-language></app-language>
       </div>
+    </div>
+
+    <div class="footer__column footer__column--build">
+      <ul class="footer__links">
+        <li>
+          {{ "build" | translate: { val: appData.build }  }}<br>
+          {{ "version" | translate: { val: appData.version }  }}
+        </li>
+        <li>
+          <a routerLink="/about/articles/cookies-policy"
+             target="_blank"
+          >{{ "footer_cookie_link" | translate }}</a>
+        </li>
+        <li class="footer__dynamic-content">
+          <ng-content></ng-content>
+        </li>
+      </ul>
     </div>
   </div>
 </footer>

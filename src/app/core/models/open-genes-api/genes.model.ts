@@ -22,7 +22,7 @@ export type SelectionCriteria = GenericItem;
 export type AgeRelatedProcesses = GenericItem;
 export type Phylum = GenericItem;
 
-interface GeneralGeneInfo {
+export interface GeneralGeneInfo {
   id: number;
   symbol: string;
   ensembl: string;

@@ -1,0 +1,17 @@
+<div class="popover" #popover
+     [style.width]="width"
+     [style.top]="top"
+     [style.right]="right"
+     [style.left]="left"
+     [style.z-index]="zIndex"
+>
+  <div class="popover__arrow"
+       [style.right]="arrowPositionRight"
+       [style.left]="arrowPositionLeft"></div>
+  <div class="popover__header">
+    <ng-content select="[popover-header]"></ng-content>
+  </div>
+  <div class="popover__content">
+    <ng-content select="[popover-content]"></ng-content>
+  </div>
+</div>

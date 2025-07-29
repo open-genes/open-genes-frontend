@@ -2,7 +2,7 @@
   <td class="cell cell--name">
     <div class="title overflow">
       <div class="add-to-favorites">
-        <button *ngIf="!(this.isAdded | async)"
+        <button *ngIf="(this.isAdded | async) === false"
                 (click)="favItem(item['id'])"
                 mat-icon-button>
           <span

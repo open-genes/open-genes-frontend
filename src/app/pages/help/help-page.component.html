@@ -1,0 +1,89 @@
+<div class="page text-page">
+  <div class="page__inner __pb-60">
+    <div class="wrapper text-page__header">
+      <div class="container-fluid">
+        <div class="row no-gutters">
+          <div class="col col-12">
+            <div class="page__title">
+              <h1>{{ 'help_page_title' | translate }}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-2">
+          <app-sidebar>
+            <mat-nav-list>
+              <a mat-list-item
+                 [routerLink]="'/about'" fragment="guidelines">
+                {{ 'help_page_articles_title' | translate }}
+              </a>
+              <a mat-list-item
+                 [routerLink]="'/about'" fragment="entities">
+                {{ 'help_page_title_entities' | translate }}
+              </a>
+            </mat-nav-list>
+          </app-sidebar>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-xl-8">
+          <section id="guidelines"
+                   class="row no-gutters faq__section">
+            <h2 class="col col-12">
+              {{ "help_page_articles_title" | translate }}
+            </h2>
+
+            <div class="faq__section">
+              <app-wp-articles
+                [showSkeleton]="showArticlesLoader"
+                (showSkeletonChange)="showArticlesLoader = $event"
+              ></app-wp-articles>
+
+              <app-skeleton
+                *ngIf="showArticlesLoader"
+                [view]="'panel'"
+                [groups]="6"
+              ></app-skeleton>
+            </div>
+          </section>
+
+          <section id="entities"
+                   class="row no-gutters faq__section">
+          <h2>{{ 'help_page_title_entities' | translate }}</h2>
+
+          <ul class="list">
+            <li>
+              <a [routerLink]="'entities/age-related-processes'"
+                 class="link">
+                {{ 'entities_age_related_processes' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="'entities/aging-mechanisms'"
+                 class="link">
+                {{ 'entities_aging_mechanisms' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="'entities/selection-criteria'"
+                 class="link">
+                {{ 'entities_selection_criteria' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="'entities/disease-categories'"
+                 class="link">
+                {{ 'entities_disease_categories' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="'entities/diseases'"
+                 class="link">
+                {{ 'entities_diseases' | translate }}</a>
+            </li>
+          </ul>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -21,7 +21,7 @@
           [groups]="3"
         ></app-skeleton>
         <div class="col col-12">
-          <article *ngIf="(showSkeletonChange | async) === false"
+          <article *ngIf="!(showSkeletonChange | async)"
                    [innerHTML]="res?.content.rendered | safe: 'html'"></article>
         </div>
       </div>

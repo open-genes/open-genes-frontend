@@ -1,7 +1,12 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../core/services/settings.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Settings, SettingsEnum } from '../../core/models/settings.model';
+import { localesMap } from '../../core/maps/languages.map';
+import { TranslateService } from '@ngx-translate/core';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { LocaleKeyType } from '../../core/models/languages.model';
 
 @Component({
   selector: 'app-settings-page',
@@ -11,19 +16,40 @@ import { Settings, SettingsEnum } from '../../core/models/settings.model';
 export class SettingsComponent implements OnInit {
   public retrievedSettings: Settings;
   private settingsKey = SettingsEnum;
-  @ViewChild('settingsChanged') settingsChangedTmpl: ElementRef;
+  public selectedLanguage: keyof typeof localesMap;
+  public locales = localesMap;
+  private successMessageTranslation$ = new Subject<void>();
 
-  constructor(private settingsService: SettingsService, private snackBar: MatSnackBar) {}
+  constructor(
+    private settingsService: SettingsService,
+    private translate: TranslateService,
+    private snackBar: MatSnackBar,
+  ) {}
 
   ngOnInit(): void {
     this.retrievedSettings = this.settingsService.getSettings();
+    this.selectedLanguage = this.settingsService.getLanguage();
+  }
+
+  private showSuccessMessage(): void {
+    this.translate.getStreamOnTranslationChange('settings_settings_changed')
+      .pipe(takeUntil(this.successMessageTranslation$))
+      .subscribe((msg) => {
+      this.snackBar.open(msg, '', {
+        duration: 600,
+      });
+    });
   }
 
   public toggleInterfaceHints(): void {
     this.retrievedSettings.showUiHints = !this.retrievedSettings.showUiHints;
     this.settingsService.setSettings(this.settingsKey.showUiHints, this.retrievedSettings.showUiHints);
-    this.snackBar.open(this.settingsChangedTmpl.nativeElement.textContent, '', {
-      duration: 600,
-    });
+    this.showSuccessMessage();
+  }
+
+  public changeLanguageSettings(language: LocaleKeyType): void {
+    this.settingsService.updateLanguage(language);
+    this.selectedLanguage = this.settingsService.getLanguage();
+    this.showSuccessMessage();
   }
 }

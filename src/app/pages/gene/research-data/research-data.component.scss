@@ -14,7 +14,7 @@
         min-width: 13px;
         width: 13px;
         height: 13px;
-        margin: 3px 8px 0 0;
+        margin: 1px 8px 0 0;
         @include study-type-mark-pseudo();
       }
     }
@@ -25,8 +25,7 @@
   }
 
   &::ng-deep .mat-expansion-panel-body {
-    padding-right: 0;
-    padding-left: 0;
+    padding: 0;
   }
 }
 
