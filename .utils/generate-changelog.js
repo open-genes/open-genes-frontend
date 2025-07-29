@@ -20,7 +20,7 @@ exec(`git log ${tag}..HEAD --pretty=format:"- %s" --no-merges`, (error, stdout, 
     process.exit(1);
   }
   const strippedText = stdout.replace(/#/g, ''); // Remove '#' symbols
-  const changelogContent = `\n#Release v${tag}\n\n${strippedText}\n`;
+  const changelogContent = `\n# Release v${tag}\n\n${strippedText}\n`;
 
   fs.appendFileSync(changelogFile, changelogContent);
 
