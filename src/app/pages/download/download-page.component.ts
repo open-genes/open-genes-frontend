@@ -5,7 +5,7 @@ import { FileExportService } from 'src/app/core/services/browser/file-export.ser
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { CommonModalComponent } from 'src/app/components/ui-components/modals/common-modal/common-modal.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';

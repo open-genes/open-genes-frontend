@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
 import { GeneTableCardLogic } from '../../../../../../core/utils/gene-table-card-logic';
 import { GenesFilterService } from '../../../../../../core/services/filters/genes-filter.service';
 import { FavouritesService } from '../../../../../../core/services/favourites.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Observable } from 'rxjs';
 
 @Component({

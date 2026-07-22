@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ResearchTables } from '../research-tables';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-gene-associated-with-progeria-syndromes',

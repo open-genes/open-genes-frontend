@@ -1,5 +1,5 @@
 import { Component, Inject, TemplateRef } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogModule as MatDialogModule, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { MaterialModule } from '../../../../modules/third-party/material.module';

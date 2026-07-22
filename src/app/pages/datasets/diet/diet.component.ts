@@ -5,7 +5,7 @@ import { Diet } from '../../../core/models/open-genes-api/diet.model';
 import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SnackBarComponent } from '../../../components/shared/snack-bar/snack-bar.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 
 @Component({
   selector: 'app-diet-page',

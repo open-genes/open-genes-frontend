@@ -10,7 +10,7 @@ import { Symbols } from '../../../core/models';
 import { FavouritesService } from '../../../core/services/favourites.service';
 import { FileExportService } from '../../../core/services/browser/file-export.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 
 @Component({
   selector: 'app-favourites-list',

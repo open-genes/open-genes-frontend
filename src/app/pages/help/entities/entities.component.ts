@@ -10,7 +10,7 @@ import { ApiService } from '../../../core/services/api/open-genes-api.service';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 
 @Component({
   selector: 'app-entities-page',

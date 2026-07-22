@@ -7,8 +7,8 @@ import { SettingsService } from '../../../../core/services/settings.service';
 import { GenesFilterService } from '../../../../core/services/filters/genes-filter.service';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatLegacyCheckboxChange as MatCheckboxChange } from '@angular/material/legacy-checkbox';
 import { FilterPanelLogic } from '../../../../core/utils/filter-panel-logic';
 
 type formControls =

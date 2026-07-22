@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Diet } from '../../../../../core/models/open-genes-api/diet.model';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { Pagination } from '../../../../../core/models/settings.model';
 import { Sort } from '@angular/material/sort';
 

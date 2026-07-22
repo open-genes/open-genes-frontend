@@ -1,7 +1,7 @@
 import { Observable, of, Subject } from 'rxjs';
 import { ApiService } from '../services/api/open-genes-api.service';
-import { MatSelectChange } from '@angular/material/select';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatLegacyCheckboxChange as MatCheckboxChange } from '@angular/material/legacy-checkbox';
 import { GenesListSettings } from '../../components/shared/genes-list/genes-list-settings.model';
 import { map, takeUntil } from 'rxjs/operators';
 

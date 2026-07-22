@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { GeneLocation } from '../../../core/models/open-genes-api/gene-location.model';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { CommonModalComponent } from '../../ui-components/modals/common-modal/common-modal.component';
 import { TranslateService } from '@ngx-translate/core';
 

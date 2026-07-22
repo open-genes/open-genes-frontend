@@ -10,7 +10,7 @@ import { SettingsService } from '../../core/services/settings.service';
 import { SearchModeEnum, Settings } from '../../core/models/settings.model';
 import { FavouritesService } from '../../core/services/favourites.service';
 import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { GenesFilterService } from '../../core/services/filters/genes-filter.service';
 import { Gene, Ortholog } from '../../core/models';
 import { ApiGeneSearchFilter } from '../../core/models/filters/filter.model';

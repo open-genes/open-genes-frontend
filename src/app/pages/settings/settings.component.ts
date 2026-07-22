@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../core/services/settings.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Settings, SettingsEnum } from '../../core/models/settings.model';
 import { localesMap } from '../../core/maps/languages.map';
 import { TranslateService } from '@ngx-translate/core';

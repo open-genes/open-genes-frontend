@@ -10,8 +10,8 @@ import {
 import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatLegacyCheckboxChange as MatCheckboxChange } from '@angular/material/legacy-checkbox';
 import { ApiResearchSearchParameters } from '../../../../core/models/filters/filter.model';
 import { FilterPanelLogic } from '../../../../core/utils/filter-panel-logic';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';

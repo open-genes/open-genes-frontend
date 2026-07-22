@@ -8,7 +8,7 @@ import {
   MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 
 @Component({

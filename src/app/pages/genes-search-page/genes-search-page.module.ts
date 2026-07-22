@@ -6,10 +6,10 @@ import { GenesListModule } from '../../components/shared/genes-list/genes-list.m
 import { TranslateModule } from '@ngx-translate/core';
 import { NgStripTagsPipeModule } from 'angular-pipes';
 import { PipesModule } from '../../core/pipes/pipes.module';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { SidebarModule } from '../../components/shared/sidebar/sidebar.module';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
 import { GeneFiltersPanelModule } from './components/gene-filters-panel/gene-filters-panel.module';
 import { SearchModule } from '../../components/shared/search/search.module';
 import { PageSubtitleComponent } from '../../components/ui-components/page-subtitle/page-subtitle.component';

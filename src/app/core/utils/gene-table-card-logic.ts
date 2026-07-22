@@ -9,7 +9,7 @@ import { appliedFilter, GenesListSettings } from '../../components/shared/genes-
 import { Genes } from '../models';
 import { GenesFilterService } from '../services/filters/genes-filter.service';
 import { FavouritesService } from '../services/favourites.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { SnackBarComponent } from '../../components/shared/snack-bar/snack-bar.component';
 import { Observable, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

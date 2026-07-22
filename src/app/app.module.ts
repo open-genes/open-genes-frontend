@@ -35,7 +35,7 @@ import { GoogleAnalyticsModule } from './modules/third-party/google-analytics.mo
 import { DirectivesModule } from './directives/directives.module';
 import { TermHintModule } from './components/shared/terms/term-hint.module';
 import { SnackBarModule } from './components/shared/snack-bar/snack-bar.module';
-import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatLegacyPaginatorIntl as MatPaginatorIntl } from '@angular/material/legacy-paginator';
 import { CustomMatPaginatorIntl } from './core/services/custom-mat-paginator-int';
 import { HttpReqInterceptor } from './core/utils/http-req.interceptor';
 import {BannerComponent} from "./components/ui-components/banner/banner.component";

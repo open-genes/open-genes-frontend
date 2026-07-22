@@ -1,5 +1,5 @@
 import { Directive, Input } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { AdditionalInterventionResolver } from '../../../core/utils/additional-intervention-resolver';
 import { CommonModalComponent } from '../../ui-components/modals/common-modal/common-modal.component';
 

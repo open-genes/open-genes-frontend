@@ -15,14 +15,14 @@ import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 import { ApiService } from '../../../../core/services/api/open-genes-api.service';
 import { AdditionalInterventionResolver } from 'src/app/core/utils/additional-intervention-resolver';
 import { SnackBarComponent } from '../../../../components/shared/snack-bar/snack-bar.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { SearchMode } from '../../../../core/models/settings.model';
 import { Genes } from '../../../../core/models';
 import { StudiesFilterService } from '../../../../core/services/filters/studies-filter.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModalComponent } from '../../../../components/ui-components/modals/common-modal/common-modal.component';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -10,7 +10,7 @@ import { WindowWidth } from '../../core/utils/window-width';
 import { Subject } from 'rxjs';
 import { appliedFilter } from '../../components/shared/genes-list/genes-list-settings.model';
 import { CommonModalComponent } from '../../components/ui-components/modals/common-modal/common-modal.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { WordpressApiService } from '../../core/services/api/wordpress-api.service';
 import { ActivatedRoute } from '@angular/router';
 
