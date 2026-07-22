@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { RouterLinkActive, RouterLinkWithHref } from '@angular/router';
+import { RouterLinkActive, RouterLink } from '@angular/router';
 import {LanguageComponent} from "../language/language.component";
 
 @Component({
@@ -8,7 +8,7 @@ import {LanguageComponent} from "../language/language.component";
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
   standalone: true,
-    imports: [TranslateModule, RouterLinkWithHref, RouterLinkActive, LanguageComponent],
+    imports: [TranslateModule, RouterLink, RouterLinkActive, LanguageComponent],
 })
 export class FooterComponent {
   @Input() appData: { build: string; version: string };

@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {NgIf} from "@angular/common";
-import { RouterLink, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { DirectivesModule } from '../../directives/directives.module';
 import { MaterialModule } from '../../modules/third-party/material.module';
 import { IconComponent } from '../ui-components/icon/app-icon.component';
@@ -25,7 +25,7 @@ import { IconComponent } from '../ui-components/icon/app-icon.component';
     NgIf,
     RouterLink,
     RouterLinkActive,
-    RouterLinkWithHref,
+    RouterLink,
     TranslateModule,
     DirectivesModule,
     MaterialModule,

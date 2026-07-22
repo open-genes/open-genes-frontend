@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BreadcrumbService } from './breadcrumb.service';
 import { BreadcrumbModel } from './breadcrumb.model';
 import { Subject } from 'rxjs';
-import { ActivatedRoute, Router, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
+import { ActivatedRoute, Router, RouterLinkActive, RouterLink } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgForOf } from '@angular/common';
@@ -14,7 +14,7 @@ import { NgForOf } from '@angular/common';
   standalone: true,
   imports: [
     TranslateModule,
-    RouterLinkWithHref,
+    RouterLink,
     RouterLinkActive,
     NgForOf,
   ],

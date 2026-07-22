@@ -72,9 +72,8 @@ export const APP_ROUTES: Routes = [
 ];
 
 export const ROUTER_OPTIONS: ExtraOptions = {
-  anchorScrolling: 'enabled',
-  relativeLinkResolution: 'legacy',
-  onSameUrlNavigation: 'reload',
-  scrollPositionRestoration: 'top',
-  enableTracing: true,
+    anchorScrolling: 'enabled',
+    onSameUrlNavigation: 'reload',
+    scrollPositionRestoration: 'top',
+    enableTracing: true
 };

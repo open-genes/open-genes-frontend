@@ -9,7 +9,7 @@ import { Sort } from '@angular/material/sort';
 import { NgClass, NgForOf, NgIf, SlicePipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../../../../../modules/third-party/material.module';
-import { RouterLinkWithHref } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { NgTrimPipeModule } from 'angular-pipes';
 import { IconComponent } from '../../../../../components/ui-components/icon/app-icon.component';
 import { SpinnerComponent } from '../../../../../components/ui-components/spinner/spinner.component';
@@ -27,7 +27,7 @@ import { NoContentComponent } from '../../../../../components/shared/no-content/
     MaterialModule,
     NgForOf,
     SlicePipe,
-    RouterLinkWithHref,
+    RouterLink,
     NgTrimPipeModule,
     IconComponent,
     SpinnerComponent,

@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { IconComponent } from '../ui-components/icon/app-icon.component';
 import { NgIf } from '@angular/common';
-import { RouterLinkActive, RouterLinkWithHref } from '@angular/router';
+import { RouterLinkActive, RouterLink } from '@angular/router';
 import { BurgerMenuComponent } from '../burger-menu/burger-menu.component';
 
 @Component({
@@ -20,7 +20,7 @@ import { BurgerMenuComponent } from '../burger-menu/burger-menu.component';
     TranslateModule,
     IconComponent,
     NgIf,
-    RouterLinkWithHref,
+    RouterLink,
     RouterLinkActive,
     BurgerMenuComponent,
   ],
