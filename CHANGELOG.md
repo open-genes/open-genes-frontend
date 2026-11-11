@@ -105,3 +105,7 @@
 # Release v2.2.0
 
 - i18n. Translate notifications about new languages
+
+# Release v2.2.1
+
+- Fix longevity-association study panel visibility and add regression coverage for empty and nonempty study datasets (related to #334).
